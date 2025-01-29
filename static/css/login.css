@@ -16,15 +16,15 @@ body {
 body::after {
     content: "";
     position: absolute;
-    bottom: 0px;
-    right: 0px;
-    width: 1540px;
-    height: 750px;
+    bottom: 0;
+    right: 0;
+    width: 90vw; 
+    height: 90vh; 
     background-image: url("/static/images/background/bg-01.webp");
     background-size: cover;
     background-position: center;
-    z-index: -4;
-  }
+    z-index: -10;
+}
 
 /* Ana Kapsayıcı */
 .container {
@@ -214,6 +214,26 @@ body::after {
     z-index: 1000;
 }
 
+/* Seçili dil butonu */
+.language-dropdown button.active {
+    background: rgba(255, 127, 50, 0.5);
+    border-radius: 5px;
+}
+
+/* Globe butonu seçili dili göstermek için */
+.language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.language-toggle span {
+    font-size: 15px;
+}
+
+
 /* Dropdown Açıkken */
 .language-switcher:hover .language-dropdown {
     display: flex;
@@ -248,10 +268,13 @@ body::after {
 }
 
 
-
-
 /* Responsive */
 @media (max-width: 768px) {
+
+    body::after {
+        height: 30vh; 
+        width: 60vw; 
+    }
     .content {
         display: flex;
         flex-direction: column;
@@ -275,9 +298,18 @@ body::after {
     .login-btn {
         font-size: 14px;
     }
+
+    body::after {
+        height: 30vh; 
+    }
 }
 
 @media (max-width: 480px) {
+
+    body::after {
+        height: 30vh; 
+        width: 60vw; 
+    }
     .content {
         display: flex;
         flex-direction: column;
@@ -285,7 +317,7 @@ body::after {
         justify-content: center;
         width: 100vw;
     }
-    
+
     .login-box {
         width: 220px;
     }
@@ -301,5 +333,9 @@ body::after {
     .language-switcher {
         bottom: 10px;
         right: 10px;
+    }
+
+    body::after {
+        height: 25vh; 
     }
 }

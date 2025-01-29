@@ -19,3 +19,57 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+// Dil
+document.addEventListener("DOMContentLoaded", function () {
+    const langButtons = document.querySelectorAll(".language-dropdown button");
+    const langToggle = document.querySelector(".language-toggle");
+    const languageDropdown = document.querySelector(".language-dropdown");
+    const selectedLangText = document.getElementById("selected-lang");
+
+    // Önceki seçili dili al ve UI güncelle
+    const savedLang = localStorage.getItem("selectedLanguage");
+    if (savedLang) {
+        setLanguage(savedLang);
+    } else {
+        setLanguage("tr"); // Varsayılan dil TR olsun
+    }
+
+    // Dil değiştirme işlemi
+    langButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const selectedLang = this.getAttribute("data-lang");
+            setLanguage(selectedLang);
+            localStorage.setItem("selectedLanguage", selectedLang);
+        });
+    });
+
+    function setLanguage(lang) {
+        langButtons.forEach(btn => btn.classList.remove("active"));
+        const activeBtn = document.querySelector(`.language-dropdown button[data-lang="${lang}"]`);
+        if (activeBtn) activeBtn.classList.add("active");
+
+        // Seçilen dili gösteren butonu güncelle
+        const langMapping = {
+            "tr": "TR",
+            "en": "EN",
+            "de": "DE"
+        };
+        selectedLangText.textContent = langMapping[lang] || "TR";
+
+        // Seçim yapıldıktan sonra dropdown'u kapat
+        languageDropdown.style.display = "none";
+    }
+
+    // Dil menüsünü aç/kapat
+    langToggle.addEventListener("click", function () {
+        languageDropdown.style.display = (languageDropdown.style.display === "flex") ? "none" : "flex";
+    });
+
+    // Dışarı tıklanınca menüyü kapat
+    document.addEventListener("click", function (event) {
+        if (!languageDropdown.contains(event.target) && !langToggle.contains(event.target)) {
+            languageDropdown.style.display = "none";
+        }
+    });
+});
+

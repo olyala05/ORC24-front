@@ -16,10 +16,10 @@ body {
 body::after {
   content: "";
   position: absolute;
-  bottom: 0px;
-  right: 0px;
-  width: 1540px;
-  height: 750px;
+  bottom: 0;
+  right: 0;
+  width: 66vw;
+  height: 62vh;
   background-image: url("/static/images/background/bg-01.webp");
   background-size: cover;
   background-position: center;
@@ -119,8 +119,8 @@ body::after {
 
 /* 📌 RESPONSIVE MEDIA QUERIES */
 
-/* Tablet ekranları için (max-width: 1024px) */
-@media (max-width: 1024px) {
+/* 1020 x 600 çözünürlüğe özel */
+@media (max-width: 1020px) {
   .content {
     width: 95%;
     max-width: 900px;
@@ -137,6 +137,29 @@ body::after {
   .header {
     gap: 15px; /* Logonun etrafındaki boşluğu azalt */
   }
+
+  .footer {
+    font-size: 16px; /* Footer yazısını biraz küçült */
+  }
+}
+
+/* Tablet ekranları için (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .content {
+    width: 100vw;
+  }
+
+  .logo {
+    height: 55px;
+  }
+
+  .line {
+    flex-grow: 1.2; /* Çizgileri biraz daha kısa yap */
+  }
+
+  .footer {
+    font-size: 15px; /* Footer yazısını biraz küçült */
+  }
 }
 
 /* Mobil ekranlar için (max-width: 768px) */
@@ -147,7 +170,7 @@ body::after {
     align-items: center;
     justify-content: center;
     width: 100vw;
-}
+  }
 
   .logo {
     height: 50px;
@@ -174,14 +197,13 @@ body::after {
 
 /* Küçük telefonlar için (max-width: 480px) */
 @media (max-width: 480px) {
-
   .content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100vw;
-}
+  }
   .logo {
     height: 40px;
   }
