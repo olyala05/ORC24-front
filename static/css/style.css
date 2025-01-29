@@ -43,7 +43,7 @@ body::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100vw; /* Genişliği ekran boyutuna göre ayarla */
+  width: 100vw; 
 }
 
 /* Üst kısım */
@@ -142,9 +142,12 @@ body::after {
 /* Mobil ekranlar için (max-width: 768px) */
 @media (max-width: 768px) {
   .content {
-    width: 100%;
-    max-width: 600px;
-  }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+}
 
   .logo {
     height: 50px;
@@ -171,11 +174,14 @@ body::after {
 
 /* Küçük telefonlar için (max-width: 480px) */
 @media (max-width: 480px) {
-  .content {
-    width: 100%;
-    max-width: 400px;
-  }
 
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+}
   .logo {
     height: 40px;
   }
