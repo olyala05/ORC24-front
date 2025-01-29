@@ -1,0 +1,195 @@
+/* Genel stil */
+body {
+  background-color: #1c2747;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  width: 100%;
+  position: relative;
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 1540px;
+  height: 750px;
+  background-image: url("/static/images/background/bg-01.webp");
+  background-size: cover;
+  background-position: center;
+  z-index: -4;
+}
+
+/* Ana kapsayıcı */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-grow: 1;
+  text-align: center;
+}
+
+/* İçerik */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw; /* Genişliği ekran boyutuna göre ayarla */
+}
+
+/* Üst kısım */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  gap: 20px; /* Logonun kenarlarındaki boşluğu artır */
+}
+
+/* Çizgiler */
+.line {
+  flex-grow: 2; /* Çizgileri daha uzun yap */
+  height: 2px;
+  background-color: #ff7f32;
+  position: relative;
+  max-width: 100%; /* Çizgilerin genişliği tam ekrana yayılsın */
+}
+
+/* Çizgi uçlarına dikdörtgen ekleme */
+.line::after {
+  content: "";
+  width: 10px; /* Dikdörtgen genişliği */
+  height: 10px; /* Dikdörtgen yüksekliği */
+  background-color: #ff7f32;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Sol çizginin dikdörtgeni */
+.line-left::after {
+  right: -6px; /* Dikdörtgeni biraz daha dışa kaydır */
+}
+
+/* Sağ çizginin dikdörtgeni */
+.line-right::after {
+  left: -6px; /* Dikdörtgeni biraz daha dışa kaydır */
+}
+
+/* Logo */
+.logo {
+  height: 110px; 
+  z-index: 2;
+}
+
+/* Footer - Sayfanın en altına sabit */
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 24px 0;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 600;
+  position: absolute;
+  bottom: 0;
+}
+
+/* Küçük yazı */
+.small {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* İkon */
+.footer-icon {
+  width: 36px;
+  height: 38px;
+  margin-right: 5px;
+}
+
+/* 📌 RESPONSIVE MEDIA QUERIES */
+
+/* Tablet ekranları için (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .content {
+    width: 95%;
+    max-width: 900px;
+  }
+
+  .logo {
+    height: 60px;
+  }
+
+  .line {
+    flex-grow: 1.5; /* Çizgileri biraz daha kısa yap */
+  }
+
+  .header {
+    gap: 15px; /* Logonun etrafındaki boşluğu azalt */
+  }
+}
+
+/* Mobil ekranlar için (max-width: 768px) */
+@media (max-width: 768px) {
+  .content {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  .line {
+    flex-grow: 1;
+    width: 40%; /* Mobilde çizgileri biraz daha kısa yap */
+  }
+
+  .line::after {
+    width: 6px; /* Dikdörtgenler küçülsün */
+    height: 6px;
+  }
+
+  .header {
+    gap: 10px;
+  }
+
+  .footer {
+    font-size: 14px; /* Footer yazısı küçülsün */
+  }
+}
+
+/* Küçük telefonlar için (max-width: 480px) */
+@media (max-width: 480px) {
+  .content {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .line {
+    width: 30%; /* Küçük telefonlarda çizgileri daha kısa yap */
+  }
+
+  .line::after {
+    width: 5px;
+    height: 5px;
+  }
+
+  .header {
+    gap: 5px;
+  }
+}
