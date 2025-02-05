@@ -12,12 +12,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
 
     <!-- Genel Stil Dosyası (Tüm Sayfalarda Kullanılacak) -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <!-- Login Sayfası İçin Ek CSS -->
-    {% if request.path == '/login' %}
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-    {% endif %}
 </head>
 <body>
     {% block content %}{% endblock content %}
