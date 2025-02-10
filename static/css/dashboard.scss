@@ -1,0 +1,54 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0f1b30; // Header arka plan rengi
+    padding: 10px 20px;
+  
+    .btn {
+      background-color: #ff6700; // Turuncu buton rengi
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+  
+      &:hover {
+        background-color: #e55e00; // Hover rengi
+      }
+  
+      &.login {
+        margin-right: 10px;
+      }
+    }
+  
+    .logo {
+      display: flex;
+      align-items: center;
+  
+      img {
+        height: 40px; // Logo boyutu
+      }
+    }
+  
+    .date,
+    .report-date {
+      color: #ffffff;
+      font-size: 14px;
+      text-align: right;
+  
+      &.date {
+        font-weight: bold;
+      }
+    }
+  
+    .report-date {
+      font-size: 12px;
+    }
+  }
+  

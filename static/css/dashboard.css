@@ -1,0 +1,46 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0f1b30;
+  padding: 10px 20px;
+}
+header .btn {
+  background-color: #ff6700;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+header .btn:hover {
+  background-color: #e55e00;
+}
+header .btn.login {
+  margin-right: 10px;
+}
+header .logo {
+  display: flex;
+  align-items: center;
+}
+header .logo img {
+  height: 40px;
+}
+header .date,
+header .report-date {
+  color: #ffffff;
+  font-size: 14px;
+  text-align: right;
+}
+header .date.date,
+header .report-date.date {
+  font-weight: bold;
+}
+header .report-date {
+  font-size: 12px;
+}/*# sourceMappingURL=dashboard.css.map */

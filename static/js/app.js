@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 setTimeout(function () {
-    if (window.location.pathname !== "/login") {
+    if (window.location.pathname === "/" || window.location.pathname === "/index.html") {
         window.location.href = loginURL;
     }
 }, 5000);

@@ -92,8 +92,6 @@ body::after {
   background: #0f1a32;
   border-radius: 5px;
   padding: 7px;
-  width: 100%;
-  max-width: 500px;
 }
 .input-group input {
   background: none;
@@ -112,18 +110,11 @@ body::after {
 }
 
 .icon-left {
-  position: absolute;
-  left: 10px; /* Sol tarafa yapışmasını önlüyoruz */
-  font-size: 18px;
-  color: white;
+  left: 10px;
 }
 
-.icon-right,
-.icon-eye {
-  position: absolute;
+.icon-right, .icon-eye {
   right: 10px;
-  font-size: 18px;
-  color: white;
   cursor: pointer;
 }
 
@@ -148,13 +139,6 @@ body::after {
   background: #fe5f00;
   box-shadow: 0 6px 12px rgba(255, 127, 50, 0.5);
 }
-.login-actions {
-  display: flex;
-  align-items: center; /* Buton ve dil seçiciyi dikey hizalar */
-  justify-content: center; /* Yatay olarak ortalar */
-  gap: 20px; /* Buton ve dil seçici arasına boşluk ekler */
-  width: 100%; /* Ebeveyn divin genişliği kadar hizalama yapar */
-}
 
 /* Dil Seçici */
 .language-switcher {
@@ -165,7 +149,7 @@ body::after {
   background: none;
   border: none;
   color: white;
-  font-size: 18px;
+  font-size: 24px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -179,7 +163,7 @@ body::after {
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  padding: 5px;
+  padding: 10px;
   display: none;
   flex-direction: column;
   min-width: 120px;
@@ -189,17 +173,15 @@ body::after {
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 5px 10px;
+  padding: 7px;
   background: none;
   border: none;
+  color: #0E1734;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
   width: 100%;
-  text-align: left;
-}
-.language-switcher .language-dropdown button img {
-  width: 18px;
-  height: auto;
 }
 .language-switcher .language-dropdown button:hover {
   background: rgba(255, 127, 50, 0.3);
@@ -207,16 +189,6 @@ body::after {
 }
 .language-switcher:hover .language-dropdown {
   display: flex;
-}
-#selected-lang {
-  font-size: 14px;
-  font-weight: bold;
-}
-
-/* Dropdown içinde kaydırmayı önlemek için */
-.language-dropdown {
-  max-height: none; /* Scroll oluşmasını engeller */
-  overflow: hidden;
 }
 
 /* Responsive */
@@ -231,15 +203,6 @@ body::after {
   .logo {
     height: 50px;
   }
-  .language-switcher .language-dropdown {
-    min-width: 100px;
-  }
-  .language-switcher .language-dropdown button {
-    padding: 4px 8px;
-  }
-  .language-switcher .language-dropdown button img {
-    width: 16px;
-  }
 }
 @media (max-width: 480px) {
   .login-box {
@@ -251,4 +214,92 @@ body::after {
   .login-btn {
     font-size: 12px;
   }
-} /*# sourceMappingURL=styles.css.map */
+}
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #0e1734;
+  padding: 10px 20px;
+  width: 100%;
+  height: 60px;
+  border-bottom: 3px solid #ff7f32;
+}
+
+/* Sol kısım (Butonlar) */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* LOGIN ve MENU Butonları */
+.header-button {
+  background-color: #ff7f32;
+  color: #1c2747;
+  border: none;
+  padding: 8px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(255, 127, 50, 0.5);
+}
+.header-button:hover {
+  background: #fe5f00;
+  box-shadow: 0 4px 8px rgba(255, 127, 50, 0.7);
+}
+.header-button i {
+  font-size: 20px;
+}
+
+/* LOGO */
+.header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+.header-logo img {
+  height: 40px;
+}
+
+/* Sağ kısım (Tarih ve Rapor Tarihi) */
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 14px;
+  color: #fff;
+}
+.header-right .date-time {
+  font-weight: bold;
+}
+.header-right .report-date {
+  font-size: 12px;
+  color: #ff7f32;
+  font-weight: bold;
+}
+
+/* Responsive - Küçük ekranlar için */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+  .header-left,
+  .header-right {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .header-logo img {
+    height: 30px;
+  }
+}/*# sourceMappingURL=styles.css.map */
