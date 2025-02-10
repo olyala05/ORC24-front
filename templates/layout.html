@@ -17,8 +17,15 @@
 
     <!-- Genel Stil Dosyası (Tüm Sayfalarda Kullanılacak) -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+
+    {% if request.endpoint == "dashboard" %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    {% endif %}
+
+
   </head>
   <body>
+    <body class="{% if request.endpoint == 'dashboard' %}dashboard-body{% endif %}">
     {% block content %}
 
     {% endblock %}
