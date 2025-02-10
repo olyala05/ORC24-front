@@ -123,22 +123,32 @@ body {
   cursor: pointer;
 }
 
+.login-actions {
+  display: flex;
+  align-items: center; /* Dikeyde ortalar */
+  justify-content: center; /* Yatayda ortalar */
+  gap: 12px; /* Buton ile dil seçici arasındaki boşluk */
+  width: 100%; /* Eğer tam ortada olmasını istiyorsan genişliği tam yap */
+}
+
+
 /* Login Butonu */
 .login-btn {
-  background: $primary-color;
-  color: $bg-color;
-  padding: 15px 20px;
+  background: #ff7f32;
+  color: #1c2747;
+  padding: 18px 30px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  width: 180px;
+  width: auto;
   transition: all 0.3s ease-in-out;
   box-shadow: 0 4px 8px rgba(255, 127, 50, 0.3);
+  gap: 12px;
 
   &:hover {
     background: darken($primary-color, 10%);
@@ -149,17 +159,22 @@ body {
 /* Dil Seçici */
 .language-switcher {
   position: relative;
-  display: inline-block;
+  display: flex; /* Butonun yanında düzgün hizalanmasını sağlar */
+  align-items: center;
 
   .language-toggle {
     background: none;
     border: none;
     color: white;
-    font-size: 24px;
+    font-size: 30px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 5px;
+  }
+  .selected-lang-txt{
+    font-size: 16px;
+    margin: 17px 0px 0px 0px;
   }
 
   .language-dropdown {
