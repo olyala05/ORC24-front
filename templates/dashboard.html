@@ -4,14 +4,14 @@
 <header class="header">
   <div class="header-left">
     <button class="header-button">
-      <i class="fa-solid fa-sign-in-alt"></i> LOGIN
+        LOGIN  <i class="fa-solid fa-sign-in-alt"></i> 
     </button>
-    <button class="header-button"><i class="fa-solid fa-bars"></i> Menu</button>
+    <button class="header-button">Menu <i class="fa-solid fa-bars"></i></button>
   </div>
 
   <div class="header-logo">
     <img
-      src="{{ url_for('static', filename='images/logos/logo-01.webp') }}"
+      src="{{ url_for('static', filename='images/logos/logo-02.png') }}"
       alt="Pier MTTP Logo"
       class="logo"
     />
@@ -19,8 +19,12 @@
 
   <div class="header-right">
     <div class="date-time">May 23, 2024, 12:34</div>
+    <div class="report-line">
+        <div class="line"></div>
+    </div>
     <div class="report-date">Report Date: April 12 - May 23</div>
-  </div>
+</div>
+
 </header>
 
 <!-- Ana Tablo -->
@@ -32,26 +36,56 @@
       <div>Consumed Energy</div>
     </div>
     <div class="energy-row">
-      <div><i class="fa-solid fa-bolt"></i> 80.158,68 kWh</div>
-      <div><i class="fa-solid fa-bolt"></i> 80.158,68 kWh</div>
-      <div><i class="fa-solid fa-bolt"></i> 80.158,68 kWh</div>
+        <div>
+            <img src="{{ url_for('static', filename='images/svg/08.svg') }}" alt="Energy">
+            80.158,68 kWh
+        </div>
+        <div>
+            <img src="{{ url_for('static', filename='images/svg/08.svg') }}" alt="Energy">
+            80.158,68 kWh
+        </div>
+        <div>
+            <img src="{{ url_for('static', filename='images/svg/08.svg') }}" alt="Energy">
+            80.158,68 kWh
+        </div>
     </div>
+    
     <div class="energy-row">
-      <div><i class="fa-solid fa-industry"></i> 80.158,68 TEP</div>
-      <div><i class="fa-solid fa-industry"></i> 80.158,68 TEP</div>
-      <div><i class="fa-solid fa-industry"></i> 80.158,68 TEP</div>
+        <div>
+            <img src="{{ url_for('static', filename='images/svg/09.svg') }}" alt="Industry">
+            80.158,68 TEP
+        </div>
+        <div>
+            <img src="{{ url_for('static', filename='images/svg/09.svg') }}" alt="Industry">
+            80.158,68 TEP
+        </div>
+        <div>
+            <img src="{{ url_for('static', filename='images/svg/09.svg') }}" alt="Industry">
+            80.158,68 TEP
+        </div>
     </div>
+    
     <div class="energy-row">
-      <div><i class="fa-solid fa-cloud"></i> 80.158,68 Ton</div>
-      <div><i class="fa-solid fa-cloud"></i> 80.158,68 Ton</div>
-      <div><i class="fa-solid fa-cloud"></i> 80.158,68 Ton</div>
+        <div>
+            <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="Cloud">
+            80.158,68 Ton
+        </div>
+        <div>
+            <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="Cloud">
+            80.158,68 Ton
+        </div>
+        <div>
+            <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="Cloud">
+            80.158,68 Ton
+        </div>
     </div>
+    
   </div>
 
   <div class="device-status">
     <div class="system-info">
         <div class="info-box">
-            <img src="{{ url_for('static', filename='images/svg/02.svg') }}" alt="Reactive Power">
+            <img class="reactive-power" src="{{ url_for('static', filename='images/svg/02.svg') }}" alt="Reactive Power">
             REACTIVE POWER
         </div>
         <div class="info-box harmonic">

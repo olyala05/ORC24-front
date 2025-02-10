@@ -10,8 +10,7 @@
   background-color: #0e1734;
   padding: 9px 20px;
   width: 100%;
-  height: 62px;
-  border-bottom: 3px solid #ff7f32;
+  height: 70px;
   z-index: 1000;
 }
 
@@ -64,18 +63,39 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  font-size: 14px;
+  font-size: 16px;
   color: #fff;
+}
 
-  .date-time {
-    font-weight: bold;
-  }
+.date-time {
+  font-weight: bold;
+}
 
-  .report-date {
-    font-size: 12px;
-    color: #ff7f32;
-    font-weight: bold;
-  }
+/* Çizgi ve kutucuk */
+.report-line {
+  display: flex;
+  align-items: center;
+  width: 120%;
+  margin: 5px 0; /* Üst ve alt boşluk */
+}
+
+.square {
+  width: 8px;
+  height: 8px;
+  background-color: #ff7f32; /* Turuncu kare */
+  margin-right: 5px; /* Çizgiden boşluk */
+}
+
+.line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #ff7f32; /* Çizginin rengi */
+}
+
+.report-date {
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold;
 }
 
 /* Responsive - Küçük ekranlar için */
@@ -101,8 +121,8 @@
 .dashboard {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
+  gap: 10px;
+  padding: 13px;
   background-color: #1c2747;
   color: #fff;
   width: 100%;
@@ -111,7 +131,7 @@
 /* Enerji Tablosu */
 .energy-table {
   background: #0e1734;
-  padding: 15px;
+  padding: 10px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -122,19 +142,38 @@
     justify-content: space-between;
     font-size: 18px;
     font-weight: bold;
-    color: #ff7f32;
+    color: #ffffff;
     padding-bottom: 10px;
+    position: relative; /* Pseudo-element için gerekli */
+  }
+
+  .energy-header::after {
+    content: "";
+    display: block;
+    width: 100%; /* Tam genişlikte çizgi */
+    height: 1px; /* Çizgi kalınlığı */
+    background: #ffffff; /* Beyaz renk */
+    position: absolute;
+    bottom: 5px;
+    left: 0;
   }
 
   .energy-row {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
-    font-size: 16px;
+    padding: 3px 15px;
+    font-size: 18px;
   }
 
-  i {
-    margin-right: 8px;
+  .energy-row div {
+    display: flex;
+    align-items: center;
+    gap: 18px; /* İkon ve yazı arasındaki boşluk */
+  }
+
+  .energy-row img {
+    width: 30px; /* SVG ikon boyutu */
+    height: 30px;
   }
 }
 
@@ -178,34 +217,38 @@
   background: #0e1734;
   padding: 15px;
   border-radius: 8px;
-  gap: 20px; // Kutular ile bilgi kısmı arasında boşluk ekler
+  gap: 10px; // Kutular ile bilgi kısmı arasında boşluk ekler
 
   /* System Info Kutuları */
   .system-info {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    width: 30%;
+    gap: 10px; /* Kutular arasındaki boşluğu daralttım */
+    width: 40%;
     justify-content: center;
 
     .info-box {
       background: #b1b1b1;
-      padding: 10px;
       border-radius: 5px;
-      font-size: 16px;
+      font-size: 12px;
       font-weight: 600;
       text-align: center;
       display: flex;
-      flex-direction: column; /* SVG üstte, yazı altta */
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-width: 100px; /* Genişliği artırıldı */
-      height: 140px; /* Yükseklik artırıldı */
+      min-width: 100px;
+      height: 124px;
+      line-height: 1.2;
 
       img {
-        width: 50px;
-        height: 50px;
-        margin-bottom: 30px;
+        width: 30px;
+        height: 30px;
+        margin-bottom: 22px;
+      }
+
+      .reactive-power {
+        margin-bottom: 6px !important;
       }
     }
 
@@ -230,14 +273,14 @@
     background: #0e1734;
     padding: 9px;
     border-radius: 8px;
-    width: 20%;
+    width: 25%;
     p {
-      margin: 4px 0;
-      font-size: 19px;
+      margin: 6px 0px;
+      font-size: 14px;
       display: flex;
       justify-content: space-between;
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      padding-bottom: 2px;
+      padding-bottom: 1px;
       color: #fff;
     }
 
@@ -268,11 +311,11 @@
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  width: 50%; // Ekranın yarısını kaplayacak
+  width: 60%; // Ekranın yarısını kaplayacak
   background: #1c2747;
-  padding: 20px;
+  padding: 2px;
   border-radius: 8px;
-  gap: 15px;
+  gap: 25px;
 }
 
 /* Gösterge Alanı */
@@ -280,8 +323,8 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  gap: 15px;
-  padding-bottom: 20px;
+  gap: 0px;
+  padding-top: 14px;
 }
 
 /* Gösterge Kutuları */
@@ -327,8 +370,8 @@
   padding-top: 10px;
   background: #0e1734;
   border-radius: 8px;
-  padding: 15px;
-  height: 108px;
+  padding: 6px;
+  height: 90px;
 }
 
 .voltage-box-1,
@@ -339,7 +382,7 @@
 .voltage-box-6 {
   text-align: center;
   padding: 8px;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: bold;
   color: #fff;
   border-radius: 6px;
@@ -365,7 +408,16 @@
 }
 
 /* Responsive */
+/* Raspberry Pi 1024x600 ve Küçük Ekranlar için Responsive */
+@media (max-width: 1024px) {
+  .dashboard {
+    height: 75vh;
+  }
+}
 @media (max-width: 768px) {
+  .dashboard {
+    height: 75vh;
+  }
   .dashboard-container {
     width: 100%; // Küçük ekranlarda tam genişlikte olacak
   }
