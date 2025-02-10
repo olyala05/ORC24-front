@@ -31,13 +31,25 @@
           <button class="login-btn">LOGIN <i class="fa-solid fa-sign-in-alt login-icon"></i></button>
 
           <div class="language-switcher">
-            <button class="language-toggle"><i class="fa-solid fa-globe"></i> <span id="selected-lang">TR</span></button>
+            <button class="language-toggle">
+                <i class="fa-solid fa-globe"></i> 
+                <span id="selected-lang">TR</span> <!-- Seçilen dilin adını gösterir -->
+            </button>
             <div class="language-dropdown">
-              <button data-lang="tr"><span>🇹🇷</span> TR</button>
-              <button data-lang="en"><span>🇬🇧</span> EN</button>
-              <button data-lang="de"><span>🇩🇪</span> DE</button>
+                <button data-lang="tr">
+                    <img src="{{ url_for('static', filename='images/flags/tr.png') }}" alt="TR" width="20"/> TR
+                </button>
+                <button data-lang="en">
+                    <img src="{{ url_for('static', filename='images/flags/uk.png') }}" alt="EN" width="20"/> EN
+                </button>
+                <button data-lang="de">
+                    <img src="{{ url_for('static', filename='images/flags/de.png') }}" alt="DE" width="20"/> DE
+                </button>
             </div>
-          </div>
+        </div>
+        
+        
+        
           
         </div>
       </div>

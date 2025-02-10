@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Dil
 document.addEventListener("DOMContentLoaded", function () {
     const langButtons = document.querySelectorAll(".language-dropdown button");
     const langToggle = document.querySelector(".language-toggle");
@@ -31,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (savedLang) {
         setLanguage(savedLang);
     } else {
-        setLanguage("tr"); // Varsayılan dil TR olsun
+        setLanguage("tr"); // Varsayılan dil TR
     }
 
     // Dil değiştirme işlemi
@@ -48,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const activeBtn = document.querySelector(`.language-dropdown button[data-lang="${lang}"]`);
         if (activeBtn) activeBtn.classList.add("active");
 
-        // Seçilen dili gösteren butonu güncelle
+        // Seçili dilin metnini güncelle
         const langMapping = {
             "tr": "TR",
             "en": "EN",
@@ -56,12 +55,13 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         selectedLangText.textContent = langMapping[lang] || "TR";
 
-        // Seçim yapıldıktan sonra dropdown'u kapat
+        // Dropdown'u kapat
         languageDropdown.style.display = "none";
     }
 
     // Dil menüsünü aç/kapat
-    langToggle.addEventListener("click", function () {
+    langToggle.addEventListener("click", function (event) {
+        event.stopPropagation();
         languageDropdown.style.display = (languageDropdown.style.display === "flex") ? "none" : "flex";
     });
 
@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 
 
 setTimeout(function () {
