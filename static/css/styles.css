@@ -85,20 +85,23 @@ body::after {
 }
 
 /* Input Grubu */
+/* Input Grubu */
 .input-group {
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative;
   background: #0f1a32;
   border-radius: 5px;
   padding: 7px;
 }
+
+/* Input */
 .input-group input {
   background: none;
   border: none;
   color: white;
   width: 100%;
-  padding: 10px 40px;
+  padding: 10px 40px; /* Solda ve sağda ikonlar olduğu için iç boşluk ayarla */
   font-size: 16px;
 }
 
@@ -109,13 +112,18 @@ body::after {
   font-size: 18px;
 }
 
+/* Sol İkon (Kilit) */
 .icon-left {
-  left: 10px;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%); /* Dikey olarak ortalar */
 }
 
-.icon-right,
-.icon-eye {
-  right: 10px;
+/* Sağ İkon (Göz - Şifre Göster) */
+.icon-right {
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%); /* Dikey olarak ortalar */
   cursor: pointer;
 }
 

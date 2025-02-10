@@ -161,7 +161,7 @@
   .energy-row {
     display: flex;
     justify-content: space-between;
-    padding: 3px 15px;
+    padding: 8px 15px;
     font-size: 18px;
   }
 
@@ -411,7 +411,7 @@
 /* Raspberry Pi 1024x600 ve Küçük Ekranlar için Responsive */
 @media (max-width: 1024px) {
   .dashboard {
-    height: 75vh;
+    height: 76vh;
   }
 }
 @media (max-width: 768px) {
