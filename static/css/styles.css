@@ -1,5 +1,4 @@
 @charset "UTF-8";
-/* SCSS Değişkenler */
 /* Genel Stil */
 body {
   background-color: #1c2747;
@@ -19,13 +18,14 @@ body::after {
   position: absolute;
   bottom: 0;
   right: 0;
+  width: 90vw;
+  height: 90vh;
   background-image: url("/static/images/background/bg-01.webp");
   background-size: cover;
   background-position: center;
   z-index: -10;
 }
 
-/* Ana Kapsayıcı */
 .container {
   display: flex;
   flex-direction: column;
@@ -35,9 +35,7 @@ body::after {
   flex-grow: 1;
   text-align: center;
 }
-
-/* Header */
-.header {
+.container .header {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,32 +69,12 @@ body::after {
   left: -6px;
 }
 
-/* Logo */
 .logo {
   height: 110px;
   z-index: 2;
 }
 
-/* Footer */
-.footer {
-  width: 100%;
-  text-align: center;
-  padding: 24px 0;
-  font-size: 18px;
-  font-weight: 600;
-  position: absolute;
-  bottom: 0;
-}
-
-/* Login Box */
-.login-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin-top: 30px;
-}
-
+/* Login Kutusu */
 .login-box {
   padding: 20px;
   border-radius: 10px;
@@ -106,14 +84,16 @@ body::after {
   width: 500px;
 }
 
-/* Input Grup */
+/* Input Grubu */
 .input-group {
   display: flex;
+  align-items: center;
   position: relative;
   background: #0f1a32;
   border-radius: 5px;
   padding: 7px;
-  /* İkonlar */
+  width: 100%;
+  max-width: 500px;
 }
 .input-group input {
   background: none;
@@ -123,11 +103,27 @@ body::after {
   padding: 10px 40px;
   font-size: 16px;
 }
-.input-group .icon,
-.input-group .icon-eye .icon-right {
+
+/* İkonlar */
+.icon {
   position: absolute;
   color: white;
   font-size: 18px;
+}
+
+.icon-left {
+  position: absolute;
+  left: 10px; /* Sol tarafa yapışmasını önlüyoruz */
+  font-size: 18px;
+  color: white;
+}
+
+.icon-right, .icon-eye {
+  position: absolute;
+    right: 10px; 
+    font-size: 18px;
+    color: white;
+    cursor: pointer; 
 }
 
 /* Login Butonu */
@@ -138,6 +134,9 @@ body::after {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 18px;
   font-weight: bold;
   width: 180px;
@@ -148,20 +147,20 @@ body::after {
   background: #fe5f00;
   box-shadow: 0 6px 12px rgba(255, 127, 50, 0.5);
 }
-
-fa-solid fa-eye:before {
-  content: "\f06e";
-  position: absolute;
-  right: 15px;
-  top: 20px;
+.login-actions {
+  display: flex;
+  align-items: center; /* Buton ve dil seçiciyi dikey hizalar */
+  justify-content: center; /* Yatay olarak ortalar */
+  gap: 20px; /* Buton ve dil seçici arasına boşluk ekler */
+  width: 100%; /* Ebeveyn divin genişliği kadar hizalama yapar */
 }
 
-.icon-left {
-  position: absolute;
-  left: 10px;
+/* Dil Seçici */
+.language-switcher {
+  position: relative;
+  display: inline-block;
 }
-
-.language-toggle {
+.language-switcher .language-toggle {
   background: none;
   border: none;
   color: white;
@@ -170,38 +169,54 @@ fa-solid fa-eye:before {
   display: flex;
   align-items: center;
   gap: 5px;
-  display: flex;
-  font-weight: bold;
 }
-
-.login-actions {
+.language-switcher .language-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  min-width: 120px;
+  z-index: 1000;
+}
+.language-switcher .language-dropdown button {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 25px;
+  gap: 5px;
+  padding: 7px;
+  background: none;
+  border: none;
+  color: #0E1734;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+}
+.language-switcher .language-dropdown button:hover {
+  background: rgba(255, 127, 50, 0.3);
+  border-radius: 5px;
+}
+.language-switcher:hover .language-dropdown {
+  display: flex;
 }
 
-/* Responsive Media Queries */
-@media (max-width: 1024px) {
-  .content {
-    width: 100vw;
-  }
-  .logo {
-    height: 55px;
-  }
-  .line {
-    flex-grow: 1.2;
-  }
-}
+/* Responsive */
 @media (max-width: 768px) {
+  body::after {
+    height: 30vh;
+    width: 60vw;
+  }
   .login-box {
     width: 250px;
   }
   .logo {
     height: 50px;
-  }
-  .login-btn {
-    font-size: 14px;
   }
 }
 @media (max-width: 480px) {

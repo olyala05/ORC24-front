@@ -73,3 +73,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
+setTimeout(function () {
+    if (window.location.pathname !== "/login") {
+        window.location.href = loginURL;
+    }
+}, 5000);
+
