@@ -1,27 +1,131 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %} {% block title %} ORC 24 Dashboard {% endblock title
+%} {% block content %}
 
-{% block title %} ORC 24 Dashbord {% endblock title %} 
-
-{% block content %}
 <header class="header">
-    <div class="header-left">
-        <button class="header-button">
-            <i class="fa-solid fa-sign-in-alt"></i> LOGIN
-        </button>
-        <button class="header-button">
-            <i class="fa-solid fa-bars"></i> Menu
-        </button>
-    </div>
+  <div class="header-left">
+    <button class="header-button">
+      <i class="fa-solid fa-sign-in-alt"></i> LOGIN
+    </button>
+    <button class="header-button"><i class="fa-solid fa-bars"></i> Menu</button>
+  </div>
 
-    <div class="header-logo">
-        <img src="{{ url_for('static', filename='images/logos/logo-01.webp') }}" alt="Pier MTTP Logo" class="logo">
-    </div>
+  <div class="header-logo">
+    <img
+      src="{{ url_for('static', filename='images/logos/logo-01.webp') }}"
+      alt="Pier MTTP Logo"
+      class="logo"
+    />
+  </div>
 
-    <div class="header-right">
-        <div class="date-time">May 23, 2024, 12:34</div>
-        <div class="report-date">Report Date: April 12 - May 23</div>
-    </div>
+  <div class="header-right">
+    <div class="date-time">May 23, 2024, 12:34</div>
+    <div class="report-date">Report Date: April 12 - May 23</div>
+  </div>
 </header>
 
+<!-- Ana Tablo -->
+<section class="dashboard">
+  <div class="energy-table">
+    <div class="energy-header">
+      <div>Energy Drawn From The Grid</div>
+      <div>Generated Energy</div>
+      <div>Consumed Energy</div>
+    </div>
+    <div class="energy-row">
+      <div><i class="fa-solid fa-bolt"></i> 80.158,68 kWh</div>
+      <div><i class="fa-solid fa-bolt"></i> 80.158,68 kWh</div>
+      <div><i class="fa-solid fa-bolt"></i> 80.158,68 kWh</div>
+    </div>
+    <div class="energy-row">
+      <div><i class="fa-solid fa-industry"></i> 80.158,68 TEP</div>
+      <div><i class="fa-solid fa-industry"></i> 80.158,68 TEP</div>
+      <div><i class="fa-solid fa-industry"></i> 80.158,68 TEP</div>
+    </div>
+    <div class="energy-row">
+      <div><i class="fa-solid fa-cloud"></i> 80.158,68 Ton</div>
+      <div><i class="fa-solid fa-cloud"></i> 80.158,68 Ton</div>
+      <div><i class="fa-solid fa-cloud"></i> 80.158,68 Ton</div>
+    </div>
+  </div>
+
+  <div class="device-status">
+    <div class="system-info">
+        <div class="info-box">
+            <img src="{{ url_for('static', filename='images/svg/02.svg') }}" alt="Reactive Power">
+            REACTIVE POWER
+        </div>
+        <div class="info-box harmonic">
+            <img src="{{ url_for('static', filename='images/svg/03.svg') }}" alt="Harmonic">
+            HARMONIC
+        </div>
+        <div class="info-box active">
+            <img src="{{ url_for('static', filename='images/svg/04.svg') }}" alt="Active">
+            ACTIVE
+        </div>
+        <div class="info-box">
+            <img src="{{ url_for('static', filename='images/svg/05.svg') }}" alt="Voltage">
+            VOLTAGE
+        </div>
+        <div class="info-box">
+            <img src="{{ url_for('static', filename='images/svg/06.svg') }}" alt="Network">
+            NETWORK
+        </div>
+        <div class="info-box power">
+            <img src="{{ url_for('static', filename='images/svg/07.svg') }}" alt="Power">
+            POWER
+        </div>
+        
+    </div>
+
+    <div class="status-info">
+        <p><strong>Mac:</strong> Mac</p>
+        <p><strong>IP:</strong> 100.54.26.2</p>
+        <p><strong>Modem:</strong> Modem ID</p>
+        <p><strong>CPU:</strong> 37%</p>
+        <p><strong>RAM:</strong> 72%</p>
+        <p><strong>Temperature:</strong> 9%</p>
+        <p><strong>Lag:</strong> 16%</p>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Gösterge Alanı (Ekranın Yarısını Kaplayacak) -->
+        <div class="gauge-container">
+            <div class="gauge">
+                <div class="gauge-circle frequency">
+                    <span>50,04</span>
+                    <p>Frequency (Hz)</p>
+                </div>
+            </div>
+    
+            <div class="gauge">
+                <div class="gauge-circle reactive">
+                    <span>Reactive Penalty</span>
+                    <p>Does not Exist</p>
+                </div>
+            </div>
+    
+            <div class="gauge">
+                <div class="gauge-circle power-factor">
+                    <span>%87,45</span>
+                    <p>Power Factor</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Voltaj ve Akım Bilgileri -->
+        <div class="voltage-table">
+            <div class="voltage-box-1">V1-N (V) <br> 212,53</div>
+            <div class="voltage-box-2">V2-N (V) <br> 217</div>
+            <div class="voltage-box-3">V3-N (V) <br> 215,17</div>
+            <div class="voltage-box-4">IL1-N (A) <br> 6.023,21</div>
+            <div class="voltage-box-5">IL2-N (A) <br> 6.027,78</div>
+            <div class="voltage-box-5">IL3-N (A) <br> 6.117,42</div>
+        </div>
+    </div>
+</div>
+
+
+
+</section>
 
 {% endblock content %}

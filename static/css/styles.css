@@ -113,7 +113,8 @@ body::after {
   left: 10px;
 }
 
-.icon-right, .icon-eye {
+.icon-right,
+.icon-eye {
   right: 10px;
   cursor: pointer;
 }
@@ -176,7 +177,7 @@ body::after {
   padding: 7px;
   background: none;
   border: none;
-  color: #0E1734;
+  color: #0e1734;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
@@ -217,14 +218,19 @@ body::after {
 }
 /* Header */
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #0e1734;
-  padding: 10px 20px;
+  padding: 9px 20px;
   width: 100%;
-  height: 60px;
+  height: 62px;
   border-bottom: 3px solid #ff7f32;
+  z-index: 1000;
 }
 
 /* Sol kısım (Butonlar) */
@@ -301,5 +307,275 @@ body::after {
   }
   .header-logo img {
     height: 30px;
+  }
+}
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: #1c2747;
+  color: #fff;
+  width: 100%;
+}
+
+/* Enerji Tablosu */
+.energy-table {
+  background: #0e1734;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.energy-table .energy-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ff7f32;
+  padding-bottom: 10px;
+}
+.energy-table .energy-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 16px;
+}
+.energy-table i {
+  margin-right: 8px;
+}
+
+/* System Info */
+.system-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  width: 70%;
+}
+.system-info .info-box {
+  background: #b1b1b1;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  height: 70px;
+}
+.system-info .harmonic {
+  background: #e63946;
+}
+.system-info .active {
+  background: #28a745;
+}
+.system-info .power {
+  background: #ff7f32;
+}
+
+/* Device Status */
+.device-status {
+  display: flex;
+  background: #0e1734;
+  padding: 15px;
+  border-radius: 8px;
+  gap: 20px;
+  /* System Info Kutuları */
+  /* Cihaz Bilgileri */
+}
+.device-status .system-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  width: 30%;
+  justify-content: center;
+}
+.device-status .system-info .info-box {
+  background: #b1b1b1;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  flex-direction: column; /* SVG üstte, yazı altta */
+  align-items: center;
+  justify-content: center;
+  min-width: 100px; /* Genişliği artırıldı */
+  height: 140px; /* Yükseklik artırıldı */
+}
+.device-status .system-info .info-box img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 30px;
+}
+.device-status .system-info .harmonic {
+  background: #e63946;
+}
+.device-status .system-info .active {
+  background: #28a745;
+}
+.device-status .system-info .power {
+  background: #ff7f32;
+}
+.device-status .status-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #0e1734;
+  padding: 9px;
+  border-radius: 8px;
+  width: 20%;
+}
+.device-status .status-info p {
+  margin: 4px 0;
+  font-size: 19px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 2px;
+  color: #fff;
+}
+.device-status .status-info strong {
+  color: #ff7f32;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .device-status {
+    flex-direction: column;
+    align-items: center;
+  }
+  .system-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .status-info {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* Göstergeler */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  background: #1c2747;
+  padding: 20px;
+  border-radius: 8px;
+  gap: 15px;
+}
+
+/* Gösterge Alanı */
+.gauge-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 20px;
+}
+
+/* Gösterge Kutuları */
+.gauge {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gauge-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+}
+
+/* Farklı göstergeler için özel renkler */
+.frequency {
+  background: conic-gradient(#ff7f32 80%, #1c2747 20%);
+}
+
+.reactive {
+  background: #28a745;
+}
+
+.power-factor {
+  background: conic-gradient(#ff7f32 87%, #1c2747 13%);
+}
+
+/* Voltaj ve Akım Bilgileri */
+.voltage-table {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  background: #0e1734;
+  border-radius: 8px;
+  padding: 15px;
+  height: 108px;
+}
+
+.voltage-box-1,
+.voltage-box-2,
+.voltage-box-3,
+.voltage-box-4,
+.voltage-box-5,
+.voltage-box-6 {
+  text-align: center;
+  padding: 8px;
+  font-size: 17px;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 6px;
+  width: 15%;
+}
+
+.voltage-box-1 {
+  background: #2a3559;
+}
+
+.voltage-box-2 {
+  background: #1b3b6a;
+}
+
+.voltage-box-3 {
+  background: #1c3d89;
+}
+
+.voltage-box-4 {
+  background: #102648;
+}
+
+.voltage-box-5 {
+  background: #1b3b6a;
+}
+
+.voltage-box-6 {
+  background: #1c3d89;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-container {
+    width: 100%;
+  }
+  .gauge-container {
+    flex-direction: column;
+  }
+  .voltage-table {
+    flex-wrap: wrap;
+  }
+  .voltage-box {
+    width: 30%;
+    margin-bottom: 8px;
   }
 }/*# sourceMappingURL=styles.css.map */
