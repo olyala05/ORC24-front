@@ -18,28 +18,19 @@ body {
   background-color: #0e1734;
   padding: 9px 20px;
   width: 100%;
-  height: 80px;
+  height: 60px;
   z-index: 1000;
 }
 .header .header-left {
   display: flex;
   align-items: center;
-  gap: 15px;
-}
-.header .line {
-  flex-grow: 20;
-  height: 1px;
-  background-color: #ff7f32;
-  position: relative;
 }
 .header .header-button {
   background-color: #ff6f00;
-  color: #000;
-  border: none;
-  padding: 8px 16px;
-  margin: 0 5px;
-  font-size: 23px;
-  font-weight: 600;
+  color: black;
+  padding: 10px 16px;
+  font-size: 18px;
+  font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
 }
@@ -47,11 +38,7 @@ body {
   background-color: #ff8c33;
 }
 .header .header-button i {
-  margin-left: 30px;
-  color: #ff6f00;
-  background: #1c2747;
-  padding: 12px;
-  border-radius: 10px;
+  margin-left: 5px;
 }
 .header .header-logo .logo {
   height: 40px;
@@ -64,72 +51,128 @@ body {
 .header .report-line {
   display: flex;
   align-items: center;
-  width: 120%;
+  width: 110%;
   margin: 3px 0;
 }
 
 .orc-content {
   margin-top: 60px;
-  padding: 20px;
+  padding: 10px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  width: 100vw;
+  height: calc(100vh - 60px);
+  gap: 20px;
 }
 
 .device-info {
   background-color: #0B1734;
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
-  width: 45%;
+  width: 47%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  font-size: 16px;
 }
 .device-info ul {
   list-style: none;
   padding: 0;
+  width: 100%;
 }
 .device-info ul li {
-  padding: 5px 0;
-  font-size: 16px;
-}
-.device-info .connection-status {
-  margin-top: 15px;
-}
-.device-info .connection-status .status-box {
   display: flex;
   justify-content: space-between;
+  padding: 6px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #ff6f00;
+}
+.device-info .connection-status {
+  width: 100%;
   background-color: white;
-  padding: 10px;
+  padding: 7px;
   border-radius: 8px;
+  text-align: center;
   color: black;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+.device-info .connection-status .status-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1C2747;
+  display: block;
+  margin-bottom: 5px;
+}
+.device-info .connection-status .separator {
+  width: 90%;
+  height: 1px;
+  background-color: #ff6f00;
+  margin: 10px auto;
+}
+.device-info .connection-status .status-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 15px;
+}
+.device-info .connection-status .status-left {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #1C2747;
+}
+.device-info .connection-status .status-left i {
+  font-size: 18px;
+  margin-right: 8px;
+  color: #1C2747;
 }
 .device-info .connection-status .disconnect-btn {
   background-color: #ff6f00;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
+  padding: 10px 14px;
+  font-size: 16px;
+  border-radius: 6px;
   font-weight: bold;
+  cursor: pointer;
+  border: none;
+  color: white;
 }
 .device-info .connection-status .disconnect-btn:hover {
   background-color: #ff8c33;
 }
 
 .connection-table {
-  width: 45%;
+  width: 47%;
+  height: 90%;
   background-color: #0B1734;
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
 }
 .connection-table table {
   width: 100%;
   border-collapse: collapse;
 }
-.connection-table table th, .connection-table table td {
+.connection-table table th {
+  background-color: #1C2747;
   padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid white;
+  font-size: 14px;
+}
+.connection-table table td {
+  padding: 8px;
+  font-size: 14px;
 }
 .connection-table table .status-dot {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   display: inline-block;
 }
@@ -137,24 +180,65 @@ body {
   background-color: #4CAF50;
 }
 
-.algorithm-section {
-  width: 90%;
-  margin-top: 20px;
-  text-align: center;
+.line {
+  flex-grow: 2;
+  height: 1px;
+  background-color: #ff6f00;
+  position: relative;
 }
-.algorithm-section .algorithm-box {
+
+.algorithm-section {
+  width: 100%;
   background-color: white;
-  padding: 15px;
+  padding: 7px;
   border-radius: 8px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   color: black;
 }
-.algorithm-section .status-btn {
+.algorithm-section h3 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1C2747;
+  margin-bottom: 5px;
+}
+.algorithm-section .separator {
+  width: 90%;
+  height: 1px;
   background-color: #ff6f00;
-  border: none;
+  margin: 5px auto 10px;
+}
+.algorithm-section .algorithm-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
   padding: 10px;
   border-radius: 8px;
-  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
 }
-.algorithm-section .status-btn:hover {
+.algorithm-section .algorithm-box .algorithm-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1C2747;
+}
+.algorithm-section .algorithm-box .algorithm-left i {
+  font-size: 18px;
+  color: #1C2747;
+}
+.algorithm-section .algorithm-box .status-btn {
+  background-color: #ff6f00;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  color: white;
+}
+.algorithm-section .algorithm-box .status-btn:hover {
   background-color: #ff8c33;
 }/*# sourceMappingURL=orc-status.css.map */
