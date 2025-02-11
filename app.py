@@ -41,6 +41,10 @@ def orc_status():
 def log():
     return render_template("log.html")
 
+@app.route('/alarm', endpoint="alarm")
+def alarm():
+    return render_template("alarm.html")    
+
 # # Kullanıcı giriş yaparsa, Laravel API'den token alacağız
 # @app.route("/login", methods=["GET"])  
 # def login():

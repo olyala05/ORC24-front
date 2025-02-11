@@ -1,0 +1,53 @@
+@charset "UTF-8";
+/* Temel Alarm Sayfası Stili */
+.alarm-container {
+  margin-top: 60px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: calc(100vh - 60px);
+}
+
+.alarm-table {
+  width: 100%;
+  background-color: #0B1734;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: justify;
+  color: white;
+  overflow: hidden;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.alarm-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.alarm-table th {
+  background-color: #1C2747;
+  padding: 10px;
+  font-size: 16px;
+  border-bottom: 1px solid white;
+}
+
+.alarm-table td {
+  padding: 8px;
+  font-size: 16px;
+}
+
+.alarm-error a {
+  color: #EF742A;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.alarm-error a:hover {
+  text-decoration: none;
+}
+
+.alarm-mac {
+  color: #EF742A;
+}/*# sourceMappingURL=alarm.css.map */
