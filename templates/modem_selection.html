@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %} Modem Selection {% endblock %}
+
+{% block content %}
+<div class="header">
+  <div class="header-left">
+    <button class="header-button">
+     Home <i class="fas fa-home"></i> 
+    </button>
+  </div>
+
+  <div class="header-logo">
+    <img src="{{ url_for('static', filename='images/logos/logo-01.webp') }}" alt="Pier MTTP Logo" class="logo" />
+  </div>
+
+  <div class="header-right">
+    <div class="date-time">16 Temmuz 2024 10:14</div>
+    <div class="report-line">
+      <div class="line"></div>
+    </div>
+    <div class="report-date">Modem Selection</div>
+  </div>
+</div>
+
+<!-- Sayfa İçeriği -->
+<main class="content">
+  <div class="modem-selection">
+    <div class="dropdown-container">
+      <select id="modem" class="modem-dropdown">
+        <option value="" disabled selected>Select Modem</option>
+        <option value="iot_test">iot_test (02:81:2b:61:c6:1d)</option>
+        <option value="iot_test_1">iot_test_1 (02:81:2b:61:c6:2d)</option>
+      </select>
+    </div>
+
+    <div class="button-container">
+      <button class="btn active">ORC Status</button>
+      <button class="btn">Equipment</button>
+      <button class="btn">Settings</button>
+    </div>
+
+    <div class="bottom-buttons">
+      <button class="btn">Test</button>
+      <button class="btn">Date</button>
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -20,8 +20,9 @@
 
     {% if request.endpoint == "dashboard" %}
       <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    {% elif request.endpoint == "modem_selection" %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/modem-selection.css') }}">
     {% endif %}
-
 
   </head>
   <body>
