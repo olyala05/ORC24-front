@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %} Equipment Details {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/equipment.css') }}" />
+{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<div class="equipment-container">
+  <div class="equipment-grid">
+    {% for i in range(5) %}
+      <div class="equipment-box green">EMR-53CS@<br>3630748023</div>
+      <div class="equipment-box red">EMR-53CS@<br>3630748023</div>
+      <div class="equipment-box green">EMR-53CS@<br>3630748023</div>
+      <div class="equipment-box green">EMR-53CS@<br>3630748023</div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+body {
+  background-color: #1C2747;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.equipment-container {
+  margin-top: 60px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: calc(100vh - 60px);
+}
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 90%;
+  max-width: 1024px;
+}
+
+.equipment-box {
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.green {
+  background-color: #4CAF50;
+}
+
+.red {
+  background-color: #D32F2F;
+}/*# sourceMappingURL=equipment.css.map */

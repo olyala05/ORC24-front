@@ -45,6 +45,11 @@ def log():
 def alarm():
     return render_template("alarm.html")    
 
+
+@app.route('/equipment', endpoint="equipment")
+def equipment():
+    return render_template("equipments/equipments.html")
+
 # # Kullanıcı giriş yaparsa, Laravel API'den token alacağız
 # @app.route("/login", methods=["GET"])  
 # def login():
