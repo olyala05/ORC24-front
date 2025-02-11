@@ -1,0 +1,160 @@
+body {
+  background-color: #1C2747;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #0e1734;
+  padding: 9px 20px;
+  width: 100%;
+  height: 80px;
+  z-index: 1000;
+}
+.header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.header .line {
+  flex-grow: 20;
+  height: 1px;
+  background-color: #ff7f32;
+  position: relative;
+}
+.header .header-button {
+  background-color: #ff6f00;
+  color: #000;
+  border: none;
+  padding: 8px 16px;
+  margin: 0 5px;
+  font-size: 23px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.header .header-button:hover {
+  background-color: #ff8c33;
+}
+.header .header-button i {
+  margin-left: 30px;
+  color: #ff6f00;
+  background: #1c2747;
+  padding: 12px;
+  border-radius: 10px;
+}
+.header .header-logo .logo {
+  height: 40px;
+}
+.header .date-time,
+.header .report-date {
+  font-size: 14px;
+  text-align: end;
+}
+.header .report-line {
+  display: flex;
+  align-items: center;
+  width: 120%;
+  margin: 3px 0;
+}
+
+.orc-content {
+  margin-top: 60px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.device-info {
+  background-color: #0B1734;
+  padding: 20px;
+  border-radius: 8px;
+  width: 45%;
+}
+.device-info ul {
+  list-style: none;
+  padding: 0;
+}
+.device-info ul li {
+  padding: 5px 0;
+  font-size: 16px;
+}
+.device-info .connection-status {
+  margin-top: 15px;
+}
+.device-info .connection-status .status-box {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  color: black;
+}
+.device-info .connection-status .disconnect-btn {
+  background-color: #ff6f00;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.device-info .connection-status .disconnect-btn:hover {
+  background-color: #ff8c33;
+}
+
+.connection-table {
+  width: 45%;
+  background-color: #0B1734;
+  padding: 20px;
+  border-radius: 8px;
+}
+.connection-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.connection-table table th, .connection-table table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid white;
+}
+.connection-table table .status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.connection-table table .status-dot.green {
+  background-color: #4CAF50;
+}
+
+.algorithm-section {
+  width: 90%;
+  margin-top: 20px;
+  text-align: center;
+}
+.algorithm-section .algorithm-box {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  color: black;
+}
+.algorithm-section .status-btn {
+  background-color: #ff6f00;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.algorithm-section .status-btn:hover {
+  background-color: #ff8c33;
+}/*# sourceMappingURL=orc-status.css.map */

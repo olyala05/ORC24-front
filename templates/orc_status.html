@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block title %} ORC Status {% endblock %}
+
+{% block content %}
+<div class="orc-status-container">
+  <div class="header">
+    <div class="header-left">
+      <button class="header-button">
+       Back <i class="fas fa-arrow-left"></i> 
+      </button>
+    </div>
+
+    <div class="header-logo">
+      <img src="{{ url_for('static', filename='images/logos/logo-01.webp') }}" alt="Pier MTTP Logo" class="logo" />
+    </div>
+
+    <div class="header-right">
+      <div class="date-time">16 Temmuz 2024 13:50</div>
+      <div class="report-line">
+        <div class="line"></div>
+      </div>
+      <div class="report-date">ORC Status</div>
+    </div>
+  </div>
+
+  <!-- ORC Status İçeriği -->
+  <main class="orc-content">
+    <div class="device-info">
+      <ul>
+        <li>S/N:12:12:12:12:12:12</li>
+        <li>MODEM NAME: Modem</li>
+        <li>MODEM BRAND / MODEL: ORC 23 OwL</li>
+        <li>MODEM STATUS: Active</li>
+        <li>DATE OF INSTALLATION: 2022-02-02 12:12:12</li>
+        <li>DATA READING INTERVAL: 1380 Seconds</li>
+        <li>NETWORK TYPE: Wi-Fi</li>
+        <li>CONNECTION PROTOCOL: Modbus</li>
+        <li>SOFTWARE VERSION: V 1.02</li>
+      </ul>
+
+      <div class="connection-status">
+        <div class="status-box">
+          <span>Connected Wi-Fi / GSM / Ethernet</span>
+          <button class="disconnect-btn">Disconnect</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="connection-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Archive</th>
+            <th>End</th>
+            <th>Modem Name</th>
+            <th>Last Connection Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="status-dot green"></td>
+            <td>Lora connection</td>
+            <td>2024-04-03</td>
+            <td>13:54:31</td>
+          </tr>
+          <tr>
+            <td class="status-dot green"></td>
+            <td>WiFi connection</td>
+            <td>2024-04-03</td>
+            <td>13:54:31</td>
+          </tr>
+          <tr>
+            <td class="status-dot green"></td>
+            <td>Bulut connection</td>
+            <td>2024-04-03</td>
+            <td>13:55:03</td>
+          </tr>
+          <tr>
+            <td class="status-dot green"></td>
+            <td>Rabbit Mq</td>
+            <td>2024-04-03</td>
+            <td>13:55:11</td>
+          </tr>
+          <tr>
+            <td class="status-dot green"></td>
+            <td>VPN Port</td>
+            <td>2024-04-03</td>
+            <td>13:55:14</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="algorithm-section">
+        <h3>Algoritma Süreçlerin</h3>
+        <div class="algorithm-box">
+          <span>ORC Process Procedures</span>
+          <button class="status-btn">Normal / Error (Red)</button>
+        </div>
+      </div>
+    </div>
+
+    
+  </main>
+</div>
+{% endblock %}
