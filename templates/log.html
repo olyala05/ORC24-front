@@ -1,0 +1,132 @@
+{% extends "layout.html" %} {% block title %} ORC Status - Error Log {% endblock
+%} {% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
+{% endblock %} {% block content %}
+
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<div class="log-container">
+  <div class="log-table">
+    <div class="log-table-content">
+      <!-- Scroll buraya eklendi -->
+      <table>
+        <thead>
+          <tr>
+            <th>Archive</th>
+            <th>End</th>
+            <th>Log Description</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Equipment Comparison Successful.</td>
+            <td>2024-04-03 13:54:31</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modem Task Cycle Completed.</td>
+            <td>2024-04-03 13:54:31</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot red"></span></td>
+            <td>Register Read.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot red"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Modbus Connection is Being Established.</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- log-table-content BİTİŞ -->
+  </div>
+</div>
+
+{% endblock %}

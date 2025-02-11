@@ -25,6 +25,9 @@
     {% elif request.endpoint == "orc_status" %}
       <link rel="stylesheet" href="{{ url_for('static', filename='css/orc-status.css') }}">
       <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+    {% elif request.endpoint == "log" %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
     {% endif %}
 
   </head>

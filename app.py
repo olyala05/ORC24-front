@@ -33,10 +33,13 @@ def dashboard():
 def modem_selection():
     return render_template("modem_selection.html")
 
-
 @app.route('/orc-status', endpoint="orc_status")
 def orc_status():
     return render_template("orc_status.html")
+
+@app.route('/log', endpoint="log")
+def log():
+    return render_template("log.html")
 
 # # Kullanıcı giriş yaparsa, Laravel API'den token alacağız
 # @app.route("/login", methods=["GET"])  
