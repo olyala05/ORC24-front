@@ -139,15 +139,15 @@ body {
   .btn {
     background-color: #fff;
     color: #000;
-    padding: 16px 28px; // Buton yüksekliği ve genişliği arttı
-    margin: 0 15px; // Butonlar arasındaki boşluk biraz arttı
-    font-size: 20px; // Yazı boyutunu büyüttük
-    border-radius: 12px; // Kenarları biraz daha oval yaptık
+    padding: 0px 0px;
+    margin: 11px 20px;
+    font-size: 22px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3sease;
     font-weight: 700;
-    min-width: 160px;
-    min-height: 70px; 
+    min-width: 196px;
+    min-height: 70px;
 
     &:hover {
       background-color: $primary-color;

@@ -1,17 +1,16 @@
-{% extends "layout.html" %}
-
-{% block title %} Modem Selection {% endblock %}
-
-{% block content %}
+{% extends "layout.html" %} {% block title %} Modem Selection {% endblock %} {%
+block content %}
 <div class="header">
   <div class="header-left">
-    <button class="header-button">
-     Home <i class="fas fa-home"></i> 
-    </button>
+    <button class="header-button" onclick="goToDashboard()">Home <i class="fas fa-home"></i></button>
   </div>
 
   <div class="header-logo">
-    <img src="{{ url_for('static', filename='images/logos/logo-01.webp') }}" alt="Pier MTTP Logo" class="logo" />
+    <img
+      src="{{ url_for('static', filename='images/logos/logo-01.webp') }}"
+      alt="Pier MTTP Logo"
+      class="logo"
+    />
   </div>
 
   <div class="header-right">
@@ -27,15 +26,14 @@
 <main class="content">
   <div class="modem-selection">
     <div class="dropdown-container">
-      <select id="modem" class="modem-dropdown">
-        <option value="" disabled selected>Select Modem</option>
-        <option value="iot_test">iot_test (02:81:2b:61:c6:1d)</option>
-        <option value="iot_test_1">iot_test_1 (02:81:2b:61:c6:2d)</option>
+      <label for="modem">Select Modem or Device:</label>
+      <select id="modem" class="modem-dropdown" onchange="connectDevice()">
+        <option value="" disabled selected>Loading devices...</option>
       </select>
     </div>
 
     <div class="button-container">
-      <button class="btn active">ORC Status</button>
+      <button class="btn active" onclick="goToORCStatus()">ORC Status</button>
       <button class="btn">Equipment</button>
       <button class="btn">Settings</button>
     </div>
@@ -44,6 +42,87 @@
       <button class="btn">Test</button>
       <button class="btn">Date</button>
     </div>
+
+    <div id="status"></div>
   </div>
 </main>
+
+<script>
+  function fetchDevices() {
+    fetch("/devices")
+      .then((response) => response.json())
+      .then((data) => {
+        let dropdown = document.getElementById("modem");
+        dropdown.innerHTML = ""; // Önce temizle
+
+        // Varsayılan "Select Modem" Seçeneği
+        let defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        defaultOption.textContent = "Select Modem or Device";
+        dropdown.appendChild(defaultOption);
+
+        // Wi-Fi ve Modemlere Bağlı Cihazları Ekleyelim
+        data.forEach((device) => {
+          let option = document.createElement("option");
+          option.value = device.ip;
+          option.textContent = `${device.ip} (${device.mac})`;
+          dropdown.appendChild(option);
+        });
+      })
+      .catch((error) => console.error("Cihazları alırken hata:", error));
+  }
+
+  function connectDevice() {
+    let dropdown = document.getElementById("modem");
+    let selectedDevice = dropdown.value;
+
+    if (!selectedDevice) {
+      return;
+    }
+
+    fetch("/connect_device", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ip_address: selectedDevice }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let status = document.getElementById("status");
+        if (data.success) {
+          status.innerHTML = "<p style='color: green;'>Bağlantı başarılı!</p>";
+          sessionStorage.setItem("selected_device_ip", selectedDevice); // 📌 Cihaz IP'sini sakla
+        } else {
+          status.innerHTML =
+            "<p style='color: red;'>Bağlantı hatası: " + data.error + "</p>";
+        }
+      })
+      .catch((error) => console.error("Bağlantı hatası:", error));
+  }
+
+  function goToORCStatus() {
+    fetch("/get_selected_device")
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.ip_address) {
+          alert("Lütfen önce bir cihaz seçin!");
+          return;
+        }
+        window.location.href = `/orc-status?ip_address=${data.ip_address}`;
+      })
+      .catch((error) => console.error("Cihaz seçme hatası:", error));
+  }
+
+  // Sayfa yüklendiğinde cihazları getir
+  document.addEventListener("DOMContentLoaded", fetchDevices);
+
+
+  // Dashboard SAyfasına Yönlendirir
+  function goToDashboard() {
+    window.location.href = "/dashboard";
+  }
+</script>
 {% endblock %}

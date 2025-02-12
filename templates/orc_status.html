@@ -8,11 +8,17 @@ content %}
   <div class="orc-content">
     <div class="device-info">
       <ul>
-        <li>S/N: <span>12:12:12:12:12:12</span></li>
-        <li>MODEM NAME: <span>Modem</span></li>
+        <li>S/N: <span>{{modem.serial_no}}</span></li>
+        <li>MODEM NAME: <span>{{ modem.name }}</span></li>
         <li>MODEM BRAND / MODEL: <span>ORC 23 OwL</span></li>
-        <li>MODEM STATUS: <span>Active</span></li>
-        <li>DATE OF INSTALLATION: <span>2022-02-02 12:12:12</span></li>
+        <li>
+          MODEM STATUS:
+          <span
+            >{% if modem.status == 1 %} Active {% else %} Passive {% endif
+            %}</span
+          >
+        </li>
+        <li>DATE OF INSTALLATION: <span>{{modem.created_at}}</span></li>
         <li>DATA READING INTERVAL: <span>1380 Seconds</span></li>
         <li>NETWORK TYPE: <span>Wi-Fi</span></li>
         <li>CONNECTION PROTOCOL: <span>Modbus</span></li>
@@ -24,12 +30,18 @@ content %}
         <div class="separator"></div>
         <div class="status-details">
             <div class="status-left">
-                <i class="fas fa-wifi"></i> Pier Enerji
+                <i class="fas fa-wifi"></i> 
+                {% if network and network.connected_ssid and network.connected_ssid != "Not Connected" %}
+                    {{ network.connected_ssid }}
+                {% else %}
+                    No Wi-Fi
+                {% endif %}
             </div>
             <button class="disconnect-btn">Disconnect</button>
         </div>
     </div>
     
+
     </div>
 
     <div class="connection-table">
@@ -47,47 +59,46 @@ content %}
             <td><span class="status-dot green"></span></td>
             <td><span class="status-dot green"></span></td>
             <td>Lora connection</td>
-            <td>2024-04-03<br />13:54:31</td>
+            <td>2024-04-03 13:54:31</td>
           </tr>
           <tr>
             <td><span class="status-dot green"></span></td>
             <td><span class="status-dot green"></span></td>
             <td>WiFi connection</td>
-            <td>2024-04-03<br />13:54:31</td>
+            <td>2024-04-03 13:54:31</td>
           </tr>
           <tr>
             <td><span class="status-dot green"></span></td>
             <td><span class="status-dot green"></span></td>
             <td>Bulut connection</td>
-            <td>2024-04-03<br />13:55:00</td>
+            <td>2024-04-03 13:55:00</td>
           </tr>
           <tr>
             <td><span class="status-dot green"></span></td>
             <td><span class="status-dot green"></span></td>
             <td>Rabbit Mq</td>
-            <td>2024-04-03<br />13:55:11</td>
+            <td>2024-04-03 13:55:11</td>
           </tr>
           <tr>
             <td><span class="status-dot green"></span></td>
             <td><span class="status-dot green"></span></td>
             <td>VPN Port</td>
-            <td>2024-04-03<br />13:55:14</td>
+            <td>2024-04-03 13:55:14</td>
           </tr>
         </tbody>
       </table>
 
       <div class="algorithm-section">
-    <h3>Algoritma Süreçlerin</h3>
-    <div class="separator"></div>  <!-- Turuncu çizgi -->
-    <div class="algorithm-box">
-        <div class="algorithm-left">
+        <h3>Algoritma Süreçlerin</h3>
+        <div class="separator"></div>
+        <!-- Turuncu çizgi -->
+        <div class="algorithm-box">
+          <div class="algorithm-left">
             <i class="fas fa-cog"></i> ORC Process Procedures
+          </div>
+          <button class="status-btn">Normal / Error (Red)</button>
         </div>
-        <button class="status-btn">Normal / Error (Red)</button>
-    </div>
-</div>
-
-
+      </div>
     </div>
   </div>
 

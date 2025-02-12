@@ -117,14 +117,14 @@ body {
 .bottom-buttons .btn {
   background-color: #fff;
   color: #000;
-  padding: 16px 28px;
-  margin: 0 15px;
-  font-size: 20px;
+  padding: 0px 0px;
+  margin: 11px 20px;
+  font-size: 22px;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3sease;
   font-weight: 700;
-  min-width: 160px;
+  min-width: 196px;
   min-height: 70px;
 }
 .button-container .btn:hover,
