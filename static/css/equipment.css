@@ -13,25 +13,27 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: calc(100vh - 60px);
+  width: 97vw;
+  height: calc(97vh - 57px);
+  background: #0B1734;
+  border-radius: 10px;
 }
 
 .equipment-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  width: 90%;
+  gap: 15px;
+  width: 100%;
   max-width: 1024px;
 }
 
 .equipment-box {
-  padding: 15px;
-  font-size: 16px;
+  padding: 18px;
+  font-size: 17px;
   font-weight: bold;
   text-align: center;
   border-radius: 8px;
-  color: #fff;
+  color: #000;
 }
 
 .green {
