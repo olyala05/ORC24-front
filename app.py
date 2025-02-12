@@ -186,6 +186,7 @@ def orc_status():
     try:
         # 📌 Modem verilerini al
         url_modem = f"http://{selected_ip}:8085/get_modems"
+        print("URL:", url_modem)  # 🔍 Konsola yazdı    r
         response_modem = requests.get(url_modem)
         response_modem.raise_for_status()
         modems = response_modem.json().get("modems", [])
@@ -193,6 +194,7 @@ def orc_status():
 
         # 📌 Ağ bilgilerini al
         url_network = f"http://{selected_ip}:8085/check_network"
+        print("URL:", url_network)  # 🔍 Konsola yazdır
         response_network = requests.get(url_network)
         response_network.raise_for_status()
         network_data = response_network.json()
@@ -217,29 +219,6 @@ def orc_status():
         return render_template("orc_status.html", error=f"Modem API isteği başarısız: {e}", modem=None, network=None)
 
 
-# @app.route('/orc-status', endpoint="orc_status")
-# def orc_status():
-#     return render_template("orc_status.html")
-
-# # Token yenileme (Laravel API'den yeni access token al)
-# @app.route("/refresh", methods=["POST"])
-# def refresh_token():
-#     if "refresh_token" not in session:
-#         return jsonify({"error": "No refresh token"}), 401
-
-#     response = requests.post(
-#         f"{LARAVEL_API_URL}/refresh",
-#         json={"refresh_token": session["refresh_token"]}
-#     )
-
-#     if response.status_code == 200:
-#         new_token = response.json()["access_token"]
-#         session["access_token"] = new_token
-#         return jsonify({"access_token": new_token}), 200
-
-#     return jsonify({"error": "Token refresh failed"}), 401
-
-        
 # Diger SAyfalar         
 @app.route('/modem-selection', endpoint="modem_selection")
 def modem_selection():

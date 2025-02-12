@@ -32,7 +32,8 @@ content %}
             <div class="status-left">
                 <i class="fas fa-wifi"></i> 
                 {% if network and network.connected_ssid and network.connected_ssid != "Not Connected" %}
-                    {{ network.connected_ssid }}
+                {{ network["Connected_SSID"] }}
+
                 {% else %}
                     No Wi-Fi
                 {% endif %}
