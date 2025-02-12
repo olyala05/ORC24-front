@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-
+// Dil
 document.addEventListener("DOMContentLoaded", function () {
     const langButtons = document.querySelectorAll(".language-dropdown button");
     const langToggle = document.querySelector(".language-toggle");

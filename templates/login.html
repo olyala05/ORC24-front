@@ -1,8 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %}
-  ORC 24 - Login - Pier MTTP
-{% endblock %}
+{% block title %}ORC 24 - Login - Pier MTTP{% endblock %}
 
 {% block content %}
   <div class="container">
@@ -15,40 +13,30 @@
     <!-- Login Form Wrapper -->
     <div class="login-wrapper">
       <div class="login-box">
-        <div class="input-group">
-          <span class="icon icon-left"><i class="fa-solid fa-user"></i></span>
-          <input type="text" placeholder="Username" />
-        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
 
-        <div class="input-group">
-          <span class="icon icon-left"><i class="fa-solid fa-lock"></i></span>
-          <input type="password" id="password-input" placeholder="Password" />
-          <span class="icon icon-right" id="toggle-password"><i class="fa-solid fa-eye"></i></span>
-        </div>
-        
+        <form method="POST" action="{{ url_for('login') }}">  <!-- 🎯 Flask'a yönlendirme -->
+          <div class="input-group">
+            <span class="icon icon-left"><i class="fa-solid fa-user"></i></span>
+            <input type="text" name="email" placeholder="Email" required />
+          </div>
 
-        <!-- Buton ve Dil Seçici Yan Yana -->
-        <div class="login-actions">
-          <button class="login-btn">LOGIN <i class="fa-solid fa-sign-in-alt login-icon"></i></button>
-
-          <div class="language-switcher">
-            <button class="language-toggle">
-                <i class="fa-solid fa-globe"></i> 
-                <span id="selected-lang" class="selected-lang-txt">TR</span> <!-- Seçilen dilin adını gösterir -->
-            </button>
-            <div class="language-dropdown">
-                <button data-lang="tr">
-                    <img src="{{ url_for('static', filename='images/flags/tr.png') }}" alt="TR" width="20"/> TR
-                </button>
-                <button data-lang="en">
-                    <img src="{{ url_for('static', filename='images/flags/uk.png') }}" alt="EN" width="20"/> EN
-                </button>
-                <button data-lang="de">
-                    <img src="{{ url_for('static', filename='images/flags/de.png') }}" alt="DE" width="20"/> DE
-                </button>
-            </div>
-        </div>
-        </div>
+          <div class="input-group">
+            <span class="icon icon-left"><i class="fa-solid fa-lock"></i></span>
+            <input type="password" name="password" id="password-input" placeholder="Password" required />
+            <span class="icon icon-right" id="toggle-password"><i class="fa-solid fa-eye"></i></span>
+          </div>
+          
+          <div class="login-actions">
+            <button type="submit" class="login-btn">LOGIN <i class="fa-solid fa-sign-in-alt login-icon"></i></button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
