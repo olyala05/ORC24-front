@@ -183,40 +183,48 @@ def orc_status():
         flash("Lütfen önce bir cihaz seçin!", "danger")
         return render_template("orc_status.html", error="Lütfen önce bir cihaz seçin!", modem=None, network=None)
 
+    selected_modem = None
+    network_data = None
+
     try:
         # 📌 Modem verilerini al
         url_modem = f"http://{selected_ip}:8085/get_modems"
-        print("URL:", url_modem)  # 🔍 Konsola yazdı    r
-        response_modem = requests.get(url_modem)
-        response_modem.raise_for_status()
-        modems = response_modem.json().get("modems", [])
-        selected_modem = modems[0] if modems else None
+        print("Modem URL:", url_modem)  # 🔍 Konsola yazdır
+        try:
+            response_modem = requests.get(url_modem, timeout=5)  # 5 saniye timeout ekledik
+            response_modem.raise_for_status()
+            modems = response_modem.json().get("modems", [])
+            selected_modem = modems[0] if modems else None
+        except requests.exceptions.RequestException as e:
+            print(f"⚠️ Modem bilgisi alınamadı: {e}")  # Hata logla ama hata döndürme!
+            flash(f"Modem bilgisi alınamadı: {e}", "warning")
 
         # 📌 Ağ bilgilerini al
         url_network = f"http://{selected_ip}:8085/check_network"
-        print("URL:", url_network)  # 🔍 Konsola yazdır
-        response_network = requests.get(url_network)
-        response_network.raise_for_status()
-        network_data = response_network.json()
+        print("Ağ URL:", url_network)  # 🔍 Konsola yazdır
+        try:
+            response_network = requests.get(url_network, timeout=5)  # 5 saniye timeout ekledik
+            response_network.raise_for_status()
+            network_data = response_network.json()
+            print("Wi-Fi SSID:", network_data.get("connected_ssid"))  # 🔍 Konsola yazdır
+        except requests.exceptions.RequestException as e:
+            print(f"⚠️ Ağ bilgisi alınamadı: {e}")  # Hata logla ama hata döndürme!
+            flash(f"Ağ bilgisi alınamadı: {e}", "warning")
 
-        print("Wi-Fi SSID:", network_data.get("connected_ssid"))  # 🔍 Konsola yazdır
+        # 📌 Tarih formatını dönüştür
+        if selected_modem and "created_at" in selected_modem:
+            raw_date = selected_modem["created_at"]
+            try:
+                parsed_date = datetime.strptime(raw_date, "%a, %d %b %Y %H:%M:%S %Z")
+                selected_modem["created_at"] = parsed_date.strftime("%Y-%m-%d %H:%M:%S")
+            except ValueError:
+                selected_modem["created_at"] = "Geçersiz Tarih"
 
-        if selected_modem:
-            # 📌 Tarih formatını dönüştür
-            raw_date = selected_modem.get("created_at")
-            if raw_date:
-                try:
-                    parsed_date = datetime.strptime(raw_date, "%a, %d %b %Y %H:%M:%S %Z")
-                    selected_modem["created_at"] = parsed_date.strftime("%Y-%m-%d %H:%M:%S")
-                except ValueError:
-                    selected_modem["created_at"] = "Geçersiz Tarih"
+        return render_template("orc_status.html", modem=selected_modem, network=network_data, error=None)
 
-            return render_template("orc_status.html", modem=selected_modem, network=network_data, error=None)
-        else:
-            return render_template("orc_status.html", error="Modem bilgisi bulunamadı!", modem=None, network=None)
-
-    except requests.exceptions.RequestException as e:
-        return render_template("orc_status.html", error=f"Modem API isteği başarısız: {e}", modem=None, network=None)
+    except Exception as e:
+        print("🔥 Genel hata:", e)
+        return render_template("orc_status.html", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
 
 
 # Diger SAyfalar         

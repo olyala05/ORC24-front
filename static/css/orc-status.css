@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   background-color: #1C2747;
   color: #fff;
@@ -241,4 +242,38 @@ body {
 }
 .algorithm-section .algorithm-box .status-btn:hover {
   background-color: #ff8c33;
+}
+
+.connection-status {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ❌ Wi-Fi Bağlı Değilse */
+.status-title.error-message {
+  color: red;
+  font-size: 14px;
+}
+
+/* 🔁 Retry Butonu */
+.retry-btn {
+  background: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.retry-btn:hover {
+  background: #0056b3;
 }/*# sourceMappingURL=orc-status.css.map */

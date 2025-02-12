@@ -26,22 +26,30 @@ content %}
       </ul>
 
       <div class="connection-status">
-        <span class="status-title">Connected Wi-Fi / GSM / Ethernet</span>
-        <div class="separator"></div>
-        <div class="status-details">
-            <div class="status-left">
-                <i class="fas fa-wifi"></i> 
-                {% if network and network.connected_ssid and network.connected_ssid != "Not Connected" %}
-                {{ network["Connected_SSID"] }}
-
-                {% else %}
-                    No Wi-Fi
-                {% endif %}
+        {% if network and network.connected_ssid and network.connected_ssid != "Not Connected" %}
+            <!-- 📡 Wi-Fi Bağlıysa -->
+            <span class="status-title">Connected Wi-Fi / GSM / Ethernet</span>
+            <div class="separator"></div>
+            <div class="status-details">
+                <div class="status-left">
+                    <i class="fas fa-wifi"></i> {{ network.connected_ssid }}
+                </div>
+                <button class="disconnect-btn">Disconnect</button>
             </div>
-            <button class="disconnect-btn">Disconnect</button>
-        </div>
+        {% else %}
+            <!-- ❌ Wi-Fi Bağlı Değilse -->
+            <span class="status-title error-message">
+                Checking the network cables, modem and router <br>
+                Reconnecting to Wi-Fi...
+            </span>
+            <div class="separator"></div>
+            <div class="status-details">
+                <button class="retry-btn" onclick="retryConnection()">Retry</button>
+            </div>
+        {% endif %}
     </div>
     
+
 
     </div>
 
@@ -102,6 +110,31 @@ content %}
       </div>
     </div>
   </div>
+<script>
 
+  function retryConnection() {
+    // Yeniden ağ bağlantısını kontrol et
+    fetch("/check_network")
+        .then(response => response.json())
+        .then(data => {
+            if (data.connected_ssid && data.connected_ssid !== "Not Connected") {
+                // Wi-Fi bağlandıysa sayfayı yenile
+                location.reload();
+            } else {
+                // Hala bağlantı yoksa SweetAlert ile uyarı ver
+                Swal.fire({
+                    icon: "error",
+                    title: "Wi-Fi Bağlantısı Yok!",
+                    text: "Lütfen modeminizi ve bağlantılarınızı kontrol edin.",
+                    confirmButtonText: "Tamam"
+                });
+            }
+        })
+        .catch(error => {
+            console.error("Bağlantı kontrolü sırasında hata oluştu:", error);
+        });
+}
+
+</script>
   {% endblock %}
 </div>

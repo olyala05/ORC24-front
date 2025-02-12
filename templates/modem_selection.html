@@ -79,29 +79,73 @@ block content %}
     let selectedDevice = dropdown.value;
 
     if (!selectedDevice) {
-      return;
+        return;
     }
 
     fetch("/connect_device", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ip_address: selectedDevice }),
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ip_address: selectedDevice }),
     })
-      .then((response) => response.json())
-      .then((data) => {
+    .then((response) => response.json())
+    .then((data) => {
         let status = document.getElementById("status");
+
         if (data.success) {
-          status.innerHTML = "<p style='color: green;'>Bağlantı başarılı!</p>";
-          sessionStorage.setItem("selected_device_ip", selectedDevice); // 📌 Cihaz IP'sini sakla
+            sessionStorage.setItem("selected_device_ip", selectedDevice);
+
+            // SweetAlert ile başarı mesajı
+            Swal.fire({
+                position: "bottom-end",  // 📌 Sağ alt köşe
+                icon: "success",
+                title: "Cihaz başarıyla bağlandı!",
+                showConfirmButton: false,
+                timer: 5000, // 5 saniyede kaybolur
+                toast: true,
+                customClass: {
+                    popup: 'small-toast',
+                }
+            });
+
         } else {
-          status.innerHTML =
-            "<p style='color: red;'>Bağlantı hatası: " + data.error + "</p>";
+            // ❌ Başarısız bağlantı mesajı (Kırmızı)
+            status.innerHTML = "<p style='color: red;'>Bağlantı hatası: " + data.error + "</p>";
+
+            // SweetAlert ile hata mesajı
+            Swal.fire({
+                position: "bottom-end",  // 📌 Sağ alt köşe
+                icon: "error",
+                title: "⚠️ Bağlantı hatası!",
+                showConfirmButton: false,
+                timer: 5000, // 5 saniyede kaybolur
+                toast: true,
+                customClass: {
+                    popup: 'small-toast',
+                }
+            });
         }
-      })
-      .catch((error) => console.error("Bağlantı hatası:", error));
-  }
+    })
+    .catch((error) => {
+        console.error("Bağlantı hatası:", error);
+        
+        // Genel hata mesajı
+        Swal.fire({
+            position: "bottom-end",  // 📌 Sağ alt köşe
+            icon: "error",
+            title: "⚠️ Bağlantı sırasında hata oluştu!",
+            showConfirmButton: false,
+            timer: 5000, // 5 saniyede kaybolur
+            toast: true,
+            customClass: {
+                popup: 'small-toast',
+            }
+        });
+    });
+}
+
+
 
   function goToORCStatus() {
     fetch("/get_selected_device")
