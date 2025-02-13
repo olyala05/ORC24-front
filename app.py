@@ -10,12 +10,17 @@ import nmap
 import socket
 from datetime import datetime 
 from requests.exceptions import RequestException  
+import logging
 
 app = Flask(__name__)
 CORS(app)
 app.secret_key = 'supersecretkey'
 app.config["JWT_SECRET_KEY"] = "jwt_secret_key"
 jwt = JWTManager(app)
+
+# Flask logları ayarla
+logging.basicConfig(level=logging.INFO)  # INFO seviyesinde log al
+logger = logging.getLogger(__name__)
 
 # Laravel API'nin URL'si 
 LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
@@ -175,6 +180,7 @@ def connect_device():
     except Exception as e:
         return jsonify(success=False, error=f"Bağlantı hatası: {str(e)}")
 
+#  ORC Stataus
 @app.route("/orc-status", methods=["GET", "POST"])
 def orc_status():
     selected_ip = session.get("selected_device_ip")
@@ -226,6 +232,46 @@ def orc_status():
         print("🔥 Genel hata:", e)
         return render_template("orc_status.html", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
 
+# Equipments Modbus 
+@app.route("/modbus_request", methods=["POST"])
+def modbus_request():
+    """
+    Seçili cihazdan Modbus verilerini alır ve frontend'e iletir.
+    """
+    selected_ip = session.get("selected_device_ip")  # 🔥 Seçili cihazın IP'sini al
+
+    if not selected_ip:
+        logger.warning("⚠️ Cihaz seçilmedi!")
+        return jsonify({"error": "Cihaz seçilmedi. Lütfen önce bir cihaz bağlayın."}), 400
+
+    try:
+        logger.info(f"🔄 Modbus verisi alınıyor: {selected_ip}")  # İsteğin başladığını logla
+        
+        # HTTP ile cihazdan Modbus verilerini al
+        url = f"http://{selected_ip}:8085/get_modbus_data"
+        response = requests.get(url, timeout=500)  # Timeout ekledik
+        response.raise_for_status()
+
+        modbus_data = response.json().get("modbus_data", [])
+        if not modbus_data:
+            logger.warning("❌ Modbus verisi bulunamadı.")
+            return jsonify({"error": "Modbus verisi alınamadı veya cihaz desteklemiyor."}), 500
+
+        logger.info(f"✅ Modbus verisi başarıyla alındı: {len(modbus_data)} cihaz bulundu.")  # Kaç cihaz bulunduğunu logla
+        return jsonify({"modbus_data": modbus_data})
+
+    except requests.exceptions.RequestException as e:
+        logger.error(f"🔥 Modbus isteği hatası: {e}")
+        return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
+    
+@app.route("/equipment", methods=["GET"])
+def equipment():
+    """
+    Equipment sayfasını render eder ve cihaz modellerini gösterir.
+    """
+    modbus_data = session.get("modbus_data", [])  # Modbus verilerini al
+    return render_template("equipments/equipments.html", modbus_data=modbus_data)
+
 
 # Diger SAyfalar         
 @app.route('/modem-selection', endpoint="modem_selection")
@@ -240,9 +286,6 @@ def log():
 def alarm():
     return render_template("alarm.html")    
 
-@app.route('/equipment', endpoint="equipment")
-def equipment():
-    return render_template("equipments/equipments.html")
 
 @app.route('/equipment-details', endpoint="equipment_detatils")
 def equipment_details():

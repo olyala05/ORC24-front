@@ -2,7 +2,9 @@
 block content %}
 <div class="header">
   <div class="header-left">
-    <button class="header-button" onclick="goToDashboard()">Home <i class="fas fa-home"></i></button>
+    <button class="header-button" onclick="goToDashboard()">
+      Home <i class="fas fa-home"></i>
+    </button>
   </div>
 
   <div class="header-logo">
@@ -34,7 +36,7 @@ block content %}
 
     <div class="button-container">
       <button class="btn active" onclick="goToORCStatus()">ORC Status</button>
-      <button class="btn">Equipment</button>
+      <button class="btn" onclick="goToEquipment()">Equipment</button>
       <button class="btn">Settings</button>
     </div>
 
@@ -79,94 +81,196 @@ block content %}
     let selectedDevice = dropdown.value;
 
     if (!selectedDevice) {
-        return;
+      return;
     }
 
     fetch("/connect_device", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ip_address: selectedDevice }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ip_address: selectedDevice }),
     })
-    .then((response) => response.json())
-    .then((data) => {
+      .then((response) => response.json())
+      .then((data) => {
         let status = document.getElementById("status");
 
         if (data.success) {
-            sessionStorage.setItem("selected_device_ip", selectedDevice);
+          sessionStorage.setItem("selected_device_ip", selectedDevice);
 
-            // SweetAlert ile başarı mesajı
-            Swal.fire({
-                position: "bottom-end",  // 📌 Sağ alt köşe
-                icon: "success",
-                title: "Cihaz başarıyla bağlandı!",
-                showConfirmButton: false,
-                timer: 5000, // 5 saniyede kaybolur
-                toast: true,
-                customClass: {
-                    popup: 'small-toast',
-                }
-            });
-
-        } else {
-            // ❌ Başarısız bağlantı mesajı (Kırmızı)
-            status.innerHTML = "<p style='color: red;'>Bağlantı hatası: " + data.error + "</p>";
-
-            // SweetAlert ile hata mesajı
-            Swal.fire({
-                position: "bottom-end",  // 📌 Sağ alt köşe
-                icon: "error",
-                title: "⚠️ Bağlantı hatası!",
-                showConfirmButton: false,
-                timer: 5000, // 5 saniyede kaybolur
-                toast: true,
-                customClass: {
-                    popup: 'small-toast',
-                }
-            });
-        }
-    })
-    .catch((error) => {
-        console.error("Bağlantı hatası:", error);
-        
-        // Genel hata mesajı
-        Swal.fire({
-            position: "bottom-end",  // 📌 Sağ alt köşe
-            icon: "error",
-            title: "⚠️ Bağlantı sırasında hata oluştu!",
+          // SweetAlert ile başarı mesajı
+          Swal.fire({
+            position: "bottom-end", // 📌 Sağ alt köşe
+            icon: "success",
+            title: "Cihaz başarıyla bağlandı!",
             showConfirmButton: false,
             timer: 5000, // 5 saniyede kaybolur
             toast: true,
             customClass: {
-                popup: 'small-toast',
-            }
+              popup: "small-toast",
+            },
+          });
+        } else {
+          // ❌ Başarısız bağlantı mesajı (Kırmızı)
+          status.innerHTML =
+            "<p style='color: red;'>Bağlantı hatası: " + data.error + "</p>";
+
+          // SweetAlert ile hata mesajı
+          Swal.fire({
+            position: "bottom-end", // 📌 Sağ alt köşe
+            icon: "error",
+            title: "⚠️ Bağlantı hatası!",
+            showConfirmButton: false,
+            timer: 5000, // 5 saniyede kaybolur
+            toast: true,
+            customClass: {
+              popup: "small-toast",
+            },
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Bağlantı hatası:", error);
+
+        // Genel hata mesajı
+        Swal.fire({
+          position: "bottom-end", // 📌 Sağ alt köşe
+          icon: "error",
+          title: "⚠️ Bağlantı sırasında hata oluştu!",
+          showConfirmButton: false,
+          timer: 5000, // 5 saniyede kaybolur
+          toast: true,
+          customClass: {
+            popup: "small-toast",
+          },
         });
-    });
+      });
+  }
+
+  function goToORCStatus() {
+    let dropdown = document.getElementById("modem");
+    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+
+    if (!selectedDeviceIP) {
+        // Kullanıcıya uyarı ver
+        Swal.fire({
+            icon: "warning",
+            title: "⚠️ Uyarı",
+            text: "Lütfen önce bir cihaz seçiniz!",
+            confirmButtonText: "Tamam"
+        });
+        return; // İşlemi durdur
+    }
+
+    // **Loading ekranını ekleyelim**
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
+      <div class="loading-box">
+        <p> ORC Status yükleniyor...</p>
+        <div class="loader"></div>
+      </div>`;
+    document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
+
+    fetch("/get_selected_device")
+        .then((response) => response.json())
+        .then((data) => {
+            if (!data.ip_address) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "⚠️ Uyarı",
+                    text: "Lütfen önce bir cihaz seçiniz!",
+                    confirmButtonText: "Tamam"
+                });
+                return;
+            }
+
+            // **Yönlendirme**
+            window.location.href = `/orc-status?ip_address=${data.ip_address}`;
+        })
+        .catch((error) => {
+            console.error("Cihaz seçme hatası:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Hata!",
+                text: "Cihaz bilgisi alınamadı. Lütfen tekrar deneyin.",
+                confirmButtonText: "Tamam"
+            });
+        })
+        .finally(() => {
+            // **Loading ekranını kaldır**
+            let loader = document.getElementById("loading-overlay");
+            if (loader) loader.remove();
+        });
 }
 
 
-
-  function goToORCStatus() {
-    fetch("/get_selected_device")
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data.ip_address) {
-          alert("Lütfen önce bir cihaz seçin!");
-          return;
-        }
-        window.location.href = `/orc-status?ip_address=${data.ip_address}`;
-      })
-      .catch((error) => console.error("Cihaz seçme hatası:", error));
-  }
-
   // Sayfa yüklendiğinde cihazları getir
   document.addEventListener("DOMContentLoaded", fetchDevices);
-
 
   // Dashboard SAyfasına Yönlendirir
   function goToDashboard() {
     window.location.href = "/dashboard";
   }
+
+  // Equipment Buttonununa gider
+  function goToEquipment() {
+    let dropdown = document.getElementById("modem");
+    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+
+    if (!selectedDeviceIP) {
+        // Kullanıcıya uyarı ver
+        Swal.fire({
+            icon: "warning",
+            title: "⚠️ Uyarı",
+            text: "Lütfen önce bir cihaz seçiniz!",
+            confirmButtonText: "Tamam"
+        });
+        return; // İşlemi durdur
+    }
+
+    // **Loading ekranını ekleyelim**
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
+      <div class="loading-box">
+        <p> Equipments taranıyor...</p>
+        <div class="loader"></div>
+      </div>`;
+    document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
+
+    fetch("/modbus_request", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ip_address: selectedDeviceIP }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.error) {
+            alert("Hata: " + data.error);
+            return;
+        }
+
+        // Modbus verilerini Equipment sayfasına yönlendirmeden önce sakla
+        sessionStorage.setItem("modbus_data", JSON.stringify(data.modbus_data));
+
+        // Equipment sayfasına yönlendir
+        window.location.href = "/equipment";
+    })
+    .catch((error) => {
+        console.error("Modbus verisi alırken hata oluştu:", error);
+        alert("Modbus verisi alınamadı. Lütfen tekrar deneyin.");
+    })
+    .finally(() => {
+        // **Loading ekranını kaldır**
+        let loader = document.getElementById("loading-overlay");
+        if (loader) loader.remove();
+    });
+}
+
 </script>
 {% endblock %}

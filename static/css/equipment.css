@@ -11,8 +11,8 @@ body {
   margin-top: 60px;
   padding: 20px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   width: 97vw;
   height: calc(97vh - 57px);
   background: #0B1734;

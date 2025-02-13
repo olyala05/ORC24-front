@@ -11,14 +11,32 @@
 {% include 'partials/header.html' %}
 
 <div class="equipment-container">
-  <div class="equipment-grid">
-    {% for i in range(5) %}
-      <div class="equipment-box green">EMR-53CS@<br>3630748023</div>
-      <div class="equipment-box red">EMR-53CS@<br>3630748023</div>
-      <div class="equipment-box green">EMR-53CS@<br>3630748023</div>
-      <div class="equipment-box green">EMR-53CS@<br>3630748023</div>
-    {% endfor %}
+  <div class="equipment-grid" id="equipment-list">
+    <!-- Buraya dinamik veriler gelecek -->
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    let equipmentList = document.getElementById("equipment-list");
+
+    // SessionStorage'dan verileri al
+    let modbusData = JSON.parse(sessionStorage.getItem("modbus_data")) || [];
+
+    if (modbusData.length === 0) {
+      equipmentList.innerHTML = "<p style='color: red;'>Modbus verisi alınamadı.</p>";
+      return;
+    }
+
+    // Dinamik olarak cihazları oluştur
+    modbusData.forEach(device => {
+      let statusClass = device.slave_id ? "green" : "red";  // Eğer slave_id varsa cihaz bağlıdır
+      let equipmentBox = document.createElement("div");
+      equipmentBox.className = `equipment-box ${statusClass}`;
+      equipmentBox.innerHTML = `${device.model_name}<br>Slave ID: ${device.slave_id}`;
+      equipmentList.appendChild(equipmentBox);
+    });
+  });
+</script>
 
 {% endblock %}
