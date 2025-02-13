@@ -35,7 +35,7 @@ block content %}
     </div>
 
     <div class="button-container">
-      <button class="btn active" onclick="goToORCStatus()">ORC Status</button>
+      <button class="btn" onclick="goToORCStatus()">ORC Status</button>
       <button class="btn" onclick="goToEquipment()">Equipment</button>
       <button class="btn">Settings</button>
     </div>
@@ -50,6 +50,23 @@ block content %}
 </main>
 
 <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Tüm butonları seç
+    let buttons = document.querySelectorAll(
+      ".button-container .btn, .bottom-buttons .btn"
+    );
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", function () {
+        // Önce tüm butonlardan `active` sınıfını kaldır
+        buttons.forEach((btn) => btn.classList.remove("active"));
+
+        // Tıklanan butona `active` sınıfını ekle
+        this.classList.add("active");
+      });
+    });
+  });
+
   function fetchDevices() {
     fetch("/devices")
       .then((response) => response.json())
@@ -213,9 +230,10 @@ block content %}
     window.location.href = "/dashboard";
   }
 
-  // Equipment With Model 
+  // Equipment With Model
   function goToEquipment() {
-    let selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+    let dropdown = document.getElementById("modem");
+    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
 
     if (!selectedDeviceIP) {
       // Kullanıcıya uyarı ver
@@ -234,7 +252,7 @@ block content %}
     loadingOverlay.className = "loading-overlay";
     loadingOverlay.innerHTML = `
       <div class="loading-box">
-        <p> Equipments taranıyor...</p>
+        <p> ORC Status yükleniyor...</p>
         <div class="loader"></div>
       </div>`;
     document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
@@ -341,4 +359,5 @@ block content %}
       });
   }
 </script>
+
 {% endblock %}
