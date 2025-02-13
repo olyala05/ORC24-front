@@ -1,0 +1,274 @@
+.test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Sayfanın ortasına hizala */
+}
+
+.test-btn {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 18px 100px;
+  font-size: 19px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.test-btn:hover {
+  background-color: #ddd;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  background: none; /* Arka plan değişmesin */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #0f1a30;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  width: 700px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-icon {
+    font-size: 39px;
+    color: orange;
+    margin-bottom: 30px;
+
+}
+
+.modal-buttons button {
+    margin: 20px;
+    padding: 16px 120px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+    font-weight: 700;
+}
+
+#yes-btn {
+  background-color: white;
+  color: black;
+}
+
+#no-btn {
+  background-color: white;
+  color: black;
+}
+
+.close {
+    font-size: 28px;
+    cursor: pointer;
+    display: flex;
+    justify-content: end;
+}
+
+
+.hidden {
+    display: none;
+}
+
+.test-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.test-btn {
+    background-color: #EF742A;
+    color: #fff;
+    border: none;
+    padding: 18px 100px;
+    font-size: 19px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.test-btn:hover {
+    background-color: #EF742A;
+}
+
+/* Yeni İçerik */
+#test-mode-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3px;
+    gap: 12px;
+    top: 27px;
+    margin-top: 10px;
+}
+
+.sidebar {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-btn {
+    padding: 17px;
+    font-size: 20px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    margin-bottom: 14px;
+    cursor: pointer;
+    border-radius: 13px;
+    font-weight: 700;
+    line-height: 1.3;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    background-color: #ccc;
+}
+
+/* Aktif Butonun Stili */
+.tab-btn.active {
+    background-color: #fff;
+    font-weight: 700;
+    border: 3px solid #ff6f00;
+    color: #000;
+}
+
+.content-area {
+    flex: 1;
+    color: white;
+    width: 740px;
+}
+
+.tab-content {
+    display: none;
+    padding: 0;
+    color: white;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 735px;
+    margin: auto;
+}
+
+.network-box {
+    display: flex;
+    align-items: center;
+    padding: 0px;
+    border-radius: 10px;
+}
+
+// Soldaki butonları (Available Wi-Fi & Ethernet) düzenle
+.network-header {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #2b3a5a;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: white;
+    transition: background 0.3s ease;
+    min-width: 200px;
+    text-align: center;
+    justify-content: center;
+}
+
+.network-header:hover {
+    background-color: #3b4a6a;
+}
+
+// İkonlar buton içinde sol tarafta olacak
+.wifi-icon, .ethernet-icon {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+// Sağ tarafta bağlantı bilgileri
+.network-info {
+    flex: 1; // Sağ alanın esnek büyüklük almasını sağlar
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+
+    p {
+        margin: 3px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding-bottom: 5px;
+        font-size: 14px;
+        display: flex    ;
+        justify-content: right;
+    }
+
+    .test-btn {
+        background-color: #EF742A;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 150px;
+        margin-top: 10px;
+        text-align: center;
+        transition: background 0.3s ease;
+    }
+
+    .test-btn:hover {
+        background-color: #ff8c42;
+    }
+}
+
+// Bağlantı durumu (Success & Fail)
+.status-text {
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}
+
+.success {
+    color: #00ff7f;
+}
+
+.fail {
+    color: #ff4444;
+}
+
+// Küçük ekranlar için duyarlı yapı
+@media screen and (max-width: 1024px) {
+    .network-box {
+        flex-direction: column;
+        // gap: 10px;
+    }
+
+    .network-header {
+        width: 100%;
+    }
+
+    .network-info {
+        width: 100%;
+    }
+
+    .test-btn {
+        width: 100%;
+    }
+}

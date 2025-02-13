@@ -268,24 +268,27 @@ def modbus_request():
 def equipments_with_models():
     data = request.json
     ip_address = data.get("ip_address")
-    
+
     if not ip_address:
         return jsonify({"error": "IP adresi belirtilmedi"}), 400
 
     try:
         # 📌 HTTP ile cihazdan `/get_equipments_with_models` verisini al
         url = f"http://{ip_address}:8085/get_equipments_with_models"
-        response = requests.get(url, timeout=5)  # Timeout ekledik
+        response = requests.get(url, timeout=200)  # Timeout ekledik
         response.raise_for_status()
 
         equipment_data = response.json()
-        session["equipment_data"] = equipment_data  # Veriyi sakla
 
+        if "warning" in equipment_data:  # ✅ Eğer ekipman yoksa uyarı ver
+            return jsonify({"warning": equipment_data["warning"]}), 200
+
+        session["equipment_data"] = equipment_data  # Veriyi sakla
         return jsonify(equipment_data)
 
     except requests.exceptions.RequestException as e:
         logging.error(f"🔥 Equipment isteği hatası: {e}")
-        return jsonify({"error": f"Equipment bağlantı hatası: {str(e)}"}), 500
+        return jsonify({"error": f"Equipment Boş"})
 
 @app.route('/equipment', endpoint="equipment")
 def equipment():
@@ -311,6 +314,10 @@ def log():
 @app.route('/alarm', endpoint="alarm")
 def alarm():
     return render_template("alarm.html")    
+
+@app.route('/test', endpoint="test")
+def test():
+    return render_template("test/test.html")    
 
 @app.route('/equipment-details', endpoint="equipment_detatils")
 def equipment_details():

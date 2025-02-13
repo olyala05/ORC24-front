@@ -1,0 +1,180 @@
+{% extends "layout.html" %} 
+
+{% block title %} Equipment Details {% endblock %}
+
+{% block content %}
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<!-- Orta Kısım -->
+<div class="test-container">
+    <button class="test-btn">Switch to Test Mode</button>
+</div>
+
+<!-- Modal -->
+<div id="test-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modal-icon">⚠️</div>
+        <p>If you switch to test mode, services will shut down.<br>
+            Do you want to switch to test mode?</p>
+        <div class="modal-buttons">
+            <button id="yes-btn">Yes</button>
+            <button id="no-btn">No</button>
+        </div>
+    </div>
+</div>
+
+<!-- Yeni İçerik (İlk başta gizli olacak) -->
+<div id="test-mode-content" class="hidden">
+    <div class="sidebar">
+        <button class="tab-btn" data-target="wifi">Wifi / Ethernet Connection Test</button>
+        <button class="tab-btn" data-target="equipment">Equipment</button>
+        <button class="tab-btn" data-target="cloud">Cloud Connection Test</button>
+        <button class="tab-btn" data-target="read">Read</button>
+        <button class="tab-btn" data-target="write">Write</button>
+    </div>
+
+    <div class="content-area">
+        <div id="wifi" class="tab-content">
+            <!-- Available Wi-Fi -->
+            <div class="network-box">
+                <button class="network-header wifi-header">
+                    <span class="wifi-icon">📶</span> Available Wi-Fi
+                </button>
+                <div class="network-info">
+                    <p><strong>Network Name:</strong> Pier Mi Right 5G</p>
+                    <p><strong>Password:</strong> 123457</p>
+                    <p><strong>Connection Status:</strong> Connected / No connection</p>
+                    <p><strong>Connection Mac:</strong> 02:81:2b:61:c6:1d</p>
+                    
+                    <button class="test-btn">Test</button>
+                    <p class="status-text success">✔ WiFi Connection Successful.</p>
+                    <p class="status-text fail">✖ WiFi Connection Failed.</p>
+                </div>
+            </div>
+        
+            <!-- Ethernet -->
+            <div class="network-box">
+                <button class="network-header ethernet-header">
+                    <span class="ethernet-icon">🖧</span> Ethernet
+                </button>
+                <div class="network-info">
+                    <p><strong>Connection Status:</strong> Connected / No connection</p>
+                    <p><strong>Connection Mac:</strong> 02:81:2b:61:c6:1d</p>
+                    <button class="test-btn">Test</button>
+                    <p class="status-text success">✔ Ethernet Connection Successful.</p>
+                    <p class="status-text fail">✖ Ethernet Connection Failed.</p>
+                </div>
+            </div>
+        </div>
+        
+
+        <div id="equipment" class="tab-content">
+            <h2>Equipment</h2>
+            <p>Equipment details will be displayed here.</p>
+        </div>
+        <div id="cloud" class="tab-content">
+            <h2>Cloud Connection Test</h2>
+            <p>Cloud test details will be displayed here.</p>
+        </div>
+        <div id="read" class="tab-content">
+            <h2>Read</h2>
+            <p>Read operations will be displayed here.</p>
+        </div>
+        <div id="write" class="tab-content">
+            <h2>Write</h2>
+            <p>Write operations will be displayed here.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var btn = document.querySelector(".test-btn");
+        var modal = document.getElementById("test-modal");
+        var closeBtn = document.querySelector(".close");
+        var noBtn = document.getElementById("no-btn");
+        var yesBtn = document.getElementById("yes-btn");
+        var testModeContent = document.getElementById("test-mode-content");
+        var testContainer = document.querySelector(".test-container");
+        var tabButtons = document.querySelectorAll(".tab-btn");
+        var tabContents = document.querySelectorAll(".tab-content");
+    
+        // Sayfanın modunu kontrol et
+        if (localStorage.getItem("testMode") === "enabled") {
+            testContainer.style.display = "none";
+            testModeContent.style.display = "flex";
+            modal.style.display = "none";
+        } else {
+            testContainer.style.display = "flex";
+            testModeContent.style.display = "none";
+        }
+    
+        // Butona tıklayınca modal açılsın
+        btn.addEventListener("click", function () {
+            if (!localStorage.getItem("testMode")) {
+                modal.style.display = "flex";
+            }
+        });
+    
+        // Kapatma butonuna tıklayınca modal kapansın
+        closeBtn.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+    
+        // Hayır butonuna tıklayınca modal kapansın
+        noBtn.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+    
+        // Yes butonuna tıklanınca test modunu aktif et ve kaydet
+        yesBtn.addEventListener("click", function () {
+            modal.style.display = "none"; // Modal'ı kapat
+            testContainer.style.display = "none"; // Eski butonu gizle
+            testModeContent.style.display = "flex"; // Yeni içeriği göster
+            localStorage.setItem("testMode", "enabled"); // Test modunu kaydet
+        });
+    
+        // Tab butonlarına tıklanınca ilgili içeriği göster ve aktif class'ı ekle
+        tabButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                var target = this.getAttribute("data-target");
+    
+                // Tüm içerikleri gizle
+                tabContents.forEach(content => {
+                    content.style.display = "none";
+                });
+    
+                // Seçili içeriği göster
+                document.getElementById(target).style.display = "block";
+    
+                // Önce tüm butonlardan aktif class'ını kaldır
+                tabButtons.forEach(btn => btn.classList.remove("active"));
+    
+                // Şu an tıklanan butona aktif class'ı ekle
+                this.classList.add("active");
+    
+                // Son açılan sekmeyi kaydet
+                localStorage.setItem("lastTab", target);
+            });
+        });
+    
+        // Sayfa yenilendiğinde en son açılan sekmeyi göster
+        var lastTab = localStorage.getItem("lastTab");
+        if (lastTab) {
+            document.getElementById(lastTab).style.display = "block";
+            tabButtons.forEach(button => {
+                if (button.getAttribute("data-target") === lastTab) {
+                    button.classList.add("active");
+                }
+            });
+        } else {
+            tabContents.forEach(content => content.style.display = "none");
+        }
+    });
+    
+    </script>
+    
+    
+{% endblock %}

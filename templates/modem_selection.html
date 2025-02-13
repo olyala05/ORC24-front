@@ -41,7 +41,7 @@ block content %}
     </div>
 
     <div class="bottom-buttons">
-      <button class="btn">Test</button>
+      <button class="btn" onclick="goToTest()">Test</button>
       <button class="btn">Date</button>
     </div>
 
@@ -50,6 +50,15 @@ block content %}
 </main>
 
 <script>
+  // Sayfa yüklendiğinde cihazları getir
+  document.addEventListener("DOMContentLoaded", fetchDevices);
+
+  // Dashboard Sayfasına Yönlendirir
+  function goToDashboard() {
+    window.location.href = "/dashboard";
+  }
+
+  // Active butonu seçme
   document.addEventListener("DOMContentLoaded", function () {
     // Tüm butonları seç
     let buttons = document.querySelectorAll(
@@ -222,14 +231,6 @@ block content %}
       });
   }
 
-  // Sayfa yüklendiğinde cihazları getir
-  document.addEventListener("DOMContentLoaded", fetchDevices);
-
-  // Dashboard SAyfasına Yönlendirir
-  function goToDashboard() {
-    window.location.href = "/dashboard";
-  }
-
   // Equipment With Model
   function goToEquipment() {
     let dropdown = document.getElementById("modem");
@@ -299,6 +300,36 @@ block content %}
         let loader = document.getElementById("loading-overlay");
         if (loader) loader.remove();
       });
+  }
+
+  // Test Sayfasına Yönlendirir
+  function goToTest() {
+    let dropdown = document.getElementById("modem");
+    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+
+    if (!selectedDeviceIP) {
+      // Kullanıcıya uyarı ver
+      Swal.fire({
+        icon: "warning",
+        title: "⚠️ Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return; // İşlemi durdur
+    }
+
+    // **Loading ekranını ekleyelim**
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
+      <div class="loading-box">
+        <p> ORC Status yükleniyor...</p>
+        <div class="loader"></div>
+      </div>`;
+    document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
+
+    window.location.href = "/test";
   }
 
   // Equipment Buttonununa gider onclick="goToEquipmentSetting()"
