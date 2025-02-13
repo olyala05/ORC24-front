@@ -92,7 +92,7 @@
 }
 
 .test-btn {
-  background-color: #EF742A;
+  background-color: #ef742a;
   color: #fff;
   border: none;
   padding: 18px 100px;
@@ -105,7 +105,7 @@
 }
 
 .test-btn:hover {
-  background-color: #EF742A;
+  background-color: #ef742a;
 }
 
 /* Yeni İçerik */
@@ -172,6 +172,7 @@
   align-items: center;
   padding: 0px;
   border-radius: 10px;
+  gap: 140px;
 }
 
 .network-header {
@@ -179,11 +180,11 @@
   align-items: center;
   font-size: 16px;
   font-weight: bold;
-  background-color: #2b3a5a;
+  background-color: #fff;
   border-radius: 8px;
   padding: 8px 12px;
   cursor: pointer;
-  color: white;
+  color: #000;
   transition: background 0.3s ease;
   min-width: 200px;
   text-align: center;
@@ -191,10 +192,12 @@
 }
 
 .network-header:hover {
-  background-color: #3b4a6a;
+  background-color: #fff;
+  color: #000;
 }
 
-.wifi-icon, .ethernet-icon {
+.wifi-icon,
+.ethernet-icon {
   margin-right: 10px;
   font-size: 20px;
 }
@@ -203,17 +206,80 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 0px;
+  align-items: flex-end;
 }
 .network-info p {
-  margin: 3px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 5px 0;
   padding-bottom: 5px;
   font-size: 14px;
   display: flex;
   justify-content: right;
+  text-align: right;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.network-info > p:nth-child(-n+3)::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  right: 0;
+  width: 400px;
+  height: 1px;
+  background-color: rgba(239, 116, 42, 0.5);
+}
+.network-info > div p {
+  border-bottom: none;
+}
+.network-info .test-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 .network-info .test-btn {
+  background-color: #ef742a;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 120px;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+.network-info .test-btn:hover {
+  background-color: #ff8c42;
+}
+.network-info .status-text {
+  font-size: 14px;
+  text-align: right;
+}
+.network-info .success {
+  color: #00ff7f;
+}
+.network-info .fail {
+  color: #ff4444;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.5);
+  margin: 10px 0;
+}
+
+.test-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.test-button {
   background-color: #EF742A;
   color: #fff;
   border: none;
@@ -222,19 +288,30 @@
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
-  width: 150px;
-  margin-top: 10px;
+  width: 120px;
   text-align: center;
   transition: background 0.3s ease;
 }
-.network-info .test-btn:hover {
+
+.test-button:hover {
   background-color: #ff8c42;
 }
 
-.status-text {
+.connection-status {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.status-message {
   font-size: 14px;
-  margin-top: 5px;
-  display: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.status-message img {
+  font-size: 19px;
 }
 
 .success {
@@ -245,17 +322,11 @@
   color: #ff4444;
 }
 
-@media screen and (max-width: 1024px) {
-  .network-box {
-    flex-direction: column;
-  }
-  .network-header {
-    width: 100%;
-  }
-  .network-info {
-    width: 100%;
-  }
-  .test-btn {
-    width: 100%;
-  }
+.status-message img {
+  width: 16px;
+  height: 16px;
+}
+
+.svg-md {
+  font-size: 19px;
 }/*# sourceMappingURL=test.css.map */

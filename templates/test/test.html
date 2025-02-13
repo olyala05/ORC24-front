@@ -40,7 +40,7 @@
             <!-- Available Wi-Fi -->
             <div class="network-box">
                 <button class="network-header wifi-header">
-                    <span class="wifi-icon">📶</span> Available Wi-Fi
+                    <span class="wifi-icon"><img  src="{{ url_for('static', filename='images/svg/12.svg') }}" alt="No Wi Fi"></img></span> Available Wi-Fi
                 </button>
                 <div class="network-info">
                     <p><strong>Network Name:</strong> Pier Mi Right 5G</p>
@@ -48,12 +48,26 @@
                     <p><strong>Connection Status:</strong> Connected / No connection</p>
                     <p><strong>Connection Mac:</strong> 02:81:2b:61:c6:1d</p>
                     
-                    <button class="test-btn">Test</button>
-                    <p class="status-text success">✔ WiFi Connection Successful.</p>
-                    <p class="status-text fail">✖ WiFi Connection Failed.</p>
+                    <div class="test-wrapper">
+                        <button class="test-button">Test</button>
+                        <div class="connection-status">
+                            <p class="status-message success">
+                                <img src="{{ url_for('static', filename='images/svg/13.svg') }}" alt="WiFi Success">
+                                WiFi Connection Successful.
+                            </p>
+                            <p class="status-message fail">
+                                <img src="{{ url_for('static', filename='images/svg/14.svg') }}" alt="WiFi Failed">
+                                WiFi Connection Failed.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    
                 </div>
             </div>
         
+                    <!-- Orta çizgi buraya eklendi -->
+                    <div class="divider"></div>
             <!-- Ethernet -->
             <div class="network-box">
                 <button class="network-header ethernet-header">
@@ -62,11 +76,24 @@
                 <div class="network-info">
                     <p><strong>Connection Status:</strong> Connected / No connection</p>
                     <p><strong>Connection Mac:</strong> 02:81:2b:61:c6:1d</p>
-                    <button class="test-btn">Test</button>
-                    <p class="status-text success">✔ Ethernet Connection Successful.</p>
-                    <p class="status-text fail">✖ Ethernet Connection Failed.</p>
+
+                    <div class="test-wrapper">
+                        <button class="test-button">Test</button>
+                        <div class="connection-status">
+                            <p class="status-message success">
+                                <img src="{{ url_for('static', filename='images/svg/15.svg') }}" alt="WiFi Success" class="svg-md">
+                                Ethernet Connection Successful.
+                            </p>
+                            <p class="status-message fail">
+                                <img src="{{ url_for('static', filename='images/svg/16.svg') }}" alt="WiFi Failed">
+                                Ethernet Connection Failed.
+                            </p>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
+
         </div>
         
 
