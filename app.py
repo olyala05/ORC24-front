@@ -244,6 +244,10 @@ def alarm():
 def equipment():
     return render_template("equipments/equipments.html")
 
+@app.route('/equipment-details', endpoint="equipment_detatils")
+def equipment_details():
+    return render_template("equipments/equipment_details.html")
+
 # 🎯 Çıkış Yapma
 @app.route("/logout")
 def logout():

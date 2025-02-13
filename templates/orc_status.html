@@ -40,17 +40,16 @@ content %}
             <!-- ❌ Wi-Fi Bağlı Değilse -->
             <span class="status-title error-message">
                 Checking the network cables, modem and router <br>
-                Reconnecting to Wi-Fi...
+                Reconnecting to Wi-Fi
             </span>
             <div class="separator"></div>
             <div class="status-details">
+              <div class="status-left">
+                <img  src="{{ url_for('static', filename='images/svg/11.svg') }}" alt="No Wi Fi"></img> No Internet</div>
                 <button class="retry-btn" onclick="retryConnection()">Retry</button>
             </div>
         {% endif %}
     </div>
-    
-
-
     </div>
 
     <div class="connection-table">
@@ -65,17 +64,26 @@ content %}
         </thead>
         <tbody>
           <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Lora connection</td>
+            <td><span class="status-dot red"></span></td>
+            <td><span class="status-dot red"></span></td>
+            <td>Lora disconnection</td>
             <td>2024-04-03 13:54:31</td>
           </tr>
+
           <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>WiFi connection</td>
-            <td>2024-04-03 13:54:31</td>
-          </tr>
+            {% if network.wifi_connected %}
+                <td><span class="status-dot green"></span></td>
+                <td><span class="status-dot green"></span></td>
+                <td>WiFi connection</td>
+                <td>{{ network.last_connected_time }}</td>  <!-- 📌 Güncellenmiş tarih -->
+            {% else %}
+                <td><span class="status-dot red"></span></td>
+                <td><span class="status-dot red"></span></td>
+                <td>WiFi Disconnected</td>
+                <td>{{ network.last_connected_time }}</td>  <!-- 📌 En son bağlantı tarihi -->
+            {% endif %}
+        </tr>
+        
           <tr>
             <td><span class="status-dot green"></span></td>
             <td><span class="status-dot green"></span></td>

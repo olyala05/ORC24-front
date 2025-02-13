@@ -1,6 +1,6 @@
 @charset "UTF-8";
 body {
-  background-color: #1C2747;
+  background-color: #1c2747;
   color: #fff;
   font-family: "Arial", sans-serif;
   margin: 0;
@@ -69,7 +69,7 @@ body {
 }
 
 .device-info {
-  background-color: #0B1734;
+  background-color: #0b1734;
   padding: 15px;
   border-radius: 8px;
   width: 47%;
@@ -95,7 +95,7 @@ body {
 .device-info .connection-status {
   width: 100%;
   background-color: white;
-  padding: 7px;
+  padding: 0px;
   border-radius: 8px;
   text-align: center;
   color: black;
@@ -104,7 +104,7 @@ body {
 .device-info .connection-status .status-title {
   font-size: 16px;
   font-weight: bold;
-  color: #1C2747;
+  color: #1c2747;
   display: block;
   margin-bottom: 5px;
 }
@@ -125,12 +125,17 @@ body {
   align-items: center;
   font-size: 16px;
   font-weight: bold;
-  color: #1C2747;
+  color: #1c2747;
 }
 .device-info .connection-status .status-left i {
   font-size: 18px;
   margin-right: 8px;
-  color: #1C2747;
+  color: #1c2747;
+}
+.device-info .connection-status .status-left img {
+  font-size: 18px;
+  margin-right: 8px;
+  color: #1c2747;
 }
 .device-info .connection-status .disconnect-btn {
   background-color: #ff6f00;
@@ -149,7 +154,7 @@ body {
 .connection-table {
   width: 47%;
   height: 90%;
-  background-color: #0B1734;
+  background-color: #0b1734;
   padding: 15px;
   border-radius: 8px;
   color: white;
@@ -163,7 +168,7 @@ body {
   border-collapse: collapse;
 }
 .connection-table table th {
-  background-color: #1C2747;
+  background-color: #1c2747;
   padding: 8px;
   font-size: 14px;
 }
@@ -178,7 +183,10 @@ body {
   display: inline-block;
 }
 .connection-table table .status-dot.green {
-  background-color: #4CAF50;
+  background-color: #4caf50;
+}
+.connection-table table .status-dot.red {
+  background-color: #FF0F00;
 }
 
 .line {
@@ -200,7 +208,7 @@ body {
 .algorithm-section h3 {
   font-size: 16px;
   font-weight: bold;
-  color: #1C2747;
+  color: #1c2747;
   margin-bottom: 5px;
 }
 .algorithm-section .separator {
@@ -224,11 +232,11 @@ body {
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: #1C2747;
+  color: #1c2747;
 }
 .algorithm-section .algorithm-box .algorithm-left i {
   font-size: 18px;
-  color: #1C2747;
+  color: #1c2747;
 }
 .algorithm-section .algorithm-box .status-btn {
   background-color: #ff6f00;
@@ -265,7 +273,7 @@ body {
 
 /* 🔁 Retry Butonu */
 .retry-btn {
-  background: #007bff;
+  background: #ff6f00;
   color: white;
   padding: 8px 16px;
   border: none;
@@ -275,5 +283,5 @@ body {
 }
 
 .retry-btn:hover {
-  background: #0056b3;
+  background: #ff8c33;
 }/*# sourceMappingURL=orc-status.css.map */

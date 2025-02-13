@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block title %} Equipment Details {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/equipment.scss') }}" />
+{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<div class="equipment-container">
+  <div class="header">
+    <h2>16 Temmuz 2024 13:50</h2>
+    <p>Equipment Details</p>
+  </div>
+  <div class="equipment-details">
+    <div class="info-panel">
+      <div class="info-item"><strong>Equipment Name:</strong> EMR-53CS@3630748023</div>
+      <div class="info-item"><strong>Slave ID:</strong> 12</div>
+      <div class="info-item"><strong>Modem Name:</strong> Modem 1</div>
+      <div class="info-item"><strong>Brand / Model:</strong> Entes / 46s</div>
+      <div class="info-item"><strong>Equipment Type:</strong> Analyzer</div>
+      <div class="info-item"><strong>Equipment Serial No:</strong> asj-234</div>
+      <div class="info-item"><strong>Activity Status:</strong> 5</div>
+      <div class="info-item"><strong>Device ID:</strong> Active</div>
+      <div class="info-item"><strong>SID/IP:</strong> 5</div>
+      <div class="info-item"><strong>Status / Configuration:</strong> A / A</div>
+      <div class="info-item"><strong>Connection Protocol:</strong> Modbus</div>
+      <div class="info-item"><strong>GMT:</strong> 3</div>
+      <div class="info-item"><strong>Daylight Saving Time:</strong> Yes</div>
+      <div class="info-item"><strong>Equipment Date:</strong> 2024-04-01 10:43:19</div>
+      <div class="info-item"><strong>Connection Date:</strong> 2024-04-01 10:43:19</div>
+    </div>
+    <div class="log-panel">
+      <h3>Archive Log</h3>
+      <ul>
+        <li class="log-entry green">Service Started - 2024-04-03 13:54:31</li>
+        <li class="log-entry green">Modbus Connection Established - 2024-04-03 13:54:31</li>
+        <li class="log-entry green">32000 Register Error - 2024-04-03 13:55:00</li>
+        <li class="log-entry red">Equipment Not Found - 2024-04-03 13:55:11</li>
+        <li class="log-entry green">Modbus Connection - 2024-04-03 13:55:14</li>
+        <li class="log-entry red">Register Read - 2024-04-03 13:55:14</li>
+        <li class="log-entry green">Equipment Data Collecting - 2024-04-03 13:55:16</li>
+        <li class="log-entry green">Modem Task Cycle - 2024-04-03 13:55:31</li>
+        <li class="log-entry green">Data Transfer Cycle - 2024-04-03 13:55:32</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

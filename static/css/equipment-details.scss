@@ -1,0 +1,78 @@
+.equipment-container {
+    padding: 10px;
+    background-color: #121212;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  
+    .header {
+      text-align: center;
+      margin-bottom: 15px;
+  
+      h2 {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+  
+      p {
+        font-size: 16px;
+        color: #ff9800;
+      }
+    }
+  
+    .equipment-details {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 1024px;
+  
+      .info-panel {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        background: #1a1a1a;
+        padding: 10px;
+        border-radius: 8px;
+        
+        .info-item {
+          padding: 5px;
+          font-size: 14px;
+          border-bottom: 1px solid #333;
+        }
+      }
+  
+      .log-panel {
+        margin-top: 15px;
+        padding: 10px;
+        background: #1a1a1a;
+        border-radius: 8px;
+  
+        h3 {
+          font-size: 16px;
+          margin-bottom: 10px;
+        }
+  
+        ul {
+          list-style: none;
+          padding: 0;
+  
+          .log-entry {
+            padding: 5px;
+            font-size: 14px;
+            border-bottom: 1px solid #333;
+  
+            &.green {
+              color: #4CAF50;
+            }
+  
+            &.red {
+              color: #F44336;
+            }
+          }
+        }
+      }
+    }
+  }
+  

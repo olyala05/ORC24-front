@@ -1,6 +1,6 @@
 // 📌 Temel Değişkenler
 $primary-color: #ff6f00;
-$background-color: #1C2747;
+$background-color: #1c2747;
 $text-color: #fff;
 $border-radius: 8px;
 $header-height: 60px;
@@ -85,11 +85,9 @@ body {
   gap: 20px; // İki div arasındaki boşluğu küçült
 }
 
-
-
 // 📌 Cihaz Bilgileri Paneli (Sol Taraf)
 .device-info {
-  background-color: #0B1734;
+  background-color: #0b1734;
   padding: 15px;
   border-radius: $border-radius;
   width: 47%;
@@ -117,7 +115,7 @@ body {
   .connection-status {
     width: 100%;
     background-color: white;
-    padding: 7px;
+    padding: 0px;
     border-radius: $border-radius;
     text-align: center;
     color: black;
@@ -125,66 +123,72 @@ body {
 
     // Üstteki metin (Connected Wi-Fi / GSM / Ethernet)
     .status-title {
-        font-size: 16px;
-        font-weight: bold;
-        color: #1C2747;
-        display: block;
-        margin-bottom: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #1c2747;
+      display: block;
+      margin-bottom: 5px;
     }
 
     // Turuncu çizgi
     .separator {
-        width: 90%;
-        height: 1px;
-        background-color: #ff6f00;
-        margin: 10px auto;
+      width: 90%;
+      height: 1px;
+      background-color: #ff6f00;
+      margin: 10px auto;
     }
 
     .status-details {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 5px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 15px;
     }
 
     // Wi-Fi ikonu ve Pier Enerji metni
     .status-left {
-        display: flex;
-        align-items: center;
-        font-size: 16px;
-        font-weight: bold;
-        color: #1C2747;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #1c2747;
 
-        i {
-            font-size: 18px;
-            margin-right: 8px;
-            color: #1C2747;
-        }
+      i {
+        font-size: 18px;
+        margin-right: 8px;
+        color: #1c2747;
+      }
+
+      img {
+        font-size: 18px;
+        margin-right: 8px;
+        color: #1c2747;
+      }
     }
 
     // Disconnect butonu
     .disconnect-btn {
-        background-color: $primary-color;
-        padding: 10px 14px;
-        font-size: 16px;
-        border-radius: 6px;
-        font-weight: bold;
-        cursor: pointer;
-        border: none;
-        color: white;
+      background-color: $primary-color;
+      padding: 10px 14px;
+      font-size: 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      color: white;
 
-        &:hover {
-            background-color: lighten($primary-color, 10%);
-        }
+      &:hover {
+        background-color: lighten($primary-color, 10%);
+      }
     }
-}
+  }
 }
 
 // 📌 Bağlantı Tablosu (Sağ Taraf)
 .connection-table {
   width: 47%;
   height: 90%;
-  background-color: #0B1734;
+  background-color: #0b1734;
   padding: 15px;
   border-radius: $border-radius;
   color: white;
@@ -198,7 +202,7 @@ body {
     border-collapse: collapse;
 
     th {
-      background-color: #1C2747;
+      background-color: #1c2747;
       padding: 8px;
       font-size: 14px;
     }
@@ -215,7 +219,11 @@ body {
       display: inline-block;
 
       &.green {
-        background-color: #4CAF50;
+        background-color: #4caf50;
+      }
+
+      &.red {
+        background-color: #FF0F00;
       }
     }
   }
@@ -225,7 +233,8 @@ body {
   flex-grow: 2;
   height: 1px;
   background-color: $primary-color;
-  position: relative;}
+  position: relative;
+}
 
 // 📌 Algoritma Süreçleri
 .algorithm-section {
@@ -240,7 +249,7 @@ body {
   h3 {
     font-size: 16px;
     font-weight: bold;
-    color: #1C2747;
+    color: #1c2747;
     margin-bottom: 5px;
   }
 
@@ -266,11 +275,11 @@ body {
       align-items: center;
       gap: 8px;
       font-size: 14px;
-      color: #1C2747;
+      color: #1c2747;
 
       i {
         font-size: 18px;
-        color: #1C2747;
+        color: #1c2747;
       }
     }
 
@@ -312,7 +321,7 @@ body {
 
 /* 🔁 Retry Butonu */
 .retry-btn {
-  background: #007bff;
+  background: #ff6f00;
   color: white;
   padding: 8px 16px;
   border: none;
@@ -322,5 +331,5 @@ body {
 }
 
 .retry-btn:hover {
-  background: #0056b3;
+  background: #ff8c33;
 }
