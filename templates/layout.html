@@ -37,6 +37,9 @@
     {% elif request.endpoint == "equipment_details" %}
       <link rel="stylesheet" href="{{ url_for('static', filename='css/equipment-details.css') }}">
       <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+    {% elif request.endpoint == "equipment_setting" %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/equipment-setting.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
     {% endif %}
 
   </head>

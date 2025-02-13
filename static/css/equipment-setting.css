@@ -28,7 +28,7 @@ body {
 }
 
 .equipment-box {
-  padding: 40px;
+  padding: 18px;
   font-size: 17px;
   font-weight: bold;
   text-align: center;
@@ -42,4 +42,4 @@ body {
 
 .red {
   background-color: #D32F2F;
-}/*# sourceMappingURL=equipment.css.map */
+}/*# sourceMappingURL=equipment-setting.css.map */

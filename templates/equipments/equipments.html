@@ -20,20 +20,20 @@
   document.addEventListener("DOMContentLoaded", function() {
     let equipmentList = document.getElementById("equipment-list");
 
-    // SessionStorage'dan verileri al
-    let modbusData = JSON.parse(sessionStorage.getItem("modbus_data")) || [];
+    // **SessionStorage'dan verileri al**
+    let equipmentData = JSON.parse(sessionStorage.getItem("equipment_data")) || [];
 
-    if (modbusData.length === 0) {
-      equipmentList.innerHTML = "<p style='color: red;'>Modbus verisi alınamadı.</p>";
+    if (equipmentData.length === 0) {
+      equipmentList.innerHTML = "<p style='color: red;'>Ekipman verisi bulunamadı.</p>";
       return;
     }
 
-    // Dinamik olarak cihazları oluştur
-    modbusData.forEach(device => {
-      let statusClass = device.slave_id ? "green" : "red";  // Eğer slave_id varsa cihaz bağlıdır
+    // **Ekipmanları sırayla ekleyelim**
+    equipmentData.forEach(equipment => {
+      let statusClass = equipment.status === 1 ? "green" : "red"; // Eğer status=1 ise yeşil, değilse kırmızı
       let equipmentBox = document.createElement("div");
       equipmentBox.className = `equipment-box ${statusClass}`;
-      equipmentBox.innerHTML = `${device.model_name}<br>Slave ID: ${device.slave_id}`;
+      equipmentBox.innerHTML = `${equipment.model_name}`;
       equipmentList.appendChild(equipmentBox);
     });
   });

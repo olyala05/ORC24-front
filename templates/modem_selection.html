@@ -152,14 +152,14 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
 
     if (!selectedDeviceIP) {
-        // Kullanıcıya uyarı ver
-        Swal.fire({
-            icon: "warning",
-            title: "⚠️ Uyarı",
-            text: "Lütfen önce bir cihaz seçiniz!",
-            confirmButtonText: "Tamam"
-        });
-        return; // İşlemi durdur
+      // Kullanıcıya uyarı ver
+      Swal.fire({
+        icon: "warning",
+        title: "⚠️ Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return; // İşlemi durdur
     }
 
     // **Loading ekranını ekleyelim**
@@ -174,37 +174,36 @@ block content %}
     document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
 
     fetch("/get_selected_device")
-        .then((response) => response.json())
-        .then((data) => {
-            if (!data.ip_address) {
-                Swal.fire({
-                    icon: "warning",
-                    title: "⚠️ Uyarı",
-                    text: "Lütfen önce bir cihaz seçiniz!",
-                    confirmButtonText: "Tamam"
-                });
-                return;
-            }
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.ip_address) {
+          Swal.fire({
+            icon: "warning",
+            title: "⚠️ Uyarı",
+            text: "Lütfen önce bir cihaz seçiniz!",
+            confirmButtonText: "Tamam",
+          });
+          return;
+        }
 
-            // **Yönlendirme**
-            window.location.href = `/orc-status?ip_address=${data.ip_address}`;
-        })
-        .catch((error) => {
-            console.error("Cihaz seçme hatası:", error);
-            Swal.fire({
-                icon: "error",
-                title: "Hata!",
-                text: "Cihaz bilgisi alınamadı. Lütfen tekrar deneyin.",
-                confirmButtonText: "Tamam"
-            });
-        })
-        .finally(() => {
-            // **Loading ekranını kaldır**
-            let loader = document.getElementById("loading-overlay");
-            if (loader) loader.remove();
+        // **Yönlendirme**
+        window.location.href = `/orc-status?ip_address=${data.ip_address}`;
+      })
+      .catch((error) => {
+        console.error("Cihaz seçme hatası:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Hata!",
+          text: "Cihaz bilgisi alınamadı. Lütfen tekrar deneyin.",
+          confirmButtonText: "Tamam",
         });
-}
-
+      })
+      .finally(() => {
+        // **Loading ekranını kaldır**
+        let loader = document.getElementById("loading-overlay");
+        if (loader) loader.remove();
+      });
+  }
 
   // Sayfa yüklendiğinde cihazları getir
   document.addEventListener("DOMContentLoaded", fetchDevices);
@@ -214,20 +213,90 @@ block content %}
     window.location.href = "/dashboard";
   }
 
-  // Equipment Buttonununa gider
+  // Equipment With Model 
   function goToEquipment() {
+    let selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+
+    if (!selectedDeviceIP) {
+      // Kullanıcıya uyarı ver
+      Swal.fire({
+        icon: "warning",
+        title: "⚠️ Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return; // İşlemi durdur
+    }
+
+    // **Loading ekranını ekleyelim**
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
+      <div class="loading-box">
+        <p> Equipments taranıyor...</p>
+        <div class="loader"></div>
+      </div>`;
+    document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
+
+    fetch("/equipments-with-models", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ip_address: selectedDeviceIP }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          Swal.fire({
+            icon: "error",
+            title: "Hata",
+            text: data.error,
+            confirmButtonText: "Tamam",
+          });
+          return;
+        }
+
+        // **Modbus verilerini sakla**
+        sessionStorage.setItem(
+          "equipment_data",
+          JSON.stringify(data.equipments)
+        );
+
+        // **Equipment sayfasına yönlendir**
+        window.location.href = "/equipment";
+      })
+      .catch((error) => {
+        console.error("Ekipman verisi alırken hata oluştu:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Hata!",
+          text: "Modbus verisi alınamadı. Lütfen tekrar deneyin.",
+          confirmButtonText: "Tamam",
+        });
+      })
+      .finally(() => {
+        // **Loading ekranını kaldır**
+        let loader = document.getElementById("loading-overlay");
+        if (loader) loader.remove();
+      });
+  }
+
+  // Equipment Buttonununa gider onclick="goToEquipmentSetting()"
+  function goToEquipmentSetting() {
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
 
     if (!selectedDeviceIP) {
-        // Kullanıcıya uyarı ver
-        Swal.fire({
-            icon: "warning",
-            title: "⚠️ Uyarı",
-            text: "Lütfen önce bir cihaz seçiniz!",
-            confirmButtonText: "Tamam"
-        });
-        return; // İşlemi durdur
+      // Kullanıcıya uyarı ver
+      Swal.fire({
+        icon: "warning",
+        title: "⚠️ Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return; // İşlemi durdur
     }
 
     // **Loading ekranını ekleyelim**
@@ -242,35 +311,34 @@ block content %}
     document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
 
     fetch("/modbus_request", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ip_address: selectedDeviceIP }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ip_address: selectedDeviceIP }),
     })
-    .then((response) => response.json())
-    .then((data) => {
+      .then((response) => response.json())
+      .then((data) => {
         if (data.error) {
-            alert("Hata: " + data.error);
-            return;
+          alert("Hata: " + data.error);
+          return;
         }
 
         // Modbus verilerini Equipment sayfasına yönlendirmeden önce sakla
         sessionStorage.setItem("modbus_data", JSON.stringify(data.modbus_data));
 
         // Equipment sayfasına yönlendir
-        window.location.href = "/equipment";
-    })
-    .catch((error) => {
+        window.location.href = "/equipment-setting";
+      })
+      .catch((error) => {
         console.error("Modbus verisi alırken hata oluştu:", error);
         alert("Modbus verisi alınamadı. Lütfen tekrar deneyin.");
-    })
-    .finally(() => {
+      })
+      .finally(() => {
         // **Loading ekranını kaldır**
         let loader = document.getElementById("loading-overlay");
         if (loader) loader.remove();
-    });
-}
-
+      });
+  }
 </script>
 {% endblock %}
