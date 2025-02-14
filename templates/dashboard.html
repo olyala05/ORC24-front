@@ -1,13 +1,27 @@
-{% extends "layout.html" %} {% block title %} ORC 24 Dashboard {% endblock title
-%} {% block content %}
+{% extends "layout.html" %} 
+
+{% block title %} ORC 24 Dashboard {% endblock title%} 
+
+{% block content %}
 
 <header class="header">
-  <div class="header-left">
-    <button class="header-button">
-        LOGIN  <i class="fa-solid fa-sign-in-alt"></i> 
-    </button>
-    <button class="header-button">Menu <i class="fa-solid fa-bars"></i></button>
-  </div>
+
+    <div class="header-left">
+        <form action="{{ url_for('login') }}" method="POST">
+          <button type="submit" class="header-button">
+            Logout <i class="fa-solid fa-sign-in-alt"></i>
+          </button>
+        </form>
+    
+        <!-- Menu butonunu modem-selection sayfasına yönlendirme -->
+        <form action="{{ url_for('modem_selection') }}" method="GET">
+          <button type="submit" class="header-button">
+            Menu <i class="fa-solid fa-bars"></i>
+          </button>
+        </form>
+    </div>
+    
+    
 
   <div class="header-logo">
     <img
