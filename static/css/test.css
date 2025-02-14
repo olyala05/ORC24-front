@@ -169,10 +169,10 @@
 
 .network-box {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding: 0px;
   border-radius: 10px;
-  gap: 140px;
+  gap: 40px;
 }
 
 .network-header {
@@ -186,7 +186,7 @@
   cursor: pointer;
   color: #000;
   transition: background 0.3s ease;
-  min-width: 200px;
+  min-width: 300px;
   text-align: center;
   justify-content: center;
 }
@@ -280,7 +280,7 @@
 }
 
 .test-button {
-  background-color: #EF742A;
+  background-color: #ef742a;
   color: #fff;
   border: none;
   padding: 10px 15px;
@@ -323,10 +323,383 @@
 }
 
 .status-message img {
-  width: 16px;
-  height: 16px;
+  width: 30px;
+  height: 30px;
 }
 
 .svg-md {
   font-size: 19px;
+}
+
+#equipment {
+  padding: 15px;
+  color: white;
+}
+#equipment .eq-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+#equipment .eq-table-wrap {
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 8px;
+  background: #1b223a;
+  padding: 10px;
+}
+#equipment .eq-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1b223a;
+  border-radius: 8px;
+}
+#equipment .eq-table th,
+#equipment .eq-table td {
+  padding: 0px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+#equipment .eq-status-ok {
+  color: #00ff7f;
+  font-weight: bold;
+}
+#equipment .eq-connection-ok {
+  color: #00ff7f;
+  font-weight: bold;
+}
+#equipment .eq-btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 15px;
+}
+#equipment .eq-scan-btn {
+  flex: 1;
+  max-width: 260px;
+  background-color: #ef742a;
+  color: white;
+  padding: 12px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+#equipment .eq-scan-btn:hover {
+  background-color: #ff8c42;
+}
+#equipment .eq-update-btn {
+  flex: 2;
+  background-color: #ff6f00;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+#equipment .eq-update-btn:hover {
+  background-color: #ff9100;
+}
+#equipment .eq-conn-status {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 14px;
+  text-align: left;
+  min-width: 280px;
+}
+#equipment .eq-status-success {
+  color: #00ff7f;
+  font-weight: bold;
+}
+#equipment .eq-status-fail {
+  color: #ff4444;
+  font-weight: bold;
+}
+
+#cloud {
+  padding: 15px;
+  color: white;
+}
+#cloud .cloud-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+#cloud .cloud-table-wrap {
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 8px;
+  background: #1b223a;
+  padding: 10px;
+}
+#cloud .cloud-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1b223a;
+  border-radius: 8px;
+}
+#cloud .cloud-table th, #cloud .cloud-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+#cloud .cloud-status {
+  text-align: center;
+}
+#cloud .cloud-status .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+#cloud .cloud-status .green {
+  background-color: #00ff7f;
+}
+#cloud .cloud-note {
+  font-size: 12px;
+  font-style: italic;
+  margin-top: 5px;
+  opacity: 0.7;
+}
+#cloud .cloud-btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 15px;
+}
+#cloud .cloud-scan-btn {
+  flex: 1;
+  max-width: 280px;
+  background-color: #EF742A;
+  color: white;
+  padding: 12px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+#cloud .cloud-scan-btn:hover {
+  background-color: #ff8c42;
+}
+#cloud .cloud-status-messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 14px;
+  text-align: left;
+  min-width: 280px;
+}
+#cloud .cloud-status-success {
+  color: #00ff7f;
+  font-weight: bold;
+}
+#cloud .cloud-status-fail {
+  color: #ff4444;
+  font-weight: bold;
+}
+
+#read {
+  padding: 15px;
+  color: white;
+}
+#read .read-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+#read .read-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 15px;
+}
+#read .read-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+#read .read-input-group label {
+  font-size: 14px;
+  font-weight: bold;
+}
+#read .read-input-group input {
+  background-color: #1b223a;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+#read .read-btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 15px;
+  grid-column: span 3;
+}
+#read .read-scan-btn {
+  flex: 1;
+  max-width: 280px;
+  background-color: #EF742A;
+  color: white;
+  padding: 12px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+#read .read-scan-btn:hover {
+  background-color: #ff8c42;
+}
+#read .read-status-messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 14px;
+  text-align: left;
+  min-width: 280px;
+}
+#read .read-status-success {
+  color: #00ff7f;
+  font-weight: bold;
+}
+#read .read-status-fail {
+  color: #ff4444;
+  font-weight: bold;
+}
+#read .read-terminal {
+  margin-top: 15px;
+  grid-column: span 3;
+}
+#read .read-terminal .terminal-label {
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+#read .read-terminal textarea {
+  width: 100%;
+  height: 80px;
+  background-color: #1b223a;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  resize: none;
+}
+
+#write {
+  padding: 15px;
+  color: white;
+}
+#write .wr-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+#write .wr-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 15px;
+}
+#write .wr-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+#write .wr-input-group label {
+  font-size: 14px;
+  font-weight: bold;
+}
+#write .wr-input-group input {
+  background-color: #1b223a;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+#write .wr-btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 15px;
+  grid-column: span 3;
+}
+#write .wr-scan-btn {
+  flex: 1;
+  max-width: 280px;
+  background-color: #EF742A;
+  color: white;
+  padding: 12px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+#write .wr-scan-btn:hover {
+  background-color: #ff8c42;
+}
+#write .wr-status-messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 14px;
+  text-align: left;
+  min-width: 280px;
+}
+#write .wr-status-success {
+  color: #00ff7f;
+  font-weight: bold;
+}
+#write .wr-status-fail {
+  color: #ff4444;
+  font-weight: bold;
+}
+#write .wr-terminal {
+  margin-top: 15px;
+  grid-column: span 3;
+}
+#write .wr-terminal .terminal-label {
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+#write .wr-terminal textarea {
+  width: 100%;
+  height: 80px;
+  background-color: #1b223a;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  resize: none;
 }/*# sourceMappingURL=test.css.map */

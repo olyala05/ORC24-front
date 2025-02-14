@@ -36,6 +36,7 @@
     </div>
 
     <div class="content-area">
+        <!-- Wi-Fi -->  
         <div id="wifi" class="tab-content">
             <!-- Available Wi-Fi -->
             <div class="network-box">
@@ -96,23 +97,230 @@
 
         </div>
         
+<!-- Equipment -->
+<div id="equipment" class="tab-content">
 
-        <div id="equipment" class="tab-content">
-            <h2>Equipment</h2>
-            <p>Equipment details will be displayed here.</p>
+            <!-- Equipment Table Container -->
+            <div class="eq-table-wrap">
+                <table class="eq-table">
+                    <thead>
+                        <tr>
+                            <th>Serial Number</th>
+                            <th>SID/IP</th>
+                            <th>Status / Configuration</th>
+                            <th>Connection</th>
+                            <th>Connection Protocol</th>
+                            <th>Equipment Date / Connection Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>EMR-53CS@3630748023</td>
+                            <td>5</td>
+                            <td class="eq-status-ok">A / A</td>
+                            <td class="eq-connection-ok">OK</td>
+                            <td>Modbus</td>
+                            <td>2024-04-01 10:43:19</td>
+                        </tr>
+                        <tr>
+                            <td>MPR-46S@2931</td>
+                            <td>192.168.1.147</td>
+                            <td class="eq-status-ok">A / A</td>
+                            <td class="eq-connection-ok">OK</td>
+                            <td>TCP / IP</td>
+                            <td>2024-04-01 10:43:19</td>
+                        </tr>
+                        <tr>
+                            <td>EMR-53CS@3630748023</td>
+                            <td>5</td>
+                            <td class="eq-status-ok">A / A</td>
+                            <td class="eq-connection-ok">OK</td>
+                            <td>Modbus</td>
+                            <td>2024-04-01 10:43:19</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+                <!-- Butonlar ve Bağlantı Durumu Yan Yana -->
+        <div class="eq-btn-group">
+            <!-- Küçük tarama butonu -->
+            <button class="eq-scan-btn">Scan Test</button>
+        
+            <!-- Durum mesajları sağda olacak -->
+            <div class="eq-conn-status">
+                <p class="eq-status-success">✔ Local Network Connection Scan Successful.</p>
+                <p class="eq-status-fail">✖ Local Network Connection Scan Failed.</p>
+            </div>
         </div>
-        <div id="cloud" class="tab-content">
-            <h2>Cloud Connection Test</h2>
-            <p>Cloud test details will be displayed here.</p>
-        </div>
-        <div id="read" class="tab-content">
-            <h2>Read</h2>
-            <p>Read operations will be displayed here.</p>
-        </div>
-        <div id="write" class="tab-content">
-            <h2>Write</h2>
-            <p>Write operations will be displayed here.</p>
-        </div>
+        <!-- Büyük güncelleme butonu -->
+        <button class="eq-update-btn">Update the equipment table with the equipment found during scanning</button>
+
+</div>
+
+
+            <!-- Cloud Connection Test -->
+            <div id="cloud" class="tab-content">
+
+                <!-- Cloud Connection Table -->
+                <div class="cloud-table-wrap">
+                    <table class="cloud-table">
+                        <thead>
+                            <tr>
+                                <th>Archive</th>
+                                <th>End</th>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="cloud-status"><span class="dot green"></span></td>
+                                <td class="cloud-status"><span class="dot green"></span></td>
+                                <td>Cloud connection</td>
+                                <td>2024-04-03</td>
+                                <td>13:55:00</td>
+                            </tr>
+                            <tr>
+                                <td class="cloud-status"><span class="dot green"></span></td>
+                                <td class="cloud-status"><span class="dot green"></span></td>
+                                <td>Rabbit Mq</td>
+                                <td>2024-04-03</td>
+                                <td>13:55:11</td>
+                            </tr>
+                            <tr>
+                                <td class="cloud-status"><span class="dot green"></span></td>
+                                <td class="cloud-status"><span class="dot green"></span></td>
+                                <td>VPN Port</td>
+                                <td>2024-04-03</td>
+                                <td>13:55:14</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Description -->
+                <p class="cloud-note">
+                    *Does the ORC have connection with cloud and other devices or not?
+                </p>
+
+                <!-- Buttons and Status Messages -->
+                <div class="cloud-btn-group">
+                    <button class="cloud-scan-btn">Perform a scanning test</button>
+
+                    <div class="cloud-status-messages">
+                        <p class="cloud-status-success">✔ Local Network Connection Scan Successful.</p>
+                        <p class="cloud-status-fail">✖ Local Network Connection Scan Failed.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Read Section -->
+            <div id="read" class="tab-content">
+                <!-- Form for Backend -->
+                <form action="/read-data" method="POST" class="read-form">
+                    <div class="read-input-group">
+                        <label for="port">Port</label>
+                        <input type="text" id="port" name="port" value="/dev/ttyUSB0">
+                    </div>
+                    <div class="read-input-group">
+                        <label for="baudrate">Baud Rate</label>
+                        <input type="text" id="baudrate" name="baudrate" value="9600">
+                    </div>
+                    <div class="read-input-group">
+                        <label for="parity">Parity</label>
+                        <input type="text" id="parity" name="parity" value="None">
+                    </div>
+                    <div class="read-input-group">
+                        <label for="stopbit">Stop Bit</label>
+                        <input type="text" id="stopbit" name="stopbit" value="8">
+                    </div>
+                    <div class="read-input-group">
+                        <label for="register">Register</label>
+                        <input type="text" id="register" name="register" value="8">
+                    </div>
+                    <div class="read-input-group">
+                        <label for="count">Count</label>
+                        <input type="text" id="count" name="count" value="8">
+                    </div>
+                    <div class="read-input-group">
+                        <label for="datatype">Data Type</label>
+                        <input type="text" id="datatype" name="datatype" value="uint32">
+                    </div>
+
+                    <!-- Buttons and Status Messages -->
+                    <div class="read-btn-group">
+                        <button type="submit" class="read-scan-btn">Perform a scanning test</button>
+
+                        <div class="read-status-messages">
+                            <p class="read-status-success">✔ Local Network Connection Scan Successful.</p>
+                            <p class="read-status-fail">✖ Local Network Connection Scan Failed.</p>
+                        </div>
+                    </div>
+
+                    <!-- Terminal -->
+                    <div class="read-terminal">
+                        <label class="terminal-label">Terminal</label>
+                        <textarea readonly>/dev/ttyUSB0</textarea>
+                    </div>
+                </form>
+            </div>
+
+             <!-- Write Section -->
+            <div id="write" class="tab-content">
+                <!-- Form for Backend -->
+                <form action="/write-data" method="POST" class="wr-form">
+                    <div class="wr-input-group">
+                        <label for="port">Port</label>
+                        <input type="text" id="port" name="port" value="/dev/ttyUSB0">
+                    </div>
+                    <div class="wr-input-group">
+                        <label for="baudrate">Baud Rate</label>
+                        <input type="text" id="baudrate" name="baudrate" value="9600">
+                    </div>
+                    <div class="wr-input-group">
+                        <label for="parity">Parity</label>
+                        <input type="text" id="parity" name="parity" value="None">
+                    </div>
+                    <div class="wr-input-group">
+                        <label for="stopbit">Stop Bit</label>
+                        <input type="text" id="stopbit" name="stopbit" value="8">
+                    </div>
+                    <div class="wr-input-group">
+                        <label for="register">Register</label>
+                        <input type="text" id="register" name="register" value="8">
+                    </div>
+                    <div class="wr-input-group">
+                        <label for="count">Count</label>
+                        <input type="text" id="count" name="count" value="8">
+                    </div>
+                    <div class="wr-input-group">
+                        <label for="datatype">Data Type</label>
+                        <input type="text" id="datatype" name="datatype" value="uint32">
+                    </div>
+
+                    <!-- Buttons and Status Messages -->
+                    <div class="wr-btn-group">
+                        <button type="submit" class="wr-scan-btn">Perform a scanning test</button>
+
+                        <div class="wr-status-messages">
+                            <p class="wr-status-success">✔ Local Network Connection Scan Successful.</p>
+                            <p class="wr-status-fail">✖ Local Network Connection Scan Failed.</p>
+                        </div>
+                    </div>
+
+                    <!-- Terminal -->
+                    <div class="wr-terminal">
+                        <label class="terminal-label">Terminal</label>
+                        <textarea readonly>Write successful
+
+            Read value: sadfasd</textarea>
+                    </div>
+                </form>
+            </div>
+
     </div>
 </div>
 
