@@ -98,51 +98,94 @@ def alarm_status():
     else:
         return jsonify({"error": "Alarm status verisi alınamadı"}), response.status_code
 
-# 🎯 1️⃣ Ağdaki Bağlı Cihazları Bulma (Sadece MAC adresi 02 veya 12 ile başlayanlar)
-def get_connected_devices():
-    ip_list = []
+# # 🎯 1️⃣ Ağdaki Bağlı Cihazları Bulma (Sadece MAC adresi 02 veya 12 ile başlayanlar)
+# def get_connected_devices():
+#     ip_list = []
 
-    # ARP taraması
-    arp_request = scapy.ARP(pdst=IP_RANGE)
+#     # ARP taraması
+#     arp_request = scapy.ARP(pdst=IP_RANGE)
+#     broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
+#     arp_request_broadcast = broadcast / arp_request
+
+#     try:
+#         answered_list = scapy.srp(arp_request_broadcast, timeout=2, verbose=False)[0]
+#         if answered_list:
+#             for element in answered_list:
+#                 mac_address = element[1].hwsrc
+#                 ip_address = element[1].psrc
+                
+#                 # 🎯 Sadece 02 veya 12 ile başlayanları listele
+#                 if mac_address.startswith("02") or mac_address.startswith("12"):
+#                     ip_list.append({"ip": ip_address, "mac": mac_address})
+
+#             print("Bağlı cihazlar (ARP taraması):", ip_list)
+#             return ip_list  
+
+#     except Exception as e:
+#         print(f"ARP taraması sırasında hata: {str(e)}")
+
+#     # ARP başarısız olduysa, Nmap taraması yap
+#     print("ARP başarısız, Nmap taraması başlatılıyor...")
+
+#     try:
+#         nm = nmap.PortScanner()
+#         nm.scan(hosts=IP_RANGE, arguments='-sn')
+#         for host in nm.all_hosts():
+#             mac_address = nm[host]['addresses'].get('mac', None)
+
+#             # 🎯 Sadece 02 veya 12 ile başlayanları listele
+#             if mac_address and (mac_address.startswith("02") or mac_address.startswith("12")):
+#                 ip_list.append({"ip": host, "mac": mac_address})
+
+#         print("Bağlı cihazlar (Nmap taraması):", ip_list)
+
+#     except Exception as e:
+#         print(f"Nmap taraması sırasında hata: {str(e)}")
+
+#     return ip_list  
+
+
+def arp_scan(ip_range):
+    """ Belirtilen IP aralığında ARP taraması yaparak 02 veya 12 ile başlayan MAC adreslerini bulur """
+    arp_request = scapy.ARP(pdst=ip_range)
     broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
     arp_request_broadcast = broadcast / arp_request
+    answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]
 
-    try:
-        answered_list = scapy.srp(arp_request_broadcast, timeout=2, verbose=False)[0]
-        if answered_list:
-            for element in answered_list:
-                mac_address = element[1].hwsrc
-                ip_address = element[1].psrc
-                
-                # 🎯 Sadece 02 veya 12 ile başlayanları listele
-                if mac_address.startswith("02") or mac_address.startswith("12"):
-                    ip_list.append({"ip": ip_address, "mac": mac_address})
+    ip_list = []
+    for element in answered_list:
+        mac_address = element[1].hwsrc
+        if mac_address.startswith('02') or mac_address.startswith('12'):
+            ip_list.append({"ip": element[1].psrc, "mac": mac_address})
 
-            print("Bağlı cihazlar (ARP taraması):", ip_list)
-            return ip_list  
+    return ip_list
 
-    except Exception as e:
-        print(f"ARP taraması sırasında hata: {str(e)}")
 
-    # ARP başarısız olduysa, Nmap taraması yap
-    print("ARP başarısız, Nmap taraması başlatılıyor...")
+def nmap_scan(ip_range):
+    """ Belirtilen IP aralığında Nmap taraması yaparak 02 veya 12 ile başlayan MAC adreslerini bulur """
+    nm = nmap.PortScanner()
+    nm.scan(hosts=ip_range, arguments='-sn')
 
-    try:
-        nm = nmap.PortScanner()
-        nm.scan(hosts=IP_RANGE, arguments='-sn')
-        for host in nm.all_hosts():
-            mac_address = nm[host]['addresses'].get('mac', None)
+    ip_list = []
+    for host in nm.all_hosts():
+        mac_address = nm[host]['addresses'].get('mac', '')
+        if mac_address.startswith('02') or mac_address.startswith('12'):
+            ip_list.append({"ip": host, "mac": mac_address})
 
-            # 🎯 Sadece 02 veya 12 ile başlayanları listele
-            if mac_address and (mac_address.startswith("02") or mac_address.startswith("12")):
-                ip_list.append({"ip": host, "mac": mac_address})
+    return ip_list
 
-        print("Bağlı cihazlar (Nmap taraması):", ip_list)
 
-    except Exception as e:
-        print(f"Nmap taraması sırasında hata: {str(e)}")
+def get_connected_devices():
+    """ Önce ARP taraması, başarısız olursa Nmap taraması ile cihazları bulur """
+    print("🔍 ARP taraması başlatılıyor...")
+    devices = arp_scan(IP_RANGE)
 
-    return ip_list  
+    if not devices:
+        print("❌ ARP taraması başarısız, Nmap taraması başlatılıyor...")
+        devices = nmap_scan(IP_RANGE)
+
+    print("✅ Bağlı cihazlar:", devices)
+    return devices
 
 # 🎯 2️⃣ Bağlı Cihazları Listeleme API'si
 @app.route("/devices", methods=["GET"])

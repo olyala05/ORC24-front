@@ -8,13 +8,13 @@ body {
 }
 
 .equipment-container {
-  margin-top: 60px;
+  margin-top: 79px;
   padding: 20px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   width: 97vw;
-  height: calc(97vh - 57px);
+  height: calc(79vh + 17px);
   background: #0B1734;
   border-radius: 10px;
 }

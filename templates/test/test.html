@@ -35,9 +35,9 @@
         <button class="tab-btn" data-target="write">Write</button>
     </div>
 
-    <div class="content-area">
-        <!-- Wi-Fi -->  
-        <div id="wifi" class="tab-content">
+        <div class="content-area">
+            <!-- Wi-Fi -->  
+            <div id="wifi" class="tab-content">
             <!-- Available Wi-Fi -->
             <div class="network-box">
                 <button class="network-header wifi-header">
@@ -156,9 +156,7 @@
         <!-- Büyük güncelleme butonu -->
         <button class="eq-update-btn">Update the equipment table with the equipment found during scanning</button>
 
-</div>
-
-
+        </div>
             <!-- Cloud Connection Test -->
             <div id="cloud" class="tab-content">
 
@@ -335,67 +333,65 @@
         var testContainer = document.querySelector(".test-container");
         var tabButtons = document.querySelectorAll(".tab-btn");
         var tabContents = document.querySelectorAll(".tab-content");
-    
-        // Sayfanın modunu kontrol et
+
+        // 🎯 1️⃣ Sayfa yüklendiğinde test modunu kontrol et
         if (localStorage.getItem("testMode") === "enabled") {
-            testContainer.style.display = "none";
-            testModeContent.style.display = "flex";
-            modal.style.display = "none";
+            testContainer.style.display = "none";  // İlk butonu gizle
+            testModeContent.style.display = "flex";  // Yeni butonları göster
+            modal.style.display = "none";  // Modal kapalı başlasın
         } else {
-            testContainer.style.display = "flex";
-            testModeContent.style.display = "none";
+            testContainer.style.display = "flex";  // İlk butonu göster
+            testModeContent.style.display = "none";  // Yeni içerikleri gizle
         }
-    
-        // Butona tıklayınca modal açılsın
+
+        // 🎯 2️⃣ "Switch to Test Mode" butonuna tıklanınca modal açılsın
         btn.addEventListener("click", function () {
             if (!localStorage.getItem("testMode")) {
-                modal.style.display = "flex";
+                modal.style.display = "flex"; // Modalı aç
             }
         });
-    
-        // Kapatma butonuna tıklayınca modal kapansın
+
+        // 🎯 3️⃣ "X" veya "No" butonuna tıklanınca modal kapansın
         closeBtn.addEventListener("click", function () {
             modal.style.display = "none";
         });
-    
-        // Hayır butonuna tıklayınca modal kapansın
         noBtn.addEventListener("click", function () {
             modal.style.display = "none";
         });
-    
-        // Yes butonuna tıklanınca test modunu aktif et ve kaydet
+
+        // 🎯 4️⃣ "Yes" butonuna tıklanınca test modu aktif edilsin
         yesBtn.addEventListener("click", function () {
-            modal.style.display = "none"; // Modal'ı kapat
-            testContainer.style.display = "none"; // Eski butonu gizle
-            testModeContent.style.display = "flex"; // Yeni içeriği göster
-            localStorage.setItem("testMode", "enabled"); // Test modunu kaydet
+            modal.style.display = "none";  // Modal kapat
+            testContainer.style.display = "none";  // İlk butonu gizle
+            testModeContent.style.display = "flex";  // Yeni içeriği göster
+            localStorage.setItem("testMode", "enabled");  // Test modunu localStorage'a kaydet
         });
-    
-        // Tab butonlarına tıklanınca ilgili içeriği göster ve aktif class'ı ekle
+
+        // 🎯 5️⃣ Tab butonlarına tıklanınca ilgili içeriği göster
         tabButtons.forEach(button => {
             button.addEventListener("click", function () {
                 var target = this.getAttribute("data-target");
-    
+
                 // Tüm içerikleri gizle
                 tabContents.forEach(content => {
                     content.style.display = "none";
                 });
-    
+
                 // Seçili içeriği göster
                 document.getElementById(target).style.display = "block";
-    
+
                 // Önce tüm butonlardan aktif class'ını kaldır
                 tabButtons.forEach(btn => btn.classList.remove("active"));
-    
+
                 // Şu an tıklanan butona aktif class'ı ekle
                 this.classList.add("active");
-    
+
                 // Son açılan sekmeyi kaydet
                 localStorage.setItem("lastTab", target);
             });
         });
-    
-        // Sayfa yenilendiğinde en son açılan sekmeyi göster
+
+        // 🎯 6️⃣ Sayfa yenilendiğinde en son açılan sekmeyi göster
         var lastTab = localStorage.getItem("lastTab");
         if (lastTab) {
             document.getElementById(lastTab).style.display = "block";
@@ -408,8 +404,7 @@
             tabContents.forEach(content => content.style.display = "none");
         }
     });
-    
-    </script>
-    
+</script>
+
     
 {% endblock %}

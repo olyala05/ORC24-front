@@ -16,12 +16,13 @@ block content %}
   </div>
 
   <div class="header-right">
-    <div class="date-time">16 Temmuz 2024 10:14</div>
+    <div class="date-time" id="currentDateTime"></div>
     <div class="report-line">
       <div class="line"></div>
     </div>
     <div class="report-date">Modem Selection</div>
   </div>
+
 </div>
 
 <!-- Sayfa İçeriği -->
@@ -389,6 +390,27 @@ block content %}
         if (loader) loader.remove();
       });
   }
+
+  function updateDateTime() {
+        const now = new Date();
+        
+        // 📌 Gün, ay, yıl formatında al (DD Month YYYY)
+        const options = { day: '2-digit', month: 'long', year: 'numeric' };
+        const formattedDate = now.toLocaleDateString('tr-TR', options);
+
+        // 📌 Saat ve dakikayı ekle (HH:MM formatında)
+        const formattedTime = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+
+        // 📌 HTML içine ekle
+        document.getElementById('currentDateTime').textContent = `${formattedDate} ${formattedTime}`;
+    }
+
+    // Sayfa yüklendiğinde çalıştır
+    updateDateTime();
+
+    // 📌 Her 1 dakikada bir tarihi ve saati güncelle
+    setInterval(updateDateTime, 60000);
+
 </script>
 
 {% endblock %}

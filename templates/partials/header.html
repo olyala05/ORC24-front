@@ -24,7 +24,10 @@
 
 <script>
   function goBack() {
-    window.history.back();
+    history.back();
+    setTimeout(() => {
+      location.replace(document.referrer); // Sayfa yenilenmesini engelle
+    }, 0);
   }
 
   function updateDateTime() {
@@ -32,11 +35,11 @@
     const formattedDate = now.toLocaleString("tr-TR", {
       // weekday: "long", // Haftaisimleirni isterseler buun yorum satırından aç
       year: "numeric",
-      month: "long",  // Ocak, Şubat vs.
+      month: "long", // Ocak, Şubat vs.
       day: "numeric",
       hour: "2-digit",
       minute: "2-digit",
-      second: "2-digit"
+      second: "2-digit",
     });
     document.getElementById("currentDateTime").textContent = formattedDate;
   }

@@ -155,7 +155,7 @@
 .energy-table .energy-row {
   display: flex;
   justify-content: space-between;
-  padding: 8px 15px;
+  padding: 3px 15px;
   font-size: 18px;
 }
 .energy-table .energy-row div {
