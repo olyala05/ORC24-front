@@ -39,7 +39,7 @@ body {
   flex-grow: 1;
   text-align: center;
 
-  .header {
+  .login-header {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,7 +75,7 @@ body {
 }
 
 .logo {
-  height: 110px;
+  height: 80px;
   z-index: 2;
 }
 
@@ -86,10 +86,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 500px;
+  width: 400px;
 }
 
-/* Input Grubu */
 /* Input Grubu */
 .input-group {
   position: relative;
@@ -98,6 +97,7 @@ body {
   background: #0f1a32;
   border-radius: 5px;
   padding: 7px;
+  margin: 10px;
 }
 
 /* Input */
