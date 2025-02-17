@@ -1,4 +1,6 @@
 @charset "UTF-8";
+@import "bootstrap/css/bootstrap.min.css";
+@import 'fontawesome/css/all.min.css';
 /* Genel Stil */
 body {
   background-color: #1c2747;
@@ -154,7 +156,7 @@ body::after {
   gap: 12px;
 }
 .login-btn:hover {
-  background: #fe5f00;
+  background: rgb(254, 95.4048780488, 0);
   box-shadow: 0 6px 12px rgba(255, 127, 50, 0.5);
 }
 
@@ -331,7 +333,7 @@ body::after {
   box-shadow: 0 2px 5px rgba(255, 127, 50, 0.5);
 }
 .header-button:hover {
-  background: #fe5f00;
+  background: rgb(254, 95.4048780488, 0);
   box-shadow: 0 4px 8px rgba(255, 127, 50, 0.7);
 }
 .header-button i {
@@ -891,7 +893,7 @@ body {
   cursor: pointer;
 }
 .header .header-button:hover {
-  background-color: #ff8c33;
+  background-color: rgb(255, 139.8, 51);
 }
 .header .header-logo .logo {
   height: 40px;
@@ -1020,7 +1022,7 @@ body {
   cursor: pointer;
 }
 .header .header-button:hover {
-  background-color: #ff8c33;
+  background-color: rgb(255, 139.8, 51);
 }
 .header .header-button i {
   margin-left: 30px;
@@ -1196,7 +1198,7 @@ body {
   cursor: pointer;
 }
 .header .header-button:hover {
-  background-color: #ff8c33;
+  background-color: rgb(255, 139.8, 51);
 }
 .header .header-button i {
   margin-left: 5px;
@@ -1308,7 +1310,7 @@ body {
   color: white;
 }
 .device-info .connection-status .disconnect-btn:hover {
-  background-color: #ff8c33;
+  background-color: rgb(255, 139.8, 51);
 }
 
 .connection-table {
@@ -1409,7 +1411,7 @@ body {
   color: white;
 }
 .algorithm-section .algorithm-box .status-btn:hover {
-  background-color: #ff8c33;
+  background-color: rgb(255, 139.8, 51);
 }
 
 .connection-status {
@@ -2175,4 +2177,6 @@ body {
   border-radius: 5px;
   font-size: 14px;
   resize: none;
-}/*# sourceMappingURL=build.css.map */
+}
+
+/*# sourceMappingURL=build.css.map */

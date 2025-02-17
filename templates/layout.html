@@ -9,53 +9,10 @@
       {% endblock %}
     </title>
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" />
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}" />
 
     <!-- Genel Stil Dosyası (Tüm Sayfalarda Kullanılacak) -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/build.css') }}" />
 
-    {% if request.endpoint == "dashboard" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
-    {% elif request.endpoint == "modem_selection" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/modem-selection.css') }}">
-    {% elif request.endpoint == "orc_status" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/orc-status.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    {% elif request.endpoint == "log" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    {% elif request.endpoint == "alarm" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/alarm.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    {% elif request.endpoint == "equipment" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/equipment.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    {% elif request.endpoint == "equipment_details" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/equipment-details.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    {% elif request.endpoint == "equipment_setting" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/equipment-setting.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    {% elif request.endpoint == "test" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/test.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    {% elif request.endpoint == "settings" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    {% elif request.endpoint == "orc_settings" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/orc_settings.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    {% elif request.endpoint == "osos_settings" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/osos_settings.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    {% elif request.endpoint == "equipment_settings" %}
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/equipment_settings.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    {% endif %}
 
   </head>
   <body>

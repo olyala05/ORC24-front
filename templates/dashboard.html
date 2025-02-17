@@ -9,14 +9,16 @@
     <div class="header-left">
         <form action="{{ url_for('logout') }}" method="POST">
           <button type="submit" class="header-button">
-            Logout <i class="fa-solid fa-sign-in-alt"></i>
-          </button>
+            Logout
+            <img src="{{ url_for('static', filename='images/svg/17.svg') }}" alt="Logout" width="20" height="20"  style="padding: 7px 7px; background: #0B1734; border-radius: 5px;">    
+        </button>
+        
         </form>
     
         <!-- Menu butonunu modem-selection sayfasına yönlendirme -->
         <form action="{{ url_for('modem_selection') }}" method="GET">
           <button type="submit" class="header-button">
-            Menu <i class="fa-solid fa-bars"></i>
+            Menu <img src="{{ url_for('static', filename='images/svg/18.svg') }}" alt="Logout" width="20" height="20"  style="padding: 7px 7px; background: #0B1734; border-radius: 5px;">    
           </button>
         </form>
     </div>

@@ -20,5 +20,9 @@
   "description": "",
   "devDependencies": {
     "sass": "^1.85.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "bootstrap": "^5.3.3"
   }
 }
