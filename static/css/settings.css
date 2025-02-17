@@ -1,0 +1,25 @@
+.settings-container {
+  display: flex;
+  gap: 40px;
+  background-color: #0f1b38;
+  padding: 20px;
+  border-radius: 8px;
+}
+.settings-container .settings-button {
+  background-color: #ffffff;
+  border: 2px solid transparent;
+  padding: 20px 50px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.settings-container .settings-button:hover {
+  border-color: #ff6a00;
+}
+.settings-container .settings-button.active {
+  border-color: #ff6a00;
+  color: #000;
+}/*# sourceMappingURL=settings.css.map */

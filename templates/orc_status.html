@@ -142,7 +142,22 @@ content %}
             console.error("Bağlantı kontrolü sırasında hata oluştu:", error);
         });
 }
+document.addEventListener("DOMContentLoaded", function () {
+  const disconnectBtn = document.querySelector(".disconnect-btn");
 
+  disconnectBtn.addEventListener("click", function () {
+      fetch("/disconnect_request", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" }
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data);
+          alert("Wi-Fi bağlantısı kapatıldı!");
+      })
+      .catch(error => console.error("Error:", error));
+  });
+});
 </script>
   {% endblock %}
 </div>

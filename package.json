@@ -1,0 +1,24 @@
+{
+  "name": "orc24-front",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch static/css/build.scss:static/css/build.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olyala05/ORC24-front.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olyala05/ORC24-front/issues"
+  },
+  "homepage": "https://github.com/olyala05/ORC24-front#readme",
+  "description": "",
+  "devDependencies": {
+    "sass": "^1.85.0"
+  }
+}

@@ -38,7 +38,7 @@ block content %}
     <div class="button-container">
       <button class="btn" onclick="goToORCStatus()">ORC Status</button>
       <button class="btn" onclick="goToEquipment()">Equipment</button>
-      <button class="btn">Settings</button>
+      <button class="btn" onclick="goToSetting()">Settings</button>
     </div>
 
     <div class="bottom-buttons">
@@ -302,6 +302,36 @@ block content %}
         if (loader) loader.remove();
       });
   }
+
+    // Equipment With Model
+    function goToSetting() {
+      let dropdown = document.getElementById("modem");
+      let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+  
+      if (!selectedDeviceIP) {
+        // Kullanıcıya uyarı ver
+        Swal.fire({
+          icon: "warning",
+          title: "⚠️ Uyarı",
+          text: "Lütfen önce bir cihaz seçiniz!",
+          confirmButtonText: "Tamam",
+        });
+        return; // İşlemi durdur
+      }
+  
+      // **Loading ekranını ekleyelim**
+      let loadingOverlay = document.createElement("div");
+      loadingOverlay.id = "loading-overlay";
+      loadingOverlay.className = "loading-overlay";
+      loadingOverlay.innerHTML = `
+        <div class="loading-box">
+          <p> ORC Status yükleniyor...</p>
+          <div class="loader"></div>
+        </div>`;
+      document.body.appendChild(loadingOverlay); 
+
+      window.location.href = "/settings";
+    }
 
   // Test Sayfasına Yönlendirir
   function goToTest() {

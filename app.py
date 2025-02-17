@@ -45,8 +45,6 @@ def login():
         email = request.form.get("email")
         password = request.form.get("password")
 
-        print("Giriş Denemesi:", email, password)
-
         response = requests.get(
             f"{LARAVEL_API_URL}/login",
             params={"client_email": email, "client_password": password},
@@ -54,24 +52,25 @@ def login():
             verify=False
         )
 
-        print("Laravel API Yanıtı:", response.status_code, response.text)
-
         if response.status_code == 200:
             try:
                 api_response = response.json()
                 session["access_token"] = api_response.get("access_token")
 
-                flash("Giriş başarılı!", "success")
-                return redirect(url_for("dashboard"))  # 🎯 Başarılı giriş sonrası yönlendir
+                # 🎯 Başarılı giriş bilgisini session içinde sakla
+                session["login_success"] = True  
+
+                return redirect(url_for("dashboard"))  # 🎯 Dashboard sayfasına yönlendir
             except Exception as e:
-                print("JSON Decode Hatası:", e)
                 flash("Sunucudan geçersiz yanıt alındı!", "danger")
                 return redirect(url_for("login"))
 
         flash("Hatalı e-posta veya şifre!", "danger")
         return redirect(url_for("login"))
 
-    return render_template("login.html")  
+    # 🎯 Başarılı girişten sonra mesajı göstermek için
+    login_success = session.pop("login_success", None)
+    return render_template("login.html", login_success=login_success)
 
 # # 🎯 Dashboard Sayfası
 @app.route("/dashboard")
@@ -307,6 +306,32 @@ def modbus_request():
         logger.error(f"🔥 Modbus isteği hatası: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
 
+@app.route("/disconnect_request", methods=["POST"])
+def disconnect_request():
+    """
+    Seçili cihazın Wi-Fi bağlantısını keser.
+    """
+    selected_ip = session.get("selected_device_ip")  # Seçili cihazın IP'sini al
+
+    if not selected_ip:
+        logger.warning("⚠️ Cihaz seçilmedi!")
+        return jsonify({"error": "Cihaz seçilmedi. Lütfen önce bir cihaz bağlayın."}), 400
+
+    try:
+        logger.info(f"🔌 Wi-Fi bağlantısı kesiliyor: {selected_ip}")
+        
+        # HTTP ile cihazdan Wi-Fi'yi kapatmasını iste
+        url = f"http://{selected_ip}:8085/disconnect_wifi"
+        response = requests.post(url, timeout=10)  # Timeout ekleyelim
+        response.raise_for_status()
+
+        logger.info("✅ Wi-Fi başarıyla kapatıldı.")
+        return jsonify({"status": "success", "message": "Wi-Fi bağlantısı kapatıldı."})
+
+    except requests.exceptions.RequestException as e:
+        logger.error(f"🔥 Wi-Fi kapatma hatası: {e}")
+        return jsonify({"error": f"Wi-Fi bağlantısı kapatılamadı: {str(e)}"}), 500
+
 @app.route("/equipments-with-models", methods=["POST"])
 def equipments_with_models():
     data = request.json
@@ -366,12 +391,27 @@ def test():
 def equipment_details():
     return render_template("equipments/equipment_details.html")
 
+@app.route('/settings', endpoint="settings")
+def settings():
+    return render_template("settings/setting.html")
+
+@app.route('/orc-settings', endpoint="orc_settings")
+def orc_setting():
+    return render_template("settings/orc_set.html")
+
+@app.route('/osos-settings', endpoint="osos_settings")
+def osos_setting():
+    return render_template("settings/osos_set.html")
+
+@app.route('/equipment-settings', endpoint="equipment_settings")
+def equipment_setting():
+    return render_template("settings/equipment_set.html")
+
 # 🎯 Çıkış Yapma
-@app.route("/logout")
+@app.route("/logout", methods=["POST"])
 def logout():
-    session.clear()
-    flash("Başarıyla çıkış yapıldı.", "success")
-    return redirect(url_for("login"))
+    session.clear()  # 🎯 Tüm oturum bilgilerini temizle
+    return redirect(url_for("login"))  # 🎯 Login sayfasına yönlendir
 
 if __name__ == '__main__':
     app.run(debug=True, port=5004)
