@@ -16,7 +16,7 @@
     </div>
 
     <div class="content-area-set">
-      <!-- Wi-Fi -->
+      <!-- Wi-Fi Set -->
       <div id="wifi-set" class="tab-content-set">
           <div class="wifi-container-set">
               <!-- Available Wi-Fi -->
@@ -79,6 +79,26 @@
               </div>
           </div>
       </div>
+
+      <div id="lora-set" class="tab-content-set" style="display: none;"> 
+        <!-- LoRa Ayarları -->
+        <h3>LoRa Settings</h3>
+    </div>
+
+    <div id="eth-set" class="tab-content-set" style="display: none;"> 
+        <!-- Ethernet Ayarları -->
+        <h3>Ethernet Settings</h3>
+    </div>
+
+    <div id="gsm-set" class="tab-content-set" style="display: none;"> 
+        <!-- GSM Ayarları -->
+        <h3>GSM Settings</h3>
+    </div>
+
+    <div id="orc-set" class="tab-content-set" style="display: none;"> 
+        <!-- ORC Ayarları -->
+        <h3>ORC Settings</h3>
+    </div>
   </div>
   
 <script>
@@ -86,5 +106,36 @@
         const wifiList = document.getElementById("wifi-list");
         wifiList.classList.toggle("hidden");
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabButtons = document.querySelectorAll(".tab-btn-set");
+        const tabContents = document.querySelectorAll(".tab-content-set");
+    
+        tabButtons.forEach((button) => {
+            button.addEventListener("click", function () {
+                const targetId = this.getAttribute("data-target");
+    
+                // 📌 Önce tüm butonlardaki aktif sınıfı kaldır
+                tabButtons.forEach((btn) => btn.classList.remove("active"));
+    
+                // 📌 Tüm tab içeriklerini gizle
+                tabContents.forEach((content) => content.style.display = "none");
+    
+                // 📌 Seçilen butona "active" sınıfı ekle
+                this.classList.add("active");
+    
+                // 📌 İlgili tab içeriğini göster
+                document.getElementById(targetId).style.display = "block";
+            });
+        });
+    
+        // 📌 Sayfa yüklendiğinde varsayılan olarak ilk sekmeyi göster
+        if (tabButtons.length > 0) {
+            tabButtons[0].click();
+        }
+    });
+    
 </script>
+
+
 {% endblock %}
