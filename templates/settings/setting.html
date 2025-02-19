@@ -40,7 +40,7 @@
       <div id="wifi" class="tab-content">
           <div class="wifi-container">
               <!-- Available Wi-Fi -->
-              <div class="network-box">
+              <div class="network-box-set">
                   <button class="network-header wifi-header">
                       Available Wi-Fi 
                       <span class="wifi-icon">
@@ -55,13 +55,19 @@
               <!-- Wi-Fi Password Form -->
               <div class="wifi-connection">
                   <div class="wifi-card">
-                      <h4>Wi-Fi Password</h4>
+                    <div class="wifi-icon-password">
+                        <img src="{{ url_for('static', filename='images/svg/12.svg') }}" alt="No Wi-Fi"> 
+                        <h4>Wi-Fi Password</h4>
+                    </div>
+             
                       <p>Wi-Fi SSID: pier mi 5g</p>
-                      <label>Password:</label>
-                      <input type="password" placeholder="Enter password">
+                      <div class="password-intput">  
+                        <label>Password:</label>
+                        <input type="password">
+                      </div>
                       <div class="show-password">
-                          <input type="checkbox" id="showPass">
-                          <label for="showPass">Show Password</label>
+                          <input type="checkbox" id="showPass" class="check-box">
+                          <label for="showPass" class="show-pass">Show Password</label>
                       </div>
                       <div class="btn-group">
                           <button class="btn cancel">Cancel</button>
@@ -395,13 +401,15 @@
 </script>
 
 <style>
+
   .wifi-container {
     display: flex;
-    gap: 20px;
     align-items: flex-start;
+    
 }
 
-.network-box {
+.network-box-set {
+    margin-right: 15px;
     .network-header {
         display: flex;
         align-items: center;
@@ -409,17 +417,20 @@
         font-size: 16px;
         font-weight: bold;
         background: #f5f5f5;
-        padding: 10px;
-        border-radius: 5px;
+        padding: 14px;
+        border-radius: 7px;
         border: none;
         cursor: pointer;
 
         .wifi-icon img {
-            width: 20px;
+            width: 30px;
         }
     }
 }
-
+.wifi-icon-password{
+    display: flex;
+    gap: 10px;
+}
 .wifi-connection {
     display: flex;
     flex-direction: column;
@@ -430,7 +441,7 @@
     background: white;
     padding: 5px;
     border-radius: 10px;
-    width: 350px;
+    width: 407px;
 
     h4 {
         font-size: 18px;
@@ -439,8 +450,11 @@
     }
 
     p {
-        font-size: 14px;
-        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: 700;
+        color: #1C2747;
+        margin-left: 34px;
+        margin-top: 0;
     }
 
     label {
@@ -451,11 +465,17 @@
     }
 
     input {
-        width: 100%;
         padding: 8px;
         border: 1px solid #E2E2E2;
         border-radius: 5px;
-        background: #E2E2E2;;
+        background: #E2E2E2;
+        width: 100%;    
+    }
+
+    .password-intput{
+        display: flex;
+        gap: 10px;
+        align-items: center;
     }
 
     .show-password {
@@ -463,6 +483,19 @@
         align-items: center;
         gap: 5px;
         margin-top: 5px;
+        justify-content: center;
+        width: 300px;
+
+        .check-box{
+            width:15px; 
+        }
+
+        .show-pass{
+            font-size: 14px;    
+            color: #1C2747; 
+            font-weight: 100;
+            white-space: nowrap;
+        }
     }
 
     .btn-group {
