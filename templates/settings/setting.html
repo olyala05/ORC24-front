@@ -21,12 +21,23 @@
           <div class="wifi-container-set">
               <!-- Available Wi-Fi -->
               <div class="network-box-set">
-                  <button class="network-header-set wifi-header-set">
-                      Available Wi-Fi 
-                      <span class="wifi-icon-set">
-                          <img src="{{ url_for('static', filename='images/svg/12.svg') }}" alt="No Wi-Fi">
-                      </span> 
-                  </button>
+                <button class="network-header-set wifi-header-set" onclick="toggleWifiList()">
+                    Available Wi-Fi 
+                    <span class="wifi-icon-set">
+                        <img src="{{ url_for('static', filename='images/svg/12.svg') }}" alt="No Wi-Fi">
+                    </span> 
+                </button>
+                
+                <div id="wifi-list" class="wifi-list-set hidden">
+                    <ul>
+                        <li>Pier Enerji</li>
+                        <li>Pier Router Mi</li>
+                        <li>1 NUMBER</li>
+                        <li>Alperen</li>
+                        <li>AndroidAP_2455</li>
+                        <li>Tenda_R24</li>
+                    </ul>
+                </div>
                   <div class="network-info-set">
                       <!-- Wi-Fi List Here -->
                   </div>
@@ -70,284 +81,10 @@
       </div>
   </div>
   
-    
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var btn = document.querySelector(".test-btn");
-        var modal = document.getElementById("test-modal");
-        var closeBtn = document.querySelector(".close");
-        var noBtn = document.getElementById("no-btn");
-        var yesBtn = document.getElementById("yes-btn");
-        var testModeContent = document.getElementById("test-mode-content");
-        var testContainer = document.querySelector(".test-container");
-        var tabButtons = document.querySelectorAll(".tab-btn");
-        var tabContents = document.querySelectorAll(".tab-content");
-
-        // 🎯 1️⃣ Sayfa yüklendiğinde test modunu kontrol et
-        if (localStorage.getItem("testMode") === "enabled") {
-            testContainer.style.display = "none";  // İlk butonu gizle
-            testModeContent.style.display = "flex";  // Yeni butonları göster
-            modal.style.display = "none";  // Modal kapalı başlasın
-        } else {
-            testContainer.style.display = "flex";  // İlk butonu göster
-            testModeContent.style.display = "none";  // Yeni içerikleri gizle
-        }
-
-        // 🎯 2️⃣ "Switch to Test Mode" butonuna tıklanınca modal açılsın
-        btn.addEventListener("click", function () {
-            if (!localStorage.getItem("testMode")) {
-                modal.style.display = "flex"; // Modalı aç
-            }
-        });
-
-        // 🎯 3️⃣ "X" veya "No" butonuna tıklanınca modal kapansın
-        closeBtn.addEventListener("click", function () {
-            modal.style.display = "none";
-        });
-        noBtn.addEventListener("click", function () {
-            modal.style.display = "none";
-        });
-
-        // 🎯 4️⃣ "Yes" butonuna tıklanınca test modu aktif edilsin
-        yesBtn.addEventListener("click", function () {
-            modal.style.display = "none";  // Modal kapat
-            testContainer.style.display = "none";  // İlk butonu gizle
-            testModeContent.style.display = "flex";  // Yeni içeriği göster
-            localStorage.setItem("testMode", "enabled");  // Test modunu localStorage'a kaydet
-        });
-
-        // 🎯 5️⃣ Tab butonlarına tıklanınca ilgili içeriği göster
-        tabButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                var target = this.getAttribute("data-target");
-
-                // Tüm içerikleri gizle
-                tabContents.forEach(content => {
-                    content.style.display = "none";
-                });
-
-                // Seçili içeriği göster
-                document.getElementById(target).style.display = "block";
-
-                // Önce tüm butonlardan aktif class'ını kaldır
-                tabButtons.forEach(btn => btn.classList.remove("active"));
-
-                // Şu an tıklanan butona aktif class'ı ekle
-                this.classList.add("active");
-
-                // Son açılan sekmeyi kaydet
-                localStorage.setItem("lastTab", target);
-            });
-        });
-
-        // 🎯 6️⃣ Sayfa yenilendiğinde en son açılan sekmeyi göster
-        var lastTab = localStorage.getItem("lastTab");
-        if (lastTab) {
-            document.getElementById(lastTab).style.display = "block";
-            tabButtons.forEach(button => {
-                if (button.getAttribute("data-target") === lastTab) {
-                    button.classList.add("active");
-                }
-            });
-        } else {
-            tabContents.forEach(content => content.style.display = "none");
-        }
-    });
+    function toggleWifiList() {
+        const wifiList = document.getElementById("wifi-list");
+        wifiList.classList.toggle("hidden");
+    }
 </script>
-
-<style>
-    .settings-content{
-        display: flex;
-        gap: 20px;
-        
-        
-        .tab-btn-set{
-            padding: 19px;
-            border-radius: 7px;
-            color: #000;
-            font-weight: 600;
-            margin: 10px;
-            font-size: large;
-        }
-    }
-    .sidebar-set {
-        width: 250px;
-        display: flex;
-        flex-direction: column;
-        
-    }
-    .tab-btn-set.active {
-        background-color: #fff;
-        font-weight: 700;
-        border: 3px solid #ff6f00;
-        color: #000;
-    }
-  .wifi-container-set {
-    display: flex;
-    align-items: flex-start;
-}
-
-.btn-group-set{
-    padding: 10px;
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-}
-
-.network-box-set {
-    margin-right: 15px;
-
-    .network-header-set {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 16px;
-        font-weight: bold;
-        background: #f5f5f5;
-        padding: 14px;
-        border-radius: 7px;
-        border: none;
-        cursor: pointer;
-        width: 280px;
-        margin-top: 15px;
-
-        .wifi-icon-set {
-            display: flex;
-            gap: 10px;
-
-            img{
-               width: 30px; 
-            }
-        }
-    }
-}
-
-.wifi-icon-set {
-    display: flex;
-    gap: 10px; 
-}
-.wifi-icon-password{
-    display: flex;
-    gap: 10px;
-}
-.wifi-connection-set {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.wifi-card-set {
-    background: white;
-    padding: 5px;
-    border-radius: 10px;
-    width: 407px;
-
-    h4 {
-        font-size: 18px;
-        margin-bottom: 10px;
-        color: #1C2747;
-    }
-
-    p {
-        font-size: 18px;
-        font-weight: 700;
-        color: #1C2747;
-        margin-left: 34px;
-        margin-top: 0;
-    }
-
-    label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-        color: #1C2747;
-    }
-
-    input {
-        padding: 8px;
-        border: 1px solid #E2E2E2;
-        border-radius: 5px;
-        background: #E2E2E2;
-        width: 100%;    
-    }
-
-    .password-intput-set{
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .show-password-set {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        margin-top: 5px;
-        justify-content: center;
-        width: 300px;
-
-        .check-box-set{
-            width:15px; 
-        }
-
-        .show-pass{
-            font-size: 14px;    
-            color: #1C2747; 
-            font-weight: 100;
-            white-space: nowrap;
-        }
-    }
-
-    .btn-group-set {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 15px;
-      gap: 14px;
-
-        .btn-set {
-            padding: 14px 32px;
-            border: none;
-            cursor: pointer;
-            border-radius: 6px;
-            background: #EF742A;
-            color: #fff;
-            font-size: 16px;
-
-            &.cancel {
-              background: #EF742A;
-              color: white;
-              padding: 14px 40px;
-            }
-
-            &.connect {
-                background: #EF742A;
-                color: white;
-                padding: 14px 40px;
-            }
-        }
-    }
-
-    &.connected {
-        .wifi-info-set {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px;
-            border-radius: 5px;
-            color: #1C2747;
-            font-weight: bold;
-
-
-            .disconnect {
-              background: #EF742A;
-              color: white;
-              border: none;
-              padding: 14px 40px;
-              cursor: pointer;
-              border-radius: 5px;
-            }
-        }
-    }
-}
-
-</style> 
 {% endblock %}

@@ -31,6 +31,7 @@ body {
   height: $header-height;
   z-index: 1000;
 
+
   .header-left {
     display: flex;
     align-items: center;
@@ -69,6 +70,7 @@ body {
     align-items: center;
     width: 110%;
     margin: 3px 0;
+    width: 150%;
   }
 }
 
