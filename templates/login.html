@@ -23,18 +23,18 @@
 
         <form method="POST" action="{{ url_for('login') }}">  <!-- 🎯 Flask'a yönlendirme -->
           <div class="input-group">
-            <span class="icon icon-left"><i class="fa-solid fa-user"></i></span>
+            <span class="icon icon-left"><img src="{{ url_for('static', filename='images/svg/22.svg') }}" alt="Logout" width="20" height="20" ></span>
             <input type="text" name="email" placeholder="Email" required />
           </div>
 
           <div class="input-group">
-            <span class="icon icon-left"><i class="fa-solid fa-lock"></i></span>
+            <span class="icon icon-left"><img src="{{ url_for('static', filename='images/svg/21.svg') }}" alt="Logout" width="20" height="20" ></span>
             <input type="password" name="password" id="password-input" placeholder="Password" required />
             <span class="icon icon-right" id="toggle-password"><i class="fa-solid fa-eye"></i></span>
           </div>
           
           <div class="login-actions">
-            <button type="submit" class="login-btn">LOGIN <i class="fa-solid fa-sign-in-alt login-icon"></i></button>
+            <button type="submit" class="login-btn">LOGIN  <img src="{{ url_for('static', filename='images/svg/17.svg') }}" alt="Logout" width="30" height="30"  style="padding: 7px 9px; background: #0B1734; border-radius: 5px;"> </button>
           </div>
         </form>
       </div>

@@ -27,6 +27,29 @@ body::after {
   background-position: center;
   z-index: -10;
 }
+body .footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: white !important; /* Yazı rengini zorla değiştir */
+  background-color: #0E1734 !important; /* Arka plan rengini belirle */
+  -webkit-box-shadow: 0 0 0 30px #0E1734 inset !important; /* Arka planı zorla değiştir */
+  -webkit-transition: background-color 5000s ease-in-out 0s;
+  transition: background-color 5000s ease-in-out 0s; /* Renk değişimini kalıcı yap */
+}
+
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: white !important; /* Yazı rengini hover ve focus durumunda da zorla değiştir */
+  background-color: #0E1734 !important;
+  -webkit-box-shadow: 0 0 0 30px #0E1734 inset !important;
+}
 
 .container {
   display: flex;
@@ -103,7 +126,7 @@ body::after {
   border: none;
   color: white;
   width: 100%;
-  padding: 10px 40px; /* Solda ve sağda ikonlar olduğu için iç boşluk ayarla */
+  padding: 14px 40px; /* Solda ve sağda ikonlar olduğu için iç boşluk ayarla */
   font-size: 16px;
 }
 
@@ -135,13 +158,14 @@ body::after {
   justify-content: center; /* Yatayda ortalar */
   gap: 12px; /* Buton ile dil seçici arasındaki boşluk */
   width: 100%; /* Eğer tam ortada olmasını istiyorsan genişliği tam yap */
+  margin-top: 15px;
 }
 
 /* Login Butonu */
 .login-btn {
   background: #ff7f32;
   color: #1c2747;
-  padding: 18px 30px;
+  padding: 10px 25px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -156,7 +180,7 @@ body::after {
   gap: 12px;
 }
 .login-btn:hover {
-  background: rgb(254, 95.4048780488, 0);
+  background: #fe5f00;
   box-shadow: 0 6px 12px rgba(255, 127, 50, 0.5);
 }
 
@@ -333,7 +357,7 @@ body::after {
   box-shadow: 0 2px 5px rgba(255, 127, 50, 0.5);
 }
 .header-button:hover {
-  background: rgb(254, 95.4048780488, 0);
+  background: #fe5f00;
   box-shadow: 0 4px 8px rgba(255, 127, 50, 0.7);
 }
 .header-button i {
@@ -893,7 +917,7 @@ body {
   cursor: pointer;
 }
 .header .header-button:hover {
-  background-color: rgb(255, 139.8, 51);
+  background-color: #ff8c33;
 }
 .header .header-logo .logo {
   height: 40px;
@@ -1022,7 +1046,7 @@ body {
   cursor: pointer;
 }
 .header .header-button:hover {
-  background-color: rgb(255, 139.8, 51);
+  background-color: #ff8c33;
 }
 .header .header-button i {
   margin-left: 30px;
@@ -1198,7 +1222,7 @@ body {
   cursor: pointer;
 }
 .header .header-button:hover {
-  background-color: rgb(255, 139.8, 51);
+  background-color: #ff8c33;
 }
 .header .header-button i {
   margin-left: 5px;
@@ -1310,7 +1334,7 @@ body {
   color: white;
 }
 .device-info .connection-status .disconnect-btn:hover {
-  background-color: rgb(255, 139.8, 51);
+  background-color: #ff8c33;
 }
 
 .connection-table {
@@ -1411,7 +1435,7 @@ body {
   color: white;
 }
 .algorithm-section .algorithm-box .status-btn:hover {
-  background-color: rgb(255, 139.8, 51);
+  background-color: #ff8c33;
 }
 
 .connection-status {
@@ -1664,6 +1688,7 @@ body {
   min-width: 300px;
   text-align: center;
   justify-content: center;
+  gap: 30px;
 }
 
 .network-header:hover {
@@ -2177,6 +2202,4 @@ body {
   border-radius: 5px;
   font-size: 14px;
   resize: none;
-}
-
-/*# sourceMappingURL=build.css.map */
+}/*# sourceMappingURL=build.css.map */

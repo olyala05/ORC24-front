@@ -238,14 +238,10 @@ def orc_status():
         # 📌 Modem verilerini al
         url_modem = f"http://{selected_ip}:8085/get_modems"
         print("Modem URL:", url_modem)  # 🔍 Konsola yazdır
-        try:
-            response_modem = requests.get(url_modem, timeout=5)  # 5 saniye timeout ekledik
-            response_modem.raise_for_status()
-            modems = response_modem.json().get("modems", [])
-            selected_modem = modems[0] if modems else None
-        except requests.exceptions.RequestException as e:
-            print(f"⚠️ Modem bilgisi alınamadı: {e}")  # Hata logla ama hata döndürme!
-            flash(f"Modem bilgisi alınamadı: {e}", "warning")
+        response_modem = requests.get(url_modem, timeout=5)  # 5 saniye timeout ekledik
+        response_modem.raise_for_status()
+        modems = response_modem.json().get("modems", [])
+        selected_modem = modems[0] if modems else None
 
         # 📌 Ağ bilgilerini al
         url_network = f"http://{selected_ip}:8085/check_network"

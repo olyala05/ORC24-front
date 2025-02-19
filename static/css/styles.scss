@@ -14,7 +14,7 @@ body {
   height: 100vh;
   margin: 0;
   width: 100%;
-  position: relative; 
+  position: relative;
 
   &::after {
     content: "";
@@ -28,7 +28,32 @@ body {
     background-position: center;
     z-index: -10;
   }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+  }
 }
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: #ffff !important;  /* Yazı rengini zorla değiştir */
+  background-color: #0E1734 !important;  /* Arka plan rengini belirle */
+  -webkit-box-shadow: 0 0 0 30px #0E1734 inset !important;  /* Arka planı zorla değiştir */
+  transition: background-color 5000s ease-in-out 0s; /* Renk değişimini kalıcı yap */
+}
+
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffff !important;  /* Yazı rengini hover ve focus durumunda da zorla değiştir */
+  background-color: #0E1734 !important;
+  -webkit-box-shadow: 0 0 0 30px #0E1734 inset !important;
+}
+
+
 
 .container {
   display: flex;
@@ -106,7 +131,7 @@ body {
   border: none;
   color: white;
   width: 100%;
-  padding: 10px 40px; /* Solda ve sağda ikonlar olduğu için iç boşluk ayarla */
+  padding: 14px 40px; /* Solda ve sağda ikonlar olduğu için iç boşluk ayarla */
   font-size: 16px;
 }
 
@@ -138,14 +163,14 @@ body {
   justify-content: center; /* Yatayda ortalar */
   gap: 12px; /* Buton ile dil seçici arasındaki boşluk */
   width: 100%; /* Eğer tam ortada olmasını istiyorsan genişliği tam yap */
+  margin-top: 15px;
 }
-
 
 /* Login Butonu */
 .login-btn {
   background: #ff7f32;
   color: #1c2747;
-  padding: 18px 30px;
+  padding: 10px 25px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -181,7 +206,7 @@ body {
     align-items: center;
     gap: 5px;
   }
-  .selected-lang-txt{
+  .selected-lang-txt {
     font-size: 16px;
     margin: 17px 0px 0px 0px;
   }
@@ -251,4 +276,3 @@ body {
     font-size: 12px;
   }
 }
-
