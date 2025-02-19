@@ -5,81 +5,61 @@
 {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
-
-<!-- Orta Kısım -->
-<div class="test-container">
-    <button class="test-btn">Switch to Test Mode</button>
-</div>
-
-<!-- Modal -->
-<div id="test-modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="modal-icon">⚠️</div>
-        <p>If you switch to test mode, services will shut down.<br>
-            Do you want to switch to test mode?</p>
-        <div class="modal-buttons">
-            <button id="yes-btn">Yes</button>
-            <button id="no-btn">No</button>
-        </div>
-    </div>
-</div>
-
 <!-- Yeni İçerik (İlk başta gizli olacak) -->
-<div id="test-mode-content" class="hidden">
-    <div class="sidebar">
-        <button class="tab-btn" data-target="wifi">Wi-fi Settings</button>
-        <button class="tab-btn" data-target="equipment">LoRa Settings</button>
-        <button class="tab-btn" data-target="cloud">Ethernet Settings</button>
-        <button class="tab-btn" data-target="read">GSM Settingsead</button>
-        <button class="tab-btn" data-target="write">ORC Settings</button>
+<div class="settings-content">  
+    <div class="sidebar-set">
+        <button class="tab-btn-set" data-target="wifi-set">Wi-fi Settings</button>
+        <button class="tab-btn-set" data-target="lora-set">LoRa Settings</button>
+        <button class="tab-btn-set" data-target="eth-set">Ethernet Settings</button>
+        <button class="tab-btn-set" data-target="gsm-set">GSM Settingsead</button>
+        <button class="tab-btn-set" data-target="orc-set">ORC Settings</button>
     </div>
 
-    <div class="content-area">
+    <div class="content-area-set">
       <!-- Wi-Fi -->
-      <div id="wifi" class="tab-content">
-          <div class="wifi-container">
+      <div id="wifi-set" class="tab-content-set">
+          <div class="wifi-container-set">
               <!-- Available Wi-Fi -->
               <div class="network-box-set">
-                  <button class="network-header wifi-header">
+                  <button class="network-header-set wifi-header-set">
                       Available Wi-Fi 
-                      <span class="wifi-icon">
+                      <span class="wifi-icon-set">
                           <img src="{{ url_for('static', filename='images/svg/12.svg') }}" alt="No Wi-Fi">
                       </span> 
                   </button>
-                  <div class="network-info">
+                  <div class="network-info-set">
                       <!-- Wi-Fi List Here -->
                   </div>
               </div>
   
               <!-- Wi-Fi Password Form -->
-              <div class="wifi-connection">
-                  <div class="wifi-card">
-                    <div class="wifi-icon-password">
+              <div class="wifi-connection-set">
+                  <div class="wifi-card-set">
+                    <div class="wifi-icon-set">
                         <img src="{{ url_for('static', filename='images/svg/12.svg') }}" alt="No Wi-Fi"> 
                         <h4>Wi-Fi Password</h4>
                     </div>
              
                       <p>Wi-Fi SSID: pier mi 5g</p>
-                      <div class="password-intput">  
+                      <div class="password-intput-set">  
                         <label>Password:</label>
                         <input type="password">
                       </div>
-                      <div class="show-password">
-                          <input type="checkbox" id="showPass" class="check-box">
+                      <div class="show-password-set">
+                          <input type="checkbox" id="showPass" class="check-box-set">
                           <label for="showPass" class="show-pass">Show Password</label>
                       </div>
-                      <div class="btn-group">
-                          <button class="btn cancel">Cancel</button>
-                          <button class="btn connect">Connect</button>
+                      <div class="btn-group-set">
+                          <button class="btn-set cancel-set">Cancel</button>
+                          <button class="btn-set connec-set">Connect</button>
                       </div>
                   </div>
   
                   <!-- Connected Wi-Fi -->
-                  <div class="wifi-card connected">
+                  <div class="wifi-card-set connected">
                       <h4>Connected</h4>
                       <div class="underline"></div>
-                      <div class="wifi-info">
+                      <div class="wifi-info-set">
                         <img src="{{ url_for('static', filename='images/svg/12.svg') }}" alt="No Wi-Fi">
                           <span>Pier Enerji</span>
                           <button class="btn disconnect">Disconnect</button>
@@ -90,232 +70,7 @@
       </div>
   </div>
   
-        
-<!-- Equipment -->
-<div id="equipment" class="tab-content">
-
-            <!-- Equipment Table Container -->
-            <div class="eq-table-wrap">
-                <table class="eq-table">
-                    <thead>
-                        <tr>
-                            <th>Serial Number</th>
-                            <th>SID/IP</th>
-                            <th>Status / Configuration</th>
-                            <th>Connection</th>
-                            <th>Connection Protocol</th>
-                            <th>Equipment Date / Connection Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>EMR-53CS@3630748023</td>
-                            <td>5</td>
-                            <td class="eq-status-ok">A / A</td>
-                            <td class="eq-connection-ok">OK</td>
-                            <td>Modbus</td>
-                            <td>2024-04-01 10:43:19</td>
-                        </tr>
-                        <tr>
-                            <td>MPR-46S@2931</td>
-                            <td>192.168.1.147</td>
-                            <td class="eq-status-ok">A / A</td>
-                            <td class="eq-connection-ok">OK</td>
-                            <td>TCP / IP</td>
-                            <td>2024-04-01 10:43:19</td>
-                        </tr>
-                        <tr>
-                            <td>EMR-53CS@3630748023</td>
-                            <td>5</td>
-                            <td class="eq-status-ok">A / A</td>
-                            <td class="eq-connection-ok">OK</td>
-                            <td>Modbus</td>
-                            <td>2024-04-01 10:43:19</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-                <!-- Butonlar ve Bağlantı Durumu Yan Yana -->
-        <div class="eq-btn-group">
-            <!-- Küçük tarama butonu -->
-            <button class="eq-scan-btn">Scan Test</button>
-        
-            <!-- Durum mesajları sağda olacak -->
-            <div class="eq-conn-status">
-                <p class="eq-status-success">✔ Local Network Connection Scan Successful.</p>
-                <p class="eq-status-fail">✖ Local Network Connection Scan Failed.</p>
-            </div>
-        </div>
-        <!-- Büyük güncelleme butonu -->
-        <button class="eq-update-btn">Update the equipment table with the equipment found during scanning</button>
-
-        </div>
-            <!-- Cloud Connection Test -->
-            <div id="cloud" class="tab-content">
-
-                <!-- Cloud Connection Table -->
-                <div class="cloud-table-wrap">
-                    <table class="cloud-table">
-                        <thead>
-                            <tr>
-                                <th>Archive</th>
-                                <th>End</th>
-                                <th>Service</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="cloud-status"><span class="dot green"></span></td>
-                                <td class="cloud-status"><span class="dot green"></span></td>
-                                <td>Cloud connection</td>
-                                <td>2024-04-03</td>
-                                <td>13:55:00</td>
-                            </tr>
-                            <tr>
-                                <td class="cloud-status"><span class="dot green"></span></td>
-                                <td class="cloud-status"><span class="dot green"></span></td>
-                                <td>Rabbit Mq</td>
-                                <td>2024-04-03</td>
-                                <td>13:55:11</td>
-                            </tr>
-                            <tr>
-                                <td class="cloud-status"><span class="dot green"></span></td>
-                                <td class="cloud-status"><span class="dot green"></span></td>
-                                <td>VPN Port</td>
-                                <td>2024-04-03</td>
-                                <td>13:55:14</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Description -->
-                <p class="cloud-note">
-                    *Does the ORC have connection with cloud and other devices or not?
-                </p>
-
-                <!-- Buttons and Status Messages -->
-                <div class="cloud-btn-group">
-                    <button class="cloud-scan-btn">Perform a scanning test</button>
-
-                    <div class="cloud-status-messages">
-                        <p class="cloud-status-success">✔ Local Network Connection Scan Successful.</p>
-                        <p class="cloud-status-fail">✖ Local Network Connection Scan Failed.</p>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Read Section -->
-            <div id="read" class="tab-content">
-                <!-- Form for Backend -->
-                <form action="/read-data" method="POST" class="read-form">
-                    <div class="read-input-group">
-                        <label for="port">Port</label>
-                        <input type="text" id="port" name="port" value="/dev/ttyUSB0">
-                    </div>
-                    <div class="read-input-group">
-                        <label for="baudrate">Baud Rate</label>
-                        <input type="text" id="baudrate" name="baudrate" value="9600">
-                    </div>
-                    <div class="read-input-group">
-                        <label for="parity">Parity</label>
-                        <input type="text" id="parity" name="parity" value="None">
-                    </div>
-                    <div class="read-input-group">
-                        <label for="stopbit">Stop Bit</label>
-                        <input type="text" id="stopbit" name="stopbit" value="8">
-                    </div>
-                    <div class="read-input-group">
-                        <label for="register">Register</label>
-                        <input type="text" id="register" name="register" value="8">
-                    </div>
-                    <div class="read-input-group">
-                        <label for="count">Count</label>
-                        <input type="text" id="count" name="count" value="8">
-                    </div>
-                    <div class="read-input-group">
-                        <label for="datatype">Data Type</label>
-                        <input type="text" id="datatype" name="datatype" value="uint32">
-                    </div>
-
-                    <!-- Buttons and Status Messages -->
-                    <div class="read-btn-group">
-                        <button type="submit" class="read-scan-btn">Perform a scanning test</button>
-
-                        <div class="read-status-messages">
-                            <p class="read-status-success">✔ Local Network Connection Scan Successful.</p>
-                            <p class="read-status-fail">✖ Local Network Connection Scan Failed.</p>
-                        </div>
-                    </div>
-
-                    <!-- Terminal -->
-                    <div class="read-terminal">
-                        <label class="terminal-label">Terminal</label>
-                        <textarea readonly>/dev/ttyUSB0</textarea>
-                    </div>
-                </form>
-            </div>
-
-             <!-- Write Section -->
-            <div id="write" class="tab-content">
-                <!-- Form for Backend -->
-                <form action="/write-data" method="POST" class="wr-form">
-                    <div class="wr-input-group">
-                        <label for="port">Port</label>
-                        <input type="text" id="port" name="port" value="/dev/ttyUSB0">
-                    </div>
-                    <div class="wr-input-group">
-                        <label for="baudrate">Baud Rate</label>
-                        <input type="text" id="baudrate" name="baudrate" value="9600">
-                    </div>
-                    <div class="wr-input-group">
-                        <label for="parity">Parity</label>
-                        <input type="text" id="parity" name="parity" value="None">
-                    </div>
-                    <div class="wr-input-group">
-                        <label for="stopbit">Stop Bit</label>
-                        <input type="text" id="stopbit" name="stopbit" value="8">
-                    </div>
-                    <div class="wr-input-group">
-                        <label for="register">Register</label>
-                        <input type="text" id="register" name="register" value="8">
-                    </div>
-                    <div class="wr-input-group">
-                        <label for="count">Count</label>
-                        <input type="text" id="count" name="count" value="8">
-                    </div>
-                    <div class="wr-input-group">
-                        <label for="datatype">Data Type</label>
-                        <input type="text" id="datatype" name="datatype" value="uint32">
-                    </div>
-
-                    <!-- Buttons and Status Messages -->
-                    <div class="wr-btn-group">
-                        <button type="submit" class="wr-scan-btn">Perform a scanning test</button>
-
-                        <div class="wr-status-messages">
-                            <p class="wr-status-success">✔ Local Network Connection Scan Successful.</p>
-                            <p class="wr-status-fail">✖ Local Network Connection Scan Failed.</p>
-                        </div>
-                    </div>
-
-                    <!-- Terminal -->
-                    <div class="wr-terminal">
-                        <label class="terminal-label">Terminal</label>
-                        <textarea readonly>Write successful
-
-            Read value: sadfasd</textarea>
-                    </div>
-                </form>
-            </div>
-
-    </div>
-</div>
-
+    
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var btn = document.querySelector(".test-btn");
@@ -401,16 +156,48 @@
 </script>
 
 <style>
-
-  .wifi-container {
+    .settings-content{
+        display: flex;
+        gap: 20px;
+        
+        
+        .tab-btn-set{
+            padding: 19px;
+            border-radius: 7px;
+            color: #000;
+            font-weight: 600;
+            margin: 10px;
+            font-size: large;
+        }
+    }
+    .sidebar-set {
+        width: 250px;
+        display: flex;
+        flex-direction: column;
+        
+    }
+    .tab-btn-set.active {
+        background-color: #fff;
+        font-weight: 700;
+        border: 3px solid #ff6f00;
+        color: #000;
+    }
+  .wifi-container-set {
     display: flex;
     align-items: flex-start;
-    
+}
+
+.btn-group-set{
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
 }
 
 .network-box-set {
     margin-right: 15px;
-    .network-header {
+
+    .network-header-set {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -421,23 +208,35 @@
         border-radius: 7px;
         border: none;
         cursor: pointer;
+        width: 280px;
+        margin-top: 15px;
 
-        .wifi-icon img {
-            width: 30px;
+        .wifi-icon-set {
+            display: flex;
+            gap: 10px;
+
+            img{
+               width: 30px; 
+            }
         }
     }
+}
+
+.wifi-icon-set {
+    display: flex;
+    gap: 10px; 
 }
 .wifi-icon-password{
     display: flex;
     gap: 10px;
 }
-.wifi-connection {
+.wifi-connection-set {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.wifi-card {
+.wifi-card-set {
     background: white;
     padding: 5px;
     border-radius: 10px;
@@ -472,13 +271,13 @@
         width: 100%;    
     }
 
-    .password-intput{
+    .password-intput-set{
         display: flex;
         gap: 10px;
         align-items: center;
     }
 
-    .show-password {
+    .show-password-set {
         display: flex;
         align-items: center;
         gap: 5px;
@@ -486,7 +285,7 @@
         justify-content: center;
         width: 300px;
 
-        .check-box{
+        .check-box-set{
             width:15px; 
         }
 
@@ -498,17 +297,20 @@
         }
     }
 
-    .btn-group {
+    .btn-group-set {
       display: flex;
       justify-content: flex-end;
       margin-top: 15px;
       gap: 14px;
 
-        .btn {
-            padding: 8px 12px;
+        .btn-set {
+            padding: 14px 32px;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 6px;
+            background: #EF742A;
+            color: #fff;
+            font-size: 16px;
 
             &.cancel {
               background: #EF742A;
@@ -525,7 +327,7 @@
     }
 
     &.connected {
-        .wifi-info {
+        .wifi-info-set {
             display: flex;
             align-items: center;
             justify-content: space-between;
