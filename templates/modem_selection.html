@@ -43,7 +43,7 @@ block content %}
 
     <div class="bottom-buttons">
       <button class="btn" onclick="goToTest()">Test</button>
-      <button class="btn">Date</button>
+      <button class="btn" onclick="goToData()">Date</button>
     </div>
 
     <div id="status"></div>
@@ -361,6 +361,36 @@ block content %}
     document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
 
     window.location.href = "/test";
+  }
+
+  // data
+  function goToData() {
+    let dropdown = document.getElementById("modem");
+    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+
+    if (!selectedDeviceIP) {
+      // Kullanıcıya uyarı ver
+      Swal.fire({
+        icon: "warning",
+        title: "⚠️ Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return; // İşlemi durdur
+    }
+
+    // **Loading ekranını ekleyelim**
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
+      <div class="loading-box">
+        <p> ORC Status yükleniyor...</p>
+        <div class="loader"></div>
+      </div>`;
+    document.body.appendChild(loadingOverlay); 
+
+    window.location.href = "/data";
   }
 
   // Equipment Buttonununa gider onclick="goToEquipmentSetting()"

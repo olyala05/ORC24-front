@@ -387,6 +387,7 @@ def test():
 def equipment_details():
     return render_template("equipments/equipment_details.html")
 
+# !! Settings Start
 @app.route('/settings', endpoint="settings")
 def settings():
     return render_template("settings/setting.html")
@@ -402,6 +403,25 @@ def osos_setting():
 @app.route('/equipment-settings', endpoint="equipment_settings")
 def equipment_setting():
     return render_template("settings/equipment_set.html")
+# !! Settings End
+
+# !! Data Start 
+@app.route('/data', endpoint="data")
+def data():
+    return render_template("datas/data.html")
+
+@app.route('/live-data', endpoint="live-data")
+def live_data():
+    return render_template("datas/live_data.html")
+
+@app.route('/hourly-data', endpoint="hourly-data")  
+def hourly_data():
+    return render_template("datas/hourly_data.html")
+@app.route('/daily-data', endpoint="daily-data")  
+def daily_data():
+    return render_template("datas/daily_data.html")
+# !! Data End 
+ 
 
 # 🎯 Çıkış Yapma
 @app.route("/logout", methods=["POST"])
