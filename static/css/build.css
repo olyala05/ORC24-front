@@ -1474,6 +1474,38 @@ body {
   background: #ff8c33;
 }
 
+.main-set-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0B1734;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.main-set-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.main-set-btn {
+  background: white;
+  border: 3px solid transparent;
+  color: black;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 20px 60px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.main-set-btn.active {
+  border-color: #ff6f00;
+}
+.main-set-btn:hover {
+  background: #f5f5f5;
+}
+
 .settings-container {
   display: flex;
   gap: 40px;
@@ -2206,6 +2238,38 @@ body {
   resize: none;
 }
 
+.main-set-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0B1734;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.main-set-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.main-set-btn {
+  background: white;
+  border: 3px solid transparent;
+  color: black;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 20px 60px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.3sease-in-out;
+}
+.main-set-btn.active {
+  border-color: #ff6f00;
+}
+.main-set-btn:hover {
+  background: #f5f5f5;
+}
+
 .settings-content {
   display: flex;
   gap: 20px;
@@ -2219,7 +2283,7 @@ body {
   font-size: large;
 }
 
-.sidebar-set {
+.orc-sidebar-set {
   width: 250px;
   display: flex;
   flex-direction: column;
