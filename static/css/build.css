@@ -892,10 +892,20 @@ input:-webkit-autofill:focus {
 
 .equip-setting-card {
   background: #161b3d;
+  padding: 14px;
+  border-radius: 10px;
+  width: 700px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.equip-setting-card {
+  background: #161b3d;
   padding: 20px;
   border-radius: 10px;
-  width: 500px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .equip-setting-group {
@@ -903,9 +913,11 @@ input:-webkit-autofill:focus {
   justify-content: space-between;
   align-items: center;
   background: #c4c4c4;
-  padding: 12px;
+  padding: 11px;
   border-radius: 7px;
   margin-bottom: 15px;
+  width: 500px;
+  text-align: center;
 }
 
 .equip-setting-group label {
@@ -920,7 +932,7 @@ input:-webkit-autofill:focus {
   padding: 12px;
   border-radius: 3px;
   width: 50%;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .equip-setting-select {
@@ -954,7 +966,7 @@ input:-webkit-autofill:focus {
   background: #ef742a;
   color: white;
   border: none;
-  width: 100%;
+  width: 25%;
   padding: 14px;
   font-size: 16px;
   font-weight: bold;

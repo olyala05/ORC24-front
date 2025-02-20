@@ -114,10 +114,20 @@
 // Equipment Settings Stil
 .equip-setting-card {
   background: #161b3d;
+  padding: 14px;
+  border-radius: 10px;
+  width: 700px; // İçerik genişliği
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.equip-setting-card {
+  background: #161b3d;
   padding: 20px;
   border-radius: 10px;
-  width: 500px; // İçerik genişliği
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center; // İçeriği ortala
 }
 
 .equip-setting-group {
@@ -125,9 +135,11 @@
   justify-content: space-between;
   align-items: center;
   background: #c4c4c4;
-  padding: 12px;
+  padding: 11px;
   border-radius: 7px;
   margin-bottom: 15px;
+  width: 500px;  
+  text-align: center;
 }
 
 .equip-setting-group label {
@@ -142,7 +154,7 @@
   padding: 12px;
   border-radius: 3px;
   width: 50%;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .equip-setting-select {
@@ -174,7 +186,7 @@
   background: #ef742a;
   color: white;
   border: none;
-  width: 100%;
+  width: 25%;
   padding: 14px;
   font-size: 16px;
   font-weight: bold;
