@@ -1,56 +1,213 @@
-// 📌 Temel Değişkenler
-$primary-color: #ff6f00;
-$background-color: #1C2747;
-$text-color: #fff;
-$border-radius: 8px;
+// Genel Konteyner
+.equ-set-container {
+  display: flex;
 
-// 📌 Genel Stil Ayarları
-body {
-  background-color: $background-color;
-  color: $text-color;
-  font-family: "Arial", sans-serif;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-// 📌 Equipment Sayfası Konteyneri
-.equipment-container {
-  margin-top: 60px;
-    padding: 20px;
+  // Sol Sidebar (Menü)
+  .equ-set-sidebar {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 97vw;
-    height: calc(97vh - 57px);
-    background: #0B1734;
-    border-radius: 10px;
+    flex-direction: column;
+    gap: 15px;
+
+    .equ-set-btn {
+      background: white;
+      border: 3px solid transparent;
+      color: black;
+      font-size: 18px;
+      font-weight: 600;
+      padding: 22px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.3sease-in-out;
+      text-align: left;
+
+      &.active {
+        border-color: #ff6f00; // Turuncu çerçeve
+      }
+
+      &:hover {
+        background: #f5f5f5;
+      }
+    }
+  }
+
+  // İçerik Alanı (Sağ)
+  .equ-set-content {
+    flex-grow: 1;
+    padding-left: 30px;
+
+    .modbus-setting-form {
+      background: #161b3d;
+      padding: 20px;
+      border-radius: 10px;
+      width: 700px;
+
+      // Form Satırı
+      .modbus-setting-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 15px;
+
+        // Form İçindeki Input Grupları
+        .modbus-setting-group {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+
+          label {
+            font-size: 14px;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 5px;
+          }
+
+          input {
+            background: white;
+            border: none;
+            padding: 9px;
+            border-radius: 4px;
+            font-size: 14px;
+            width: 80%;
+            box-sizing: border-box;
+          }
+        }
+      }
+
+      // Test Butonu
+      .modbus-setting-btn-test {
+        background: #ef742a;
+        color: white;
+        border: none;
+        width: 50%;
+        padding: 14px;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        display: block;
+        margin: 40px auto 0 auto;
+        text-align: center;
+
+        &:hover {
+          background: #d65f1f;
+        }
+      }
+
+      // Test Sonuçları
+      .modbus-setting-success {
+        color: #40c700;
+        font-weight: 100;
+        text-align: center;
+        margin-top: 25px;
+      }
+
+      .modbus-setting-failed {
+        color: #ff0000;
+        font-weight: 100;
+        text-align: center;
+        line-height: 0;
+      }
+    }
+  }
 }
 
-// 📌 Equipment Grid
-.equipment-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  width: 100%;
-  max-width: 1024px;
+// Equipment Settings Stil
+.equip-setting-card {
+  background: #161b3d;
+  padding: 20px;
+  border-radius: 10px;
+  width: 500px; // İçerik genişliği
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-// 📌 Equipment Kutuları
-.equipment-box {
-  padding: 18px;
-  font-size: 17px;
+.equip-setting-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #c4c4c4;
+  padding: 12px;
+  border-radius: 7px;
+  margin-bottom: 15px;
+}
+
+.equip-setting-group label {
+  font-size: 16px;
   font-weight: bold;
+  color: black;
+}
+
+.equip-setting-group input {
+  background: white;
+  border: none;
+  padding: 12px;
+  border-radius: 3px;
+  width: 50%;
+  font-size: 15px;
+}
+
+.equip-setting-select {
+  position: relative;
+  width: 50%;
+}
+
+.equip-setting-select select {
+  appearance: none;
+  width: 100%;
+  padding: 12px;
+  border-radius: 3px;
+  border: none;
+  font-size: 15px;
+  background: white;
+}
+
+.equip-setting-arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 14px;
+  color: black;
+}
+
+.equip-setting-save-btn {
+  background: #ef742a;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
   text-align: center;
-  border-radius: $border-radius;
-  color: #000;
+  margin-top: 10px;
+
+  &:hover {
+    background: #d65f1f;
+  }
 }
 
-// 📌 Renkler
-.green {
-  background-color: #4CAF50;
+.equ-set-content {
+  flex-grow: 1;
+  padding-left: 30px;
+
+  .obis-setting-form {
+    background: #161b3d;
+    padding: 20px;
+    border-radius: 10px;
+    width: 700px;
+  }
 }
 
-.red {
-  background-color: #D32F2F;
+.equ-set-content {
+  flex-grow: 1;
+  padding-left: 30px;
+
+  .tcp-setting-form {
+    background: #161b3d;
+    padding: 20px;
+    border-radius: 10px;
+    width: 700px;
+  }
 }
