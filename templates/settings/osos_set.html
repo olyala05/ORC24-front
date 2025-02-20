@@ -3,7 +3,52 @@
 <!-- Header -->
 {% include 'partials/header.html' %}
 <!-- Yeni İçerik (İlk başta gizli olacak) -->
-<div class="osos-settings-content">
-    <h3>OSOS Settings</h3>      
+<div class="osos-settings-container">
+    <div class="osos-settings-card">
+        <!-- Authorized Supplier Company -->
+        <div class="osos-settings-group">
+            <label>Authorized Supplier Company</label>
+            <div class="osos-settings-select">
+                <select>
+                    <option value="adm">ADM Electricity Distribution Inc.</option>
+                    <option value="aydem">Aydem Energy</option>
+                    <option value="enerjisa">Enerjisa</option>
+                </select>
+                <span class="osos-settings-arrow">&#9662;</span> <!-- Aşağı bakan ok -->
+            </div>
+        </div>
+
+        <!-- Username -->
+        <div class="osos-settings-group">
+            <label>Username</label>
+            <input type="text" placeholder="Operating System">
+        </div>
+
+        <!-- Organization Number -->
+        <div class="osos-settings-group">
+            <label>Organization Number</label>
+            <input type="text" placeholder="Operating System">
+        </div>
+
+        <!-- Password -->
+        <div class="osos-settings-group">
+            <label>Password</label>
+            <input type="password" placeholder="Industry">
+        </div>
+
+        <!-- Butonlar -->
+        <div class="osos-settings-btn-group">
+            <button class="osos-settings-btn-test">Test</button>
+            <button class="osos-settings-btn-save">Save</button>
+        </div>
+
+        <!-- Bağlantı Sonuçları -->
+        <div class="osos-results">
+            <p class="osos-settings-failed">OSOS Connection Failed</p>
+            <p class="osos-settings-success">OSOS Connection Successful</p>
+        </div>
+        
+    </div>
 </div>
+
 {% endblock %}
