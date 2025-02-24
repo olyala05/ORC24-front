@@ -24,11 +24,9 @@
 
 <script>
   function goBack() {
-    history.back();
-    setTimeout(() => {
-      location.replace(document.referrer); // Sayfa yenilenmesini engelle
-    }, 0);
+    history.go(-1);
   }
+  
 
   function updateDateTime() {
     const now = new Date();

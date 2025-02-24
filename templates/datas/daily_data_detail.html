@@ -1,0 +1,172 @@
+{% extends "layout.html" %} {% block title %} Daily Data Details {% endblock %}
+{% block content %}
+
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<div class="daily-data-detail-table-container">
+  <table class="daily-data-detail-data-table">
+    <thead>
+      <tr>
+        <th>Serial Number</th>
+        <th>Modem Serial No</th>
+        <th>Status / Configuration</th>
+        <th>Archive</th>
+        <th>Number of Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>EMR-53CS@3630748023</td>
+        <td>02:81:2b:61:c6:1d</td>
+        <td class="daily-data-detail-status">A / A</td>
+        <td class="daily-data-detail-archive">&#128308;</td>
+        <!-- Kırmızı nokta -->
+        <td>200</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="daily-data-detail-data-table">
+    <thead>
+      <tr>
+        <th>Daily Data ID</th>
+        <th>Device ID</th>
+        <th>Value List ID</th>
+        <th>Data Value</th>
+        <th>Created Date</th>
+        <th>Main Value List</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>272003</td>
+        <td>5</td>
+        <td>804</td>
+        <td>229.64</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+      <tr class="daily-data-detail-error">
+        <td>412</td>
+        <td colspan="5">
+          Retrieve the active register of the relevant equipment from the
+          register list table and compare it with the log.
+          <br />
+          <span class="daily-data-detail-error-text"
+            >Make the value red if it's missing.</span
+          >
+        </td>
+      </tr>
+
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>271856</td>
+        <td>5</td>
+        <td>21</td>
+        <td>0.00</td>
+        <td>2024-04-03 13:50:00</td>
+        <td>8</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

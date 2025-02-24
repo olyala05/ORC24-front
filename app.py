@@ -437,7 +437,7 @@ def equipment_setting():
 def data():
     return render_template("datas/data.html")
 
-
+#Live Data 
 @app.route('/live-data', endpoint="live-data")
 def live_data():
     return render_template("datas/live_data.html")
@@ -446,13 +446,23 @@ def live_data():
 def live_data_detail():
     return render_template("datas/live_data_detail.html")
 
+# Hourly Data   
 @app.route('/hourly-data', endpoint="hourly-data")
 def hourly_data():
     return render_template("datas/hourly_data.html")
 
+@app.route('/hourly-data-detail', endpoint="hourly-data-detail")
+def hourly_data_detail():
+    return render_template("datas/hourly_data_detail.html")
+
+# Daily Data    
 @app.route('/daily-data', endpoint="daily-data")
 def daily_data():
     return render_template("datas/daily_data.html")
+
+@app.route('/daily-data-detail', endpoint="daily-data-detail")
+def daily_data_detail():
+    return render_template("datas/daily_data_detail.html")
 
 # !! Data End
 
