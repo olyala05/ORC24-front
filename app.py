@@ -399,6 +399,9 @@ def log():
 def alarm():
     return render_template("alarm.html")
 
+@app.route('/switch', endpoint="switch")
+def switch():
+    return render_template("test/switch.html")
 
 @app.route('/test', endpoint="test")
 def test():
@@ -467,13 +470,10 @@ def daily_data_detail():
 
 # !! Data End
 
-
-# 🎯 Çıkış Yapma
 @app.route("/logout", methods=["POST"])
 def logout():
-    session.clear()  # 🎯 Tüm oturum bilgilerini temizle
-    return redirect(url_for("login"))  # 🎯 Login sayfasına yönlendir
-
+    session.clear() 
+    return redirect(url_for("login")) 
 
 if __name__ == '__main__':
     app.run(debug=True, port=5004)

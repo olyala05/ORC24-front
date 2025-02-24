@@ -42,7 +42,7 @@ block content %}
     </div>
 
     <div class="bottom-buttons">
-      <button class="btn" onclick="goToTest()">Test</button>
+      <button class="btn" onclick="SwitchtTest()">Test</button>
       <button class="btn" onclick="goToData()">Data</button>
     </div>
 
@@ -334,7 +334,7 @@ block content %}
     }
 
   // Test Sayfasına Yönlendirir
-  function goToTest() {
+  function SwitchtTest() {
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
 
@@ -360,7 +360,7 @@ block content %}
       </div>`;
     document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
 
-    window.location.href = "/test";
+    window.location.href = "/switch";
   }
 
   // data
