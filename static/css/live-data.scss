@@ -67,9 +67,19 @@
       background-color: red;
     }
   }
+
+  // Status hücresi için data-status attribute'una göre renk ayarı
+  .live-data-status {
+    .table-row {
+      > div[data-status="A / A"] {
+        color: green;
+      }
+      > div[data-status="P / P"] {
+        color: red;
+      }
+    }
+  }
 }
-
-
 
 // live-data-detail.scss
 .live-data-detail {

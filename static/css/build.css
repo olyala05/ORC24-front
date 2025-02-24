@@ -2922,6 +2922,12 @@ body {
 .live-data-container .status.inactive {
   background-color: red;
 }
+.live-data-container .live-data-status .table-row > div[data-status="A / A"] {
+  color: green;
+}
+.live-data-container .live-data-status .table-row > div[data-status="P / P"] {
+  color: red;
+}
 
 .live-data-detail-table-container {
   width: 96%;
