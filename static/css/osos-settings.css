@@ -18,7 +18,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #F2F2F2;
+  background: #f2f2f2;
   padding: 12px;
   border-radius: 7px;
   margin-bottom: 15px;
@@ -28,17 +28,32 @@
   font-weight: bold;
 }
 .osos-settings-container .osos-settings-card .osos-settings-group input {
-  width: 70%;
+  width: 58%;
   padding: 10px;
   border: none;
   border-radius: 5px;
   background: white !important;
+  color: black !important;
+}
+.osos-settings-container .osos-settings-card .osos-settings-group input:focus,
+.osos-settings-container .osos-settings-card .osos-settings-group input:active {
+  background: white !important;
+  color: black !important;
+  outline: none;
+}
+.osos-settings-container .osos-settings-card .osos-settings-group input:-webkit-autofill,
+.osos-settings-container .osos-settings-card .osos-settings-group input:-webkit-autofill:hover,
+.osos-settings-container .osos-settings-card .osos-settings-group input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-transition: background-color 5000s ease-in-out 0s;
+  transition: background-color 5000s ease-in-out 0s;
+  color: black !important;
 }
 .osos-settings-container .osos-settings-card .osos-settings-select {
   display: flex;
   align-items: center;
   position: relative;
-  width: 70%;
+  width: 60%;
 }
 .osos-settings-container .osos-settings-card .osos-settings-select select {
   width: 100%;

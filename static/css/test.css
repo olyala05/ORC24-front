@@ -116,7 +116,7 @@
   padding: 3px;
   gap: 12px;
   top: 27px;
-  margin-top: 10px;
+  margin-top: 80px;
 }
 
 .sidebar {
@@ -333,7 +333,7 @@
 }
 
 #equipment {
-  padding: 15px;
+  padding: 0px;
   color: white;
 }
 #equipment .eq-title {
@@ -342,11 +342,12 @@
   margin-bottom: 15px;
 }
 #equipment .eq-table-wrap {
-  max-height: 300px;
+  max-height: 360px;
   overflow-y: auto;
   border-radius: 8px;
   background: #1b223a;
   padding: 10px;
+  position: relative;
 }
 #equipment .eq-table {
   width: 100%;
@@ -357,16 +358,23 @@
 #equipment .eq-table th,
 #equipment .eq-table td {
   padding: 0px;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
+#equipment .eq-table thead {
+  position: sticky;
+  top: -10px;
+  z-index: 2;
+  background: #1b223a;
+  /* Sticky header'ı container ile uyumlu yuvarlatmak için: */
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
 #equipment .eq-status-ok {
-  color: #00ff7f;
-  font-weight: bold;
+  color: #19b300;
 }
 #equipment .eq-connection-ok {
-  color: #00ff7f;
-  font-weight: bold;
+  color: #19b300;
 }
 #equipment .eq-btn-group {
   display: flex;
@@ -374,14 +382,15 @@
   justify-content: space-between;
   gap: 15px;
   margin-top: 15px;
+  margin-bottom: 15px;
 }
 #equipment .eq-scan-btn {
   flex: 1;
-  max-width: 260px;
+  max-width: 365px;
   background-color: #ef742a;
   color: white;
-  padding: 12px 15px;
-  font-size: 14px;
+  padding: 15px 15px;
+  font-size: 16px;
   font-weight: bold;
   border: none;
   border-radius: 5px;
@@ -396,7 +405,7 @@
   flex: 2;
   background-color: #ff6f00;
   color: white;
-  padding: 12px 20px;
+  padding: 15px 20px;
   font-size: 16px;
   font-weight: bold;
   border: none;
@@ -404,6 +413,7 @@
   cursor: pointer;
   text-align: center;
   transition: background 0.3s ease;
+  width: 700px;
 }
 #equipment .eq-update-btn:hover {
   background-color: #ff9100;
@@ -419,11 +429,11 @@
 }
 #equipment .eq-status-success {
   color: #00ff7f;
-  font-weight: bold;
+  margin: 0;
 }
 #equipment .eq-status-fail {
   color: #ff4444;
-  font-weight: bold;
+  margin: 0;
 }
 
 #cloud {
@@ -439,19 +449,18 @@
   max-height: 200px;
   overflow-y: auto;
   border-radius: 8px;
-  background: #1b223a;
   padding: 10px;
 }
 #cloud .cloud-table {
   width: 100%;
   border-collapse: collapse;
-  background: #1b223a;
   border-radius: 8px;
 }
-#cloud .cloud-table th, #cloud .cloud-table td {
+#cloud .cloud-table th,
+#cloud .cloud-table td {
   padding: 8px;
   text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(239, 116, 42, 0.2);
 }
 #cloud .cloud-status {
   text-align: center;
@@ -466,25 +475,26 @@
   background-color: #00ff7f;
 }
 #cloud .cloud-note {
-  font-size: 12px;
+  font-size: 14px;
   font-style: italic;
   margin-top: 5px;
   opacity: 0.7;
+  text-align: end;
 }
 #cloud .cloud-btn-group {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  margin-top: 15px;
+  margin-top: 157px;
 }
 #cloud .cloud-scan-btn {
   flex: 1;
-  max-width: 280px;
-  background-color: #EF742A;
+  max-width: 350px;
+  background-color: #ef742a;
   color: white;
-  padding: 12px 15px;
-  font-size: 14px;
+  padding: 14px 15px;
+  font-size: 18px;
   font-weight: bold;
   border: none;
   border-radius: 5px;
@@ -505,12 +515,14 @@
   min-width: 280px;
 }
 #cloud .cloud-status-success {
-  color: #00ff7f;
-  font-weight: bold;
+  color: #40C700;
+  margin: 0;
+  font-size: 16px;
 }
 #cloud .cloud-status-fail {
-  color: #ff4444;
-  font-weight: bold;
+  color: #FF0000;
+  margin: 0;
+  font-size: 16px;
 }
 
 #read {
@@ -556,7 +568,7 @@
 #read .read-scan-btn {
   flex: 1;
   max-width: 280px;
-  background-color: #EF742A;
+  background-color: #ef742a;
   color: white;
   padding: 12px 15px;
   font-size: 14px;
@@ -652,7 +664,7 @@
 #write .wr-scan-btn {
   flex: 1;
   max-width: 280px;
-  background-color: #EF742A;
+  background-color: #ef742a;
   color: white;
   padding: 12px 15px;
   font-size: 14px;

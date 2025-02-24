@@ -20,15 +20,15 @@ body {
 }
 
 .equipment-container-wrapper {
-  margin-top: 79px;
-  padding: 20px;
+  margin-top: 80px;
+  padding: 19px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   background: #0B1734;
-  border-radius: 10px;
-  width: 950px;
-  height: 450px;
+  border-radius: 7px;
+  width: 960px;
+  height: 460px;
 }
 
 .equipment-grid {

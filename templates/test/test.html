@@ -104,7 +104,7 @@
             <div class="eq-table-wrap">
                 <table class="eq-table">
                     <thead>
-                        <tr>
+                        <tr style="color: #EF8018;"> 
                             <th>Serial Number</th>
                             <th>SID/IP</th>
                             <th>Status / Configuration</th>
@@ -138,6 +138,78 @@
                             <td>Modbus</td>
                             <td>2024-04-01 10:43:19</td>
                         </tr>
+                        <tr>
+                            <td>EMR-53CS@3630748023</td>
+                            <td>192.168.1.147</td>
+                            <td class="eq-status-ok">A / A</td>
+                            <td class="eq-connection-ok">OK</td>
+                            <td>Modbus</td>
+                            <td>2024-04-01 10:43:19</td>
+                        </tr>
+                        <tr>
+                            <td>EMR-53CS@3630748023</td>
+                            <td>5</td>
+                            <td class="eq-status-ok">A / A</td>
+                            <td class="eq-connection-ok">OK</td>
+                            <td>Modbus</td>
+                            <td>2024-04-01 10:43:19</td>
+                        </tr>
+                        <tr>
+                            <td>EMR-53CS@3630748023</td>
+                            <td>192.168.1.147</td>
+                            <td class="eq-status-ok">A / A</td>
+                            <td class="eq-connection-ok">OK</td>
+                            <td>Modbus</td>
+                            <td>2024-04-01 10:43:19</td>
+                        </tr>
+                        <tr>
+                            <td>EMR-53CS@3630748023</td>
+                            <td>5</td>
+                            <td class="eq-status-ok">A / A</td>
+                            <td class="eq-connection-ok">OK</td>
+                            <td>Modbus</td>
+                            <td>2024-04-01 10:43:19</td>
+                        </tr>
+                        <tr>
+                            <td>EMR-53CS@3630748023</td>
+                            <td>192.168.1.147</td>
+                            <td class="eq-status-ok">A / A</td>
+                            <td class="eq-connection-ok">OK</td>
+                            <td>Modbus</td>
+                            <td>2024-04-01</td>
+                        </tr>
+                        <tr>
+                            <td>EMR-53CS@3630748023</td>
+                            <td>5</td>
+                            <td class="eq-status-ok">A / A</td>
+                            <td class="eq-connection-ok">OK</td>
+                            <td>Modbus</td>
+                            <td>2024-04-01 10:43:19</td>
+                        </tr>
+                        <tr>
+                            <td>EMR-53CS@3630748023</td>
+                            <td>192.168.1.147</td>
+                            <td class="eq-status-ok">A / A</td>
+                            <td class="eq-connection-ok">OK</td>
+                            <td>Modbus</td>
+                            <td>2024-04-01</td>
+                        </tr>
+                        <tr>
+                            <td>EMR-53CS@3630748023</td>
+                            <td>5</td>
+                            <td class="eq-status-ok">A / A</td>
+                            <td class="eq-connection-ok">OK</td>
+                            <td>Modbus</td>
+                            <td>2024-04-01 10:43:19</td>
+                        </tr>
+                        <tr>
+                            <td>EMR-53CS@3630748023</td>
+                            <td>5</td>
+                            <td class="eq-status-ok">A / A</td>
+                            <td class="eq-connection-ok">OK</td>
+                            <td>Modbus</td>
+                            <td>2024-04-01 10:43:19</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -145,7 +217,7 @@
                 <!-- Butonlar ve Bağlantı Durumu Yan Yana -->
         <div class="eq-btn-group">
             <!-- Küçük tarama butonu -->
-            <button class="eq-scan-btn">Scan Test</button>
+            <button class="eq-scan-btn">Perform a scanning test</button>
         
             <!-- Durum mesajları sağda olacak -->
             <div class="eq-conn-status">
@@ -158,7 +230,7 @@
 
         </div>
             <!-- Cloud Connection Test -->
-            <div id="cloud" class="tab-content">
+            <div id="cloud" class="tab-content;" style="background: #0B1734; border-radius: 7px;">
 
                 <!-- Cloud Connection Table -->
                 <div class="cloud-table-wrap">
@@ -334,17 +406,15 @@
         var tabButtons = document.querySelectorAll(".tab-btn");
         var tabContents = document.querySelectorAll(".tab-content");
 
-        // 🎯 1️⃣ Sayfa yüklendiğinde test modunu kontrol et
         if (localStorage.getItem("testMode") === "enabled") {
-            testContainer.style.display = "none";  // İlk butonu gizle
-            testModeContent.style.display = "flex";  // Yeni butonları göster
-            modal.style.display = "none";  // Modal kapalı başlasın
+            testContainer.style.display = "none";  
+            testModeContent.style.display = "flex";  
+            modal.style.display = "none"; 
         } else {
-            testContainer.style.display = "flex";  // İlk butonu göster
-            testModeContent.style.display = "none";  // Yeni içerikleri gizle
+            testContainer.style.display = "flex";  
+            testModeContent.style.display = "none";
         }
 
-        // 🎯 2️⃣ "Switch to Test Mode" butonuna tıklanınca modal açılsın
         btn.addEventListener("click", function () {
             if (!localStorage.getItem("testMode")) {
                 modal.style.display = "flex"; // Modalı aç
@@ -359,15 +429,13 @@
             modal.style.display = "none";
         });
 
-        // 🎯 4️⃣ "Yes" butonuna tıklanınca test modu aktif edilsin
         yesBtn.addEventListener("click", function () {
-            modal.style.display = "none";  // Modal kapat
-            testContainer.style.display = "none";  // İlk butonu gizle
-            testModeContent.style.display = "flex";  // Yeni içeriği göster
-            localStorage.setItem("testMode", "enabled");  // Test modunu localStorage'a kaydet
+            modal.style.display = "none"; 
+            testContainer.style.display = "none";  
+            testModeContent.style.display = "flex"; 
+            localStorage.setItem("testMode", "enabled");  
         });
 
-        // 🎯 5️⃣ Tab butonlarına tıklanınca ilgili içeriği göster
         tabButtons.forEach(button => {
             button.addEventListener("click", function () {
                 var target = this.getAttribute("data-target");
@@ -404,6 +472,8 @@
             tabContents.forEach(content => content.style.display = "none");
         }
     });
+
+    
 </script>
 
     
