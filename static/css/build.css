@@ -2923,4 +2923,61 @@ body {
   background-color: red;
 }
 
+.live-data-detail-table-container {
+  width: 96%;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  max-height: 500px;
+  overflow-y: auto;
+  margin-top: 80px;
+}
+.live-data-detail-table-container .live-data-detail-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #0B1734;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.live-data-detail-table-container .live-data-detail-data-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.live-data-detail-table-container .live-data-detail-data-table th,
+.live-data-detail-table-container .live-data-detail-data-table td {
+  border: none;
+  padding: 8px;
+  text-align: center;
+}
+.live-data-detail-table-container .live-data-detail-data-table th {
+  background: #0B1734;
+  font-weight: bold;
+  color: #EF8018;
+  border-bottom: 1px solid #ffffff;
+}
+.live-data-detail-table-container .live-data-detail-data-table td {
+  border-bottom: 1px solid #EF8018;
+}
+.live-data-detail-table-container .live-data-detail-data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.live-data-detail-status {
+  color: #00ff00;
+}
+.live-data-detail-archive {
+  color: red;
+}
+.live-data-detail-error {
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff4444;
+}
+.live-data-detail-error tr {
+  text-align: left;
+}
+.live-data-detail-error-text {
+  color: #ff4444;
+}
+
 /*# sourceMappingURL=build.css.map */

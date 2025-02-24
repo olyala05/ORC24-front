@@ -104,14 +104,16 @@
   </div>
   
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll(".clickable").forEach(function(td){
-            td.addEventListener("click",function(){
-                var serial = this.getAttribute("data-serial");
-                window.location.href = "live-data-detail?serial=" + encodeURIComponent(serial);
-            })
-        })
-    }
-</script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const clickableElements = document.querySelectorAll('.clickable');
+      clickableElements.forEach(function(elem) {
+        elem.addEventListener('click', function() {
+          window.location.href = '/live-data-detail';
+        });
+      });
+    });
+    </script>
+    
 {% endblock %}
