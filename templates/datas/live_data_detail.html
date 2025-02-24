@@ -1,10 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "layout.html" %}
+{% block title %} Live Data Details {% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<div class="live-data-container">
+    <!-- Birinci Kart: Data Table -->
+    <div class="card live-data-card">
+        <div class="card-header">
+            <div class="header-row">
+                <div>ID</div>
+                <div>Created Date</div>
+                <div>Number of Equipment</div>
+                <div>Number of Data</div>
+                <div>Time (Sec)</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="data-row">
+                <div>1</div>
+                <div>2024-04-03 13:50:00</div>
+                <div>5</div>
+                <div>804</div>
+                <div>804</div>
+            </div>
+            <div class="data-row">
+                <div>2</div>
+                <div>2024-04-03 13:55:00</div>
+                <div>5</div>
+                <div>804</div>
+                <div>804</div>
+            </div>
+            <div class="data-row">
+                <div>3</div>
+                <div>2024-04-03 14:00:00</div>
+                <div>5</div>
+                <div>421</div>
+                <div>421</div>
+            </div><div class="data-row">
+                <div>3</div>
+                <div>2024-04-03 14:00:00</div>
+                <div>5</div>
+                <div>421</div>
+                <div>421</div>
+            </div><div class="data-row">
+                <div>3</div>
+                <div>2024-04-03 14:00:00</div>
+                <div>5</div>
+                <div>421</div>
+                <div>421</div>
+            </div>
+            <div class="data-row">
+                <div>3</div>
+                <div>2024-04-03 14:00:00</div>
+                <div>5</div>
+                <div>421</div>
+                <div>421</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- İkinci Kart: Status / Config. -->
+    <div class="card live-data-card">
+        <div class="card-header">
+            <div class="header-row">
+                <div>Serial Number</div>
+                <div>Status / Config.</div>
+                <div>Equipment Type</div>
+                <div>Archive</div>
+                <div>Number of Data</div>
+                <div>Time (Sec)</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="data-row">
+                <div class="clickable" data-serial="EMR-53CS@3630748023">EMR-53CS@3630748023</div>
+                <div>A / A</div>
+                <div>Analyzer</div>
+                <div><span class="status inactive"></span></div>
+                <div>200</div>
+                <div>804</div>
+            </div>
+            <div class="data-row">
+                <div class="clickable" data-serial="MPR-46S@2931">MPR-46S@2931</div>
+                <div>A / A</div>
+                <div>Analyzer</div>
+                <div><span class="status active"></span></div>
+                <div>200</div>
+                <div>804</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

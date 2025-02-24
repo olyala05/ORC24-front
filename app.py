@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, render_template, request,  jsonify, redirect, url_for, session, flash
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash
 from flask_jwt_extended import JWTManager, create_access_token
 from flask_cors import CORS
 from flask_scss import Scss
@@ -8,8 +8,8 @@ import ipaddress
 import scapy.all as scapy
 import nmap
 import socket
-from datetime import datetime 
-from requests.exceptions import RequestException  
+from datetime import datetime
+from requests.exceptions import RequestException
 import logging
 
 app = Flask(__name__)
@@ -34,9 +34,11 @@ DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database":
 # Flask-SCSS'i başlat
 Scss(app, static_dir='static', asset_dir='assets')
 
+
 @app.route('/')
 def index():
     return render_template("index.html")
+
 
 # 🎯 Giriş Sayfası
 @app.route("/login", methods=["GET", "POST"])
@@ -58,7 +60,7 @@ def login():
                 session["access_token"] = api_response.get("access_token")
 
                 # 🎯 Başarılı giriş bilgisini session içinde sakla
-                session["login_success"] = True  
+                session["login_success"] = True
 
                 return redirect(url_for("dashboard"))  # 🎯 Dashboard sayfasına yönlendir
             except Exception as e:
@@ -72,16 +74,18 @@ def login():
     login_success = session.pop("login_success", None)
     return render_template("login.html", login_success=login_success)
 
+
 # # 🎯 Dashboard Sayfası
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
 
+
 # 🎯 Alarm Status API'sinden veri çek
 @app.route("/alarm_status", methods=["GET"])
 def alarm_status():
     if "access_token" not in session:
-        return jsonify({"error": "Unauthorized"}), 401 
+        return jsonify({"error": "Unauthorized"}), 401
 
     headers = {
         "Authorization": f"Bearer {session['access_token']}",
@@ -96,6 +100,7 @@ def alarm_status():
         return jsonify(response.json())
     else:
         return jsonify({"error": "Alarm status verisi alınamadı"}), response.status_code
+
 
 # # 🎯 1️⃣ Ağdaki Bağlı Cihazları Bulma (Sadece MAC adresi 02 veya 12 ile başlayanlar)
 # def get_connected_devices():
@@ -112,7 +117,7 @@ def alarm_status():
 #             for element in answered_list:
 #                 mac_address = element[1].hwsrc
 #                 ip_address = element[1].psrc
-                
+
 #                 # 🎯 Sadece 02 veya 12 ile başlayanları listele
 #                 if mac_address.startswith("02") or mac_address.startswith("12"):
 #                     ip_list.append({"ip": ip_address, "mac": mac_address})
@@ -186,11 +191,13 @@ def get_connected_devices():
     print("✅ Bağlı cihazlar:", devices)
     return devices
 
+
 # 🎯 2️⃣ Bağlı Cihazları Listeleme API'si
 @app.route("/devices", methods=["GET"])
 def list_devices():
     devices = get_connected_devices()
     return jsonify(devices)
+
 
 # 🎯 3️⃣ IP Adresinin Geçerli Olduğunu Kontrol Et
 def is_valid_ip(ip):
@@ -200,10 +207,12 @@ def is_valid_ip(ip):
     except ValueError:
         return False
 
+
 @app.route("/get_selected_device", methods=["GET"])
 def get_selected_device():
     ip_address = session.get("selected_device_ip", None)  # Flask session'dan IP al
     return jsonify({"ip_address": ip_address})  # JSON olarak döndür
+
 
 # 🎯 4️⃣ Cihaza Bağlanma
 @app.route("/connect_device", methods=["POST"])
@@ -221,6 +230,7 @@ def connect_device():
             return jsonify(success=True)
     except Exception as e:
         return jsonify(success=False, error=f"Bağlantı hatası: {str(e)}")
+
 
 #  ORC Stataus
 @app.route("/orc-status", methods=["GET", "POST"])
@@ -270,7 +280,8 @@ def orc_status():
         print("🔥 Genel hata:", e)
         return render_template("orc_status.html", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
 
-# Equipments Modbus 
+
+# Equipments Modbus
 @app.route("/modbus_request", methods=["POST"])
 def modbus_request():
     """
@@ -284,7 +295,7 @@ def modbus_request():
 
     try:
         logger.info(f"🔄 Modbus verisi alınıyor: {selected_ip}")  # İsteğin başladığını logla
-        
+
         # HTTP ile cihazdan Modbus verilerini al
         url = f"http://{selected_ip}:8085/get_modbus_data"
         response = requests.get(url, timeout=500)  # Timeout ekledik
@@ -295,12 +306,14 @@ def modbus_request():
             logger.warning("❌ Modbus verisi bulunamadı.")
             return jsonify({"error": "Modbus verisi alınamadı veya cihaz desteklemiyor."}), 500
 
-        logger.info(f"✅ Modbus verisi başarıyla alındı: {len(modbus_data)} cihaz bulundu.")  # Kaç cihaz bulunduğunu logla
+        logger.info(
+            f"✅ Modbus verisi başarıyla alındı: {len(modbus_data)} cihaz bulundu.")  # Kaç cihaz bulunduğunu logla
         return jsonify({"modbus_data": modbus_data})
 
     except requests.exceptions.RequestException as e:
         logger.error(f"🔥 Modbus isteği hatası: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
+
 
 @app.route("/disconnect_request", methods=["POST"])
 def disconnect_request():
@@ -315,7 +328,7 @@ def disconnect_request():
 
     try:
         logger.info(f"🔌 Wi-Fi bağlantısı kesiliyor: {selected_ip}")
-        
+
         # HTTP ile cihazdan Wi-Fi'yi kapatmasını iste
         url = f"http://{selected_ip}:8085/disconnect_wifi"
         response = requests.post(url, timeout=10)  # Timeout ekleyelim
@@ -327,6 +340,7 @@ def disconnect_request():
     except requests.exceptions.RequestException as e:
         logger.error(f"🔥 Wi-Fi kapatma hatası: {e}")
         return jsonify({"error": f"Wi-Fi bağlantısı kapatılamadı: {str(e)}"}), 500
+
 
 @app.route("/equipments-with-models", methods=["POST"])
 def equipments_with_models():
@@ -354,9 +368,11 @@ def equipments_with_models():
         logging.error(f"🔥 Equipment isteği hatası: {e}")
         return jsonify({"error": f"Equipment Boş"})
 
+
 @app.route('/equipment', endpoint="equipment")
 def equipment():
     return render_template("equipments/equipments.html")
+
 
 @app.route("/equipment-setting", methods=["GET"])
 def equipment_setting():
@@ -365,44 +381,55 @@ def equipment_setting():
     """
     modbus_data = session.get("modbus_data", [])  # Modbus verilerini al
     return render_template("equipments/equipment_setting.html", modbus_data=modbus_data)
-    
+
+
 # Diger SAyfalar         
 @app.route('/modem-selection', endpoint="modem_selection")
 def modem_selection():
     return render_template("modem_selection.html")
 
+
 @app.route('/log', endpoint="log")
 def log():
     return render_template("log.html")
 
+
 @app.route('/alarm', endpoint="alarm")
 def alarm():
-    return render_template("alarm.html")    
+    return render_template("alarm.html")
+
 
 @app.route('/test', endpoint="test")
 def test():
-    return render_template("test/test.html")    
+    return render_template("test/test.html")
+
 
 @app.route('/equipment-details', endpoint="equipment_detatils")
 def equipment_details():
     return render_template("equipments/equipment_details.html")
+
 
 # !! Settings Start
 @app.route('/settings', endpoint="settings")
 def settings():
     return render_template("settings/setting.html")
 
+
 @app.route('/orc-settings', endpoint="orc_settings")
 def orc_setting():
     return render_template("settings/orc_set.html")
+
 
 @app.route('/osos-settings', endpoint="osos_settings")
 def osos_setting():
     return render_template("settings/osos_set.html")
 
+
 @app.route('/equipment-settings', endpoint="equipment_settings")
 def equipment_setting():
     return render_template("settings/equipment_set.html")
+
+
 # !! Settings End
 
 # !! Data Start 
@@ -410,24 +437,32 @@ def equipment_setting():
 def data():
     return render_template("datas/data.html")
 
+
 @app.route('/live-data', endpoint="live-data")
 def live_data():
     return render_template("datas/live_data.html")
 
-@app.route('/hourly-data', endpoint="hourly-data")  
+@app.route('/live-data-detail', endpoint="live-data-detail")
+def live_data_detail():
+    return render_template("datas/live_data_detail.html")
+
+@app.route('/hourly-data', endpoint="hourly-data")
 def hourly_data():
     return render_template("datas/hourly_data.html")
-@app.route('/daily-data', endpoint="daily-data")  
+
+@app.route('/daily-data', endpoint="daily-data")
 def daily_data():
     return render_template("datas/daily_data.html")
-# !! Data End 
- 
+
+# !! Data End
+
 
 # 🎯 Çıkış Yapma
 @app.route("/logout", methods=["POST"])
 def logout():
     session.clear()  # 🎯 Tüm oturum bilgilerini temizle
     return redirect(url_for("login"))  # 🎯 Login sayfasına yönlendir
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5004)

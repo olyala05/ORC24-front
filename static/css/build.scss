@@ -13,6 +13,10 @@
 @forward './orc-setting';
 @forward './osos-settings';
 @forward './data';
+@forward './live-data';
+@forward './hourly-data';
+@forward './daily-data';
+
 
 
 @import "bootstrap/css/bootstrap.min.css";

@@ -40,7 +40,6 @@ input:-webkit-autofill {
   -webkit-text-fill-color: white !important; /* Yazı rengini zorla değiştir */
   background-color: #0E1734 !important; /* Arka plan rengini belirle */
   -webkit-box-shadow: 0 0 0 30px #0E1734 inset !important; /* Arka planı zorla değiştir */
-  -webkit-transition: background-color 5000s ease-in-out 0s;
   transition: background-color 5000s ease-in-out 0s; /* Renk değişimini kalıcı yap */
 }
 
@@ -180,7 +179,7 @@ input:-webkit-autofill:focus {
   gap: 12px;
 }
 .login-btn:hover {
-  background: #fe5f00;
+  background: rgb(254, 95.4048780488, 0);
   box-shadow: 0 6px 12px rgba(255, 127, 50, 0.5);
 }
 
@@ -357,7 +356,7 @@ input:-webkit-autofill:focus {
   box-shadow: 0 2px 5px rgba(255, 127, 50, 0.5);
 }
 .header-button:hover {
-  background: #fe5f00;
+  background: rgb(254, 95.4048780488, 0);
   box-shadow: 0 4px 8px rgba(255, 127, 50, 0.7);
 }
 .header-button i {
@@ -941,9 +940,7 @@ input:-webkit-autofill:focus {
 }
 
 .equip-setting-select select {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  appearance: none;
   width: 100%;
   padding: 12px;
   border-radius: 3px;
@@ -1075,7 +1072,7 @@ body {
   cursor: pointer;
 }
 .header .header-button:hover {
-  background-color: #ff8c33;
+  background-color: rgb(255, 139.8, 51);
 }
 .header .header-logo .logo {
   height: 40px;
@@ -1204,7 +1201,7 @@ body {
   cursor: pointer;
 }
 .header .header-button:hover {
-  background-color: #ff8c33;
+  background-color: rgb(255, 139.8, 51);
 }
 .header .header-button i {
   margin-left: 30px;
@@ -1380,7 +1377,7 @@ body {
   cursor: pointer;
 }
 .header .header-button:hover {
-  background-color: #ff8c33;
+  background-color: rgb(255, 139.8, 51);
 }
 .header .header-button i {
   margin-left: 5px;
@@ -1493,7 +1490,7 @@ body {
   color: white;
 }
 .device-info .connection-status .disconnect-btn:hover {
-  background-color: #ff8c33;
+  background-color: rgb(255, 139.8, 51);
 }
 
 .connection-table {
@@ -1594,7 +1591,7 @@ body {
   color: white;
 }
 .algorithm-section .algorithm-box .status-btn:hover {
-  background-color: #ff8c33;
+  background-color: rgb(255, 139.8, 51);
 }
 
 .connection-status {
@@ -2860,4 +2857,70 @@ body {
 }
 .main-data-btn:hover {
   background: #f5f5f5;
-}/*# sourceMappingURL=build.css.map */
+}
+
+.live-data-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+  gap: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+  margin-top: 80px;
+}
+.live-data-container .live-data-table,
+.live-data-container .live-data-status {
+  width: 48%;
+  background-color: #191932;
+  padding: 10px;
+  border-radius: 8px;
+  overflow-y: auto;
+  max-height: 500px;
+}
+.live-data-container .table-header {
+  position: sticky;
+  top: 0;
+  background-color: #191932;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #2d2d4a;
+}
+.live-data-container .table-header > div {
+  flex: 1;
+  padding: 10px;
+  text-align: left;
+  color: #ff9800;
+  font-weight: bold;
+}
+.live-data-container .table-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #2d2d4a;
+}
+.live-data-container .table-row > div {
+  flex: 1;
+  padding: 10px;
+  text-align: left;
+  color: #ccc;
+}
+.live-data-container .status {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.live-data-container .status.active {
+  background-color: green;
+}
+.live-data-container .status.inactive {
+  background-color: red;
+}
+
+/*# sourceMappingURL=build.css.map */
