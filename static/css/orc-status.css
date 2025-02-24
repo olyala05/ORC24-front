@@ -58,15 +58,15 @@ body {
 }
 
 .orc-content {
-  margin-top: 60px;
-  padding: 10px;
+  margin-top: 84px;
+  padding: 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  width: 100vw;
-  height: calc(100vh - 60px);
-  gap: 20px;
+  width: 98vw;
+  height: calc(97vh - 60px);
+  gap: 12px;
 }
 
 .device-info {
@@ -108,12 +108,13 @@ body {
   color: #1c2747;
   display: block;
   margin-bottom: 5px;
+  margin-top: 13px;
 }
 .device-info .connection-status .separator {
   width: 90%;
   height: 1px;
   background-color: #ff6f00;
-  margin: 10px auto;
+  margin: 0px auto;
 }
 .device-info .connection-status .status-details {
   display: flex;
@@ -198,7 +199,7 @@ body {
 }
 
 .algorithm-section {
-  width: 100%;
+  width: 96%;
   background-color: white;
   padding: 7px;
   border-radius: 8px;
@@ -225,7 +226,7 @@ body {
   background: white;
   padding: 10px;
   border-radius: 8px;
-  width: 100%;
+  width: 96%;
   font-weight: bold;
 }
 .algorithm-section .algorithm-box .algorithm-left {

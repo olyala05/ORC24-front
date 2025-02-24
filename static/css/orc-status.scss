@@ -76,15 +76,15 @@ body {
 
 // 📌 ORC Status İçerik (1024x600 Uyumlu)
 .orc-content {
-  margin-top: 60px;
-  padding: 10px;
+  margin-top: 84px;
+  padding: 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  width: 100vw;
-  height: calc(100vh - 60px);
-  gap: 20px; // İki div arasındaki boşluğu küçült
+  width: 98vw;
+  height: calc(97vh - 60px);
+  gap: 12px;
 }
 
 // 📌 Cihaz Bilgileri Paneli (Sol Taraf)
@@ -130,6 +130,7 @@ body {
       color: #1c2747;
       display: block;
       margin-bottom: 5px;
+      margin-top: 13px;
     }
 
     // Turuncu çizgi
@@ -137,7 +138,7 @@ body {
       width: 90%;
       height: 1px;
       background-color: #ff6f00;
-      margin: 10px auto;
+      margin: 0px auto;
     }
 
     .status-details {
@@ -240,7 +241,7 @@ body {
 
 // 📌 Algoritma Süreçleri
 .algorithm-section {
-  width: 100%;
+  width: 96%;
   background-color: white;
   padding: 7px;
   border-radius: $border-radius;
@@ -269,7 +270,7 @@ body {
     background: white;
     padding: 10px;
     border-radius: 8px;
-    width: 100%;
+    width: 96%;
     font-weight: bold;
 
     .algorithm-left {

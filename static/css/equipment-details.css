@@ -1,65 +1,103 @@
-.equipment-container {
-  padding: 10px;
-  background-color: #121212;
-  color: #ffffff;
+.eq-detail-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
+  gap: 20px;
+  color: #e6edf3;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  width: 1000px;
+  margin-top: 80px;
 }
-.equipment-container .header {
-  text-align: center;
-  margin-bottom: 15px;
-}
-.equipment-container .header h2 {
-  font-size: 20px;
-  margin-bottom: 5px;
-}
-.equipment-container .header p {
-  font-size: 16px;
-  color: #ff9800;
-}
-.equipment-container .equipment-details {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 1024px;
-}
-.equipment-container .equipment-details .info-panel {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  background: #1a1a1a;
-  padding: 10px;
+.eq-detail-container .eq-detail-panel {
+  background-color: #0b1734;
+  padding: 15px;
   border-radius: 8px;
+  width: 40%;
 }
-.equipment-container .equipment-details .info-panel .info-item {
-  padding: 5px;
-  font-size: 14px;
-  border-bottom: 1px solid #333;
-}
-.equipment-container .equipment-details .log-panel {
-  margin-top: 15px;
-  padding: 10px;
-  background: #1a1a1a;
-  border-radius: 8px;
-}
-.equipment-container .equipment-details .log-panel h3 {
-  font-size: 16px;
+.eq-detail-container .eq-detail-panel .eq-detail-header {
+  font-size: 18px;
+  font-weight: bold;
   margin-bottom: 10px;
 }
-.equipment-container .equipment-details .log-panel ul {
+.eq-detail-container .eq-detail-panel .eq-detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ef8018;
+  padding: 4px 0;
+}
+.eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item span {
+  font-size: 14px;
+}
+.eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-detail-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-active {
+  background-color: #3fb950;
+}
+.eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-passive {
+  background-color: #f85149;
+}
+.eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-detail-green {
+  color: #3fb950;
+}
+.eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-detail-red {
+  color: #f85149;
+}
+.eq-detail-container .eq-detail-log {
+  width: 60%;
+  background-color: #0b1734;
+  padding: 15px;
+  border-radius: 8px;
+}
+.eq-detail-container .eq-detail-log .eq-detail-log-header {
+  display: flex;
+  justify-content: flex-start;
+  font-size: 16px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ffffff;
+  gap: 15px;
+}
+.eq-detail-container .eq-detail-log .eq-detail-log-list {
   list-style: none;
   padding: 0;
+  max-height: 400px;
+  overflow-y: auto;
 }
-.equipment-container .equipment-details .log-panel ul .log-entry {
-  padding: 5px;
+.eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #ef8018;
   font-size: 14px;
-  border-bottom: 1px solid #333;
 }
-.equipment-container .equipment-details .log-panel ul .log-entry.green {
-  color: #4CAF50;
+.eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-status {
+  display: flex;
+  align-items: center;
+  gap: 60px;
 }
-.equipment-container .equipment-details .log-panel ul .log-entry.red {
-  color: #F44336;
+.eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-active {
+  background-color: #3fb950;
+}
+.eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-passive {
+  background-color: #f85149;
+}
+.eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-green {
+  color: #3fb950;
+}
+.eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-red {
+  color: #f85149;
+}
+.eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-gray {
+  color: #8b949e;
 }/*# sourceMappingURL=equipment-details.css.map */
