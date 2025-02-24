@@ -250,7 +250,7 @@ def orc_status():
         print("Modem URL:", url_modem)  # 🔍 Konsola yazdır
         response_modem = requests.get(url_modem, timeout=5)  # 5 saniye timeout ekledik
         response_modem.raise_for_status()
-        modems = response_modem.json().get("modems", [])
+        modems = response_modem.json().get("data", [])
         selected_modem = modems[0] if modems else None
 
         # 📌 Ağ bilgilerini al
