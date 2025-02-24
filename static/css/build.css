@@ -40,6 +40,7 @@ input:-webkit-autofill {
   -webkit-text-fill-color: white !important; /* Yazı rengini zorla değiştir */
   background-color: #0E1734 !important; /* Arka plan rengini belirle */
   -webkit-box-shadow: 0 0 0 30px #0E1734 inset !important; /* Arka planı zorla değiştir */
+  -webkit-transition: background-color 5000s ease-in-out 0s;
   transition: background-color 5000s ease-in-out 0s; /* Renk değişimini kalıcı yap */
 }
 
@@ -179,7 +180,7 @@ input:-webkit-autofill:focus {
   gap: 12px;
 }
 .login-btn:hover {
-  background: rgb(254, 95.4048780488, 0);
+  background: #fe5f00;
   box-shadow: 0 6px 12px rgba(255, 127, 50, 0.5);
 }
 
@@ -356,7 +357,7 @@ input:-webkit-autofill:focus {
   box-shadow: 0 2px 5px rgba(255, 127, 50, 0.5);
 }
 .header-button:hover {
-  background: rgb(254, 95.4048780488, 0);
+  background: #fe5f00;
   box-shadow: 0 4px 8px rgba(255, 127, 50, 0.7);
 }
 .header-button i {
@@ -940,7 +941,9 @@ input:-webkit-autofill:focus {
 }
 
 .equip-setting-select select {
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   width: 100%;
   padding: 12px;
   border-radius: 3px;
@@ -1019,6 +1022,18 @@ body {
   border-radius: 10px;
 }
 
+.equipment-container-wrapper {
+  margin-top: 79px;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background: #0B1734;
+  border-radius: 10px;
+  width: 950px;
+  height: 450px;
+}
+
 .equipment-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1072,7 +1087,7 @@ body {
   cursor: pointer;
 }
 .header .header-button:hover {
-  background-color: rgb(255, 139.8, 51);
+  background-color: #ff8c33;
 }
 .header .header-logo .logo {
   height: 40px;
@@ -1201,7 +1216,7 @@ body {
   cursor: pointer;
 }
 .header .header-button:hover {
-  background-color: rgb(255, 139.8, 51);
+  background-color: #ff8c33;
 }
 .header .header-button i {
   margin-left: 30px;
@@ -1377,7 +1392,7 @@ body {
   cursor: pointer;
 }
 .header .header-button:hover {
-  background-color: rgb(255, 139.8, 51);
+  background-color: #ff8c33;
 }
 .header .header-button i {
   margin-left: 5px;
@@ -1490,7 +1505,7 @@ body {
   color: white;
 }
 .device-info .connection-status .disconnect-btn:hover {
-  background-color: rgb(255, 139.8, 51);
+  background-color: #ff8c33;
 }
 
 .connection-table {
@@ -1591,7 +1606,7 @@ body {
   color: white;
 }
 .algorithm-section .algorithm-box .status-btn:hover {
-  background-color: rgb(255, 139.8, 51);
+  background-color: #ff8c33;
 }
 
 .connection-status {
@@ -3238,6 +3253,4 @@ body {
 }
 .daily-data-detail-error-text {
   color: #ff4444;
-}
-
-/*# sourceMappingURL=build.css.map */
+}/*# sourceMappingURL=build.css.map */

@@ -27,6 +27,18 @@ body {
   border-radius: 10px;
 }
 
+.equipment-container-wrapper {  
+  margin-top: 79px;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background: #0B1734;
+  border-radius: 10px;
+  width: 950px;
+  height: 450px;
+}
+
 // 📌 Equipment Grid
 .equipment-grid {
   display: grid;
