@@ -6,73 +6,7 @@ $border-radius: 8px;
 $header-height: 60px;
 $container-padding: 10px;
 
-// 📌 Genel Stil Ayarları
-body {
-  background-color: $background-color;
-  color: $text-color;
-  font-family: "Arial", sans-serif;
-  margin: 0;
-  padding: 0;
-  overflow: hidden; // Scroll'u kapatma
-}
 
-// 📌 Header (Sabit Üst Bar)
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #0e1734;
-  padding: 9px 20px;
-  width: 100%;
-  height: $header-height;
-  z-index: 1000;
-
-
-  .header-left {
-    display: flex;
-    align-items: center;
-  }
-
-  .header-button {
-    background-color: $primary-color;
-    color: black;
-    padding: 10px 16px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: $border-radius;
-    cursor: pointer;
-
-    &:hover {
-      background-color: lighten($primary-color, 10%);
-    }
-
-    i {
-      margin-left: 5px;
-    }
-  }
-
-  .header-logo .logo {
-    height: 40px;
-  }
-
-  .date-time,
-  .report-date {
-    font-size: 14px;
-    text-align: end;
-  }
-
-  .report-line {
-    display: flex;
-    align-items: center;
-    width: 110%;
-    margin: 3px 0;
-    width: 150%;
-  }
-}
 
 // 📌 ORC Status İçerik (1024x600 Uyumlu)
 .orc-content {

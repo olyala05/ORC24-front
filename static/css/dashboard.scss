@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: #0e1734;
-  padding: 9px 20px;
+  padding: 0px 0px;
   width: 100%;
   height: 70px;
   z-index: 1000;
@@ -59,13 +59,13 @@
 }
 
 /* Sağ kısım (Tarih ve Rapor Tarihi) */
-.header-right {
+.header-right-dashboard {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   font-size: 16px;
   color: #fff;
-  margin-right: 20px;
+  margin-right: 14px;
 }
 
 .date-time {
@@ -108,7 +108,7 @@
   }
 
   .header-left,
-  .header-right {
+  .header-right-dashboard {
     width: 100%;
     justify-content: center;
     text-align: center;

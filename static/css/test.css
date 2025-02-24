@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .switch-container {
   display: flex;
   justify-content: center;
@@ -16,4 +17,356 @@
 }
 .switch-button:hover {
   background-color: #f5f5f5;
+}
+
+.test-switch-content {
+  display: flex;
+  gap: 20px;
+  margin-top: 60px;
+}
+.test-switch-content .switch-btn-test {
+  padding: 19px;
+  border-radius: 7px;
+  color: #000;
+  font-weight: 600;
+  margin: 10px;
+  font-size: large;
+}
+
+.test-sidebar-switch {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.switch-btn-test.active {
+  background-color: #fff;
+  font-weight: 700;
+  border: 3px solid #ff6f00;
+  color: #000;
+}
+
+.wifi-container-test {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 15px;
+}
+
+.btn-group-test {
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.network-box-test {
+  margin-right: 15px;
+}
+.network-box-test .network-header-test {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: bold;
+  background: #f5f5f5;
+  padding: 14px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  width: 280px;
+}
+.network-box-test .network-header-test .wifi-icon-test {
+  display: flex;
+  gap: 10px;
+}
+.network-box-test .network-header-test .wifi-icon-test img {
+  width: 30px;
+}
+
+.wifi-icon-test {
+  display: flex;
+  gap: 10px;
+}
+
+.wifi-connection-test {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.wifi-card-test {
+  background: white;
+  padding: 5px;
+  border-radius: 10px;
+  width: 407px;
+}
+.wifi-card-test h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #1c2747;
+}
+.wifi-card-test p {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1c2747;
+  margin-left: 34px;
+  margin-top: 0;
+}
+.wifi-card-test label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #1c2747;
+}
+.wifi-card-test input {
+  padding: 8px;
+  border: 1px solid #e2e2e2;
+  border-radius: 5px;
+  background: #e2e2e2;
+  width: 100%;
+}
+.wifi-card-test .password-intput-test {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.wifi-card-test .show-password-test {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+  justify-content: center;
+  width: 300px;
+}
+.wifi-card-test .show-password-test .check-box-test {
+  width: 15px;
+}
+.wifi-card-test .show-password-test .show-pass {
+  font-size: 14px;
+  color: #1c2747;
+  font-weight: 100;
+  white-space: nowrap;
+}
+.wifi-card-test .btn-group-test {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+  gap: 14px;
+}
+.wifi-card-test .btn-group-test .btn-test {
+  padding: 14px 32px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  background: #ef742a;
+  color: #fff;
+  font-size: 16px;
+}
+.wifi-card-test .btn-group-test .btn-test.cancel {
+  background: #ef742a;
+  color: white;
+  padding: 14px 40px;
+}
+.wifi-card-test .btn-group-test .btn-test.connect {
+  background: #ef742a;
+  color: white;
+  padding: 14px 40px;
+}
+.wifi-card-test.connected .wifi-info-test {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 5px;
+  color: #1c2747;
+  font-weight: bold;
+}
+.wifi-card-test.connected .wifi-info-test .disconnect {
+  background: #ef742a;
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.wifi-card-test #wifi-list-test {
+  background: white;
+  border-radius: 7px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-top: 10px;
+  width: 280px;
+  display: none;
+}
+.wifi-card-test #wifi-list-test ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.wifi-card-test .wifi-list-switch li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  transition: background 0.2s ease-in-out;
+}
+.wifi-card-test .wifi-list-switch li:hover {
+  background: #f7f7f7;
+}
+.wifi-card-test .wifi-list-switch li:last-child {
+  border-bottom: none;
+}
+.wifi-card-test .wifi-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.wifi-card-test .wifi-icon img {
+  width: 20px;
+  height: 20px;
+}
+.wifi-card-test .lock-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.write-test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.write-test-card {
+  background: #161b3d;
+  padding: 20px;
+  border-radius: 10px;
+  width: 650px;
+  align-items: center;
+}
+
+.write-input-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #c4c4c4;
+  padding: 10px;
+  border-radius: 7px;
+  margin-bottom: 17px;
+}
+
+.write-input-group label {
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.write-input-group input,
+.write-input-group select {
+  background: white;
+  border: none;
+  padding: 15px;
+  border-radius: 3px;
+  width: 50%;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+.write-input-group select {
+  appearance: none; /* Tarayıcı varsayılan stilini kaldırır */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 20px; /* İçerik için ekstra boşluk bırakır */
+}
+
+.write-input-group select {
+  min-width: 150px;
+}
+
+.write-save-btn {
+  background: #ef742a;
+  color: white;
+  border: none;
+  width: 30%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 49px 46px 15px 220px;
+}
+
+.write-save-btn:hover {
+  background: #d65f1f;
+}
+
+.cloud-test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.cloud-test-card {
+  background: #161b3d;
+  padding: 20px;
+  border-radius: 10px;
+  width: 650px;
+  align-items: center;
+}
+.cloud-test-card h3 {
+  text-align: center;
+}
+
+.equipment-test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+.equipment-test-container h3 {
+  text-align: center;
+}
+
+.equipment-test-card {
+  background: #161b3d;
+  padding: 20px;
+  border-radius: 10px;
+  width: 650px;
+  align-items: center;
+}
+.equipment-test-card h3 {
+  text-align: center;
+}
+
+.read-test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+.read-test-container h3 {
+  text-align: center;
+}
+
+.read-test-card {
+  background: #161b3d;
+  padding: 20px;
+  border-radius: 10px;
+  width: 650px;
+  align-items: center;
+}
+.read-test-card h3 {
+  text-align: center;
 }/*# sourceMappingURL=test.css.map */

@@ -1,11 +1,162 @@
-
-{% extends "layout.html" %}
-{% block title %} Test Page {% endblock %}
-
-{% block content %}
-
+{% extends "layout.html" %} {% block title %} Test Details {% endblock %} {%
+block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
 
+<!-- Yeni İçerik (İlk başta gizli olacak) -->
+<div class="test-switch-content">
+  <div class="test-sidebar-switch">
+    <button class="switch-btn-test" data-target="wifi-test">
+      Wifi / Ethernet Connection Test
+    </button>
+    <button class="switch-btn-test" data-target="equipment-test">
+      Equipment
+    </button>
+    <button class="switch-btn-test" data-target="cloud-test">
+      Cloud Connection Test
+    </button>
+    <button class="switch-btn-test" data-target="read">Read</button>
+    <button class="switch-btn-test" data-target="write">Write</button>
+  </div>
 
-{% endblock %}
+  <div class="switch-content-area">
+    <!-- Wi-Fi Test -->
+    <div id="wifi-test" class="tab-content-test">
+      <div class="wifi-container-test">
+        <!-- Available Wi-Fi -->
+        <div class="network-box-test">
+          <button
+            class="network-header-test wifi-header-test"
+            onclick="toggleWifiList()"
+          >
+            Available Wi-Fi
+            <span class="wifi-icon-test">
+              <img
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                alt="No Wi-Fi"
+              />
+            </span>
+          </button>
+
+          <div id="wifi-list-test" class="wifi-list-switch hidden"></div>
+        </div>
+
+        <!-- Wi-Fi Password Form -->
+        <div class="wifi-connection-test">
+          <div class="wifi-card-test">
+            <div class="wifi-icon-test">
+              <img
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                alt="No Wi-Fi"
+              />
+              <h4>Wi-Fi Password</h4>
+            </div>
+
+            <p>Wi-Fi SSID: pier mi 5g</p>
+            <div class="password-intput-test">
+              <label>Password:</label>
+              <input type="password" />
+            </div>
+            <div class="show-password-test">
+              <input type="checkbox" id="showPass" class="check-box-test" />
+              <label for="showPass" class="show-pass">Show Password</label>
+            </div>
+            <div class="btn-group-test">
+              <button class="btn-test cancel-test">Cancel</button>
+              <button class="btn-test connec-test">Connect</button>
+            </div>
+          </div>
+
+          <!-- Connected Wi-Fi -->
+          <div class="wifi-card-test connected">
+            <h4>Connected</h4>
+            <div class="underline"></div>
+            <div class="wifi-info-test">
+              <img
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                alt="No Wi-Fi"
+              />
+              <span>Pier Enerji</span>
+              <button class="btn disconnect">Disconnect</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Equipment Test -->
+    <div
+      id="equipment-test"
+      class="equipment-test-container"
+      style="display: none"
+    >
+      <div class="equipment-test-card">
+        <h3>Equipment Test</h3>
+      </div>
+    </div>
+
+    <!-- Cloud Connection Test -->
+    <div id="cloud-test" class="cloud-test-container" style="display: none">
+      <div class="cloud-test-card">
+        <h3>Cloud Connection Test</h3>
+      </div>
+    </div>
+
+    <!-- Read Test -->
+    <div id="read" class="read-test-container" style="display: none">
+      <div class="read-test-card">
+        <h3>Read Test</h3>
+      </div>
+    </div>
+
+    <!-- Write Test -->
+    <div id="write" class="write-test-container" style="display: none">
+      <div class="write-test-card">
+        <h3>Write Test</h3>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleWifiList() {
+      const wifiList = document.getElementById("wifi-list");
+      wifiList.classList.toggle("hidden");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const tabButtons = document.querySelectorAll(".switch-btn-test");
+      const tabContents = document.querySelectorAll(
+        ".switch-content-area > div"
+      ); // 🔥 Tüm içerikleri direkt seçtik
+
+      tabButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const targetId = this.getAttribute("data-target");
+
+          // 📌 Önce tüm içerikleri gizle
+          tabContents.forEach((content) => (content.style.display = "none"));
+
+          // 📌 Tüm butonlardaki "active" sınıfını kaldır
+          tabButtons.forEach((btn) => btn.classList.remove("active"));
+
+          // 📌 Seçilen butona "active" sınıfı ekle
+          this.classList.add("active");
+
+          // 📌 İlgili tab içeriğini göster
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            targetElement.style.display = "block";
+          }
+        });
+      });
+
+      // 📌 Sayfa yüklendiğinde varsayılan olarak ilk sekmeyi göster
+      if (tabButtons.length > 0) {
+        tabButtons[0].click();
+      }
+    });
+  </script>
+
+  {% endblock %}
+</div>
