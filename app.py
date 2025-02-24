@@ -253,16 +253,17 @@ def orc_status():
         modems = response_modem.json().get("data", [])
         selected_modem = modems[0] if modems else None
 
-        # 📌 Ağ bilgilerini al
         url_network = f"http://{selected_ip}:8085/check_network"
-        print("Ağ URL:", url_network)  # 🔍 Konsola yazdır
+        print("Ağ URL:", url_network)
         try:
-            response_network = requests.get(url_network, timeout=5)  # 5 saniye timeout ekledik
+            response_network = requests.get(url_network, timeout=5)
             response_network.raise_for_status()
-            network_data = response_network.json()
-            print("Wi-Fi SSID:", network_data.get("connected_ssid"))  # 🔍 Konsola yazdır
+            network_full = response_network.json()
+            # Yalnızca 'data' kısmını al
+            network_data = network_full.get("data", {})
+            print("Wi-Fi SSID:", network_data.get("connected_ssid"))
         except requests.exceptions.RequestException as e:
-            print(f"⚠️ Ağ bilgisi alınamadı: {e}")  # Hata logla ama hata döndürme!
+            print(f"⚠️ Ağ bilgisi alınamadı: {e}")
             flash(f"Ağ bilgisi alınamadı: {e}", "warning")
 
         # 📌 Tarih formatını dönüştür

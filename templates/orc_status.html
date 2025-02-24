@@ -120,28 +120,31 @@ content %}
   </div>
 <script>
 
-  function retryConnection() {
-    // Yeniden ağ bağlantısını kontrol et
-    fetch("/check_network")
-        .then(response => response.json())
-        .then(data => {
-            if (data.connected_ssid && data.connected_ssid !== "Not Connected") {
-                // Wi-Fi bağlandıysa sayfayı yenile
-                location.reload();
-            } else {
-                // Hala bağlantı yoksa SweetAlert ile uyarı ver
-                Swal.fire({
-                    icon: "error",
-                    title: "Wi-Fi Bağlantısı Yok!",
-                    text: "Lütfen modeminizi ve bağlantılarınızı kontrol edin.",
-                    confirmButtonText: "Tamam"
-                });
-            }
-        })
-        .catch(error => {
-            console.error("Bağlantı kontrolü sırasında hata oluştu:", error);
+
+
+
+function retryConnection() {
+  fetch("/check_network")
+    .then(response => response.json())
+    .then(result => {
+      console.log("Network Data:", result.data);
+      const network = result.data;
+      if (network && network.connected_ssid && network.connected_ssid !== "Not Connected") {
+        location.reload();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Wi-Fi Bağlantısı Yok!",
+          text: "Lütfen modeminizi ve bağlantılarınızı kontrol edin.",
+          confirmButtonText: "Tamam"
         });
+      }
+    })
+    .catch(error => {
+      console.error("Bağlantı kontrolü sırasında hata oluştu:", error);
+    });
 }
+
 document.addEventListener("DOMContentLoaded", function () {
   const disconnectBtn = document.querySelector(".disconnect-btn");
 
