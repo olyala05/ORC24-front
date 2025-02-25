@@ -1921,7 +1921,7 @@ body {
 }
 
 .equipment-test-card {
-  background: #161b3d;
+  background: #0B1734;
   padding: 10px;
   border-radius: 10px;
   margin-right: 20px;
@@ -2019,7 +2019,7 @@ body {
 }
 
 .cloud-test-card {
-  background: #161b3d;
+  background: #0B1734;
   padding: 20px;
   border-radius: 10px;
   width: 650px;
@@ -2186,11 +2186,90 @@ body {
 }
 
 .write-test-card {
-  background: #161b3d;
+  background: #0B1734;
   padding: 20px;
   border-radius: 10px;
   width: 650px;
   align-items: center;
+  color: white;
+}
+
+.write-test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.write-test-group {
+  display: flex;
+  flex-direction: column;
+}
+.write-test-group label {
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+.write-test-group input {
+  color: #757678;
+  border: 1px solid #444;
+  padding: 8px;
+  border-radius: 5px;
+  width: 90%;
+}
+
+.write-test-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.write-test-button {
+  background-color: #EF742A;
+  color: white;
+  padding: 12px 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+}
+.write-test-button:hover {
+  background-color: #d97720;
+}
+
+.write-test-status {
+  display: flex;
+  flex-direction: column;
+}
+
+.write-test-success {
+  color: limegreen;
+  margin: 5px 0;
+  padding: 0;
+}
+
+.write-test-failed {
+  color: red;
+  margin: 0;
+  padding: 0;
+}
+
+.write-test-terminal {
+  margin-top: 15px;
+}
+.write-test-terminal label {
+  display: block;
+  margin-bottom: 5px;
+}
+.write-test-terminal textarea {
+  color: #757678;
+  border: 1px solid #444;
+  padding: 8px;
+  border-radius: 5px;
+  width: 97%;
+  height: 80px;
+  resize: none;
 }
 
 .settings-content {
