@@ -37,106 +37,99 @@ block content %}
               />
             </span>
           </button>
-
-          <div id="wifi-list-test" class="wifi-list-switch hidden"></div>
         </div>
 
-        <!-- Wi-Fi Password Form -->
-        <div class="wifi-connection-test">
-          <div class="wifi-card-test">
-            <div class="wifi-icon-test">
-              <img
-                src="{{ url_for('static', filename='images/svg/12.svg') }}"
-                alt="No Wi-Fi"
-              />
-              <h4>Wi-Fi Password</h4>
-            </div>
-
-            <p>Wi-Fi SSID: pier mi 5g</p>
-            <div class="password-intput-test">
-              <label>Password:</label>
-              <input type="password" />
-            </div>
-            <div class="show-password-test">
-              <input type="checkbox" id="showPass" class="check-box-test" />
-              <label for="showPass" class="show-pass">Show Password</label>
-            </div>
-            <div class="btn-group-test">
-              <button class="btn-test cancel-test">Cancel</button>
-              <button class="btn-test connec-test">Connect</button>
-            </div>
+        <!-- Wi-Fi Bölümü  -->
+        <div class="wifi-test-box">
+          <!-- Network Name -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">Network Name</label>
+            <span class="wifi-test-value">Pier Mi Right 5G</span>
           </div>
 
-          <!-- Connected Wi-Fi -->
-          <div class="wifi-card-test connected">
-            <h4>Connected</h4>
-            <div class="underline"></div>
-            <div class="wifi-info-test">
-              <img
-                src="{{ url_for('static', filename='images/svg/12.svg') }}"
-                alt="No Wi-Fi"
-              />
-              <span>Pier Enerji</span>
-              <button class="btn disconnect">Disconnect</button>
+          <!-- Password -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">Password</label>
+            <span class="wifi-test-value">Pier2324+</span>
+          </div>
+
+          <!-- Connection Status -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">Connection Status</label>
+            <span class="wifi-test-value">Connected / No connection</span>
+          </div>
+
+          <!-- Connection Mac -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">Connection Mac</label>
+            <span class="wifi-test-value">02:81:2b:61:c6:1d</span>
+          </div>
+
+          <!-- Test Button ve WiFi Status -->
+          <div class="wifi-test-action">
+            <button class="wifi-test-btn">Test</button>
+            <div style="display: flex; flex-direction: column">
+              <span class="wifi-success">✔ WiFi Connection Successful.</span>
+              <span class="wifi-failed">✖ WiFi Connection Failed.</span>
             </div>
           </div>
         </div>
-
       </div>
+
+      <!--Burada bir beyaz çizgi geçmeli -->
+      <div class="white-line-break"></div>
+
+      <!-- Ethernet Bölümü -->
+      <div id="ethernet-test" class="tab-content-test">
+        <div class="ethernet-container-test">
+          <!-- Available Wi-Fi -->
+          <div class="ethernet-box-test">
+            <img
+              src="{{ url_for('static', filename='images/svg/24.svg') }}"
+              alt="No Wi-Fi"
+              class="ethernet-icon"
+            />
+            <span class="ethernet-text">Ethernet</span>
+          </div>
+          
+          <!--Ethernet Test Paneli -->
+          <div class="ethernet-test-box">
+
+            <!-- Connection Status -->
+            <div class="ethernet-test-row">
+              <label class="ethernet-test-label">Connection Status</label>
+              <span class="ethernet-test-value">Connected / No connection</span>
+            </div>
+  
+            <!-- Connection Mac -->
+            <div class="ethernet-test-row">
+              <label class="ethernet-test-label">Connection Mac</label>
+              <span class="ethernet-test-value">02:81:2b:61:c6:1d</span>
+            </div>
+  
+            <!-- Test Button ve Ethernet Status -->
+            <div class="ethernet-test-action">
+              <button class="ethernet-test-btn">Test</button>
+              <div style="display: flex; flex-direction: column">
+                <span class="ethernet-success">✔ WiFi Connection Successful.</span>
+                <span class="ethernet-failed">✖ WiFi Connection Failed.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
     </div>
 
-<!-- Equipment Test -->
-<div id="equipment-test" class="equipment-test-container" style="display: none">
-  <div class="equipment-test-card">
-    <table class="equipment-table">
-      <thead>
-        <tr>
-          <th>Serial Number</th>
-          <th>Perform a Scanning Test</th>
-          <th>Equipment Date / Connection Date</th>
-          <th>Status / Configuration</th>
-          <th>Connection</th>
-          <th>Connection Protocol</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>EMR-53CS@3630748023</td>
-          <td>Local Network Connection Scan Successful.</td>
-          <td>2024-04-01 10:43:19</td>
-          <td>A/A</td>
-          <td>OK</td>
-          <td>Modbus</td>
-        </tr>
-        <tr>
-          <td>MPR-46S@2931</td>
-          <td>Local Network Connection Scan Failed.</td>
-          <td>2024-04-01 10:43:19</td>
-          <td>A / A</td>
-          <td>OK</td>
-          <td>TCP / IP</td>
-        </tr>
-        <tr>
-          <td>EMR-53CS@3630748023</td>
-          <td>Local Network Connection Scan Successful.</td>
-          <td>2024-04-01 10:43:19</td>
-          <td>A/A</td>
-          <td>OK</td>
-          <td>Modbus</td>
-        </tr>
-        <tr>
-          <td>MPR-46S@2931</td>
-          <td>Local Network Connection Scan Failed.</td>
-          <td>2024-04-01 10:43:19</td>
-          <td>A / A</td>
-          <td>OK</td>
-          <td>TCP / IP</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
+    <!-- Equipment Test -->
+    <div
+      id="equipment-test"
+      class="equipment-test-container"
+      style="display: none"
+    >
+      <div class="equipment-test-card">
+        <h1>Equipment Test</h1>
+      </div>
+    </div>
 
     <!-- Cloud Connection Test -->
     <div id="cloud-test" class="cloud-test-container" style="display: none">

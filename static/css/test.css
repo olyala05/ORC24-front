@@ -48,8 +48,9 @@
 
 .wifi-container-test {
   display: flex;
-  align-items: flex-start;
-  margin-top: 15px;
+  gap: 15px;
+  border-radius: 10px;
+  width: 100%;
 }
 
 .btn-group-test {
@@ -59,9 +60,6 @@
   justify-content: flex-end;
 }
 
-.network-box-test {
-  margin-right: 15px;
-}
 .network-box-test .network-header-test {
   display: flex;
   align-items: center;
@@ -73,7 +71,8 @@
   border-radius: 7px;
   border: none;
   cursor: pointer;
-  width: 280px;
+  width: 200px;
+  margin-top: 17px;
 }
 .network-box-test .network-header-test .wifi-icon-test {
   display: flex;
@@ -88,151 +87,206 @@
   gap: 10px;
 }
 
-.wifi-connection-test {
+.wifi-test-box {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
 }
 
-.wifi-card-test {
-  background: white;
-  padding: 5px;
-  border-radius: 10px;
-  width: 407px;
-}
-.wifi-card-test h4 {
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #1c2747;
-}
-.wifi-card-test p {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1c2747;
-  margin-left: 34px;
-  margin-top: 0;
-}
-.wifi-card-test label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
-  color: #1c2747;
-}
-.wifi-card-test input {
-  padding: 8px;
-  border: 1px solid #e2e2e2;
-  border-radius: 5px;
-  background: #e2e2e2;
-  width: 100%;
-}
-.wifi-card-test .password-intput-test {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.wifi-card-test .show-password-test {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 5px;
-  justify-content: center;
-  width: 300px;
-}
-.wifi-card-test .show-password-test .check-box-test {
-  width: 15px;
-}
-.wifi-card-test .show-password-test .show-pass {
+.wifi-test-label {
   font-size: 14px;
-  color: #1c2747;
-  font-weight: 100;
-  white-space: nowrap;
+  color: white;
+  font-weight: bold;
 }
-.wifi-card-test .btn-group-test {
+
+.wifi-test-value {
+  font-size: 14px;
+  color: white;
+}
+
+.wifi-test-action {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 15px;
-  gap: 14px;
+  gap: 20px;
 }
-.wifi-card-test .btn-group-test .btn-test {
-  padding: 14px 32px;
+
+.wifi-test-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ef742a;
+}
+
+.wifi-test-input {
+  background: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.wifi-test-btn {
+  background: #ef742a;
+  color: white;
+  border: none;
+  padding: 11px 50px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.wifi-test-btn:hover {
+  background: #d65f1f;
+}
+
+.wifi-test-action .wifi-success {
+  color: green;
+  font-size: 14px;
+}
+.wifi-test-action .wifi-failed {
+  color: red;
+  font-size: 14px;
+}
+
+.ethernet-container-test {
+  display: flex;
+  gap: 15px;
+  border-radius: 10px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.ethernet-box-test {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-weight: bold;
+  padding: 14px;
+  border-radius: 7px;
   border: none;
   cursor: pointer;
-  border-radius: 6px;
-  background: #ef742a;
-  color: #fff;
-  font-size: 16px;
+  margin-top: 17px;
 }
-.wifi-card-test .btn-group-test .btn-test.cancel {
-  background: #ef742a;
+.ethernet-box-test .ethernet-icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 5px;
+}
+.ethernet-box-test .ethernet-text {
+  font-size: 45px;
+  font-weight: 100;
   color: white;
-  padding: 14px 40px;
+  text-align: center;
 }
-.wifi-card-test .btn-group-test .btn-test.connect {
-  background: #ef742a;
-  color: white;
-  padding: 14px 40px;
-}
-.wifi-card-test.connected .wifi-info-test {
+.ethernet-box-test .ethernet-header-test {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
-  border-radius: 5px;
-  color: #1c2747;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 14px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  width: 200px;
+  margin-top: 17px;
+}
+
+.white-line-break {
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  margin: 20px 0;
+  opacity: 0.6;
+}
+
+.wifi-test-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.ethernet-test-label {
+  font-size: 14px;
+  color: white;
   font-weight: bold;
 }
-.wifi-card-test.connected .wifi-info-test .disconnect {
+
+.ethernet-test-value {
+  font-size: 14px;
+  color: white;
+}
+
+.ethernet-test-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  gap: 20px;
+}
+
+.ethernet-test-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ef742a;
+}
+
+.ethernet-test-input {
+  background: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.ethernet-test-btn {
   background: #ef742a;
   color: white;
   border: none;
-  padding: 14px 40px;
-  cursor: pointer;
+  padding: 11px 50px;
+  font-size: 16px;
+  font-weight: bold;
   border-radius: 5px;
-}
-.wifi-card-test #wifi-list-test {
-  background: white;
-  border-radius: 7px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  margin-top: 10px;
-  width: 280px;
-  display: none;
-}
-.wifi-card-test #wifi-list-test ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.wifi-card-test .wifi-list-switch li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
   cursor: pointer;
+}
+.ethernet-test-btn:hover {
+  background: #d65f1f;
+}
+
+.ethernet-test-action .ethernet-success {
+  color: green;
   font-size: 14px;
-  font-weight: 500;
-  color: #333;
-  transition: background 0.2s ease-in-out;
 }
-.wifi-card-test .wifi-list-switch li:hover {
-  background: #f7f7f7;
+.ethernet-test-action .ethernet-failed {
+  color: red;
+  font-size: 14px;
 }
-.wifi-card-test .wifi-list-switch li:last-child {
-  border-bottom: none;
-}
-.wifi-card-test .wifi-icon {
+
+.ethernet-test-box {
+  padding: 19px;
   display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.wifi-card-test .wifi-icon img {
-  width: 20px;
-  height: 20px;
-}
-.wifi-card-test .lock-icon {
-  width: 14px;
-  height: 14px;
+  flex-direction: column;
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
 }
 
 .write-test-container {
@@ -308,34 +362,12 @@
   background: #d65f1f;
 }
 
-.cloud-test-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.cloud-test-card {
-  background: #161b3d;
-  padding: 20px;
-  border-radius: 10px;
-  width: 650px;
-  align-items: center;
-}
-.cloud-test-card h3 {
-  text-align: center;
-}
-
 .equipment-test-container {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
   border-radius: 10px;
-}
-.equipment-test-container h3 {
-  text-align: center;
 }
 
 .equipment-test-card {
@@ -356,9 +388,6 @@
   padding: 20px;
   border-radius: 10px;
 }
-.read-test-container h3 {
-  text-align: center;
-}
 
 .read-test-card {
   background: #161b3d;
@@ -371,91 +400,21 @@
   text-align: center;
 }
 
-.equ-test-container {
+.cloud-test-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
   padding: 20px;
   border-radius: 10px;
+}
+
+.cloud-test-card {
   background: #161b3d;
-  width: 90%;
-  max-width: 1200px;
-}
-
-.equ-test-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-.equ-test-table th, .equ-test-table td {
-  border: 1px solid #ddd;
-  padding: 12px;
-  text-align: left;
-  color: white;
-}
-.equ-test-table th {
-  background: #1f2a48;
-  font-weight: bold;
-}
-.equ-test-table tr:nth-child(even) {
-  background: #2a3550;
-}
-.equ-test-table tr:hover {
-  background: #374065;
-}
-
-.equ-test-button-group {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.equ-test-btn {
-  padding: 14px 32px;
-  border: none;
-  cursor: pointer;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  background: #ef742a;
-  transition: background 0.3s;
-}
-.equ-test-btn:hover {
-  background: #d65f1f;
-}
-
-.equipment-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-.equipment-table th {
-  background-color: #ff9800; /* Turuncu başlık */
-  color: white;
-  padding: 10px;
-  text-align: left;
-}
-
-.equipment-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-.equipment-table tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.equipment-table tr:hover {
-  background-color: #ddd;
-}
-
-.equipment-test-card {
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  background: white;
+  border-radius: 10px;
+  width: 650px;
+  align-items: center;
+}
+.cloud-test-card h3 {
+  text-align: center;
 }/*# sourceMappingURL=test.css.map */
