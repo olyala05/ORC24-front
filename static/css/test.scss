@@ -1,3 +1,7 @@
+.switch-content-area {
+  width: 750px;
+}
+
 // switch-styles.scss
 .switch-container {
   display: flex;
@@ -23,7 +27,7 @@
 // Test
 .test-switch-content {
   display: flex;
-  gap: 20px;
+  gap: 5px;
   margin-top: 60px;
 
   .switch-btn-test {
@@ -325,10 +329,10 @@
 }
 
 .equipment-test-card {
-  background: #0B1734;
+  background: #0b1734;
   padding: 10px;
   border-radius: 10px;
-  margin-right: 20px;
+  margin-right: 5px;
 
   .equipment-table {
     width: 100%;
@@ -369,7 +373,7 @@
 
     .equipment-scan-btn,
     .equipment-update-btn {
-      padding: 11px 140px;
+      padding: 8px 110px;
       background-color: #ff7b00;
       color: #fff;
       border: none;
@@ -434,17 +438,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0px;
   border-radius: 10px;
 }
 
 .cloud-test-card {
   background: #0B1734;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
-  width: 650px;
   align-items: center;
   color: white;
+  margin-top: 10px;
 }
 
 .cloud-test-table {
@@ -452,7 +456,8 @@
   border-collapse: collapse;
   margin-bottom: 10px;
 
-  th, td {
+  th,
+  td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #444;
@@ -475,7 +480,7 @@
 }
 
 .cloud-test-button {
-  background-color: #EF742A;
+  background-color: #ef742a;
   color: white;
   padding: 12px 55px;
   border: none;
@@ -502,26 +507,25 @@
 
 .cloud-test-failed {
   color: red;
-  margin:0;
+  margin: 0;
 }
 
-
-// READ TEST PANEL START // 
+// READ TEST PANEL START //
 .read-test-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0px;
   border-radius: 10px;
 }
 
 .read-test-card {
-  background: #0B1734;
-  padding: 20px;
+  background: #0b1734;
+  padding: 10px;
   border-radius: 10px;
-  width: 650px;
   align-items: center;
   color: white;
+  margin-top: 10px;
 }
 
 .read-test-grid {
@@ -556,7 +560,7 @@
 }
 
 .read-test-button {
-  background-color: #EF742A;
+  background-color: #ef742a;
   color: white;
   padding: 14px 56px;
   border: none;
@@ -606,23 +610,22 @@
   }
 }
 
-
-// WRİTE TEST PANEL START //  
+// WRİTE TEST PANEL START //
 .write-test-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0px;
   border-radius: 10px;
 }
 
 .write-test-card {
-  background: #0B1734;
-  padding: 20px;
+  background: #0b1734;
+  padding: 10px;
   border-radius: 10px;
-  width: 650px;
   align-items: center;
   color: white;
+  margin-top: 10px; 
 }
 
 .write-test-grid {
@@ -658,7 +661,7 @@
 }
 
 .write-test-button {
-  background-color: #EF742A;
+  background-color: #ef742a;
   color: white;
   padding: 12px 60px;
   border: none;
@@ -707,4 +710,3 @@
     resize: none;
   }
 }
-

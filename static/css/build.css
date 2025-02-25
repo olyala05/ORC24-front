@@ -1622,6 +1622,10 @@ body {
   background: #f5f5f5;
 }
 
+.switch-content-area {
+  width: 750px;
+}
+
 .switch-container {
   display: flex;
   justify-content: center;
@@ -1644,7 +1648,7 @@ body {
 
 .test-switch-content {
   display: flex;
-  gap: 20px;
+  gap: 5px;
   margin-top: 60px;
 }
 .test-switch-content .switch-btn-test {
@@ -1921,10 +1925,10 @@ body {
 }
 
 .equipment-test-card {
-  background: #0B1734;
+  background: #0b1734;
   padding: 10px;
   border-radius: 10px;
-  margin-right: 20px;
+  margin-right: 5px;
 }
 .equipment-test-card .equipment-table {
   width: 100%;
@@ -1954,7 +1958,7 @@ body {
 }
 .equipment-test-card .equipment-actions .equipment-scan-btn,
 .equipment-test-card .equipment-actions .equipment-update-btn {
-  padding: 11px 140px;
+  padding: 8px 110px;
   background-color: #ff7b00;
   color: #fff;
   border: none;
@@ -2014,17 +2018,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0px;
   border-radius: 10px;
 }
 
 .cloud-test-card {
   background: #0B1734;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
-  width: 650px;
   align-items: center;
   color: white;
+  margin-top: 10px;
 }
 
 .cloud-test-table {
@@ -2032,7 +2036,8 @@ body {
   border-collapse: collapse;
   margin-bottom: 10px;
 }
-.cloud-test-table th, .cloud-test-table td {
+.cloud-test-table th,
+.cloud-test-table td {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #444;
@@ -2054,7 +2059,7 @@ body {
 }
 
 .cloud-test-button {
-  background-color: #EF742A;
+  background-color: #ef742a;
   color: white;
   padding: 12px 55px;
   border: none;
@@ -2087,17 +2092,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0px;
   border-radius: 10px;
 }
 
 .read-test-card {
-  background: #0B1734;
-  padding: 20px;
+  background: #0b1734;
+  padding: 10px;
   border-radius: 10px;
-  width: 650px;
   align-items: center;
   color: white;
+  margin-top: 10px;
 }
 
 .read-test-grid {
@@ -2130,7 +2135,7 @@ body {
 }
 
 .read-test-button {
-  background-color: #EF742A;
+  background-color: #ef742a;
   color: white;
   padding: 14px 56px;
   border: none;
@@ -2181,17 +2186,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0px;
   border-radius: 10px;
 }
 
 .write-test-card {
-  background: #0B1734;
-  padding: 20px;
+  background: #0b1734;
+  padding: 10px;
   border-radius: 10px;
-  width: 650px;
   align-items: center;
   color: white;
+  margin-top: 10px;
 }
 
 .write-test-grid {
@@ -2225,7 +2230,7 @@ body {
 }
 
 .write-test-button {
-  background-color: #EF742A;
+  background-color: #ef742a;
   color: white;
   padding: 12px 60px;
   border: none;
