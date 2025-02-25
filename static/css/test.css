@@ -369,4 +369,93 @@
 }
 .read-test-card h3 {
   text-align: center;
+}
+
+.equ-test-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  background: #161b3d;
+  width: 90%;
+  max-width: 1200px;
+}
+
+.equ-test-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.equ-test-table th, .equ-test-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  color: white;
+}
+.equ-test-table th {
+  background: #1f2a48;
+  font-weight: bold;
+}
+.equ-test-table tr:nth-child(even) {
+  background: #2a3550;
+}
+.equ-test-table tr:hover {
+  background: #374065;
+}
+
+.equ-test-button-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.equ-test-btn {
+  padding: 14px 32px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background: #ef742a;
+  transition: background 0.3s;
+}
+.equ-test-btn:hover {
+  background: #d65f1f;
+}
+
+.equipment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.equipment-table th {
+  background-color: #ff9800; /* Turuncu başlık */
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
+.equipment-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.equipment-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.equipment-table tr:hover {
+  background-color: #ddd;
+}
+
+.equipment-test-card {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  background: white;
 }/*# sourceMappingURL=test.css.map */
