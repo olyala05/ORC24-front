@@ -228,7 +228,6 @@
                 <td>TCP / IP</td>
                 <td>2024-04-01 10:43:19</td>
               </tr>
-            
             </tbody>
           </table>
           <!-- Tablonun Sonu -->
@@ -258,7 +257,53 @@
     <!-- Cloud Connection Test -->
     <div id="cloud-test" class="cloud-test-container tab-content-test">
       <div class="cloud-test-card">
-        <h3>Cloud Connection Test</h3>
+        <table class="cloud-test-table">
+          <thead>
+            <tr>
+              <th>Archive</th>
+              <th>End</th>
+              <th>Connection</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-status="A">
+              <td class="cloud-test-status"></td>
+              <td class="cloud-test-status"></td>
+              <td>Cloud connection</td>
+              <td>2024-04-03 13:55:00</td>
+            </tr>
+            <tr data-status="P">
+              <td class="cloud-test-status"></td>
+              <td class="cloud-test-status"></td>
+              <td>Rabbit Mq</td>
+              <td>2024-04-03 13:55:11</td>
+            </tr>
+            <tr data-status="A">
+              <td class="cloud-test-status"></td>
+              <td class="cloud-test-status"></td>
+              <td>VPN Port</td>
+              <td>2024-04-03 13:55:14</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="cloud-test-info">
+          *Does the ORC have connection with cloud and other devices or not?
+        </p>
+
+        <!-- Buton ve Yazıları Yan Yana Düzenleme -->
+        <div class="cloud-test-footer">
+          <button class="cloud-test-button">Perform a scanning test</button>
+          <div class="cloud-test-status-text">
+            <p class="cloud-test-success">
+              Local Network Connection Scan Successful.
+            </p>
+            <p class="cloud-test-failed">
+              Local Network Connection Scan Failed.
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -320,6 +365,14 @@
     }
   });
 
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("tr[data-status]").forEach((row) => {
+      const status = row.getAttribute("data-status");
+      row.querySelectorAll(".cloud-test-status").forEach((cell) => {
+        cell.innerHTML = status === "A" ? "🟢" : "🔴";
+      });
+    });
+  });
   document
     .querySelectorAll(
       ".equipment-table tbody tr td:nth-child(3), .equipment-table tbody tr td:nth-child(4)"

@@ -1934,7 +1934,7 @@ body {
 .equipment-test-card .equipment-table thead tr th {
   text-align: left;
   padding: 4px;
-  color: #EF8018;
+  color: #ef8018;
   font-weight: 500;
   font-size: 14px;
   border-bottom: 1px solid #fff;
@@ -1944,7 +1944,7 @@ body {
   padding: 8px;
   color: #fff;
   font-size: 14px;
-  border-bottom: 1px solid #EF742A;
+  border-bottom: 1px solid #ef742a;
   text-align: center;
 }
 .equipment-test-card .equipment-actions {
@@ -2024,9 +2024,63 @@ body {
   border-radius: 10px;
   width: 650px;
   align-items: center;
+  color: white;
 }
-.cloud-test-card h3 {
-  text-align: center;
+
+.cloud-test-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+.cloud-test-table th, .cloud-test-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.cloud-test-info {
+  font-style: italic;
+  text-align: right;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+/* Buton ve Yazıları Yan Yana Düzenleme */
+.cloud-test-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.cloud-test-button {
+  background-color: #EF742A;
+  color: white;
+  padding: 12px 55px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 600;
+}
+.cloud-test-button:hover {
+  background-color: #d97720;
+}
+
+.cloud-test-status-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cloud-test-success {
+  color: limegreen;
+  margin: 4px 0px;
+  padding: 0;
+}
+
+.cloud-test-failed {
+  color: red;
+  margin: 0;
 }
 
 .read-test-container {
