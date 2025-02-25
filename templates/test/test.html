@@ -303,14 +303,59 @@
             </p>
           </div>
         </div>
-
       </div>
     </div>
 
     <!-- Read Test -->
     <div id="read" class="read-test-container tab-content-test">
       <div class="read-test-card">
-        <h3>Read Test</h3>
+        <div class="read-test-grid">
+          <div class="read-test-group">
+            <label for="port">Port</label>
+            <input type="text" id="port" value="/dev/ttyUSB0" readonly />
+          </div>
+          <div class="read-test-group">
+            <label for="baud-rate">Baud Rate</label>
+            <input type="text" id="baud-rate" value="9600" readonly />
+          </div>
+          <div class="read-test-group">
+            <label for="parity">Parity</label>
+            <input type="text" id="parity" value="None" readonly />
+          </div>
+          <div class="read-test-group">
+            <label for="stop-bit">Stop Bit</label>
+            <input type="text" id="stop-bit" value="8" readonly />
+          </div>
+          <div class="read-test-group">
+            <label for="register">Register</label>
+            <input type="text" id="register" value="8" readonly />
+          </div>
+          <div class="read-test-group">
+            <label for="count">Count</label>
+            <input type="text" id="count" value="8" readonly />
+          </div>
+          <div class="read-test-group">
+            <label for="data-type">Data Type</label>
+            <input type="text" id="data-type" value="uint32" readonly />
+          </div>
+        </div>
+
+        <div class="read-test-footer">
+          <button class="read-test-button">Perform a scanning test</button>
+          <div class="read-test-status">
+            <p class="read-test-success">
+              Local Network Connection Scan Successful.
+            </p>
+            <p class="read-test-failed">
+              Local Network Connection Scan Failed.
+            </p>
+          </div>
+        </div>
+
+        <div class="read-test-terminal">
+          <label for="terminal">Terminal</label>
+          <textarea id="terminal" readonly>/dev/ttyUSB0</textarea>
+        </div>
       </div>
     </div>
 
@@ -320,6 +365,7 @@
         <h3>Write Test</h3>
       </div>
     </div>
+    
   </div>
 </div>
 

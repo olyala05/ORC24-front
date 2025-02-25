@@ -469,14 +469,89 @@
 }
 
 .read-test-card {
-  background: #161b3d;
+  background: #0B1734;
   padding: 20px;
   border-radius: 10px;
   width: 650px;
   align-items: center;
+  color: white;
 }
-.read-test-card h3 {
-  text-align: center;
+
+.read-test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.read-test-group {
+  display: flex;
+  flex-direction: column;
+}
+.read-test-group label {
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+.read-test-group input {
+  color: #757678;
+  padding: 8px;
+  border-radius: 5px;
+  width: 90%;
+}
+
+.read-test-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.read-test-button {
+  background-color: #EF742A;
+  color: white;
+  padding: 14px 56px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+}
+.read-test-button:hover {
+  background-color: #d97720;
+}
+
+.read-test-status {
+  display: flex;
+  flex-direction: column;
+}
+
+.read-test-success {
+  color: limegreen;
+  margin: 7px 0;
+  padding: 0;
+}
+
+.read-test-failed {
+  color: red;
+  margin: 0;
+  padding: 0;
+}
+
+.read-test-terminal {
+  margin-top: 15px;
+}
+.read-test-terminal label {
+  display: block;
+  margin-bottom: 5px;
+}
+.read-test-terminal textarea {
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+  width: 97%;
+  height: 80px;
+  resize: none;
+  color: #757678;
 }
 
 .write-test-container {
