@@ -1,5 +1,5 @@
-{% extends "layout.html" %} {% block title %} Test Details {% endblock %} {%
-block content %}
+{% extends "layout.html" %} {% block title %} Test Details {% endblock %}
+{%block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
 
@@ -68,9 +68,23 @@ block content %}
           <!-- Test Button ve WiFi Status -->
           <div class="wifi-test-action">
             <button class="wifi-test-btn">Test</button>
-            <div style="display: flex; flex-direction: column">
-              <span class="wifi-success">✔ WiFi Connection Successful.</span>
-              <span class="wifi-failed">✖ WiFi Connection Failed.</span>
+            <div style="display: flex; flex-direction: column; gap: 5px">
+              <span class="wifi-success"
+                ><img
+                  src="{{ url_for('static', filename='images/svg/13.svg') }}"
+                  alt="No Wi-Fi"
+                  class="ethernet-icon"
+                />
+                WiFi Connection Successful.</span
+              >
+              <span class="wifi-failed"
+                ><img
+                  src="{{ url_for('static', filename='images/svg/14.svg') }}"
+                  alt="No Wi-Fi"
+                  class="ethernet-icon"
+                />
+                WiFi Connection Failed.</span
+              >
             </div>
           </div>
         </div>
@@ -80,7 +94,7 @@ block content %}
       <div class="white-line-break"></div>
 
       <!-- Ethernet Bölümü -->
-      <div id="ethernet-test" class="tab-content-test">
+      <div id="ethernet-test">
         <div class="ethernet-container-test">
           <!-- Available Wi-Fi -->
           <div class="ethernet-box-test">
@@ -91,107 +105,236 @@ block content %}
             />
             <span class="ethernet-text">Ethernet</span>
           </div>
-          
+
           <!--Ethernet Test Paneli -->
           <div class="ethernet-test-box">
-
             <!-- Connection Status -->
             <div class="ethernet-test-row">
               <label class="ethernet-test-label">Connection Status</label>
               <span class="ethernet-test-value">Connected / No connection</span>
             </div>
-  
+
             <!-- Connection Mac -->
             <div class="ethernet-test-row">
               <label class="ethernet-test-label">Connection Mac</label>
               <span class="ethernet-test-value">02:81:2b:61:c6:1d</span>
             </div>
-  
+
             <!-- Test Button ve Ethernet Status -->
             <div class="ethernet-test-action">
               <button class="ethernet-test-btn">Test</button>
-              <div style="display: flex; flex-direction: column">
-                <span class="ethernet-success">✔ WiFi Connection Successful.</span>
-                <span class="ethernet-failed">✖ WiFi Connection Failed.</span>
+              <div style="display: flex; flex-direction: column; gap: 5px">
+                <span class="ethernet-success"
+                  ><img
+                    src="{{ url_for('static', filename='images/svg/15.svg') }}"
+                    alt="No Wi-Fi"
+                    class="ethernet-icon"
+                  />
+                  WiFi Connection Successful.</span
+                >
+                <span class="ethernet-failed"
+                  ><img
+                    src="{{ url_for('static', filename='images/svg/16.svg') }}"
+                    alt="No Wi-Fi"
+                    class="ethernet-icon"
+                  />
+                  WiFi Connection Failed.</span
+                >
               </div>
             </div>
           </div>
         </div>
-
+      </div>
     </div>
 
     <!-- Equipment Test -->
-    <div
-      id="equipment-test"
-      class="equipment-test-container"
-      style="display: none"
-    >
-      <div class="equipment-test-card">
-        <h1>Equipment Test</h1>
+    <div id="equipment-test" class="tab-content-test">
+      <div class="equipment-test-container">
+        <div class="equipment-test-card">
+          <!-- Tablonun Başlangıcı -->
+          <table class="equipment-table">
+            <thead>
+              <tr>
+                <th>Serial number</th>
+                <th>SID/IP</th>
+                <th>Status / Configuration</th>
+                <th>Connection</th>
+                <th>Connection Protocol</th>
+                <th>Equipment Date / Connection Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>EMR-53C9@3630748023</td>
+                <td>5</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>Modbus</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>EMR-53C9@3630748023</td>
+                <td>192.168.1.147</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>Modbus</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>MPR-45C9@2931</td>
+                <td>5</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>TCP / IP</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>MPR-45C9@2931</td>
+                <td>192.168.1.147</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>TCP / IP</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>MPR-45C9@2931</td>
+                <td>5</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>TCP / IP</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>MPR-45C9@2931</td>
+                <td>192.168.1.147</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>TCP / IP</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>MPR-45C9@2931</td>
+                <td>5</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>TCP / IP</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>MPR-45C9@2931</td>
+                <td>192.168.1.147</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>TCP / IP</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Tablonun Sonu -->
+
+          <!-- Butonlar ve Durum Bilgileri -->
+          <div class="equipment-actions">
+            <div class="equipment-scan-status">
+              <button class="equipment-scan-btn">
+                Perform a scanning test
+              </button>
+              <span class="equipment-scan-success"
+                >Local Network Connection Scan Successful.</span
+              >
+              <span class="equipment-scan-failed"
+                >Local Network Connection Scan Failed.</span
+              >
+            </div>
+            <button class="equipment-update-btn">
+              Update the equipment table with the equipment found during
+              scanning
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Cloud Connection Test -->
-    <div id="cloud-test" class="cloud-test-container" style="display: none">
+    <div id="cloud-test" class="cloud-test-container tab-content-test">
       <div class="cloud-test-card">
         <h3>Cloud Connection Test</h3>
       </div>
     </div>
 
     <!-- Read Test -->
-    <div id="read" class="read-test-container" style="display: none">
+    <div id="read" class="read-test-container tab-content-test">
       <div class="read-test-card">
         <h3>Read Test</h3>
       </div>
     </div>
 
     <!-- Write Test -->
-    <div id="write" class="write-test-container" style="display: none">
+    <div id="write" class="write-test-container tab-content-test">
       <div class="write-test-card">
         <h3>Write Test</h3>
       </div>
     </div>
   </div>
+</div>
 
-  <script>
-    function toggleWifiList() {
-      const wifiList = document.getElementById("wifi-list");
-      wifiList.classList.toggle("hidden");
-    }
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tabButtons = document.querySelectorAll(".switch-btn-test");
+    const tabContents = document.querySelectorAll(".tab-content-test");
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const tabButtons = document.querySelectorAll(".switch-btn-test");
-      const tabContents = document.querySelectorAll(
-        ".switch-content-area > div"
-      ); // 🔥 Tüm içerikleri direkt seçtik
+    console.log(document.querySelectorAll(".switch-btn-test"));
+    console.log(document.querySelectorAll(".tab-content-test"));
 
-      tabButtons.forEach((button) => {
-        button.addEventListener("click", function () {
-          const targetId = this.getAttribute("data-target");
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const targetId = this.getAttribute("data-target");
+        console.log(targetId);
 
-          // 📌 Önce tüm içerikleri gizle
-          tabContents.forEach((content) => (content.style.display = "none"));
+        // Tüm içerikleri gizle
+        tabContents.forEach((content) => (content.style.display = "none"));
 
-          // 📌 Tüm butonlardaki "active" sınıfını kaldır
-          tabButtons.forEach((btn) => btn.classList.remove("active"));
+        console.log(tabContents);
 
-          // 📌 Seçilen butona "active" sınıfı ekle
-          this.classList.add("active");
+        // Tüm butonlardaki "active" sınıfını kaldır
+        tabButtons.forEach((btn) => btn.classList.remove("active"));
+        console.log(tabButtons);
 
-          // 📌 İlgili tab içeriğini göster
-          const targetElement = document.getElementById(targetId);
-          if (targetElement) {
-            targetElement.style.display = "block";
-          }
-        });
+        // Seçilen butona "active" sınıfı ekle
+        this.classList.add("active");
+
+        // İlgili içeriği göster
+        const targetElement = document.getElementById(targetId);
+        console.log(targetElement);
+        if (targetElement) {
+          targetElement.style.display = "block";
+          console.log(targetElement);
+        }
       });
+    });
 
-      // 📌 Sayfa yüklendiğinde varsayılan olarak ilk sekmeyi göster
-      if (tabButtons.length > 0) {
-        tabButtons[0].click();
+    // Sayfa yüklendiğinde ilk butonu otomatik tıklat
+    if (tabButtons.length > 0) {
+      tabButtons[0].click();
+      console.log(tabButtons[0]);
+    }
+  });
+
+  document
+    .querySelectorAll(
+      ".equipment-table tbody tr td:nth-child(3), .equipment-table tbody tr td:nth-child(4)"
+    )
+    .forEach((td) => {
+      let text = td.innerText.trim();
+
+      if (text === "A / A" || text === "OK") {
+        td.style.color = "green";
+        td.style.fontWeight = "bold";
+      }
+
+      if (text === "No") {
+        td.style.color = "red";
+        td.style.fontWeight = "bold";
       }
     });
-  </script>
-
-  {% endblock %}
-</div>
+</script>
+{% endblock %}

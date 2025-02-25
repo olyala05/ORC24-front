@@ -315,87 +315,136 @@
   padding: 15px;
   border-radius: 10px;
 }
-// ORC testtings
-.write-test-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.write-test-card {
-  background: #161b3d;
-  padding: 20px;
-  border-radius: 10px;
-  width: 650px;
-  align-items: center;
-}
-
-.write-input-group {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #c4c4c4;
-  padding: 10px;
-  border-radius: 7px;
-  margin-bottom: 17px;
-}
-
-.write-input-group label {
-  font-size: 14px;
-  color: black;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.write-input-group input,
-.write-input-group select {
-  background: white;
-  border: none;
-  padding: 15px;
-  border-radius: 3px;
-  width: 50%;
-  box-sizing: border-box;
-  font-size: 15px;
-}
-
-.write-input-group select {
-  appearance: none; /* Tarayıcı varsayılan stilini kaldırır */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  padding-right: 20px; /* İçerik için ekstra boşluk bırakır */
-}
-
-.write-input-group select {
-  min-width: 150px;
-}
-
-.write-save-btn {
-  background: #ef742a;
-  color: white;
-  border: none;
-  width: 30%;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
-  display: block;
-  margin: 49px 46px 15px 220px;
-}
-.write-save-btn:hover {
-  background: #d65f1f;
-}
 
 .equipment-test-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0px;
+      border-radius: 10px;
+}
+
+.equipment-test-card {
+  background: #161b3d;
+  padding: 10px;
+  border-radius: 10px;
+  margin-right: 20px;
+
+  .equipment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+
+    thead {
+      tr {
+        th {
+          text-align: left;
+          padding: 4px;
+          color: #EF8018;
+          font-weight: 500;
+          font-size: 14px;
+          border-bottom: 1px solid #fff;
+          text-align: center;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          padding: 8px;
+          color: #fff;
+          font-size: 14px;
+          border-bottom: 1px solid #EF742A;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .equipment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .equipment-scan-btn,
+    .equipment-update-btn {
+      padding: 11px 140px;
+      background-color: #ff7b00;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+
+      &:hover {
+        background-color: #e26f00;
+      }
+    }
+
+    .equipment-scan-status {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-auto-rows: auto;
+      align-items: start;  
+      column-gap: 10px;    
+      row-gap: 5px;       
+  
+      .equipment-scan-btn {
+        grid-row: 1 / span 2;
+      }
+  
+      .equipment-scan-success {
+        grid-column: 2 / 3;
+        grid-row: 1;
+        color: #06b307;
+        font-size: 14px;
+      }
+  
+      .equipment-scan-failed {
+        /* İkinci satır, sağ sütunda */
+        grid-column: 2 / 3;
+        grid-row: 2;
+        color: #ff4040;
+        font-size: 14px;
+      }
+    }
+  }
+
+  
+}
+
+.equipment-table td:nth-child(3):contains("A / A"),
+.equipment-table td:nth-child(4):contains("OK") {
+  color: green !important;
+}
+
+.equipment-table td:nth-child(4):contains("No") {
+  color: red !important;
+}
+
+.status-green {
+  color: #06b307;
+}
+.status-red {
+  color: #ff4040;
+}
+
+
+
+
+
+// cloud  testtings
+.cloud-test-container {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
   border-radius: 10px;
 }
-.equipment-test-card {
+
+.cloud-test-card {
   background: #161b3d;
   padding: 20px;
   border-radius: 10px;
@@ -406,6 +455,8 @@
   }
 }
 
+
+// read test
 .read-test-container {
   display: flex;
   justify-content: center;
@@ -424,8 +475,8 @@
   }
 }
 
-// eth testtings
-.cloud-test-container {
+// Write test
+.write-test-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -433,13 +484,10 @@
   border-radius: 10px;
 }
 
-.cloud-test-card {
+.write-test-card {
   background: #161b3d;
   padding: 20px;
   border-radius: 10px;
   width: 650px;
   align-items: center;
-  h3 {
-    text-align: center;
-  }
 }
