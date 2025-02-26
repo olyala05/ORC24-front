@@ -1,0 +1,265 @@
+@charset "UTF-8";
+/* Genel Stil */
+body {
+  background-color: #1c2747;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  position: relative;
+}
+body::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 90vw;
+  height: 90vh;
+  background-image: url("/static/images/background/bg-01.webp");
+  background-size: cover;
+  background-position: center;
+  z-index: -10;
+}
+body .footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: white !important; /* Yazı rengini zorla değiştir */
+  background-color: #0E1734 !important; /* Arka plan rengini belirle */
+  -webkit-box-shadow: 0 0 0 30px #0E1734 inset !important; /* Arka planı zorla değiştir */
+  -webkit-transition: background-color 5000s ease-in-out 0s;
+  transition: background-color 5000s ease-in-out 0s; /* Renk değişimini kalıcı yap */
+}
+
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: white !important; /* Yazı rengini hover ve focus durumunda da zorla değiştir */
+  background-color: #0E1734 !important;
+  -webkit-box-shadow: 0 0 0 30px #0E1734 inset !important;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-grow: 1;
+  text-align: center;
+}
+.container .login-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  position: relative;
+  gap: 20px;
+}
+
+/* Çizgiler */
+.line {
+  flex-grow: 2;
+  height: 2px;
+  background-color: #ff7f32;
+  position: relative;
+}
+.line::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #ff7f32;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.line-left::after {
+  right: -6px;
+}
+
+.line-right::after {
+  left: -6px;
+}
+
+.logo {
+  height: 80px;
+  z-index: 2;
+}
+
+/* Login Kutusu */
+.login-box {
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 400px;
+}
+
+/* Input Grubu */
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #0f1a32;
+  border-radius: 5px;
+  padding: 7px;
+  margin: 10px;
+}
+
+/* Input */
+.input-group input {
+  background: none;
+  border: none;
+  color: white;
+  width: 100%;
+  padding: 14px 40px; /* Solda ve sağda ikonlar olduğu için iç boşluk ayarla */
+  font-size: 16px;
+}
+
+/* İkonlar */
+.icon {
+  position: absolute;
+  color: white;
+  font-size: 18px;
+}
+
+/* Sol İkon (Kilit) */
+.icon-left {
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%); /* Dikey olarak ortalar */
+}
+
+/* Sağ İkon (Göz - Şifre Göster) */
+.icon-right {
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%); /* Dikey olarak ortalar */
+  cursor: pointer;
+}
+
+.login-actions {
+  display: flex;
+  align-items: center; /* Dikeyde ortalar */
+  justify-content: center; /* Yatayda ortalar */
+  gap: 12px; /* Buton ile dil seçici arasındaki boşluk */
+  width: 100%; /* Eğer tam ortada olmasını istiyorsan genişliği tam yap */
+  margin-top: 15px;
+}
+
+/* Login Butonu */
+.login-btn {
+  background: #ff7f32;
+  color: #1c2747;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  width: auto;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(255, 127, 50, 0.3);
+  gap: 12px;
+}
+.login-btn:hover {
+  background: #fe5f00;
+  box-shadow: 0 6px 12px rgba(255, 127, 50, 0.5);
+}
+
+/* Dil Seçici */
+.language-switcher {
+  position: relative;
+  display: flex; /* Butonun yanında düzgün hizalanmasını sağlar */
+  align-items: center;
+}
+.language-switcher .language-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.language-switcher .selected-lang-txt {
+  font-size: 16px;
+  margin: 17px 0px 0px 0px;
+}
+.language-switcher .language-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  min-width: 120px;
+  z-index: 1000;
+}
+.language-switcher .language-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px;
+  background: none;
+  border: none;
+  color: #0e1734;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+}
+.language-switcher .language-dropdown button:hover {
+  background: rgba(255, 127, 50, 0.3);
+  border-radius: 5px;
+}
+.language-switcher:hover .language-dropdown {
+  display: flex;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body::after {
+    height: 30vh;
+    width: 60vw;
+  }
+  .login-box {
+    width: 250px;
+  }
+  .logo {
+    height: 50px;
+  }
+}
+@media (max-width: 480px) {
+  .login-box {
+    width: 220px;
+  }
+  .logo {
+    height: 40px;
+  }
+  .login-btn {
+    font-size: 12px;
+  }
+}/*# sourceMappingURL=styles.css.map */

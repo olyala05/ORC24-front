@@ -1,0 +1,356 @@
+@charset "UTF-8";
+.settings-content {
+  display: flex;
+  gap: 20px;
+}
+.settings-content .tab-btn-set {
+  padding: 19px;
+  border-radius: 7px;
+  color: #000;
+  font-weight: 600;
+  margin: 10px;
+  font-size: large;
+}
+
+.orc-sidebar-set {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tab-btn-set.active {
+  background-color: #fff;
+  font-weight: 700;
+  border: 3px solid #ff6f00;
+  color: #000;
+}
+
+.wifi-container-set {
+  display: flex;
+  align-items: flex-start;
+}
+
+.btn-group-set {
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.network-box-set {
+  margin-right: 15px;
+}
+.network-box-set .network-header-set {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: bold;
+  background: #f5f5f5;
+  padding: 14px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  width: 280px;
+  margin-top: 15px;
+}
+.network-box-set .network-header-set .wifi-icon-set {
+  display: flex;
+  gap: 10px;
+}
+.network-box-set .network-header-set .wifi-icon-set img {
+  width: 30px;
+}
+
+.wifi-icon-set {
+  display: flex;
+  gap: 10px;
+}
+
+.wifi-icon-password {
+  display: flex;
+  gap: 10px;
+}
+
+.wifi-connection-set {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.wifi-card-set {
+  background: white;
+  padding: 5px;
+  border-radius: 10px;
+  width: 407px;
+}
+.wifi-card-set h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #1c2747;
+}
+.wifi-card-set p {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1c2747;
+  margin-left: 34px;
+  margin-top: 0;
+}
+.wifi-card-set label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #1c2747;
+}
+.wifi-card-set input {
+  padding: 8px;
+  border: 1px solid #e2e2e2;
+  border-radius: 5px;
+  background: #e2e2e2;
+  width: 100%;
+}
+.wifi-card-set .password-intput-set {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.wifi-card-set .show-password-set {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+  justify-content: center;
+  width: 300px;
+}
+.wifi-card-set .show-password-set .check-box-set {
+  width: 15px;
+}
+.wifi-card-set .show-password-set .show-pass {
+  font-size: 14px;
+  color: #1c2747;
+  font-weight: 100;
+  white-space: nowrap;
+}
+.wifi-card-set .btn-group-set {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+  gap: 14px;
+}
+.wifi-card-set .btn-group-set .btn-set {
+  padding: 14px 32px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  background: #ef742a;
+  color: #fff;
+  font-size: 16px;
+}
+.wifi-card-set .btn-group-set .btn-set.cancel {
+  background: #ef742a;
+  color: white;
+  padding: 14px 40px;
+}
+.wifi-card-set .btn-group-set .btn-set.connect {
+  background: #ef742a;
+  color: white;
+  padding: 14px 40px;
+}
+.wifi-card-set.connected .wifi-info-set {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 5px;
+  color: #1c2747;
+  font-weight: bold;
+}
+.wifi-card-set.connected .wifi-info-set .disconnect {
+  background: #ef742a;
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.wifi-card-set #wifi-list {
+  background: white;
+  border-radius: 7px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-top: 10px;
+  width: 280px;
+  display: none;
+}
+.wifi-card-set #wifi-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.wifi-card-set .wifi-list-set li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  transition: background 0.2s ease-in-out;
+}
+.wifi-card-set .wifi-list-set li:hover {
+  background: #f7f7f7;
+}
+.wifi-card-set .wifi-list-set li:last-child {
+  border-bottom: none;
+}
+.wifi-card-set .wifi-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.wifi-card-set .wifi-icon img {
+  width: 20px;
+  height: 20px;
+}
+.wifi-card-set .lock-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.orc-settings-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.orc-settings-card {
+  background: #161b3d;
+  padding: 20px;
+  border-radius: 10px;
+  width: 650px;
+  align-items: center;
+}
+
+.orc-input-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #c4c4c4;
+  padding: 10px;
+  border-radius: 7px;
+  margin-bottom: 17px;
+}
+
+.orc-input-group label {
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.orc-input-group input,
+.orc-input-group select {
+  background: white;
+  border: none;
+  padding: 15px;
+  border-radius: 3px;
+  width: 50%;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+.orc-input-group select {
+  appearance: none; /* Tarayıcı varsayılan stilini kaldırır */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 20px; /* İçerik için ekstra boşluk bırakır */
+}
+
+.orc-input-group select {
+  min-width: 150px;
+}
+
+.orc-save-btn {
+  background: #ef742a;
+  color: white;
+  border: none;
+  width: 30%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 49px 46px 15px 220px;
+}
+
+.orc-save-btn:hover {
+  background: #d65f1f;
+}
+
+.eth-settings-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.eth-settings-card {
+  background: #161b3d;
+  padding: 20px;
+  border-radius: 10px;
+  width: 650px;
+  align-items: center;
+}
+.eth-settings-card h3 {
+  text-align: center;
+}
+
+.lora-settings-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+.lora-settings-container h3 {
+  text-align: center;
+}
+
+.lora-settings-card {
+  background: #161b3d;
+  padding: 20px;
+  border-radius: 10px;
+  width: 650px;
+  align-items: center;
+}
+.lora-settings-card h3 {
+  text-align: center;
+}
+
+.gsm-settings-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+.gsm-settings-container h3 {
+  text-align: center;
+}
+
+.gsm-settings-card {
+  background: #161b3d;
+  padding: 20px;
+  border-radius: 10px;
+  width: 650px;
+  align-items: center;
+}
+.gsm-settings-card h3 {
+  text-align: center;
+}/*# sourceMappingURL=orc-setting.css.map */

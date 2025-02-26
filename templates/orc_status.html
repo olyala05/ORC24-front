@@ -1,0 +1,166 @@
+{% extends "layout.html" %} {% block title %} ORC Status {% endblock %} {% block
+content %}
+<div class="orc-status-container">
+  <!-- Header -->
+  {% include 'partials/header.html' %}
+
+  <!-- ORC Status İçeriği -->
+  <div class="orc-content">
+    <div class="device-info">
+      <ul>
+        <li>S/N: <span>{{modem.serial_no}}</span></li>
+        <li>MODEM NAME: <span>{{ modem.name }}</span></li>
+        <li>MODEM BRAND / MODEL: <span>ORC 23 OwL</span></li>
+        <li>
+          MODEM STATUS:
+          <span
+            >{% if modem.status == 1 %} Active {% else %} Passive {% endif
+            %}</span
+          >
+        </li>
+        <li>DATE OF INSTALLATION: <span>{{modem.created_at}}</span></li>
+        <li>DATA READING INTERVAL: <span>1380 Seconds</span></li>
+        <li>NETWORK TYPE: <span>Wi-Fi</span></li>
+        <li>CONNECTION PROTOCOL: <span>Modbus</span></li>
+        <li>SOFTWARE VERSION: <span>V 1.02</span></li>
+      </ul>
+
+      <div class="connection-status">
+        {% if network and network.connected_ssid and network.connected_ssid != "Not Connected" %}
+            <!-- 📡 Wi-Fi Bağlıysa -->
+            <span class="status-title">Connected Wi-Fi / GSM / Ethernet</span>
+            <div class="separator"></div>
+            <div class="status-details">
+                <div class="status-left">
+                    <i class="fas fa-wifi"></i> {{ network.connected_ssid }}
+                </div>
+                <button class="disconnect-btn">Disconnect</button>
+            </div>
+        {% else %}
+            <!-- ❌ Wi-Fi Bağlı Değilse -->
+            <span class="status-title error-message">
+                Checking the network cables, modem and router <br>
+                Reconnecting to Wi-Fi
+            </span>
+            <div class="separator"></div>
+            <div class="status-details">
+              <div class="status-left">
+                <img  src="{{ url_for('static', filename='images/svg/11.svg') }}" alt="No Wi Fi"></img> No Internet</div>
+                <button class="retry-btn" onclick="retryConnection()">Retry</button>
+            </div>
+        {% endif %}
+    </div>
+    </div>
+
+    <div class="connection-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Archive</th>
+            <th>End</th>
+            <th>Modem Name</th>
+            <th>Last Connection Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="status-dot red"></span></td>
+            <td><span class="status-dot red"></span></td>
+            <td>Lora disconnection</td>
+            <td>2024-04-03 13:54:31</td>
+          </tr>
+
+          <tr>
+            {% if network.wifi_connected %}
+                <td><span class="status-dot green"></span></td>
+                <td><span class="status-dot green"></span></td>
+                <td>WiFi connection</td>
+                <td>{{ network.last_connected_time }}</td>  <!-- 📌 Güncellenmiş tarih -->
+            {% else %}
+                <td><span class="status-dot red"></span></td>
+                <td><span class="status-dot red"></span></td>
+                <td>WiFi Disconnected</td>
+                <td>{{ network.last_connected_time }}</td>  <!-- 📌 En son bağlantı tarihi -->
+            {% endif %}
+        </tr>
+        
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Bulut connection</td>
+            <td>2024-04-03 13:55:00</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>Rabbit Mq</td>
+            <td>2024-04-03 13:55:11</td>
+          </tr>
+          <tr>
+            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot green"></span></td>
+            <td>VPN Port</td>
+            <td>2024-04-03 13:55:14</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="algorithm-section">
+        <h3>Algoritma Süreçlerin</h3>
+        <div class="separator"></div>
+        <!-- Turuncu çizgi -->
+        <div class="algorithm-box">
+          <div class="algorithm-left">
+            <i class="fas fa-cog"></i> ORC Process Procedures
+          </div>
+          <button class="status-btn">Normal / Error (Red)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+
+
+
+
+function retryConnection() {
+  fetch("/check_network")
+    .then(response => response.json())
+    .then(result => {
+      console.log("Network Data:", result.data);
+      const network = result.data;
+      if (network && network.connected_ssid && network.connected_ssid !== "Not Connected") {
+        location.reload();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Wi-Fi Bağlantısı Yok!",
+          text: "Lütfen modeminizi ve bağlantılarınızı kontrol edin.",
+          confirmButtonText: "Tamam"
+        });
+      }
+    })
+    .catch(error => {
+      console.error("Bağlantı kontrolü sırasında hata oluştu:", error);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const disconnectBtn = document.querySelector(".disconnect-btn");
+
+  disconnectBtn.addEventListener("click", function () {
+      fetch("/disconnect_request", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" }
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data);
+          alert("Wi-Fi bağlantısı kapatıldı!");
+      })
+      .catch(error => console.error("Error:", error));
+  });
+});
+</script>
+  {% endblock %}
+</div>

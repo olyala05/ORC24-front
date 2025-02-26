@@ -1,0 +1,28 @@
+@use './styles' as styles;
+@forward './alarm';
+@forward './dashboard';
+@forward './equipment-details';
+@use './equipment-setting';
+@forward './equipment';
+@forward './header';
+@use './log';
+@use './modem-selection';
+@use './orc-status';
+@forward './settings';
+@forward './test';
+@forward './orc-setting';
+@forward './osos-settings';
+@forward './data';
+@forward './live-data';
+@forward './hourly-data';
+@forward './daily-data';
+
+
+
+@import "bootstrap/css/bootstrap.min.css";
+
+@import 'fontawesome/css/all.min.css';
+
+
+
+

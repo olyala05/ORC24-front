@@ -1,0 +1,142 @@
+@use "sass:color";
+
+// 📌 Temel Değişkenler
+$primary-color: #ff6f00;
+$background-color: #1c2747;
+$text-color: #fff;
+$border-radius: 8px;
+$header-height: 60px;
+
+// 📌 Genel Stil Ayarları
+body {
+  background-color: $background-color;
+  color: $text-color;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; // Scroll'u kapat
+}
+
+
+// 📌 Ana İçerik (Header Altında)
+.content {
+  margin-top: $header-height;
+  height: calc(100vh - $header-height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+}
+
+// 📌 Modem Seçim Alanı
+.modem-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .dropdown-container {
+    background-color: #0b1734;
+    padding: 15px;
+    border-radius: $border-radius;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    width: 400px;
+
+    label {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+
+    .modem-dropdown {
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 8px;
+      /* border: 1px solid #ff6f00; */
+      background: white;
+      color: black;
+      font-weight: 700;
+    }
+  }
+}
+
+// 📌 Butonlar
+.button-container,
+.bottom-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  .btn {
+    background-color: #fff;
+    color: #000;
+    padding: 0px 0px;
+    margin: 11px 20px;
+    font-size: 22px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3sease;
+    font-weight: 700;
+    min-width: 196px;
+    min-height: 70px;
+
+    &:hover {
+      // background-color: $primary-color;
+      color: #000;
+    }
+
+    &.active {
+      background-color: #fff;
+      font-weight: 700;
+      border: 3px solid $primary-color; // Çerçeveyi daha belirgin yaptık
+      color: #000;
+    }
+  }
+}
+
+/* 📌 Loading ekranını tam ortada gösterme */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Siyah, hafif şeffaf arka plan */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Üstte kalmasını sağlar */
+}
+
+/* 📌 Loading kutusunun stilini belirleme */
+.loading-box {
+  background: rgba(255, 255, 255, 0); /* Hafif beyaz kutu */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  color: #ff9800;
+}
+
+/* 📌 Yükleme animasyonu */
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #ff9800; /* Turuncu yükleme animasyonu */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 10px auto;
+}
+
+/* 📌 Dönme animasyonu */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

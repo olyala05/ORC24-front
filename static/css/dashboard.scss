@@ -1,0 +1,438 @@
+/* Header */
+.header {
+  position: fixed; // Header'ı ekranın üst kısmına sabitler
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #0e1734;
+  padding: 0px 0px;
+  width: 100%;
+  height: 70px;
+  z-index: 1000;
+}
+
+/* Sol kısım (Butonlar) */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px; // Butonlar arası boşluk
+}
+
+/* LOGIN ve MENU Butonları */
+.header-button {
+  background-color: #ff7f32;
+  color: #1c2747;
+  border: none;
+  padding: 8px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(255, 127, 50, 0.5);
+
+  &:hover {
+    background: darken(#ff7f32, 10%);
+    box-shadow: 0 4px 8px rgba(255, 127, 50, 0.7);
+  }
+
+  i {
+    font-size: 20px;
+  }
+}
+
+/* LOGO */
+.header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1; // Ortalamayı sağlıyor
+  img {
+    height: 40px;
+  }
+}
+
+/* Sağ kısım (Tarih ve Rapor Tarihi) */
+.header-right-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 16px;
+  color: #fff;
+  margin-right: 14px;
+}
+
+.date-time {
+  font-weight: bold;
+}
+
+/* Çizgi ve kutucuk */
+.report-line {
+  display: flex;
+  align-items: center;
+  width: 120%;
+  margin: 5px 0; /* Üst ve alt boşluk */
+}
+
+.square {
+  width: 8px;
+  height: 8px;
+  background-color: #ff7f32; /* Turuncu kare */
+  margin-right: 5px; /* Çizgiden boşluk */
+}
+
+.line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #ff7f32; /* Çizginin rengi */
+}
+
+.report-date {
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Responsive - Küçük ekranlar için */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .header-left,
+  .header-right-dashboard {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .header-logo img {
+    height: 30px;
+  }
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 13px;
+  background-color: #1c2747;
+  color: #fff;
+  width: 100%;
+}
+
+/* Enerji Tablosu */
+.energy-table {
+  background: #0e1734;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  .energy-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    padding-bottom: 10px;
+    position: relative; /* Pseudo-element için gerekli */
+  }
+
+  .energy-header::after {
+    content: "";
+    display: block;
+    width: 100%; /* Tam genişlikte çizgi */
+    height: 1px; /* Çizgi kalınlığı */
+    background: #ffffff; /* Beyaz renk */
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+  }
+
+  .energy-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 15px;
+    font-size: 18px;
+  }
+
+  .energy-row div {
+    display: flex;
+    align-items: center;
+    gap: 18px; /* İkon ve yazı arasındaki boşluk */
+  }
+
+  .energy-row img {
+    width: 30px; /* SVG ikon boyutu */
+    height: 30px;
+  }
+}
+
+/* System Info */
+.system-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // 3 sütun olacak
+  gap: 14px;
+  width: 70%; // Sol tarafın genişliği küçültüldü
+
+  .info-box {
+    background: #b1b1b1;
+    padding: 10px; // Daha küçük padding
+    border-radius: 5px;
+    font-size: 12px; // Font boyutu küçültüldü
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px; // Daha küçük kutular için
+    height: 70px; // Daha küçük yükseklik
+  }
+
+  .harmonic {
+    background: #e63946;
+  }
+
+  .active {
+    background: #28a745;
+  }
+
+  .power {
+    background: #ff7f32;
+  }
+}
+
+/* Device Status */
+.device-status {
+  display: flex;
+  background: #0e1734;
+  padding: 15px;
+  border-radius: 8px;
+  gap: 10px; // Kutular ile bilgi kısmı arasında boşluk ekler
+
+  /* System Info Kutuları */
+  .system-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; /* Kutular arasındaki boşluğu daralttım */
+    width: 40%;
+    justify-content: center;
+
+    .info-box {
+      background: #b1b1b1;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 100px;
+      height: 124px;
+      line-height: 1.2;
+
+      img {
+        width: 30px;
+        height: 30px;
+        margin-bottom: 22px;
+      }
+
+      .reactive-power {
+        margin-bottom: 6px !important;
+      }
+    }
+
+    .harmonic {
+      background: #e63946;
+    }
+
+    .active {
+      background: #28a745;
+    }
+
+    .power {
+      background: #ff7f32;
+    }
+  }
+
+  /* Cihaz Bilgileri */
+  .status-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #0e1734;
+    padding: 9px;
+    border-radius: 8px;
+    width: 25%;
+    p {
+      margin: 6px 0px;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 1px;
+      color: #fff;
+    }
+
+    strong {
+      color: #ff7f32;
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .device-status {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .system-info {
+    grid-template-columns: repeat(2, 1fr); // Küçük ekranlarda 2 sütun olacak
+  }
+
+  .status-info {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Göstergeler */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  width: 60%; // Ekranın yarısını kaplayacak
+  background: #1c2747;
+  padding: 2px;
+  border-radius: 8px;
+  gap: 25px;
+}
+
+/* Gösterge Alanı */
+.gauge-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0px;
+  padding-top: 14px;
+}
+
+/* Gösterge Kutuları */
+.gauge {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gauge-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+}
+
+/* Farklı göstergeler için özel renkler */
+.frequency {
+  background: conic-gradient(#ff7f32 80%, #1c2747 20%);
+}
+
+.reactive {
+  background: #28a745;
+}
+
+.power-factor {
+  background: conic-gradient(#ff7f32 87%, #1c2747 13%);
+}
+
+/* Voltaj ve Akım Bilgileri */
+.voltage-table {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  background: #0e1734;
+  border-radius: 8px;
+  padding: 6px;
+  height: 90px;
+}
+
+.voltage-box-1,
+.voltage-box-2,
+.voltage-box-3,
+.voltage-box-4,
+.voltage-box-5,
+.voltage-box-6 {
+  text-align: center;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 6px;
+  width: 15%;
+}
+.voltage-box-1 {
+  background: #2a3559;
+}
+.voltage-box-2 {
+  background: #1b3b6a;
+}
+.voltage-box-3 {
+  background: #1c3d89;
+}
+.voltage-box-4 {
+  background: #102648;
+}
+.voltage-box-5 {
+  background: #1b3b6a;
+}
+.voltage-box-6 {
+  background: #1c3d89;
+}
+
+/* Responsive */
+/* Raspberry Pi 1024x600 ve Küçük Ekranlar için Responsive */
+@media (max-width: 1024px) {
+  .dashboard {
+    height: 76vh;
+  }
+}
+@media (max-width: 768px) {
+  .dashboard {
+    height: 75vh;
+  }
+  .dashboard-container {
+    width: 100%; // Küçük ekranlarda tam genişlikte olacak
+  }
+
+  .gauge-container {
+    flex-direction: column;
+  }
+
+  .voltage-table {
+    flex-wrap: wrap;
+  }
+
+  .voltage-box {
+    width: 30%;
+    margin-bottom: 8px;
+  }
+}

@@ -1,0 +1,485 @@
+{% extends "layout.html" %} {% block title %} Test Details {% endblock %}
+{%block content %}
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<!-- Yeni İçerik (İlk başta gizli olacak) -->
+<div class="test-switch-content">
+  <div class="test-sidebar-switch">
+    <button class="switch-btn-test" data-target="wifi-test">
+      Wifi / Ethernet Connection Test
+    </button>
+    <button class="switch-btn-test" data-target="equipment-test">
+      Equipment
+    </button>
+    <button class="switch-btn-test" data-target="cloud-test">
+      Cloud Connection Test
+    </button>
+    <button class="switch-btn-test" data-target="read">Read</button>
+    <button class="switch-btn-test" data-target="write">Write</button>
+  </div>
+
+  <div class="switch-content-area">
+    <!-- Wi-Fi Test -->
+    <div id="wifi-test" class="tab-content-test">
+      <div class="wifi-container-test">
+        <!-- Available Wi-Fi -->
+        <div class="network-box-test">
+          <button
+            class="network-header-test wifi-header-test"
+            onclick="toggleWifiList()"
+          >
+            Available Wi-Fi
+            <span class="wifi-icon-test">
+              <img
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                alt="No Wi-Fi"
+              />
+            </span>
+          </button>
+        </div>
+
+        <!-- Wi-Fi Bölümü  -->
+        <div class="wifi-test-box">
+          <!-- Network Name -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">Network Name</label>
+            <span class="wifi-test-value">Pier Mi Right 5G</span>
+          </div>
+
+          <!-- Password -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">Password</label>
+            <span class="wifi-test-value">Pier2324+</span>
+          </div>
+
+          <!-- Connection Status -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">Connection Status</label>
+            <span class="wifi-test-value">Connected / No connection</span>
+          </div>
+
+          <!-- Connection Mac -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">Connection Mac</label>
+            <span class="wifi-test-value">02:81:2b:61:c6:1d</span>
+          </div>
+
+          <!-- Test Button ve WiFi Status -->
+          <div class="wifi-test-action">
+            <button class="wifi-test-btn">Test</button>
+            <div style="display: flex; flex-direction: column; gap: 5px">
+              <span class="wifi-success"
+                ><img
+                  src="{{ url_for('static', filename='images/svg/13.svg') }}"
+                  alt="No Wi-Fi"
+                  class="ethernet-icon"
+                />
+                WiFi Connection Successful.</span
+              >
+              <span class="wifi-failed"
+                ><img
+                  src="{{ url_for('static', filename='images/svg/14.svg') }}"
+                  alt="No Wi-Fi"
+                  class="ethernet-icon"
+                />
+                WiFi Connection Failed.</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Burada bir beyaz çizgi geçmeli -->
+      <div class="white-line-break"></div>
+
+      <!-- Ethernet Bölümü -->
+      <div id="ethernet-test">
+        <div class="ethernet-container-test">
+          <!-- Available Wi-Fi -->
+          <div class="ethernet-box-test">
+            <img
+              src="{{ url_for('static', filename='images/svg/24.svg') }}"
+              alt="No Wi-Fi"
+              class="ethernet-icon"
+            />
+            <span class="ethernet-text">Ethernet</span>
+          </div>
+
+          <!--Ethernet Test Paneli -->
+          <div class="ethernet-test-box">
+            <!-- Connection Status -->
+            <div class="ethernet-test-row">
+              <label class="ethernet-test-label">Connection Status</label>
+              <span class="ethernet-test-value">Connected / No connection</span>
+            </div>
+
+            <!-- Connection Mac -->
+            <div class="ethernet-test-row">
+              <label class="ethernet-test-label">Connection Mac</label>
+              <span class="ethernet-test-value">02:81:2b:61:c6:1d</span>
+            </div>
+
+            <!-- Test Button ve Ethernet Status -->
+            <div class="ethernet-test-action">
+              <button class="ethernet-test-btn">Test</button>
+              <div style="display: flex; flex-direction: column; gap: 5px">
+                <span class="ethernet-success"
+                  ><img
+                    src="{{ url_for('static', filename='images/svg/15.svg') }}"
+                    alt="No Wi-Fi"
+                    class="ethernet-icon"
+                  />
+                  WiFi Connection Successful.</span
+                >
+                <span class="ethernet-failed"
+                  ><img
+                    src="{{ url_for('static', filename='images/svg/16.svg') }}"
+                    alt="No Wi-Fi"
+                    class="ethernet-icon"
+                  />
+                  WiFi Connection Failed.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Equipment Test -->
+    <div id="equipment-test" class="tab-content-test">
+      <div class="equipment-test-container">
+        <div class="equipment-test-card">
+          <!-- Tablonun Başlangıcı -->
+          <table class="equipment-table">
+            <thead>
+              <tr>
+                <th>Serial number</th>
+                <th>SID/IP</th>
+                <th>Status / Configuration</th>
+                <th>Connection</th>
+                <th>Connection Protocol</th>
+                <th>Equipment Date / Connection Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>EMR-53C9@3630748023</td>
+                <td>5</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>Modbus</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>EMR-53C9@3630748023</td>
+                <td>192.168.1.147</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>Modbus</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>MPR-45C9@2931</td>
+                <td>5</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>TCP / IP</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>MPR-45C9@2931</td>
+                <td>192.168.1.147</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>TCP / IP</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>MPR-45C9@2931</td>
+                <td>5</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>TCP / IP</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>MPR-45C9@2931</td>
+                <td>192.168.1.147</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>TCP / IP</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>MPR-45C9@2931</td>
+                <td>5</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>TCP / IP</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+              <tr>
+                <td>MPR-45C9@2931</td>
+                <td>192.168.1.147</td>
+                <td>A / A</td>
+                <td>OK</td>
+                <td>TCP / IP</td>
+                <td>2024-04-01 10:43:19</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Tablonun Sonu -->
+
+          <!-- Butonlar ve Durum Bilgileri -->
+          <div class="equipment-actions">
+            <div class="equipment-scan-status">
+              <button class="equipment-scan-btn">
+                Perform a scanning test
+              </button>
+              <span class="equipment-scan-success"
+                >Local Network Connection Scan Successful.</span
+              >
+              <span class="equipment-scan-failed"
+                >Local Network Connection Scan Failed.</span
+              >
+            </div>
+            <button class="equipment-update-btn">
+              Update the equipment table with the equipment found during
+              scanning
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cloud Connection Test -->
+    <div id="cloud-test" class="cloud-test-container tab-content-test">
+      <div class="cloud-test-card">
+        <table class="cloud-test-table">
+          <thead>
+            <tr>
+              <th>Archive</th>
+              <th>End</th>
+              <th>Connection</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-status="A">
+              <td class="cloud-test-status"></td>
+              <td class="cloud-test-status"></td>
+              <td>Cloud connection</td>
+              <td>2024-04-03 13:55:00</td>
+            </tr>
+            <tr data-status="P">
+              <td class="cloud-test-status"></td>
+              <td class="cloud-test-status"></td>
+              <td>Rabbit Mq</td>
+              <td>2024-04-03 13:55:11</td>
+            </tr>
+            <tr data-status="A">
+              <td class="cloud-test-status"></td>
+              <td class="cloud-test-status"></td>
+              <td>VPN Port</td>
+              <td>2024-04-03 13:55:14</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="cloud-test-info">
+          *Does the ORC have connection with cloud and other devices or not?
+        </p>
+
+        <!-- Buton ve Yazıları Yan Yana Düzenleme -->
+        <div class="cloud-test-footer">
+          <button class="cloud-test-button">Perform a scanning test</button>
+          <div class="cloud-test-status-text">
+            <p class="cloud-test-success">
+              Local Network Connection Scan Successful.
+            </p>
+            <p class="cloud-test-failed">
+              Local Network Connection Scan Failed.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Read Test -->
+    <div id="read" class="read-test-container tab-content-test">
+      <div class="read-test-card">
+        <div class="read-test-grid">
+          <div class="read-test-group">
+            <label for="port">Port</label>
+            <input type="text" id="port" value="/dev/ttyUSB0" readonly />
+          </div>
+          <div class="read-test-group">
+            <label for="baud-rate">Baud Rate</label>
+            <input type="text" id="baud-rate" value="9600" readonly />
+          </div>
+          <div class="read-test-group">
+            <label for="parity">Parity</label>
+            <input type="text" id="parity" value="None" readonly />
+          </div>
+          <div class="read-test-group">
+            <label for="stop-bit">Stop Bit</label>
+            <input type="text" id="stop-bit" value="8" readonly />
+          </div>
+          <div class="read-test-group">
+            <label for="register">Register</label>
+            <input type="text" id="register" value="8" readonly />
+          </div>
+          <div class="read-test-group">
+            <label for="count">Count</label>
+            <input type="text" id="count" value="8" readonly />
+          </div>
+          <div class="read-test-group">
+            <label for="data-type">Data Type</label>
+            <input type="text" id="data-type" value="uint32" readonly />
+          </div>
+        </div>
+
+        <div class="read-test-footer">
+          <button class="read-test-button">Perform a scanning test</button>
+          <div class="read-test-status">
+            <p class="read-test-success">
+              Local Network Connection Scan Successful.
+            </p>
+            <p class="read-test-failed">
+              Local Network Connection Scan Failed.
+            </p>
+          </div>
+        </div>
+
+        <div class="read-test-terminal">
+          <label for="terminal">Terminal</label>
+          <textarea id="terminal" readonly>/dev/ttyUSB0</textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Write Test -->
+    <div id="write" class="write-test-container tab-content-test">
+      <div class="write-test-card">
+        <div class="write-test-grid">
+          <div class="write-test-group">
+            <label for="port">Port</label>
+            <input type="text" id="port" value="/dev/ttyUSB0" readonly />
+          </div>
+          <div class="write-test-group">
+            <label for="baud-rate">Baud Rate</label>
+            <input type="text" id="baud-rate" value="9600" readonly />
+          </div>
+          <div class="write-test-group">
+            <label for="parity">Parity</label>
+            <input type="text" id="parity" value="None" readonly />
+          </div>
+          <div class="write-test-group">
+            <label for="stop-bit">Stop Bit</label>
+            <input type="text" id="stop-bit" value="8" readonly />
+          </div>
+          <div class="write-test-group">
+            <label for="register">Register</label>
+            <input type="text" id="register" value="8" readonly />
+          </div>
+          <div class="write-test-group">
+            <label for="count">Count</label>
+            <input type="text" id="count" value="8" readonly />
+          </div>
+          <div class="write-test-group">
+            <label for="data-type">Data Type</label>
+            <input type="text" id="data-type" value="uint32" readonly />
+          </div>
+        </div>
+
+        <div class="write-test-footer">
+          <button class="write-test-button">Perform a scanning test</button>
+          <div class="write-test-status">
+            <p class="write-test-success">
+              Local Network Connection Scan Successful.
+            </p>
+            <p class="write-test-failed">
+              Local Network Connection Scan Failed.
+            </p>
+          </div>
+        </div>
+
+        <div class="write-test-terminal">
+          <label for="terminal">Terminal</label>
+          <textarea id="terminal" readonly>Write successful Read value: sadfasd</textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tabButtons = document.querySelectorAll(".switch-btn-test");
+    const tabContents = document.querySelectorAll(".tab-content-test");
+
+    console.log(document.querySelectorAll(".switch-btn-test"));
+    console.log(document.querySelectorAll(".tab-content-test"));
+
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const targetId = this.getAttribute("data-target");
+        console.log(targetId);
+
+        // Tüm içerikleri gizle
+        tabContents.forEach((content) => (content.style.display = "none"));
+
+        console.log(tabContents);
+
+        // Tüm butonlardaki "active" sınıfını kaldır
+        tabButtons.forEach((btn) => btn.classList.remove("active"));
+        console.log(tabButtons);
+
+        // Seçilen butona "active" sınıfı ekle
+        this.classList.add("active");
+
+        // İlgili içeriği göster
+        const targetElement = document.getElementById(targetId);
+        console.log(targetElement);
+        if (targetElement) {
+          targetElement.style.display = "block";
+          console.log(targetElement);
+        }
+      });
+    });
+
+    // Sayfa yüklendiğinde ilk butonu otomatik tıklat
+    if (tabButtons.length > 0) {
+      tabButtons[0].click();
+      console.log(tabButtons[0]);
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("tr[data-status]").forEach((row) => {
+      const status = row.getAttribute("data-status");
+      row.querySelectorAll(".cloud-test-status").forEach((cell) => {
+        cell.innerHTML = status === "A" ? "🟢" : "🔴";
+      });
+    });
+  });
+  document
+    .querySelectorAll(
+      ".equipment-table tbody tr td:nth-child(3), .equipment-table tbody tr td:nth-child(4)"
+    )
+    .forEach((td) => {
+      let text = td.innerText.trim();
+
+      if (text === "A / A" || text === "OK") {
+        td.style.color = "green";
+        td.style.fontWeight = "bold";
+      }
+
+      if (text === "No") {
+        td.style.color = "red";
+        td.style.fontWeight = "bold";
+      }
+    });
+</script>
+{% endblock %}

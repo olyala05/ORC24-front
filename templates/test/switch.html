@@ -1,0 +1,61 @@
+{% extends "layout.html" %} {% block title %} Switch to Test Mode {% endblock %}
+{% block content %}
+
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<div class="switch-container">
+  <button class="switch-button" onclick="confirmSwitch()">Switch to Test Mode</button>
+</div>
+<script>
+    function confirmSwitch() {
+        Swal.fire({
+          text: "If you switch to test mode, services will shut down. Do you want to switch to test mode?",
+          icon: "warning",
+          backdrop: false,
+          showCancelButton: true,
+          confirmButtonColor: "#ffffff",  // Arka plan beyaz
+          cancelButtonColor: "#ffffff",   // Arka plan beyaz
+          confirmButtonText: "Yes",
+          cancelButtonText: "No",
+          customClass: {
+              popup: 'swal-custom-bg',  // Swal arka planı için özel sınıf
+              confirmButton: 'swal-button',  // Yes butonu için özel sınıf
+              cancelButton: 'swal-button'    // No butonu için özel sınıf
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "{{ url_for('test') }}";
+          }
+        });
+      }
+  </script>
+
+<style>
+  .swal-custom-bg {
+    background-color: #0B1734 !important; 
+    color: white !important; 
+  }
+
+  .swal-button {
+    background-color: white !important; 
+    color: black !important; 
+    font-size: 18px !important; 
+    padding: 12px 24px !important; 
+    border-radius: 8px !important;
+    border: 2px solid black !important;
+  }
+
+  div:where(.swal2-container) button:where(.swal2-styled):not([disabled]) {
+    cursor: pointer;
+    width: 200px;
+}
+
+  .swal-button:hover {
+    background-color: #f0f0f0 !important;
+  }
+</style>
+
+{% endblock %}
+
+

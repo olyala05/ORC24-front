@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+{% block title %} Equipment Settings {% endblock %}
+
+{% block content %}
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<div class="equ-set-container">
+  <!-- Sol Sidebar -->
+  <div class="equ-set-sidebar">
+      <button class="equ-set-btn active" data-target="modbus-settings">Modbus Settings</button>
+      <button class="equ-set-btn" data-target="tcp-settings">TCP/IP Settings</button>
+      <button class="equ-set-btn" data-target="obis-settings">Obis Settings</button>
+      <button class="equ-set-btn" data-target="equipment-settings">Equipment Settings</button>
+  </div>
+
+  <!-- Sağ İçerik Alanı -->
+  <div class="equ-set-content">
+
+      <!-- Modbus Settings -->
+      <div id="modbus-settings" class="modbus-setting-form">
+          <div class="modbus-setting-row">
+              <div class="modbus-setting-group">
+                  <label>Port</label>
+                  <input type="text" value="/dev/ttyUSB0">
+              </div>
+              <div class="modbus-setting-group">
+                  <label>Baud Rate</label>
+                  <input type="text" value="9600">
+              </div>
+          </div>
+          <div class="modbus-setting-row">
+              <div class="modbus-setting-group">
+                  <label>Parity</label>
+                  <input type="text" value="None">
+              </div>
+              <div class="modbus-setting-group">
+                  <label>Stop Bit</label>
+                  <input type="text" value="8">
+              </div>
+          </div>
+          <button class="modbus-setting-btn-test">Test</button>
+
+          <!-- Test Sonuçları -->
+          <p class="modbus-setting-success">Modbus connection successful</p>
+          <p class="modbus-setting-failed">Modbus connection failed</p>
+      </div>
+
+      <!-- TCP/IP Settings -->
+      <div id="tcp-settings" class="tcp-setting-form" style="display: none;">
+          <h3>TCP/IP Settings</h3>
+      </div>
+
+      <!-- Obis Settings -->
+      <div id="obis-settings" class="obis-setting-form" style="display: none;">
+          <h3>Obis Settings</h3>
+      </div>
+
+      <!-- Equipment Settings -->
+      <div id="equipment-settings" class="equip-setting-form" style="display: none;">
+          <div class="equip-setting-card">
+              <div class="equip-setting-group">
+                  <label>Equipment Name</label>
+                  <input type="text" placeholder="Equipment Name">
+              </div>
+
+              <div class="equip-setting-group">
+                  <label>Multiplier Values</label>
+                  <div class="equip-setting-select">
+                      <select>
+                          <option value="">Select</option>
+                          <option value="1">1x</option>
+                          <option value="2">2x</option>
+                          <option value="3">3x</option>
+                      </select>
+                      <span class="equip-setting-arrow">&#9662;</span> <!-- Aşağı bakan ok -->
+                  </div>
+              </div>
+
+              <div class="equip-setting-group">
+                  <label>Gmt</label>
+                  <div class="equip-setting-select">
+                      <select>
+                          <option value="">Select</option>
+                          <option value="gmt-3">GMT -3</option>
+                          <option value="gmt+0">GMT +0</option>
+                          <option value="gmt+3">GMT +3</option>
+                      </select>
+                      <span class="equip-setting-arrow">&#9662;</span>
+                  </div>
+              </div>
+
+              <div class="equip-setting-group">
+                  <label>Daylight Saving Time</label>
+                  <div class="equip-setting-select">
+                      <select>
+                          <option value="">Select</option>
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                      </select>
+                      <span class="equip-setting-arrow">&#9662;</span>
+                  </div>
+              </div>
+
+              <button class="equip-setting-save-btn">Save</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".equ-set-btn");
+    const sections = document.querySelectorAll(".modbus-setting-form, .tcp-setting-form, .obis-setting-form, .equip-setting-form");
+
+    buttons.forEach((button) => {
+        button.addEventListener("click", function () {
+            const targetId = this.getAttribute("data-target");
+
+            // 📌 Önce tüm butonlardan 'active' sınıfını kaldır
+            buttons.forEach((btn) => btn.classList.remove("active"));
+
+            // 📌 Tüm içerik bölümlerini gizle
+            sections.forEach((section) => {
+                section.style.display = "none";
+            });
+
+            // 📌 Seçilen butona 'active' ekle
+            this.classList.add("active");
+
+            // 📌 İlgili içeriği göster
+            document.getElementById(targetId).style.display = "block";
+        });
+    });
+
+    // 📌 Sayfa yüklendiğinde ilk sekmeyi aç ve aktif yap
+    buttons[0].click();
+});
+
+</script>
+
+{% endblock %}

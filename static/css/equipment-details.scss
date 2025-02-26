@@ -1,0 +1,123 @@
+.eq-detail-container {
+  display: flex;
+  gap: 20px;
+  color: #e6edf3;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  width: 1000px;
+  margin-top: 80px;
+
+  .eq-detail-panel {
+    background-color: #0b1734;
+    padding: 15px;
+    border-radius: 8px;
+    width: 40%;
+
+    .eq-detail-header {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .eq-detail-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      .eq-detail-item {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #ef8018;
+        padding: 4px 0;
+
+        span {
+          font-size: 14px;
+        }
+
+        .eq-detail-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+        }
+
+        .eq-active {
+          background-color: #3fb950;
+        }
+
+        .eq-passive {
+          background-color: #f85149;
+        }
+        .eq-detail-green {
+          color: #3fb950;
+        }
+
+        .eq-detail-red {
+          color: #f85149;
+        }
+      }
+    }
+  }
+
+  .eq-detail-log {
+    width: 60%;
+    background-color: #0b1734;
+    padding: 15px;
+    border-radius: 8px;
+
+    .eq-detail-log-header {
+      display: flex;
+      justify-content: flex-start;
+      font-size: 16px;
+      padding: 5px 0;
+      border-bottom: 1px solid #ffffff;
+      gap: 15px;
+    }
+
+    .eq-detail-log-list {
+      list-style: none;
+      padding: 0;
+      max-height: 400px;
+      overflow-y: auto;
+
+      .eq-detail-log-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        border-bottom: 1px solid #ef8018;
+        font-size: 14px;
+
+        .eq-detail-log-status {
+          display: flex;
+          align-items: center;
+          gap: 60px;
+        }
+
+        .eq-detail-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+        }
+
+        .eq-active {
+          background-color: #3fb950;
+        }
+
+        .eq-passive {
+          background-color: #f85149;
+        }
+
+        .eq-detail-log-green {
+          color: #3fb950;
+        }
+
+        .eq-detail-log-red {
+          color: #f85149;
+        }
+
+        .eq-detail-log-gray {
+          color: #8b949e;
+        }
+      }
+    }
+  }
+}

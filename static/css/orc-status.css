@@ -1,0 +1,231 @@
+@charset "UTF-8";
+.orc-content {
+  margin-top: 84px;
+  padding: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  width: 98vw;
+  height: calc(97vh - 60px);
+  gap: 12px;
+}
+
+.device-info {
+  background-color: #0b1734;
+  padding: 15px;
+  border-radius: 8px;
+  width: 47%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  font-size: 16px;
+}
+.device-info ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+.device-info ul li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #ff6f00;
+}
+.device-info .connection-status {
+  width: 100%;
+  background-color: white;
+  padding: 0px;
+  border-radius: 8px;
+  text-align: center;
+  color: black;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+.device-info .connection-status .status-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1c2747;
+  display: block;
+  margin-bottom: 5px;
+  margin-top: 13px;
+}
+.device-info .connection-status .separator {
+  width: 90%;
+  height: 1px;
+  background-color: #ff6f00;
+  margin: 0px auto;
+}
+.device-info .connection-status .status-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 15px;
+}
+.device-info .connection-status .status-left {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #1c2747;
+}
+.device-info .connection-status .status-left i {
+  font-size: 18px;
+  margin-right: 8px;
+  color: #1c2747;
+}
+.device-info .connection-status .status-left img {
+  font-size: 18px;
+  margin-right: 8px;
+  color: #1c2747;
+}
+.device-info .connection-status .disconnect-btn {
+  background-color: #ff6f00;
+  padding: 10px 14px;
+  font-size: 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  color: white;
+}
+.device-info .connection-status .disconnect-btn:hover {
+  background-color: #ff8c33;
+}
+
+.connection-table {
+  width: 47%;
+  height: 90%;
+  background-color: #0b1734;
+  padding: 15px;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+.connection-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.connection-table table th {
+  background-color: #1c2747;
+  padding: 8px;
+  font-size: 14px;
+}
+.connection-table table td {
+  padding: 8px;
+  font-size: 14px;
+}
+.connection-table table .status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.connection-table table .status-dot.green {
+  background-color: #4caf50;
+}
+.connection-table table .status-dot.red {
+  background-color: #FF0F00;
+}
+
+.line {
+  flex-grow: 2;
+  height: 1px;
+  background-color: #ff6f00;
+  position: relative;
+}
+
+.algorithm-section {
+  width: 96%;
+  background-color: white;
+  padding: 7px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  color: black;
+}
+.algorithm-section h3 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1c2747;
+  margin-bottom: 5px;
+}
+.algorithm-section .separator {
+  width: 90%;
+  height: 1px;
+  background-color: #ff6f00;
+  margin: 5px auto 10px;
+}
+.algorithm-section .algorithm-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  width: 96%;
+  font-weight: bold;
+}
+.algorithm-section .algorithm-box .algorithm-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1c2747;
+}
+.algorithm-section .algorithm-box .algorithm-left i {
+  font-size: 18px;
+  color: #1c2747;
+}
+.algorithm-section .algorithm-box .status-btn {
+  background-color: #ff6f00;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  color: white;
+}
+.algorithm-section .algorithm-box .status-btn:hover {
+  background-color: #ff8c33;
+}
+
+.connection-status {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ❌ Wi-Fi Bağlı Değilse */
+.status-title.error-message {
+  color: red;
+  font-size: 14px;
+}
+
+/* 🔁 Retry Butonu */
+.retry-btn {
+  background: #ff6f00;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.retry-btn:hover {
+  background: #ff8c33;
+}/*# sourceMappingURL=orc-status.css.map */

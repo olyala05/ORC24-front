@@ -1,0 +1,655 @@
+@charset "UTF-8";
+.switch-content-area {
+  width: 750px;
+}
+
+.switch-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.switch-button {
+  color: #000;
+  border: 1px solid #ccc;
+  padding: 19px 113px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 7px;
+}
+.switch-button:hover {
+  background-color: #f5f5f5;
+}
+
+.test-switch-content {
+  display: flex;
+  gap: 5px;
+  margin-top: 60px;
+}
+.test-switch-content .switch-btn-test {
+  padding: 19px;
+  border-radius: 7px;
+  color: #000;
+  font-weight: 600;
+  margin: 10px;
+  font-size: large;
+}
+
+.test-sidebar-switch {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.switch-btn-test.active {
+  background-color: #fff;
+  font-weight: 700;
+  border: 3px solid #ff6f00;
+  color: #000;
+}
+
+.wifi-container-test {
+  display: flex;
+  gap: 15px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.btn-group-test {
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.network-box-test .network-header-test {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: bold;
+  background: #f5f5f5;
+  padding: 14px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  width: 200px;
+  margin-top: 17px;
+}
+.network-box-test .network-header-test .wifi-icon-test {
+  display: flex;
+  gap: 10px;
+}
+.network-box-test .network-header-test .wifi-icon-test img {
+  width: 30px;
+}
+
+.wifi-icon-test {
+  display: flex;
+  gap: 10px;
+}
+
+.wifi-test-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.wifi-test-label {
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
+}
+
+.wifi-test-value {
+  font-size: 14px;
+  color: white;
+}
+
+.wifi-test-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  gap: 20px;
+}
+
+.wifi-test-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ef742a;
+}
+
+.wifi-test-input {
+  background: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.wifi-test-btn {
+  background: #ef742a;
+  color: white;
+  border: none;
+  padding: 11px 50px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.wifi-test-btn:hover {
+  background: #d65f1f;
+}
+
+.wifi-test-action .wifi-success {
+  color: green;
+  font-size: 14px;
+}
+.wifi-test-action .wifi-failed {
+  color: red;
+  font-size: 14px;
+}
+
+.ethernet-container-test {
+  display: flex;
+  gap: 15px;
+  border-radius: 10px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.ethernet-box-test {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-weight: bold;
+  padding: 14px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  margin-top: 17px;
+}
+.ethernet-box-test .ethernet-icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 5px;
+}
+.ethernet-box-test .ethernet-text {
+  font-size: 45px;
+  font-weight: 100;
+  color: white;
+  text-align: center;
+}
+.ethernet-box-test .ethernet-header-test {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 14px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  width: 200px;
+  margin-top: 17px;
+}
+
+.white-line-break {
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  margin: 20px 0;
+  opacity: 0.6;
+}
+
+.wifi-test-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.ethernet-test-label {
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
+}
+
+.ethernet-test-value {
+  font-size: 14px;
+  color: white;
+}
+
+.ethernet-test-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  gap: 20px;
+}
+
+.ethernet-test-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ef742a;
+}
+
+.ethernet-test-input {
+  background: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.ethernet-test-btn {
+  background: #ef742a;
+  color: white;
+  border: none;
+  padding: 11px 50px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.ethernet-test-btn:hover {
+  background: #d65f1f;
+}
+
+.ethernet-test-action .ethernet-success {
+  color: green;
+  font-size: 14px;
+}
+.ethernet-test-action .ethernet-failed {
+  color: red;
+  font-size: 14px;
+}
+
+.ethernet-test-box {
+  padding: 19px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.equipment-test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+.equipment-test-card {
+  background: #0b1734;
+  padding: 10px;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+.equipment-test-card .equipment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.equipment-test-card .equipment-table thead tr th {
+  text-align: left;
+  padding: 4px;
+  color: #ef8018;
+  font-weight: 500;
+  font-size: 14px;
+  border-bottom: 1px solid #fff;
+  text-align: center;
+}
+.equipment-test-card .equipment-table tbody tr td {
+  padding: 8px;
+  color: #fff;
+  font-size: 14px;
+  border-bottom: 1px solid #ef742a;
+  text-align: center;
+}
+.equipment-test-card .equipment-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.equipment-test-card .equipment-actions .equipment-scan-btn,
+.equipment-test-card .equipment-actions .equipment-update-btn {
+  padding: 8px 110px;
+  background-color: #ff7b00;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+}
+.equipment-test-card .equipment-actions .equipment-scan-btn:hover,
+.equipment-test-card .equipment-actions .equipment-update-btn:hover {
+  background-color: #e26f00;
+}
+.equipment-test-card .equipment-actions .equipment-scan-status {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-auto-rows: auto;
+  align-items: start;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  row-gap: 5px;
+}
+.equipment-test-card .equipment-actions .equipment-scan-status .equipment-scan-btn {
+  grid-row: 1/span 2;
+}
+.equipment-test-card .equipment-actions .equipment-scan-status .equipment-scan-success {
+  grid-column: 2/3;
+  grid-row: 1;
+  color: #06b307;
+  font-size: 14px;
+}
+.equipment-test-card .equipment-actions .equipment-scan-status .equipment-scan-failed {
+  /* İkinci satır, sağ sütunda */
+  grid-column: 2/3;
+  grid-row: 2;
+  color: #ff4040;
+  font-size: 14px;
+}
+
+.equipment-table td:nth-child(3):contains("A / A"),
+.equipment-table td:nth-child(4):contains("OK") {
+  color: green !important;
+}
+
+.equipment-table td:nth-child(4):contains("No") {
+  color: red !important;
+}
+
+.status-green {
+  color: #06b307;
+}
+
+.status-red {
+  color: #ff4040;
+}
+
+.cloud-test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+.cloud-test-card {
+  background: #0B1734;
+  padding: 10px;
+  border-radius: 10px;
+  align-items: center;
+  color: white;
+  margin-top: 10px;
+}
+
+.cloud-test-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+.cloud-test-table th,
+.cloud-test-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.cloud-test-info {
+  font-style: italic;
+  text-align: right;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+/* Buton ve Yazıları Yan Yana Düzenleme */
+.cloud-test-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.cloud-test-button {
+  background-color: #ef742a;
+  color: white;
+  padding: 12px 55px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 600;
+}
+.cloud-test-button:hover {
+  background-color: #d97720;
+}
+
+.cloud-test-status-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cloud-test-success {
+  color: limegreen;
+  margin: 4px 0px;
+  padding: 0;
+}
+
+.cloud-test-failed {
+  color: red;
+  margin: 0;
+}
+
+.read-test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+.read-test-card {
+  background: #0b1734;
+  padding: 10px;
+  border-radius: 10px;
+  align-items: center;
+  color: white;
+  margin-top: 10px;
+}
+
+.read-test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.read-test-group {
+  display: flex;
+  flex-direction: column;
+}
+.read-test-group label {
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+.read-test-group input {
+  color: #757678;
+  padding: 8px;
+  border-radius: 5px;
+  width: 90%;
+}
+
+.read-test-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.read-test-button {
+  background-color: #ef742a;
+  color: white;
+  padding: 14px 56px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+}
+.read-test-button:hover {
+  background-color: #d97720;
+}
+
+.read-test-status {
+  display: flex;
+  flex-direction: column;
+}
+
+.read-test-success {
+  color: limegreen;
+  margin: 7px 0;
+  padding: 0;
+}
+
+.read-test-failed {
+  color: red;
+  margin: 0;
+  padding: 0;
+}
+
+.read-test-terminal {
+  margin-top: 15px;
+}
+.read-test-terminal label {
+  display: block;
+  margin-bottom: 5px;
+}
+.read-test-terminal textarea {
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+  width: 97%;
+  height: 80px;
+  resize: none;
+  color: #757678;
+}
+
+.write-test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+.write-test-card {
+  background: #0b1734;
+  padding: 10px;
+  border-radius: 10px;
+  align-items: center;
+  color: white;
+  margin-top: 10px;
+}
+
+.write-test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.write-test-group {
+  display: flex;
+  flex-direction: column;
+}
+.write-test-group label {
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+.write-test-group input {
+  color: #757678;
+  border: 1px solid #444;
+  padding: 8px;
+  border-radius: 5px;
+  width: 90%;
+}
+
+.write-test-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.write-test-button {
+  background-color: #ef742a;
+  color: white;
+  padding: 12px 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+}
+.write-test-button:hover {
+  background-color: #d97720;
+}
+
+.write-test-status {
+  display: flex;
+  flex-direction: column;
+}
+
+.write-test-success {
+  color: limegreen;
+  margin: 5px 0;
+  padding: 0;
+}
+
+.write-test-failed {
+  color: red;
+  margin: 0;
+  padding: 0;
+}
+
+.write-test-terminal {
+  margin-top: 15px;
+}
+.write-test-terminal label {
+  display: block;
+  margin-bottom: 5px;
+}
+.write-test-terminal textarea {
+  color: #757678;
+  border: 1px solid #444;
+  padding: 8px;
+  border-radius: 5px;
+  width: 97%;
+  height: 80px;
+  resize: none;
+}/*# sourceMappingURL=test.css.map */

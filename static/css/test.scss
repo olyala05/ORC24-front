@@ -1,0 +1,712 @@
+.switch-content-area {
+  width: 750px;
+}
+
+// switch-styles.scss
+.switch-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.switch-button {
+  color: #000;
+  border: 1px solid #ccc;
+  padding: 19px 113px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 7px;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+// Test
+.test-switch-content {
+  display: flex;
+  gap: 5px;
+  margin-top: 60px;
+
+  .switch-btn-test {
+    padding: 19px;
+    border-radius: 7px;
+    color: #000;
+    font-weight: 600;
+    margin: 10px;
+    font-size: large;
+  }
+}
+.test-sidebar-switch {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+.switch-btn-test.active {
+  background-color: #fff;
+  font-weight: 700;
+  border: 3px solid #ff6f00;
+  color: #000;
+}
+
+// Wi _ Fi Test
+.wifi-container-test {
+  display: flex;
+  gap: 15px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.btn-group-test {
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.network-box-test {
+  .network-header-test {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+    background: #f5f5f5;
+    padding: 14px;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    width: 200px;
+    margin-top: 17px;
+
+    .wifi-icon-test {
+      display: flex;
+      gap: 10px;
+
+      img {
+        width: 30px;
+      }
+    }
+  }
+}
+
+.wifi-icon-test {
+  display: flex;
+  gap: 10px;
+}
+
+// Wi-Fi Test Paneli
+.wifi-test-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+// Etiketler
+.wifi-test-label {
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
+}
+// Değerler (Sağ Taraf)
+.wifi-test-value {
+  font-size: 14px;
+  color: white;
+}
+// Test Butonu ve Bağlantı Durumu
+.wifi-test-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  gap: 20px;
+}
+// Satırları Yan Yana Getirme (Justify Between)
+.wifi-test-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ef742a;
+}
+
+// Input Alanları
+.wifi-test-input {
+  background: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+// Test Butonu
+.wifi-test-btn {
+  background: #ef742a;
+  color: white;
+  border: none;
+  padding: 11px 50px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background: #d65f1f;
+  }
+}
+
+.wifi-test-action {
+  .wifi-success {
+    color: green;
+    font-size: 14px;
+  }
+
+  .wifi-failed {
+    color: red;
+    font-size: 14px;
+  }
+}
+
+// Ethernet Test Paneli
+.ethernet-container-test {
+  display: flex;
+  gap: 15px;
+  border-radius: 10px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.ethernet-box-test {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-weight: bold;
+  padding: 14px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  margin-top: 17px;
+
+  .ethernet-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 5px;
+  }
+
+  // Ethernet Yazısı
+  .ethernet-text {
+    font-size: 45px;
+    font-weight: 100;
+    color: white;
+    text-align: center;
+  }
+
+  .ethernet-header-test {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 14px;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    width: 200px;
+    margin-top: 17px;
+  }
+}
+// Wi-Fi ve Ethernet bölümleri arasındaki beyaz çizgi
+.white-line-break {
+  width: 100%; // Tam genişlikte olsun
+  height: 2px; // Çizginin kalınlığı
+  background-color: white; // Beyaz çizgi rengi
+  margin: 20px 0; // Üst ve alt boşluk
+  opacity: 0.6; // Hafif şeffaflık ekler
+}
+
+// Wi-Fi Test Paneli
+.wifi-test-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+// Etiketler
+.ethernet-test-label {
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
+}
+// Değerler (Sağ Taraf)
+.ethernet-test-value {
+  font-size: 14px;
+  color: white;
+}
+// Test Butonu ve Bağlantı Durumu
+.ethernet-test-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  gap: 20px;
+}
+// Satırları Yan Yana Getirme (Justify Between)
+.ethernet-test-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ef742a;
+}
+
+// Input Alanları
+.ethernet-test-input {
+  background: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+// Test Butonu
+.ethernet-test-btn {
+  background: #ef742a;
+  color: white;
+  border: none;
+  padding: 11px 50px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background: #d65f1f;
+  }
+}
+.ethernet-test-action {
+  .ethernet-success {
+    color: green;
+    font-size: 14px;
+  }
+
+  .ethernet-failed {
+    color: red;
+    font-size: 14px;
+  }
+}
+
+.ethernet-test-box {
+  padding: 19px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+// EQUIPMENT TEST PANEL START //
+.equipment-test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+.equipment-test-card {
+  background: #0b1734;
+  padding: 10px;
+  border-radius: 10px;
+  margin-right: 5px;
+
+  .equipment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+
+    thead {
+      tr {
+        th {
+          text-align: left;
+          padding: 4px;
+          color: #ef8018;
+          font-weight: 500;
+          font-size: 14px;
+          border-bottom: 1px solid #fff;
+          text-align: center;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          padding: 8px;
+          color: #fff;
+          font-size: 14px;
+          border-bottom: 1px solid #ef742a;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .equipment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .equipment-scan-btn,
+    .equipment-update-btn {
+      padding: 8px 110px;
+      background-color: #ff7b00;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+
+      &:hover {
+        background-color: #e26f00;
+      }
+    }
+
+    .equipment-scan-status {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-auto-rows: auto;
+      align-items: start;
+      column-gap: 10px;
+      row-gap: 5px;
+
+      .equipment-scan-btn {
+        grid-row: 1 / span 2;
+      }
+
+      .equipment-scan-success {
+        grid-column: 2 / 3;
+        grid-row: 1;
+        color: #06b307;
+        font-size: 14px;
+      }
+
+      .equipment-scan-failed {
+        /* İkinci satır, sağ sütunda */
+        grid-column: 2 / 3;
+        grid-row: 2;
+        color: #ff4040;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.equipment-table td:nth-child(3):contains("A / A"),
+.equipment-table td:nth-child(4):contains("OK") {
+  color: green !important;
+}
+
+.equipment-table td:nth-child(4):contains("No") {
+  color: red !important;
+}
+
+.status-green {
+  color: #06b307;
+}
+.status-red {
+  color: #ff4040;
+}
+
+// CLOUD TEST PANEL START //
+.cloud-test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+.cloud-test-card {
+  background: #0B1734;
+  padding: 10px;
+  border-radius: 10px;
+  align-items: center;
+  color: white;
+  margin-top: 10px;
+}
+
+.cloud-test-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+  }
+}
+
+.cloud-test-info {
+  font-style: italic;
+  text-align: right;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+/* Buton ve Yazıları Yan Yana Düzenleme */
+.cloud-test-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.cloud-test-button {
+  background-color: #ef742a;
+  color: white;
+  padding: 12px 55px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #d97720;
+  }
+}
+
+.cloud-test-status-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cloud-test-success {
+  color: limegreen;
+  margin: 4px 0px;
+  padding: 0;
+}
+
+.cloud-test-failed {
+  color: red;
+  margin: 0;
+}
+
+// READ TEST PANEL START //
+.read-test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+.read-test-card {
+  background: #0b1734;
+  padding: 10px;
+  border-radius: 10px;
+  align-items: center;
+  color: white;
+  margin-top: 10px;
+}
+
+.read-test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.read-test-group {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+
+  input {
+    color: #757678;
+    padding: 8px;
+    border-radius: 5px;
+    width: 90%;
+  }
+}
+
+.read-test-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.read-test-button {
+  background-color: #ef742a;
+  color: white;
+  padding: 14px 56px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #d97720;
+  }
+}
+
+.read-test-status {
+  display: flex;
+  flex-direction: column;
+}
+
+.read-test-success {
+  color: limegreen;
+  margin: 7px 0;
+  padding: 0;
+}
+
+.read-test-failed {
+  color: red;
+  margin: 0;
+  padding: 0;
+}
+
+.read-test-terminal {
+  margin-top: 15px;
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  textarea {
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    width: 97%;
+    height: 80px;
+    resize: none;
+    color: #757678;
+  }
+}
+
+// WRİTE TEST PANEL START //
+.write-test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+.write-test-card {
+  background: #0b1734;
+  padding: 10px;
+  border-radius: 10px;
+  align-items: center;
+  color: white;
+  margin-top: 10px; 
+}
+
+.write-test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.write-test-group {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+
+  input {
+    color: #757678;
+    border: 1px solid #444;
+    padding: 8px;
+    border-radius: 5px;
+    width: 90%;
+  }
+}
+
+.write-test-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.write-test-button {
+  background-color: #ef742a;
+  color: white;
+  padding: 12px 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #d97720;
+  }
+}
+
+.write-test-status {
+  display: flex;
+  flex-direction: column;
+}
+
+.write-test-success {
+  color: limegreen;
+  margin: 5px 0;
+  padding: 0;
+}
+
+.write-test-failed {
+  color: red;
+  margin: 0;
+  padding: 0;
+}
+
+.write-test-terminal {
+  margin-top: 15px;
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  textarea {
+    color: #757678;
+    border: 1px solid #444;
+    padding: 8px;
+    border-radius: 5px;
+    width: 97%;
+    height: 80px;
+    resize: none;
+  }
+}

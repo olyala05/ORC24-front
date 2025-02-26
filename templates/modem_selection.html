@@ -1,0 +1,476 @@
+{% extends "layout.html" %} {% block title %} Modem Selection {% endblock %} {%
+block content %}
+<div class="header">
+  <div class="header-left">
+    <button class="header-button" onclick="goToDashboard()">
+      Home <img src="{{ url_for('static', filename='images/svg/19.svg') }}" alt="Logout" width="20" height="20"  style="padding: 7px 7px; background: #0B1734; border-radius: 5px;">
+    </button>
+  </div>
+
+  <div class="header-logo">
+    <img
+      src="{{ url_for('static', filename='images/logos/logo-01.webp') }}"
+      alt="Pier MTTP Logo"
+      class="logo"
+    />
+  </div>
+
+  <div class="header-right">
+    <div class="date-time" id="currentDateTime"></div>
+    <div class="report-line">
+      <div class="line"></div>
+    </div>
+    <div class="report-date">Modem Selection</div>
+  </div>
+
+</div>
+
+<!-- Sayfa İçeriği -->
+<main class="content">
+  <div class="modem-selection">
+    <div class="dropdown-container">
+      <label for="modem">Select Modem or Device:</label>
+      <select id="modem" class="modem-dropdown" onchange="connectDevice()">
+        <option value="" disabled selected>Loading devices...</option>
+      </select>
+    </div>
+
+    <div class="button-container">
+      <button class="btn" onclick="goToORCStatus()">ORC Status</button>
+      <button class="btn" onclick="goToEquipment()">Equipment</button>
+      <button class="btn" onclick="goToSetting()">Settings</button>
+    </div>
+
+    <div class="bottom-buttons">
+      <button class="btn" onclick="SwitchtTest()">Test</button>
+      <button class="btn" onclick="goToData()">Data</button>
+    </div>
+
+    <div id="status"></div>
+  </div>
+</main>
+
+<script>
+  // Sayfa yüklendiğinde cihazları getir
+  document.addEventListener("DOMContentLoaded", fetchDevices);
+
+  // Dashboard Sayfasına Yönlendirir
+  function goToDashboard() {
+    window.location.href = "/dashboard";
+  }
+
+  // Active butonu seçme
+  document.addEventListener("DOMContentLoaded", function () {
+    // Tüm butonları seç
+    let buttons = document.querySelectorAll(
+      ".button-container .btn, .bottom-buttons .btn"
+    );
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", function () {
+        // Önce tüm butonlardan `active` sınıfını kaldır
+        buttons.forEach((btn) => btn.classList.remove("active"));
+
+        // Tıklanan butona `active` sınıfını ekle
+        this.classList.add("active");
+      });
+    });
+  });
+
+  function fetchDevices() {
+    fetch("/devices")
+      .then((response) => response.json())
+      .then((data) => {
+        let dropdown = document.getElementById("modem");
+        dropdown.innerHTML = ""; // Önce temizle
+
+        // Varsayılan "Select Modem" Seçeneği
+        let defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        defaultOption.textContent = "Select Modem or Device";
+        dropdown.appendChild(defaultOption);
+
+        // Wi-Fi ve Modemlere Bağlı Cihazları Ekleyelim
+        data.forEach((device) => {
+          let option = document.createElement("option");
+          option.value = device.ip;
+          option.textContent = `${device.ip} (${device.mac})`;
+          dropdown.appendChild(option);
+        });
+      })
+      .catch((error) => console.error("Cihazları alırken hata:", error));
+  }
+
+  function connectDevice() {
+    let dropdown = document.getElementById("modem");
+    let selectedDevice = dropdown.value;
+
+    if (!selectedDevice) {
+      return;
+    }
+
+    fetch("/connect_device", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ip_address: selectedDevice }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let status = document.getElementById("status");
+
+        if (data.success) {
+          sessionStorage.setItem("selected_device_ip", selectedDevice);
+
+          // SweetAlert ile başarı mesajı
+          Swal.fire({
+            position: "bottom-end", // 📌 Sağ alt köşe
+            icon: "success",
+            title: "Cihaz başarıyla bağlandı!",
+            showConfirmButton: false,
+            timer: 5000, // 5 saniyede kaybolur
+            toast: true,
+            customClass: {
+              popup: "small-toast",
+            },
+          });
+        } else {
+          // ❌ Başarısız bağlantı mesajı (Kırmızı)
+          status.innerHTML =
+            "<p style='color: red;'>Bağlantı hatası: " + data.error + "</p>";
+
+          // SweetAlert ile hata mesajı
+          Swal.fire({
+            position: "bottom-end", // 📌 Sağ alt köşe
+            icon: "error",
+            title: "⚠️ Bağlantı hatası!",
+            showConfirmButton: false,
+            timer: 5000, // 5 saniyede kaybolur
+            toast: true,
+            customClass: {
+              popup: "small-toast",
+            },
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Bağlantı hatası:", error);
+
+        // Genel hata mesajı
+        Swal.fire({
+          position: "bottom-end", // 📌 Sağ alt köşe
+          icon: "error",
+          title: "⚠️ Bağlantı sırasında hata oluştu!",
+          showConfirmButton: false,
+          timer: 5000, // 5 saniyede kaybolur
+          toast: true,
+          customClass: {
+            popup: "small-toast",
+          },
+        });
+      });
+  }
+
+  function goToORCStatus() {
+    let dropdown = document.getElementById("modem");
+    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+
+    if (!selectedDeviceIP) {
+      // Kullanıcıya uyarı ver
+      Swal.fire({
+        icon: "warning",
+        title: "⚠️ Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return; // İşlemi durdur
+    }
+
+    // **Loading ekranını ekleyelim**
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
+      <div class="loading-box">
+        <p> ORC Status yükleniyor...</p>
+        <div class="loader"></div>
+      </div>`;
+    document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
+
+    fetch("/get_selected_device")
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.ip_address) {
+          Swal.fire({
+            icon: "warning",
+            title: "⚠️ Uyarı",
+            text: "Lütfen önce bir cihaz seçiniz!",
+            confirmButtonText: "Tamam",
+          });
+          return;
+        }
+
+        // **Yönlendirme**
+        window.location.href = `/orc-status?ip_address=${data.ip_address}`;
+      })
+      .catch((error) => {
+        console.error("Cihaz seçme hatası:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Hata!",
+          text: "Cihaz bilgisi alınamadı. Lütfen tekrar deneyin.",
+          confirmButtonText: "Tamam",
+        });
+      })
+      .finally(() => {
+        // **Loading ekranını kaldır**
+        let loader = document.getElementById("loading-overlay");
+        if (loader) loader.remove();
+      });
+  }
+
+  // Equipment With Model
+  function goToEquipment() {
+    let dropdown = document.getElementById("modem");
+    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+
+    if (!selectedDeviceIP) {
+      // Kullanıcıya uyarı ver
+      Swal.fire({
+        icon: "warning",
+        title: "⚠️ Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return; // İşlemi durdur
+    }
+
+    // **Loading ekranını ekleyelim**
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
+      <div class="loading-box">
+        <p> ORC Status yükleniyor...</p>
+        <div class="loader"></div>
+      </div>`;
+    document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
+
+    fetch("/equipments-with-models", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ip_address: selectedDeviceIP }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          Swal.fire({
+            icon: "error",
+            title: "Hata",
+            text: data.error,
+            confirmButtonText: "Tamam",
+          });
+          return;
+        }
+
+        // **Modbus verilerini sakla**
+        sessionStorage.setItem(
+          "equipment_data",
+          JSON.stringify(data.data)
+        );
+
+        // **Equipment sayfasına yönlendir**
+        window.location.href = "/equipment";
+      })
+      .catch((error) => {
+        console.error("Ekipman verisi alırken hata oluştu:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Hata!",
+          text: "Modbus verisi alınamadı. Lütfen tekrar deneyin.",
+          confirmButtonText: "Tamam",
+        });
+      })
+      .finally(() => {
+        // **Loading ekranını kaldır**
+        let loader = document.getElementById("loading-overlay");
+        if (loader) loader.remove();
+      });
+  }
+
+    // Equipment With Model
+    function goToSetting() {
+      let dropdown = document.getElementById("modem");
+      let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+  
+      if (!selectedDeviceIP) {
+        // Kullanıcıya uyarı ver
+        Swal.fire({
+          icon: "warning",
+          title: "⚠️ Uyarı",
+          text: "Lütfen önce bir cihaz seçiniz!",
+          confirmButtonText: "Tamam",
+        });
+        return; // İşlemi durdur
+      }
+  
+      // **Loading ekranını ekleyelim**
+      let loadingOverlay = document.createElement("div");
+      loadingOverlay.id = "loading-overlay";
+      loadingOverlay.className = "loading-overlay";
+      loadingOverlay.innerHTML = `
+        <div class="loading-box">
+          <p> ORC Status yükleniyor...</p>
+          <div class="loader"></div>
+        </div>`;
+      document.body.appendChild(loadingOverlay); 
+
+      window.location.href = "/settings";
+    }
+
+  // Test Sayfasına Yönlendirir
+  function SwitchtTest() {
+    let dropdown = document.getElementById("modem");
+    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+
+    if (!selectedDeviceIP) {
+      // Kullanıcıya uyarı ver
+      Swal.fire({
+        icon: "warning",
+        title: "⚠️ Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return; // İşlemi durdur
+    }
+
+    // **Loading ekranını ekleyelim**
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
+      <div class="loading-box">
+        <p> ORC Status yükleniyor...</p>
+        <div class="loader"></div>
+      </div>`;
+    document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
+
+    window.location.href = "/switch";
+  }
+
+  // data
+  function goToData() {
+    let dropdown = document.getElementById("modem");
+    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+
+    if (!selectedDeviceIP) {
+      // Kullanıcıya uyarı ver
+      Swal.fire({
+        icon: "warning",
+        title: "⚠️ Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return; // İşlemi durdur
+    }
+
+    // **Loading ekranını ekleyelim**
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
+      <div class="loading-box">
+        <p> ORC Status yükleniyor...</p>
+        <div class="loader"></div>
+      </div>`;
+    document.body.appendChild(loadingOverlay); 
+
+    window.location.href = "/data";
+  }
+
+  // Equipment Buttonununa gider onclick="goToEquipmentSetting()"
+  function goToEquipmentSetting() {
+    let dropdown = document.getElementById("modem");
+    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+
+    if (!selectedDeviceIP) {
+      // Kullanıcıya uyarı ver
+      Swal.fire({
+        icon: "warning",
+        title: "⚠️ Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return; // İşlemi durdur
+    }
+
+    // **Loading ekranını ekleyelim**
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
+      <div class="loading-box">
+        <p> Equipments taranıyor...</p>
+        <div class="loader"></div>
+      </div>`;
+    document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
+
+    fetch("/modbus_request", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ip_address: selectedDeviceIP }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          alert("Hata: " + data.error);
+          return;
+        }
+
+        // Modbus verilerini Equipment sayfasına yönlendirmeden önce sakla
+        sessionStorage.setItem("modbus_data", JSON.stringify(data.modbus_data));
+
+        // Equipment sayfasına yönlendir
+        window.location.href = "/equipment-setting";
+      })
+      .catch((error) => {
+        console.error("Modbus verisi alırken hata oluştu:", error);
+        alert("Modbus verisi alınamadı. Lütfen tekrar deneyin.");
+      })
+      .finally(() => {
+        // **Loading ekranını kaldır**
+        let loader = document.getElementById("loading-overlay");
+        if (loader) loader.remove();
+      });
+  }
+
+  function updateDateTime() {
+        const now = new Date();
+        
+        // 📌 Gün, ay, yıl formatında al (DD Month YYYY)
+        const options = { day: '2-digit', month: 'long', year: 'numeric' };
+        const formattedDate = now.toLocaleDateString('tr-TR', options);
+
+        // 📌 Saat ve dakikayı ekle (HH:MM formatında)
+        const formattedTime = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+
+        // 📌 HTML içine ekle
+        document.getElementById('currentDateTime').textContent = `${formattedDate} ${formattedTime}`;
+    }
+
+    // Sayfa yüklendiğinde çalıştır
+    updateDateTime();
+
+    // 📌 Her 1 dakikada bir tarihi ve saati güncelle
+    setInterval(updateDateTime, 60000);
+
+</script>
+
+{% endblock %}

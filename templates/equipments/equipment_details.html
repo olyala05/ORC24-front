@@ -1,0 +1,157 @@
+{% extends "layout.html" %} {% block title %} Equipment Details {% endblock %}
+{% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/equipment.scss') }}"
+/>
+{% endblock %} {% block content %}
+
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<div class="eq-detail-container">
+  <!-- Equipment Details Panel -->
+  <div class="eq-detail-panel">
+    <div class="eq-detail-info">
+      <div class="eq-detail-item">
+        <span>Equipment Name:</span>
+        <span class="eq-detail-status">EMR-53CS@3630748023</span>
+      </div>
+      <div class="eq-detail-item"><span>Slave ID:</span> <span>12</span></div>
+      <div class="eq-detail-item">
+        <span>Modem Name:</span> <span>Modem 1</span>
+      </div>
+      <div class="eq-detail-item">
+        <span>Brand / Model:</span> <span>Entes / 46s</span>
+      </div>
+      <div class="eq-detail-item">
+        <span>Equipment Type:</span> <span>Analyzer</span>
+      </div>
+      <div class="eq-detail-item">
+        <span>Equipment Serial NO:</span> <span>asj-234</span>
+      </div>
+      <div class="eq-detail-item">
+        <span>Activity Status:</span> <span>5</span>
+      </div>
+      <div class="eq-detail-item">
+        <span>Device ID:</span> <span>Active</span>
+      </div>
+      <div class="eq-detail-item"><span>SID/IP:</span> <span>5</span></div>
+      <div class="eq-detail-item">
+        <span>Status / Configuration:</span>
+        <span class="eq-detail-green">A / A</span>
+      </div>
+      <div class="eq-detail-item">
+        <span>Archive:</span> <span class="eq-detail-dot eq-active"></span>
+      </div>
+      <div class="eq-detail-item">
+        <span>Connection Protocol:</span> <span>Modbus</span>
+      </div>
+      <div class="eq-detail-item"><span>GMT:</span> <span>3</span></div>
+      <div class="eq-detail-item">
+        <span>Daylight Saving Time:</span>
+        <span class="eq-detail-dot eq-active"></span>
+      </div>
+      <div class="eq-detail-item">
+        <span>Equipment Date:</span> <span>2024-04-01 10:43:19</span>
+      </div>
+      <div class="eq-detail-item">
+        <span>Connection Date:</span> <span>2024-04-01 10:43:19</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Archive Log Panel -->
+  <div class="eq-detail-log">
+    <div class="eq-detail-log-header">
+      <span>Archive</span>
+      <span>End</span>
+    </div>
+    <ul class="eq-detail-log-list">
+      <li class="eq-detail-log-item">
+        <span class="eq-detail-log-status">
+          <span class="eq-detail-dot eq-active"></span>
+          <span class="eq-detail-dot eq-active"></span>
+          <span>Service Started</span>
+        </span>
+        <span>2024-04-03 13:54:31</span>
+      </li>
+
+      <li class="eq-detail-log-item">
+        <span class="eq-detail-log-status">
+          <span class="eq-detail-dot eq-active"></span>
+          <span class="eq-detail-dot eq-active"></span>
+          <span>Modbus connection established</span>
+        </span>
+        <span>2024-04-03 13:55:00</span>
+      </li>
+      <li class="eq-detail-log-item">
+        <span class="eq-detail-log-status">
+          <span class="eq-detail-dot eq-active"></span>
+          <span class="eq-detail-dot eq-active"></span>
+          <span>32000 register error etc.</span>
+        </span>
+        <span>2024-04-03 13:55:00</span>
+      </li>
+      <li class="eq-detail-log-item">
+        <span class="eq-detail-log-status">
+          <span class="eq-detail-dot eq-active"></span>
+          <span class="eq-detail-dot eq-active"></span>
+          <span>equipment not found etc.</span>
+        </span>
+        <span>2024-04-03 13:55:00</span>
+      </li>
+
+      <li class="eq-detail-log-item">
+        <span class="eq-detail-log-status">
+          <span class="eq-detail-dot eq-active"></span>
+          <span class="eq-detail-dot eq-active"></span>
+          <span>Modbus Connection</span>
+        </span>
+        <span>2024-04-03 13:55:00</span>
+      </li>
+      <li class="eq-detail-log-item">
+        <span class="eq-detail-log-status">
+          <span class="eq-detail-dot eq-active"></span>
+          <span class="eq-detail-dot eq-active"></span>
+          <span>Register Read</span>
+        </span>
+        <span>2024-04-03 13:55:00</span>
+      </li>
+      <li class="eq-detail-log-item">
+        <span class="eq-detail-log-status">
+          <span class="eq-detail-dot eq-active"></span>
+          <span class="eq-detail-dot eq-active"></span>
+          <span>32000 register error etc.</span>
+        </span>
+        <span>2024-04-03 13:55:00</span>
+      </li>
+      <li class="eq-detail-log-item">
+        <span class="eq-detail-log-status">
+          <span class="eq-detail-dot eq-passive"></span>
+          <span class="eq-detail-dot eq-passive"></span>
+          <span>Equipment Data Collecting </span>
+        </span>
+        <span>2024-04-03 13:55:00</span>
+      </li>
+      <li class="eq-detail-log-item">
+        <span class="eq-detail-log-status">
+          <span class="eq-detail-dot eq-active"></span>
+          <span class="eq-detail-dot eq-active"></span>
+          <span>Modem Task Cycle</span>
+        </span>
+        <span>2024-04-03 13:55:00</span>
+      </li>
+      <li class="eq-detail-log-item">
+        <span class="eq-detail-log-status">
+          <span class="eq-detail-dot eq-active"></span>
+          <span class="eq-detail-dot eq-passive"></span>
+          <span>Data Transfer Cycle</span>
+        </span>
+        <span>2024-04-03 13:55:00</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

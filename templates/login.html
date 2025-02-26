@@ -1,51 +1,43 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
 
-{% block title %} Login - Pier MTTP {% endblock title %}
+{% block title %}ORC 24 - Login - Pier MTTP{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="header">
-        <div class="line line-left"></div>
-        <img src="{{ url_for('static', filename='images/logos/logo-01.webp') }}" alt="Pier MTTP Logo" class="logo">
-        <div class="line line-right"></div>
+  <div class="container">
+    <div class="login-header">
+      <div class="line line-left"></div>
+      <img src="{{ url_for('static', filename='images/logos/logo-01.webp') }}" alt="Pier MTTP Logo" class="logo" />
+      <div class="line line-right"></div>
     </div>
 
     <!-- Login Form Wrapper -->
     <div class="login-wrapper">
-        <div class="login-box">
-            <div class="input-group">
-                <span class="icon icon-left"> <i class="fa-solid fa-user"></i></span>
-                <input type="text" placeholder="Username">
-            </div>
+      <div class="login-box">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
 
-            <div class="input-group">
-                <span class="icon icon-left"> <i class="fa-solid fa-lock"> </i></span>
-                <input type="password" id="password-input" placeholder="Password">
-                <span class="icon-eye icon-right" id="toggle-password"> <i class="fa-solid fa-eye"></i>
-                </span>
-            </div>
-            
+        <form method="POST" action="{{ url_for('login') }}">  <!-- 🎯 Flask'a yönlendirme -->
+          <div class="input-group">
+            <span class="icon icon-left"><img src="{{ url_for('static', filename='images/svg/22.svg') }}" alt="Logout" width="20" height="20" ></span>
+            <input type="text" name="email" placeholder="Email" required />
+          </div>
 
-            <!-- Buton ve Dil Seçici Yan Yana -->
-            <div class="login-actions">
-                <button class="login-btn">
-                    LOGIN <i class="fa-solid fa-sign-in-alt login-icon"></i>
-                </button>
-            
-                <div class="language-switcher">
-                    <button class="language-toggle">
-                        <i class="fa-solid fa-globe"></i>
-                    </button>
-                    <div class="language-dropdown">
-                        <button data-lang="tr"><span>🇹🇷</span> TR</button>
-                        <button data-lang="en"><span>🇬🇧</span> EN</button>
-                        <button data-lang="de"><span>🇩🇪</span> DE</button>
-                    </div>
-                </div>
-            </div>
-            
-            
-        </div>
+          <div class="input-group">
+            <span class="icon icon-left"><img src="{{ url_for('static', filename='images/svg/21.svg') }}" alt="Logout" width="20" height="20" ></span>
+            <input type="password" name="password" id="password-input" placeholder="Password" required />
+            <span class="icon icon-right" id="toggle-password"><i class="fa-solid fa-eye"></i></span>
+          </div>
+          
+          <div class="login-actions">
+            <button type="submit" class="login-btn">LOGIN  <img src="{{ url_for('static', filename='images/svg/17.svg') }}" alt="Logout" width="30" height="30"  style="padding: 7px 9px; background: #0B1734; border-radius: 5px;"> </button>
+          </div>
+        </form>
+      </div>
     </div>
-</div>
-{% endblock content %}
+  </div>
+{% endblock %}

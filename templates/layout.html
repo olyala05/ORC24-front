@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock title %}</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+      {% endblock %}
+    </title>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
 
     <!-- Genel Stil Dosyası (Tüm Sayfalarda Kullanılacak) -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/build.css') }}" />
 
-    <!-- Login Sayfası İçin Ek CSS -->
-    {% if request.path == '/login' %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-    {% endif %}
-</head>
-<body>
-    {% block content %}{% endblock content %}
+
+  </head>
+  <body>
+    <body class="{% if request.endpoint == 'dashboard' %}dashboard-body{% endif %}">
+    {% block content %}
+
+    {% endblock %}
 
     <!-- Bootstrap -->
     <script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Sweet Alert -->
     <script src="{{ url_for('static', filename='sweetalert/sweetalert.js') }}"></script>
+    <!-- URL'yi HTML içine ekleyelim -->
+
+    <script>
+      var loginURL = "{{ url_for('login') }}"
+    </script>
 
     <!-- My Js -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
-</body>
+  </body>
 </html>

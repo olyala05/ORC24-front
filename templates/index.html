@@ -5,19 +5,21 @@
 {% block content %}
 <div class="container">
   <div class="content">
-      <div class="header">
+      <div class="login-header">
           <div class="line line-left"></div>
           <img src="{{ url_for('static', filename='images/logos/logo-01.webp') }}" alt="Pier MTTP Logo" class="logo">
           <div class="line line-right"></div>
       </div>
+
+      <div class="footer">
+        <span class="version">
+            <img src="{{ url_for('static', filename='images/svg/01.svg') }}" alt="ORC Icon" class="footer-icon">
+            ORC 24 <span class="small">v1.0</span>
+        </span>
+    </div>
+    
   </div>
-  <a href="{{ url_for('login') }}" class="button">Go to Login</a>
 </div>
 
-<div class="footer">
-    <span class="version">
-        <img src="{{ url_for('static', filename='images/svg/01.svg') }}" alt="ORC Icon" class="footer-icon">
-        ORC 24 <span class="small">v1.0</span>
-    </span>
-</div>
+
 {% endblock content %}
