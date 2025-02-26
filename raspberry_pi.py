@@ -11,6 +11,10 @@ import socket
 from datetime import datetime
 from requests.exceptions import RequestException
 import logging
+import re
+import subprocess   
+import platform
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -75,7 +79,7 @@ def login():
     return render_template("login.html", login_success=login_success)
 
 
-# # 🎯 Dashboard Sayfası
+# 🎯 Dashboard Sayfası
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
@@ -101,51 +105,58 @@ def alarm_status():
     else:
         return jsonify({"error": "Alarm status verisi alınamadı"}), response.status_code
 
-def arp_scan(ip_range):
-    """ Belirtilen IP aralığında ARP taraması yaparak 02 veya 12 ile başlayan MAC adreslerini bulur """
-    arp_request = scapy.ARP(pdst=ip_range)
-    broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
-    arp_request_broadcast = broadcast / arp_request
-    answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]
+def raspberry_pi_arp_scan():
+    """ Raspberry Pi'de 'arp -av' komutunu çalıştırarak bağlı cihazları listeler """
+    try:
+        print("Raspberry Pi algılandı, 'arp -av' ile tarama yapılıyor...")
+        output = subprocess.check_output(["sudo", "arp", "-av"], universal_newlines=True)
+        
+        print("ARP Çıktısı:\n", output)  
+        
+        # Boş bir liste başlatır:
+        ip_list = []
+        
+        # ARP çıktısını satır satır işler:
+        for line in output.split("\n"):
+            # Regex (Düzenli İfade) kullanarak satırları analiz eder:
+            match = re.search(r"\((\d+\.\d+\.\d+\.\d+)\) at ([\w:]+)", line)
+            if match:
+                ip_address = match.group(1)
+                mac_address = match.group(2)
 
-    ip_list = []
-    for element in answered_list:
-        mac_address = element[1].hwsrc
-        if mac_address.startswith('02') or mac_address.startswith('12'):
-            ip_list.append({"ip": element[1].psrc, "mac": mac_address})
+                # 02 veya 12 ile başlayan MAC adreslerini filtreleme
+                if mac_address.startswith("02") or mac_address.startswith("12"):
+                    ip_list.append({"ip": ip_address, "mac": mac_address})
 
-    return ip_list
+        print("✅ Bağlı cihazlar:", ip_list)
+        return ip_list
 
-def nmap_scan(ip_range):
-    """ Belirtilen IP aralığında Nmap taraması yaparak 02 veya 12 ile başlayan MAC adreslerini bulur """
-    nm = nmap.PortScanner()
-    nm.scan(hosts=ip_range, arguments='-sn')
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Hata oluştu: {e}")
+        return []
 
-    ip_list = []
-    for host in nm.all_hosts():
-        mac_address = nm[host]['addresses'].get('mac', '')
-        if mac_address.startswith('02') or mac_address.startswith('12'):
-            ip_list.append({"ip": host, "mac": mac_address})
+# Bu fonksiyon, ağdaki tüm IP adreslerine ping atarak ARP tablosunu günceller.
+def update_arp_table(ip_range="192.168.1.0/24"):
+    """ Ağdaki tüm IP'lere ping atarak ARP tablosunu günceller """
+    print("🔄 Ağ taraması yapılıyor, ARP tablosu güncellenecek...")
+    os.system(f"sudo nmap -sn {ip_range} > /dev/null 2>&1")
 
-    return ip_list
-
+    print("✅ Ağ taraması tamamlandı.")
+    
 def get_connected_devices():
-    """ Önce ARP taraması, başarısız olursa Nmap taraması ile cihazları bulur """
-    print("ARP taraması başlatılıyor...")
-    devices = arp_scan(IP_RANGE)
-
-    if not devices:
-        print("ARP taraması başarısız, Nmap taraması başlatılıyor...")
-        devices = nmap_scan(IP_RANGE)
-
-    print("Bağlı cihazlar:", devices)
+    """Raspberry Pi'de bağlı cihazları listeleyen fonksiyon"""
+    update_arp_table() 
+    devices = raspberry_pi_arp_scan()
+    print("✅ Bağlı cihazlar:", devices)
     return devices
+
 
 # 🎯 2️⃣ Bağlı Cihazları Listeleme API'si
 @app.route("/devices", methods=["GET"])
 def list_devices():
     devices = get_connected_devices()
     return jsonify(devices)
+
 
 # 🎯 3️⃣ IP Adresinin Geçerli Olduğunu Kontrol Et
 def is_valid_ip(ip):
@@ -155,10 +166,11 @@ def is_valid_ip(ip):
     except ValueError:
         return False
 
+
 @app.route("/get_selected_device", methods=["GET"])
 def get_selected_device():
-    ip_address = session.get("selected_device_ip", None)  
-    return jsonify({"ip_address": ip_address})  
+    ip_address = session.get("selected_device_ip", None)  # Flask session'dan IP al
+    return jsonify({"ip_address": ip_address})  # JSON olarak döndür
 
 
 # 🎯 4️⃣ Cihaza Bağlanma
@@ -423,4 +435,4 @@ def logout():
     return redirect(url_for("login")) 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5004)
+    app.run(debug=True, port=5000)
