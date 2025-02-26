@@ -54,4 +54,49 @@ body {
 
 .red {
   background-color: #D32F2F;
+}
+
+@media (max-width: 800px) {
+  .equipment-container {
+    margin-top: 60px;
+    padding: 15px;
+    width: 90vw;
+    height: calc(79vh - 10px);
+  }
+  .equipment-container-wrapper {
+    margin-top: 60px;
+    padding: 15px;
+    width: 90%;
+    height: auto;
+  }
+  .equipment-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .equipment-box {
+    padding: 20px;
+    font-size: 14px;
+  }
+}
+@media (max-width: 480px) {
+  .equipment-container {
+    margin-top: 50px;
+    padding: 10px;
+    width: 80vw;
+    height: calc(79vh - 20px);
+  }
+  .equipment-container-wrapper {
+    margin-top: 50px;
+    padding: 10px;
+    width: 80%;
+    height: auto;
+  }
+  .equipment-grid {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+  .equipment-box {
+    padding: 15px;
+    font-size: 12px;
+  }
 }/*# sourceMappingURL=equipment.css.map */

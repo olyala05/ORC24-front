@@ -141,13 +141,13 @@ def get_connected_devices():
     print("Bağlı cihazlar:", devices)
     return devices
 
-# 🎯 2️⃣ Bağlı Cihazları Listeleme API'si
+# Bağlı Cihazları Listeleme API'si
 @app.route("/devices", methods=["GET"])
 def list_devices():
     devices = get_connected_devices()
     return jsonify(devices)
 
-# 🎯 3️⃣ IP Adresinin Geçerli Olduğunu Kontrol Et
+# IP Adresinin Geçerli Olduğunu Kontrol Et
 def is_valid_ip(ip):
     try:
         ipaddress.ip_address(ip)
@@ -420,7 +420,30 @@ def daily_data_detail():
 @app.route("/logout", methods=["POST"])
 def logout():
     session.clear() 
-    return redirect(url_for("login")) 
+    return redirect(url_for("login"))
+
+ 
+class ResponseHandler:
+    @staticmethod
+    def success(message=None, data=None):
+        response = {
+            "status": "success",
+            "message": message,
+            "data": data
+        }
+        return jsonify(response), 200
+
+    @staticmethod
+    def error(message="An error occurred", code=500, details=None):
+        response = {
+            "status": "error",
+            "message": message,
+            "error": {
+                "code": code,
+                "details": details
+            }
+        }
+        return jsonify(response), code
 
 if __name__ == '__main__':
     app.run(debug=True, port=5004)

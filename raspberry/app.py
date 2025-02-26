@@ -12,7 +12,7 @@ from datetime import datetime
 from requests.exceptions import RequestException
 import logging
 import re
-import subprocess
+import subprocess   
 import platform
 import os
 
@@ -26,7 +26,7 @@ jwt = JWTManager(app)
 logging.basicConfig(level=logging.INFO)  # INFO seviyesinde log al
 logger = logging.getLogger(__name__)
 
-# Laravel API'nin URL'si
+# Laravel API'nin URL'si 
 LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
 
 # Ağ Arayüzü IP Aralığı (Değiştirebilirsin)
@@ -38,11 +38,9 @@ DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database":
 # Flask-SCSS'i başlat
 Scss(app, static_dir='static', asset_dir='assets')
 
-
 @app.route('/')
 def index():
     return render_template("index.html")
-
 
 # 🎯 Giriş Sayfası
 @app.route("/login", methods=["GET", "POST"])
@@ -73,17 +71,13 @@ def login():
 
         flash("Hatalı e-posta veya şifre!", "danger")
         return redirect(url_for("login"))
-
-    # 🎯 Başarılı girişten sonra mesajı göstermek için
     login_success = session.pop("login_success", None)
     return render_template("login.html", login_success=login_success)
-
 
 # 🎯 Dashboard Sayfası
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
-
 
 # 🎯 Alarm Status API'sinden veri çek
 @app.route("/alarm_status", methods=["GET"])
@@ -105,63 +99,31 @@ def alarm_status():
     else:
         return jsonify({"error": "Alarm status verisi alınamadı"}), response.status_code
 
-
-def raspberry_pi_arp_scan():
-    """ Raspberry Pi'de 'arp -av' komutunu çalıştırarak bağlı cihazları listeler """
+def raspberry_pi_nmap_scan():
+    """ Raspberry Pi'de 'nmap -sn' komutunu çalıştırarak bağlı cihazları listeler """
     try:
-        print("Raspberry Pi algılandı, 'arp -av' ile tarama yapılıyor...")
-        output = subprocess.check_output(["sudo", "arp", "-av"], universal_newlines=True)
-
-        print("ARP Çıktısı:\n", output)
-
-        # Boş bir liste başlatır:
-        ip_list = []
-
-        # ARP çıktısını satır satır işler:
-        for line in output.split("\n"):
-            # Regex (Düzenli İfade) kullanarak satırları analiz eder:
-            match = re.search(r"\((\d+\.\d+\.\d+\.\d+)\) at ([\w:]+)", line)
-            if match:
-                ip_address = match.group(1)
-                mac_address = match.group(2)
-
-                # 02 veya 12 ile başlayan MAC adreslerini filtreleme
-                if mac_address.startswith("02") or mac_address.startswith("12"):
-                    ip_list.append({"ip": ip_address, "mac": mac_address})
-
-        print("✅ Bağlı cihazlar:", ip_list)
-        return ip_list
+        output = subprocess.check_output(["sudo", "nmap", "-sn", "192.168.1.0/24"], universal_newlines=True)
+        matches = re.findall(r"(\d+\.\d+\.\d+\.\d+)|(([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2})", output)
+        
+        macs = [m[1] for m in matches[1::2]]
+        ips = [m[0] for m in matches[0::2]]
+        mac_ip_map = dict(zip(macs, ips))
+        
+        filtered_devices = [(mac, mac_ip_map[mac]) for mac in mac_ip_map if (mac.startswith("02") or mac.startswith("12"))]
+        return filtered_devices
 
     except subprocess.CalledProcessError as e:
-        print(f"❌ Hata oluştu: {e}")
-        return []
+        return ResponseHandler.error(message="Nmap taraması sırasında bir hata oluştu.", code=500, details=str(e))
 
-
-# Bu fonksiyon, ağdaki tüm IP adreslerine ping atarak ARP tablosunu günceller.
-def update_arp_table(ip_range="192.168.1.0/24"):
-    """ Ağdaki tüm IP'lere ping atarak ARP tablosunu günceller """
-    print("🔄 Ağ taraması yapılıyor, ARP tablosu güncellenecek...")
-    os.system(f"sudo nmap -sn {ip_range} > /dev/null 2>&1")
-
-    print("✅ Ağ taraması tamamlandı.")
-
-
-def get_connected_devices():
-    """Raspberry Pi'de bağlı cihazları listeleyen fonksiyon"""
-    update_arp_table()
-    devices = raspberry_pi_arp_scan()
-    print("✅ Bağlı cihazlar:", devices)
-    return devices
-
-
-# 🎯 2️⃣ Bağlı Cihazları Listeleme API'si
 @app.route("/devices", methods=["GET"])
 def list_devices():
-    devices = get_connected_devices()
-    return jsonify(devices)
+    try:
+        devices = raspberry_pi_nmap_scan()
+        formatted_devices = [{"mac": mac, "ip": ip} for mac, ip in devices]
+        return ResponseHandler.success(message="Devices retrieved successfully", data=formatted_devices)
+    except Exception as e:
+        return ResponseHandler.error(message="Failed to retrieve devices", code=500, details=str(e))
 
-
-# 🎯 3️⃣ IP Adresinin Geçerli Olduğunu Kontrol Et
 def is_valid_ip(ip):
     try:
         ipaddress.ip_address(ip)
@@ -169,14 +131,12 @@ def is_valid_ip(ip):
     except ValueError:
         return False
 
-
 @app.route("/get_selected_device", methods=["GET"])
 def get_selected_device():
-    ip_address = session.get("selected_device_ip", None)  # Flask session'dan IP al
-    return jsonify({"ip_address": ip_address})  # JSON olarak döndür
+    ip_address = session.get("selected_device_ip", None)  
+    return jsonify({"ip_address": ip_address})  
 
-
-# 🎯 4️⃣ Cihaza Bağlanma
+# Cihaza Bağlanma
 @app.route("/connect_device", methods=["POST"])
 def connect_device():
     data = request.get_json()
@@ -187,8 +147,8 @@ def connect_device():
 
     try:
         with socket.create_connection((ip_address, 80), timeout=5):
-            session["selected_device_ip"] = ip_address  # 📌 Cihazı session'a kaydet
-            session.permanent = True  # 📌 Session'ın kalıcı olması için
+            session["selected_device_ip"] = ip_address 
+            session.permanent = True 
             return jsonify(success=True)
     except Exception as e:
         return jsonify(success=False, error=f"Bağlantı hatası: {str(e)}")
@@ -207,7 +167,7 @@ def orc_status():
     network_data = None
 
     try:
-        # 📌 Modem verilerini al
+        # Modem verilerini al
         url_modem = f"http://{selected_ip}:8085/get_modems"
         print("Modem URL:", url_modem)  # 🔍 Konsola yazdır
         response_modem = requests.get(url_modem, timeout=5)  # 5 saniye timeout ekledik
@@ -228,7 +188,7 @@ def orc_status():
             print(f"⚠️ Ağ bilgisi alınamadı: {e}")
             flash(f"Ağ bilgisi alınamadı: {e}", "warning")
 
-        # 📌 Tarih formatını dönüştür
+        # Tarih formatını dönüştür
         if selected_modem and "created_at" in selected_modem:
             raw_date = selected_modem["created_at"]
             try:
@@ -240,7 +200,7 @@ def orc_status():
         return render_template("orc_status.html", modem=selected_modem, network=network_data, error=None)
 
     except Exception as e:
-        print("🔥 Genel hata:", e)
+        print("Genel hata:", e)
         return render_template("orc_status.html", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
 
 
@@ -250,31 +210,30 @@ def modbus_request():
     """
     Seçili cihazdan Modbus verilerini alır ve frontend'e iletir.
     """
-    selected_ip = session.get("selected_device_ip")  # 🔥 Seçili cihazın IP'sini al
-
+    selected_ip = session.get("selected_device_ip")  
     if not selected_ip:
-        logger.warning("⚠️ Cihaz seçilmedi!")
+        logger.warning("Cihaz seçilmedi!")
         return jsonify({"error": "Cihaz seçilmedi. Lütfen önce bir cihaz bağlayın."}), 400
 
     try:
-        logger.info(f"🔄 Modbus verisi alınıyor: {selected_ip}")  # İsteğin başladığını logla
+        logger.info(f"Modbus verisi alınıyor: {selected_ip}") 
 
         # HTTP ile cihazdan Modbus verilerini al
         url = f"http://{selected_ip}:8085/get_modbus_data"
-        response = requests.get(url, timeout=500)  # Timeout ekledik
+        response = requests.get(url, timeout=500)  
         response.raise_for_status()
 
         modbus_data = response.json().get("modbus_data", [])
         if not modbus_data:
-            logger.warning("❌ Modbus verisi bulunamadı.")
+            logger.warning("Modbus verisi bulunamadı.")
             return jsonify({"error": "Modbus verisi alınamadı veya cihaz desteklemiyor."}), 500
 
         logger.info(
-            f"✅ Modbus verisi başarıyla alındı: {len(modbus_data)} cihaz bulundu.")  # Kaç cihaz bulunduğunu logla
+            f"Modbus verisi başarıyla alındı: {len(modbus_data)} cihaz bulundu.")  
         return jsonify({"modbus_data": modbus_data})
 
     except requests.exceptions.RequestException as e:
-        logger.error(f"🔥 Modbus isteği hatası: {e}")
+        logger.error(f"Modbus isteği hatası: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
 
 
@@ -286,7 +245,7 @@ def disconnect_request():
     selected_ip = session.get("selected_device_ip")  # Seçili cihazın IP'sini al
 
     if not selected_ip:
-        logger.warning("⚠️ Cihaz seçilmedi!")
+        logger.warning("Cihaz seçilmedi!")
         return jsonify({"error": "Cihaz seçilmedi. Lütfen önce bir cihaz bağlayın."}), 400
 
     try:
@@ -297,11 +256,11 @@ def disconnect_request():
         response = requests.post(url, timeout=10)  # Timeout ekleyelim
         response.raise_for_status()
 
-        logger.info("✅ Wi-Fi başarıyla kapatıldı.")
+        logger.info("Wi-Fi başarıyla kapatıldı.")
         return jsonify({"status": "success", "message": "Wi-Fi bağlantısı kapatıldı."})
 
     except requests.exceptions.RequestException as e:
-        logger.error(f"🔥 Wi-Fi kapatma hatası: {e}")
+        logger.error(f"Wi-Fi kapatma hatası: {e}")
         return jsonify({"error": f"Wi-Fi bağlantısı kapatılamadı: {str(e)}"}), 500
 
 
@@ -314,17 +273,16 @@ def equipments_with_models():
         return jsonify({"error": "IP adresi belirtilmedi"}), 400
 
     try:
-        # 📌 HTTP ile cihazdan `/get_equipments_with_models` verisini al
         url = f"http://{ip_address}:8085/get_equipments_with_models"
-        response = requests.get(url, timeout=200)  # Timeout ekledik
+        response = requests.get(url, timeout=200)
         response.raise_for_status()
 
         equipment_data = response.json()
 
-        if "warning" in equipment_data:  # ✅ Eğer ekipman yoksa uyarı ver
+        if "warning" in equipment_data:
             return jsonify({"warning": equipment_data["warning"]}), 200
 
-        session["equipment_data"] = equipment_data  # Veriyi sakla
+        session["equipment_data"] = equipment_data
         return jsonify(equipment_data)
 
     except requests.exceptions.RequestException as e:
@@ -346,7 +304,7 @@ def equipment_setting():
     return render_template("equipments/equipment_setting.html", modbus_data=modbus_data)
 
 
-# Diger SAyfalar
+# Diger SAyfalar         
 @app.route('/modem-selection', endpoint="modem_selection")
 def modem_selection():
     return render_template("modem_selection.html")
@@ -361,11 +319,9 @@ def log():
 def alarm():
     return render_template("alarm.html")
 
-
 @app.route('/switch', endpoint="switch")
 def switch():
     return render_template("test/switch.html")
-
 
 @app.route('/test', endpoint="test")
 def test():
@@ -396,56 +352,67 @@ def osos_setting():
 @app.route('/equipment-settings', endpoint="equipment_settings")
 def equipment_setting():
     return render_template("settings/equipment_set.html")
-
-
 # !! Settings End
 
-# !! Data Start
+# !! Data Start 
 @app.route('/data', endpoint="data")
 def data():
     return render_template("datas/data.html")
 
-
-# Live Data
+#Live Data 
 @app.route('/live-data', endpoint="live-data")
 def live_data():
     return render_template("datas/live_data.html")
-
 
 @app.route('/live-data-detail', endpoint="live-data-detail")
 def live_data_detail():
     return render_template("datas/live_data_detail.html")
 
-
-# Hourly Data
+# Hourly Data   
 @app.route('/hourly-data', endpoint="hourly-data")
 def hourly_data():
     return render_template("datas/hourly_data.html")
-
 
 @app.route('/hourly-data-detail', endpoint="hourly-data-detail")
 def hourly_data_detail():
     return render_template("datas/hourly_data_detail.html")
 
-
-# Daily Data
+# Daily Data    
 @app.route('/daily-data', endpoint="daily-data")
 def daily_data():
     return render_template("datas/daily_data.html")
 
-
 @app.route('/daily-data-detail', endpoint="daily-data-detail")
 def daily_data_detail():
     return render_template("datas/daily_data_detail.html")
-
-
 # !! Data End
 
 @app.route("/logout", methods=["POST"])
 def logout():
-    session.clear()
-    return redirect(url_for("login"))
+    session.clear() 
+    return redirect(url_for("login")) 
 
+class ResponseHandler:
+    @staticmethod
+    def success(message=None, data=None):
+        response = {
+            "status": "success",
+            "message": message,
+            "data": data
+        }
+        return jsonify(response), 200
+
+    @staticmethod
+    def error(message="An error occurred", code=500, details=None):
+        response = {
+            "status": "error",
+            "message": message,
+            "error": {
+                "code": code,
+                "details": details
+            }
+        }
+        return jsonify(response), code
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
