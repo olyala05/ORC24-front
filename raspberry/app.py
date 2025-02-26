@@ -12,7 +12,7 @@ from datetime import datetime
 from requests.exceptions import RequestException
 import logging
 import re
-import subprocess   
+import subprocess
 import platform
 import os
 
@@ -26,7 +26,7 @@ jwt = JWTManager(app)
 logging.basicConfig(level=logging.INFO)  # INFO seviyesinde log al
 logger = logging.getLogger(__name__)
 
-# Laravel API'nin URL'si 
+# Laravel API'nin URL'si
 LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
 
 # Ağ Arayüzü IP Aralığı (Değiştirebilirsin)
@@ -105,17 +105,18 @@ def alarm_status():
     else:
         return jsonify({"error": "Alarm status verisi alınamadı"}), response.status_code
 
+
 def raspberry_pi_arp_scan():
     """ Raspberry Pi'de 'arp -av' komutunu çalıştırarak bağlı cihazları listeler """
     try:
         print("Raspberry Pi algılandı, 'arp -av' ile tarama yapılıyor...")
         output = subprocess.check_output(["sudo", "arp", "-av"], universal_newlines=True)
-        
-        print("ARP Çıktısı:\n", output)  
-        
+
+        print("ARP Çıktısı:\n", output)
+
         # Boş bir liste başlatır:
         ip_list = []
-        
+
         # ARP çıktısını satır satır işler:
         for line in output.split("\n"):
             # Regex (Düzenli İfade) kullanarak satırları analiz eder:
@@ -135,6 +136,7 @@ def raspberry_pi_arp_scan():
         print(f"❌ Hata oluştu: {e}")
         return []
 
+
 # Bu fonksiyon, ağdaki tüm IP adreslerine ping atarak ARP tablosunu günceller.
 def update_arp_table(ip_range="192.168.1.0/24"):
     """ Ağdaki tüm IP'lere ping atarak ARP tablosunu günceller """
@@ -142,10 +144,11 @@ def update_arp_table(ip_range="192.168.1.0/24"):
     os.system(f"sudo nmap -sn {ip_range} > /dev/null 2>&1")
 
     print("✅ Ağ taraması tamamlandı.")
-    
+
+
 def get_connected_devices():
     """Raspberry Pi'de bağlı cihazları listeleyen fonksiyon"""
-    update_arp_table() 
+    update_arp_table()
     devices = raspberry_pi_arp_scan()
     print("✅ Bağlı cihazlar:", devices)
     return devices
@@ -343,7 +346,7 @@ def equipment_setting():
     return render_template("equipments/equipment_setting.html", modbus_data=modbus_data)
 
 
-# Diger SAyfalar         
+# Diger SAyfalar
 @app.route('/modem-selection', endpoint="modem_selection")
 def modem_selection():
     return render_template("modem_selection.html")
@@ -358,9 +361,11 @@ def log():
 def alarm():
     return render_template("alarm.html")
 
+
 @app.route('/switch', endpoint="switch")
 def switch():
     return render_template("test/switch.html")
+
 
 @app.route('/test', endpoint="test")
 def test():
@@ -395,44 +400,52 @@ def equipment_setting():
 
 # !! Settings End
 
-# !! Data Start 
+# !! Data Start
 @app.route('/data', endpoint="data")
 def data():
     return render_template("datas/data.html")
 
-#Live Data 
+
+# Live Data
 @app.route('/live-data', endpoint="live-data")
 def live_data():
     return render_template("datas/live_data.html")
+
 
 @app.route('/live-data-detail', endpoint="live-data-detail")
 def live_data_detail():
     return render_template("datas/live_data_detail.html")
 
-# Hourly Data   
+
+# Hourly Data
 @app.route('/hourly-data', endpoint="hourly-data")
 def hourly_data():
     return render_template("datas/hourly_data.html")
+
 
 @app.route('/hourly-data-detail', endpoint="hourly-data-detail")
 def hourly_data_detail():
     return render_template("datas/hourly_data_detail.html")
 
-# Daily Data    
+
+# Daily Data
 @app.route('/daily-data', endpoint="daily-data")
 def daily_data():
     return render_template("datas/daily_data.html")
+
 
 @app.route('/daily-data-detail', endpoint="daily-data-detail")
 def daily_data_detail():
     return render_template("datas/daily_data_detail.html")
 
+
 # !! Data End
 
 @app.route("/logout", methods=["POST"])
 def logout():
-    session.clear() 
-    return redirect(url_for("login")) 
+    session.clear()
+    return redirect(url_for("login"))
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
