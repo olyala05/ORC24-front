@@ -1,12 +1,13 @@
 .live-data-container {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 5px;
   border-radius: 8px;
   color: #fff;
-  font-family: 'Arial', sans-serif;
-  gap: 20px;
+  font-family: "Arial", sans-serif;
+  gap: 7px;
   max-height: 500px;
+  width: 783px;
   overflow-y: auto;
   margin-top: 80px;
 
@@ -14,7 +15,7 @@
   .live-data-status {
     width: 48%;
     background-color: #191932;
-    padding: 10px;
+    padding: 6px;
     border-radius: 8px;
     overflow-y: auto;
     max-height: 500px;
@@ -27,16 +28,18 @@
     z-index: 10;
     display: flex;
     justify-content: space-between;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
     border-bottom: 1px solid #2d2d4a;
+    text-align: center;
 
     > div {
       flex: 1;
-      padding: 10px;
-      text-align: left;
+      padding: 3px;
+      text-align: center;
       color: #ff9800;
       font-weight: bold;
+      font-size: 14px;
     }
   }
 
@@ -45,12 +48,18 @@
     justify-content: space-between;
     padding: 10px 0;
     border-bottom: 1px solid #2d2d4a;
+    align-items: center;
+    gap: -6px;
 
     > div {
       flex: 1;
-      padding: 10px;
-      text-align: left;
+      padding: 0px;
+      text-align: center;
       color: #ccc;
+      font-size: 12px;
+    }
+    .passive-style {
+      margin-left: 25px;
     }
   }
 
@@ -76,13 +85,13 @@
       }
       > div[data-status="P / P"] {
         color: red;
+        text-align: center;
+        align-items: center;
+        margin-left: 24px;
       }
     }
   }
 }
-
-
-
 
 // live-data-detail.scss
 .live-data-detail {
@@ -91,15 +100,15 @@
     margin: auto;
     font-family: Arial, sans-serif;
     color: #fff;
-    max-height: 500px; 
-    overflow-y: auto;  
+    max-height: 500px;
+    overflow-y: auto;
     margin-top: 80px;
 
     .live-data-detail-data-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
-      background: #0B1734;
+      background: #0b1734;
       border-radius: 10px;
       overflow: hidden;
 
@@ -117,14 +126,14 @@
       }
 
       th {
-        background: #0B1734;
+        background: #0b1734;
         font-weight: bold;
-        color: #EF8018;
+        color: #ef8018;
         border-bottom: 1px solid #ffffff;
       }
 
       td {
-        border-bottom: 1px solid #EF8018;
+        border-bottom: 1px solid #ef8018;
       }
 
       tbody tr:last-child td {
@@ -146,7 +155,7 @@
     color: #ff4444;
 
     tr {
-      text-align: left; 
+      text-align: left;
     }
   }
 
@@ -155,315 +164,3 @@
   }
 }
 
-
-
-// Hourly-data.scss   
-.hourly-data-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  border-radius: 8px;
-  color: #fff;
-  font-family: 'Arial', sans-serif;
-  gap: 20px;
-  max-height: 500px;
-  overflow-y: auto;
-  margin-top: 80px;
-
-  .hourly-data-table,
-  .hourly-data-status {
-    width: 48%;
-    background-color: #191932;
-    padding: 10px;
-    border-radius: 8px;
-    overflow-y: auto;
-    max-height: 500px;
-  }
-
-  .table-header {
-    position: sticky;
-    top: 0;
-    background-color: #191932;
-    z-index: 10;
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #2d2d4a;
-
-    > div {
-      flex: 1;
-      padding: 10px;
-      text-align: left;
-      color: #ff9800;
-      font-weight: bold;
-    }
-  }
-
-  .table-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #2d2d4a;
-
-    > div {
-      flex: 1;
-      padding: 10px;
-      text-align: left;
-      color: #ccc;
-    }
-  }
-
-  .status {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-
-    &.active {
-      background-color: green;
-    }
-    &.inactive {
-      background-color: red;
-    }
-  }
-
-  // Status hücresi için data-status attribute'una göre renk ayarı
-  .hourly-data-status {
-    .table-row {
-      > div[data-status="A / A"] {
-        color: green;
-      }
-      > div[data-status="P / P"] {
-        color: red;
-      }
-    }
-  }
-}
-
-// hourly-data-detail.scss
-.hourly-data-detail {
-  &-table-container {
-    width: 96%;
-    margin: auto;
-    font-family: Arial, sans-serif;
-    color: #fff;
-    max-height: 500px; 
-    overflow-y: auto;  
-    margin-top: 80px;
-
-    .hourly-data-detail-data-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      background: #0B1734;
-      border-radius: 10px;
-      overflow: hidden;
-
-      thead {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-      }
-
-      th,
-      td {
-        border: none;
-        padding: 8px;
-        text-align: center;
-      }
-
-      th {
-        background: #0B1734;
-        font-weight: bold;
-        color: #EF8018;
-        border-bottom: 1px solid #ffffff;
-      }
-
-      td {
-        border-bottom: 1px solid #EF8018;
-      }
-
-      tbody tr:last-child td {
-        border-bottom: none;
-      }
-    }
-  }
-
-  &-status {
-    color: #00ff00;
-  }
-
-  &-archive {
-    color: red;
-  }
-
-  &-error {
-    background: rgba(255, 0, 0, 0.1);
-    color: #ff4444;
-
-    tr {
-      text-align: left; 
-    }
-  }
-
-  &-error-text {
-    color: #ff4444;
-  }
-}
-
-
-// Daily-data.scss   
-.daily-data-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  border-radius: 8px;
-  color: #fff;
-  font-family: 'Arial', sans-serif;
-  gap: 20px;
-  max-height: 500px;
-  overflow-y: auto;
-  margin-top: 80px;
-
-  .daily-data-table,
-  .daily-data-status {
-    width: 48%;
-    background-color: #191932;
-    padding: 10px;
-    border-radius: 8px;
-    overflow-y: auto;
-    max-height: 500px;
-  }
-
-  .table-header {
-    position: sticky;
-    top: 0;
-    background-color: #191932;
-    z-index: 10;
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #2d2d4a;
-
-    > div {
-      flex: 1;
-      padding: 10px;
-      text-align: left;
-      color: #ff9800;
-      font-weight: bold;
-    }
-  }
-
-  .table-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #2d2d4a;
-
-    > div {
-      flex: 1;
-      padding: 10px;
-      text-align: left;
-      color: #ccc;
-    }
-  }
-
-  .status {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-
-    &.active {
-      background-color: green;
-    }
-    &.inactive {
-      background-color: red;
-    }
-  }
-
-  // Status hücresi için data-status attribute'una göre renk ayarı
-  .daily-data-status {
-    .table-row {
-      > div[data-status="A / A"] {
-        color: green;
-      }
-      > div[data-status="P / P"] {
-        color: red;
-      }
-    }
-  }
-}
-
-// hourly-data-detail.scss
-.daily-data-detail {
-  &-table-container {
-    width: 96%;
-    margin: auto;
-    font-family: Arial, sans-serif;
-    color: #fff;
-    max-height: 500px; 
-    overflow-y: auto;  
-    margin-top: 80px;
-
-    .daily-data-detail-data-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      background: #0B1734;
-      border-radius: 10px;
-      overflow: hidden;
-
-      thead {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-      }
-
-      th,
-      td {
-        border: none;
-        padding: 8px;
-        text-align: center;
-      }
-
-      th {
-        background: #0B1734;
-        font-weight: bold;
-        color: #EF8018;
-        border-bottom: 1px solid #ffffff;
-      }
-
-      td {
-        border-bottom: 1px solid #EF8018;
-      }
-
-      tbody tr:last-child td {
-        border-bottom: none;
-      }
-    }
-  }
-
-  &-status {
-    color: #00ff00;
-  }
-
-  &-archive {
-    color: red;
-  }
-
-  &-error {
-    background: rgba(255, 0, 0, 0.1);
-    color: #ff4444;
-
-    tr {
-      text-align: left; 
-    }
-  }
-
-  &-error-text {
-    color: #ff4444;
-  }
-}

@@ -1,115 +1,112 @@
-{% extends "layout.html" %}
-{% block title %} Live Data Details {% endblock %}
-
+{% extends "layout.html" %} {% block title %} Live Data Details {% endblock %}
 {% block content %}
 
 <!-- Header -->
 {% include 'partials/header.html' %}
 
 <div class="live-data-container">
-    <!-- Live Data Table Bölümü -->
-    <div class="live-data-table">
-      <div class="table-header">
-        <div>ID</div>
-        <div>Created Date</div>
-        <div>Number of Equipment</div>
-        <div>Number of Data</div>
-        <div>Time (Sec)</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
+  <!-- Live Data Table Bölümü -->
+  <div class="live-data-table">
+    <div class="table-header">
+      <div>ID</div>
+      <div>Created Date</div>
+      <div>Number of Equipment</div>
+      <div>Number of Data</div>
+      <div>Time (Sec)</div>
     </div>
-  
-    <!-- Live Data Status Bölümü -->
-    <div class="live-data-status">
-      <div class="table-header">
-        <div>Serial Number</div>
-        <div>Status / Config.</div>
-        <div>Equipment Type</div>
-        <div>Archive</div>
-        <div>Number of Data</div>
-        <div>Time (Sec)</div>
-      </div>
-      <div class="table-row clickable">
-        <div data-serial="EMR-53CS@3630748023">EMR-53CS@3630748023</div>
-        <!-- Status hücresine data-status ekleniyor -->
-        <div data-status="A / A">A / A</div>
-        <div>Analyzer</div>
-        <div><span class="status inactive"></span></div>
-        <div>200</div>
-        <div>804</div>
-      </div>
-      <div class="table-row clickable">
-        <div data-serial="MPR-46S@2931">MPR-46S@2931</div>
-        <!-- Eğer status P/P ise; metin kırmızı olacak -->
-        <div data-status="P / P">P / P</div>
-        <div>Analyzer</div>
-        <div><span class="status active"></span></div>
-        <div>200</div>
-        <div>804</div>
-      </div>
+    <div class="table-row">
+      <div>1</div>
+      <div>2024-04-03 13:50:00</div>
+      <div>5</div>
+      <div>804</div>
+      <div>804</div>
+    </div>
+    <div class="table-row">
+      <div>1</div>
+      <div>2024-04-03 13:50:00</div>
+      <div>5</div>
+      <div>804</div>
+      <div>804</div>
+    </div>
+    <div class="table-row">
+      <div>1</div>
+      <div>2024-04-03 13:50:00</div>
+      <div>5</div>
+      <div>804</div>
+      <div>804</div>
+    </div>
+    <div class="table-row">
+      <div>1</div>
+      <div>2024-04-03 13:50:00</div>
+      <div>5</div>
+      <div>804</div>
+      <div>804</div>
+    </div>
+    <div class="table-row">
+      <div>1</div>
+      <div>2024-04-03 13:50:00</div>
+      <div>5</div>
+      <div>804</div>
+      <div>804</div>
+    </div>
+    <div class="table-row">
+      <div>1</div>
+      <div>2024-04-03 13:50:00</div>
+      <div>5</div>
+      <div>804</div>
+      <div>804</div>
+    </div>
+    <div class="table-row">
+      <div>1</div>
+      <div>2024-04-03 13:50:00</div>
+      <div>5</div>
+      <div>804</div>
+      <div>804</div>
     </div>
   </div>
-  
-  
 
+  <!-- Live Data Status Bölümü -->
+  <div class="live-data-status">
+    <div class="table-header">
+      <div>Serial Number</div>
+      <div>Status / Config.</div>
+      <div>Equipment Type</div>
+      <div>Archive</div>
+      <div>Number of Data</div>
+      <div>Time (Sec)</div>
+    </div>
+    <div class="table-row clickable">
+      <div data-serial="EMR-53CS@3630748023">EMR-53CS@3630748023</div>
+      <!-- Status hücresine data-status ekleniyor -->
+      <div data-status="A / A">A / A</div>
+      <div>Analyzer</div>
+      <div><span class="status inactive"></span></div>
+      <div>200</div>
+      <div>804</div>
+    </div>
+    <div class="table-row clickable">
+      <div data-serial="MPR-46S@2931" class="passive-style">
+        MPR-46S@2931
+      </div>
+      <!-- Eğer status P/P ise; metin kırmızı olacak -->
+      <div data-status="P / P">P / P</div>
+      <div>Analyzer</div>
+      <div><span class="status active"></span></div>
+      <div>200</div>
+      <div>804</div>
+    </div>
+  </div>
+</div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const clickableElements = document.querySelectorAll('.clickable');
-      clickableElements.forEach(function(elem) {
-        elem.addEventListener('click', function() {
-          window.location.href = '/live-data-detail';
-        });
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const clickableElements = document.querySelectorAll(".clickable");
+    clickableElements.forEach(function (elem) {
+      elem.addEventListener("click", function () {
+        window.location.href = "/live-data-detail";
       });
     });
-    </script>
-    
+  });
+</script>
+
 {% endblock %}
