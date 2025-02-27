@@ -1,15 +1,16 @@
 .eq-detail-container {
-  display: flex;
-  gap: 20px;
-  color: #e6edf3;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  width: 1000px;
-  margin-top: 80px;
+  display: flex
+  ;
+      gap: 8px;
+      color: #e6edf3;
+      padding: 0px;
+      font-family: Arial, sans-serif;
+      width: 98%;
+      margin-top: 80px;
 
   .eq-detail-panel {
     background-color: #0b1734;
-    padding: 15px;
+    padding: 8px;
     border-radius: 8px;
     width: 40%;
 
@@ -22,13 +23,12 @@
     .eq-detail-info {
       display: flex;
       flex-direction: column;
-      gap: 5px;
 
       .eq-detail-item {
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid #ef8018;
-        padding: 4px 0;
+        padding: 3px 0;
 
         span {
           font-size: 14px;
@@ -61,7 +61,7 @@
   .eq-detail-log {
     width: 60%;
     background-color: #0b1734;
-    padding: 15px;
+    padding: 8px;
     border-radius: 8px;
 
     .eq-detail-log-header {
@@ -89,7 +89,7 @@
         .eq-detail-log-status {
           display: flex;
           align-items: center;
-          gap: 60px;
+          gap: 50px;
         }
 
         .eq-detail-dot {

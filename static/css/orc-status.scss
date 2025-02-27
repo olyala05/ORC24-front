@@ -14,7 +14,7 @@ $container-padding: 10px;
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  width: 98vw;
+  width: 97vw;
   height: calc(97vh - 60px);
   gap: 1px;
 }
@@ -174,7 +174,7 @@ $container-padding: 10px;
 
 // 📌 Algoritma Süreçleri
 .algorithm-section {
-  width: 96%;
+  width: 100%;
   background-color: white;
   padding: 0px;
   border-radius: 8px;
@@ -187,6 +187,7 @@ $container-padding: 10px;
     font-weight: bold;
     color: #1c2747;
     margin-bottom: 5px;
+    margin-top: 5px;
   }
 
   .separator {
@@ -202,8 +203,9 @@ $container-padding: 10px;
     background: white;
     padding: 5px;
     border-radius: 8px;
-    width: 92%;
+    width: 95%;
     font-weight: bold;
+    display: flex;
 
     .algorithm-left {
       display: flex;
@@ -220,7 +222,7 @@ $container-padding: 10px;
 
     .status-btn {
       background-color: #ff6f00;
-      padding: 5px 12px;
+      padding: 10px 14px;
       font-size: 14px;
       border-radius: 6px;
       font-weight: bold;

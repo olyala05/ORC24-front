@@ -1,5 +1,5 @@
 body {
-  background-color: #1C2747;
+  background-color: #1c2747;
   color: #fff;
   font-family: "Arial", sans-serif;
   margin: 0;
@@ -15,7 +15,7 @@ body {
   align-items: flex-start;
   width: 97vw;
   height: calc(79vh + 17px);
-  background: #0B1734;
+  background: #0b1734;
   border-radius: 10px;
 }
 
@@ -25,10 +25,10 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  background: #0B1734;
+  background: #0b1734;
   border-radius: 7px;
-  width: 960px;
-  height: 460px;
+  width: 93%;
+  height: 72%;
 }
 
 .equipment-grid {
@@ -40,8 +40,8 @@ body {
 }
 
 .equipment-box {
-  padding: 35px;
-  font-size: 17px;
+  padding: 30px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
   border-radius: 8px;
@@ -49,54 +49,9 @@ body {
 }
 
 .green {
-  background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
 .red {
-  background-color: #D32F2F;
-}
-
-@media (max-width: 800px) {
-  .equipment-container {
-    margin-top: 60px;
-    padding: 15px;
-    width: 90vw;
-    height: calc(79vh - 10px);
-  }
-  .equipment-container-wrapper {
-    margin-top: 60px;
-    padding: 15px;
-    width: 90%;
-    height: auto;
-  }
-  .equipment-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  .equipment-box {
-    padding: 20px;
-    font-size: 14px;
-  }
-}
-@media (max-width: 480px) {
-  .equipment-container {
-    margin-top: 50px;
-    padding: 10px;
-    width: 80vw;
-    height: calc(79vh - 20px);
-  }
-  .equipment-container-wrapper {
-    margin-top: 50px;
-    padding: 10px;
-    width: 80%;
-    height: auto;
-  }
-  .equipment-grid {
-    grid-template-columns: 1fr;
-    gap: 5px;
-  }
-  .equipment-box {
-    padding: 15px;
-    font-size: 12px;
-  }
+  background-color: #d32f2f;
 }/*# sourceMappingURL=equipment.css.map */

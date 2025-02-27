@@ -1,6 +1,6 @@
 // 📌 Temel Değişkenler
 $primary-color: #ff6f00;
-$background-color: #1C2747;
+$background-color: #1c2747;
 $text-color: #fff;
 $border-radius: 8px;
 
@@ -23,20 +23,20 @@ body {
   align-items: flex-start;
   width: 97vw;
   height: calc(79vh - -17px);
-  background: #0B1734;
+  background: #0b1734;
   border-radius: 10px;
 }
 
-.equipment-container-wrapper {  
+.equipment-container-wrapper {
   margin-top: 80px;
   padding: 19px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  background: #0B1734;
+  background: #0b1734;
   border-radius: 7px;
-  width: 960px;
-  height: 460px;
+  width: 93%;
+  height: 72%;
 }
 
 // 📌 Equipment Grid
@@ -50,8 +50,8 @@ body {
 
 // 📌 Equipment Kutuları
 .equipment-box {
-  padding: 35px;
-  font-size: 17px;
+  padding: 30px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
   border-radius: $border-radius;
@@ -60,62 +60,9 @@ body {
 
 // 📌 Renkler
 .green {
-  background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
 .red {
-  background-color: #D32F2F;
-}
-
-// 📌 Responsive Tasarım (800 x 480 çözünürlük için)
-@media (max-width: 800px) {
-  .equipment-container {
-    margin-top: 60px;
-    padding: 15px;
-    width: 90vw; // Ekranın %90'ı
-    height: calc(79vh - 10px); // Yükseklik ayarı
-  }
-
-  .equipment-container-wrapper {
-    margin-top: 60px;
-    padding: 15px;
-    width: 90%; // Genişlik %90
-    height: auto; // Yüksekliği otomatik yapıyoruz
-  }
-
-  .equipment-grid {
-    grid-template-columns: repeat(2, 1fr); // 2 sütunlu düzen
-    gap: 10px; // Daha küçük boşluk
-  }
-
-  .equipment-box {
-    padding: 20px; // Küçük kutu padding
-    font-size: 14px; // Yazı boyutu küçültülüyor
-  }
-}
-
-@media (max-width: 480px) {
-  .equipment-container {
-    margin-top: 50px;
-    padding: 10px;
-    width: 80vw; // Ekranın %80'i
-    height: calc(79vh - 20px);
-  }
-
-  .equipment-container-wrapper {
-    margin-top: 50px;
-    padding: 10px;
-    width: 80%; // Genişlik %80
-    height: auto; // Yükseklik otomatik
-  }
-
-  .equipment-grid {
-    grid-template-columns: 1fr; // Tek sütun düzeni
-    gap: 5px; // Daha küçük boşluk
-  }
-
-  .equipment-box {
-    padding: 15px; // Küçük padding
-    font-size: 12px; // Yazı boyutu daha da küçültülüyor
-  }
+  background-color: #d32f2f;
 }

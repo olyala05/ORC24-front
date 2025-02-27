@@ -678,16 +678,16 @@ input:-webkit-autofill:focus {
 
 .eq-detail-container {
   display: flex;
-  gap: 20px;
+  gap: 8px;
   color: #e6edf3;
-  padding: 20px;
+  padding: 0px;
   font-family: Arial, sans-serif;
-  width: 1000px;
+  width: 98%;
   margin-top: 80px;
 }
 .eq-detail-container .eq-detail-panel {
   background-color: #0b1734;
-  padding: 15px;
+  padding: 8px;
   border-radius: 8px;
   width: 40%;
 }
@@ -699,13 +699,12 @@ input:-webkit-autofill:focus {
 .eq-detail-container .eq-detail-panel .eq-detail-info {
   display: flex;
   flex-direction: column;
-  gap: 5px;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #ef8018;
-  padding: 4px 0;
+  padding: 3px 0;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item span {
   font-size: 14px;
@@ -730,7 +729,7 @@ input:-webkit-autofill:focus {
 .eq-detail-container .eq-detail-log {
   width: 60%;
   background-color: #0b1734;
-  padding: 15px;
+  padding: 8px;
   border-radius: 8px;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-header {
@@ -757,7 +756,7 @@ input:-webkit-autofill:focus {
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-status {
   display: flex;
   align-items: center;
-  gap: 60px;
+  gap: 50px;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-dot {
   width: 12px;
@@ -983,7 +982,7 @@ input:-webkit-autofill:focus {
 }
 
 body {
-  background-color: #1C2747;
+  background-color: #1c2747;
   color: #fff;
   font-family: "Arial", sans-serif;
   margin: 0;
@@ -999,7 +998,7 @@ body {
   align-items: flex-start;
   width: 97vw;
   height: calc(79vh + 17px);
-  background: #0B1734;
+  background: #0b1734;
   border-radius: 10px;
 }
 
@@ -1009,10 +1008,10 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  background: #0B1734;
+  background: #0b1734;
   border-radius: 7px;
-  width: 960px;
-  height: 460px;
+  width: 93%;
+  height: 72%;
 }
 
 .equipment-grid {
@@ -1024,8 +1023,8 @@ body {
 }
 
 .equipment-box {
-  padding: 35px;
-  font-size: 17px;
+  padding: 30px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
   border-radius: 8px;
@@ -1033,57 +1032,13 @@ body {
 }
 
 .green {
-  background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
 .red {
-  background-color: #D32F2F;
+  background-color: #d32f2f;
 }
 
-@media (max-width: 800px) {
-  .equipment-container {
-    margin-top: 60px;
-    padding: 15px;
-    width: 90vw;
-    height: calc(79vh - 10px);
-  }
-  .equipment-container-wrapper {
-    margin-top: 60px;
-    padding: 15px;
-    width: 90%;
-    height: auto;
-  }
-  .equipment-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  .equipment-box {
-    padding: 20px;
-    font-size: 14px;
-  }
-}
-@media (max-width: 480px) {
-  .equipment-container {
-    margin-top: 50px;
-    padding: 10px;
-    width: 80vw;
-    height: calc(79vh - 20px);
-  }
-  .equipment-container-wrapper {
-    margin-top: 50px;
-    padding: 10px;
-    width: 80%;
-    height: auto;
-  }
-  .equipment-grid {
-    grid-template-columns: 1fr;
-    gap: 5px;
-  }
-  .equipment-box {
-    padding: 15px;
-    font-size: 12px;
-  }
-}
 .header {
   position: fixed;
   top: 0;
@@ -1353,7 +1308,7 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  width: 98vw;
+  width: 97vw;
   height: calc(97vh - 60px);
   gap: 1px;
 }
@@ -1489,7 +1444,7 @@ body {
 }
 
 .algorithm-section {
-  width: 96%;
+  width: 100%;
   background-color: white;
   padding: 0px;
   border-radius: 8px;
@@ -1502,6 +1457,7 @@ body {
   font-weight: bold;
   color: #1c2747;
   margin-bottom: 5px;
+  margin-top: 5px;
 }
 .algorithm-section .separator {
   width: 90%;
@@ -1515,8 +1471,9 @@ body {
   background: white;
   padding: 5px;
   border-radius: 8px;
-  width: 92%;
+  width: 95%;
   font-weight: bold;
+  display: flex;
 }
 .algorithm-section .algorithm-box .algorithm-left {
   display: flex;
@@ -1531,7 +1488,7 @@ body {
 }
 .algorithm-section .algorithm-box .status-btn {
   background-color: #ff6f00;
-  padding: 5px 12px;
+  padding: 10px 14px;
   font-size: 14px;
   border-radius: 6px;
   font-weight: bold;
