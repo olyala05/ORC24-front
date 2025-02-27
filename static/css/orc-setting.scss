@@ -34,34 +34,6 @@
   justify-content: flex-end;
 }
 
-// .network-box-set {
-//   margin-right: 8px;
-//   margin-left: 8px;
-
-//   .network-header-set {
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-between;
-//     font-size: 16px;
-//     font-weight: bold;
-//     background: #f5f5f5;
-//     padding: 14px;
-//     border-radius: 7px;
-//     border: none;
-//     cursor: pointer;
-//     width: 190px;
-//     margin-top: 0px;
-
-//     .wifi-icon-set {
-//       display: flex;
-//       gap: 10px;
-
-//       img {
-//         width: 30px;
-//       }
-//     }
-//   }
-// }
 .network-box-set {
   margin-right: 8px;
   margin-left: 8px;
@@ -72,12 +44,13 @@
     justify-content: space-between;
     font-size: 16px;
     font-weight: bold;
-    background: #f5f5f5;
-    padding: 14px;
+    background: #ef742a;
+    padding: 19px;
     border-radius: 7px;
     border: none;
     cursor: pointer;
     width: 190px;
+    color: #fff;
 
     .wifi-icon-set {
       display: flex;
@@ -93,7 +66,7 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
-    background: #fff;
+    background: #EF742A;
     border-radius: 7px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     padding: 0 14px;
@@ -106,8 +79,9 @@
       li {
         padding: 6px 0;
         border-bottom: 1px solid #ddd;
-        color: #1c2747;
-        font-size: 12px;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
       }
 
       li:last-child {
@@ -119,6 +93,8 @@
   .wifi-list-set.active {
     max-height: 300px;
     padding: 14px;
+    margin-top: 12px;
+    color: #fff;
   }
 }
 
