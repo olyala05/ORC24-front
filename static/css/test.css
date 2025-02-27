@@ -468,6 +468,21 @@
   font-size: 14px;
 }
 
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.status-green {
+  background-color: green;
+}
+
+.status-red {
+  background-color: red;
+}
+
 .read-test-container {
   display: flex;
   justify-content: center;

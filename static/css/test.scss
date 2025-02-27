@@ -514,6 +514,18 @@
   margin: 0;
   font-size: 14px;
 }
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.status-green {
+  background-color: green;
+}
+.status-red {
+  background-color: red;
+}
 
 // READ TEST PANEL START //
 .read-test-container {

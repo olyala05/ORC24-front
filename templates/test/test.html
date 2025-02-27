@@ -407,7 +407,9 @@
 
         <div class="write-test-terminal">
           <label for="terminal">Terminal</label>
-          <textarea id="terminal" readonly>Write successful Read value: sadfasd</textarea>
+          <textarea id="terminal" readonly>
+Write successful Read value: sadfasd</textarea
+          >
         </div>
       </div>
     </div>
@@ -460,10 +462,14 @@
     document.querySelectorAll("tr[data-status]").forEach((row) => {
       const status = row.getAttribute("data-status");
       row.querySelectorAll(".cloud-test-status").forEach((cell) => {
-        cell.innerHTML = status === "A" ? "🟢" : "🔴";
+        cell.innerHTML =
+          status === "A"
+            ? '<span class="status-indicator status-green"></span>'
+            : '<span class="status-indicator status-red"></span>';
       });
     });
   });
+  
   document
     .querySelectorAll(
       ".equipment-table tbody tr td:nth-child(3), .equipment-table tbody tr td:nth-child(4)"
