@@ -2303,7 +2303,6 @@ body {
   border: none;
   cursor: pointer;
   width: 190px;
-  margin-top: 0px;
 }
 .network-box-set .network-header-set .wifi-icon-set {
   display: flex;
@@ -2311,6 +2310,33 @@ body {
 }
 .network-box-set .network-header-set .wifi-icon-set img {
   width: 30px;
+}
+.network-box-set .wifi-list-set {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0 14px;
+}
+.network-box-set .wifi-list-set ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.network-box-set .wifi-list-set ul li {
+  padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+  color: #1c2747;
+  font-size: 12px;
+}
+.network-box-set .wifi-list-set ul li:last-child {
+  border-bottom: none;
+}
+.network-box-set .wifi-list-set.active {
+  max-height: 300px;
+  padding: 14px;
 }
 
 .wifi-icon-set {

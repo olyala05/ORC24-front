@@ -1,179 +1,182 @@
-{% extends "layout.html" %} 
-
-{% block title %} Equipment Details {% endblock %}
-
+{% extends "layout.html" %} {% block title %} Equipment Details {% endblock %}
 {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
 <!-- Yeni İçerik (İlk başta gizli olacak) -->
-<div class="settings-content">  
-    <div class="orc-sidebar-set">
-        <button class="tab-btn-set" data-target="wifi-set">Wi-fi Settings</button>
-        <button class="tab-btn-set" data-target="lora-set">LoRa Settings</button>
-        <button class="tab-btn-set" data-target="eth-set">Ethernet Settings</button>
-        <button class="tab-btn-set" data-target="gsm-set">GSM Settingsead</button>
-        <button class="tab-btn-set" data-target="orc-set">Router Settings</button>
+<div class="settings-content">
+  <div class="orc-sidebar-set">
+    <button class="tab-btn-set" data-target="wifi-set">Wi-fi Settings</button>
+    <button class="tab-btn-set" data-target="lora-set">LoRa Settings</button>
+    <button class="tab-btn-set" data-target="eth-set">Ethernet Settings</button>
+    <button class="tab-btn-set" data-target="gsm-set">GSM Settingsead</button>
+    <button class="tab-btn-set" data-target="orc-set">Router Settings</button>
+  </div>
+
+  <div class="content-area-set">
+    <!-- Wi-Fi Set -->
+    <div id="wifi-set" class="tab-content-set">
+      <div class="wifi-container-set">
+        <!-- Available Wi-Fi -->
+<!-- Available Wi-Fi -->
+<div class="network-box-set">
+    <button
+      class="network-header-set wifi-header-set"
+      onclick="toggleWifiList()"
+    >
+      Available Wi-Fi
+      <span class="wifi-icon-set">
+        <img
+          src="{{ url_for('static', filename='images/svg/12.svg') }}"
+          alt="No Wi-Fi"
+        />
+      </span>
+    </button>
+  
+    <div id="wifi-list" class="wifi-list-set hidden">
+      <ul>
+        <li>Pier Enerji</li>
+        <li>Pier Router Mi</li>
+        <li>1 NUMBER</li>
+        <li>Alperen</li>
+        <li>AndroidAP_2455</li>
+        <li>Tenda_R24</li>
+      </ul>
     </div>
+  </div>
 
-    <div class="content-area-set">
+        <!-- Wi-Fi Password Form -->
+        <div class="wifi-connection-set">
+          <div class="wifi-card-set">
+            <div class="wifi-icon-set">
+              <img
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                alt="No Wi-Fi"
+              />
+              <h4>Wi-Fi Password</h4>
+            </div>
 
-      <!-- Wi-Fi Set -->
-      <div id="wifi-set" class="tab-content-set">
-          <div class="wifi-container-set">
-              <!-- Available Wi-Fi -->
-              <div class="network-box-set">
-                <button class="network-header-set wifi-header-set" onclick="toggleWifiList()">
-                    Available Wi-Fi 
-                    <span class="wifi-icon-set">
-                        <img src="{{ url_for('static', filename='images/svg/12.svg') }}" alt="No Wi-Fi">
-                    </span> 
-                </button>
-                
-                <div id="wifi-list" class="wifi-list-set hidden">
-                    <ul>
-                        <li>Pier Enerji</li>
-                        <li>Pier Router Mi</li>
-                        <li>1 NUMBER</li>
-                        <li>Alperen</li>
-                        <li>AndroidAP_2455</li>
-                        <li>Tenda_R24</li>
-                    </ul>
-                </div>
-                  <div class="network-info-set">
-                      <!-- Wi-Fi List Here -->
-                  </div>
-              </div>
-  
-              <!-- Wi-Fi Password Form -->
-              <div class="wifi-connection-set">
-                  <div class="wifi-card-set">
-                    <div class="wifi-icon-set">
-                        <img src="{{ url_for('static', filename='images/svg/12.svg') }}" alt="No Wi-Fi"> 
-                        <h4>Wi-Fi Password</h4>
-                    </div>
-             
-                      <p>Wi-Fi SSID: pier mi 5g</p>
-                      <div class="password-intput-set">  
-                        <label>Password:</label>
-                        <input type="password">
-                      </div>
-                      <div class="show-password-set">
-                          <input type="checkbox" id="showPass" class="check-box-set">
-                          <label for="showPass" class="show-pass">Show Password</label>
-                      </div>
-                      <div class="btn-group-set">
-                          <button class="btn-set cancel-set">Cancel</button>
-                          <button class="btn-set connec-set">Connect</button>
-                      </div>
-                  </div>
-  
-                  <!-- Connected Wi-Fi -->
-                  <div class="wifi-card-set connected">
-                      <h4>Connected</h4>
-                      <div class="underline"></div>
-                      <div class="wifi-info-set">
-                        <img src="{{ url_for('static', filename='images/svg/12.svg') }}" alt="No Wi-Fi">
-                          <span>Pier Enerji</span>
-                          <button class="btn disconnect">Disconnect</button>
-                      </div>
-                  </div>
-              </div>
+            <p>Wi-Fi SSID: pier mi 5g</p>
+            <div class="password-intput-set">
+              <label>Password:</label>
+              <input type="password" />
+            </div>
+            <div class="show-password-set">
+              <input type="checkbox" id="showPass" class="check-box-set" />
+              <label for="showPass" class="show-pass">Show Password</label>
+            </div>
+            <div class="btn-group-set">
+              <button class="btn-set cancel-set">Cancel</button>
+              <button class="btn-set connec-set">Connect</button>
+            </div>
           </div>
-      </div>
-      
-      <!-- LoRa Set -->
-      <div id="lora-set" class="lora-settings-container" style="display: none;"> 
-        <div class="lora-settings-card">
-            <h3>LoRa Settings</h3>
+
+          <!-- Connected Wi-Fi -->
+          <div class="wifi-card-set connected">
+            <h4>Connected</h4>
+            <div class="underline"></div>
+            <div class="wifi-info-set">
+              <img
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                alt="No Wi-Fi"
+              />
+              <span>Pier Enerji</span>
+              <button class="btn disconnect">Disconnect</button>
+            </div>
+          </div>
         </div>
       </div>
-
-      <!-- Ethernet Set -->
-      <div id="eth-set" class="eth-settings-container" style="display: none;"> 
-           <div class="eth-settings-card">
-               <h3>Ethernet Settings</h3>
-           </div> 
-      </div>
-      
-      <!-- GSM Set -->
-      <div id="gsm-set" class="gsm-settings-container" style="display: none;">     
-          <div class="gsm-settings-card">
-              <h3>GSM Settings</h3>
-          </div>
-      </div>
-
-      <!-- ORC Set -->
-      <div id="orc-set" class="orc-settings-container" style="display: none;">
-        <div class="orc-settings-card">
-            <div class="orc-input-group">
-                <label>Modem Name</label>
-                <input type="text" placeholder="Modem Name">
-            </div>
-    
-            <div class="orc-input-group">
-                <label>Modem Status</label>
-                <select>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
-            </div>
-    
-            <div class="orc-input-group">
-                <label>Query Update Time (Hour - Minute)</label>
-                <select>
-                    <option value="">Select</option>
-                    <option value="00:30">00:30</option>
-                    <option value="01:00">01:00</option>
-                    <option value="01:30">01:30</option>
-                    <option value="02:00">02:00</option>
-                </select>
-            </div>
-    
-            <button class="orc-save-btn">Kaydet</button>
-        </div>
-      </div>
-    
     </div>
-  
-<script>
+
+    <!-- LoRa Set -->
+    <div id="lora-set" class="lora-settings-container" style="display: none">
+      <div class="lora-settings-card">
+        <h3>LoRa Settings</h3>
+      </div>
+    </div>
+
+    <!-- Ethernet Set -->
+    <div id="eth-set" class="eth-settings-container" style="display: none">
+      <div class="eth-settings-card">
+        <h3>Ethernet Settings</h3>
+      </div>
+    </div>
+
+    <!-- GSM Set -->
+    <div id="gsm-set" class="gsm-settings-container" style="display: none">
+      <div class="gsm-settings-card">
+        <h3>GSM Settings</h3>
+      </div>
+    </div>
+
+    <!-- ORC Set -->
+    <div id="orc-set" class="orc-settings-container" style="display: none">
+      <div class="orc-settings-card">
+        <div class="orc-input-group">
+          <label>Modem Name</label>
+          <input type="text" placeholder="Modem Name" />
+        </div>
+
+        <div class="orc-input-group">
+          <label>Modem Status</label>
+          <select>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div class="orc-input-group">
+          <label>Query Update Time (Hour - Minute)</label>
+          <select>
+            <option value="">Select</option>
+            <option value="00:30">00:30</option>
+            <option value="01:00">01:00</option>
+            <option value="01:30">01:30</option>
+            <option value="02:00">02:00</option>
+          </select>
+        </div>
+
+        <button class="orc-save-btn">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
     function toggleWifiList() {
         const wifiList = document.getElementById("wifi-list");
-        wifiList.classList.toggle("hidden");
-    }
+        wifiList.classList.toggle("active");
+      }
 
     document.addEventListener("DOMContentLoaded", function () {
-        const tabButtons = document.querySelectorAll(".tab-btn-set");
-        const tabContents = document.querySelectorAll(".content-area-set > div"); // 🔥 Tüm içerikleri direkt seçtik
-    
-        tabButtons.forEach((button) => {
-            button.addEventListener("click", function () {
-                const targetId = this.getAttribute("data-target");
-    
-                // 📌 Önce tüm içerikleri gizle
-                tabContents.forEach((content) => content.style.display = "none");
-    
-                // 📌 Tüm butonlardaki "active" sınıfını kaldır
-                tabButtons.forEach((btn) => btn.classList.remove("active"));
-    
-                // 📌 Seçilen butona "active" sınıfı ekle
-                this.classList.add("active");
-    
-                // 📌 İlgili tab içeriğini göster
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.style.display = "block";
-                }
-            });
+      const tabButtons = document.querySelectorAll(".tab-btn-set");
+      const tabContents = document.querySelectorAll(".content-area-set > div"); // 🔥 Tüm içerikleri direkt seçtik
+
+      tabButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const targetId = this.getAttribute("data-target");
+
+          // 📌 Önce tüm içerikleri gizle
+          tabContents.forEach((content) => (content.style.display = "none"));
+
+          // 📌 Tüm butonlardaki "active" sınıfını kaldır
+          tabButtons.forEach((btn) => btn.classList.remove("active"));
+
+          // 📌 Seçilen butona "active" sınıfı ekle
+          this.classList.add("active");
+
+          // 📌 İlgili tab içeriğini göster
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            targetElement.style.display = "block";
+          }
         });
-    
-        // 📌 Sayfa yüklendiğinde varsayılan olarak ilk sekmeyi göster
-        if (tabButtons.length > 0) {
-            tabButtons[0].click();
-        }
+      });
+
+      // 📌 Sayfa yüklendiğinde varsayılan olarak ilk sekmeyi göster
+      if (tabButtons.length > 0) {
+        tabButtons[0].click();
+      }
     });
-    
-    
-</script>
+  </script>
 
-
-{% endblock %}
+  {% endblock %}
+</div>
