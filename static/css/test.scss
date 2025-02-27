@@ -450,7 +450,8 @@
   border-radius: 10px;
   align-items: center;
   color: white;
-  margin-top: 10px;
+  margin-top: 0px;
+  width: 560px;
 }
 
 .cloud-test-table {
@@ -460,9 +461,10 @@
 
   th,
   td {
-    padding: 10px;
+    padding: 4px;
     text-align: left;
     border-bottom: 1px solid #444;
+    font-size: 13px;
   }
 }
 
@@ -478,17 +480,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 15px;
 }
 
 .cloud-test-button {
   background-color: #ef742a;
   color: white;
-  padding: 12px 55px;
+  padding: 13px 40px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 600;
 
   &:hover {
@@ -503,13 +504,15 @@
 
 .cloud-test-success {
   color: limegreen;
-  margin: 4px 0px;
+  margin: 2px 0px;
   padding: 0;
+  font-size: 14px;
 }
 
 .cloud-test-failed {
   color: red;
   margin: 0;
+  font-size: 14px;
 }
 
 // READ TEST PANEL START //
