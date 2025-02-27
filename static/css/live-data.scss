@@ -96,33 +96,35 @@
 // live-data-detail.scss
 .live-data-detail {
   &-table-container {
-    width: 96%;
+    width: 98%;
     margin: auto;
     font-family: Arial, sans-serif;
     color: #fff;
-    max-height: 500px;
+    max-height: 400px;
     overflow-y: auto;
-    margin-top: 80px;
+    margin-top: 76px;
 
     .live-data-detail-data-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
       background: #0b1734;
-      border-radius: 10px;
+      border-radius: 6px;
       overflow: hidden;
 
       thead {
         position: sticky;
         top: 0;
         z-index: 10;
+        font-size: 14px;
       }
 
       th,
       td {
         border: none;
-        padding: 8px;
+        padding: 6px;
         text-align: center;
+        font-size: 13px;
       }
 
       th {

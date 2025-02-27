@@ -464,11 +464,11 @@ input:-webkit-autofill:focus {
 .energy-table .energy-row div {
   display: flex;
   align-items: center;
-  gap: 7px; /* İkon ve yazı arasındaki boşluk */
+  gap: 7px;
 }
 .energy-table .energy-row img {
-  width: 30px; /* SVG ikon boyutu */
-  height: 30px;
+  width: 20px;
+  height: 20px;
 }
 
 /* System Info */
@@ -505,18 +505,20 @@ input:-webkit-autofill:focus {
 .device-status {
   display: flex;
   background: #0e1734;
-  padding: 8px;
+  padding: 17px 17px;
   border-radius: 8px;
-  gap: 9px;
+  gap: 8px;
   /* System Info Kutuları */
   /* Cihaz Bilgileri */
 }
 .device-status .system-info {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  width: 31%;
+  gap: 5px;
+  width: 33%;
   justify-content: center;
+  margin-bottom: 17px;
+  margin-top: 14px;
 }
 .device-status .system-info .info-box {
   background: #b1b1b1;
@@ -556,7 +558,7 @@ input:-webkit-autofill:focus {
   background: #0e1734;
   padding: 5px;
   border-radius: 8px;
-  width: 17%;
+  width: 21%;
 }
 .device-status .status-info p {
   margin: 6px 0px;
@@ -579,7 +581,7 @@ input:-webkit-autofill:focus {
   background: #1c2747;
   padding: 0px;
   border-radius: 8px;
-  gap: 0px;
+  gap: 17px;
 }
 
 /* Gösterge Alanı */
@@ -589,12 +591,13 @@ input:-webkit-autofill:focus {
   align-items: center;
   gap: 0px;
   padding-top: 0px;
+  margin: 9px 5px;
 }
 
 /* Gösterge Kutuları */
 .gauge {
-  width: 120px;
-  height: 120px;
+  width: 110px;
+  height: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -634,8 +637,11 @@ input:-webkit-autofill:focus {
   padding-top: 10px;
   background: #0e1734;
   border-radius: 8px;
-  padding: 6px;
-  height: 60px;
+  padding: 5px;
+  height: 54px;
+  margin-top: 26px;
+  align-items: center;
+  margin: 6px 8px 2px 4px;
 }
 
 .voltage-box-1,
@@ -2844,32 +2850,34 @@ body {
 }
 
 .live-data-detail-table-container {
-  width: 96%;
+  width: 98%;
   margin: auto;
   font-family: Arial, sans-serif;
   color: #fff;
-  max-height: 500px;
+  max-height: 400px;
   overflow-y: auto;
-  margin-top: 80px;
+  margin-top: 76px;
 }
 .live-data-detail-table-container .live-data-detail-data-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
   background: #0b1734;
-  border-radius: 10px;
+  border-radius: 6px;
   overflow: hidden;
 }
 .live-data-detail-table-container .live-data-detail-data-table thead {
   position: sticky;
   top: 0;
   z-index: 10;
+  font-size: 14px;
 }
 .live-data-detail-table-container .live-data-detail-data-table th,
 .live-data-detail-table-container .live-data-detail-data-table td {
   border: none;
-  padding: 8px;
+  padding: 6px;
   text-align: center;
+  font-size: 13px;
 }
 .live-data-detail-table-container .live-data-detail-data-table th {
   background: #0b1734;
@@ -2983,32 +2991,34 @@ body {
 }
 
 .hourly-data-detail-table-container {
-  width: 96%;
+  width: 98%;
   margin: auto;
   font-family: Arial, sans-serif;
   color: #fff;
-  max-height: 500px;
+  max-height: 400px;
   overflow-y: auto;
-  margin-top: 80px;
+  margin-top: 76px;
 }
 .hourly-data-detail-table-container .hourly-data-detail-data-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
   background: #0b1734;
-  border-radius: 10px;
+  border-radius: 6px;
   overflow: hidden;
 }
 .hourly-data-detail-table-container .hourly-data-detail-data-table thead {
   position: sticky;
   top: 0;
   z-index: 10;
+  font-size: 14px;
 }
 .hourly-data-detail-table-container .hourly-data-detail-data-table th,
 .hourly-data-detail-table-container .hourly-data-detail-data-table td {
   border: none;
   padding: 8px;
   text-align: center;
+  font-size: 14px;
 }
 .hourly-data-detail-table-container .hourly-data-detail-data-table th {
   background: #0b1734;
@@ -3122,32 +3132,34 @@ body {
 }
 
 .daily-data-detail-table-container {
-  width: 96%;
+  width: 98%;
   margin: auto;
   font-family: Arial, sans-serif;
   color: #fff;
-  max-height: 500px;
+  max-height: 400px;
   overflow-y: auto;
-  margin-top: 80px;
+  margin-top: 76px;
 }
 .daily-data-detail-table-container .daily-data-detail-data-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
   background: #0b1734;
-  border-radius: 10px;
+  border-radius: 6px;
   overflow: hidden;
 }
 .daily-data-detail-table-container .daily-data-detail-data-table thead {
   position: sticky;
   top: 0;
   z-index: 10;
+  font-size: 14px;
 }
 .daily-data-detail-table-container .daily-data-detail-data-table th,
 .daily-data-detail-table-container .daily-data-detail-data-table td {
   border: none;
   padding: 8px;
   text-align: center;
+  font-size: 14px;
 }
 .daily-data-detail-table-container .daily-data-detail-data-table th {
   background: #0b1734;
