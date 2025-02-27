@@ -115,19 +115,13 @@
 // Equipment Settings Stil
 .equip-setting-card {
   background: #161b3d;
-  padding: 14px;
-  border-radius: 10px;
-  width: 700px; // İçerik genişliği
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.equip-setting-card {
-  background: #161b3d;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
+  width: 547px;
+  height: 317px;
 }
 
 .equip-setting-group {
@@ -135,10 +129,10 @@
   justify-content: space-between;
   align-items: center;
   background: #c4c4c4;
-  padding: 11px;
+  padding: 6px;
   border-radius: 7px;
-  margin-bottom: 15px;
-  width: 500px;  
+  margin-top: 15px;
+  width: 500px;
   text-align: center;
 }
 
@@ -151,9 +145,9 @@
 .equip-setting-group input {
   background: white;
   border: none;
-  padding: 12px;
-  border-radius: 3px;
-  width: 50%;
+  padding: 10px;
+  border-radius: 4px;
+  width: 46%;
   font-size: 16px;
 }
 
@@ -165,7 +159,7 @@
 .equip-setting-select select {
   appearance: none;
   width: 100%;
-  padding: 12px;
+  padding: 9px;
   border-radius: 3px;
   border: none;
   font-size: 15px;
@@ -206,9 +200,9 @@
 
   .obis-setting-form {
     background: #161b3d;
-    padding: 20px;
+    padding: 7px;
     border-radius: 10px;
-    width: 700px;
+    width: 540px;
   }
 }
 
@@ -218,8 +212,8 @@
 
   .tcp-setting-form {
     background: #161b3d;
-    padding: 20px;
+    padding: 7px;
     border-radius: 10px;
-    width: 700px;
+    width: 540px;
   }
 }

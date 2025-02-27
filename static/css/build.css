@@ -874,19 +874,13 @@ input:-webkit-autofill:focus {
 
 .equip-setting-card {
   background: #161b3d;
-  padding: 14px;
-  border-radius: 10px;
-  width: 700px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.equip-setting-card {
-  background: #161b3d;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 547px;
+  height: 317px;
 }
 
 .equip-setting-group {
@@ -894,9 +888,9 @@ input:-webkit-autofill:focus {
   justify-content: space-between;
   align-items: center;
   background: #c4c4c4;
-  padding: 11px;
+  padding: 6px;
   border-radius: 7px;
-  margin-bottom: 15px;
+  margin-top: 15px;
   width: 500px;
   text-align: center;
 }
@@ -910,9 +904,9 @@ input:-webkit-autofill:focus {
 .equip-setting-group input {
   background: white;
   border: none;
-  padding: 12px;
-  border-radius: 3px;
-  width: 50%;
+  padding: 10px;
+  border-radius: 4px;
+  width: 46%;
   font-size: 16px;
 }
 
@@ -926,7 +920,7 @@ input:-webkit-autofill:focus {
      -moz-appearance: none;
           appearance: none;
   width: 100%;
-  padding: 12px;
+  padding: 9px;
   border-radius: 3px;
   border: none;
   font-size: 15px;
@@ -966,9 +960,9 @@ input:-webkit-autofill:focus {
 }
 .equ-set-content .obis-setting-form {
   background: #161b3d;
-  padding: 20px;
+  padding: 7px;
   border-radius: 10px;
-  width: 700px;
+  width: 540px;
 }
 
 .equ-set-content {
@@ -977,9 +971,9 @@ input:-webkit-autofill:focus {
 }
 .equ-set-content .tcp-setting-form {
   background: #161b3d;
-  padding: 20px;
+  padding: 7px;
   border-radius: 10px;
-  width: 700px;
+  width: 540px;
 }
 
 body {
