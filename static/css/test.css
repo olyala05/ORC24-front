@@ -304,18 +304,18 @@
 
 .equipment-test-card {
   background: #0b1734;
-  padding: 10px;
+  padding: 5px 5px;
   border-radius: 10px;
   margin-right: 5px;
 }
 .equipment-test-card .equipment-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 .equipment-test-card .equipment-table thead tr th {
   text-align: left;
-  padding: 4px;
+  padding: 1px;
   color: #ef8018;
   font-weight: 500;
   font-size: 14px;
@@ -323,26 +323,26 @@
   text-align: center;
 }
 .equipment-test-card .equipment-table tbody tr td {
-  padding: 8px;
+  padding: 1px;
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   border-bottom: 1px solid #ef742a;
   text-align: center;
 }
 .equipment-test-card .equipment-actions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 .equipment-test-card .equipment-actions .equipment-scan-btn,
 .equipment-test-card .equipment-actions .equipment-update-btn {
-  padding: 8px 110px;
+  padding: 6px 28px;
   background-color: #ff7b00;
   color: #fff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
 }
 .equipment-test-card .equipment-actions .equipment-scan-btn:hover,
@@ -355,8 +355,7 @@
   grid-auto-rows: auto;
   align-items: start;
   -moz-column-gap: 10px;
-       column-gap: 10px;
-  row-gap: 5px;
+  column-gap: 10px;
 }
 .equipment-test-card .equipment-actions .equipment-scan-status .equipment-scan-btn {
   grid-row: 1/span 2;

@@ -332,20 +332,20 @@
 
 .equipment-test-card {
   background: #0b1734;
-  padding: 10px;
+  padding: 5px 5px;
   border-radius: 10px;
   margin-right: 5px;
 
   .equipment-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 
     thead {
       tr {
         th {
           text-align: left;
-          padding: 4px;
+          padding: 1px;
           color: #ef8018;
           font-weight: 500;
           font-size: 14px;
@@ -358,9 +358,9 @@
     tbody {
       tr {
         td {
-          padding: 8px;
+          padding: 1px;
           color: #fff;
-          font-size: 14px;
+          font-size: 13px;
           border-bottom: 1px solid #ef742a;
           text-align: center;
         }
@@ -371,17 +371,17 @@
   .equipment-actions {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
 
     .equipment-scan-btn,
     .equipment-update-btn {
-      padding: 8px 110px;
+      padding: 6px 28px;
       background-color: #ff7b00;
       color: #fff;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 500;
 
       &:hover {
@@ -394,8 +394,8 @@
       grid-template-columns: auto 1fr;
       grid-auto-rows: auto;
       align-items: start;
+      -moz-column-gap: 10px;
       column-gap: 10px;
-      row-gap: 5px;
 
       .equipment-scan-btn {
         grid-row: 1 / span 2;
