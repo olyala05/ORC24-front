@@ -1742,15 +1742,17 @@ body {
   border-radius: 7px;
   border: none;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 22px;
+  margin-right: 2px;
+  margin-left: 26px;
 }
 .ethernet-box-test .ethernet-icon {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   margin-bottom: 5px;
 }
 .ethernet-box-test .ethernet-text {
-  font-size: 45px;
+  font-size: 35px;
   font-weight: 100;
   color: white;
   text-align: center;
@@ -2051,6 +2053,7 @@ body {
   align-items: center;
   padding: 0px;
   border-radius: 10px;
+  width: 580px;
 }
 
 .read-test-card {
@@ -2059,14 +2062,14 @@ body {
   border-radius: 10px;
   align-items: center;
   color: white;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 .read-test-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 16px;
+  margin-bottom: 0px;
 }
 
 .read-test-group {
@@ -2075,11 +2078,12 @@ body {
 }
 .read-test-group label {
   font-size: 14px;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 .read-test-group input {
   color: #757678;
-  padding: 8px;
+  border: 1px solid #444;
+  padding: 7px;
   border-radius: 5px;
   width: 90%;
 }
@@ -2088,17 +2092,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 12px;
 }
 
 .read-test-button {
   background-color: #ef742a;
   color: white;
-  padding: 14px 56px;
+  padding: 13px 48px;
   border: none;
-  border-radius: 5px;
+  border-radius: 7px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 .read-test-button:hover {
@@ -2112,14 +2116,16 @@ body {
 
 .read-test-success {
   color: limegreen;
-  margin: 7px 0;
+  margin: 2px 0;
   padding: 0;
+  font-size: 14px;
 }
 
 .read-test-failed {
   color: red;
   margin: 0;
   padding: 0;
+  font-size: 14px;
 }
 
 .read-test-terminal {
@@ -2134,7 +2140,7 @@ body {
   padding: 8px;
   border-radius: 5px;
   width: 97%;
-  height: 80px;
+  height: 60px;
   resize: none;
   color: #757678;
 }
@@ -2145,22 +2151,23 @@ body {
   align-items: center;
   padding: 0px;
   border-radius: 10px;
+  width: 580px;
 }
 
 .write-test-card {
   background: #0b1734;
-  padding: 10px;
+  padding: 9px;
   border-radius: 10px;
   align-items: center;
   color: white;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 .write-test-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 16px;
+  margin-bottom: 0px;
 }
 
 .write-test-group {
@@ -2174,7 +2181,7 @@ body {
 .write-test-group input {
   color: #757678;
   border: 1px solid #444;
-  padding: 8px;
+  padding: 7px;
   border-radius: 5px;
   width: 90%;
 }
@@ -2189,11 +2196,11 @@ body {
 .write-test-button {
   background-color: #ef742a;
   color: white;
-  padding: 12px 60px;
+  padding: 12px 46px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 .write-test-button:hover {
@@ -2207,14 +2214,16 @@ body {
 
 .write-test-success {
   color: limegreen;
-  margin: 5px 0;
+  margin: 2px 0;
   padding: 0;
+  font-size: 14px;
 }
 
 .write-test-failed {
   color: red;
   margin: 0;
   padding: 0;
+  font-size: 14px;
 }
 
 .write-test-terminal {
@@ -2230,7 +2239,7 @@ body {
   padding: 8px;
   border-radius: 5px;
   width: 97%;
-  height: 80px;
+  height: 60px;
   resize: none;
 }
 
