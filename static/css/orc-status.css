@@ -1,6 +1,6 @@
 @charset "UTF-8";
 .orc-content {
-  margin-top: 84px;
+  margin-top: 76px;
   padding: 0px;
   display: flex;
   justify-content: space-between;
@@ -8,12 +8,12 @@
   flex-grow: 1;
   width: 98vw;
   height: calc(97vh - 60px);
-  gap: 12px;
+  gap: 1px;
 }
 
 .device-info {
   background-color: #0b1734;
-  padding: 15px;
+  padding: 8px;
   border-radius: 8px;
   width: 47%;
   height: 90%;
@@ -26,12 +26,13 @@
 .device-info ul {
   list-style: none;
   padding: 0;
+  margin: 0;
   width: 100%;
 }
 .device-info ul li {
   display: flex;
   justify-content: space-between;
-  padding: 6px 0;
+  padding: 5px 0;
   font-size: 14px;
   border-bottom: 1px solid #ff6f00;
 }
@@ -50,7 +51,7 @@
   color: #1c2747;
   display: block;
   margin-bottom: 5px;
-  margin-top: 13px;
+  margin-top: 8px;
 }
 .device-info .connection-status .separator {
   width: 90%;
@@ -99,7 +100,7 @@
   width: 47%;
   height: 90%;
   background-color: #0b1734;
-  padding: 15px;
+  padding: 8px;
   border-radius: 8px;
   color: white;
   display: flex;
@@ -130,7 +131,7 @@
   background-color: #4caf50;
 }
 .connection-table table .status-dot.red {
-  background-color: #FF0F00;
+  background-color: #ff0f00;
 }
 
 .line {
@@ -143,7 +144,7 @@
 .algorithm-section {
   width: 96%;
   background-color: white;
-  padding: 7px;
+  padding: 0px;
   border-radius: 8px;
   text-align: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -159,22 +160,21 @@
   width: 90%;
   height: 1px;
   background-color: #ff6f00;
-  margin: 5px auto 10px;
+  margin: 2px auto 1px;
 }
 .algorithm-section .algorithm-box {
-  display: flex;
   align-items: center;
   justify-content: space-between;
   background: white;
-  padding: 10px;
+  padding: 5px;
   border-radius: 8px;
-  width: 96%;
+  width: 92%;
   font-weight: bold;
 }
 .algorithm-section .algorithm-box .algorithm-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0px;
   font-size: 14px;
   color: #1c2747;
 }
@@ -184,7 +184,7 @@
 }
 .algorithm-section .algorithm-box .status-btn {
   background-color: #ff6f00;
-  padding: 10px 16px;
+  padding: 5px 12px;
   font-size: 14px;
   border-radius: 6px;
   font-weight: bold;

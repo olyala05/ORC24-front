@@ -417,23 +417,6 @@ input:-webkit-autofill:focus {
   font-weight: bold;
 }
 
-/* Responsive - Küçük ekranlar için */
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    height: auto;
-    padding: 10px;
-  }
-  .header-left,
-  .header-right-dashboard {
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-  }
-  .header-logo img {
-    height: 30px;
-  }
-}
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -441,13 +424,13 @@ input:-webkit-autofill:focus {
   padding: 13px;
   background-color: #1c2747;
   color: #fff;
-  width: 100%;
+  height: 65vh;
 }
 
 /* Enerji Tablosu */
 .energy-table {
   background: #0e1734;
-  padding: 10px;
+  padding: 6px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -456,11 +439,11 @@ input:-webkit-autofill:focus {
 .energy-table .energy-header {
   display: flex;
   justify-content: space-between;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
   color: #ffffff;
   padding-bottom: 10px;
-  position: relative; /* Pseudo-element için gerekli */
+  position: relative;
 }
 .energy-table .energy-header::after {
   content: "";
@@ -475,13 +458,13 @@ input:-webkit-autofill:focus {
 .energy-table .energy-row {
   display: flex;
   justify-content: space-between;
-  padding: 3px 15px;
-  font-size: 18px;
+  padding: 3px 5px;
+  font-size: 16px;
 }
 .energy-table .energy-row div {
   display: flex;
   align-items: center;
-  gap: 18px; /* İkon ve yazı arasındaki boşluk */
+  gap: 7px; /* İkon ve yazı arasındaki boşluk */
 }
 .energy-table .energy-row img {
   width: 30px; /* SVG ikon boyutu */
@@ -522,17 +505,17 @@ input:-webkit-autofill:focus {
 .device-status {
   display: flex;
   background: #0e1734;
-  padding: 15px;
+  padding: 8px;
   border-radius: 8px;
-  gap: 10px;
+  gap: 9px;
   /* System Info Kutuları */
   /* Cihaz Bilgileri */
 }
 .device-status .system-info {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px; /* Kutular arasındaki boşluğu daralttım */
-  width: 40%;
+  gap: 6px;
+  width: 31%;
   justify-content: center;
 }
 .device-status .system-info .info-box {
@@ -545,8 +528,8 @@ input:-webkit-autofill:focus {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 100px;
-  height: 124px;
+  min-width: 60px;
+  height: 70px;
   line-height: 1.2;
 }
 .device-status .system-info .info-box img {
@@ -571,9 +554,9 @@ input:-webkit-autofill:focus {
   flex-direction: column;
   justify-content: center;
   background: #0e1734;
-  padding: 9px;
+  padding: 5px;
   border-radius: 8px;
-  width: 25%;
+  width: 17%;
 }
 .device-status .status-info p {
   margin: 6px 0px;
@@ -588,29 +571,15 @@ input:-webkit-autofill:focus {
   color: #ff7f32;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .device-status {
-    flex-direction: column;
-    align-items: center;
-  }
-  .system-info {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .status-info {
-    width: 100%;
-    text-align: center;
-  }
-}
 /* Göstergeler */
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 50%;
   background: #1c2747;
-  padding: 2px;
+  padding: 0px;
   border-radius: 8px;
-  gap: 25px;
+  gap: 0px;
 }
 
 /* Gösterge Alanı */
@@ -619,7 +588,7 @@ input:-webkit-autofill:focus {
   justify-content: space-around;
   align-items: center;
   gap: 0px;
-  padding-top: 14px;
+  padding-top: 0px;
 }
 
 /* Gösterge Kutuları */
@@ -632,14 +601,14 @@ input:-webkit-autofill:focus {
 }
 
 .gauge-circle {
-  width: 120px;
-  height: 120px;
+  width: 106px;
+  height: 106px;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   text-align: center;
   color: #fff;
@@ -666,7 +635,7 @@ input:-webkit-autofill:focus {
   background: #0e1734;
   border-radius: 8px;
   padding: 6px;
-  height: 90px;
+  height: 60px;
 }
 
 .voltage-box-1,
@@ -676,12 +645,11 @@ input:-webkit-autofill:focus {
 .voltage-box-5,
 .voltage-box-6 {
   text-align: center;
-  padding: 8px;
-  font-size: 14px;
-  font-weight: bold;
+  padding: 6px;
+  font-size: 12px;
   color: #fff;
   border-radius: 6px;
-  width: 15%;
+  width: 12%;
 }
 
 .voltage-box-1 {
@@ -708,31 +676,6 @@ input:-webkit-autofill:focus {
   background: #1c3d89;
 }
 
-/* Responsive */
-/* Raspberry Pi 1024x600 ve Küçük Ekranlar için Responsive */
-@media (max-width: 1024px) {
-  .dashboard {
-    height: 76vh;
-  }
-}
-@media (max-width: 768px) {
-  .dashboard {
-    height: 75vh;
-  }
-  .dashboard-container {
-    width: 100%;
-  }
-  .gauge-container {
-    flex-direction: column;
-  }
-  .voltage-table {
-    flex-wrap: wrap;
-  }
-  .voltage-box {
-    width: 30%;
-    margin-bottom: 8px;
-  }
-}
 .eq-detail-container {
   display: flex;
   gap: 20px;
@@ -1404,7 +1347,7 @@ body {
   }
 }
 .orc-content {
-  margin-top: 84px;
+  margin-top: 76px;
   padding: 0px;
   display: flex;
   justify-content: space-between;
@@ -1412,12 +1355,12 @@ body {
   flex-grow: 1;
   width: 98vw;
   height: calc(97vh - 60px);
-  gap: 12px;
+  gap: 1px;
 }
 
 .device-info {
   background-color: #0b1734;
-  padding: 15px;
+  padding: 8px;
   border-radius: 8px;
   width: 47%;
   height: 90%;
@@ -1430,12 +1373,13 @@ body {
 .device-info ul {
   list-style: none;
   padding: 0;
+  margin: 0;
   width: 100%;
 }
 .device-info ul li {
   display: flex;
   justify-content: space-between;
-  padding: 6px 0;
+  padding: 5px 0;
   font-size: 14px;
   border-bottom: 1px solid #ff6f00;
 }
@@ -1454,7 +1398,7 @@ body {
   color: #1c2747;
   display: block;
   margin-bottom: 5px;
-  margin-top: 13px;
+  margin-top: 8px;
 }
 .device-info .connection-status .separator {
   width: 90%;
@@ -1503,7 +1447,7 @@ body {
   width: 47%;
   height: 90%;
   background-color: #0b1734;
-  padding: 15px;
+  padding: 8px;
   border-radius: 8px;
   color: white;
   display: flex;
@@ -1534,7 +1478,7 @@ body {
   background-color: #4caf50;
 }
 .connection-table table .status-dot.red {
-  background-color: #FF0F00;
+  background-color: #ff0f00;
 }
 
 .line {
@@ -1547,7 +1491,7 @@ body {
 .algorithm-section {
   width: 96%;
   background-color: white;
-  padding: 7px;
+  padding: 0px;
   border-radius: 8px;
   text-align: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -1563,22 +1507,21 @@ body {
   width: 90%;
   height: 1px;
   background-color: #ff6f00;
-  margin: 5px auto 10px;
+  margin: 2px auto 1px;
 }
 .algorithm-section .algorithm-box {
-  display: flex;
   align-items: center;
   justify-content: space-between;
   background: white;
-  padding: 10px;
+  padding: 5px;
   border-radius: 8px;
-  width: 96%;
+  width: 92%;
   font-weight: bold;
 }
 .algorithm-section .algorithm-box .algorithm-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0px;
   font-size: 14px;
   color: #1c2747;
 }
@@ -1588,7 +1531,7 @@ body {
 }
 .algorithm-section .algorithm-box .status-btn {
   background-color: #ff6f00;
-  padding: 10px 16px;
+  padding: 5px 12px;
   font-size: 14px;
   border-radius: 6px;
   font-weight: bold;

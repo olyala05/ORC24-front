@@ -99,26 +99,6 @@
   font-weight: bold;
 }
 
-/* Responsive - Küçük ekranlar için */
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    height: auto;
-    padding: 10px;
-  }
-
-  .header-left,
-  .header-right-dashboard {
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .header-logo img {
-    height: 30px;
-  }
-}
-
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -126,13 +106,13 @@
   padding: 13px;
   background-color: #1c2747;
   color: #fff;
-  width: 100%;
+  height: 65vh;
 }
 
 /* Enerji Tablosu */
 .energy-table {
   background: #0e1734;
-  padding: 10px;
+  padding: 6px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -141,11 +121,11 @@
   .energy-header {
     display: flex;
     justify-content: space-between;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     color: #ffffff;
     padding-bottom: 10px;
-    position: relative; /* Pseudo-element için gerekli */
+    position: relative;
   }
 
   .energy-header::after {
@@ -162,14 +142,14 @@
   .energy-row {
     display: flex;
     justify-content: space-between;
-    padding: 3px 15px;
-    font-size: 18px;
+    padding: 3px 5px;
+    font-size: 16px;
   }
 
   .energy-row div {
     display: flex;
     align-items: center;
-    gap: 18px; /* İkon ve yazı arasındaki boşluk */
+    gap: 7px; /* İkon ve yazı arasındaki boşluk */
   }
 
   .energy-row img {
@@ -216,16 +196,16 @@
 .device-status {
   display: flex;
   background: #0e1734;
-  padding: 15px;
+  padding: 8px;
   border-radius: 8px;
-  gap: 10px; // Kutular ile bilgi kısmı arasında boşluk ekler
+  gap: 9px;
 
   /* System Info Kutuları */
   .system-info {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px; /* Kutular arasındaki boşluğu daralttım */
-    width: 40%;
+    gap: 6px;
+    width: 31%;
     justify-content: center;
 
     .info-box {
@@ -238,8 +218,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-width: 100px;
-      height: 124px;
+      min-width: 60px;
+      height: 70px;
       line-height: 1.2;
 
       img {
@@ -272,9 +252,9 @@
     flex-direction: column;
     justify-content: center;
     background: #0e1734;
-    padding: 9px;
+    padding: 5px;
     border-radius: 8px;
-    width: 25%;
+    width: 17%;
     p {
       margin: 6px 0px;
       font-size: 14px;
@@ -291,32 +271,15 @@
   }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .device-status {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .system-info {
-    grid-template-columns: repeat(2, 1fr); // Küçük ekranlarda 2 sütun olacak
-  }
-
-  .status-info {
-    width: 100%;
-    text-align: center;
-  }
-}
-
 /* Göstergeler */
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  width: 60%; // Ekranın yarısını kaplayacak
+  width: 50%;
   background: #1c2747;
-  padding: 2px;
+  padding: 0px;
   border-radius: 8px;
-  gap: 25px;
+  gap: 0px;
 }
 
 /* Gösterge Alanı */
@@ -325,7 +288,7 @@
   justify-content: space-around;
   align-items: center;
   gap: 0px;
-  padding-top: 14px;
+  padding-top: 0px;
 }
 
 /* Gösterge Kutuları */
@@ -338,14 +301,14 @@
 }
 
 .gauge-circle {
-  width: 120px;
-  height: 120px;
+  width: 106px;
+  height: 106px;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   text-align: center;
   color: #fff;
@@ -372,7 +335,7 @@
   background: #0e1734;
   border-radius: 8px;
   padding: 6px;
-  height: 90px;
+  height: 60px;
 }
 
 .voltage-box-1,
@@ -382,12 +345,11 @@
 .voltage-box-5,
 .voltage-box-6 {
   text-align: center;
-  padding: 8px;
-  font-size: 14px;
-  font-weight: bold;
+  padding: 6px;
+  font-size: 12px;
   color: #fff;
   border-radius: 6px;
-  width: 15%;
+  width: 12%;
 }
 .voltage-box-1 {
   background: #2a3559;
@@ -406,33 +368,4 @@
 }
 .voltage-box-6 {
   background: #1c3d89;
-}
-
-/* Responsive */
-/* Raspberry Pi 1024x600 ve Küçük Ekranlar için Responsive */
-@media (max-width: 1024px) {
-  .dashboard {
-    height: 76vh;
-  }
-}
-@media (max-width: 768px) {
-  .dashboard {
-    height: 75vh;
-  }
-  .dashboard-container {
-    width: 100%; // Küçük ekranlarda tam genişlikte olacak
-  }
-
-  .gauge-container {
-    flex-direction: column;
-  }
-
-  .voltage-table {
-    flex-wrap: wrap;
-  }
-
-  .voltage-box {
-    width: 30%;
-    margin-bottom: 8px;
-  }
 }

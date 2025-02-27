@@ -6,11 +6,9 @@ $border-radius: 8px;
 $header-height: 60px;
 $container-padding: 10px;
 
-
-
 // 📌 ORC Status İçerik (1024x600 Uyumlu)
 .orc-content {
-  margin-top: 84px;
+  margin-top: 76px;
   padding: 0px;
   display: flex;
   justify-content: space-between;
@@ -18,14 +16,14 @@ $container-padding: 10px;
   flex-grow: 1;
   width: 98vw;
   height: calc(97vh - 60px);
-  gap: 12px;
+  gap: 1px;
 }
 
 // 📌 Cihaz Bilgileri Paneli (Sol Taraf)
 .device-info {
   background-color: #0b1734;
-  padding: 15px;
-  border-radius: $border-radius;
+  padding: 8px;
+  border-radius: 8px;
   width: 47%;
   height: 90%;
   display: flex;
@@ -37,12 +35,13 @@ $container-padding: 10px;
   ul {
     list-style: none;
     padding: 0;
+    margin: 0;
     width: 100%;
 
     li {
       display: flex;
       justify-content: space-between;
-      padding: 6px 0;
+      padding: 5px 0;
       font-size: 14px;
       border-bottom: 1px solid #ff6f00;
     }
@@ -64,7 +63,7 @@ $container-padding: 10px;
       color: #1c2747;
       display: block;
       margin-bottom: 5px;
-      margin-top: 13px;
+      margin-top: 8px;
     }
 
     // Turuncu çizgi
@@ -126,8 +125,8 @@ $container-padding: 10px;
   width: 47%;
   height: 90%;
   background-color: #0b1734;
-  padding: 15px;
-  border-radius: $border-radius;
+  padding: 8px;
+  border-radius: 8px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -160,7 +159,7 @@ $container-padding: 10px;
       }
 
       &.red {
-        background-color: #FF0F00;
+        background-color: #ff0f00;
       }
     }
   }
@@ -177,8 +176,8 @@ $container-padding: 10px;
 .algorithm-section {
   width: 96%;
   background-color: white;
-  padding: 7px;
-  border-radius: $border-radius;
+  padding: 0px;
+  border-radius: 8px;
   text-align: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   color: black;
@@ -194,23 +193,22 @@ $container-padding: 10px;
     width: 90%;
     height: 1px;
     background-color: #ff6f00;
-    margin: 5px auto 10px; // Çizgiyi ortalar ve aralığı belirler
+    margin: 2px auto 1px; // Çizgiyi ortalar ve aralığı belirler
   }
 
   .algorithm-box {
-    display: flex;
     align-items: center;
     justify-content: space-between;
     background: white;
-    padding: 10px;
+    padding: 5px;
     border-radius: 8px;
-    width: 96%;
+    width: 92%;
     font-weight: bold;
 
     .algorithm-left {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0px;
       font-size: 14px;
       color: #1c2747;
 
@@ -222,7 +220,7 @@ $container-padding: 10px;
 
     .status-btn {
       background-color: #ff6f00;
-      padding: 10px 16px;
+      padding: 5px 12px;
       font-size: 14px;
       border-radius: 6px;
       font-weight: bold;
