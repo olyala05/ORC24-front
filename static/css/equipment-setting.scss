@@ -1,12 +1,13 @@
 // Genel Konteyner
 .equ-set-container {
   display: flex;
+  margin-top: 31px;
 
   // Sol Sidebar (Menü)
   .equ-set-sidebar {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 7px;
 
     .equ-set-btn {
       background: white;
@@ -14,10 +15,10 @@
       color: black;
       font-size: 18px;
       font-weight: 600;
-      padding: 22px;
+      padding: 22px 18px;
       border-radius: 7px;
       cursor: pointer;
-      transition: all 0.3sease-in-out;
+      transition: all 0.3s ease-in-out;
       text-align: left;
 
       &.active {
@@ -33,13 +34,13 @@
   // İçerik Alanı (Sağ)
   .equ-set-content {
     flex-grow: 1;
-    padding-left: 30px;
+    padding-left: 14px;
 
     .modbus-setting-form {
       background: #161b3d;
-      padding: 20px;
+      padding: 12px;
       border-radius: 10px;
-      width: 700px;
+      width: 528px;
 
       // Form Satırı
       .modbus-setting-row {

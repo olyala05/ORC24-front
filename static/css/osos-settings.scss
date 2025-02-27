@@ -3,18 +3,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 
   // **KART TASARIMI**
   .osos-settings-card {
     background: #161b3d;
     padding: 20px;
     border-radius: 10px;
-    width: 800px;
+    width: 745px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-
     flex-direction: column;
     align-items: center;
+    margin-top: 80px;
 
     // **GRUP YAPISI**
     .osos-settings-group {
@@ -22,7 +21,7 @@
       justify-content: space-between;
       align-items: center;
       background: #f2f2f2;
-      padding: 12px;
+      padding: 8px;
       border-radius: 7px;
       margin-bottom: 15px;
       color: black;
@@ -37,12 +36,12 @@
         border: none;
         border-radius: 5px;
         background: white !important;
-        color: black !important;  
+        color: black !important;
       }
       input:focus,
       input:active {
         background: white !important;
-        color:black !important;
+        color: black !important;
         outline: none;
       }
 

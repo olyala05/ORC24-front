@@ -781,11 +781,12 @@ input:-webkit-autofill:focus {
 
 .equ-set-container {
   display: flex;
+  margin-top: 31px;
 }
 .equ-set-container .equ-set-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 7px;
 }
 .equ-set-container .equ-set-sidebar .equ-set-btn {
   background: white;
@@ -793,10 +794,10 @@ input:-webkit-autofill:focus {
   color: black;
   font-size: 18px;
   font-weight: 600;
-  padding: 22px;
+  padding: 22px 18px;
   border-radius: 7px;
   cursor: pointer;
-  transition: all 0.3sease-in-out;
+  transition: all 0.3s ease-in-out;
   text-align: left;
 }
 .equ-set-container .equ-set-sidebar .equ-set-btn.active {
@@ -807,13 +808,13 @@ input:-webkit-autofill:focus {
 }
 .equ-set-container .equ-set-content {
   flex-grow: 1;
-  padding-left: 30px;
+  padding-left: 14px;
 }
 .equ-set-container .equ-set-content .modbus-setting-form {
   background: #161b3d;
-  padding: 20px;
+  padding: 12px;
   border-radius: 10px;
-  width: 700px;
+  width: 528px;
 }
 .equ-set-container .equ-set-content .modbus-setting-form .modbus-setting-row {
   display: flex;
@@ -2591,23 +2592,23 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 .osos-settings-container .osos-settings-card {
   background: #161b3d;
   padding: 20px;
   border-radius: 10px;
-  width: 800px;
+  width: 745px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   flex-direction: column;
   align-items: center;
+  margin-top: 80px;
 }
 .osos-settings-container .osos-settings-card .osos-settings-group {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #f2f2f2;
-  padding: 12px;
+  padding: 8px;
   border-radius: 7px;
   margin-bottom: 15px;
   color: black;
