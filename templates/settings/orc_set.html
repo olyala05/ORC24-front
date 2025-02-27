@@ -17,32 +17,31 @@
     <div id="wifi-set" class="tab-content-set">
       <div class="wifi-container-set">
         <!-- Available Wi-Fi -->
-<!-- Available Wi-Fi -->
-<div class="network-box-set">
-    <button
-      class="network-header-set wifi-header-set"
-      onclick="toggleWifiList()"
-    >
-      Available Wi-Fi
-      <span class="wifi-icon-set">
-        <img
-          src="{{ url_for('static', filename='images/svg/12.svg') }}"
-          alt="No Wi-Fi"
-        />
-      </span>
-    </button>
-  
-    <div id="wifi-list" class="wifi-list-set hidden">
-      <ul>
-        <li>Pier Enerji</li>
-        <li>Pier Router Mi</li>
-        <li>1 NUMBER</li>
-        <li>Alperen</li>
-        <li>AndroidAP_2455</li>
-        <li>Tenda_R24</li>
-      </ul>
-    </div>
-  </div>
+        <div class="network-box-set">
+          <button
+            class="network-header-set wifi-header-set"
+            onclick="toggleWifiList()"
+          >
+            Available Wi-Fi
+            <span class="wifi-icon-set">
+              <img
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                alt="No Wi-Fi"
+              />
+            </span>
+          </button>
+
+          <div id="wifi-list" class="wifi-list-set hidden">
+            <ul>
+              <li>Pier Enerji</li>
+              <li>Pier Router Mi</li>
+              <li>1 NUMBER</li>
+              <li>Alperen</li>
+              <li>AndroidAP_2455</li>
+              <li>Tenda_R24</li>
+            </ul>
+          </div>
+        </div>
 
         <!-- Wi-Fi Password Form -->
         <div class="wifi-connection-set">
@@ -142,9 +141,9 @@
 
   <script>
     function toggleWifiList() {
-        const wifiList = document.getElementById("wifi-list");
-        wifiList.classList.toggle("active");
-      }
+      const wifiList = document.getElementById("wifi-list");
+      wifiList.classList.toggle("active");
+    }
 
     document.addEventListener("DOMContentLoaded", function () {
       const tabButtons = document.querySelectorAll(".tab-btn-set");
