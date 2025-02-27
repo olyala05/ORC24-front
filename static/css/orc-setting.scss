@@ -1,20 +1,20 @@
 .settings-content {
   display: flex;
-  gap: 20px;
+  gap: 0px;
+  margin-top: 70px;
 
   .tab-btn-set {
-    padding: 19px;
+    padding: 20px;
     border-radius: 7px;
     color: #000;
     font-weight: 600;
-    margin: 10px;
     font-size: large;
   }
 }
 .orc-sidebar-set {
-  width: 250px;
   display: flex;
   flex-direction: column;
+  gap: 7px;
 }
 .tab-btn-set.active {
   background-color: #fff;
@@ -35,7 +35,8 @@
 }
 
 .network-box-set {
-  margin-right: 15px;
+  margin-right: 8px;
+  margin-left: 8px;
 
   .network-header-set {
     display: flex;
@@ -48,8 +49,8 @@
     border-radius: 7px;
     border: none;
     cursor: pointer;
-    width: 280px;
-    margin-top: 15px;
+    width: 190px;
+    margin-top: 0px;
 
     .wifi-icon-set {
       display: flex;
@@ -78,13 +79,19 @@
 
 .wifi-card-set {
   background: white;
-  padding: 5px;
+  padding: 12px;
   border-radius: 10px;
-  width: 407px;
+  width: 358px;
+
+  .underline {
+    border: 1px solid #ef8018;
+    opacity: 0.5;
+  }
 
   h4 {
     font-size: 18px;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
+    margin-top: 0px;
     color: #1c2747;
   }
 
@@ -140,11 +147,11 @@
   .btn-group-set {
     display: flex;
     justify-content: flex-end;
-    margin-top: 15px;
-    gap: 14px;
+    margin-top: 0px;
+    gap: 10px;
 
     .btn-set {
-      padding: 14px 32px;
+      padding: 12px 30px;
       border: none;
       cursor: pointer;
       border-radius: 6px;
@@ -171,7 +178,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px;
+      padding: 8px;
       border-radius: 5px;
       color: #1c2747;
       font-weight: bold;
@@ -246,15 +253,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0px;
   border-radius: 10px;
+  margin-left: 10px;
 }
 
 .orc-settings-card {
   background: #161b3d;
-  padding: 20px;
+  padding: 19px;
   border-radius: 10px;
-  width: 650px;
+  width: 530px;
   align-items: center;
 }
 
@@ -263,9 +271,9 @@
   justify-content: space-between;
   align-items: center;
   background: #c4c4c4;
-  padding: 10px;
+  padding: 6px;
   border-radius: 7px;
-  margin-bottom: 17px;
+  margin-bottom: 13px;
 }
 
 .orc-input-group label {
@@ -302,25 +310,25 @@
   color: white;
   border: none;
   width: 30%;
-  padding: 14px;
+  padding: 19px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
   display: block;
-  margin: 49px 46px 15px 220px;
+  margin: 34px 17px 12px 189px;
 }
 .orc-save-btn:hover {
   background: #d65f1f;
 }
-
 
 // eth Settings
 .eth-settings-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0px;
+  margin-left: 8px;
   border-radius: 10px;
 }
 
@@ -328,7 +336,7 @@
   background: #161b3d;
   padding: 20px;
   border-radius: 10px;
-  width: 650px;
+  width: 540px;
   align-items: center;
   h3 {
     text-align: center;
@@ -340,7 +348,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0px;
+  margin-left: 8px;
   border-radius: 10px;
   h3 {
     text-align: center;
@@ -351,7 +360,7 @@
   background: #161b3d;
   padding: 20px;
   border-radius: 10px;
-  width: 650px;
+  width: 540px;
   align-items: center;
   h3 {
     text-align: center;
@@ -363,7 +372,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0px;
+  margin-left: 8px;
   border-radius: 10px;
   h3 {
     text-align: center;
@@ -374,7 +384,7 @@
   background: #161b3d;
   padding: 20px;
   border-radius: 10px;
-  width: 650px;
+  width: 540px;
   align-items: center;
 
   h3 {

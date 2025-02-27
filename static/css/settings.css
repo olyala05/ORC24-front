@@ -3,13 +3,13 @@
   justify-content: center;
   align-items: center;
   background: #0B1734;
-  padding: 15px;
+  padding: 14px;
   border-radius: 10px;
 }
 
 .main-set-buttons {
   display: flex;
-  gap: 20px;
+  gap: 15px;
 }
 
 .main-set-btn {
@@ -18,10 +18,10 @@
   color: black;
   font-size: 18px;
   font-weight: 600;
-  padding: 20px 60px;
+  padding: 25px 46px;
   border-radius: 7px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3sease-in-out;
 }
 .main-set-btn.active {
   border-color: #ff6f00;
