@@ -23,21 +23,46 @@
     <!-- Wi-Fi Test -->
     <div id="wifi-test" class="tab-content-test">
       <div class="wifi-container-test">
+        
         <!-- Available Wi-Fi -->
         <div class="network-box-test">
-          <button
-            class="network-header-test wifi-header-test"
-            onclick="toggleWifiList()"
-          >
+          <button class="network-header-test" id="wifiToggleBtn">
             Available Wi-Fi
             <span class="wifi-icon-test">
-              <img
-                src="{{ url_for('static', filename='images/svg/12.svg') }}"
-                alt="No Wi-Fi"
-              />
+              <img src="{{ url_for('static', filename='images/svg/12.svg') }}" alt="Wi-Fi Icon" />
             </span>
           </button>
+        
+          <div class="wifi-list-test" id="wifiList">
+            <div class="wifi-category-test">Known Networks</div>
+            <div class="wifi-item-test">
+              <div class="wifi-name-test"> <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/></span> Pier Mi Sag 5G <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi"/></div>
+            </div>
+            <div class="wifi-item-test">
+              <div class="wifi-name-test">
+                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/></span> Pier Router Mi_5G <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi"/></div>
+            </div>
+            <div class="wifi-item-test">
+              <div class="wifi-name-test">
+                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/></span> pierenerji <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi"/></div>
+            </div>
+        
+            <div class="wifi-category-test">Other Networks</div>
+            <div class="wifi-item-test">
+              <div class="wifi-name-test">
+                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/></span> 1 NUMARA <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi"/></div>
+            </div>
+            <div class="wifi-item-test">
+              <div class="wifi-name-test">
+                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/></span> DIRECT-274604BB <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi"/></div>
+            </div>
+            <div class="wifi-item-test">
+              <div class="wifi-name-test">
+                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/></span> dsmart_1401 <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi"/></div>
+            </div>
+          </div>
         </div>
+        
 
         <!-- Wi-Fi Bölümü  -->
         <div class="wifi-test-box">
@@ -407,9 +432,7 @@
 
         <div class="write-test-terminal">
           <label for="terminal">Terminal</label>
-          <textarea id="terminal" readonly>
-Write successful Read value: sadfasd</textarea
-          >
+          <textarea id="terminal" readonly>Write successful Read value: sadfasd</textarea>
         </div>
       </div>
     </div>
@@ -417,6 +440,17 @@ Write successful Read value: sadfasd</textarea
 </div>
 
 <script>
+  // JavaScript for toggling the dropdown
+  document.addEventListener("DOMContentLoaded", function () {
+    const wifiToggleBtn = document.getElementById("wifiToggleBtn");
+    const wifiList = document.getElementById("wifiList");
+  
+    wifiToggleBtn.addEventListener("click", function () {
+      wifiList.style.display = wifiList.style.display === "block" ? "none" : "block";
+    });
+  });
+  
+
   document.addEventListener("DOMContentLoaded", function () {
     const tabButtons = document.querySelectorAll(".switch-btn-test");
     const tabContents = document.querySelectorAll(".tab-content-test");
@@ -469,7 +503,7 @@ Write successful Read value: sadfasd</textarea
       });
     });
   });
-  
+
   document
     .querySelectorAll(
       ".equipment-table tbody tr td:nth-child(3), .equipment-table tbody tr td:nth-child(4)"
