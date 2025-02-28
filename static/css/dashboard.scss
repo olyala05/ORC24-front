@@ -314,15 +314,42 @@
 
 /* Farklı göstergeler için özel renkler */
 .frequency {
-  background: conic-gradient(#ff7f32 80%, #1c2747 20%);
+  background: radial-gradient(circle at center, #1c2747 60%, transparent 61%), 
+              conic-gradient(#28a745 40%, #ff7f32 40% 80%, #1c2747 80%);
+  position: relative;
 }
 
+/* İç kısım için ayrı bir katman oluştur */
+.gauge-circle::before {
+  content: "";
+  background: #1c2747;
+  position: absolute;
+  border-radius: 50%;
+}
+
+/* İçerideki metin */
+.gauge-circle span {
+  position: relative;
+  z-index: 1;
+  font-size: 18px;
+}
+
+.gauge-circle p {
+  position: relative;
+  z-index: 1;
+  font-size: 10px;
+  line-height: 0.1;
+  opacity: 0.7;
+}
 .reactive {
-  background: #28a745;
+  background: #0DA100;
+  
 }
 
 .power-factor {
-  background: conic-gradient(#ff7f32 87%, #1c2747 13%);
+  background: radial-gradient(circle at center, #1c2747 60%, transparent 61%), 
+  conic-gradient( #ff7f32 40% 80%, #1c2747 80%);
+  position: relative;
 }
 
 /* Voltaj ve Akım Bilgileri */
