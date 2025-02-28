@@ -1,7 +1,7 @@
 @charset "UTF-8";
 .settings-content {
   display: flex;
-  gap: 0px;
+  gap: 10px;
   margin-top: 70px;
 }
 .settings-content .tab-btn-set {
@@ -9,13 +9,14 @@
   border-radius: 7px;
   color: #000;
   font-weight: 600;
-  font-size: large;
+  font-size: 16px;
 }
 
 .orc-sidebar-set {
   display: flex;
   flex-direction: column;
   gap: 7px;
+  width: 170px;
 }
 
 .tab-btn-set.active {
@@ -28,6 +29,7 @@
 .wifi-container-set {
   display: flex;
   align-items: flex-start;
+  gap: 10px;
 }
 
 .btn-group-set {
@@ -62,35 +64,45 @@
 .network-box-set .network-header-set .wifi-icon-set img {
   width: 30px;
 }
-.network-box-set .wifi-list-set {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
-  background: #EF742A;
-  border-radius: 7px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 0 14px;
-}
-.network-box-set .wifi-list-set ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.network-box-set .wifi-list-set ul li {
-  padding: 6px 0;
-  border-bottom: 1px solid #ddd;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-}
-.network-box-set .wifi-list-set ul li:last-child {
-  border-bottom: none;
-}
 .network-box-set .wifi-list-set.active {
   max-height: 300px;
   padding: 14px;
   margin-top: 12px;
   color: #fff;
+}
+
+.content-area-set .wifi-list-set {
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 11px 14px;
+  color: #1c2747;
+}
+.content-area-set .available-wifi-underline {
+  border-bottom: 1px solid #ef742a;
+}
+.content-area-set ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.content-area-set ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+  color: #1c2747;
+  font-size: 14px;
+  font-weight: 600;
+}
+.content-area-set ul li:last-child {
+  border-bottom: none;
+}
+.content-area-set ul li img {
+  width: 20px;
+  height: auto;
 }
 
 .wifi-icon-set {

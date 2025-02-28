@@ -18,7 +18,7 @@
       <div class="wifi-container-set">
         <!-- Available Wi-Fi -->
         <div class="network-box-set">
-          <button
+          <!-- <button
             class="network-header-set wifi-header-set"
             onclick="toggleWifiList()"
           >
@@ -29,16 +29,18 @@
                 alt="No Wi-Fi"
               />
             </span>
-          </button>
+          </button> -->
 
-          <div id="wifi-list" class="wifi-list-set hidden">
+          <div id="wifi-list" class="wifi-list-set">
+            <h4 style="margin: 6px 0 5px 0px; padding: 0; padding: 0 20px;">Available Wi-Fi</h4>
+            <div class="available-wifi-underline"></div>
             <ul>
-              <li>Pier Enerji</li>
-              <li>Pier Router Mi</li>
-              <li>1 NUMBER</li>
-              <li>Alperen</li>
-              <li>AndroidAP_2455</li>
-              <li>Tenda_R24</li>
+              <li> <img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/> <span>Pier Enerji</span> <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Lock"/> </li>
+              <li> <img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/> <span>Pier Router Mi</span>  <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Lock"/> </li>
+              <li> <img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/> <span>1 NUMBER</span>  <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Lock"/> </li>
+              <li> <img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/> <span>Alperen</span> <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Lock"/> </li>
+              <li> <img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/> <span>AndroidAP_2455</span> <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Lock"/> </li>
+              <li> <img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/> <span>Tenda_R24</span> <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Lock"/> </li>
             </ul>
           </div>
         </div>
@@ -140,10 +142,10 @@
   </div>
 
   <script>
-    function toggleWifiList() {
-      const wifiList = document.getElementById("wifi-list");
-      wifiList.classList.toggle("active");
-    }
+    //function toggleWifiList() {
+    //const wifiList = document.getElementById("wifi-list");
+    //wifiList.classList.toggle("active");
+    //}
 
     document.addEventListener("DOMContentLoaded", function () {
       const tabButtons = document.querySelectorAll(".tab-btn-set");

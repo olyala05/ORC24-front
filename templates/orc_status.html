@@ -27,7 +27,7 @@ content %}
 
       <div class="connection-status">
         {% if network and network.connected_ssid and network.connected_ssid != "Not Connected" %}
-            <!-- 📡 Wi-Fi Bağlıysa -->
+            <!-- Wi-Fi Bağlıysa -->
             <span class="status-title">Connected Wi-Fi / GSM / Ethernet</span>
             <div class="separator"></div>
             <div class="status-details">
@@ -37,7 +37,7 @@ content %}
                 <button class="disconnect-btn">Disconnect</button>
             </div>
         {% else %}
-            <!-- ❌ Wi-Fi Bağlı Değilse -->
+            <!-- Wi-Fi Bağlı Değilse -->
             <span class="status-title error-message">
                 Checking the network cables, modem and router <br>
                 Reconnecting to Wi-Fi
@@ -75,12 +75,12 @@ content %}
                 <td><span class="status-dot green"></span></td>
                 <td><span class="status-dot green"></span></td>
                 <td>WiFi connection</td>
-                <td>{{ network.last_connected_time }}</td>  <!-- 📌 Güncellenmiş tarih -->
+                <td>{{ network.last_connected_time }}</td> 
             {% else %}
                 <td><span class="status-dot red"></span></td>
                 <td><span class="status-dot red"></span></td>
                 <td>WiFi Disconnected</td>
-                <td>{{ network.last_connected_time }}</td>  <!-- 📌 En son bağlantı tarihi -->
+                <td>{{ network.last_connected_time }}</td> 
             {% endif %}
         </tr>
         
@@ -120,9 +120,6 @@ content %}
   </div>
 <script>
 
-
-
-
 function retryConnection() {
   fetch("/check_network")
     .then(response => response.json())
@@ -147,7 +144,6 @@ function retryConnection() {
 
 document.addEventListener("DOMContentLoaded", function () {
   const disconnectBtn = document.querySelector(".disconnect-btn");
-
   disconnectBtn.addEventListener("click", function () {
       fetch("/disconnect_request", {
           method: "POST",

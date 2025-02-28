@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %}ORC 24 - Login - Pier MTTP{% endblock %}
+{% block title %} ORC 24 - Login - Pier MTTP {% endblock %}
 
 {% block content %}
   <div class="container">
@@ -21,7 +21,7 @@
           {% endif %}
         {% endwith %}
 
-        <form method="POST" action="{{ url_for('login') }}">  <!-- 🎯 Flask'a yönlendirme -->
+        <form method="POST" action="{{ url_for('login') }}"> 
           <div class="input-group">
             <span class="icon icon-left"><img src="{{ url_for('static', filename='images/svg/22.svg') }}" alt="Logout" width="20" height="20" ></span>
             <input type="text" name="email" placeholder="Email" required />
