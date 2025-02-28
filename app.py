@@ -78,7 +78,7 @@ def login():
 # # 🎯 Dashboard Sayfası
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    return render_template("dashboard.html", page_title="Dashboard")        
 
 
 # 🎯 Alarm Status API'sinden veri çek
@@ -251,44 +251,36 @@ def modbus_request():
 
         modbus_data = response.json().get("modbus_data", [])
         if not modbus_data:
-            logger.warning("❌ Modbus verisi bulunamadı.")
+            logger.warning("Modbus verisi bulunamadı.")
             return jsonify({"error": "Modbus verisi alınamadı veya cihaz desteklemiyor."}), 500
 
         logger.info(
-            f"✅ Modbus verisi başarıyla alındı: {len(modbus_data)} cihaz bulundu.")  # Kaç cihaz bulunduğunu logla
+            f"Modbus verisi başarıyla alındı: {len(modbus_data)} cihaz bulundu.")  # Kaç cihaz bulunduğunu logla
         return jsonify({"modbus_data": modbus_data})
 
     except requests.exceptions.RequestException as e:
-        logger.error(f"🔥 Modbus isteği hatası: {e}")
+        logger.error(f"Modbus isteği hatası: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
 
 
 @app.route("/disconnect_request", methods=["POST"])
 def disconnect_request():
-    """
-    Seçili cihazın Wi-Fi bağlantısını keser.
-    """
     selected_ip = session.get("selected_device_ip")  # Seçili cihazın IP'sini al
 
     if not selected_ip:
-        logger.warning("⚠️ Cihaz seçilmedi!")
+        logger.warning("Cihaz seçilmedi!")
         return jsonify({"error": "Cihaz seçilmedi. Lütfen önce bir cihaz bağlayın."}), 400
-
     try:
-        logger.info(f"🔌 Wi-Fi bağlantısı kesiliyor: {selected_ip}")
-
-        # HTTP ile cihazdan Wi-Fi'yi kapatmasını iste
+        logger.info(f"Wi-Fi bağlantısı kesiliyor: {selected_ip}")
         url = f"http://{selected_ip}:8085/disconnect_wifi"
-        response = requests.post(url, timeout=10)  # Timeout ekleyelim
+        response = requests.post(url, timeout=10)
         response.raise_for_status()
-
-        logger.info("✅ Wi-Fi başarıyla kapatıldı.")
+        logger.info("Wi-Fi başarıyla kapatıldı.")
         return jsonify({"status": "success", "message": "Wi-Fi bağlantısı kapatıldı."})
 
     except requests.exceptions.RequestException as e:
-        logger.error(f"🔥 Wi-Fi kapatma hatası: {e}")
+        logger.error(f"Wi-Fi kapatma hatası: {e}")
         return jsonify({"error": f"Wi-Fi bağlantısı kapatılamadı: {str(e)}"}), 500
-
 
 @app.route("/equipments-with-models", methods=["POST"])
 def equipments_with_models():
@@ -297,88 +289,75 @@ def equipments_with_models():
 
     if not ip_address:
         return jsonify({"error": "IP adresi belirtilmedi"}), 400
-
     try:
-        # 📌 HTTP ile cihazdan `/get_equipments_with_models` verisini al
         url = f"http://{ip_address}:8085/get_equipments_with_models"
-        response = requests.get(url, timeout=200)  # Timeout ekledik
+        response = requests.get(url, timeout=200) 
         response.raise_for_status()
-
         equipment_data = response.json()
-
-        if "warning" in equipment_data:  # ✅ Eğer ekipman yoksa uyarı ver
+        
+        if "warning" in equipment_data: 
             return jsonify({"warning": equipment_data["warning"]}), 200
-
-        session["equipment_data"] = equipment_data  # Veriyi sakla
+        session["equipment_data"] = equipment_data 
         return jsonify(equipment_data)
-
     except requests.exceptions.RequestException as e:
-        logging.error(f"🔥 Equipment isteği hatası: {e}")
+        logging.error(f"Equipment isteği hatası: {e}")
         return jsonify({"error": f"Equipment Boş"})
-
 
 @app.route('/equipment', endpoint="equipment")
 def equipment():
-    return render_template("equipments/equipments.html")
-
+    return render_template("equipments/equipments.html", page_title="Equipments")   
 
 @app.route("/equipment-setting", methods=["GET"])
 def equipment_setting():
-    """
-    Equipment sayfasını render eder ve cihaz modellerini gösterir.
-    """
-    modbus_data = session.get("modbus_data", [])  # Modbus verilerini al
-    return render_template("equipments/equipment_setting.html", modbus_data=modbus_data)
+    modbus_data = session.get("modbus_data", [])
+    return render_template("equipments/equipment_setting.html", modbus_data=modbus_data, page_title="Equipment Setting")    
 
-
-# Diger SAyfalar         
+# Diger Sayfalar         
 @app.route('/modem-selection', endpoint="modem_selection")
 def modem_selection():
-    return render_template("modem_selection.html")
+    return render_template("modem_selection.html", page_title="Modem Selection")    
 
 
 @app.route('/log', endpoint="log")
 def log():
-    return render_template("log.html")
+    return render_template("log.html", page_title="Log")    
 
 
 @app.route('/alarm', endpoint="alarm")
 def alarm():
-    return render_template("alarm.html")
+    return render_template("alarm.html", page_title="Alarm")
 
 @app.route('/switch', endpoint="switch")
 def switch():
-    return render_template("test/switch.html")
+    return render_template("test/switch.html", page_title="Switch") 
 
 @app.route('/test', endpoint="test")
 def test():
-    return render_template("test/test.html")
+    return render_template("test/test.html", page_title="Test")
 
-
-@app.route('/equipment-details', endpoint="equipment_detatils")
+@app.route('/equipment-details', endpoint="equipment_details")
 def equipment_details():
-    return render_template("equipments/equipment_details.html")
-
+    return render_template("equipments/equipment_details.html", page_title="Equipments Details")
 
 # !! Settings Start
 @app.route('/settings', endpoint="settings")
 def settings():
-    return render_template("settings/setting.html")
+    return render_template("settings/setting.html", page_title="Settings")  
 
 
 @app.route('/orc-settings', endpoint="orc_settings")
 def orc_setting():
-    return render_template("settings/orc_set.html")
+    return render_template("settings/orc_set.html", page_title="Orc Settings")   
 
 
 @app.route('/osos-settings', endpoint="osos_settings")
 def osos_setting():
-    return render_template("settings/osos_set.html")
+    return render_template("settings/osos_set.html", pgae_title="Osos Settings")    
 
 
 @app.route('/equipment-settings', endpoint="equipment_settings")
 def equipment_setting():
-    return render_template("settings/equipment_set.html")
+    return render_template("settings/equipment_set.html", page_title="Equipment Settings")    
 
 
 # !! Settings End
@@ -386,34 +365,34 @@ def equipment_setting():
 # !! Data Start 
 @app.route('/data', endpoint="data")
 def data():
-    return render_template("datas/data.html")
+    return render_template("datas/data.html", page_title="Datas")    
 
 #Live Data 
 @app.route('/live-data', endpoint="live-data")
 def live_data():
-    return render_template("datas/live_data.html")
+    return render_template("datas/live_data.html", page_title="Live Data")  
 
 @app.route('/live-data-detail', endpoint="live-data-detail")
 def live_data_detail():
-    return render_template("datas/live_data_detail.html")
+    return render_template("datas/live_data_detail.html", page_title="Live Data Detail")    
 
 # Hourly Data   
 @app.route('/hourly-data', endpoint="hourly-data")
 def hourly_data():
-    return render_template("datas/hourly_data.html")
+    return render_template("datas/hourly_data.html", page_title="Hourly Data")  
 
 @app.route('/hourly-data-detail', endpoint="hourly-data-detail")
 def hourly_data_detail():
-    return render_template("datas/hourly_data_detail.html")
+    return render_template("datas/hourly_data_detail.html", page_title="Hourly Data Detail")    
 
 # Daily Data    
 @app.route('/daily-data', endpoint="daily-data")
 def daily_data():
-    return render_template("datas/daily_data.html")
+    return render_template("datas/daily_data.html", page_title="Daily Data")    
 
 @app.route('/daily-data-detail', endpoint="daily-data-detail")
 def daily_data_detail():
-    return render_template("datas/daily_data_detail.html")
+    return render_template("datas/daily_data_detail.html", page_title="Daily Data Detail")  
 
 # !! Data End
 

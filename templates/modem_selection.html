@@ -3,7 +3,14 @@ block content %}
 <div class="header">
   <div class="header-left">
     <button class="header-button" onclick="goToDashboard()">
-      Home <img src="{{ url_for('static', filename='images/svg/19.svg') }}" alt="Logout" width="20" height="20"  style="padding: 7px 7px; background: #0B1734; border-radius: 5px;">
+      Home
+      <img
+        src="{{ url_for('static', filename='images/svg/19.svg') }}"
+        alt="Logout"
+        width="20"
+        height="20"
+        style="padding: 7px 7px; background: #0b1734; border-radius: 5px"
+      />
     </button>
   </div>
 
@@ -22,7 +29,6 @@ block content %}
     </div>
     <div class="report-date">Modem Selection</div>
   </div>
-
 </div>
 
 <!-- Sayfa İçeriği -->
@@ -182,7 +188,7 @@ block content %}
       // Kullanıcıya uyarı ver
       Swal.fire({
         icon: "warning",
-        title: "⚠️ Uyarı",
+        title: "Uyarı",
         text: "Lütfen önce bir cihaz seçiniz!",
         confirmButtonText: "Tamam",
       });
@@ -206,7 +212,7 @@ block content %}
         if (!data.ip_address) {
           Swal.fire({
             icon: "warning",
-            title: "⚠️ Uyarı",
+            title: "Uyarı",
             text: "Lütfen önce bir cihaz seçiniz!",
             confirmButtonText: "Tamam",
           });
@@ -241,7 +247,7 @@ block content %}
       // Kullanıcıya uyarı ver
       Swal.fire({
         icon: "warning",
-        title: "⚠️ Uyarı",
+        title: "Uyarı",
         text: "Lütfen önce bir cihaz seçiniz!",
         confirmButtonText: "Tamam",
       });
@@ -279,10 +285,7 @@ block content %}
         }
 
         // **Modbus verilerini sakla**
-        sessionStorage.setItem(
-          "equipment_data",
-          JSON.stringify(data.data)
-        );
+        sessionStorage.setItem("equipment_data", JSON.stringify(data.data));
 
         // **Equipment sayfasına yönlendir**
         window.location.href = "/equipment";
@@ -303,35 +306,35 @@ block content %}
       });
   }
 
-    // Equipment With Model
-    function goToSetting() {
-      let dropdown = document.getElementById("modem");
-      let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
-  
-      if (!selectedDeviceIP) {
-        // Kullanıcıya uyarı ver
-        Swal.fire({
-          icon: "warning",
-          title: "⚠️ Uyarı",
-          text: "Lütfen önce bir cihaz seçiniz!",
-          confirmButtonText: "Tamam",
-        });
-        return; // İşlemi durdur
-      }
-  
-      // **Loading ekranını ekleyelim**
-      let loadingOverlay = document.createElement("div");
-      loadingOverlay.id = "loading-overlay";
-      loadingOverlay.className = "loading-overlay";
-      loadingOverlay.innerHTML = `
+  // Equipment With Model
+  function goToSetting() {
+    let dropdown = document.getElementById("modem");
+    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+
+    if (!selectedDeviceIP) {
+      // Kullanıcıya uyarı ver
+      Swal.fire({
+        icon: "warning",
+        title: "Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return; // İşlemi durdur
+    }
+
+    // **Loading ekranını ekleyelim**
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
         <div class="loading-box">
           <p> ORC Status yükleniyor...</p>
           <div class="loader"></div>
         </div>`;
-      document.body.appendChild(loadingOverlay); 
+    document.body.appendChild(loadingOverlay);
 
-      window.location.href = "/settings";
-    }
+    window.location.href = "/settings";
+  }
 
   // Test Sayfasına Yönlendirir
   function SwitchtTest() {
@@ -342,7 +345,7 @@ block content %}
       // Kullanıcıya uyarı ver
       Swal.fire({
         icon: "warning",
-        title: "⚠️ Uyarı",
+        title: "Uyarı",
         text: "Lütfen önce bir cihaz seçiniz!",
         confirmButtonText: "Tamam",
       });
@@ -372,7 +375,7 @@ block content %}
       // Kullanıcıya uyarı ver
       Swal.fire({
         icon: "warning",
-        title: "⚠️ Uyarı",
+        title: "Uyarı",
         text: "Lütfen önce bir cihaz seçiniz!",
         confirmButtonText: "Tamam",
       });
@@ -388,7 +391,7 @@ block content %}
         <p> ORC Status yükleniyor...</p>
         <div class="loader"></div>
       </div>`;
-    document.body.appendChild(loadingOverlay); 
+    document.body.appendChild(loadingOverlay);
 
     window.location.href = "/data";
   }
@@ -402,11 +405,11 @@ block content %}
       // Kullanıcıya uyarı ver
       Swal.fire({
         icon: "warning",
-        title: "⚠️ Uyarı",
+        title: "Uyarı",
         text: "Lütfen önce bir cihaz seçiniz!",
         confirmButtonText: "Tamam",
       });
-      return; // İşlemi durdur
+      return;
     }
 
     // **Loading ekranını ekleyelim**
@@ -452,25 +455,29 @@ block content %}
   }
 
   function updateDateTime() {
-        const now = new Date();
-        
-        // 📌 Gün, ay, yıl formatında al (DD Month YYYY)
-        const options = { day: '2-digit', month: 'long', year: 'numeric' };
-        const formattedDate = now.toLocaleDateString('tr-TR', options);
+    const now = new Date();
 
-        // 📌 Saat ve dakikayı ekle (HH:MM formatında)
-        const formattedTime = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+    // 📌 Gün, ay, yıl formatında al (DD Month YYYY)
+    const options = { day: "2-digit", month: "long", year: "numeric" };
+    const formattedDate = now.toLocaleDateString("tr-TR", options);
 
-        // 📌 HTML içine ekle
-        document.getElementById('currentDateTime').textContent = `${formattedDate} ${formattedTime}`;
-    }
+    // 📌 Saat ve dakikayı ekle (HH:MM formatında)
+    const formattedTime = now.toLocaleTimeString("tr-TR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 
-    // Sayfa yüklendiğinde çalıştır
-    updateDateTime();
+    // 📌 HTML içine ekle
+    document.getElementById(
+      "currentDateTime"
+    ).textContent = `${formattedDate} ${formattedTime}`;
+  }
 
-    // 📌 Her 1 dakikada bir tarihi ve saati güncelle
-    setInterval(updateDateTime, 60000);
+  // Sayfa yüklendiğinde çalıştır
+  updateDateTime();
 
+  // 📌 Her 1 dakikada bir tarihi ve saati güncelle
+  setInterval(updateDateTime, 60000);
 </script>
 
 {% endblock %}
