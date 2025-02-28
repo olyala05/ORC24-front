@@ -23,46 +23,130 @@
     <!-- Wi-Fi Test -->
     <div id="wifi-test" class="tab-content-test">
       <div class="wifi-container-test">
-        
         <!-- Available Wi-Fi -->
         <div class="network-box-test">
           <button class="network-header-test" id="wifiToggleBtn">
             Available Wi-Fi
             <span class="wifi-icon-test">
-              <img src="{{ url_for('static', filename='images/svg/12.svg') }}" alt="Wi-Fi Icon" />
+              <img
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                alt="Wi-Fi Icon"
+              />
             </span>
           </button>
-        
+
           <div class="wifi-list-test" id="wifiList">
             <div class="wifi-category-test">Known Networks</div>
-            <div class="wifi-item-test">
-              <div class="wifi-name-test"> <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/></span> Pier Mi Sag 5G <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi"/></div>
-            </div>
-            <div class="wifi-item-test">
+            <div class="wifi-item-test" data-wifi="Pier Mi Sag 5G">
               <div class="wifi-name-test">
-                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/></span> Pier Router Mi_5G <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi"/></div>
+                <span
+                  ><img
+                    src="{{ url_for('static', filename='images/svg/25.svg') }}"
+                    alt="Wi-Fi"
+                /></span>
+                Pier Mi Sag 5G
+                <img
+                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
+                  alt="Wi-Fi"
+                />
+              </div>
             </div>
-            <div class="wifi-item-test">
+            <div class="wifi-item-test" data-wifi="Pier Router Mi_5G">
               <div class="wifi-name-test">
-                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/></span> pierenerji <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi"/></div>
+                <span
+                  ><img
+                    src="{{ url_for('static', filename='images/svg/25.svg') }}"
+                    alt="Wi-Fi"
+                /></span>
+                Pier Router Mi_5G
+                <img
+                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
+                  alt="Wi-Fi"
+                />
+              </div>
             </div>
-        
+            <div class="wifi-item-test" data-wifi="pierenerji">
+              <div class="wifi-name-test">
+                <span
+                  ><img
+                    src="{{ url_for('static', filename='images/svg/25.svg') }}"
+                    alt="Wi-Fi"
+                /></span>
+                pierenerji
+                <img
+                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
+                  alt="Wi-Fi"
+                />
+              </div>
+            </div>
+
             <div class="wifi-category-test">Other Networks</div>
-            <div class="wifi-item-test">
+            <div class="wifi-item-test" data-wifi="1 NUMARA">
               <div class="wifi-name-test">
-                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/></span> 1 NUMARA <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi"/></div>
+                <span
+                  ><img
+                    src="{{ url_for('static', filename='images/svg/25.svg') }}"
+                    alt="Wi-Fi"
+                /></span>
+                1 NUMARA
+                <img
+                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
+                  alt="Wi-Fi"
+                />
+              </div>
             </div>
-            <div class="wifi-item-test">
+            <div class="wifi-item-test" data-wifi="DIRECT-274604BB">
               <div class="wifi-name-test">
-                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/></span> DIRECT-274604BB <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi"/></div>
+                <span
+                  ><img
+                    src="{{ url_for('static', filename='images/svg/25.svg') }}"
+                    alt="Wi-Fi"
+                /></span>
+                DIRECT-274604BB
+                <img
+                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
+                  alt="Wi-Fi"
+                />
+              </div>
             </div>
-            <div class="wifi-item-test">
+            <div class="wifi-item-test" data-wifi="dsmart_1401">
               <div class="wifi-name-test">
-                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi"/></span> dsmart_1401 <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi"/></div>
+                <span
+                  ><img
+                    src="{{ url_for('static', filename='images/svg/25.svg') }}"
+                    alt="Wi-Fi"
+                /></span>
+                dsmart_1401
+                <img
+                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
+                  alt="Wi-Fi"
+                />
+              </div>
             </div>
           </div>
         </div>
-        
+
+        <!-- Wi-Fi Şifre Giriş Popup -->
+        <div id="wifiPopup" class="popup-overlay">
+          <div class="popup-content">
+            <h3>
+              <img
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                alt="Wi-Fi"
+              />
+              Enter the Wi-Fi password for '<span id="wifiName"></span>'
+            </h3>
+            <label for="wifiPassword">Password</label>
+            <input type="password" id="wifiPassword" placeholder="Password" />
+            <div class="text-show-pass"><input type="checkbox" id="showPassword" /> Show Password</div>
+            <div class="popup-buttons">
+              <button class="cancel-btn" onclick="closeWifiPopup()">
+                Cancel
+              </button>
+              <button class="join-btn">Join</button>
+            </div>
+          </div>
+        </div>
 
         <!-- Wi-Fi Bölümü  -->
         <div class="wifi-test-box">
@@ -432,7 +516,9 @@
 
         <div class="write-test-terminal">
           <label for="terminal">Terminal</label>
-          <textarea id="terminal" readonly>Write successful Read value: sadfasd</textarea>
+          <textarea id="terminal" readonly>
+Write successful Read value: sadfasd</textarea
+          >
         </div>
       </div>
     </div>
@@ -440,16 +526,44 @@
 </div>
 
 <script>
-  // JavaScript for toggling the dropdown
+  // JavaScript for toggling the dropdown and Pop Up password
   document.addEventListener("DOMContentLoaded", function () {
     const wifiToggleBtn = document.getElementById("wifiToggleBtn");
     const wifiList = document.getElementById("wifiList");
-  
+    const wifiPopup = document.getElementById("wifiPopup");
+    const wifiName = document.getElementById("wifiName");
+    const passwordInput = document.getElementById("wifiPassword");
+    const showPasswordCheckbox = document.getElementById("showPassword");
+
+    // İlk başta popup'ı kesinlikle gizli yap
+    wifiPopup.style.display = "none";
+
+    // Wi-Fi listesi aç/kapa
     wifiToggleBtn.addEventListener("click", function () {
-      wifiList.style.display = wifiList.style.display === "block" ? "none" : "block";
+      wifiList.style.display =
+        wifiList.style.display === "block" ? "none" : "block";
+    });
+
+    // Wi-Fi listesinde her öğeye tıklanınca popup aç
+    document.querySelectorAll(".wifi-item-test").forEach((item) => {
+      item.addEventListener("click", function () {
+        const networkName = item.getAttribute("data-wifi");
+        wifiName.textContent = networkName;
+        passwordInput.value = "";
+        wifiPopup.style.display = "flex"; // Popup aç
+      });
+    });
+
+    // Popup kapatma
+    window.closeWifiPopup = function () {
+      wifiPopup.style.display = "none";
+    };
+
+    // Şifre göster/gizle
+    showPasswordCheckbox.addEventListener("change", function () {
+      passwordInput.type = this.checked ? "text" : "password";
     });
   });
-  
 
   document.addEventListener("DOMContentLoaded", function () {
     const tabButtons = document.querySelectorAll(".switch-btn-test");
