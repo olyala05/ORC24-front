@@ -180,19 +180,18 @@ def connect_device():
 
 
 #  ORC Stataus
-@app.route("/orc-status", methods=["GET", "POST"])
+@app.route("/orc-status", methods=["GET", "POST"], endpoint="orc_status")
 def orc_status():
     selected_ip = session.get("selected_device_ip")
 
     if not selected_ip:
         flash("Lütfen önce bir cihaz seçin!", "danger")
-        return render_template("orc_status.html", error="Lütfen önce bir cihaz seçin!", modem=None, network=None)
+        return render_template("orc_status.html", page_title="ORC Status", error="Lütfen önce bir cihaz seçin!", modem=None, network=None)
 
     selected_modem = None
     network_data = None
 
     try:
-        # 📌 Modem verilerini al
         url_modem = f"http://{selected_ip}:8085/get_modems"
         print("Modem URL:", url_modem)  # 🔍 Konsola yazdır
         response_modem = requests.get(url_modem, timeout=5)  # 5 saniye timeout ekledik
@@ -222,11 +221,11 @@ def orc_status():
             except ValueError:
                 selected_modem["created_at"] = "Geçersiz Tarih"
 
-        return render_template("orc_status.html", modem=selected_modem, network=network_data, error=None)
+        return render_template("orc_status.html", page_title="ORC Status", modem=selected_modem, network=network_data, error=None)
 
     except Exception as e:
-        print("🔥 Genel hata:", e)
-        return render_template("orc_status.html", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
+        print("Genel hata:", e)
+        return render_template("orc_status.html", page_title="ORC Status", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
 
 
 # Equipments Modbus

@@ -241,10 +241,9 @@ block content %}
   // Equipment With Model
   function goToEquipment() {
     let dropdown = document.getElementById("modem");
-    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+    let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-      // Kullanıcıya uyarı ver
       Swal.fire({
         icon: "warning",
         title: "Uyarı",
