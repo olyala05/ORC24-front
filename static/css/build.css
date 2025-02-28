@@ -1,6 +1,5 @@
 @charset "UTF-8";
-@import "bootstrap/css/bootstrap.min.css";
-@import 'fontawesome/css/all.min.css';
+@import '../fontawesome/css/all.min.css';
 /* Genel Stil */
 body {
   background-color: #1c2747;
@@ -1474,10 +1473,15 @@ body {
 .algorithm-section .algorithm-box .algorithm-left i {
   font-size: 18px;
   color: #1c2747;
+  margin-left: 14px;
+}
+.algorithm-section .algorithm-box .algorithm-left i span {
+  margin-right: 70px;
 }
 .algorithm-section .algorithm-box .status-btn {
   background-color: #ff6f00;
-  padding: 10px 14px;
+  padding: 3px 17px;
+  margin: 0px 0px;
   font-size: 14px;
   border-radius: 6px;
   font-weight: bold;
