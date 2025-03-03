@@ -3,6 +3,17 @@
     <button class="header-button" onclick="goBack()">
       Back <img src="{{ url_for('static', filename='images/svg/20.svg') }}" alt="Logout" width="20" height="20"  style="padding: 7px 7px; background: #0B1734; border-radius: 5px;">
     </button>
+
+    <!-- Alarm Butonu -->
+    <button class="header-button" onclick="goToAlarm()" title="Alarm">
+      <img
+        src="{{ url_for('static', filename='images/svg/30.svg') }}"
+        alt="Alarm"
+        width="30"
+        height="30"
+        style="padding: 3px; border-radius: 5px"
+      />
+    </button>
   </div>
 
   <div class="header-logo">
