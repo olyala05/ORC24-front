@@ -1080,6 +1080,12 @@ input:-webkit-autofill:focus {
   width: 540px;
 }
 
+.equ-set-sidebar .equ-set-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
 body {
   background-color: #1c2747;
   color: #fff;

@@ -193,4 +193,10 @@
   padding: 7px;
   border-radius: 10px;
   width: 540px;
+}
+
+.equ-set-sidebar .equ-set-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 1;
 }/*# sourceMappingURL=equipment-setting.css.map */
