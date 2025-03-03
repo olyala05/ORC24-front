@@ -319,10 +319,6 @@ def modem_selection():
 def log():
     return render_template("log.html", page_title="Log")    
 
-@app.route('/alarm', endpoint="alarm")
-def alarm():
-    return render_template("alarm.html", page_title="Alarm")
-
 @app.route('/switch', endpoint="switch")
 def switch():
     return render_template("test/switch.html", page_title="Switch") 
@@ -406,6 +402,20 @@ def daily_data():
 def daily_data_detail():
     return render_template("datas/daily_data_detail.html", page_title="Daily Data Detail")  
 # !! Data End
+
+# !! Alarm Start    
+@app.route('/alarm', endpoint="alarm")
+def alarm():
+    return render_template("alarms/alarm.html", page_title="Alarm")  
+
+@app.route('/network-alarm-detail', endpoint="network-alarm-detail")
+def network_alarm_detail():
+    return render_template("alarms/network-alarm_details.html", page_title="Network Alarm Details")
+
+@app.route('/electric-alarm-detail', endpoint="electric-alarm-detail")
+def electric_alarm_detail():
+    return render_template("alarms/electric_alarm_details.html", page_title="Electric Alarm Details")
+# !! Alarm End
 
 @app.route("/logout", methods=["POST"])
 def logout():

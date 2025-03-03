@@ -264,20 +264,54 @@ input:-webkit-autofill:focus {
     font-size: 12px;
   }
 }
+.main-alarm-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: #0B1734; */
+  padding: 0px;
+  border-radius: 10px;
+  margin-top: 70px;
+}
+
+.main-alarm-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.main-alarm-btn {
+  background: white;
+  border: 3px solid transparent;
+  color: black;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 30px 66px;
+  border-radius: 7px;
+  margin: 0px 13px;
+  cursor: pointer;
+  transition: all 0.3sease-in-out;
+}
+.main-alarm-btn.active {
+  border-color: #ff6f00;
+}
+.main-alarm-btn:hover {
+  background: #f5f5f5;
+}
+
 /* Temel Alarm Sayfası Stili */
-.alarm-container {
-  margin-top: 60px;
+.alarm-network-container {
+  margin-top: 80px;
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
+  width: 94vw;
   height: calc(100vh - 60px);
 }
 
-.alarm-table {
+.alarm-network-table {
   width: 100%;
-  background-color: #0B1734;
+  background-color: #0b1734;
   padding: 15px;
   border-radius: 8px;
   text-align: justify;
@@ -286,35 +320,84 @@ input:-webkit-autofill:focus {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.alarm-table table {
+.alarm-network-table table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.alarm-table th {
-  background-color: #1C2747;
+.alarm-network-table th {
   padding: 10px;
   font-size: 16px;
   border-bottom: 1px solid white;
 }
 
-.alarm-table td {
+.alarm-network-table td {
   padding: 8px;
   font-size: 16px;
 }
 
-.alarm-error a {
-  color: #EF742A;
-  font-weight: bold;
+.alarm-network-error a {
+  color: #ef742a;
   text-decoration: none;
 }
 
-.alarm-error a:hover {
+.alarm-network-error a:hover {
   text-decoration: none;
 }
 
-.alarm-mac {
-  color: #EF742A;
+.alarm-network-mac {
+  color: #ef742a;
+}
+
+/* Temel Alarm Sayfası Stili */
+.alarm-electric-container {
+  margin-top: 80px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 94vw;
+  height: calc(100vh - 60px);
+}
+
+.alarm-electric-table {
+  width: 100%;
+  background-color: #0b1734;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: justify;
+  color: white;
+  overflow: hidden;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.alarm-electric-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.alarm-electric-table th {
+  padding: 10px;
+  font-size: 16px;
+  border-bottom: 1px solid white;
+}
+
+.alarm-electric-table td {
+  padding: 8px;
+  font-size: 16px;
+}
+
+.alarm-electric-error a {
+  color: #ef742a;
+  text-decoration: none;
+}
+
+.alarm-electric-error a:hover {
+  text-decoration: none;
+}
+
+.alarm-electric-mac {
+  color: #ef742a;
 }
 
 /* Header */

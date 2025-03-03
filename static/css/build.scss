@@ -1,5 +1,7 @@
 @use './styles' as styles;
-@forward './alarm';
+@forward './alarms';
+@forward './alarm-network';    
+@forward './alarm-electric'; 
 @forward './dashboard';
 @forward './equipment-details';
 @use './equipment-setting';

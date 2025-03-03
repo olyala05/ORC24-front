@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %} Settings {% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+{% include 'partials/header.html' %}
+<div class="main-alarm-container">
+    <div class="main-alrm-buttons">
+        <button class="main-alarm-btn active" data-url="{{url_for('network-alarm-detail')}}">Network Alarms</button>
+        <button class="main-alarm-btn" data-url="{{url_for('electric-alarm-detail')}}">Elektrik Alarms</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const buttons = document.querySelectorAll(".main-alarm-btn");
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", function () {
+                // 📌 Önce tüm butonlardan 'active' sınıfını kaldır
+                buttons.forEach((btn) => btn.classList.remove("active"));
+
+                // 📌 Tıklanan butona 'active' ekle
+                this.classList.add("active");
+
+                // 📌 Sayfayı yönlendir
+                const url = this.getAttribute("data-url");
+                if (url) {
+                    window.location.href = url; 
+                }
+            });
+        });
+
+        // 📌 Sayfa yenilendiğinde hangi sayfadaysa, o butonu 'active' yap
+        const currentPath = window.location.pathname;
+        buttons.forEach((button) => {
+            if (button.getAttribute("data-url") === currentPath) {
+                button.classList.add("active");
+            }
+        });
+    });
+</script>
+{% endblock %}

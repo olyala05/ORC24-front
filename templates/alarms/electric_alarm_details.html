@@ -1,0 +1,52 @@
+{% extends "layout.html" %} {% block title %} Alarm {% endblock %} {% block
+    extra_css %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/alarm.css') }}"
+    />
+    {% endblock %} {% block content %}
+    
+    <!-- Header -->
+    {% include 'partials/header.html' %}
+    
+    <div class="alarm-electric-container">
+      <div class="alarm-electric-table">
+        <table>
+          <thead stytle="text-align: center;">
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Equipments Serial</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="alarm-electric-error"><a href="#">Cannot Retrieve CPU Value</a></td>
+              <td>Network</td>
+              <td class="alarm-electric-mac">00:00:5e:00:53:af</td>
+              <td>2023-04-05 11:20</td>
+              <td>Active</td>   
+            </tr>
+            <tr>
+              <td class="alarm-electric-error"><a href="#">Cannot Retrieve RAM Value</a></td>
+              <td>Network</td>
+              <td class="alarm-electric-mac">00:00:5e:00:53:af</td>
+              <td>2023-04-05 11:20</td>
+              <td>Active</td>   
+            </tr>
+            <tr>
+              <td class="alarm-electric-error"><a href="#">Cannot Retrieve RAM Value</a></td>
+              <td>Network</td>
+              <td class="alarm-electric-mac">00:00:5e:00:53:af</td>
+              <td>2023-04-05 11:20</td>
+              <td style="color:green;">Active</td>   
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    {% endblock %}
+    
