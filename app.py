@@ -9,7 +9,6 @@ import scapy.all as scapy
 import nmap
 import socket
 from datetime import datetime
-from requests.exceptions import RequestException
 import logging
 
 app = Flask(__name__)
@@ -19,7 +18,7 @@ app.config["JWT_SECRET_KEY"] = "jwt_secret_key"
 jwt = JWTManager(app)
 
 # Flask logları ayarla
-logging.basicConfig(level=logging.INFO)  # INFO seviyesinde log al
+logging.basicConfig(level=logging.INFO)  
 logger = logging.getLogger(__name__)
 
 # Laravel API'nin URL'si 
@@ -316,11 +315,9 @@ def equipment_setting():
 def modem_selection():
     return render_template("modem_selection.html", page_title="Modem Selection")    
 
-
 @app.route('/log', endpoint="log")
 def log():
     return render_template("log.html", page_title="Log")    
-
 
 @app.route('/alarm', endpoint="alarm")
 def alarm():
@@ -357,8 +354,6 @@ def osos_setting():
 @app.route('/equipment-settings', endpoint="equipment_settings")
 def equipment_setting():
     return render_template("settings/equipment_set.html", page_title="Equipment Settings")    
-
-
 # !! Settings End
 
 # !! Data Start 
@@ -369,7 +364,25 @@ def data():
 #Live Data 
 @app.route('/live-data', endpoint="live-data")
 def live_data():
-    return render_template("datas/live_data.html", page_title="Live Data")  
+    return render_template("datas/live_data.html", page_title="Live Data") 
+
+# Live Data
+@app.route("/fetch_grouped_live_data", methods=["POST"])
+def fetch_grouped_live_data():
+    selected_ip = session.get("selected_device_ip")
+    if not selected_ip:
+        return jsonify({"error": "Lütfen önce bir cihaz seçin!"}), 400
+
+    try:
+        url = f"http://{selected_ip}:8085/get_grouped_live_data"
+        response = requests.get(url)
+        response.raise_for_status()
+        live_data = response.json().get("data", [])
+
+        return jsonify({"equipments": live_data}) if live_data else jsonify({"message": "Bu tablo boş"}), 404
+
+    except requests.RequestException as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/live-data-detail', endpoint="live-data-detail")
 def live_data_detail():
@@ -392,7 +405,6 @@ def daily_data():
 @app.route('/daily-data-detail', endpoint="daily-data-detail")
 def daily_data_detail():
     return render_template("datas/daily_data_detail.html", page_title="Daily Data Detail")  
-
 # !! Data End
 
 @app.route("/logout", methods=["POST"])
@@ -400,7 +412,6 @@ def logout():
     session.clear() 
     return redirect(url_for("login"))
 
- 
 class ResponseHandler:
     @staticmethod
     def success(message=None, data=None):

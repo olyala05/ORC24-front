@@ -55,9 +55,6 @@
   color: #ccc;
   font-size: 12px;
 }
-.live-data-container .table-row .passive-style {
-  margin-left: 25px;
-}
 .live-data-container .status {
   display: inline-block;
   width: 12px;
