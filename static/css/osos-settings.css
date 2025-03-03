@@ -117,4 +117,10 @@
 }
 .osos-settings-container .osos-settings-success {
   color: #4caf50;
+}
+
+.tab-btn-set:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 1;
 }/*# sourceMappingURL=osos-settings.css.map */
