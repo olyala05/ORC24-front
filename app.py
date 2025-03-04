@@ -191,41 +191,41 @@ def orc_status():
     network_data = None
 
     try:
+        # Modem bilgilerini al
         url_modem = f"http://{selected_ip}:8085/get_modems"
-        print("Modem URL:", url_modem)  # 🔍 Konsola yazdır
-        response_modem = requests.get(url_modem, timeout=5)  # 5 saniye timeout ekledik
+        response_modem = requests.get(url_modem, timeout=5)
         response_modem.raise_for_status()
         modems = response_modem.json().get("data", [])
         selected_modem = modems[0] if modems else None
 
+        # Ağ bilgilerini al
         url_network = f"http://{selected_ip}:8085/check_network"
-        print("Ağ URL:", url_network)
+
         try:
             response_network = requests.get(url_network, timeout=5)
             response_network.raise_for_status()
             network_full = response_network.json()
-            # Yalnızca 'data' kısmını al
             network_data = network_full.get("data", {})
-            print("Wi-Fi SSID:", network_data.get("connected_ssid"))
-        except requests.exceptions.RequestException as e:
-            print(f"⚠️ Ağ bilgisi alınamadı: {e}")
-            flash(f"Ağ bilgisi alınamadı: {e}", "warning")
 
-        # 📌 Tarih formatını dönüştür
-        if selected_modem and "created_at" in selected_modem:
-            raw_date = selected_modem["created_at"]
-            try:
-                parsed_date = datetime.strptime(raw_date, "%a, %d %b %Y %H:%M:%S %Z")
-                selected_modem["created_at"] = parsed_date.strftime("%Y-%m-%d %H:%M:%S")
-            except ValueError:
-                selected_modem["created_at"] = "Geçersiz Tarih"
+            # Aktif bağlantıları belirleme
+            active_connections = []
+            if network_data.get("wifi_connected"):
+                active_connections.append("Wi-Fi")
+            if network_data.get("ethernet_connected"):
+                active_connections.append("Ethernet")
+            if network_data.get("network_type") == "GSM":
+                active_connections.append("GSM")
+
+            network_data["active_connections"] = active_connections  # Bağlı ağları liste olarak ekle
+            network_data["network_type_list"] = active_connections  # NETWORK TYPE için liste
+
+        except requests.exceptions.RequestException as e:
+            flash(f"Ağ bilgisi alınamadı: {e}", "warning")
 
         return render_template("orc_status/orc_status.html", page_title="ORC Status", modem=selected_modem, network=network_data, error=None)
 
     except Exception as e:
-        print("Genel hata:", e)
         return render_template("orc_status/orc_status.html", page_title="ORC Status", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
-
 
 # Equipments Modbus
 @app.route("/modbus_request", methods=["POST"])
