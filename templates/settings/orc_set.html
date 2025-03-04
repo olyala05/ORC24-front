@@ -1,4 +1,7 @@
-{% extends "layout.html" %} {% block title %} Equipment Details {% endblock %}
+{% extends "layout.html" %} 
+
+{% block title %} Equipment Details {% endblock %}
+
 {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
@@ -29,73 +32,8 @@
               Available Wi-Fi
             </h4>
             <div class="available-wifi-underline"></div>
-            <ul>
-              <li>
-                <img
-                  src="{{ url_for('static', filename='images/svg/25.svg') }}"
-                  alt="Wi-Fi"
-                />
-                <span>Pier Enerji</span>
-                <img
-                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
-                  alt="Lock"
-                />
-              </li>
-              <li>
-                <img
-                  src="{{ url_for('static', filename='images/svg/25.svg') }}"
-                  alt="Wi-Fi"
-                />
-                <span>Pier Router Mi</span>
-                <img
-                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
-                  alt="Lock"
-                />
-              </li>
-              <li>
-                <img
-                  src="{{ url_for('static', filename='images/svg/25.svg') }}"
-                  alt="Wi-Fi"
-                />
-                <span>1 NUMBER</span>
-                <img
-                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
-                  alt="Lock"
-                />
-              </li>
-              <li>
-                <img
-                  src="{{ url_for('static', filename='images/svg/25.svg') }}"
-                  alt="Wi-Fi"
-                />
-                <span>Alperen</span>
-                <img
-                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
-                  alt="Lock"
-                />
-              </li>
-              <li>
-                <img
-                  src="{{ url_for('static', filename='images/svg/25.svg') }}"
-                  alt="Wi-Fi"
-                />
-                <span>AndroidAP_2455</span>
-                <img
-                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
-                  alt="Lock"
-                />
-              </li>
-              <li>
-                <img
-                  src="{{ url_for('static', filename='images/svg/25.svg') }}"
-                  alt="Wi-Fi"
-                />
-                <span>Tenda_R24</span>
-                <img
-                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
-                  alt="Lock"
-                />
-              </li>
+            <ul id="wifi-networks">
+              <!-- Buraya dinamik Wi-Fi listesi gelecek -->
             </ul>
           </div>
         </div>
@@ -179,7 +117,6 @@
             <option value="inactive">Inactive</option>
           </select>
         </div>
-
         <div class="orc-input-group">
           <label>Query Update Time (Hour - Minute)</label>
           <select>
@@ -190,36 +127,25 @@
             <option value="02:00">02:00</option>
           </select>
         </div>
-
         <button class="orc-save-btn">Kaydet</button>
       </div>
     </div>
   </div>
 
   <script>
-    //function toggleWifiList() {
-    //const wifiList = document.getElementById("wifi-list");
-    //wifiList.classList.toggle("active");
-    //}
-
     document.addEventListener("DOMContentLoaded", function () {
       const tabButtons = document.querySelectorAll(".tab-btn-set");
-      const tabContents = document.querySelectorAll(".content-area-set > div"); // 🔥 Tüm içerikleri direkt seçtik
-
+      const tabContents = document.querySelectorAll(".content-area-set > div"); 
       tabButtons.forEach((button) => {
         button.addEventListener("click", function () {
           const targetId = this.getAttribute("data-target");
 
-          // 📌 Önce tüm içerikleri gizle
           tabContents.forEach((content) => (content.style.display = "none"));
 
-          // 📌 Tüm butonlardaki "active" sınıfını kaldır
           tabButtons.forEach((btn) => btn.classList.remove("active"));
 
-          // 📌 Seçilen butona "active" sınıfı ekle
           this.classList.add("active");
 
-          // 📌 İlgili tab içeriğini göster
           const targetElement = document.getElementById(targetId);
           if (targetElement) {
             targetElement.style.display = "block";
@@ -227,21 +153,104 @@
         });
       });
 
-      // 📌 Sayfa yüklendiğinde varsayılan olarak ilk sekmeyi göster
       if (tabButtons.length > 0) {
         tabButtons[0].click();
       }
     });
 
-    //JavaScript ile butonları sonradan aktif edebilme (isteğe bağlı)
-    // Eğer ilerleyen zamanlarda bu butonları etkin hale getirmek istersen aşağıdaki kodu ekleyerek belirli bir süre sonra aktif edebilirsin:
-    //setTimeout(() => {
-    //  document.querySelectorAll(".tab-btn-set[disabled]").forEach((btn) => {
-    //    btn.removeAttribute("disabled");
-    //  });
-    //}, 5000);
-    
-  </script>
 
+    document.addEventListener("DOMContentLoaded", function () {
+      const wifiListElement = document.getElementById("wifi-networks");
+      const wifiPasswordInput = document.querySelector(".password-intput-set input");
+      const wifiSSIDElement = document.querySelector(".wifi-connection-set p");
+      const connectButton = document.querySelector(".btn-set.connec-set");
+      let selectedSSID = null;
+  
+      // 📌 Wi-Fi ağlarını getir
+      function fetchWifiNetworks() {
+          fetch("/wi-fi-list", { method: "POST" })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.status !== "success") {
+                      wifiListElement.innerHTML = `<p style='color: red;'>${data.message}</p>`;
+                      return;
+                  }
+  
+                  const networks = data.data.wifi_networks || [];
+                  const connectedSSID = data.data.connected_ssid || null;
+                  const connectedPassword = data.data.wifi_password || "";
+  
+                  let wifiHTML = "";
+  
+                  networks.forEach(ssid => {
+                      wifiHTML += `
+                          <li onclick="selectWifi('${ssid}')">
+                              <img src="/static/images/svg/25.svg" alt="Wi-Fi"/>
+                              <span>${ssid}</span>
+                              <img src="/static/images/svg/26.svg" alt="Lock"/>
+                          </li>
+                      `;
+                  });
+  
+                  wifiListElement.innerHTML = wifiHTML;
+  
+                  // 📌 Eğer bağlı Wi-Fi varsa inputu doldur
+                  if (connectedSSID) {
+                      selectedSSID = connectedSSID;
+                      wifiSSIDElement.innerText = `Wi-Fi SSID: ${connectedSSID}`;
+                      wifiPasswordInput.value = connectedPassword;
+                  }
+              })
+              .catch(error => {
+                  console.error("Wi-Fi ağları yüklenirken hata oluştu:", error);
+                  wifiListElement.innerHTML = "<p style='color: red;'>Wi-Fi bilgisi alınamadı.</p>";
+              });
+      }
+  
+      // 📌 Seçilen Wi-Fi'yi inputa ekle
+      window.selectWifi = function (ssid) {
+          selectedSSID = ssid;
+          wifiSSIDElement.innerText = `Wi-Fi SSID: ${ssid}`;
+          wifiPasswordInput.value = "";
+      };
+  
+      // 📌 Wi-Fi ağına bağlan
+      connectButton.addEventListener("click", function () {
+          if (!selectedSSID) {
+              alert("Lütfen bir Wi-Fi ağı seçin!");
+              return;
+          }
+  
+          const password = wifiPasswordInput.value;
+          if (!password) {
+              alert("Lütfen şifre girin!");
+              return;
+          }
+  
+          fetch("/connect_wifi", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ ssid: selectedSSID, password: password }),
+          })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.status === "success") {
+                      alert("Wi-Fi bağlantısı başarılı!");
+                      fetchWifiNetworks(); // 📌 Bağlı ağı güncelle
+                  } else {
+                      alert("Bağlantı başarısız: " + data.message);
+                  }
+              })
+              .catch(error => {
+                  console.error("Wi-Fi bağlantısı sırasında hata oluştu:", error);
+                  alert("Bağlantı hatası!");
+              });
+      });
+  
+      // 📌 Sayfa yüklendiğinde Wi-Fi ağlarını getir
+      fetchWifiNetworks();
+  });
+  
+  </script>
   {% endblock %}
 </div>

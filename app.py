@@ -236,6 +236,34 @@ def orc_status():
     except Exception as e:
         return render_template("orc_status/orc_status.html", page_title="ORC Status", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
 
+
+#network info    
+@app.route("/wi-fi-list", methods=["POST"])
+def wi_fi_list():
+    selected_ip = session.get("selected_device_ip")
+    
+    if not selected_ip:
+        return jsonify({"error": "IP address is missing"}), 400
+
+    try:
+        # Seçilen cihazdan bağlantı bilgilerini al
+        url = f"http://{selected_ip}:8085/check_network"
+        response = requests.get(url)
+        response.raise_for_status()
+        network_data = response.json()
+
+        return jsonify({
+            "status": "success",
+            "message": "Connection information retrieved successfully.",
+            "data": network_data["data"]  
+        })
+    except requests.RequestException as e:
+        return jsonify({
+            "status": "error",
+            "message": f"Failed to connect to device: {str(e)}",
+            "data": None
+        }), 500
+
 @app.route("/fetch_equipment_details", methods=["GET"])
 def fetch_equipment_details():
     selected_ip = session.get("selected_device_ip")  
