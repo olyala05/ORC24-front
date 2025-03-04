@@ -267,7 +267,7 @@ block content %}
         text: "Lütfen önce bir cihaz seçiniz!",
         confirmButtonText: "Tamam",
       });
-      return; // İşlemi durdur
+      return; 
     }
 
     // **Loading ekranını ekleyelim**
@@ -279,7 +279,7 @@ block content %}
           <p> Equipments yükleniyor...</p>
           <div class="loader"></div>
         </div>`;
-    document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
+    document.body.appendChild(loadingOverlay);
 
     fetch("/equipments-with-models", {
       method: "POST",

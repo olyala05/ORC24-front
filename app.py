@@ -11,6 +11,7 @@ import socket
 from datetime import datetime
 import logging
 
+
 app = Flask(__name__)
 CORS(app)
 app.secret_key = 'supersecretkey'
@@ -195,11 +196,20 @@ def orc_status():
         response_modem = requests.get(url_modem, timeout=5)
         response_modem.raise_for_status()
         modems = response_modem.json().get("data", [])
-        selected_modem = modems[0] if modems else None
+
+        if modems:
+            selected_modem = modems[0]
+
+            # **created_at tarihini uygun formata dönüştürelim**
+            if "created_at" in selected_modem and selected_modem["created_at"]:
+                try:
+                    created_at_dt = datetime.strptime(selected_modem["created_at"], "%a, %d %b %Y %H:%M:%S %Z")
+                    selected_modem["created_at"] = created_at_dt.strftime("%Y-%m-%d %H:%M:%S")
+                except ValueError:
+                    selected_modem["created_at"] = "Tarih formatı hatalı"
 
         # Ağ bilgilerini al
         url_network = f"http://{selected_ip}:8085/check_network"
-
         try:
             response_network = requests.get(url_network, timeout=5)
             response_network.raise_for_status()
@@ -225,7 +235,6 @@ def orc_status():
 
     except Exception as e:
         return render_template("orc_status/orc_status.html", page_title="ORC Status", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
-
 
 # Equipments Modbus
 @app.route("/modbus_request", methods=["POST"])
