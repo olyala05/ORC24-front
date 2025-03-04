@@ -36,6 +36,9 @@
   font-size: 14px;
   border-bottom: 1px solid #ff6f00;
 }
+.device-info ul li:last-child {
+  border-bottom: none;
+}
 .device-info .connection-status {
   width: 100%;
   background-color: white;
@@ -118,8 +121,12 @@
   border-bottom: 1px solid #fff;
 }
 .connection-table table td {
-  padding: 8px;
+  padding: 1px 6px;
   font-size: 14px;
+  border-bottom: 1px solid #ef8018;
+}
+.connection-table table tr:last-child td {
+  border-bottom: none;
 }
 .connection-table table .status-dot {
   width: 12px;

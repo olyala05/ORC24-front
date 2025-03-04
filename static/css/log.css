@@ -49,6 +49,9 @@ body {
   border-bottom: 1px solid #ef742a;
   text-align: center;
 }
+.log-table table tr:last-child td {
+  border-bottom: none;
+}
 .log-table table .status-dot {
   width: 12px;
   height: 12px;

@@ -112,7 +112,19 @@
             <td>Rabbit Mq</td>
             <td>2024-04-03 13:55:11</td>
           </tr>
-
+          <tr>
+            {% if network.ethernet_connected %}
+                <td><span class="status-dot green"></span></td>
+                <td><span class="status-dot green"></span></td>
+                <td>Ethernet Connection</td>
+                <td>{{ network.last_connected_time }}</td> 
+            {% else %}
+                <td><span class="status-dot red"></span></td>
+                <td><span class="status-dot red"></span></td>
+                <td>Ethernet Disconnected</td>
+                <td>{{ network.last_connected_time }}</td> 
+            {% endif %}
+          </tr>
           <tr>
             {% if network.vpn_connected %}
                 <td><span class="status-dot green"></span></td>

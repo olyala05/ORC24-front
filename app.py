@@ -212,11 +212,11 @@ def orc_status():
                 active_connections.append("Wi-Fi")
             if network_data.get("ethernet_connected"):
                 active_connections.append("Ethernet")
-            if network_data.get("vpn_connected"):  # 🌟 VPN Bağlantısını ekledik
+            if network_data.get("vpn_connected"):  
                 active_connections.append("VPN")
 
-            network_data["active_connections"] = active_connections  # Bağlı ağları liste olarak ekle
-            network_data["network_type_list"] = active_connections  # NETWORK TYPE için liste
+            network_data["active_connections"] = active_connections  
+            network_data["network_type_list"] = active_connections  
 
         except requests.exceptions.RequestException as e:
             flash(f"Ağ bilgisi alınamadı: {e}", "warning")
