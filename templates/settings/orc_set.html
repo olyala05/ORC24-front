@@ -1,7 +1,4 @@
-{% extends "layout.html" %} 
-
-{% block title %} Equipment Details {% endblock %}
-
+{% extends "layout.html" %} {% block title %} Equipment Details {% endblock %}
 {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
@@ -135,7 +132,7 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const tabButtons = document.querySelectorAll(".tab-btn-set");
-      const tabContents = document.querySelectorAll(".content-area-set > div"); 
+      const tabContents = document.querySelectorAll(".content-area-set > div");
       tabButtons.forEach((button) => {
         button.addEventListener("click", function () {
           const targetId = this.getAttribute("data-target");
@@ -158,99 +155,120 @@
       }
     });
 
-
     document.addEventListener("DOMContentLoaded", function () {
       const wifiListElement = document.getElementById("wifi-networks");
-      const wifiPasswordInput = document.querySelector(".password-intput-set input");
+      const wifiPasswordInput = document.querySelector(
+        ".password-intput-set input"
+      );
       const wifiSSIDElement = document.querySelector(".wifi-connection-set p");
       const connectButton = document.querySelector(".btn-set.connec-set");
+      const showPasswordCheckbox = document.getElementById("showPass");
       let selectedSSID = null;
-  
-      // 📌 Wi-Fi ağlarını getir
+
+      // 📌 Wi-Fi ağlarını getir ve listele
       function fetchWifiNetworks() {
-          fetch("/wi-fi-list", { method: "POST" })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.status !== "success") {
-                      wifiListElement.innerHTML = `<p style='color: red;'>${data.message}</p>`;
-                      return;
-                  }
-  
-                  const networks = data.data.wifi_networks || [];
-                  const connectedSSID = data.data.connected_ssid || null;
-                  const connectedPassword = data.data.wifi_password || "";
-  
-                  let wifiHTML = "";
-  
-                  networks.forEach(ssid => {
-                      wifiHTML += `
-                          <li onclick="selectWifi('${ssid}')">
+        fetch("/wi-fi-list", { method: "POST" })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status !== "success") {
+              wifiListElement.innerHTML = `<p style='color: red;'>${data.message}</p>`;
+              return;
+            }
+
+            let networks = data.data.wifi_networks || [];
+            const connectedSSID = data.data.connected_ssid || null;
+            const connectedPassword = data.data.wifi_password || "";
+
+            let wifiHTML = "";
+
+            // 📌 Bağlı Wi-Fi'yi en üste taşı
+            if (connectedSSID) {
+              networks = networks.filter((ssid) => ssid !== connectedSSID); // Bağlı SSID'yi listeden çıkar
+              networks.unshift(connectedSSID); // En başa ekle
+            }
+
+            networks.forEach((ssid, index) => {
+              const isConnected =
+                ssid === connectedSSID ? "wifi-connected" : "";
+              wifiHTML += `
+                          <li onclick="selectWifi('${ssid}')" class="${isConnected}">
                               <img src="/static/images/svg/25.svg" alt="Wi-Fi"/>
                               <span>${ssid}</span>
                               <img src="/static/images/svg/26.svg" alt="Lock"/>
                           </li>
                       `;
-                  });
-  
-                  wifiListElement.innerHTML = wifiHTML;
-  
-                  // 📌 Eğer bağlı Wi-Fi varsa inputu doldur
-                  if (connectedSSID) {
-                      selectedSSID = connectedSSID;
-                      wifiSSIDElement.innerText = `Wi-Fi SSID: ${connectedSSID}`;
-                      wifiPasswordInput.value = connectedPassword;
-                  }
-              })
-              .catch(error => {
-                  console.error("Wi-Fi ağları yüklenirken hata oluştu:", error);
-                  wifiListElement.innerHTML = "<p style='color: red;'>Wi-Fi bilgisi alınamadı.</p>";
-              });
+            });
+
+            wifiListElement.innerHTML = wifiHTML;
+
+            // 📌 Eğer bağlı Wi-Fi varsa inputu doldur ve yeşil yap
+            if (connectedSSID) {
+              selectedSSID = connectedSSID;
+              wifiSSIDElement.innerText = `Wi-Fi SSID: ${connectedSSID}`;
+              wifiPasswordInput.value = connectedPassword;
+            }
+          })
+          .catch((error) => {
+            console.error("Wi-Fi ağları yüklenirken hata oluştu:", error);
+            wifiListElement.innerHTML =
+              "<p style='color: red;'>Wi-Fi bilgisi alınamadı.</p>";
+          });
       }
-  
+
       // 📌 Seçilen Wi-Fi'yi inputa ekle
       window.selectWifi = function (ssid) {
-          selectedSSID = ssid;
-          wifiSSIDElement.innerText = `Wi-Fi SSID: ${ssid}`;
-          wifiPasswordInput.value = "";
+        selectedSSID = ssid;
+        wifiSSIDElement.innerText = `Wi-Fi SSID: ${ssid}`;
+        wifiPasswordInput.value = "";
       };
-  
+
+      // 📌 Show Password işlevi
+      showPasswordCheckbox.addEventListener("change", function () {
+        wifiPasswordInput.type = this.checked ? "text" : "password";
+      });
+
       // 📌 Wi-Fi ağına bağlan
       connectButton.addEventListener("click", function () {
-          if (!selectedSSID) {
-              alert("Lütfen bir Wi-Fi ağı seçin!");
-              return;
-          }
-  
-          const password = wifiPasswordInput.value;
-          if (!password) {
-              alert("Lütfen şifre girin!");
-              return;
-          }
-  
-          fetch("/connect_wifi", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ ssid: selectedSSID, password: password }),
+        if (!selectedSSID) {
+          alert("Lütfen bir Wi-Fi ağı seçin!");
+          return;
+        }
+
+        const password = wifiPasswordInput.value;
+        if (!password) {
+          alert("Lütfen şifre girin!");
+          return;
+        }
+
+        fetch("/connect_wifi", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ssid: selectedSSID, password: password }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "success") {
+              alert("Wi-Fi bağlantısı başarılı!");
+              fetchWifiNetworks(); // 📌 Bağlı ağı güncelle
+            } else {
+              alert("Bağlantı başarısız: " + data.message);
+            }
           })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.status === "success") {
-                      alert("Wi-Fi bağlantısı başarılı!");
-                      fetchWifiNetworks(); // 📌 Bağlı ağı güncelle
-                  } else {
-                      alert("Bağlantı başarısız: " + data.message);
-                  }
-              })
-              .catch(error => {
-                  console.error("Wi-Fi bağlantısı sırasında hata oluştu:", error);
-                  alert("Bağlantı hatası!");
-              });
+          .catch((error) => {
+            console.error("Wi-Fi bağlantısı sırasında hata oluştu:", error);
+            alert("Bağlantı hatası!");
+          });
       });
-  
-      // 📌 Sayfa yüklendiğinde Wi-Fi ağlarını getir
       fetchWifiNetworks();
-  });
-  
+    });
   </script>
+
+  <style>
+    .wifi-connected span {
+      color: green; /* Bağlı olan Wi-Fi ağının yazısını yeşil yap */
+      font-weight: bold;
+  }
+  
+  </style>
   {% endblock %}
 </div>

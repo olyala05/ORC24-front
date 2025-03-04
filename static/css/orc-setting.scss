@@ -73,6 +73,9 @@
 
 .content-area-set {
   .wifi-list-set {
+    width: 170px;
+    max-height: 300px;
+    overflow-y: auto;
     transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
     background: #fff;
     border-radius: 7px;
