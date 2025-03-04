@@ -1,5 +1,8 @@
-{% extends "layout.html" %} {% block title %} ORC Status {% endblock %} {% block
-content %}
+{% extends "layout.html" %} 
+
+{% block title %} ORC Status {% endblock %} 
+
+{% block content %}
 <div class="orc-status-container">
   <!-- Header -->
   {% include 'partials/header.html' %}
@@ -135,12 +138,17 @@ content %}
           <div class="algorithm-left">
             <i class="fas fa-cog"></i> <span class="margin-right-70" style="margin-right: 70px;">ORC Process Procedures</span>          
           </div>
-          <button class="status-btn">Normal / Error (Red)</button>
+          <button class="status-btn" onclick="redirectToLog()">Normal / Error (Red)</button>
         </div>
       </div>
     </div>
   </div>
+
 <script>
+
+  function redirectToLog() {
+    window.location.href = "{{ url_for('log')}}"
+  }
 
 function retryConnection() {
   fetch("/check_network")
@@ -180,5 +188,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
-  {% endblock %}
-</div>
+
+{% endblock %}
+

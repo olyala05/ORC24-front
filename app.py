@@ -317,7 +317,7 @@ def modem_selection():
 
 @app.route('/log', endpoint="log")
 def log():
-    return render_template("log.html", page_title="Log")    
+    return render_template("logs/log.html", page_title="Log")    
 
 @app.route('/switch', endpoint="switch")
 def switch():

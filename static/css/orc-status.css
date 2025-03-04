@@ -113,9 +113,9 @@
   border-collapse: collapse;
 }
 .connection-table table th {
-  background-color: #1c2747;
-  padding: 8px;
+  padding: 4px;
   font-size: 14px;
+  border-bottom: 1px solid #fff;
 }
 .connection-table table td {
   padding: 8px;

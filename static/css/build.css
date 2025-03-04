@@ -1230,17 +1230,15 @@ body {
 }
 
 .log-container {
-  margin-top: 60px;
-  padding: 20px;
+  margin-top: 79px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
-  height: calc(100vh - 60px);
 }
 
 .log-table {
-  width: 100%;
+  width: 752px;
+  max-height: 354px;
   background-color: #0b1734;
   padding: 15px;
   border-radius: 8px;
@@ -1249,7 +1247,7 @@ body {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 .log-table .log-table-content {
-  max-height: 470px;
+  max-height: 354px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -1258,9 +1256,9 @@ body {
   border-collapse: collapse;
 }
 .log-table table th {
-  background-color: #1c2747;
-  padding: 10px;
-  font-size: 16px;
+  background: #0b1734;
+  padding: 9px;
+  font-size: 14px;
   border-bottom: 1px solid #fff;
   text-align: center;
   position: sticky;
@@ -1524,9 +1522,9 @@ body {
   border-collapse: collapse;
 }
 .connection-table table th {
-  background-color: #1c2747;
-  padding: 8px;
+  padding: 4px;
   font-size: 14px;
+  border-bottom: 1px solid #fff;
 }
 .connection-table table td {
   padding: 8px;

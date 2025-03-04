@@ -138,9 +138,9 @@ $container-padding: 10px;
     border-collapse: collapse;
 
     th {
-      background-color: #1c2747;
-      padding: 8px;
+      padding: 4px;
       font-size: 14px;
+      border-bottom: 1px solid #fff;
     }
 
     td {
