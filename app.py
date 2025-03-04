@@ -185,7 +185,7 @@ def orc_status():
 
     if not selected_ip:
         flash("Lütfen önce bir cihaz seçin!", "danger")
-        return render_template("orc_status.html", page_title="ORC Status", error="Lütfen önce bir cihaz seçin!", modem=None, network=None)
+        return render_template("orc_status/orc_status.html", page_title="ORC Status", error="Lütfen önce bir cihaz seçin!", modem=None, network=None)
 
     selected_modem = None
     network_data = None
@@ -220,11 +220,11 @@ def orc_status():
             except ValueError:
                 selected_modem["created_at"] = "Geçersiz Tarih"
 
-        return render_template("orc_status.html", page_title="ORC Status", modem=selected_modem, network=network_data, error=None)
+        return render_template("orc_status/orc_status.html", page_title="ORC Status", modem=selected_modem, network=network_data, error=None)
 
     except Exception as e:
         print("Genel hata:", e)
-        return render_template("orc_status.html", page_title="ORC Status", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
+        return render_template("orc_status/orc_status.html", page_title="ORC Status", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
 
 
 # Equipments Modbus
