@@ -236,6 +236,47 @@ def orc_status():
     except Exception as e:
         return render_template("orc_status/orc_status.html", page_title="ORC Status", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
 
+@app.route("/fetch_equipment_details", methods=["GET"])
+def fetch_equipment_details():
+    selected_ip = session.get("selected_device_ip")  
+    equipment_id = session.get("selected_equipment_id")  
+
+    # 🔍 Debug için logging ekleyelim
+    logging.info(f"Selected Device IP: {selected_ip}")
+    logging.info(f"Selected Equipment ID: {equipment_id}")
+
+    if not selected_ip:
+        return jsonify({"error": "Cihaz seçilmedi. Lütfen önce bir cihaz seçin!"}), 400
+
+    if not equipment_id:
+        return jsonify({"error": "Ekipman seçilmedi. Lütfen önce bir ekipman seçin!"}), 400
+
+    try:
+        # **Uzak cihaza istek at (8085 portundaki Flask API)**
+        url = f"http://{selected_ip}:8085/get_equipment_details/{equipment_id}"
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+
+        equipment_data = response.json()
+        return jsonify(equipment_data)  # Gelen JSON'u frontend'e gönder
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
+
+@app.route("/set_selected_equipment", methods=["POST"])
+def set_selected_equipment():
+    data = request.get_json()
+    equipment_id = data.get("equipment_id")
+
+    if not equipment_id:
+        return jsonify({"error": "Ekipman ID'si belirtilmedi!"}), 400
+
+    session["selected_equipment_id"] = equipment_id  
+
+    logging.info(f"Ekipman ID kaydedildi: {equipment_id}")
+
+    return jsonify({"success": True, "message": "Ekipman seçildi!"})
+
 # Equipments Modbus
 @app.route("/modbus_request", methods=["POST"])
 def modbus_request():

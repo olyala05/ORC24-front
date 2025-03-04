@@ -181,14 +181,12 @@ block content %}
       })
       .catch((error) => {
         console.error("Bağlantı hatası:", error);
-
-        // Genel hata mesajı
         Swal.fire({
-          position: "bottom-end", // 📌 Sağ alt köşe
+          position: "bottom-end", 
           icon: "error",
           title: "⚠️ Bağlantı sırasında hata oluştu!",
           showConfirmButton: false,
-          timer: 5000, // 5 saniyede kaybolur
+          timer: 5000, 
           toast: true,
           customClass: {
             popup: "small-toast",
@@ -199,17 +197,16 @@ block content %}
 
   function goToORCStatus() {
     let dropdown = document.getElementById("modem");
-    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+    let selectedDeviceIP = dropdown ? dropdown.value : null; 
 
     if (!selectedDeviceIP) {
-      // Kullanıcıya uyarı ver
       Swal.fire({
         icon: "warning",
         title: "Uyarı",
         text: "Lütfen önce bir cihaz seçiniz!",
         confirmButtonText: "Tamam",
       });
-      return; // İşlemi durdur
+      return;
     }
 
     // **Loading ekranını ekleyelim**
@@ -221,7 +218,7 @@ block content %}
           <p> ORC Status yükleniyor...</p>
           <div class="loader"></div>
         </div>`;
-    document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
+    document.body.appendChild(loadingOverlay);
 
     fetch("/get_selected_device")
       .then((response) => response.json())
@@ -322,7 +319,7 @@ block content %}
       });
   }
 
-  // Equipment With Model
+  // Setting
   function goToSetting() {
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al

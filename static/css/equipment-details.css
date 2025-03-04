@@ -26,10 +26,10 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #ef8018;
-  padding: 3px 0;
+  padding: 3px 5px;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item span {
-  font-size: 14px;
+  font-size: 13px;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-detail-dot {
   width: 12px;
