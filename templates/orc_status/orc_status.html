@@ -79,7 +79,7 @@ content %}
           <tr>
             <td><span class="status-dot red"></span></td>
             <td><span class="status-dot red"></span></td>
-            <td>Lora disconnection</td>
+            <td>Lora Disconnection</td>
             <td>2024-04-03 13:54:31</td>
           </tr>
 
@@ -87,7 +87,7 @@ content %}
             {% if network.wifi_connected %}
                 <td><span class="status-dot green"></span></td>
                 <td><span class="status-dot green"></span></td>
-                <td>WiFi connection</td>
+                <td>WiFi Connection</td>
                 <td>{{ network.last_connected_time }}</td> 
             {% else %}
                 <td><span class="status-dot red"></span></td>
@@ -98,28 +98,37 @@ content %}
         </tr>
         
           <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Bulut connection</td>
+            <td><span class="status-dot red"></span></td>
+            <td><span class="status-dot red"></span></td>
+            <td>Bulut Connection</td>
             <td>2024-04-03 13:55:00</td>
           </tr>
           <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
+            <td><span class="status-dot red"></span></td>
+            <td><span class="status-dot red"></span></td>
             <td>Rabbit Mq</td>
             <td>2024-04-03 13:55:11</td>
           </tr>
+
           <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>VPN Port</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
+            {% if network.vpn_connected %}
+                <td><span class="status-dot green"></span></td>
+                <td><span class="status-dot green"></span></td>
+                <td>VPN Connection</td>
+                <td>{{ network.last_connected_time }}</td> 
+            {% else %}
+                <td><span class="status-dot red"></span></td>
+                <td><span class="status-dot red"></span></td>
+                <td>VPN Disconnected</td>
+                <td>{{ network.last_connected_time }}</td> 
+            {% endif %}
+        </tr>
+        
         </tbody>
       </table>
 
       <div class="algorithm-section">
-        <h3>Algoritma Süreçlerin</h3>
+        <h3>Algorithm Processes</h3>
         <div class="separator"></div>
         <!-- Turuncu çizgi -->
         <div class="algorithm-box">

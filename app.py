@@ -177,8 +177,7 @@ def connect_device():
     except Exception as e:
         return jsonify(success=False, error=f"Bağlantı hatası: {str(e)}")
 
-
-#  ORC Stataus
+# ORC Status
 @app.route("/orc-status", methods=["GET", "POST"], endpoint="orc_status")
 def orc_status():
     selected_ip = session.get("selected_device_ip")
@@ -213,8 +212,8 @@ def orc_status():
                 active_connections.append("Wi-Fi")
             if network_data.get("ethernet_connected"):
                 active_connections.append("Ethernet")
-            if network_data.get("network_type") == "GSM":
-                active_connections.append("GSM")
+            if network_data.get("vpn_connected"):  # 🌟 VPN Bağlantısını ekledik
+                active_connections.append("VPN")
 
             network_data["active_connections"] = active_connections  # Bağlı ağları liste olarak ekle
             network_data["network_type_list"] = active_connections  # NETWORK TYPE için liste
@@ -226,6 +225,7 @@ def orc_status():
 
     except Exception as e:
         return render_template("orc_status/orc_status.html", page_title="ORC Status", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
+
 
 # Equipments Modbus
 @app.route("/modbus_request", methods=["POST"])

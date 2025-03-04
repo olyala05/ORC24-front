@@ -46,7 +46,7 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 .device-info .connection-status .status-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   color: #1c2747;
   display: block;
@@ -151,7 +151,7 @@
   color: black;
 }
 .algorithm-section h3 {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   color: #1c2747;
   margin-bottom: 5px;
