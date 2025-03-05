@@ -262,50 +262,89 @@
   document.addEventListener("DOMContentLoaded", function () {
     const buttons = document.querySelectorAll(".equ-set-btn");
     const sections = document.querySelectorAll(
-      ".modbus-setting-form, .tcp-setting-form, .obis-setting-form, .equip-setting-form, .equipment-set-list-card"
+        ".modbus-setting-form, .tcp-setting-form, .obis-setting-form, .equip-setting-form, .equipment-set-list-card"
     );
 
-    const equipmentSettingsButton = document.querySelector(
-      '[data-target="equipment-settings"]'
-    );
+    const equipmentSettingsButton = document.querySelector('[data-target="equipment-settings"]');
     const equipmentSetList = document.getElementById("equipment-set-list");
     const equipmentSettings = document.getElementById("equipment-settings");
-    const equipmentBoxes = document.querySelectorAll(".equipment-set-box");
+    const equipmentGrid = document.querySelector(".equipment-set-grid"); 
 
-    // 📌 İlk başta sadece Modbus ayarları gösterilsin, Equipment list ve settings gizli olsun
+    // İlk başta sadece Modbus ayarları gösterilsin, Equipment list ve settings gizli olsun
     sections.forEach((section) => (section.style.display = "none"));
     document.getElementById("modbus-settings").style.display = "block";
     equipmentSetList.style.display = "none";
     equipmentSettings.style.display = "none";
 
     buttons.forEach((button) => {
-      button.addEventListener("click", function () {
-        const targetId = this.getAttribute("data-target");
+        button.addEventListener("click", function () {
+            const targetId = this.getAttribute("data-target");
 
-        buttons.forEach((btn) => btn.classList.remove("active"));
-        sections.forEach((section) => {
-          section.style.display = "none";
+            buttons.forEach((btn) => btn.classList.remove("active"));
+            sections.forEach((section) => {
+                section.style.display = "none";
+            });
+
+            this.classList.add("active");
+            document.getElementById(targetId).style.display = "block";
         });
-
-        this.classList.add("active");
-        document.getElementById(targetId).style.display = "block";
-      });
     });
 
-    // 📌 "Equipment Settings" butonuna tıklanınca sadece equipment list gösterilsin
+    // "Equipment Settings" butonuna tıklanınca API'den cihazları çek ve listele
     equipmentSettingsButton.addEventListener("click", function () {
-      sections.forEach((section) => (section.style.display = "none"));
-      equipmentSetList.style.display = "block"; // Listeyi aç
+        sections.forEach((section) => (section.style.display = "none"));
+        equipmentSetList.style.display = "block"; // Listeyi aç
+
+        fetchEquipments(); // API'den verileri çek ve listele
     });
 
-    // 📌 Equipment list'teki kutulardan birine tıklanınca ayar sayfası açılsın
-    equipmentBoxes.forEach((box) => {
-      box.addEventListener("click", function () {
-        equipmentSetList.style.display = "none"; // Listeyi kapat
-        equipmentSettings.style.display = "block"; // Ayarlar sayfasını aç
-      });
-    });
-  });
+    function fetchEquipments() {
+        const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+
+        if (!selectedDeviceIP) {
+            console.warn("No device selected for fetching equipments.");
+            return;
+        }
+
+        fetch("/equipments-with-models", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ip_address: selectedDeviceIP }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Equipments Response:", data);
+
+                if (data.status === "success" && Array.isArray(data.data)) {
+                    equipmentGrid.innerHTML = ""; // Önce mevcut listeyi temizle
+
+                    data.data.forEach((device) => {
+                        const statusClass = device.status === 1 ? "green" : "red";
+                        const equipmentBox = document.createElement("div");
+
+                        equipmentBox.classList.add("equipment-set-box", statusClass);
+                        equipmentBox.innerText = device.model_name; // 📌 Model ismi gösterilecek
+
+                        // 📌 Kutulara tıklanınca detay sayfasına yönlendirme
+                        equipmentBox.addEventListener("click", function () {
+                            equipmentSetList.style.display = "none";
+                            equipmentSettings.style.display = "block";
+                        });
+
+                        equipmentGrid.appendChild(equipmentBox);
+                    });
+                } else {
+                    console.warn("No equipments found.");
+                    equipmentGrid.innerHTML = "<p style='color: red;'>No equipments found</p>";
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching equipments:", error);
+                equipmentGrid.innerHTML = "<p style='color: red;'>Error fetching equipments</p>";
+            });
+    }
+});
+
 
   document.addEventListener("DOMContentLoaded", function () {
     const testButton = document.querySelector(".modbus-setting-btn-test");
