@@ -162,113 +162,165 @@
     document.addEventListener("DOMContentLoaded", function () {
       const wifiListElement = document.getElementById("wifi-networks");
       const wifiPasswordInput = document.getElementById("wifi-password");
-      const wifiSSIDElement = document.getElementById("wifi-ssid").querySelector("span");
+      const wifiSSIDElement = document
+        .getElementById("wifi-ssid")
+        .querySelector("span");
       const connectedWifiSpan = document.getElementById("connected-wifi");
       const connectButton = document.getElementById("connect-btn");
       const disconnectButton = document.getElementById("disconnect-btn");
       const showPasswordCheckbox = document.getElementById("showPass");
       let selectedSSID = null;
-  
-      // 📌 Wi-Fi ağlarını getir ve listele
+
+      // Wi-Fi ağlarını getir ve listele
       function fetchWifiNetworks() {
-          fetch("/wi-fi-list", { method: "POST" })
-              .then((response) => response.json())
-              .then((data) => {
-                  if (data.status !== "success") {
-                      wifiListElement.innerHTML = `<p style='color: red;'>${data.message}</p>`;
-                      return;
-                  }
-  
-                  let networks = data.data.wifi_networks || [];
-                  const connectedSSID = data.data.connected_ssid || null;
-                  const connectedPassword = data.data.wifi_password || "";
-  
-                  let wifiHTML = "";
-  
-                  // 📌 Bağlı Wi-Fi'yi en üste taşı
-                  if (connectedSSID) {
-                      networks = networks.filter((ssid) => ssid !== connectedSSID);
-                      networks.unshift(connectedSSID);
-                  }
-  
-                  networks.forEach((ssid) => {
-                      const isConnected = ssid === connectedSSID ? "wifi-connected" : "";
-                      wifiHTML += `
+        fetch("/wi-fi-list", { method: "POST" })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status !== "success") {
+              wifiListElement.innerHTML = `<p style='color: red;'>${data.message}</p>`;
+              return;
+            }
+
+            let networks = data.data.wifi_networks || [];
+            const connectedSSID = data.data.connected_ssid || null;
+            const connectedPassword = data.data.wifi_password || "";
+
+            let wifiHTML = "";
+
+            // Bağlı Wi-Fi'yi en üste taşı
+            if (connectedSSID) {
+              networks = networks.filter((ssid) => ssid !== connectedSSID);
+              networks.unshift(connectedSSID);
+            }
+
+            networks.forEach((ssid) => {
+              const isConnected =
+                ssid === connectedSSID ? "wifi-connected" : "";
+              wifiHTML += `
                           <li onclick="selectWifi('${ssid}')" class="${isConnected}">
                               <img src="/static/images/svg/25.svg" alt="Wi-Fi"/>
                               <span>${ssid}</span>
                               <img src="/static/images/svg/26.svg" alt="Lock"/>
                           </li>
                       `;
-                  });
-  
-                  wifiListElement.innerHTML = wifiHTML;
-  
-                  // 📌 Bağlı Wi-Fi'yi güncelle
-                  if (connectedSSID) {
-                      selectedSSID = connectedSSID;
-                      wifiSSIDElement.innerText = connectedSSID;
-                      connectedWifiSpan.innerText = connectedSSID;
-                      wifiPasswordInput.value = connectedPassword;
-                  }
-              })
-              .catch((error) => {
-                  console.error("Wi-Fi ağları yüklenirken hata oluştu:", error);
-                  wifiListElement.innerHTML = "<p style='color: red;'>Wi-Fi bilgisi alınamadı.</p>";
-              });
-      }
-  
-      // 📌 Seçilen Wi-Fi'yi inputa ekle
-      window.selectWifi = function (ssid) {
-          selectedSSID = ssid;
-          wifiSSIDElement.innerText = ssid;
-          wifiPasswordInput.value = "";
-      };
-  
-      // 📌 Şifreyi göster/gizle
-      showPasswordCheckbox.addEventListener("change", function () {
-          wifiPasswordInput.type = this.checked ? "text" : "password";
-      });
-  
-      // 📌 Wi-Fi ağına bağlan
-      connectButton.addEventListener("click", function () {
-          if (!selectedSSID) {
-              alert("Lütfen bir Wi-Fi ağı seçin!");
-              return;
-          }
-  
-          const password = wifiPasswordInput.value;
-          if (!password) {
-              alert("Lütfen şifre girin!");
-              return;
-          }
-  
-          // 📌 Bağlantıyı başlat
-          fetch("/connect_wifi", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ ssid: selectedSSID, password: password }),
+            });
+
+            wifiListElement.innerHTML = wifiHTML;
+
+            // Bağlı Wi-Fi'yi güncelle
+            if (connectedSSID) {
+              selectedSSID = connectedSSID;
+              wifiSSIDElement.innerText = connectedSSID;
+              connectedWifiSpan.innerText = connectedSSID;
+              wifiPasswordInput.value = connectedPassword;
+            }
           })
-              .then((response) => response.json())
-              .then((data) => {
-                  if (data.status === "success") {
-                      alert("Wi-Fi bağlantısı başarılı!");
-                      connectedWifiSpan.innerText = selectedSSID;
-                      fetchWifiNetworks();
-                  } else {
-                      alert("Bağlantı başarısız: " + data.message);
-                  }
-              })
-              .catch((error) => {
-                  console.error("Wi-Fi bağlantısı sırasında hata oluştu:", error);
-                  alert("Bağlantı hatası!");
-              });
+          .catch((error) => {
+            console.error("Wi-Fi ağları yüklenirken hata oluştu:", error);
+            wifiListElement.innerHTML =
+              "<p style='color: red;'>Wi-Fi bilgisi alınamadı.</p>";
+          });
+      }
+
+      // Seçilen Wi-Fi'yi inputa ekle
+      window.selectWifi = function (ssid) {
+        selectedSSID = ssid;
+        wifiSSIDElement.innerText = ssid;
+        wifiPasswordInput.value = "";
+      };
+
+      // Şifreyi göster/gizle
+      showPasswordCheckbox.addEventListener("change", function () {
+        wifiPasswordInput.type = this.checked ? "text" : "password";
       });
-  
+
+      // Wi-Fi ağına bağlan
+      connectButton.addEventListener("click", function () {
+        if (!selectedSSID) {
+          Swal.fire({
+            icon: "warning",
+            title: "Wi-Fi Seçilmedi!",
+            text: "Lütfen bir Wi-Fi ağı seçin.",
+            width: "280px", // Küçük ekranlar için ideal
+            customClass: {
+              popup: "small-swal-popup",
+            },
+          });
+          return;
+        }
+
+        const password = wifiPasswordInput.value;
+        if (!password) {
+          Swal.fire({
+            icon: "warning",
+            title: "Şifre Girilmedi!",
+            text: "Lütfen şifre girin.",
+            width: "280px",
+            customClass: {
+              popup: "small-swal-popup",
+            },
+          });
+          return;
+        }
+
+        // Butonu loading durumuna geçir
+        connectButton.disabled = true;
+        connectButton.innerHTML = `<span class="spinner"></span> Connecting...`;
+
+        // Bağlantıyı başlat
+        fetch("/connect_wifi", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ssid: selectedSSID, password: password }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "success") {
+              Swal.fire({
+                icon: "success",
+                title: "Bağlantı Başarılı!",
+                text: `Wi-Fi bağlantısı başarıyla kuruldu: ${selectedSSID}`,
+                width: "280px",
+                customClass: {
+                  popup: "small-swal-popup",
+                },
+              });
+
+              connectedWifiSpan.innerText = selectedSSID;
+              fetchWifiNetworks();
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Bağlantı Başarısız!",
+                text: data.message || "Bağlanılamadı. Lütfen tekrar deneyin.",
+                width: "280px",
+                customClass: {
+                  popup: "small-swal-popup",
+                },
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Wi-Fi bağlantısı sırasında hata oluştu:", error);
+            Swal.fire({
+              icon: "error",
+              title: "Bağlantı Hatası!",
+              text: "Wi-Fi bağlantısı kurulurken bir hata oluştu.",
+              width: "280px",
+              customClass: {
+                popup: "small-swal-popup",
+              },
+            });
+          })
+          .finally(() => {
+            // Butonu eski haline getir
+            connectButton.disabled = false;
+            connectButton.innerHTML = "Connect";
+          });
+      });
+
       fetchWifiNetworks();
-  });
-  
-    
+    });
   </script>
 
   <style>
@@ -276,6 +328,42 @@
       color: green;
       font-weight: bold;
     }
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .small-swal-popup {
+      font-size: 14px !important;
+      padding: 10px !important;
+      max-width: 280px !important;
+  }
+  
+  .swal2-title {
+      font-size: 14px !important;
+  }
+  
+  .swal2-content {
+      font-size: 14px !important;
+  }
+  
   </style>
   {% endblock %}
 </div>
