@@ -1,7 +1,7 @@
 // Genel Konteyner
 .equ-set-container {
   display: flex;
-  margin-top: 31px;
+  margin-top: 80px;
 
   // Sol Sidebar (Menü)
   .equ-set-sidebar {
@@ -41,6 +41,7 @@
       padding: 12px;
       border-radius: 10px;
       width: 528px;
+      height: 330px;
 
       // Form Row
       .modbus-setting-row {
@@ -81,13 +82,13 @@
         color: white;
         border: none;
         width: 43%;
-        padding: 9px;
+        padding: 12px;
         font-size: 18px;
         font-weight: bold;
         border-radius: 5px;
         cursor: pointer;
         display: block;
-        margin: 11px auto 0 auto;
+        margin: 37px auto 0 auto;
         text-align: center;
 
         &:hover {
@@ -100,7 +101,7 @@
         color: #40c700;
         font-weight: 100;
         text-align: center;
-        margin-top: 8px;
+        margin-top: 30px;
         margin-bottom: 0px;
       }
 
@@ -109,6 +110,7 @@
         font-weight: 100;
         text-align: center;
         line-height: 0;
+        margin-top: 8px;
       }
     }
   }
@@ -123,7 +125,9 @@
   flex-direction: column;
   align-items: center;
   width: 547px;
-  height: 317px;
+  height: 354px;
+  overflow: auto;
+  padding: 11px 0;
 }
 
 .equip-setting-group {
@@ -131,9 +135,9 @@
   justify-content: space-between;
   align-items: center;
   background: #c4c4c4;
-  padding: 6px;
+  padding: 4px;
   border-radius: 7px;
-  margin-top: 15px;
+  margin-bottom: 8px;
   width: 500px;
   text-align: center;
 }
@@ -147,9 +151,9 @@
 .equip-setting-group input {
   background: white;
   border: none;
-  padding: 10px;
+  padding: 6px;
   border-radius: 4px;
-  width: 46%;
+  width: 48%;
   font-size: 16px;
 }
 
@@ -161,7 +165,7 @@
 .equip-setting-select select {
   appearance: none;
   width: 100%;
-  padding: 9px;
+  padding: 6px;
   border-radius: 3px;
   border: none;
   font-size: 15px;
@@ -189,7 +193,6 @@
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
-  margin-top: 10px;
 
   &:hover {
     background: #d65f1f;
