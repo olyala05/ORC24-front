@@ -46,7 +46,7 @@
               <h4>Wi-Fi Password</h4>
             </div>
 
-            <p id="wifi-ssid">Wi-Fi SSID: <span>Seçilmedi</span></p>
+            <p id="wifi-ssid">Wi-Fi SSID: <span>Not Connected</span></p>
             <div class="password-intput-set">
               <label>Password:</label>
               <input type="password" id="wifi-password" />
@@ -72,7 +72,7 @@
                 src="{{ url_for('static', filename='images/svg/12.svg') }}"
                 alt="No Wi-Fi"
               />
-              <span id="connected-wifi">Bağlı değil</span>
+              <span id="connected-wifi">Not Connected</span>
               <button class="btn disconnect" id="disconnect-btn">
                 Disconnect
               </button>
@@ -171,7 +171,7 @@
       const showPasswordCheckbox = document.getElementById("showPass");
       let selectedSSID = null;
 
-      // Wi-Fi ağlarını getir ve listele
+      // 📌 Wi-Fi ağlarını getir ve listele
       function fetchWifiNetworks() {
         fetch("/wi-fi-list", { method: "POST" })
           .then((response) => response.json())
@@ -187,7 +187,7 @@
 
             let wifiHTML = "";
 
-            // Bağlı Wi-Fi'yi en üste taşı
+            // 📌 Bağlı Wi-Fi'yi en üste taşı
             if (connectedSSID) {
               networks = networks.filter((ssid) => ssid !== connectedSSID);
               networks.unshift(connectedSSID);
@@ -207,12 +207,14 @@
 
             wifiListElement.innerHTML = wifiHTML;
 
-            // Bağlı Wi-Fi'yi güncelle
+            // 📌 Bağlı Wi-Fi'yi güncelle
             if (connectedSSID) {
               selectedSSID = connectedSSID;
               wifiSSIDElement.innerText = connectedSSID;
               connectedWifiSpan.innerText = connectedSSID;
               wifiPasswordInput.value = connectedPassword;
+            } else {
+              connectedWifiSpan.innerText = "Not Connected";
             }
           })
           .catch((error) => {
@@ -222,26 +224,26 @@
           });
       }
 
-      // Seçilen Wi-Fi'yi inputa ekle
+      // 📌 Seçilen Wi-Fi'yi inputa ekle
       window.selectWifi = function (ssid) {
         selectedSSID = ssid;
         wifiSSIDElement.innerText = ssid;
         wifiPasswordInput.value = "";
       };
 
-      // Şifreyi göster/gizle
+      // 📌 Şifreyi göster/gizle
       showPasswordCheckbox.addEventListener("change", function () {
         wifiPasswordInput.type = this.checked ? "text" : "password";
       });
 
-      // Wi-Fi ağına bağlan
+      // 📌 Wi-Fi ağına bağlan
       connectButton.addEventListener("click", function () {
         if (!selectedSSID) {
           Swal.fire({
             icon: "warning",
             title: "Wi-Fi Seçilmedi!",
             text: "Lütfen bir Wi-Fi ağı seçin.",
-            width: "280px", // Küçük ekranlar için ideal
+            width: "280px",
             customClass: {
               popup: "small-swal-popup",
             },
@@ -263,11 +265,11 @@
           return;
         }
 
-        // Butonu loading durumuna geçir
+        // 📌 Butonu loading durumuna geçir
         connectButton.disabled = true;
         connectButton.innerHTML = `<span class="spinner"></span> Connecting...`;
 
-        // Bağlantıyı başlat
+        // 📌 Bağlantıyı başlat
         fetch("/connect_wifi", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -313,10 +315,108 @@
             });
           })
           .finally(() => {
-            // Butonu eski haline getir
+            // 📌 Butonu eski haline getir
             connectButton.disabled = false;
             connectButton.innerHTML = "Connect";
           });
+      });
+
+      // 📌 Wi-Fi Disconnection with Confirmation
+      disconnectButton.addEventListener("click", function () {
+        if (connectedWifiSpan.innerText === "Not Connected") {
+          Swal.fire({
+            icon: "info",
+            title: "No Active Connection!",
+            text: "You are not currently connected to any Wi-Fi network.",
+            width: "280px",
+            customClass: {
+              popup: "small-swal-popup",
+            },
+          });
+          return;
+        }
+
+        // 📌 Show Confirmation Alert Before Disconnecting
+        Swal.fire({
+          icon: "warning",
+          title: "Disconnect Wi-Fi?",
+          text: "Are you sure you want to disconnect from the Wi-Fi network?",
+          width: "280px",
+          showCancelButton: true,
+          confirmButtonText: "Yes, disconnect",
+          cancelButtonText: "Cancel",
+          customClass: {
+            popup: "small-swal-popup",
+            confirmButton: "btn-confirm",
+            cancelButton: "btn-cancel",
+          },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // 📌 Set Button to Loading State
+            disconnectButton.disabled = true;
+            disconnectButton.innerHTML = `<span class="spinner"></span> Disconnecting...`;
+
+            fetch("/disconnect_wifi", { method: "POST" })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.status === "success") {
+                  Swal.fire({
+                    icon: "success",
+                    title: "Wi-Fi Disconnected!",
+                    text: "You have successfully disconnected from the Wi-Fi network.",
+                    width: "280px",
+                    customClass: {
+                      popup: "small-swal-popup",
+                    },
+                  });
+
+                  // 📌 Clear the Wi-Fi list
+                  wifiListElement.innerHTML = "";
+
+                  // 📌 Reset the SSID display
+                  wifiSSIDElement.innerText = "Not Connected";
+
+                  // 📌 Clear the password input field
+                  wifiPasswordInput.value = "";
+
+                  // 📌 Update the connection status
+                  connectedWifiSpan.innerText = "Not Connected";
+
+                  // 📌 Reload the Wi-Fi list
+                  fetchWifiNetworks();
+                } else {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Disconnection Failed!",
+                    text:
+                      data.message ||
+                      "An error occurred while disconnecting from Wi-Fi.",
+                    width: "280px",
+                    customClass: {
+                      popup: "small-swal-popup",
+                    },
+                  });
+                }
+              })
+              .catch((error) => {
+                console.error("Error while disconnecting:", error);
+                Swal.fire({
+                  icon: "error",
+                  title: "Disconnection Error!",
+                  text: "An unexpected error occurred while disconnecting.",
+                  width: "280px",
+                  customClass: {
+                    popup: "small-swal-popup",
+                  },
+                });
+              })
+              .finally(() => {
+                // 📌 Reset Button State
+                disconnectButton.disabled = false;
+                disconnectButton.innerHTML = "Disconnect";
+              });
+          }
+        });
       });
 
       fetchWifiNetworks();
@@ -354,16 +454,25 @@
       font-size: 14px !important;
       padding: 10px !important;
       max-width: 280px !important;
-  }
-  
-  .swal2-title {
+    }
+
+    .swal2-title {
       font-size: 14px !important;
-  }
-  
-  .swal2-content {
+    }
+
+    .swal2-content {
       font-size: 14px !important;
-  }
-  
+    }
+
+    .btn-confirm {
+      background-color: #EF742A !important; /* Red button */
+      color: white !important;
+    }
+
+    .btn-cancel {
+      background-color: #6c757d !important; /* Grey button */
+      color: white !important;
+    }
   </style>
   {% endblock %}
 </div>

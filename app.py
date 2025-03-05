@@ -293,6 +293,31 @@ def connect_wifi():
     except Exception as e:
         return ResponseHandler.error(message="Unexpected error occurred", code=500, details=str(e))
 
+@app.route("/disconnect_wifi", methods=["POST"])
+def disconnect_wifi():
+    try:
+        selected_ip = session.get("selected_device_ip")
+
+        if not selected_ip:
+            return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
+
+        # Cihaza bağlantıyı kesme isteği gönder
+        url = f"http://{selected_ip}:8085/disconnect_wifi"
+        response = requests.post(url)
+        response.raise_for_status()
+        result = response.json()
+
+        if result.get("status") == "success":
+            return ResponseHandler.success(message="Wi-Fi connection successfully disconnected.")
+
+        return ResponseHandler.error(message=result.get("message", "Disconnection failed"), code=400, details="Wi-Fi disconnection issue")
+
+    except requests.RequestException as e:
+        return ResponseHandler.error(message="Network error", code=500, details=str(e))
+    except Exception as e:
+        return ResponseHandler.error(message="Unexpected error occurred", code=500, details=str(e))
+
+
 @app.route("/fetch_equipment_details", methods=["GET"])
 def fetch_equipment_details():
     selected_ip = session.get("selected_device_ip")  

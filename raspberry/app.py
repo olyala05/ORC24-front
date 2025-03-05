@@ -242,7 +242,7 @@ def disconnect_request():
     """
     Seçili cihazın Wi-Fi bağlantısını keser.
     """
-    selected_ip = session.get("selected_device_ip")  # Seçili cihazın IP'sini al
+    selected_ip = session.get("selected_device_ip")  
 
     if not selected_ip:
         logger.warning("Cihaz seçilmedi!")
@@ -253,7 +253,7 @@ def disconnect_request():
 
         # HTTP ile cihazdan Wi-Fi'yi kapatmasını iste
         url = f"http://{selected_ip}:8085/disconnect_wifi"
-        response = requests.post(url, timeout=10)  # Timeout ekleyelim
+        response = requests.post(url, timeout=10)  
         response.raise_for_status()
 
         logger.info("Wi-Fi başarıyla kapatıldı.")
