@@ -241,15 +241,17 @@
             // 📌 Gelen cihaz verisini göster (İlk bulunan cihaz)
             const device = data.data[0];
 
-            document.getElementById("portSelect").value = device.port;
-            document.getElementById("baudRateSelect").value =
-              device.baudrate || "Unknown";
-            document.getElementById("paritySelect").value =
-              device.parity || "Unknown";
-            document.getElementById("stopBitsSelect").value =
-              device.stopbits || "Unknown";
-            document.getElementById("byteSizeSelect").value =
-              device.bytesize || "Unknown";
+            // 📌 Gelen değerler varsa değiştir, yoksa seçili değerleri koru
+            if (device.port)
+              document.getElementById("portSelect").value = device.port;
+            if (device.baudrate && device.baudrate !== "Unknown")
+              document.getElementById("baudRateSelect").value = device.baudrate;
+            if (device.parity && device.parity !== "Unknown")
+              document.getElementById("paritySelect").value = device.parity;
+            if (device.stopbits && device.stopbits !== "Unknown")
+              document.getElementById("stopBitsSelect").value = device.stopbits;
+            if (device.bytesize && device.bytesize !== "Unknown")
+              document.getElementById("byteSizeSelect").value = device.bytesize;
           } else {
             failureMessage.innerText = "Modbus test failed: No valid response";
             failureMessage.style.display = "block";

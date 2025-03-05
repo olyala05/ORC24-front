@@ -431,7 +431,7 @@ def modbus_test():
 
     if not selected_ip:
         return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
-    
+
     try:
         url = f"http://{selected_ip}:8085/modbus_test"
         response = requests.get(url)
