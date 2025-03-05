@@ -269,7 +269,6 @@ def get_modem_info():
     except Exception as e:
         return ResponseHandler.error(message="Unexpected error occurred", code=500, details=str(e))
 
-
 #network info    
 @app.route("/wi-fi-list", methods=["POST"])
 def wi_fi_list():
@@ -425,6 +424,46 @@ def modbus_request():
         logger.error(f"Modbus isteği hatası: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
 
+@app.route("/modbus_test", methods=["POST", "GET"])
+def modbus_test():
+    """Check if the selected device has a valid Modbus connection."""
+    selected_ip = session.get("selected_device_ip")
+
+    if not selected_ip:
+        return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
+    
+    try:
+        url = f"http://{selected_ip}:8085/modbus_test"
+        response = requests.get(url)
+        response.raise_for_status()
+        
+        result = response.json()  # JSON verisini bir değişkene al
+
+        if result.get("status") == "success":
+            return ResponseHandler.success(message="Modbus test successful", data=result.get("data", []))
+
+        # Eğer `status` "success" değilse, hata mesajını API'den al ve kullanıcıya döndür
+        return ResponseHandler.error(
+            message="Modbus test failed", 
+            code=400, 
+            details=result.get("message", "No valid Modbus response")
+        )
+
+    except requests.RequestException as e:
+        return ResponseHandler.error(
+            message="Device connection error", 
+            code=500, 
+            details=f"Failed to connect to {selected_ip}: {str(e)}"
+        )
+
+    except Exception as e:
+        return ResponseHandler.error(
+            message="Unexpected error occurred", 
+            code=500, 
+            details=str(e)
+        )
+
+    
 @app.route("/disconnect_request", methods=["POST"])
 def disconnect_request():
     selected_ip = session.get("selected_device_ip")  # Seçili cihazın IP'sini al

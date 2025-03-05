@@ -51,12 +51,10 @@
         <div class="modbus-setting-group">
           <label>Parity</label>
           <select id="paritySelect">
-            <option value="None" selected>None</option>
+            <option value="None" selected>N</option>
             <!-- Default -->
-            <option value="Even">Even</option>
-            <option value="Odd">Odd</option>
-            <option value="Mark">Mark</option>
-            <option value="Space">Space</option>
+            <option value="Even">E</option>
+            <option value="Odd">O</option>
           </select>
         </div>
         <div class="modbus-setting-group">
@@ -185,6 +183,91 @@
       });
     });
     buttons[0].click();
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const testButton = document.querySelector(".modbus-setting-btn-test");
+    const successMessage = document.querySelector(".modbus-setting-success");
+    const failureMessage = document.querySelector(".modbus-setting-failed");
+
+    successMessage.style.display = "none";
+    failureMessage.style.display = "none";
+
+    testButton.addEventListener("click", function () {
+      const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+
+      if (!selectedDeviceIP) {
+        console.warn("No device selected for Modbus test.");
+        failureMessage.innerText = "No device selected for Modbus test.";
+        failureMessage.style.display = "block";
+        return;
+      }
+
+      const selectedModbusParams = {
+        port: document.getElementById("portSelect").value,
+        baudrate: document.getElementById("baudRateSelect").value,
+        parity: document.getElementById("paritySelect").value,
+        stopbits: document.getElementById("stopBitsSelect").value,
+        bytesize: document.getElementById("byteSizeSelect").value,
+        timeout: document.getElementById("timeoutSelect").value,
+      };
+
+      console.log("Selected Modbus Parameters:", selectedModbusParams);
+      testButton.disabled = true;
+      testButton.innerHTML = `<span class="spinner"></span> Testing...`;
+
+      // 📌 Doğru endpoint çağrılıyor: "/modbus_test"
+      fetch("/modbus_test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ip_address: selectedDeviceIP,
+          modbus_params: selectedModbusParams,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Response from Backend:", data);
+
+          if (
+            data.status === "success" &&
+            Array.isArray(data.data) &&
+            data.data.length > 0
+          ) {
+            successMessage.innerText = "Modbus connection successful!";
+            successMessage.style.display = "block";
+            failureMessage.style.display = "none";
+
+            // 📌 Gelen cihaz verisini göster (İlk bulunan cihaz)
+            const device = data.data[0];
+
+            document.getElementById("portSelect").value = device.port;
+            document.getElementById("baudRateSelect").value =
+              device.baudrate || "Unknown";
+            document.getElementById("paritySelect").value =
+              device.parity || "Unknown";
+            document.getElementById("stopBitsSelect").value =
+              device.stopbits || "Unknown";
+            document.getElementById("byteSizeSelect").value =
+              device.bytesize || "Unknown";
+          } else {
+            failureMessage.innerText = "Modbus test failed: No valid response";
+            failureMessage.style.display = "block";
+            successMessage.style.display = "none";
+          }
+        })
+        .catch((error) => {
+          console.error("Error during Modbus test:", error);
+          failureMessage.innerText =
+            "Error during Modbus test: " + error.message;
+          failureMessage.style.display = "block";
+          successMessage.style.display = "none";
+        })
+        .finally(() => {
+          testButton.disabled = false;
+          testButton.innerHTML = "Test";
+        });
+    });
   });
 </script>
 {% endblock %}
