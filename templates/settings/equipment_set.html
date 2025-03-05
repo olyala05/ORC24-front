@@ -153,10 +153,10 @@
           <input type="text" placeholder="Equipment Serial No" />
         </div>
 
-        <!--Electrical ID-->
+        <!-- Device ID-->
         <div class="equip-setting-group">
-          <label>Electrical ID</label>
-          <input type="text" placeholder="Electrical ID" />
+          <label>Device ID</label>
+          <input type="text" placeholder="Device ID" />
         </div>
 
         <!-- Equipment Status -->
@@ -185,19 +185,6 @@
           </div>
         </div>
 
-        <!-- Equipment Model -->
-        <div class="equip-setting-group">
-          <label>Equipment Model</label>
-          <div class="equip-setting-select">
-            <select>
-              <option value="">Select</option>
-              <option value="EMR-53CS">EMR-53CS</option>
-              <option value="PAC3200">PAC3200</option>
-            </select>
-            <span class="equip-setting-arrow">&#9662;</span>
-          </div>
-        </div>
-
         <!-- Equipment Brand -->
         <div class="equip-setting-group">
           <label>Equipment Brand</label>
@@ -211,47 +198,6 @@
           </div>
         </div>
 
-        <!-- Multiplier Values -->
-        <div class="equip-setting-group">
-          <label>Multiplier Values</label>
-          <div class="equip-setting-select">
-            <select>
-              <option value="">Select</option>
-              <option value="1">1x</option>
-              <option value="2">2x</option>
-              <option value="3">3x</option>
-            </select>
-            <span class="equip-setting-arrow">&#9662;</span>
-            <!-- Aşağı bakan ok -->
-          </div>
-        </div>
-
-        <!-- Gmt -->
-        <div class="equip-setting-group">
-          <label>Gmt</label>
-          <div class="equip-setting-select">
-            <select>
-              <option value="">Select</option>
-              <option value="gmt-3">GMT -3</option>
-              <option value="gmt+0">GMT +0</option>
-              <option value="gmt+3">GMT +3</option>
-            </select>
-            <span class="equip-setting-arrow">&#9662;</span>
-          </div>
-        </div>
-
-        <!-- Daylight Saving Time -->
-        <div class="equip-setting-group">
-          <label>Daylight Saving Time</label>
-          <div class="equip-setting-select">
-            <select>
-              <option value="">Select</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-            <span class="equip-setting-arrow">&#9662;</span>
-          </div>
-        </div>
         <button class="equip-setting-save-btn">Save</button>
       </div>
     </div>
@@ -262,89 +208,149 @@
   document.addEventListener("DOMContentLoaded", function () {
     const buttons = document.querySelectorAll(".equ-set-btn");
     const sections = document.querySelectorAll(
-        ".modbus-setting-form, .tcp-setting-form, .obis-setting-form, .equip-setting-form, .equipment-set-list-card"
+      ".modbus-setting-form, .tcp-setting-form, .obis-setting-form, .equip-setting-form, .equipment-set-list-card"
     );
 
-    const equipmentSettingsButton = document.querySelector('[data-target="equipment-settings"]');
+    const equipmentSettingsButton = document.querySelector(
+      '[data-target="equipment-settings"]'
+    );
     const equipmentSetList = document.getElementById("equipment-set-list");
     const equipmentSettings = document.getElementById("equipment-settings");
-    const equipmentGrid = document.querySelector(".equipment-set-grid"); 
+    const equipmentGrid = document.querySelector(".equipment-set-grid");
 
-    // İlk başta sadece Modbus ayarları gösterilsin, Equipment list ve settings gizli olsun
+    const equipmentNameInput = document.querySelector(
+      "#equipment-settings input[placeholder='Equipment Name']"
+    );
+    const slaveIDInput = document.querySelector(
+      "#equipment-settings input[placeholder='Equipment Slave ID']"
+    );
+    const modemSerialInput = document.querySelector(
+      "#equipment-settings input[placeholder='Modem Serial No']"
+    );
+    const equipmentSerialInput = document.querySelector(
+      "#equipment-settings input[placeholder='Equipment Serial No']"
+    );
+    const deviceIDInput = document.querySelector(
+      "#equipment-settings input[placeholder='Device ID']"
+    );
+
     sections.forEach((section) => (section.style.display = "none"));
     document.getElementById("modbus-settings").style.display = "block";
     equipmentSetList.style.display = "none";
     equipmentSettings.style.display = "none";
 
     buttons.forEach((button) => {
-        button.addEventListener("click", function () {
-            const targetId = this.getAttribute("data-target");
+      button.addEventListener("click", function () {
+        const targetId = this.getAttribute("data-target");
 
-            buttons.forEach((btn) => btn.classList.remove("active"));
-            sections.forEach((section) => {
-                section.style.display = "none";
-            });
-
-            this.classList.add("active");
-            document.getElementById(targetId).style.display = "block";
+        buttons.forEach((btn) => btn.classList.remove("active"));
+        sections.forEach((section) => {
+          section.style.display = "none";
         });
+
+        this.classList.add("active");
+        document.getElementById(targetId).style.display = "block";
+      });
     });
 
-    // "Equipment Settings" butonuna tıklanınca API'den cihazları çek ve listele
     equipmentSettingsButton.addEventListener("click", function () {
-        sections.forEach((section) => (section.style.display = "none"));
-        equipmentSetList.style.display = "block"; // Listeyi aç
+      sections.forEach((section) => (section.style.display = "none"));
+      equipmentSetList.style.display = "block";
 
-        fetchEquipments(); // API'den verileri çek ve listele
+      fetchEquipments();
     });
 
     function fetchEquipments() {
-        const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+      const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
 
-        if (!selectedDeviceIP) {
-            console.warn("No device selected for fetching equipments.");
-            return;
-        }
+      if (!selectedDeviceIP) {
+        console.warn("No device selected for fetching equipments.");
+        return;
+      }
 
-        fetch("/equipments-with-models", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ip_address: selectedDeviceIP }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Equipments Response:", data);
+      fetch("/equipments-with-models", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ip_address: selectedDeviceIP }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Equipments Response:", data);
 
-                if (data.status === "success" && Array.isArray(data.data)) {
-                    equipmentGrid.innerHTML = ""; // Önce mevcut listeyi temizle
+          if (data.status === "success" && Array.isArray(data.data)) {
+            equipmentGrid.innerHTML = "";
 
-                    data.data.forEach((device) => {
-                        const statusClass = device.status === 1 ? "green" : "red";
-                        const equipmentBox = document.createElement("div");
+            data.data.forEach((device) => {
+              const statusClass = device.status === 1 ? "green" : "red";
+              const equipmentBox = document.createElement("div");
 
-                        equipmentBox.classList.add("equipment-set-box", statusClass);
-                        equipmentBox.innerText = device.model_name; // 📌 Model ismi gösterilecek
+              equipmentBox.classList.add("equipment-set-box", statusClass);
+              equipmentBox.innerText = device.model_name;
+              equipmentBox.dataset.equipmentId = device.id;
 
-                        // 📌 Kutulara tıklanınca detay sayfasına yönlendirme
-                        equipmentBox.addEventListener("click", function () {
-                            equipmentSetList.style.display = "none";
-                            equipmentSettings.style.display = "block";
-                        });
-
-                        equipmentGrid.appendChild(equipmentBox);
-                    });
-                } else {
-                    console.warn("No equipments found.");
-                    equipmentGrid.innerHTML = "<p style='color: red;'>No equipments found</p>";
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching equipments:", error);
-                equipmentGrid.innerHTML = "<p style='color: red;'>Error fetching equipments</p>";
+              equipmentBox.addEventListener("click", function () {
+                const equipmentId = this.dataset.equipmentId;
+                sessionStorage.setItem("selected_equipment_id", equipmentId);
+                fetchEquipmentDetails(equipmentId);
+              });
+              equipmentGrid.appendChild(equipmentBox);
             });
+          } else {
+            console.warn("No equipments found.");
+            equipmentGrid.innerHTML =
+              "<p style='color: red;'>No equipments found</p>";
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching equipments:", error);
+          equipmentGrid.innerHTML =
+            "<p style='color: red;'>Error fetching equipments</p>";
+        });
     }
-});
 
+    function fetchEquipmentDetails(equipmentId) {
+      const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+
+      if (!selectedDeviceIP || !equipmentId) {
+        console.warn("Device IP or Equipment ID is missing.");
+        return;
+      }
+
+      fetch("/set_selected_equipment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ equipment_id: equipmentId }),
+      })
+        .then((response) => response.json())
+        .then(() => {
+          console.log("Equipment ID saved.");
+        })
+        .catch((error) => console.error("Error setting equipment ID:", error));
+
+      fetch("/fetch_equipment_details", { method: "GET" })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Equipment Details Response:", data);
+
+          if (data.status === "success" && data.data) {
+            const equipment = data.data;
+
+            equipmentNameInput.value = equipment.model_name || "";
+            slaveIDInput.value = equipment.modbus_address || "";
+            modemSerialInput.value = equipment.modem_name || "";
+            equipmentSerialInput.value = equipment.serial_number || "";
+            deviceIDInput.value = equipment.device_id || "";
+            equipmentSetList.style.display = "none";
+            equipmentSettings.style.display = "block";
+          } else {
+            console.warn("Equipment details not found.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching equipment details:", error);
+        });
+    }
+  });
 
   document.addEventListener("DOMContentLoaded", function () {
     const testButton = document.querySelector(".modbus-setting-btn-test");

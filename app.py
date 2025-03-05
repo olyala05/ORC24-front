@@ -355,7 +355,6 @@ def fetch_equipment_details():
     selected_ip = session.get("selected_device_ip")  
     equipment_id = session.get("selected_equipment_id")  
 
-    # 🔍 Debug için logging ekleyelim
     logging.info(f"Selected Device IP: {selected_ip}")
     logging.info(f"Selected Equipment ID: {equipment_id}")
 
@@ -364,16 +363,13 @@ def fetch_equipment_details():
 
     if not equipment_id:
         return jsonify({"error": "Ekipman seçilmedi. Lütfen önce bir ekipman seçin!"}), 400
-
     try:
-        # **Uzak cihaza istek at (8085 portundaki Flask API)**
         url = f"http://{selected_ip}:8085/get_equipment_details/{equipment_id}"
         response = requests.get(url, timeout=10)
         response.raise_for_status()
 
         equipment_data = response.json()
-        return jsonify(equipment_data)  # Gelen JSON'u frontend'e gönder
-
+        return jsonify(equipment_data) 
     except requests.exceptions.RequestException as e:
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
 
