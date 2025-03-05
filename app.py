@@ -236,7 +236,6 @@ def orc_status():
     except Exception as e:
         return render_template("orc_status/orc_status.html", page_title="ORC Status", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
 
-
 #network info    
 @app.route("/wi-fi-list", methods=["POST"])
 def wi_fi_list():
@@ -263,6 +262,36 @@ def wi_fi_list():
             "message": f"Failed to connect to device: {str(e)}",
             "data": None
         }), 500
+
+@app.route("/connect_wifi", methods=["POST"])
+def connect_wifi():
+    try:
+        data = request.json
+        ssid = data.get("ssid")
+        password = data.get("password")
+        selected_ip = session.get("selected_device_ip")
+
+        if not ssid:
+            return ResponseHandler.error(message="SSID not found", code=400, details="SSID is required")
+
+        if not selected_ip:
+            return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
+
+        # Cihaza bağlanma isteği gönder
+        url = f"http://{selected_ip}:8085/connect_wifi"
+        response = requests.post(url, json={"ssid": ssid, "password": password})
+        response.raise_for_status()
+        result = response.json()
+
+        if result.get("status") == "success":
+            return ResponseHandler.success(message="Connection established successfully.")
+
+        return ResponseHandler.error(message=result.get("message", "Connection failed"), code=400, details="Wi-Fi connection issue")
+
+    except requests.RequestException as e:
+        return ResponseHandler.error(message="Network error", code=500, details=str(e))
+    except Exception as e:
+        return ResponseHandler.error(message="Unexpected error occurred", code=500, details=str(e))
 
 @app.route("/fetch_equipment_details", methods=["GET"])
 def fetch_equipment_details():
@@ -337,7 +366,6 @@ def modbus_request():
     except requests.exceptions.RequestException as e:
         logger.error(f"Modbus isteği hatası: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
-
 
 @app.route("/disconnect_request", methods=["POST"])
 def disconnect_request():
@@ -414,16 +442,13 @@ def equipment_details():
 def settings():
     return render_template("settings/setting.html", page_title="Settings")  
 
-
 @app.route('/orc-settings', endpoint="orc_settings")
 def orc_setting():
     return render_template("settings/orc_set.html", page_title="Orc Settings")   
 
-
 @app.route('/osos-settings', endpoint="osos_settings")
 def osos_setting():
     return render_template("settings/osos_set.html", pgae_title="Osos Settings")    
-
 
 @app.route('/equipment-settings', endpoint="equipment_settings")
 def equipment_setting():
