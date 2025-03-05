@@ -103,12 +103,12 @@
       </div>
     </div>
 
-    <!-- ORC Set -->
+    <!-- Router Set -->
     <div id="orc-set" class="orc-settings-container" style="display: none">
       <div class="orc-settings-card">
         <div class="orc-input-group">
           <label>Modem Name</label>
-          <input type="text" placeholder="Modem Name" />
+          <input type="text" placeholder="Modem Name" readonly />
         </div>
 
         <div class="orc-input-group">
@@ -118,6 +118,7 @@
             <option value="inactive">Inactive</option>
           </select>
         </div>
+
         <div class="orc-input-group">
           <label>Query Update Time (Hour - Minute)</label>
           <select>
@@ -421,6 +422,39 @@
 
       fetchWifiNetworks();
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const modemNameInput = document.querySelector(
+        "#orc-set .orc-input-group input"
+      );
+      const modemStatusSelect = document.querySelector(
+        "#orc-set .orc-input-group select"
+      );
+
+      // 📌 Fetch Modem Information
+      function fetchModemInfo() {
+        fetch("/get_modem_info")
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "success") {
+              const modem = data.data;
+
+              // 📌 Set Modem Name
+              modemNameInput.value = modem.name || "Unknown";
+
+              // 📌 Set Modem Status (but keep it selectable)
+              modemStatusSelect.value = modem.status.toLowerCase();
+            } else {
+              console.error("Failed to load modem info:", data.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error while fetching modem info:", error);
+          });
+      }
+
+      fetchModemInfo();
+    });
   </script>
 
   <style>
@@ -465,7 +499,7 @@
     }
 
     .btn-confirm {
-      background-color: #EF742A !important; /* Red button */
+      background-color: #ef742a !important; /* Red button */
       color: white !important;
     }
 

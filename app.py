@@ -236,6 +236,40 @@ def orc_status():
     except Exception as e:
         return render_template("orc_status/orc_status.html", page_title="ORC Status", error=f"Beklenmeyen hata: {e}", modem=None, network=None)
 
+@app.route("/get_modem_info", methods=["GET"])
+def get_modem_info():
+    selected_ip = session.get("selected_device_ip")
+
+    if not selected_ip:
+        return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
+
+    try:
+        # Fetch modem data from the device
+        url_modem = f"http://{selected_ip}:8085/get_modems"
+        response = requests.get(url_modem, timeout=5)
+        response.raise_for_status()
+        modems = response.json().get("data", [])
+
+        if not modems:
+            return ResponseHandler.error(message="No modem data found", code=404, details="Modem list is empty")
+
+        # Get the first modem (assuming only one is active)
+        modem = modems[0]
+
+        # Extract required fields
+        modem_info = {
+            "name": modem.get("name", "Unknown"),
+            "status": "Active" if modem.get("status") == 1 else "Inactive"
+        }
+
+        return ResponseHandler.success(message="Modem info retrieved successfully", data=modem_info)
+
+    except requests.RequestException as e:
+        return ResponseHandler.error(message="Failed to fetch modem data", code=500, details=str(e))
+    except Exception as e:
+        return ResponseHandler.error(message="Unexpected error occurred", code=500, details=str(e))
+
+
 #network info    
 @app.route("/wi-fi-list", methods=["POST"])
 def wi_fi_list():
@@ -316,7 +350,6 @@ def disconnect_wifi():
         return ResponseHandler.error(message="Network error", code=500, details=str(e))
     except Exception as e:
         return ResponseHandler.error(message="Unexpected error occurred", code=500, details=str(e))
-
 
 @app.route("/fetch_equipment_details", methods=["GET"])
 def fetch_equipment_details():
