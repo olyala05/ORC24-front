@@ -22,6 +22,7 @@
 
   <!-- Sağ İçerik Alanı -->
   <div class="equ-set-content">
+
     <!-- Modbus Settings -->
     <div id="modbus-settings" class="modbus-setting-form">
       <div class="modbus-setting-row">
@@ -40,13 +41,37 @@
           <input type="text" value="None" />
         </div>
         <div class="modbus-setting-group">
-          <label>Stop Bit</label>
-          <input type="text" value="8" />
+          <label>Stop Bits</label>
+          <input type="text" value="1" />
         </div>
       </div>
+      <div class="modbus-setting-row">
+        <div class="modbus-setting-group">
+          <label>ByteSize</label>
+          <select id="byteSizeSelect">
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8" selected>8</option>
+            <!-- Default -->
+          </select>
+        </div>
+        <div class="modbus-setting-group">
+          <label>Timeout (Seconds)</label>
+          <select id="timeoutSelect">
+            <option value="0.5">0.5</option>
+            <option value="1" selected>1</option>
+            <!-- Default -->
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+      </div>
+
       <button class="modbus-setting-btn-test">Test</button>
 
-      <!-- Test Sonuçları -->
+      <!-- Test Results -->
       <p class="modbus-setting-success">Modbus connection successful</p>
       <p class="modbus-setting-failed">Modbus connection failed</p>
     </div>

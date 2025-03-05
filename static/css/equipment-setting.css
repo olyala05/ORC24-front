@@ -47,32 +47,33 @@
   flex: 1;
 }
 .equ-set-container .equ-set-content .modbus-setting-form .modbus-setting-row .modbus-setting-group label {
-  font-size: 14px;
+  font-size: 13px;
   color: white;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
-.equ-set-container .equ-set-content .modbus-setting-form .modbus-setting-row .modbus-setting-group input {
+.equ-set-container .equ-set-content .modbus-setting-form .modbus-setting-row .modbus-setting-group input,
+.equ-set-container .equ-set-content .modbus-setting-form .modbus-setting-row .modbus-setting-group select {
   background: white;
   border: none;
-  padding: 9px;
+  padding: 7px;
   border-radius: 4px;
-  font-size: 14px;
-  width: 80%;
+  font-size: 13px;
+  width: 84%;
   box-sizing: border-box;
 }
 .equ-set-container .equ-set-content .modbus-setting-form .modbus-setting-btn-test {
   background: #ef742a;
   color: white;
   border: none;
-  width: 50%;
-  padding: 14px;
+  width: 43%;
+  padding: 9px;
   font-size: 18px;
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
   display: block;
-  margin: 40px auto 0 auto;
+  margin: 11px auto 0 auto;
   text-align: center;
 }
 .equ-set-container .equ-set-content .modbus-setting-form .modbus-setting-btn-test:hover {
@@ -82,7 +83,8 @@
   color: #40c700;
   font-weight: 100;
   text-align: center;
-  margin-top: 25px;
+  margin-top: 8px;
+  margin-bottom: 0px;
 }
 .equ-set-container .equ-set-content .modbus-setting-form .modbus-setting-failed {
   color: #ff0000;

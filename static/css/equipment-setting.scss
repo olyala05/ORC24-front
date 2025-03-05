@@ -42,51 +42,52 @@
       border-radius: 10px;
       width: 528px;
 
-      // Form Satırı
+      // Form Row
       .modbus-setting-row {
         display: flex;
         justify-content: space-between;
         gap: 20px;
         margin-bottom: 15px;
 
-        // Form İçindeki Input Grupları
+        // Form Groups (Input + Select)
         .modbus-setting-group {
           display: flex;
           flex-direction: column;
           flex: 1;
 
           label {
-            font-size: 14px;
+            font-size: 13px;
             color: white;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
           }
 
-          input {
+          input,
+          select {
             background: white;
             border: none;
-            padding: 9px;
+            padding: 7px;
             border-radius: 4px;
-            font-size: 14px;
-            width: 80%;
+            font-size: 13px;
+            width: 84%;
             box-sizing: border-box;
           }
         }
       }
 
-      // Test Butonu
+      // Test Button
       .modbus-setting-btn-test {
         background: #ef742a;
         color: white;
         border: none;
-        width: 50%;
-        padding: 14px;
+        width: 43%;
+        padding: 9px;
         font-size: 18px;
         font-weight: bold;
         border-radius: 5px;
         cursor: pointer;
         display: block;
-        margin: 40px auto 0 auto;
+        margin: 11px auto 0 auto;
         text-align: center;
 
         &:hover {
@@ -94,12 +95,13 @@
         }
       }
 
-      // Test Sonuçları
+      // Test Results
       .modbus-setting-success {
         color: #40c700;
         font-weight: 100;
         text-align: center;
-        margin-top: 25px;
+        margin-top: 8px;
+        margin-bottom: 0px;
       }
 
       .modbus-setting-failed {
@@ -218,11 +220,10 @@
   }
 }
 
-.equ-set-sidebar{
+.equ-set-sidebar {
   .equ-set-btn:disabled {
-  background-color: #ccc; 
-  cursor: not-allowed;
-  opacity: 1;
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 1;
+  }
 }
-}
-
