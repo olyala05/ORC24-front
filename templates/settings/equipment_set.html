@@ -107,6 +107,21 @@
       <h3>Obis Settings</h3>
     </div>
 
+    <!-- Equipments list Settings  İlk burası açılacak sonra -->
+    <div
+      id="equipment-set-list"
+      class="equipment-set-list-card"
+      style="display: none"
+    >
+      <div class="equipment-set-grid" id="equipment-set-list">
+        <!-- Buraya dinamik EQuipmenler veriler gelecek -->
+        <div class="equipment-set-box green">DKM411</div>
+        <div class="equipment-set-box red">PAC3200</div>
+        <div class="equipment-set-box green">MPR-16S-21</div>
+        <div class="equipment-set-box red">RGSR-20S-OG</div>
+      </div>
+    </div>
+
     <!-- Equipment Settings -->
     <div
       id="equipment-settings"
@@ -114,7 +129,6 @@
       style="display: none"
     >
       <div class="equip-setting-card">
-
         <!--Equipment Name-->
         <div class="equip-setting-group">
           <label>Equipment Name</label>
@@ -238,7 +252,6 @@
             <span class="equip-setting-arrow">&#9662;</span>
           </div>
         </div>
-
         <button class="equip-setting-save-btn">Save</button>
       </div>
     </div>
@@ -249,21 +262,49 @@
   document.addEventListener("DOMContentLoaded", function () {
     const buttons = document.querySelectorAll(".equ-set-btn");
     const sections = document.querySelectorAll(
-      ".modbus-setting-form, .tcp-setting-form, .obis-setting-form, .equip-setting-form"
+      ".modbus-setting-form, .tcp-setting-form, .obis-setting-form, .equip-setting-form, .equipment-set-list-card"
     );
+
+    const equipmentSettingsButton = document.querySelector(
+      '[data-target="equipment-settings"]'
+    );
+    const equipmentSetList = document.getElementById("equipment-set-list");
+    const equipmentSettings = document.getElementById("equipment-settings");
+    const equipmentBoxes = document.querySelectorAll(".equipment-set-box");
+
+    // 📌 İlk başta sadece Modbus ayarları gösterilsin, Equipment list ve settings gizli olsun
+    sections.forEach((section) => (section.style.display = "none"));
+    document.getElementById("modbus-settings").style.display = "block";
+    equipmentSetList.style.display = "none";
+    equipmentSettings.style.display = "none";
 
     buttons.forEach((button) => {
       button.addEventListener("click", function () {
         const targetId = this.getAttribute("data-target");
+
         buttons.forEach((btn) => btn.classList.remove("active"));
         sections.forEach((section) => {
           section.style.display = "none";
         });
+
         this.classList.add("active");
         document.getElementById(targetId).style.display = "block";
       });
     });
-    buttons[0].click();
+
+    // 📌 "Equipment Settings" butonuna tıklanınca sadece equipment list gösterilsin
+    equipmentSettingsButton.addEventListener("click", function () {
+      sections.forEach((section) => (section.style.display = "none"));
+      equipmentSetList.style.display = "block"; // Listeyi aç
+    });
+
+    // 📌 Equipment list'teki kutulardan birine tıklanınca ayar sayfası açılsın
+    equipmentBoxes.forEach((box) => {
+      box.addEventListener("click", function () {
+        equipmentSetList.style.display = "none"; // Listeyi kapat
+        equipmentSettings.style.display = "block"; // Ayarlar sayfasını aç
+      });
+    });
   });
 
   document.addEventListener("DOMContentLoaded", function () {

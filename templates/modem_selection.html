@@ -105,9 +105,8 @@ block content %}
       .then((response) => response.json())
       .then((data) => {
         let dropdown = document.getElementById("modem");
-        dropdown.innerHTML = ""; // Önce temizle
+        dropdown.innerHTML = ""; 
 
-        // Varsayılan "Select Modem" Seçeneği
         let defaultOption = document.createElement("option");
         defaultOption.value = "";
         defaultOption.disabled = true;
@@ -115,7 +114,6 @@ block content %}
         defaultOption.textContent = "Select Modem or Device";
         dropdown.appendChild(defaultOption);
 
-        // Wi-Fi ve Modemlere Bağlı Cihazları Ekleyelim
         data.forEach((device) => {
           let option = document.createElement("option");
           option.value = device.ip;
@@ -147,31 +145,26 @@ block content %}
 
         if (data.success) {
           sessionStorage.setItem("selected_device_ip", selectedDevice);
-
-          // SweetAlert ile başarı mesajı
           Swal.fire({
-            position: "bottom-end", // 📌 Sağ alt köşe
+            position: "bottom-end", 
             icon: "success",
             title: "Cihaz başarıyla bağlandı!",
             showConfirmButton: false,
-            timer: 5000, // 5 saniyede kaybolur
+            timer: 5000,
             toast: true,
             customClass: {
               popup: "small-toast",
             },
           });
         } else {
-          // ❌ Başarısız bağlantı mesajı (Kırmızı)
           status.innerHTML =
             "<p style='color: red;'>Bağlantı hatası: " + data.error + "</p>";
-
-          // SweetAlert ile hata mesajı
           Swal.fire({
-            position: "bottom-end", // 📌 Sağ alt köşe
+            position: "bottom-end", 
             icon: "error",
-            title: "⚠️ Bağlantı hatası!",
+            title: "Bağlantı hatası!",
             showConfirmButton: false,
-            timer: 5000, // 5 saniyede kaybolur
+            timer: 5000,
             toast: true,
             customClass: {
               popup: "small-toast",
@@ -184,7 +177,7 @@ block content %}
         Swal.fire({
           position: "bottom-end", 
           icon: "error",
-          title: "⚠️ Bağlantı sırasında hata oluştu!",
+          title: "Bağlantı sırasında hata oluştu!",
           showConfirmButton: false,
           timer: 5000, 
           toast: true,
@@ -296,7 +289,6 @@ block content %}
           });
           return;
         }
-
         // **Modbus verilerini sakla**
         sessionStorage.setItem("equipment_data", JSON.stringify(data.data));
 
