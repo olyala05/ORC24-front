@@ -458,8 +458,7 @@ def modbus_test():
             code=500, 
             details=str(e)
         )
-
-    
+   
 @app.route("/disconnect_request", methods=["POST"])
 def disconnect_request():
     selected_ip = session.get("selected_device_ip")  # Seçili cihazın IP'sini al
