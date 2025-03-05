@@ -129,73 +129,64 @@
       style="display: none"
     >
       <div class="equip-setting-card">
-        <!--Equipment Name-->
+        <!-- Equipment Name -->
         <div class="equip-setting-group">
           <label>Equipment Name</label>
-          <input type="text" placeholder="Equipment Name" />
+          <input type="text" id="equipment-name" />
         </div>
 
-        <!--Equipment Slave ID-->
+        <!-- Equipment Slave ID -->
         <div class="equip-setting-group">
           <label>Equipment Slave ID</label>
-          <input type="text" placeholder="Equipment Slave ID" />
+          <input type="text" id="slave-id" />
         </div>
 
-        <!--Modem Serial No-->
+        <!-- Modem Serial No -->
         <div class="equip-setting-group">
           <label>Modem Serial No</label>
-          <input type="text" placeholder="Modem Serial No" />
+          <input type="text" id="modem-serial" />
         </div>
 
-        <!--Equipment Serial No-->
+        <!-- Equipment Serial No -->
         <div class="equip-setting-group">
           <label>Equipment Serial No</label>
-          <input type="text" placeholder="Equipment Serial No" />
+          <input type="text" id="equipment-serial" />
         </div>
 
-        <!-- Device ID-->
+        <!-- Device ID -->
         <div class="equip-setting-group">
           <label>Device ID</label>
-          <input type="text" placeholder="Device ID" />
+          <input type="text" id="device-id" />
         </div>
 
         <!-- Equipment Status -->
         <div class="equip-setting-group">
           <label>Equipment Status</label>
-          <div class="equip-setting-select">
-            <select>
-              <option value="">Select</option>
-              <option value="active">Active</option>
-              <option value="passive">Passive</option>
-            </select>
-            <span class="equip-setting-arrow">&#9662;</span>
-          </div>
+          <input type="text" id="equipment-status" />
         </div>
 
         <!-- Equipment Config Status -->
         <div class="equip-setting-group">
           <label>Equipment Config Status</label>
-          <div class="equip-setting-select">
-            <select>
-              <option value="">Select</option>
-              <option value="active">Active</option>
-              <option value="passive">Passive</option>
-            </select>
-            <span class="equip-setting-arrow">&#9662;</span>
-          </div>
+          <input type="text" id="config-status" />
         </div>
 
         <!-- Equipment Brand -->
         <div class="equip-setting-group">
           <label>Equipment Brand</label>
-          <div class="equip-setting-select">
-            <select>
-              <option value="">Select</option>
-              <option value="entes">Entes</option>
-              <option value="datacom">Datacom</option>
-            </select>
-            <span class="equip-setting-arrow">&#9662;</span>
-          </div>
+          <input type="text" id="equipment-brand" />
+        </div>
+
+        <!-- Communication Protocol -->
+        <div class="equip-setting-group">
+          <label>Communication Protocol</label>
+          <input type="text" id="communication-protocol" />
+        </div>
+
+        <!-- Modem Name -->
+        <div class="equip-setting-group">
+          <label>Modem Name</label>
+          <input type="text" id="modem-name" />
         </div>
 
         <button class="equip-setting-save-btn">Save</button>
@@ -218,22 +209,7 @@
     const equipmentSettings = document.getElementById("equipment-settings");
     const equipmentGrid = document.querySelector(".equipment-set-grid");
 
-    const equipmentNameInput = document.querySelector(
-      "#equipment-settings input[placeholder='Equipment Name']"
-    );
-    const slaveIDInput = document.querySelector(
-      "#equipment-settings input[placeholder='Equipment Slave ID']"
-    );
-    const modemSerialInput = document.querySelector(
-      "#equipment-settings input[placeholder='Modem Serial No']"
-    );
-    const equipmentSerialInput = document.querySelector(
-      "#equipment-settings input[placeholder='Equipment Serial No']"
-    );
-    const deviceIDInput = document.querySelector(
-      "#equipment-settings input[placeholder='Device ID']"
-    );
-
+    // 📌 İlk başta sadece Modbus ayarları gösterilsin
     sections.forEach((section) => (section.style.display = "none"));
     document.getElementById("modbus-settings").style.display = "block";
     equipmentSetList.style.display = "none";
@@ -253,10 +229,10 @@
       });
     });
 
+    // 📌 "Equipment Settings" butonuna tıklanınca API'den cihazları çek ve listele
     equipmentSettingsButton.addEventListener("click", function () {
       sections.forEach((section) => (section.style.display = "none"));
-      equipmentSetList.style.display = "block";
-
+      equipmentSetList.style.display = "block"; // Listeyi aç
       fetchEquipments();
     });
 
@@ -278,7 +254,7 @@
           console.log("Equipments Response:", data);
 
           if (data.status === "success" && Array.isArray(data.data)) {
-            equipmentGrid.innerHTML = "";
+            equipmentGrid.innerHTML = ""; // Önce mevcut listeyi temizle
 
             data.data.forEach((device) => {
               const statusClass = device.status === 1 ? "green" : "red";
@@ -288,11 +264,6 @@
               equipmentBox.innerText = device.model_name;
               equipmentBox.dataset.equipmentId = device.id;
 
-              equipmentBox.addEventListener("click", function () {
-                const equipmentId = this.dataset.equipmentId;
-                sessionStorage.setItem("selected_equipment_id", equipmentId);
-                fetchEquipmentDetails(equipmentId);
-              });
               equipmentGrid.appendChild(equipmentBox);
             });
           } else {
@@ -307,6 +278,19 @@
             "<p style='color: red;'>Error fetching equipments</p>";
         });
     }
+
+    // 📌 Event delegation ile dinamik olarak oluşturulan `equipment-set-box` öğelerine tıklanabilirlik ekleme
+    document.addEventListener("click", function (event) {
+      const clickedEquipment = event.target.closest(".equipment-set-box");
+
+      if (!clickedEquipment) return; // Eğer tıklanan öğe `.equipment-set-box` değilse çık
+
+      const equipmentId = clickedEquipment.dataset.equipmentId;
+      if (!equipmentId) return;
+
+      sessionStorage.setItem("selected_equipment_id", equipmentId); // ID'yi kaydet
+      fetchEquipmentDetails(equipmentId); // Detayları çek
+    });
 
     function fetchEquipmentDetails(equipmentId) {
       const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
@@ -335,11 +319,33 @@
           if (data.status === "success" && data.data) {
             const equipment = data.data;
 
-            equipmentNameInput.value = equipment.model_name || "";
-            slaveIDInput.value = equipment.modbus_address || "";
-            modemSerialInput.value = equipment.modem_name || "";
-            equipmentSerialInput.value = equipment.serial_number || "";
-            deviceIDInput.value = equipment.device_id || "";
+            // 📌 Tüm inputları dinamik olarak doldur
+            const updateInput = (id, value) => {
+              const input = document.getElementById(id);
+              if (input) input.value = value || "";
+            };
+
+            updateInput("equipment-name", equipment.model_name);
+            updateInput("slave-id", equipment.modbus_address);
+            updateInput("modem-serial", equipment.modem_serial_number);
+            updateInput("equipment-serial", equipment.serial_number);
+            updateInput("device-id", equipment.device_id);
+            updateInput(
+              "equipment-status",
+              equipment.status === 1 ? "Active" : "Passive"
+            );
+            updateInput(
+              "config-status",
+              equipment.configuration_data === 1 ? "Active" : "Passive"
+            );
+            updateInput("equipment-brand", equipment.brand_name);
+            updateInput(
+              "communication-protocol",
+              equipment.communication_protocol_code
+            );
+            updateInput("modem-name", equipment.modem_name);
+
+            // 📌 Sayfayı aç
             equipmentSetList.style.display = "none";
             equipmentSettings.style.display = "block";
           } else {
