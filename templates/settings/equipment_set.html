@@ -22,27 +22,50 @@
 
   <!-- Sağ İçerik Alanı -->
   <div class="equ-set-content">
-
     <!-- Modbus Settings -->
     <div id="modbus-settings" class="modbus-setting-form">
       <div class="modbus-setting-row">
         <div class="modbus-setting-group">
           <label>Port</label>
-          <input type="text" value="/dev/ttyUSB0" />
+          <select id="portSelect">
+            <option value="/dev/ttyUSB0" selected>/dev/ttyUSB0</option>
+            <!-- Default -->
+            <option value="/dev/ttyUSB1">/dev/ttyUSB1</option>
+            <option value="/dev/ttyS0">/dev/ttyS0</option>
+            <option value="/dev/ttyS1">/dev/ttyS1</option>
+          </select>
         </div>
         <div class="modbus-setting-group">
           <label>Baud Rate</label>
-          <input type="text" value="9600" />
+          <select id="baudRateSelect">
+            <option value="9600">9600</option>
+            <option value="19200" selected>19200</option>
+            <!-- Default -->
+            <option value="38400">38400</option>
+            <option value="57600">57600</option>
+            <option value="115200">115200</option>
+          </select>
         </div>
       </div>
       <div class="modbus-setting-row">
         <div class="modbus-setting-group">
           <label>Parity</label>
-          <input type="text" value="None" />
+          <select id="paritySelect">
+            <option value="None" selected>None</option>
+            <!-- Default -->
+            <option value="Even">Even</option>
+            <option value="Odd">Odd</option>
+            <option value="Mark">Mark</option>
+            <option value="Space">Space</option>
+          </select>
         </div>
         <div class="modbus-setting-group">
           <label>Stop Bits</label>
-          <input type="text" value="1" />
+          <select id="stopBitsSelect">
+            <option value="1" selected>1</option>
+            <!-- Default -->
+            <option value="2">2</option>
+          </select>
         </div>
       </div>
       <div class="modbus-setting-row">
