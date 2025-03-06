@@ -23,7 +23,6 @@
     <!-- Wi-Fi Test -->
     <div id="wifi-test" class="tab-content-test">
       <div class="wifi-container-test">
-
         <!-- Available Wi-Fi -->
         <div class="network-box-test">
           <button class="network-header-test" id="wifiToggleBtn">
@@ -485,39 +484,47 @@ Write successful Read value: sadfasd</textarea
     });
   });
 
-  document.getElementById("wifiToggleBtn").addEventListener("click", function () {
-    fetch("/wi-fi-list", {
+  document
+    .getElementById("wifiToggleBtn")
+    .addEventListener("click", function () {
+      fetch("/wi-fi-list", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({}),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        const wifiList = document.getElementById("dynamicWifiList");
-        wifiList.innerHTML = "";
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const wifiList = document.getElementById("dynamicWifiList");
+          wifiList.innerHTML = "";
 
-        if (data.status === "success" && data.data && data.data.wifi_networks) {
+          if (
+            data.status === "success" &&
+            data.data &&
+            data.data.wifi_networks
+          ) {
             let networks = data.data.wifi_networks;
             let connectedSSID = data.data.connected_ssid; // 📌 Bağlı Wi-Fi SSID'yi al
 
             if (networks.length > 0) {
-                // 📌 Bağlı olan Wi-Fi'yi en üste almak için filtrele
-                networks.sort((a, b) => (a === connectedSSID ? -1 : b === connectedSSID ? 1 : 0));
+              // 📌 Bağlı olan Wi-Fi'yi en üste almak için filtrele
+              networks.sort((a, b) =>
+                a === connectedSSID ? -1 : b === connectedSSID ? 1 : 0
+              );
 
-                networks.forEach((wifi) => {
-                    const wifiItem = document.createElement("div");
-                    wifiItem.classList.add("wifi-item-test");
+              networks.forEach((wifi) => {
+                const wifiItem = document.createElement("div");
+                wifiItem.classList.add("wifi-item-test");
 
-                    // 📌 Eğer bu Wi-Fi bağlı olan Wi-Fi ise, yeşil renk ver
-                    if (wifi === connectedSSID) {
-                        wifiItem.classList.add("connected-wifi"); // CSS için ekstra class ekle
-                    }
+                // 📌 Eğer bu Wi-Fi bağlı olan Wi-Fi ise, yeşil renk ver
+                if (wifi === connectedSSID) {
+                  wifiItem.classList.add("connected-wifi"); // CSS için ekstra class ekle
+                }
 
-                    wifiItem.dataset.wifi = wifi;
+                wifiItem.dataset.wifi = wifi;
 
-                    wifiItem.innerHTML = `
+                wifiItem.innerHTML = `
                         <div class="wifi-name-test">
                             <span>
                                 <img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi">
@@ -527,22 +534,23 @@ Write successful Read value: sadfasd</textarea
                         </div>
                     `;
 
-                    wifiList.appendChild(wifiItem);
-                });
+                wifiList.appendChild(wifiItem);
+              });
             } else {
-                wifiList.innerHTML = "<p>No available networks found.</p>";
+              wifiList.innerHTML = "<p>No available networks found.</p>";
             }
-        } else {
+          } else {
             wifiList.innerHTML = "<p>Failed to retrieve Wi-Fi networks.</p>";
-        }
-    })
-    .catch((error) => {
-        console.error("Error fetching Wi-Fi list:", error);
-        document.getElementById("dynamicWifiList").innerHTML = "<p>Error retrieving networks.</p>";
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching Wi-Fi list:", error);
+          document.getElementById("dynamicWifiList").innerHTML =
+            "<p>Error retrieving networks.</p>";
+        });
     });
-});
 
-
+    
 
   document.addEventListener("DOMContentLoaded", function () {
     const tabButtons = document.querySelectorAll(".switch-btn-test");
@@ -620,7 +628,6 @@ Write successful Read value: sadfasd</textarea
   .connected-wifi {
     font-weight: bold;
     color: green;
-}
-
+  }
 </style>
 {% endblock %}
