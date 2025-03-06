@@ -34,13 +34,11 @@ DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database":
 # Flask-SCSS'i başlat
 Scss(app, static_dir='static', asset_dir='assets')
 
-
 @app.route('/')
 def index():
     return render_template("index.html")
 
-
-# 🎯 Giriş Sayfası
+# Giriş Sayfası
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -75,7 +73,7 @@ def login():
     return render_template("login.html", login_success=login_success)
 
 
-# # 🎯 Dashboard Sayfası
+# Dashboard Sayfası
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html", page_title="Dashboard")        

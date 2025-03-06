@@ -1,10 +1,10 @@
 .settings-content {
   display: flex;
   gap: 10px;
-  margin-top: 70px;
+  margin-top: 60px;
 
   .tab-btn-set {
-    padding: 20px;
+    padding: 16px;
     border-radius: 7px;
     color: #000;
     font-weight: 600;
@@ -14,8 +14,8 @@
 .orc-sidebar-set {
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  width: 170px;
+  gap: 6px;
+  width: 155px;
 }
 .tab-btn-set.active {
   background-color: #fff;
@@ -97,7 +97,7 @@
   ul li {
     display: flex;
     align-items: center;
-    justify-content: space-between; 
+    justify-content: space-between;
     padding: 6px 0;
     border-bottom: 1px solid #ddd;
     color: #1c2747;
@@ -110,7 +110,7 @@
   }
 
   ul li img {
-    width: 20px; 
+    width: 20px;
     height: 20px;
   }
 }
@@ -312,9 +312,9 @@
 
 .orc-settings-card {
   background: #161b3d;
-  padding: 19px;
+  padding: 13px;
   border-radius: 10px;
-  width: 530px;
+  width: 570px;
   align-items: center;
 }
 
