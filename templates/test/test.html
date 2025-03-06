@@ -505,10 +505,9 @@ Write successful Read value: sadfasd</textarea
             data.data.wifi_networks
           ) {
             let networks = data.data.wifi_networks;
-            let connectedSSID = data.data.connected_ssid; // 📌 Bağlı Wi-Fi SSID'yi al
+            let connectedSSID = data.data.connected_ssid; 
 
             if (networks.length > 0) {
-              // 📌 Bağlı olan Wi-Fi'yi en üste almak için filtrele
               networks.sort((a, b) =>
                 a === connectedSSID ? -1 : b === connectedSSID ? 1 : 0
               );
