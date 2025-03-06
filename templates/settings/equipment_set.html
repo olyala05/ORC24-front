@@ -283,9 +283,11 @@
     document.addEventListener("click", function (event) {
       const clickedEquipment = event.target.closest(".equipment-set-box");
 
-      if (!clickedEquipment) return; // Eğer tıklanan öğe `.equipment-set-box` değilse çık
+      if (!clickedEquipment) return;
 
       const equipmentId = clickedEquipment.dataset.equipmentId;
+      console.log("Clicked Equipment ID:", equipmentId);
+
       if (!equipmentId) return;
 
       sessionStorage.setItem("selected_equipment_id", equipmentId); // ID'yi kaydet
@@ -294,42 +296,51 @@
 
     function fetchEquipmentDetails(equipmentId) {
       const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
-
+    
       if (!selectedDeviceIP || !equipmentId) {
         console.warn("Device IP or Equipment ID is missing.");
         return;
       }
-
+    
+      console.log("Fetching equipment details for ID:", equipmentId);
+    
       fetch("/set_selected_equipment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ equipment_id: equipmentId }),
       })
         .then((response) => response.json())
-        .then(() => {
-          console.log("Equipment ID saved.");
+        .then((setResponse) => {
+          console.log("Equipment ID saved:", equipmentId);
+    
+          if (setResponse.success) {
+            // Promise (söz) oluşturur ve 300 milisaniye bekledikten sonra çözülmesini (resolve) sağlar.
+            // new Promise((resolve) => { ... }) → Yeni bir Promise oluşturur.
+            // setTimeout(resolve, 300) → 300 ms sonra resolve fonksiyonunu çalıştırır.
+            // Bu kod, 300 ms bekleyen ve sonra devam eden bir asenkron işlem oluşturur.
+            return new Promise((resolve) => setTimeout(resolve, 300)); 
+          } else {
+            throw new Error("Failed to set selected equipment");
+          }
         })
-        .catch((error) => console.error("Error setting equipment ID:", error));
-
-      fetch("/fetch_equipment_details", { method: "GET" })
+        .then(() => fetch("/fetch_equipment_details", { method: "GET" }))
         .then((response) => response.json())
         .then((data) => {
           console.log("Equipment Details Response:", data);
-
+    
           if (data.status === "success" && data.data) {
             const equipment = data.data;
-
-            // 📌 Tüm inputları dinamik olarak doldur
+    
             const updateInput = (id, value) => {
               const input = document.getElementById(id);
               if (input) input.value = value || "";
             };
-
+    
             updateInput("equipment-name", equipment.model_name);
-            updateInput("slave-id", equipment.modbus_address);
-            updateInput("modem-serial", equipment.modem_serial_number);
-            updateInput("equipment-serial", equipment.serial_number);
-            updateInput("device-id", equipment.device_id);
+            updateInput("slave-id", equipment.modbus_address || "");
+            updateInput("modem-serial", equipment.modem_serial_number || "");
+            updateInput("equipment-serial", equipment.serial_number || "");
+            updateInput("device-id", equipment.device_id || "");
             updateInput(
               "equipment-status",
               equipment.status === 1 ? "Active" : "Passive"
@@ -338,14 +349,10 @@
               "config-status",
               equipment.configuration_data === 1 ? "Active" : "Passive"
             );
-            updateInput("equipment-brand", equipment.brand_name);
-            updateInput(
-              "communication-protocol",
-              equipment.communication_protocol_code
-            );
-            updateInput("modem-name", equipment.modem_name);
-
-            // 📌 Sayfayı aç
+            updateInput("equipment-brand", equipment.brand_name || "");
+            updateInput("communication-protocol", equipment.communication_protocol_code || "");
+            updateInput("modem-name", equipment.modem_name || "");
+    
             equipmentSetList.style.display = "none";
             equipmentSettings.style.display = "block";
           } else {
@@ -356,6 +363,7 @@
           console.error("Error fetching equipment details:", error);
         });
     }
+    
   });
 
   document.addEventListener("DOMContentLoaded", function () {
