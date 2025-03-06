@@ -78,8 +78,7 @@ def login():
 def dashboard():
     return render_template("dashboard.html", page_title="Dashboard")        
 
-
-# 🎯 Alarm Status API'sinden veri çek
+# Alarm Status API'sinden veri çek
 @app.route("/alarm_status", methods=["GET"])
 def alarm_status():
     if "access_token" not in session:
@@ -159,7 +158,7 @@ def get_selected_device():
     return jsonify({"ip_address": ip_address})  
 
 
-# 🎯 4️⃣ Cihaza Bağlanma
+# Cihaza Bağlanma
 @app.route("/connect_device", methods=["POST"])
 def connect_device():
     data = request.get_json()
@@ -536,6 +535,29 @@ def osos_setting():
 def equipment_setting():
     return render_template("settings/equipment_set.html", page_title="Equipment Settings")    
 # !! Settings End
+
+# !! Test Start 
+@app.route("/send_command", methods=["POST"])
+def send_command():
+    selected_ip = session.get("selected_device_ip") 
+
+    if not selected_ip:
+        return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
+
+    data = request.json
+    command = data.get("command")
+
+    if not command:
+        return ResponseHandler.error(message="Command missing", code=400, details="Command is required")
+    try:
+        url = f"http://{selected_ip}:8085/execute_command"
+        response = requests.post(url, json={"command": command})
+        response.raise_for_status()
+        return ResponseHandler.success(message="Command sent to ORC24 successfully", data=response.json())
+    except requests.RequestException as e:
+        return ResponseHandler.error(message="Failed to send command to ORC24", code=500, details=str(e))
+
+# !! Test End
 
 # !! Data Start 
 @app.route('/data', endpoint="data")
