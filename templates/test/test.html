@@ -23,6 +23,7 @@
     <!-- Wi-Fi Test -->
     <div id="wifi-test" class="tab-content-test">
       <div class="wifi-container-test">
+
         <!-- Available Wi-Fi -->
         <div class="network-box-test">
           <button class="network-header-test" id="wifiToggleBtn">
@@ -37,65 +38,9 @@
 
           <div class="wifi-list-test" id="wifiList">
             <div class="wifi-category-test">Other Networks</div>
-            <div class="wifi-item-test" data-wifi="Pier Mi Sag 5G">
-              <div class="wifi-name-test">
-                <span
-                  ><img
-                    src="{{ url_for('static', filename='images/svg/25.svg') }}"
-                    alt="Wi-Fi"
-                /></span>
-                Pier Mi Sag 5G
-                <img
-                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
-                  alt="Wi-Fi"
-                />
-              </div>
+            <div id="dynamicWifiList">
+              <p>Loading available networks...</p>
             </div>
-            <div class="wifi-item-test" data-wifi="Pier Router Mi_5G">
-              <div class="wifi-name-test">
-                <span
-                  ><img
-                    src="{{ url_for('static', filename='images/svg/25.svg') }}"
-                    alt="Wi-Fi"
-                /></span>
-                Pier Router Mi_5G
-                <img
-                  src="{{ url_for('static', filename='images/svg/26.svg') }}"
-                  alt="Wi-Fi"
-                />
-              </div>
-            </div>
-
-            <div class="wifi-item-test" data-wifi="PIERENERJI">
-              <div class="wifi-name-test">
-                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}"alt="Wi-Fi" /></span>PIERENERJI<img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi" />
-              </div>
-            </div>
-
-            <div class="wifi-item-test" data-wifi="DIRECT-274604BB">
-              <div class="wifi-name-test">
-                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}"alt="Wi-Fi" /></span>DIRECT-274604BB<img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi" />
-              </div>
-            </div>
-
-            <div class="wifi-item-test" data-wifi="dsmart_1401">
-              <div class="wifi-name-test">
-                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}"alt="Wi-Fi" /></span>dsmart_1401<img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi" />
-              </div>
-            </div>
-
-            <div class="wifi-item-test" data-wifi="pierenerji">
-              <div class="wifi-name-test">
-                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}"alt="Wi-Fi" /></span>pierenerji<img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi" />
-              </div>
-            </div>
-
-            <div class="wifi-item-test" data-wifi="test1">
-              <div class="wifi-name-test">
-                <span><img src="{{ url_for('static', filename='images/svg/25.svg') }}"alt="Wi-Fi" /></span>test1<img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi" />
-              </div>
-            </div>
-
           </div>
         </div>
 
@@ -111,7 +56,9 @@
             </h3>
             <label for="wifiPassword">Password</label>
             <input type="password" id="wifiPassword" placeholder="Password" />
-            <div class="text-show-pass"><input type="checkbox" id="showPassword" /> Show Password</div>
+            <div class="text-show-pass">
+              <input type="checkbox" id="showPassword" /> Show Password
+            </div>
             <div class="popup-buttons">
               <button class="cancel-btn" onclick="closeWifiPopup()">
                 Cancel
@@ -538,6 +485,65 @@ Write successful Read value: sadfasd</textarea
     });
   });
 
+  document.getElementById("wifiToggleBtn").addEventListener("click", function () {
+    fetch("/wi-fi-list", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        const wifiList = document.getElementById("dynamicWifiList");
+        wifiList.innerHTML = "";
+
+        if (data.status === "success" && data.data && data.data.wifi_networks) {
+            let networks = data.data.wifi_networks;
+            let connectedSSID = data.data.connected_ssid; // 📌 Bağlı Wi-Fi SSID'yi al
+
+            if (networks.length > 0) {
+                // 📌 Bağlı olan Wi-Fi'yi en üste almak için filtrele
+                networks.sort((a, b) => (a === connectedSSID ? -1 : b === connectedSSID ? 1 : 0));
+
+                networks.forEach((wifi) => {
+                    const wifiItem = document.createElement("div");
+                    wifiItem.classList.add("wifi-item-test");
+
+                    // 📌 Eğer bu Wi-Fi bağlı olan Wi-Fi ise, yeşil renk ver
+                    if (wifi === connectedSSID) {
+                        wifiItem.classList.add("connected-wifi"); // CSS için ekstra class ekle
+                    }
+
+                    wifiItem.dataset.wifi = wifi;
+
+                    wifiItem.innerHTML = `
+                        <div class="wifi-name-test">
+                            <span>
+                                <img src="{{ url_for('static', filename='images/svg/25.svg') }}" alt="Wi-Fi">
+                            </span>
+                            ${wifi}
+                            <img src="{{ url_for('static', filename='images/svg/26.svg') }}" alt="Wi-Fi">
+                        </div>
+                    `;
+
+                    wifiList.appendChild(wifiItem);
+                });
+            } else {
+                wifiList.innerHTML = "<p>No available networks found.</p>";
+            }
+        } else {
+            wifiList.innerHTML = "<p>Failed to retrieve Wi-Fi networks.</p>";
+        }
+    })
+    .catch((error) => {
+        console.error("Error fetching Wi-Fi list:", error);
+        document.getElementById("dynamicWifiList").innerHTML = "<p>Error retrieving networks.</p>";
+    });
+});
+
+
+
   document.addEventListener("DOMContentLoaded", function () {
     const tabButtons = document.querySelectorAll(".switch-btn-test");
     const tabContents = document.querySelectorAll(".tab-content-test");
@@ -609,4 +615,12 @@ Write successful Read value: sadfasd</textarea
       }
     });
 </script>
+
+<style>
+  .connected-wifi {
+    font-weight: bold;
+    color: green;
+}
+
+</style>
 {% endblock %}

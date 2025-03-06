@@ -172,7 +172,6 @@
       const showPasswordCheckbox = document.getElementById("showPass");
       let selectedSSID = null;
 
-      // 📌 Wi-Fi ağlarını getir ve listele
       function fetchWifiNetworks() {
         fetch("/wi-fi-list", { method: "POST" })
           .then((response) => response.json())
@@ -188,7 +187,7 @@
 
             let wifiHTML = "";
 
-            // 📌 Bağlı Wi-Fi'yi en üste taşı
+            // Bağlı Wi-Fi'yi en üste taşı
             if (connectedSSID) {
               networks = networks.filter((ssid) => ssid !== connectedSSID);
               networks.unshift(connectedSSID);
@@ -208,7 +207,7 @@
 
             wifiListElement.innerHTML = wifiHTML;
 
-            // 📌 Bağlı Wi-Fi'yi güncelle
+            // Bağlı Wi-Fi'yi güncelle
             if (connectedSSID) {
               selectedSSID = connectedSSID;
               wifiSSIDElement.innerText = connectedSSID;
@@ -225,19 +224,19 @@
           });
       }
 
-      // 📌 Seçilen Wi-Fi'yi inputa ekle
+      // Seçilen Wi-Fi'yi inputa ekle
       window.selectWifi = function (ssid) {
         selectedSSID = ssid;
         wifiSSIDElement.innerText = ssid;
         wifiPasswordInput.value = "";
       };
 
-      // 📌 Şifreyi göster/gizle
+      // Şifreyi göster/gizle
       showPasswordCheckbox.addEventListener("change", function () {
         wifiPasswordInput.type = this.checked ? "text" : "password";
       });
 
-      // 📌 Wi-Fi ağına bağlan
+      // Wi-Fi ağına bağlan
       connectButton.addEventListener("click", function () {
         if (!selectedSSID) {
           Swal.fire({
@@ -266,11 +265,11 @@
           return;
         }
 
-        // 📌 Butonu loading durumuna geçir
+        // Butonu loading durumuna geçir
         connectButton.disabled = true;
         connectButton.innerHTML = `<span class="spinner"></span> Connecting...`;
 
-        // 📌 Bağlantıyı başlat
+        // Bağlantıyı başlat
         fetch("/connect_wifi", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -316,13 +315,13 @@
             });
           })
           .finally(() => {
-            // 📌 Butonu eski haline getir
+            // Butonu eski haline getirir
             connectButton.disabled = false;
             connectButton.innerHTML = "Connect";
           });
       });
 
-      // 📌 Wi-Fi Disconnection with Confirmation
+      // Wi-Fi Disconnection
       disconnectButton.addEventListener("click", function () {
         if (connectedWifiSpan.innerText === "Not Connected") {
           Swal.fire({
@@ -337,7 +336,6 @@
           return;
         }
 
-        // 📌 Show Confirmation Alert Before Disconnecting
         Swal.fire({
           icon: "warning",
           title: "Disconnect Wi-Fi?",
@@ -353,7 +351,6 @@
           },
         }).then((result) => {
           if (result.isConfirmed) {
-            // 📌 Set Button to Loading State
             disconnectButton.disabled = true;
             disconnectButton.innerHTML = `<span class="spinner"></span> Disconnecting...`;
 
@@ -370,20 +367,10 @@
                       popup: "small-swal-popup",
                     },
                   });
-
-                  // 📌 Clear the Wi-Fi list
                   wifiListElement.innerHTML = "";
-
-                  // 📌 Reset the SSID display
                   wifiSSIDElement.innerText = "Not Connected";
-
-                  // 📌 Clear the password input field
                   wifiPasswordInput.value = "";
-
-                  // 📌 Update the connection status
                   connectedWifiSpan.innerText = "Not Connected";
-
-                  // 📌 Reload the Wi-Fi list
                   fetchWifiNetworks();
                 } else {
                   Swal.fire({
@@ -412,7 +399,6 @@
                 });
               })
               .finally(() => {
-                // 📌 Reset Button State
                 disconnectButton.disabled = false;
                 disconnectButton.innerHTML = "Disconnect";
               });
@@ -430,19 +416,13 @@
       const modemStatusSelect = document.querySelector(
         "#orc-set .orc-input-group select"
       );
-
-      // 📌 Fetch Modem Information
       function fetchModemInfo() {
         fetch("/get_modem_info")
           .then((response) => response.json())
           .then((data) => {
             if (data.status === "success") {
               const modem = data.data;
-
-              // 📌 Set Modem Name
               modemNameInput.value = modem.name || "Unknown";
-
-              // 📌 Set Modem Status (but keep it selectable)
               modemStatusSelect.value = modem.status.toLowerCase();
             } else {
               console.error("Failed to load modem info:", data.message);
@@ -452,7 +432,6 @@
             console.error("Error while fetching modem info:", error);
           });
       }
-
       fetchModemInfo();
     });
   </script>
