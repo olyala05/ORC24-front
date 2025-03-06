@@ -34,7 +34,6 @@
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        // ✅ "Yes" butonuna basıldığında önce API çağrılacak, sonra yönlendirilecek
         fetch("/send_command", {
           method: "POST",
           headers: {
@@ -45,12 +44,10 @@
           }),
         })
         .then(() => {
-          // ✅ API çağrısı tamamlandıktan sonra doğrudan test sayfasına yönlendir
           window.location.href = "{{ url_for('test') }}";
         })
         .catch((error) => {
           console.error("Error:", error);
-          // ✅ API başarısız olsa bile yine de yönlendir
           window.location.href = "{{ url_for('test') }}";
         });
       }
