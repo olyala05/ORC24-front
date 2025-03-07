@@ -157,7 +157,6 @@ def get_selected_device():
     ip_address = session.get("selected_device_ip", None)  
     return jsonify({"ip_address": ip_address})  
 
-
 # Cihaza Bağlanma
 @app.route("/connect_device", methods=["POST"])
 def connect_device():
@@ -346,6 +345,46 @@ def disconnect_wifi():
         return ResponseHandler.error(message="Network error", code=500, details=str(e))
     except Exception as e:
         return ResponseHandler.error(message="Unexpected error occurred", code=500, details=str(e))
+   
+@app.route("/rabbitmq-status", methods=["POST"])
+def rabbitmq_status():
+    selected_ip = session.get("selected_device_ip") 
+    
+    if not selected_ip:
+        return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")   
+    
+    try:
+        url = f"http://{selected_ip}:8085/check_rabbitmq"
+        response = requests.get(url, timeout=5)  # 5 saniyelik timeout
+        
+        response.raise_for_status()
+        rabbitmq_status = response.json()
+
+        return ResponseHandler.success(
+            message="RabbitMQ status retrieved successfully",
+            data={"rabbitmq_connected": rabbitmq_status["data"]["rabbitmq_connected"]}
+        )
+    
+    except requests.RequestException as e:
+        return ResponseHandler.error(message="Failed to fetch RabbitMQ status", code=500, details=str(e))
+
+@app.route("/vpn-status", methods=["POST"])
+def vpn_status():
+    selected_ip = session.get("selected_device_ip")
+    
+    if not selected_ip:
+        return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
+
+    try:
+        url = f"http://{selected_ip}:8085/check_vpn"
+        response = requests.get(url)
+        response.raise_for_status()
+        vpn_data = response.json()
+
+        return ResponseHandler.success(message="VPN status retrieved successfully", data={"vpn_connected": vpn_data["data"]["vpn_connected"]})
+
+    except requests.RequestException as e:
+        return ResponseHandler.error(message="Failed to fetch VPN status", code=500, details=str(e))
 
 @app.route("/fetch_equipment_details", methods=["GET"])
 def fetch_equipment_details():

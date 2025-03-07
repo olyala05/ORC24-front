@@ -319,7 +319,8 @@ block content %}
             <tr data-status="P">
               <td class="cloud-test-status"></td>
               <td class="cloud-test-status"></td>
-              <td>Rabbit Mq</td>
+              <td>Rabbit MQ</td>
+              <!-- Bağlıysa yeşil, değilse kırmızı olacak -->
               <td>2024-04-03 13:55:11</td>
             </tr>
             <tr data-status="A">
@@ -336,7 +337,9 @@ block content %}
 
         <!-- Buton ve Yazıları Yan Yana Düzenleme -->
         <div class="cloud-test-footer">
-          <button class="cloud-test-button">Perform a scanning test</button>
+          <button class="cloud-test-button" onclick="updateRabbitMQStatus()">
+            Perform a scanning test
+          </button>
           <div class="cloud-test-status-text">
             <p class="cloud-test-success">
               Local Network Connection Scan Successful.
@@ -456,6 +459,7 @@ block content %}
         </div>
       </div>
     </div>
+    
   </div>
 </div>
 
@@ -739,15 +743,85 @@ block content %}
   });
 
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll("tr[data-status]").forEach((row) => {
-      const status = row.getAttribute("data-status");
-      row.querySelectorAll(".cloud-test-status").forEach((cell) => {
-        cell.innerHTML =
-          status === "A"
-            ? '<span class="status-indicator status-green"></span>'
-            : '<span class="status-indicator status-red"></span>';
+    function setCloudConnectionStatus(isConnected) {
+      const cloudStatusRow = document.querySelector(
+        "tr[data-status='A']:nth-child(1)"
+      ); // Cloud Connection satırı
+      const statusCells = cloudStatusRow.querySelectorAll(".cloud-test-status");
+
+      statusCells.forEach((cell) => {
+        cell.innerHTML = isConnected
+          ? '<span class="status-indicator status-green"></span>'
+          : '<span class="status-indicator status-red"></span>';
       });
-    });
+    }
+
+    function updateRabbitMQStatus() {
+      fetch("/rabbitmq-status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const rabbitmqStatusRow = document.querySelector(
+            "tr[data-status='P']"
+          );
+          const statusCells =
+            rabbitmqStatusRow.querySelectorAll(".cloud-test-status");
+
+          if (data.status === "success" && data.data.rabbitmq_connected) {
+            statusCells.forEach((cell) => {
+              cell.innerHTML =
+                '<span class="status-indicator status-green"></span>';
+            });
+          } else {
+            statusCells.forEach((cell) => {
+              cell.innerHTML =
+                '<span class="status-indicator status-red"></span>';
+            });
+          }
+        })
+        .catch((error) =>
+          console.error("Error fetching RabbitMQ status:", error)
+        );
+    }
+
+    function updateVPNStatus() {
+      fetch("/vpn-status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const vpnStatusRow = document.querySelector(
+            "tr[data-status='A']:nth-child(3)"
+          ); // VPN Port satırı
+          const statusCells =
+            vpnStatusRow.querySelectorAll(".cloud-test-status");
+
+          if (data.status === "success" && data.data.vpn_connected) {
+            statusCells.forEach((cell) => {
+              cell.innerHTML =
+                '<span class="status-indicator status-green"></span>';
+            });
+          } else {
+            statusCells.forEach((cell) => {
+              cell.innerHTML =
+                '<span class="status-indicator status-red"></span>';
+            });
+          }
+        })
+        .catch((error) => console.error("Error fetching VPN status:", error));
+    }
+
+    // 📌 **Cloud varsayılan olarak kırmızı olacak**
+    setCloudConnectionStatus(false);
+
+    // 📌 **RabbitMQ ve VPN bağlantılarını kontrol et**
+    updateRabbitMQStatus();
+    updateVPNStatus();
   });
 
   document
