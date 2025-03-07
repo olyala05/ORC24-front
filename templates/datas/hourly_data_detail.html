@@ -1,11 +1,12 @@
-{% extends "layout.html" %} {% block title %} Live Data Details {% endblock %}
+{% extends "layout.html" %} {% block title %} Hourly Data Details {% endblock %}
 {% block content %}
 
 <!-- Header -->
 {% include 'partials/header.html' %}
 
-<div class="live-data-detail-table-container">
-  <table class="live-data-detail-data-table">
+<div class="hourly-data-detail-table-container">
+  <!-- Sabit duran ilk tablo -->
+  <table class="hourly-data-detail-data-table">
     <thead>
       <tr>
         <th>Serial Number</th>
@@ -15,158 +16,179 @@
         <th>Number of Data</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>EMR-53CS@3630748023</td>
-        <td>02:81:2b:61:c6:1d</td>
-        <td class="live-data-detail-status">A / A</td>
-        <td class="live-data-detail-archive">&#128308;</td>
-        <!-- Kırmızı nokta -->
-        <td>200</td>
-      </tr>
-    </tbody>
+    <tbody id="equipment-details"></tbody>
   </table>
 
-  <table class="live-data-detail-data-table">
-    <thead>
-      <tr>
-        <th>Hourly Data ID</th>
-        <th>Device ID</th>
-        <th>Value List ID</th>
-        <th>Data Value</th>
-        <th>Created Date</th>
-        <th>Main Value List</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>272003</td>
-        <td>5</td>
-        <td>804</td>
-        <td>229.64</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>3</td>
-      </tr>
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-      <tr class="live-data-detail-error">
-        <td>412</td>
-        <td colspan="5">
-          Retrieve the active register of the relevant equipment from the
-          register list table and compare it with the log.
-          <br />
-          <span class="live-data-detail-error-text"
-            >Make the value red if it's missing.</span
-          >
-        </td>
-      </tr>
-
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-      <tr>
-        <td>271856</td>
-        <td>5</td>
-        <td>21</td>
-        <td>0.00</td>
-        <td>2024-04-03 13:50:00</td>
-        <td>8</td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Scroll olacak ikinci tablo -->
+  <div class="scrollable-table">
+    <table class="hourly-data-detail-data-table">
+      <thead>
+        <tr>
+          <th>Hourly Data ID</th>
+          <th>Device ID</th>
+          <th>Value List</th>
+          <th>Data Value</th>
+          <th>Created Date</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetchEquipmentDetails();
+  });
+
+  function fetchEquipmentDetails() {
+    const selectedEquipmentID = sessionStorage.getItem("selected_equipment_id");
+
+    if (!selectedEquipmentID) {
+      console.error("❌ Ekipman seçilmedi!");
+      document.getElementById("equipment-details").innerHTML =
+        "<tr><td colspan='5' style='color: red; text-align: center;'>Ekipman seçilmedi!</td></tr>";
+      return;
+    }
+
+    console.log("🔍 Seçilen Equipment ID:", selectedEquipmentID);
+
+    fetch(`/fetch_equipment_details?equipment_id=${selectedEquipmentID}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP Hatası! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("✅ Equipment Details Response:", data);
+
+        if (data.status === "success" && data.data) {
+          updateDetailsTable([data.data]);
+        } else {
+          console.warn("⚠️ Ekipman detayları bulunamadı.");
+          document.getElementById("equipment-details").innerHTML =
+            "<tr><td colspan='5' style='color: red; text-align: center;'>Ekipman detayları bulunamadı.</td></tr>";
+        }
+      })
+      .catch((error) => {
+        console.error("Detayları getirirken hata oluştu:", error);
+        document.getElementById("equipment-details").innerHTML =
+          "<tr><td colspan='5' style='color: red; text-align: center;'>Hata oluştu.</td></tr>";
+      });
+  }
+
+  function updateDetailsTable(equipments) {
+    const tableBody = document.getElementById("equipment-details");
+
+    if (!tableBody) {
+      console.error("Hata: `equipment-details` ID'li element bulunamadı.");
+      return;
+    }
+
+    tableBody.innerHTML = "";
+
+    equipments.forEach((equipment) => {
+      let row = document.createElement("tr");
+      row.innerHTML = `
+          <td>${equipment.model_name}@${equipment.serial_number}</td>
+          <td>${equipment.modem_serial_number || "N/A"}</td>
+          <td class="hourly-data-detail-status">${
+            equipment.status === 1 ? "A / A" : "P / P"
+          }</td>
+          <td class="hourly-data-detail-archive">&#128308;</td>
+          <td>${equipment.data_count || 0}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  }
+
+  // Hourly Data
+  let currentPage = 1;
+  const perPage = 20;
+  let isFetching = false;
+
+  document.addEventListener("DOMContentLoaded", function () {
+    fetchHourlyData(currentPage);
+  });
+
+  // Scroll Event Listener
+  document
+    .querySelector(".scrollable-table tbody")
+    .addEventListener("scroll", function () {
+      const tableBody = this;
+      if (
+        tableBody.scrollTop + tableBody.clientHeight >=
+        tableBody.scrollHeight - 50
+      ) {
+        if (!isFetching) {
+          isFetching = true;
+          currentPage++;
+          fetchHourlyData(currentPage);
+        }
+      }
+    });
+
+  function fetchHourlyData(page) {
+    const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+
+    if (!selectedDeviceIP) {
+      console.warn("Cihaz IP adresi seçilmedi.");
+      return;
+    }
+
+    fetch("/fetch_hourly_data_paginated", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ page: page, per_page: perPage }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Hourly Data Response:", data);
+
+        if (
+          data.status === "success" &&
+          data.data &&
+          Array.isArray(data.data.data)
+        ) {
+          updateHourlyDataTable(data.data.data);
+        } else {
+          console.warn("Yeni veri bulunamadı.");
+        }
+      })
+      .catch((error) => console.error("Veri çekme hatası:", error))
+      .finally(() => {
+        isFetching = false;
+      });
+  }
+
+  function updateHourlyDataTable(hourlyData) {
+    const tableBody = document.querySelector(".scrollable-table tbody");
+
+    if (!tableBody) {
+      console.error("Hata: `tbody` bulunamadı.");
+      return;
+    }
+
+    hourlyData.forEach((data) => {
+      let row = document.createElement("tr");
+      row.innerHTML = `
+            <td>${data.device_serial_no || "N/A"}</td>
+            <td>${data.device_id || "N/A"}</td>
+            <td>${data.value_list_title || "N/A"}</td>
+            <td>${data.value || "0.00"}</td>
+            <td>${formatDateTime(data.created_at)}</td>
+        `;
+      tableBody.appendChild(row);
+    });
+  }
+
+  function formatDateTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    return (
+      date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0]
+    );
+  }
+</script>
 
 {% endblock %}

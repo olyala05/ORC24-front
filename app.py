@@ -655,7 +655,6 @@ def fetch_live_data_paginated():
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
 
-
 @app.route('/live-data-detail', endpoint="live-data-detail")
 def live_data_detail():
     return render_template("datas/live_data_detail.html", page_title="Live Data Detail")    
@@ -664,6 +663,49 @@ def live_data_detail():
 @app.route('/hourly-data', endpoint="hourly-data")
 def hourly_data():
     return render_template("datas/hourly_data.html", page_title="Hourly Data")  
+
+@app.route("/fetch_grouped_hourly_data", methods=["POST"])
+def fetch_grouped_hourly_data():
+    selected_ip = session.get("selected_device_ip")
+    if not selected_ip:
+        return jsonify({"error": "Lütfen önce bir cihaz seçin!"}), 400
+
+    try:
+        url = f"http://{selected_ip}:8085/get_grouped_hourly_data"
+        response = requests.get(url)
+        response.raise_for_status()
+        hourly_data = response.json().get("data", [])
+
+        return jsonify({"equipments": hourly_data}) if hourly_data else jsonify({"message": "Bu tablo boş"}), 404
+
+    except requests.RequestException as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/fetch_hourly_data_paginated", methods=["POST"])
+def fetch_hourly_data_paginated():
+    """
+    Sayfalama ile canlı veri döndüren endpoint.
+    """
+    selected_ip = session.get("selected_device_ip")  # Seçili cihazın IP adresi
+    data = request.json
+    page = int(data.get("page", 1))
+    per_page = int(data.get("per_page", 20))
+
+    if not selected_ip:
+        return jsonify({"error": "Lütfen önce bir cihaz seçin!"}), 400
+
+    print(f"📡 IP: {selected_ip}, Sayfa: {page}, Veri Sayısı: {per_page}")
+    
+    try:
+        # IP adresine göre cihazdan veri al
+        url = f"http://{selected_ip}:8085/get_hourly_data?page={page}&per_page={per_page}"
+        response = requests.get(url)
+        response.raise_for_status()
+        hourly_data = response.json()
+
+        return jsonify(hourly_data)
+    except requests.RequestException as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/hourly-data-detail', endpoint="hourly-data-detail")
 def hourly_data_detail():
