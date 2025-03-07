@@ -390,11 +390,14 @@ def vpn_status():
 def fetch_equipment_details():
     selected_ip = session.get("selected_device_ip")  
     equipment_id = session.get("selected_equipment_id")  
-    
+
     if not selected_ip:
         return jsonify({"error": "Cihaz seçilmedi. Lütfen önce bir cihaz seçin!"}), 400
     if not equipment_id:
         return jsonify({"error": "Ekipman seçilmedi. Lütfen önce bir ekipman seçin!"}), 400
+
+    print(f"🔍 Backend'e Gelen Equipment ID: {equipment_id}")  # 🔥 Konsolda kontrol et
+
     try:
         url = f"http://{selected_ip}:8085/get_equipment_details/{equipment_id}"
         response = requests.get(url, timeout=10)
@@ -404,6 +407,7 @@ def fetch_equipment_details():
         return jsonify(equipment_data) 
     except requests.exceptions.RequestException as e:
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
+
 
 @app.route("/set_selected_equipment", methods=["POST"])
 def set_selected_equipment():

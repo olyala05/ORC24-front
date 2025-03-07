@@ -91,10 +91,6 @@
     fetchEquipments();
   });
 
-  document.addEventListener("DOMContentLoaded", function () {
-    fetchEquipments();
-  });
-
   function fetchEquipments() {
     const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
 
@@ -131,48 +127,68 @@
 
   function updateTable(equipments) {
     const table = document.getElementById("equipment-table");
-    table.innerHTML = "";
+    table.innerHTML = ""; // Önceki verileri temizle
 
     if (equipments.length === 0) {
-      table.innerHTML = "<p style='color: red;'>No equipments found</p>";
-      return;
+        table.innerHTML = "<p style='color: red;'>No equipments found</p>";
+        return;
     }
 
     equipments.forEach((device) => {
-      // Status'u "A" veya "P" olarak ayarla
-      const statusText = device.status === 1 ? "A" : "P";
-      const statusClass = device.status === 1 ? "green" : "red"; // CSS için sınıflar
+        const statusText = device.status === 1 ? "A" : "P";
+        const statusClass = device.status === 1 ? "green" : "red";
 
-      let row = document.createElement("div");
-      row.className = "table-row clickable";
+        let row = document.createElement("div");
+        row.className = "table-row clickable";
 
-      row.innerHTML = `
-          <div data-serial="${device.model_name}@${device.serial_number}">
-              ${device.model_name}@${device.serial_number}
-          </div>
-          <div data-status="${statusText}" style="color: ${statusClass}; font-weight: bold;">
-              ${statusText}
-          </div>
-          <div>${device.equipment_type || "Analyzer"}</div>
-          <div><span class="status ${statusClass}"></span></div>
-          <div>${device.data_count || 0}</div>
-      `;
+        row.innerHTML = `
+            <div data-serial="${device.model_name}@${device.serial_number}">
+                ${device.model_name}@${device.serial_number}
+            </div>
+            <div data-status="${statusText}" style="color: ${statusClass}; font-weight: bold;">
+                ${statusText}
+            </div>
+            <div>${device.equipment_type || "Analyzer"}</div>
+            <div><span class="status ${statusClass}"></span></div>
+            <div>${device.data_count || 0}</div>
+        `;
 
-      table.appendChild(row);
+        // Cihaza tıklanınca ID'yi sessionStorage ve backend'e gönder
+        row.addEventListener("click", function () {
+            sessionStorage.setItem("selected_equipment_id", device.id);
+            console.log("✅ Seçilen Equipment ID Kaydedildi:", device.id);
+
+            // Backend'e POST isteği ile ID'yi gönder
+            fetch("/set_selected_equipment", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ equipment_id: device.id }),
+            })
+            .then(response => response.json())
+            .then(setResponse => {
+                if (setResponse.success) {
+                    console.log("✅ Backend'de Equipment ID Güncellendi:", device.id);
+                    window.location.href = "/live-data-detail"; // 🔥 Detay sayfasına yönlendir
+                } else {
+                    throw new Error("Backend'de ID güncellenemedi!");
+                }
+            })
+            .catch(error => console.error("❌ Backend'de ID güncellenirken hata:", error));
+        });
+
+        table.appendChild(row);
     });
-  }
-
+}
 
 </script>
 
-
 <style>
   .table-row div:first-child {
-      white-space: normal; 
-      word-break: break-word; 
-      max-width: 150px;
-      overflow: visible; 
-      display: block; 
+    white-space: normal;
+    word-break: break-word;
+    max-width: 150px;
+    overflow: visible;
+    display: block;
   }
 </style>
 

@@ -15,16 +15,7 @@
         <th>Number of Data</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>EMR-53CS@3630748023</td>
-        <td>02:81:2b:61:c6:1d</td>
-        <td class="live-data-detail-status">A / A</td>
-        <td class="live-data-detail-archive">&#128308;</td>
-        <!-- Kırmızı nokta -->
-        <td>200</td>
-      </tr>
-    </tbody>
+    <tbody id="equipment-details"></tbody>
   </table>
 
   <table class="live-data-detail-data-table">
@@ -169,4 +160,71 @@
   </table>
 </div>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetchEquipmentDetails();
+});
+
+function fetchEquipmentDetails() {
+    const selectedEquipmentID = sessionStorage.getItem("selected_equipment_id");
+
+    if (!selectedEquipmentID) {
+        console.error("❌ Ekipman seçilmedi!");
+        document.getElementById("equipment-details").innerHTML =
+            "<tr><td colspan='5' style='color: red; text-align: center;'>Ekipman seçilmedi!</td></tr>";
+        return;
+    }
+
+    console.log("🔍 Seçilen Equipment ID:", selectedEquipmentID);
+
+    fetch(`/fetch_equipment_details?equipment_id=${selectedEquipmentID}`)  
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP Hatası! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("✅ Equipment Details Response:", data);
+
+        if (data.status === "success" && data.data) {
+          updateDetailsTable([data.data]);  
+        } else {
+          console.warn("⚠️ Ekipman detayları bulunamadı.");
+          document.getElementById("equipment-details").innerHTML =
+            "<tr><td colspan='5' style='color: red; text-align: center;'>Ekipman detayları bulunamadı.</td></tr>";
+        }
+      })
+      .catch((error) => {
+        console.error("❌ Detayları getirirken hata oluştu:", error);
+        document.getElementById("equipment-details").innerHTML =
+          "<tr><td colspan='5' style='color: red; text-align: center;'>Hata oluştu.</td></tr>";
+      });
+}
+
+  function updateDetailsTable(equipments) {
+    const tableBody = document.getElementById("equipment-details");
+
+    if (!tableBody) {
+      console.error("Hata: `equipment-details` ID'li element bulunamadı.");
+      return;
+    }
+
+    tableBody.innerHTML = "";
+
+    equipments.forEach((equipment) => {
+      let row = document.createElement("tr");
+      row.innerHTML = `
+          <td>${equipment.model_name}@${equipment.serial_number}</td>
+          <td>${equipment.modem_serial_number || "N/A"}</td>
+          <td class="live-data-detail-status">${
+            equipment.status === 1 ? "A / A" : "P / P"
+          }</td>
+          <td class="live-data-detail-archive">&#128308;</td>
+          <td>${equipment.data_count || 0}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  }
+</script>
 {% endblock %}
