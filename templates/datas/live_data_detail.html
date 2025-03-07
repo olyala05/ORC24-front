@@ -5,7 +5,6 @@
 {% include 'partials/header.html' %}
 
 <div class="live-data-detail-table-container">
-
   <!-- Sabit duran ilk tablo -->
   <table class="live-data-detail-data-table">
     <thead>
@@ -32,12 +31,9 @@
           <th>Created Date</th>
         </tr>
       </thead>
-      <tbody>
-        
-      </tbody>
+      <tbody></tbody>
     </table>
   </div>
-
 </div>
 
 <script>
@@ -107,84 +103,92 @@
     });
   }
 
-
   // Live Data
-  let currentPage = 1; // Başlangıç sayfası
-const perPage = 20; // Her istekte kaç veri çekilecek
-let isFetching = false; // Tekrar eden istekleri önlemek için flag
+  let currentPage = 1;
+  const perPage = 20;
+  let isFetching = false;
 
-document.addEventListener("DOMContentLoaded", function () {
-    fetchLiveData(currentPage); // İlk sayfa verilerini çek
-});
+  document.addEventListener("DOMContentLoaded", function () {
+    fetchLiveData(currentPage);
+  });
 
-// Scroll Event Listener
-document.querySelector(".scrollable-table tbody").addEventListener("scroll", function () {
-    const tableBody = this;
-    if (tableBody.scrollTop + tableBody.clientHeight >= tableBody.scrollHeight - 50) {
+  // Scroll Event Listener
+  document
+    .querySelector(".scrollable-table tbody")
+    .addEventListener("scroll", function () {
+      const tableBody = this;
+      if (
+        tableBody.scrollTop + tableBody.clientHeight >=
+        tableBody.scrollHeight - 50
+      ) {
         if (!isFetching) {
-            isFetching = true;
-            currentPage++; // Sayfa numarasını artır
-            fetchLiveData(currentPage);
+          isFetching = true;
+          currentPage++;
+          fetchLiveData(currentPage);
         }
-    }
-});
+      }
+    });
 
-function fetchLiveData(page) {
+  function fetchLiveData(page) {
     const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
 
     if (!selectedDeviceIP) {
-        console.warn("Cihaz IP adresi seçilmedi.");
-        return;
+      console.warn("Cihaz IP adresi seçilmedi.");
+      return;
     }
 
     fetch("/fetch_live_data_paginated", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ page: page, per_page: perPage }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ page: page, per_page: perPage }),
     })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log("📌 Live Data Response:", data);
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Live Data Response:", data);
 
-        if (data.status === "success" && data.data && Array.isArray(data.data.data)) {
-            updateLiveDataTable(data.data.data);
+        if (
+          data.status === "success" &&
+          data.data &&
+          Array.isArray(data.data.data)
+        ) {
+          updateLiveDataTable(data.data.data);
         } else {
-            console.warn("⚠️ Yeni veri bulunamadı.");
+          console.warn("Yeni veri bulunamadı.");
         }
-    })
-    .catch((error) => console.error("❌ Veri çekme hatası:", error))
-    .finally(() => {
+      })
+      .catch((error) => console.error("Veri çekme hatası:", error))
+      .finally(() => {
         isFetching = false;
-    });
-}
+      });
+  }
 
-function updateLiveDataTable(liveData) {
+  function updateLiveDataTable(liveData) {
     const tableBody = document.querySelector(".scrollable-table tbody");
 
     if (!tableBody) {
-        console.error("Hata: `tbody` bulunamadı.");
-        return;
+      console.error("Hata: `tbody` bulunamadı.");
+      return;
     }
 
     liveData.forEach((data) => {
-        let row = document.createElement("tr");
-        row.innerHTML = `
+      let row = document.createElement("tr");
+      row.innerHTML = `
             <td>${data.device_serial_no || "N/A"}</td>
             <td>${data.device_id || "N/A"}</td>
             <td>${data.value_list_title || "N/A"}</td>
             <td>${data.value || "0.00"}</td>
             <td>${formatDateTime(data.created_at)}</td>
         `;
-        tableBody.appendChild(row);
+      tableBody.appendChild(row);
     });
-}
+  }
 
-function formatDateTime(dateTimeString) {
+  function formatDateTime(dateTimeString) {
     const date = new Date(dateTimeString);
-    return date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0];
-}
-
+    return (
+      date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0]
+    );
+  }
 </script>
-
 
 {% endblock %}
