@@ -408,7 +408,6 @@ def fetch_equipment_details():
     except requests.exceptions.RequestException as e:
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
 
-
 @app.route("/set_selected_equipment", methods=["POST"])
 def set_selected_equipment():
     data = request.get_json()
@@ -629,6 +628,33 @@ def fetch_grouped_live_data():
 
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route("/fetch_live_data_paginated", methods=["POST"])
+def fetch_live_data_paginated():
+    """
+    Sayfalama ile canlı veri döndüren endpoint.
+    """
+    selected_ip = session.get("selected_device_ip")  # Seçili cihazın IP adresi
+    data = request.json
+    page = int(data.get("page", 1))
+    per_page = int(data.get("per_page", 20))
+
+    if not selected_ip:
+        return jsonify({"error": "Lütfen önce bir cihaz seçin!"}), 400
+
+    print(f"📡 IP: {selected_ip}, Sayfa: {page}, Veri Sayısı: {per_page}")
+    
+    try:
+        # IP adresine göre cihazdan veri al
+        url = f"http://{selected_ip}:8085/get_live_data?page={page}&per_page={per_page}"
+        response = requests.get(url)
+        response.raise_for_status()
+        live_data = response.json()
+
+        return jsonify(live_data)
+    except requests.RequestException as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/live-data-detail', endpoint="live-data-detail")
 def live_data_detail():
