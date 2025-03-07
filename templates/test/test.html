@@ -127,7 +127,7 @@ block content %}
       <!-- Ethernet Bölümü -->
       <div id="ethernet-test">
         <div class="ethernet-container-test">
-          <!-- Available Wi-Fi -->
+          <!-- Ethernet Box -->
           <div class="ethernet-box-test">
             <img
               src="{{ url_for('static', filename='images/svg/24.svg') }}"
@@ -137,40 +137,52 @@ block content %}
             <span class="ethernet-text">Ethernet</span>
           </div>
 
-          <!--Ethernet Test Paneli -->
+          <!-- Ethernet Test Paneli -->
           <div class="ethernet-test-box">
             <!-- Connection Status -->
             <div class="ethernet-test-row">
               <label class="ethernet-test-label">Connection Status</label>
-              <span class="ethernet-test-value">Connected / No connection</span>
+              <span id="ethernetConnectionStatus" class="ethernet-test-value"
+                >No connection</span
+              >
             </div>
 
             <!-- Connection Mac -->
             <div class="ethernet-test-row">
               <label class="ethernet-test-label">Connection Mac</label>
-              <span class="ethernet-test-value">02:81:2b:61:c6:1d</span>
+              <span id="ethernetMacAddress" class="ethernet-test-value">-</span>
             </div>
 
             <!-- Test Button ve Ethernet Status -->
             <div class="ethernet-test-action">
-              <button class="ethernet-test-btn">Test</button>
+              <button id="testEthernetBtn" class="ethernet-test-btn">
+                Test
+              </button>
               <div style="display: flex; flex-direction: column; gap: 5px">
-                <span class="ethernet-success"
-                  ><img
+                <span
+                  id="ethernetSuccess"
+                  class="ethernet-success"
+                  style="display: none"
+                >
+                  <img
                     src="{{ url_for('static', filename='images/svg/15.svg') }}"
-                    alt="No Wi-Fi"
+                    alt="Ethernet Connected"
                     class="ethernet-icon"
                   />
-                  WiFi Connection Successful.</span
+                  Ethernet Connection Successful.
+                </span>
+                <span
+                  id="ethernetFailed"
+                  class="ethernet-failed"
+                  style="display: none"
                 >
-                <span class="ethernet-failed"
-                  ><img
+                  <img
                     src="{{ url_for('static', filename='images/svg/16.svg') }}"
-                    alt="No Wi-Fi"
+                    alt="Ethernet Disconnected"
                     class="ethernet-icon"
                   />
-                  WiFi Connection Failed.</span
-                >
+                  Ethernet Connection Failed.
+                </span>
               </div>
             </div>
           </div>
@@ -496,145 +508,194 @@ block content %}
 
     const networkNameSpan = document.getElementById("wifiNetworkName");
     const passwordSpan = document.getElementById("wifiPasswordDisplay");
-    const connectionStatusSpan = document.getElementById("wifiConnectionStatus");
+    const connectionStatusSpan = document.getElementById(
+      "wifiConnectionStatus"
+    );
     const macAddressSpan = document.getElementById("wifiMacAddress");
     const wifiSuccess = document.getElementById("wifiSuccess");
     const wifiFailed = document.getElementById("wifiFailed");
+
+    const ethernetStatusSpan = document.getElementById(
+      "ethernetConnectionStatus"
+    );
+    const ethernetMacSpan = document.getElementById("ethernetMacAddress");
+    const ethernetSuccess = document.getElementById("ethernetSuccess");
+    const ethernetFailed = document.getElementById("ethernetFailed");
+
     const wifiListContainer = document.getElementById("dynamicWifiList");
 
-    function getWifiDetails(updateList = false) {
-        fetch("/wi-fi-list", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({}),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === "success" && data.data) {
-                const connectedSSID = data.data.connected_ssid;
-                const macAddress = data.data.wifi_mac;
-                const password = data.data.wifi_password;
+    function getNetworkDetails(updateList = false) {
+      fetch("/wi-fi-list", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success" && data.data) {
+            const connectedSSID = data.data.connected_ssid;
+            const macAddress = data.data.wifi_mac;
+            const password = data.data.wifi_password;
+            const ethernetConnected = data.data.ethernet_connected;
+            const ethernetMac = data.data.ethernet_mac;
 
-                if (connectedSSID) {
-                    networkNameSpan.textContent = connectedSSID;
-                    passwordSpan.textContent = password ? password : "No Password";
-                    connectionStatusSpan.textContent = "Connected";
-                    connectionStatusSpan.style.color = "green";
-                    macAddressSpan.textContent = macAddress || "Unknown";
-                    wifiSuccess.style.display = "block";
-                    wifiFailed.style.display = "none";
-                } else {
-                    connectionStatusSpan.textContent = "No connection";
-                    connectionStatusSpan.style.color = "red";
-                    wifiSuccess.style.display = "none";
-                    wifiFailed.style.display = "block";
-                }
-
-                if (updateList) updateWifiList(data.data.wifi_networks, connectedSSID);
+            // 📌 Wi-Fi Bilgilerini Güncelle
+            if (connectedSSID) {
+              networkNameSpan.textContent = connectedSSID;
+              passwordSpan.textContent = password ? password : "No Password";
+              connectionStatusSpan.textContent = "Connected";
+              connectionStatusSpan.style.color = "green";
+              macAddressSpan.textContent = macAddress || "Unknown";
+              wifiSuccess.style.display = "block";
+              wifiFailed.style.display = "none";
+            } else {
+              connectionStatusSpan.textContent = "No connection";
+              connectionStatusSpan.style.color = "red";
+              wifiSuccess.style.display = "none";
+              wifiFailed.style.display = "block";
             }
+
+            // Ethernet Bilgilerini Güncelle
+            if (ethernetConnected) {
+              ethernetStatusSpan.textContent = "Connected";
+              ethernetStatusSpan.style.color = "green";
+              ethernetMacSpan.textContent = ethernetMac || "Unknown";
+              ethernetSuccess.style.display = "block";
+              ethernetFailed.style.display = "none";
+            } else {
+              ethernetStatusSpan.textContent = "No connection";
+              ethernetStatusSpan.style.color = "red";
+              ethernetSuccess.style.display = "none";
+              ethernetFailed.style.display = "block";
+            }
+
+            if (updateList)
+              updateWifiList(data.data.wifi_networks, connectedSSID);
+          }
         })
-        .catch(error => console.error("Error fetching Wi-Fi details:", error));
+        .catch((error) =>
+          console.error("Error fetching network details:", error)
+        );
     }
 
     function updateWifiList(networks, connectedSSID) {
-        wifiListContainer.innerHTML = "";
+      wifiListContainer.innerHTML = "";
 
-        if (networks.length > 0) {
-            networks.sort((a, b) => (a === connectedSSID ? -1 : b === connectedSSID ? 1 : 0));
+      if (networks.length > 0) {
+        networks.sort((a, b) =>
+          a === connectedSSID ? -1 : b === connectedSSID ? 1 : 0
+        );
 
-            networks.forEach(wifi => {
-                const wifiItem = document.createElement("div");
-                wifiItem.classList.add("wifi-item-test");
-                wifiItem.dataset.wifi = wifi;
+        networks.forEach((wifi) => {
+          const wifiItem = document.createElement("div");
+          wifiItem.classList.add("wifi-item-test");
+          wifiItem.dataset.wifi = wifi;
 
-                if (wifi === connectedSSID) wifiItem.classList.add("connected-wifi");
+          if (wifi === connectedSSID) wifiItem.classList.add("connected-wifi");
 
-                wifiItem.innerHTML = `
+          wifiItem.innerHTML = `
                     <div class="wifi-name-test">
                         <span><img src="/static/images/svg/25.svg" alt="Wi-Fi"></span>
                         ${wifi}
                         <img src="/static/images/svg/26.svg" alt="Wi-Fi">
                     </div>`;
 
-                wifiItem.addEventListener("click", function () {
-                    openWifiPopup(wifi);
-                });
+          wifiItem.addEventListener("click", function () {
+            openWifiPopup(wifi);
+          });
 
-                wifiListContainer.appendChild(wifiItem);
-            });
-        } else {
-            wifiListContainer.innerHTML = "<p>No available networks found.</p>";
-        }
+          wifiListContainer.appendChild(wifiItem);
+        });
+      } else {
+        wifiListContainer.innerHTML = "<p>No available networks found.</p>";
+      }
     }
 
-    getWifiDetails(true);
+    getNetworkDetails(true);
 
     window.openWifiPopup = function (ssid) {
-        wifiName.textContent = ssid;
-        passwordInput.value = "";
-        wifiPopup.style.display = "flex";
+      wifiName.textContent = ssid;
+      passwordInput.value = "";
+      wifiPopup.style.display = "flex";
     };
 
     window.closeWifiPopup = function () {
-        wifiPopup.style.display = "none";
+      wifiPopup.style.display = "none";
     };
 
     showPasswordCheckbox.addEventListener("change", function () {
-        passwordInput.type = this.checked ? "text" : "password";
+      passwordInput.type = this.checked ? "text" : "password";
     });
 
     joinButton.addEventListener("click", function () {
-        const ssid = wifiName.textContent.trim();
-        const password = passwordInput.value.trim();
+      const ssid = wifiName.textContent.trim();
+      const password = passwordInput.value.trim();
 
-        if (!ssid) {
-            Swal.fire({ icon: "error", title: "Wi-Fi Not Selected", text: "Please select a Wi-Fi network first!" });
-            return;
-        }
+      if (!ssid) {
+        Swal.fire({
+          icon: "error",
+          title: "Wi-Fi Not Selected",
+          text: "Please select a Wi-Fi network first!",
+        });
+        return;
+      }
 
-        joinButton.innerHTML = `<span class="spinner"></span> Connecting...`;
-        joinButton.disabled = true;
+      joinButton.innerHTML = `<span class="spinner"></span> Connecting...`;
+      joinButton.disabled = true;
 
-        fetch("/connect_wifi", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ssid, password }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === "success") {
-                Swal.fire({ icon: "success", title: "Connected!", text: `Successfully connected to ${ssid}.` });
+      fetch("/connect_wifi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ssid, password }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            Swal.fire({
+              icon: "success",
+              title: "Connected!",
+              text: `Successfully connected to ${ssid}.`,
+            });
 
-                networkNameSpan.textContent = ssid;
-                passwordSpan.textContent = password ? password : "No Password";
-                connectionStatusSpan.textContent = "Connected";
-                connectionStatusSpan.style.color = "green";
+            networkNameSpan.textContent = ssid;
+            passwordSpan.textContent = password ? password : "No Password";
+            connectionStatusSpan.textContent = "Connected";
+            connectionStatusSpan.style.color = "green";
 
-                getWifiDetails(true);
-                closeWifiPopup();
-            } else {
-                Swal.fire({ icon: "error", title: "Connection Failed", text: data.message || "Failed to connect to Wi-Fi." });
-                connectionStatusSpan.textContent = "No connection";
-                connectionStatusSpan.style.color = "red";
-            }
-        })
-        .catch(error => {
-            console.error("Error connecting to Wi-Fi:", error);
-            Swal.fire({ icon: "error", title: "Error", text: "An error occurred while connecting to Wi-Fi." });
+            getNetworkDetails(true);
+            closeWifiPopup();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Connection Failed",
+              text: data.message || "Failed to connect to Wi-Fi.",
+            });
             connectionStatusSpan.textContent = "No connection";
             connectionStatusSpan.style.color = "red";
+          }
+        })
+        .catch((error) => {
+          console.error("Error connecting to Wi-Fi:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "An error occurred while connecting to Wi-Fi.",
+          });
+          connectionStatusSpan.textContent = "No connection";
+          connectionStatusSpan.style.color = "red";
         })
         .finally(() => {
-            joinButton.innerHTML = "Join";
-            joinButton.disabled = false;
+          joinButton.innerHTML = "Join";
+          joinButton.disabled = false;
         });
     });
 
-    document.getElementById("wifiToggleBtn").addEventListener("click", function () {
-        getWifiDetails(true);
-    });
-});
-
+    document
+      .getElementById("wifiToggleBtn")
+      .addEventListener("click", function () {
+        getNetworkDetails(true);
+      });
+  });
 
   document.addEventListener("DOMContentLoaded", function () {
     const tabButtons = document.querySelectorAll(".switch-btn-test");
