@@ -139,7 +139,10 @@
     }
 
     equipments.forEach((device) => {
-      const statusClass = device.status === 1 ? "green" : "red";
+      // Status'u "A" veya "P" olarak ayarla
+      const statusText = device.status === 1 ? "A" : "P";
+      const statusClass = device.status === 1 ? "green" : "red"; // CSS için sınıflar
+
       let row = document.createElement("div");
       row.className = "table-row clickable";
 
@@ -147,9 +150,9 @@
           <div data-serial="${device.model_name}@${device.serial_number}">
               ${device.model_name}@${device.serial_number}
           </div>
-          <div data-status="${device.status || "N/A"}">${
-        device.status || "N/A"
-      }</div>
+          <div data-status="${statusText}" style="color: ${statusClass}; font-weight: bold;">
+              ${statusText}
+          </div>
           <div>${device.equipment_type || "Analyzer"}</div>
           <div><span class="status ${statusClass}"></span></div>
           <div>${device.data_count || 0}</div>
@@ -158,6 +161,19 @@
       table.appendChild(row);
     });
   }
+
+
 </script>
+
+
+<style>
+  .table-row div:first-child {
+      white-space: normal; 
+      word-break: break-word; 
+      max-width: 150px;
+      overflow: visible; 
+      display: block; 
+  }
+</style>
 
 {% endblock %}
