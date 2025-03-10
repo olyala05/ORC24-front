@@ -190,49 +190,49 @@ block content %}
       </div>
     </div>
 
-<!-- Equipment Test -->
-<div id="equipment-test" class="tab-content-test">
-  <div class="equipment-test-container">
-    <div class="equipment-test-card">
-      <!-- Tablonun Başlangıcı -->
-      <table class="equipment-table">
-        <thead>
-          <tr>
-            <th>Serial Number</th>
-            <th>SID/IP</th>
-            <th>Status / Configuration</th>
-            <th>Connection</th>
-            <th>Connection Protocol</th>
-            <th>Equipment Date / Connection Date</th>
-          </tr>
-        </thead>
-        <tbody id="equipment-table-body">
-          <!-- Dinamik veriler buraya eklenecek -->
-        </tbody>
-      </table>
-      <!-- Tablonun Sonu -->
+    <!-- Equipment Test -->
+    <div id="equipment-test" class="tab-content-test">
+      <div class="equipment-test-container">
+        <div class="equipment-test-card">
+          <!-- Tablonun Başlangıcı -->
+          <table class="equipment-table">
+            <thead>
+              <tr>
+                <th>Serial Number</th>
+                <th>SID/IP</th>
+                <th>Status / Configuration</th>
+                <th>Connection</th>
+                <th>Connection Protocol</th>
+                <th>Equipment Date / Connection Date</th>
+              </tr>
+            </thead>
+            <tbody id="equipment-table-body">
+              <!-- Dinamik veriler buraya eklenecek -->
+            </tbody>
+          </table>
+          <!-- Tablonun Sonu -->
 
-      <!-- Butonlar ve Durum Bilgileri -->
-      <div class="equipment-actions">
-        <div class="equipment-scan-status">
-          <button class="equipment-scan-btn" onclick="fetchEquipments()">
-            Perform a scanning test
-          </button>
-          <span class="equipment-scan-success"
-            >Local Network Connection Scan Successful.</span
-          >
-          <span class="equipment-scan-failed"
-            >Local Network Connection Scan Failed.</span
-          >
+          <!-- Butonlar ve Durum Bilgileri -->
+          <div class="equipment-actions">
+            <div class="equipment-scan-status">
+              <button class="equipment-scan-btn" onclick="fetchEquipments()">
+                Perform a scanning test
+              </button>
+              <span class="equipment-scan-success"
+                >Local Network Connection Scan Successful.</span
+              >
+              <span class="equipment-scan-failed"
+                >Local Network Connection Scan Failed.</span
+              >
+            </div>
+            <button class="equipment-update-btn">
+              Update the equipment table with the equipment found during
+              scanning
+            </button>
+          </div>
         </div>
-        <button class="equipment-update-btn">
-          Update the equipment table with the equipment found during scanning
-        </button>
       </div>
     </div>
-  </div>
-</div>
-
 
     <!-- Cloud Connection Test -->
     <div id="cloud-test" class="cloud-test-container tab-content-test">
@@ -295,49 +295,113 @@ block content %}
         <div class="read-test-grid">
           <div class="read-test-group">
             <label for="port">Port</label>
-            <input type="text" id="port" value="/dev/ttyUSB0" readonly />
+            <select id="port">
+              <option value="/dev/ttyUSB0" selected>/dev/ttyUSB0</option>
+              <option value="/dev/ttyUSB1">/dev/ttyUSB1</option>
+              <option value="/dev/ttyS0">/dev/ttyS0</option>
+              <option value="/dev/ttyS1">/dev/ttyS1</option>
+            </select>
           </div>
+
           <div class="read-test-group">
             <label for="baud-rate">Baud Rate</label>
-            <input type="text" id="baud-rate" value="9600" readonly />
+            <select id="baud-rate">
+              <option value="19200" selected>19200</option>
+              <option value="9600">9600</option>
+              <option value="115200">115200</option>
+              <option value="38400">38400</option>
+            </select>
           </div>
+
           <div class="read-test-group">
             <label for="parity">Parity</label>
-            <input type="text" id="parity" value="None" readonly />
+            <select id="parity">
+              <option value="N" selected>N</option>
+              <option value="E">E</option>
+              <option value="O">O</option>
+            </select>
           </div>
+
           <div class="read-test-group">
-            <label for="stop-bit">Stop Bit</label>
-            <input type="text" id="stop-bit" value="8" readonly />
+            <label for="stop-bit">Stop Bits</label>
+            <select id="stop-bit">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+            </select>
           </div>
+
+          <div class="read-test-group">
+            <label for="bytesize">Byte Size</label>
+            <select id="bytesize">
+              <option value="8" selected>8</option>
+              <option value="7">7</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+
+          <div class="read-test-group">
+            <label for="timeout">Timeout</label>
+            <select id="timeout">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+
           <div class="read-test-group">
             <label for="register">Register</label>
-            <input type="text" id="register" value="8" readonly />
+            <select id="register">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
           </div>
+
           <div class="read-test-group">
             <label for="count">Count</label>
-            <input type="text" id="count" value="8" readonly />
+            <select id="count">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
           </div>
+
+          <div class="read-test-group">
+            <label for="slave-id">Slave ID</label>
+            <select id="slave-id">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3" selected>3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+
           <div class="read-test-group">
             <label for="data-type">Data Type</label>
-            <input type="text" id="data-type" value="uint32" readonly />
+            <select id="data-type">
+              <option value="uint32" selected>uint32</option>
+              <option value="uint16">uint16</option>
+              <option value="int32">int32</option>
+              <option value="float">float</option>
+            </select>
           </div>
         </div>
 
         <div class="read-test-footer">
-          <button class="read-test-button">Perform a scanning test</button>
-          <div class="read-test-status">
-            <p class="read-test-success">
-              Local Network Connection Scan Successful.
-            </p>
-            <p class="read-test-failed">
-              Local Network Connection Scan Failed.
-            </p>
-          </div>
+          <button class="read-test-button" onclick="sendModbusRequest()">
+            Send Modbus Request
+          </button>
         </div>
 
         <div class="read-test-terminal">
           <label for="terminal">Terminal</label>
-          <textarea id="terminal" readonly>/dev/ttyUSB0</textarea>
+          <textarea id="terminal" readonly>Waiting for response...</textarea>
         </div>
       </div>
     </div>
@@ -396,7 +460,6 @@ block content %}
         </div>
       </div>
     </div>
-    
   </div>
 </div>
 
@@ -779,70 +842,71 @@ block content %}
       }
     });
 
-
-    document.addEventListener("DOMContentLoaded", function () {
-      fetchEquipments();
+  document.addEventListener("DOMContentLoaded", function () {
+    fetchEquipments();
   });
-  
+
   function fetchEquipments() {
-      const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
-  
-      if (!selectedDeviceIP) {
-          console.warn("No device selected for fetching equipments.");
+    const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+
+    if (!selectedDeviceIP) {
+      console.warn("No device selected for fetching equipments.");
+      document.getElementById("equipment-table-body").innerHTML =
+        "<tr><td colspan='6' style='color: red;'>No device selected.</td></tr>";
+      return;
+    }
+
+    fetch("/equipments-with-models", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ip_address: selectedDeviceIP }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success" && Array.isArray(data.data)) {
+          updateEquipmentTable(data.data);
+        } else {
+          console.warn("No equipments found.");
           document.getElementById("equipment-table-body").innerHTML =
-              "<tr><td colspan='6' style='color: red;'>No device selected.</td></tr>";
-          return;
-      }
-  
-      fetch("/equipments-with-models", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ip_address: selectedDeviceIP }),
+            "<tr><td colspan='6' style='color: red;'>No equipments found</td></tr>";
+        }
       })
-          .then((response) => response.json())
-          .then((data) => {
-              if (data.status === "success" && Array.isArray(data.data)) {
-                  updateEquipmentTable(data.data);
-              } else {
-                  console.warn("No equipments found.");
-                  document.getElementById("equipment-table-body").innerHTML =
-                      "<tr><td colspan='6' style='color: red;'>No equipments found</td></tr>";
-              }
-          })
-          .catch((error) => {
-              console.error("Error fetching equipments:", error);
-              document.getElementById("equipment-table-body").innerHTML =
-                  "<tr><td colspan='6' style='color: red;'>Error fetching equipments</td></tr>";
-          });
+      .catch((error) => {
+        console.error("Error fetching equipments:", error);
+        document.getElementById("equipment-table-body").innerHTML =
+          "<tr><td colspan='6' style='color: red;'>Error fetching equipments</td></tr>";
+      });
   }
-  
+
   function updateEquipmentTable(equipments) {
-      const tableBody = document.getElementById("equipment-table-body");
-      tableBody.innerHTML = ""; // Önceki verileri temizle
-  
-      equipments.forEach((equipment) => {
-          const row = document.createElement("tr");
-  
-          // Serial Number
-          const serialNumber = `${equipment.model_name}@${equipment.serial_number}`;
-  
-          // SID / IP
-          const sidIP = equipment.modbus_address || "N/A";
-  
-          // Status / Configuration
-          const statusText = equipment.configuration_data === 1 ? "A / A " : "P / P";
-          const statusColor = equipment.configuration_data === 1 ? "green" : "red";
-  
-          // Connection (Static "OK" and green color)
-          const connectionStatus = `<span style="color: green; font-weight: bold;">OK</span>`;
-  
-          // Connection Protocol
-          const connectionProtocol = equipment.communication_protocol_code || "Unknown";
-  
-          // Equipment Date / Connection Date
-          const formattedDate = formatDateTime(equipment.created_at);
-  
-          row.innerHTML = `
+    const tableBody = document.getElementById("equipment-table-body");
+    tableBody.innerHTML = ""; // Önceki verileri temizle
+
+    equipments.forEach((equipment) => {
+      const row = document.createElement("tr");
+
+      // Serial Number
+      const serialNumber = `${equipment.model_name}@${equipment.serial_number}`;
+
+      // SID / IP
+      const sidIP = equipment.modbus_address || "N/A";
+
+      // Status / Configuration
+      const statusText =
+        equipment.configuration_data === 1 ? "A / A " : "P / P";
+      const statusColor = equipment.configuration_data === 1 ? "green" : "red";
+
+      // Connection (Static "OK" and green color)
+      const connectionStatus = `<span style="color: green; font-weight: bold;">OK</span>`;
+
+      // Connection Protocol
+      const connectionProtocol =
+        equipment.communication_protocol_code || "Unknown";
+
+      // Equipment Date / Connection Date
+      const formattedDate = formatDateTime(equipment.created_at);
+
+      row.innerHTML = `
               <td>${serialNumber}</td>
               <td>${sidIP}</td>
               <td style="color: ${statusColor}; font-weight: bold;">${statusText}</td>
@@ -850,16 +914,69 @@ block content %}
               <td>${connectionProtocol}</td>
               <td>${formattedDate}</td>
           `;
-  
-          tableBody.appendChild(row);
-      });
+
+      tableBody.appendChild(row);
+    });
   }
-  
+
   function formatDateTime(dateTimeString) {
-      const date = new Date(dateTimeString);
-      return date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0];
+    const date = new Date(dateTimeString);
+    return (
+      date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0]
+    );
   }
-  
+
+  // Read Modbus
+  function sendModbusRequest() {
+    const terminal = document.getElementById("terminal");
+    terminal.value = "🔍 Sending Modbus request... Please wait.";
+
+    const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+    if (!selectedDeviceIP) {
+        terminal.value = "No device selected.";
+        return;
+    }
+
+    const modbusParams = {
+        port: document.getElementById("port").value,
+        baudrate: parseInt(document.getElementById("baud-rate").value),
+        parity: document.getElementById("parity").value,
+        stopbits: parseInt(document.getElementById("stop-bit").value),
+        bytesize: parseInt(document.getElementById("bytesize").value),
+        timeout: parseFloat(document.getElementById("timeout").value),
+        address: parseInt(document.getElementById("register").value),
+        count: 2, // 🔹 **2 register okuyarak çift değer alınmasını sağladık**
+        slave_id: parseInt(document.getElementById("slave-id").value),
+        method: "rtu",
+    };
+
+    console.log("📤 Sending JSON:", JSON.stringify({ modbus_params: modbusParams }));
+
+    fetch("/validate_modbus", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ modbus_params: modbusParams }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log("📥 Received Response:", data);
+
+        // ✅ `data.data` içinde başka bir `data` objesi var, onu alıyoruz
+        const registers = data.data?.data;
+
+        if (data.status === "success" && Array.isArray(registers) && registers.length > 0) {
+            terminal.value = `Registers: ${registers.join(", ")}`;
+        } else {
+            terminal.value = `❌ Error: ${data.message}`;
+        }
+    })
+    .catch((error) => {
+        console.error("🚨 Request Failed:", error);
+        terminal.value = `Request failed:\n${error}`;
+    });
+}
+
+
 </script>
 
 <style>
@@ -921,30 +1038,29 @@ block content %}
     border-radius: 6px;
     overflow: hidden;
     font-size: 14px;
-}
+  }
 
-.equipment-table th,
-.equipment-table td {
+  .equipment-table th,
+  .equipment-table td {
     border: none;
     padding: 10px;
     text-align: center;
     color: #fff;
-}
+  }
 
-.equipment-table th {
+  .equipment-table th {
     background: #0b1734;
     font-weight: bold;
     color: #ef8018;
     border-bottom: 1px solid #ffffff;
-}
+  }
 
-.equipment-table td {
+  .equipment-table td {
     border-bottom: 1px solid #ef8018;
-}
+  }
 
-.equipment-table tbody tr:last-child td {
+  .equipment-table tbody tr:last-child td {
     border-bottom: none;
-}
-
+  }
 </style>
 {% endblock %}

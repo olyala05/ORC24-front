@@ -2184,10 +2184,6 @@ body {
 }
 .equipment-test-card .equipment-table tbody tr td:first-child {
   word-break: break-word;
-  white-space: normal;
-  max-width: 150px;
-  overflow-wrap: break-word;
-  text-align: center;
   padding: 1px;
 }
 .equipment-test-card .equipment-actions {

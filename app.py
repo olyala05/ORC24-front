@@ -598,7 +598,6 @@ def send_command():
         return ResponseHandler.success(message="Command sent to ORC24 successfully", data=response.json())
     except requests.RequestException as e:
         return ResponseHandler.error(message="Failed to send command to ORC24", code=500, details=str(e))
-
 # !! Test End
 
 # !! Data Start 
@@ -732,7 +731,7 @@ def fetch_grouped_daily_data():
 
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
-
+    
 @app.route("/fetch_daily_data_paginated", methods=["POST"])
 def fetch_daily_data_paginated():
     """
@@ -775,6 +774,30 @@ def network_alarm_detail():
 def electric_alarm_detail():
     return render_template("alarms/electric_alarm_details.html", page_title="Electric Alarm Details")
 # !! Alarm End
+
+# Read Modbus
+@app.route("/validate_modbus", methods=["POST"])
+def validate_modbus():
+    selected_ip = session.get("selected_device_ip") 
+    if not selected_ip:
+        return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
+
+    data = request.json
+    if not data:
+        return ResponseHandler.error(message="No JSON data received", code=400)
+
+    modbus_params = data.get("modbus_params")  
+    if not modbus_params:
+        return ResponseHandler.error(message="Modbus parameters missing", code=400)
+
+    try:
+        url = f"http://{selected_ip}:8085/modbus_config"
+        response = requests.post(url, json=modbus_params)
+        response.raise_for_status()
+        return ResponseHandler.success(message="Command sent to ORC24 successfully", data=response.json())
+    except requests.RequestException as e:
+        return ResponseHandler.error(message="Failed to send command to ORC24", code=500, details=str(e))
+
 
 @app.route("/logout", methods=["POST"])
 def logout():
