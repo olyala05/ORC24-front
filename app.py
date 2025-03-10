@@ -269,14 +269,18 @@ def wi_fi_list():
     selected_ip = session.get("selected_device_ip")
     
     if not selected_ip:
+        print("❌ ERROR: No selected device IP found!")
         return jsonify({"error": "IP address is missing"}), 400
 
     try:
-        # Seçilen cihazdan bağlantı bilgilerini al
+        print(f"📡 Wi-Fi listesi için cihazdan veri alınıyor: {selected_ip}")
         url = f"http://{selected_ip}:8085/check_network"
         response = requests.get(url)
-        response.raise_for_status()
+        print(f"✅ Cihazdan cevap alındı: {response.status_code}")
+
+        response.raise_for_status()  # Hata fırlatırsa yakalayalım
         network_data = response.json()
+        print(f"📡 Gelen JSON: {network_data}")
 
         return jsonify({
             "status": "success",
@@ -284,6 +288,7 @@ def wi_fi_list():
             "data": network_data["data"]  
         })
     except requests.RequestException as e:
+        print(f"❌ ERROR: Request failed - {str(e)}")
         return jsonify({
             "status": "error",
             "message": f"Failed to connect to device: {str(e)}",
@@ -294,6 +299,7 @@ def wi_fi_list():
 def connect_wifi():
     try:
         data = request.json
+        print("Gelen JSON:", data)  # 💡 Gelen veriyi logla
         ssid = data.get("ssid")
         password = data.get("password")
         selected_ip = session.get("selected_device_ip")
@@ -304,7 +310,6 @@ def connect_wifi():
         if not selected_ip:
             return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
 
-        # Cihaza bağlanma isteği gönder
         url = f"http://{selected_ip}:8085/connect_wifi"
         response = requests.post(url, json={"ssid": ssid, "password": password})
         response.raise_for_status()
