@@ -96,7 +96,9 @@
           <td class="live-data-detail-status">${
             equipment.status === 1 ? "A / A" : "P / P"
           }</td>
-          <td class="live-data-detail-archive">&#128308;</td>
+          <td class="live-data-detail-archive">
+            <div class="status-circle"></div>
+          </td>
           <td>${equipment.data_count || 0}</td>
       `;
       tableBody.appendChild(row);

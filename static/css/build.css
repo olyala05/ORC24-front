@@ -3313,6 +3313,14 @@ body {
   border-bottom: none;
 }
 
+.status-circle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: red; /* Kırmızı yuvarlak */
+  border-radius: 50%;
+}
+
 .hourly-data-container {
   display: flex;
   justify-content: space-between;

@@ -173,7 +173,7 @@
 }
 .live-data-detail-table-container .scrollable-table tbody {
   display: block;
-  max-height: 300px; /* Sadece içeriği kaydır */
+  max-height: 300px;
   overflow-y: auto;
   width: 100%;
 }
@@ -209,4 +209,12 @@
 }
 .live-data-detail-table-container .scrollable-table tbody tr:last-child td {
   border-bottom: none;
+}
+
+.status-circle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: red;
+  border-radius: 50%;
 }/*# sourceMappingURL=live-data.css.map */

@@ -200,7 +200,7 @@
     /* Scroll olacak kısım (sadece tbody) */
     tbody {
       display: block;
-      max-height: 300px; /* Sadece içeriği kaydır */
+      max-height: 300px; 
       overflow-y: auto;
       width: 100%;
     }
@@ -247,4 +247,13 @@
       border-bottom: none;
     }
   }
+}
+
+
+.status-circle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: red; 
+  border-radius: 50%;
 }
