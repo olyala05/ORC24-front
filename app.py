@@ -195,8 +195,6 @@ def orc_status():
 
         if modems:
             selected_modem = modems[0]
-
-            # **created_at tarihini uygun formata dönüştürelim**
             if "created_at" in selected_modem and selected_modem["created_at"]:
                 try:
                     created_at_dt = datetime.strptime(selected_modem["created_at"], "%a, %d %b %Y %H:%M:%S %Z")
@@ -421,21 +419,14 @@ def set_selected_equipment():
 # Equipments Modbus
 @app.route("/modbus_request", methods=["POST"])
 def modbus_request():
-    """
-    Seçili cihazdan Modbus verilerini alır ve frontend'e iletir.
-    """
-    selected_ip = session.get("selected_device_ip")  # 🔥 Seçili cihazın IP'sini al
-
+    selected_ip = session.get("selected_device_ip")  
     if not selected_ip:
-        logger.warning("⚠️ Cihaz seçilmedi!")
+        logger.warning("Cihaz seçilmedi!")
         return jsonify({"error": "Cihaz seçilmedi. Lütfen önce bir cihaz bağlayın."}), 400
-
     try:
-        logger.info(f"🔄 Modbus verisi alınıyor: {selected_ip}")  # İsteğin başladığını logla
-
-        # HTTP ile cihazdan Modbus verilerini al
+        logger.info(f"Modbus verisi alınıyor: {selected_ip}") 
         url = f"http://{selected_ip}:8085/get_modbus_data"
-        response = requests.get(url, timeout=500)  # Timeout ekledik
+        response = requests.get(url, timeout=500)
         response.raise_for_status()
 
         modbus_data = response.json().get("modbus_data", [])
@@ -444,12 +435,77 @@ def modbus_request():
             return jsonify({"error": "Modbus verisi alınamadı veya cihaz desteklemiyor."}), 500
 
         logger.info(
-            f"Modbus verisi başarıyla alındı: {len(modbus_data)} cihaz bulundu.")  # Kaç cihaz bulunduğunu logla
+            f"Modbus verisi başarıyla alındı: {len(modbus_data)} cihaz bulundu.")
         return jsonify({"modbus_data": modbus_data})
 
     except requests.exceptions.RequestException as e:
         logger.error(f"Modbus isteği hatası: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
+
+# Read Modbus
+@app.route("/validate_modbus", methods=["POST"])
+def validate_modbus():
+    selected_ip = session.get("selected_device_ip") 
+    if not selected_ip:
+        return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
+
+    data = request.json
+    if not data:
+        return ResponseHandler.error(message="No JSON data received", code=400)
+
+    modbus_params = data.get("modbus_params")  
+    if not modbus_params:
+        return ResponseHandler.error(message="Modbus parameters missing", code=400)
+
+    try:
+        url = f"http://{selected_ip}:8085/modbus_config"
+        response = requests.post(url, json=modbus_params)
+        response.raise_for_status()
+        return ResponseHandler.success(message="Command sent to ORC24 successfully", data=response.json())
+    except requests.RequestException as e:
+        return ResponseHandler.error(message="Failed to send command to ORC24", code=500, details=str(e))
+
+# Modbus Slave Scan
+@app.route("/modbus_slave_scan", methods=["POST"])
+def modbus_request():
+    selected_ip = session.get("selected_device_ip") 
+    if not selected_ip:
+        return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
+
+    data = request.json
+    if not data:
+        return ResponseHandler.error(message="No JSON data received", code=400)
+
+    modbus_params = data.get("modbus_params")  
+    if not modbus_params:
+        return ResponseHandler.error(message="Modbus parameters missing", code=400)
+    try:
+        url = f"http://{selected_ip}:8085/get_modbus_data"
+        response = requests.post(url, json=modbus_params)
+        response.raise_for_status()
+        return ResponseHandler.success(message="Command sent to ORC24 successfully", data=response.json())
+    except requests.RequestException as e:
+        return ResponseHandler.error(message="Failed to send command to ORC24", code=500, details=str(e))
+
+# Modbus IP Scan
+@app.route("/modbus_ip_scan", methods=["POST"])
+def modbus_request():
+    selected_ip = session.get("selected_device_ip") 
+    if not selected_ip:
+        return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
+    data = request.json
+    if not data:
+        return ResponseHandler.error(message="No JSON data received", code=400)
+    modbus_params = data.get("modbus_params")  
+    if not modbus_params:
+        return ResponseHandler.error(message="Modbus parameters missing", code=400)
+    try:
+        url = f"http://{selected_ip}:8085/scan_modbus_ips"
+        response = requests.post(url, json=modbus_params)
+        response.raise_for_status()
+        return ResponseHandler.success(message="Command sent to ORC24 successfully", data=response.json())
+    except requests.RequestException as e:
+        return ResponseHandler.error(message="Failed to send command to ORC24", code=500, details=str(e))
 
 @app.route("/modbus_test", methods=["POST", "GET"])
 def modbus_test():
@@ -774,31 +830,6 @@ def network_alarm_detail():
 def electric_alarm_detail():
     return render_template("alarms/electric_alarm_details.html", page_title="Electric Alarm Details")
 # !! Alarm End
-
-# Read Modbus
-@app.route("/validate_modbus", methods=["POST"])
-def validate_modbus():
-    selected_ip = session.get("selected_device_ip") 
-    if not selected_ip:
-        return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
-
-    data = request.json
-    if not data:
-        return ResponseHandler.error(message="No JSON data received", code=400)
-
-    modbus_params = data.get("modbus_params")  
-    if not modbus_params:
-        return ResponseHandler.error(message="Modbus parameters missing", code=400)
-
-    try:
-        url = f"http://{selected_ip}:8085/modbus_config"
-        response = requests.post(url, json=modbus_params)
-        response.raise_for_status()
-        return ResponseHandler.success(message="Command sent to ORC24 successfully", data=response.json())
-    except requests.RequestException as e:
-        return ResponseHandler.error(message="Failed to send command to ORC24", code=500, details=str(e))
-
-
 @app.route("/logout", methods=["POST"])
 def logout():
     session.clear() 
