@@ -176,7 +176,8 @@
     margin-top: 0px;
   }
 
-  input[type="password"] {
+  input[type="password"],
+  #wifi-password {
     width: 93%;
     padding: 12px 11px;
     margin-top: 0px;
@@ -185,6 +186,7 @@
     align-items: center;
     margin-right: 4px;
   }
+
   .text-show-pass {
     color: #1b2746;
     display: flex;
@@ -207,13 +209,13 @@
     }
 
     .cancel-btn {
-      background: #EF8018;
+      background: #ef8018;
       color: white;
       padding: 15px 50px;
     }
 
     .join-btn {
-      background: #EF8018;
+      background: #ef8018;
       color: white;
       padding: 15px 50px;
     }
@@ -221,7 +223,6 @@
 }
 
 // Wi Fi password Pop Up End
-
 .wifi-icon-test {
   display: flex;
   gap: 10px;
@@ -364,6 +365,8 @@
   background-color: white;
   margin: 0px 0;
   opacity: 0.6;
+  z-index: -1;
+  position: relative;
 }
 
 // Wi-Fi Test Paneli
@@ -498,7 +501,7 @@
           &:first-child {
             word-break: break-word;
             padding: 1px;
-        }
+          }
         }
       }
     }
@@ -707,7 +710,7 @@
     width: 90%;
   }
 
-  select{
+  select {
     color: #000;
     border: 1px solid #444;
     padding: 7px;
@@ -819,7 +822,7 @@
     border-radius: 5px;
     width: 90%;
   }
-  select{
+  select {
     color: #000;
     border: 1px solid #444;
     padding: 7px;

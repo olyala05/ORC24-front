@@ -269,14 +269,14 @@ def wi_fi_list():
     selected_ip = session.get("selected_device_ip")
     
     if not selected_ip:
-        print("❌ ERROR: No selected device IP found!")
+        print("ERROR: No selected device IP found!")
         return jsonify({"error": "IP address is missing"}), 400
 
     try:
         print(f"📡 Wi-Fi listesi için cihazdan veri alınıyor: {selected_ip}")
         url = f"http://{selected_ip}:8085/check_network"
         response = requests.get(url)
-        print(f"✅ Cihazdan cevap alındı: {response.status_code}")
+        print(f"Cihazdan cevap alındı: {response.status_code}")
 
         response.raise_for_status()  # Hata fırlatırsa yakalayalım
         network_data = response.json()
@@ -288,7 +288,7 @@ def wi_fi_list():
             "data": network_data["data"]  
         })
     except requests.RequestException as e:
-        print(f"❌ ERROR: Request failed - {str(e)}")
+        print(f"ERROR: Request failed - {str(e)}")
         return jsonify({
             "status": "error",
             "message": f"Failed to connect to device: {str(e)}",

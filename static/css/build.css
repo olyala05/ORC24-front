@@ -1899,7 +1899,8 @@ body {
   margin-bottom: 0px;
   margin-top: 0px;
 }
-.popup-content input[type=password] {
+.popup-content input[type=password],
+.popup-content #wifi-password {
   width: 93%;
   padding: 12px 11px;
   margin-top: 0px;
@@ -1913,6 +1914,21 @@ body {
   display: flex;
   z-index: 25;
   margin-top: 10px;
+}
+.popup-content .show-password-set {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.popup-content .check-box-set {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.popup-content .show-pass {
+  font-size: 14px;
+  color: #333;
 }
 .popup-content .popup-buttons {
   display: flex;
@@ -1928,12 +1944,12 @@ body {
   font-size: 14px;
 }
 .popup-content .popup-buttons .cancel-btn {
-  background: #EF8018;
+  background: #ef8018;
   color: white;
   padding: 15px 50px;
 }
 .popup-content .popup-buttons .join-btn {
-  background: #EF8018;
+  background: #ef8018;
   color: white;
   padding: 15px 50px;
 }
@@ -2066,6 +2082,8 @@ body {
   background-color: white;
   margin: 0px 0;
   opacity: 0.6;
+  z-index: -1;
+  position: relative;
 }
 
 .wifi-test-box {
