@@ -685,7 +685,7 @@
 .read-test-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 0px;
   margin-bottom: 0px;
 }
 
@@ -701,6 +701,14 @@
   input {
     color: #757678;
     border: 1px solid #444;
+    padding: 6px;
+    border-radius: 5px;
+    width: 90%;
+  }
+
+  select{
+    color: #757678;
+    border: 1px solid #444;
     padding: 7px;
     border-radius: 5px;
     width: 90%;
@@ -711,7 +719,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 12px;
+  margin-top: 7px;
 }
 
 .read-test-button {
@@ -749,11 +757,11 @@
 }
 
 .read-test-terminal {
-  margin-top: 15px;
+  margin-top: 8px;
 
   label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 1px;
   }
 
   textarea {

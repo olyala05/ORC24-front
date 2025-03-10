@@ -397,6 +397,8 @@ block content %}
           <button class="read-test-button" onclick="sendModbusRequest()">
             Send Modbus Request
           </button>
+          <span id="status-message" class="status-message"></span>
+          <!-- Durum mesajı için -->
         </div>
 
         <div class="read-test-terminal">
@@ -929,54 +931,71 @@ block content %}
   // Read Modbus
   function sendModbusRequest() {
     const terminal = document.getElementById("terminal");
+    const statusMessage = document.getElementById("status-message"); // Status mesajını al
     terminal.value = "🔍 Sending Modbus request... Please wait.";
+    statusMessage.textContent = ""; // Önceki mesajı temizle
+    statusMessage.className = "status-message"; // Önceki class'ı temizle
 
     const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
     if (!selectedDeviceIP) {
-        terminal.value = "No device selected.";
-        return;
+      terminal.value = "No device selected.";
+      statusMessage.textContent = "Local Network Connection Scan Failed.";
+      statusMessage.classList.add("error");
+      return;
     }
 
     const modbusParams = {
-        port: document.getElementById("port").value,
-        baudrate: parseInt(document.getElementById("baud-rate").value),
-        parity: document.getElementById("parity").value,
-        stopbits: parseInt(document.getElementById("stop-bit").value),
-        bytesize: parseInt(document.getElementById("bytesize").value),
-        timeout: parseFloat(document.getElementById("timeout").value),
-        address: parseInt(document.getElementById("register").value),
-        count: 2, // 🔹 **2 register okuyarak çift değer alınmasını sağladık**
-        slave_id: parseInt(document.getElementById("slave-id").value),
-        method: "rtu",
+      port: document.getElementById("port").value,
+      baudrate: parseInt(document.getElementById("baud-rate").value),
+      parity: document.getElementById("parity").value,
+      stopbits: parseInt(document.getElementById("stop-bit").value),
+      bytesize: parseInt(document.getElementById("bytesize").value),
+      timeout: parseFloat(document.getElementById("timeout").value),
+      address: parseInt(document.getElementById("register").value),
+      count: 2, // 🔹 **2 register okuyarak çift değer alınmasını sağladık**
+      slave_id: parseInt(document.getElementById("slave-id").value),
+      method: "rtu",
     };
 
-    console.log("📤 Sending JSON:", JSON.stringify({ modbus_params: modbusParams }));
+    console.log(
+      "📤 Sending JSON:",
+      JSON.stringify({ modbus_params: modbusParams })
+    );
 
     fetch("/validate_modbus", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ modbus_params: modbusParams }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ modbus_params: modbusParams }),
     })
-    .then((response) => response.json())
-    .then((data) => {
+      .then((response) => response.json())
+      .then((data) => {
         console.log("📥 Received Response:", data);
 
         // ✅ `data.data` içinde başka bir `data` objesi var, onu alıyoruz
         const registers = data.data?.data;
 
-        if (data.status === "success" && Array.isArray(registers) && registers.length > 0) {
-            terminal.value = `Registers: ${registers.join(", ")}`;
+        if (
+          data.status === "success" &&
+          Array.isArray(registers) &&
+          registers.length > 0
+        ) {
+          terminal.value = `Registers: ${registers.join(", ")}`;
+          statusMessage.textContent =
+            "Local Network Connection Scan Successful.";
+          statusMessage.classList.add("success"); // Yeşil renk
         } else {
-            terminal.value = `❌ Error: ${data.message}`;
+          terminal.value = `Error: ${data.message}`;
+          statusMessage.textContent = "Local Network Connection Scan Failed.";
+          statusMessage.classList.add("error"); // Kırmızı renk
         }
-    })
-    .catch((error) => {
-        console.error("🚨 Request Failed:", error);
+      })
+      .catch((error) => {
+        console.error("Request Failed:", error);
         terminal.value = `Request failed:\n${error}`;
-    });
-}
-
-
+        statusMessage.textContent = "Local Network Connection Scan Failed.";
+        statusMessage.classList.add("error"); // Kırmızı renk
+      });
+  }
 </script>
 
 <style>
@@ -1061,6 +1080,20 @@ block content %}
 
   .equipment-table tbody tr:last-child td {
     border-bottom: none;
+  }
+
+  .status-message {
+    margin-left: 10px;
+  }
+
+  .success {
+    color: green;
+    font-size: 14px;   
+  }
+
+  .error {
+    color: red;
+    font-size: 14px;  
   }
 </style>
 {% endblock %}
