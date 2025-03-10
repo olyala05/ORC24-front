@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .hourly-data-container {
   display: flex;
   justify-content: space-between;
@@ -19,6 +20,7 @@
   border-radius: 8px;
   overflow-y: auto;
   max-height: 500px;
+  min-height: 375px;
 }
 .hourly-data-container .table-header {
   position: sticky;
@@ -137,4 +139,77 @@
 }
 .hourly-data-detail-error-text {
   color: #ff4444;
+}
+
+/* Genel Konteyner */
+.hourly-data-detail-table-container {
+  width: 98%;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  max-height: 600px; /* Konteynerin max yüksekliği */
+  overflow: hidden;
+  margin-top: 76px;
+  /* İlk tabloyu sabit bırak */
+  /* İkinci tablo için scroll ayarları */
+}
+.hourly-data-detail-table-container .hourly-data-detail-data-table:first-child {
+  position: relative;
+  width: 100%;
+  border-collapse: collapse;
+  background: #0b1734;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+.hourly-data-detail-table-container .scrollable-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0b1734;
+  border-radius: 6px;
+  display: block;
+  max-height: 317px;
+  overflow: hidden;
+  /* Scroll olacak kısım (sadece tbody) */
+  /* Thead sabit kalsın */
+  /* Tablo içi hücre ayarları */
+  /* Son satırın alt sınırını kaldır */
+}
+.hourly-data-detail-table-container .scrollable-table tbody {
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+  width: 100%;
+}
+.hourly-data-detail-table-container .scrollable-table thead {
+  display: block;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  background: #0b1734;
+  z-index: 10;
+}
+.hourly-data-detail-table-container .scrollable-table thead tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+.hourly-data-detail-table-container .scrollable-table thead th {
+  font-weight: bold;
+  color: #ef8018;
+  border-bottom: 1px solid #ffffff;
+}
+.hourly-data-detail-table-container .scrollable-table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+.hourly-data-detail-table-container .scrollable-table th, .hourly-data-detail-table-container .scrollable-table td {
+  border: none;
+  padding: 6px;
+  text-align: center;
+  font-size: 13px;
+  border-bottom: 1px solid #ef8018;
+}
+.hourly-data-detail-table-container .scrollable-table tbody tr:last-child td {
+  border-bottom: none;
 }/*# sourceMappingURL=hourly-data.css.map */

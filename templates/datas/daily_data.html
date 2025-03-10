@@ -1,4 +1,5 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} 
+
 {% block title %} Daily Data Details {% endblock %}
 
 {% block content %}
@@ -7,109 +8,191 @@
 {% include 'partials/header.html' %}
 
 <div class="daily-data-container">
-    <!-- daily Data Table Bölümü -->
-    <div class="daily-data-table">
-      <div class="table-header">
-        <div>ID</div>
-        <div>Created Date</div>
-        <div>Number of Equipment</div>
-        <div>Number of Data</div>
-        <div>Time (Sec)</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
-      <div class="table-row">
-        <div>1</div>
-        <div>2024-04-03 13:50:00</div>
-        <div>5</div>
-        <div>804</div>
-        <div>804</div>
-      </div>
+  <!-- Daily Data Table Bölümü -->
+  <div class="daily-data-table">
+    <div class="table-header">
+      <div>Created Date</div>
+      <div>Number of Equipment</div>
+      <div>Number of Data</div>
+      <div>Time (Sec)</div>
     </div>
-  
-    <!-- daily Data Status Bölümü -->
-    <div class="daily-data-status">
-      <div class="table-header">
-        <div>Serial Number</div>
-        <div>Status / Config.</div>
-        <div>Equipment Type</div>
-        <div>Archive</div>
-        <div>Number of Data</div>
-        <div>Time (Sec)</div>
-      </div>
-      <div class="table-row clickable">
-        <div data-serial="EMR-53CS@3630748023">EMR-53CS@3630748023</div>
-        <!-- Status hücresine data-status ekleniyor -->
-        <div data-status="A / A">A / A</div>
-        <div>Analyzer</div>
-        <div><span class="status inactive"></span></div>
-        <div>200</div>
-        <div>804</div>
-      </div>
-      <div class="table-row clickable">
-        <div data-serial="MPR-46S@2931" class="passive-style">MPR-46S@2931</div>
-        <!-- Eğer status P/P ise; metin kırmızı olacak -->
-        <div data-status="P / P">P / P</div>
-        <div>Analyzer</div>
-        <div><span class="status active"></span></div>
-        <div>200</div>
-        <div>804</div>
-      </div>
+    <div id="daily-data-container"></div>
+  </div>
+
+  <!-- Daily Data Status Bölümü -->
+  <div class="daily-data-status">
+    <div class="table-header">
+      <div>Serial Number</div>
+      <div>Status / Config.</div>
+      <div>Equipment Type</div>
+      <div>Archive</div>
+      <div>Number of Data</div>
+    </div>
+    <div id="equipment-table">
+      <!-- Dinamik veriler buraya eklenecek -->
     </div>
   </div>
-  
-  
+</div>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetchDailyData();
+  });
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const clickableElements = document.querySelectorAll('.clickable');
-      clickableElements.forEach(function(elem) {
-        elem.addEventListener('click', function() {
-          window.location.href = '/daily-data-detail';
-        });
+  function fetchDailyData() {
+    fetch("/fetch_grouped_daily_data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.equipments) {
+          updateDailyDataTable(data.equipments);
+        } else {
+          console.error("Veri alınamadı:", data.message || data.error);
+        }
+      })
+      .catch((error) => console.error("Hata:", error));
+  }
+
+  function formatDateTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    return (
+      date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0]
+    );
+  }
+
+  function updateDailyDataTable(dailyData) {
+    const container = document.getElementById("daily-data-container");
+    container.innerHTML = "";
+
+    dailyData.forEach((item, index) => {
+      const formattedDate = formatDateTime(item.created_at);
+
+      const row = document.createElement("div");
+      row.className = "table-row";
+      row.innerHTML = `
+          <div>${formattedDate}</div>
+          <div>${item.equipment_count}</div>
+          <div>${item.data_count}</div>
+          <div>0</div>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const clickableElements = document.querySelectorAll(".clickable");
+    clickableElements.forEach(function (elem) {
+      elem.addEventListener("click", function () {
+        window.location.href = "/daily-data-detail";
       });
     });
-    </script>
-    
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    fetchEquipments();
+  });
+
+  function fetchEquipments() {
+    const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+
+    if (!selectedDeviceIP) {
+      console.warn("No device selected for fetching equipments.");
+      document.getElementById("equipment-table").innerHTML =
+        "<p style='color: red;'>No device selected.</p>";
+      return;
+    }
+
+    fetch("/equipments-with-models", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ip_address: selectedDeviceIP }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Equipments Response:", data);
+
+        if (data.status === "success" && Array.isArray(data.data)) {
+          updateTable(data.data);
+        } else {
+          console.warn("No equipments found.");
+          document.getElementById("equipment-table").innerHTML =
+            "<p style='color: red;'>No equipments found</p>";
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching equipments:", error);
+        document.getElementById("equipment-table").innerHTML =
+          "<p style='color: red;'>Error fetching equipments</p>";
+      });
+  }
+
+  function updateTable(equipments) {
+    const table = document.getElementById("equipment-table");
+    table.innerHTML = ""; // Önceki verileri temizle
+
+    if (equipments.length === 0) {
+      table.innerHTML = "<p style='color: red;'>No equipments found</p>";
+      return;
+    }
+
+    equipments.forEach((device) => {
+      const statusText = device.status === 1 ? "A" : "P";
+      const statusClass = device.status === 1 ? "green" : "red";
+
+      let row = document.createElement("div");
+      row.className = "table-row clickable";
+
+      row.innerHTML = `
+            <div data-serial="${device.model_name}@${device.serial_number}">
+                ${device.model_name}@${device.serial_number}
+            </div>
+            <div data-status="${statusText}" style="color: ${statusClass}; font-weight: bold;">
+                ${statusText}
+            </div>
+            <div>${device.equipment_type || "Analyzer"}</div>
+            <div><span class="status ${statusClass}"></span></div>
+            <div>${device.data_count || 0}</div>
+        `;
+
+      // Cihaza tıklanınca ID'yi sessionStorage ve backend'e gönder
+      row.addEventListener("click", function () {
+        sessionStorage.setItem("selected_equipment_id", device.id);
+        console.log("✅ Seçilen Equipment ID Kaydedildi:", device.id);
+
+        // Backend'e POST isteği ile ID'yi gönder
+        fetch("/set_selected_equipment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ equipment_id: device.id }),
+        })
+          .then((response) => response.json())
+          .then((setResponse) => {
+            if (setResponse.success) {
+              console.log("Backend'de Equipment ID Güncellendi:", device.id);
+              window.location.href = "/daily-data-detail";
+            } else {
+              throw new Error("Backend'de ID güncellenemedi!");
+            }
+          })
+          .catch((error) =>
+            console.error("Backend'de ID güncellenirken hata:", error)
+          );
+      });
+
+      table.appendChild(row);
+    });
+  }
+</script>
+<style>
+  .table-row div:first-child {
+    white-space: normal;
+    word-break: break-word;
+    max-width: 150px;
+    overflow: visible;
+    display: block;
+  }
+</style>
+
 {% endblock %}

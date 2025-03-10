@@ -716,7 +716,6 @@ def hourly_data_detail():
 def daily_data():
     return render_template("datas/daily_data.html", page_title="Daily Data")    
 
-
 @app.route("/fetch_grouped_daily_data", methods=["POST"])
 def fetch_grouped_daily_data():
     selected_ip = session.get("selected_device_ip")
@@ -739,16 +738,14 @@ def fetch_daily_data_paginated():
     """
     Sayfalama ile canlı veri döndüren endpoint.
     """
-    selected_ip = session.get("selected_device_ip")  # Seçili cihazın IP adresi
+    selected_ip = session.get("selected_device_ip")
     data = request.json
     page = int(data.get("page", 1))
     per_page = int(data.get("per_page", 20))
 
     if not selected_ip:
         return jsonify({"error": "Lütfen önce bir cihaz seçin!"}), 400
-
-    print(f"📡 IP: {selected_ip}, Sayfa: {page}, Veri Sayısı: {per_page}")
-    
+    print(f"IP: {selected_ip}, Sayfa: {page}, Veri Sayısı: {per_page}")
     try:
         # IP adresine göre cihazdan veri al
         url = f"http://{selected_ip}:8085/get_daily_data?page={page}&per_page={per_page}"
@@ -759,7 +756,6 @@ def fetch_daily_data_paginated():
         return jsonify(daily_data)
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
-
 
 @app.route('/daily-data-detail', endpoint="daily-data-detail")
 def daily_data_detail():
