@@ -674,6 +674,7 @@
 }
 
 .read-test-card {
+  width: 100%;
   background: #0b1734;
   padding: 10px;
   border-radius: 10px;
@@ -707,7 +708,7 @@
   }
 
   select{
-    color: #757678;
+    color: #000;
     border: 1px solid #444;
     padding: 7px;
     border-radius: 5px;
@@ -771,7 +772,7 @@
     width: 97%;
     height: 60px;
     resize: none;
-    color: #757678;
+    color: #000;
   }
 }
 
@@ -792,12 +793,13 @@
   align-items: center;
   color: white;
   margin-top: 0px;
+  width: 100%;
 }
 
 .write-test-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 0px;
   margin-bottom: 0px;
 }
 
@@ -812,6 +814,13 @@
 
   input {
     color: #757678;
+    border: 1px solid #444;
+    padding: 7px;
+    border-radius: 5px;
+    width: 90%;
+  }
+  select{
+    color: #000;
     border: 1px solid #444;
     padding: 7px;
     border-radius: 5px;
@@ -861,15 +870,15 @@
 }
 
 .write-test-terminal {
-  margin-top: 15px;
+  margin-top: 6px;
 
   label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
   }
 
   textarea {
-    color: #757678;
+    color: #000;
     border: 1px solid #444;
     padding: 8px;
     border-radius: 5px;
