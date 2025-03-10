@@ -494,6 +494,11 @@
           font-size: 13px;
           border-bottom: 1px solid #ef742a;
           text-align: center;
+
+          &:first-child {
+            word-break: break-word;
+            padding: 1px;
+        }
         }
       }
     }

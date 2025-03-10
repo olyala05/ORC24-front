@@ -396,7 +396,7 @@ def fetch_equipment_details():
     if not equipment_id:
         return jsonify({"error": "Ekipman seçilmedi. Lütfen önce bir ekipman seçin!"}), 400
 
-    print(f"🔍 Backend'e Gelen Equipment ID: {equipment_id}")  # 🔥 Konsolda kontrol et
+    print(f"Backend'e Gelen Equipment ID: {equipment_id}") 
 
     try:
         url = f"http://{selected_ip}:8085/get_equipment_details/{equipment_id}"

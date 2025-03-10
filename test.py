@@ -1,19 +1,23 @@
-import scapy.all as scapy
-import requests
-from flask import Flask, render_template, request, jsonify
-app = Flask(__name__)
+import nmcli
  
-def scan_network(ip_range):
-    arp_request = scapy.ARP(pdst=ip_range)
-    broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
-    arp_request_broadcast = broadcast / arp_request
-    answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]
-    ip_list = []
-    for element in answered_list:
-        mac_address = element[1].hwsrc
-        if mac_address.startswith('02') or mac_address.startswith('12'):
-            ip_list.append(element[1].psrc)
-    return ip_list
-
-
-print(scan_network("192.168.1.0/24"))
+def get_routes_ip_ranges():
+    try:
+        temp_route_ip_ranges:dict[str, str | None] = {}
+        for device_information in nmcli.device.show_all():
+            interface_name:str | None = device_information.get("GENERAL.DEVICE", None)
+            if interface_name is not None:
+                ip_v4_route:str | None
+                ip_v4_route_string:str | None = device_information.get("IP4.ROUTE[1]", None)
+                if ip_v4_route_string is not None:
+                    parts = ip_v4_route_string.replace(" " , "").split("dst=", 1)
+                    if len(parts) == 2:
+                        ip_v4_route = parts[-1].split(",", 1)[0]
+                    else:
+                        ip_v4_route = None
+                temp_route_ip_ranges[interface_name] = ip_v4_route
+        return (True, temp_route_ip_ranges, None)
+    except Exception as e:
+        return (False, None, str(e))
+ 
+res:dict[str, str | None] = get_routes_ip_ranges()
+print(res)

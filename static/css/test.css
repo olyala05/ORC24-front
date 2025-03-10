@@ -445,6 +445,10 @@
   border-bottom: 1px solid #ef742a;
   text-align: center;
 }
+.equipment-test-card .equipment-table tbody tr td:first-child {
+  word-break: break-word;
+  padding: 1px;
+}
 .equipment-test-card .equipment-actions {
   display: flex;
   flex-direction: column;

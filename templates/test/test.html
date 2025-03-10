@@ -190,112 +190,49 @@ block content %}
       </div>
     </div>
 
-    <!-- Equipment Test -->
-    <div id="equipment-test" class="tab-content-test">
-      <div class="equipment-test-container">
-        <div class="equipment-test-card">
-          <!-- Tablonun Başlangıcı -->
-          <table class="equipment-table">
-            <thead>
-              <tr>
-                <th>Serial number</th>
-                <th>SID/IP</th>
-                <th>Status / Configuration</th>
-                <th>Connection</th>
-                <th>Connection Protocol</th>
-                <th>Equipment Date / Connection Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>EMR-53C9@3630748023</td>
-                <td>5</td>
-                <td>A / A</td>
-                <td>OK</td>
-                <td>Modbus</td>
-                <td>2024-04-01 10:43:19</td>
-              </tr>
-              <tr>
-                <td>EMR-53C9@3630748023</td>
-                <td>192.168.1.147</td>
-                <td>A / A</td>
-                <td>OK</td>
-                <td>Modbus</td>
-                <td>2024-04-01 10:43:19</td>
-              </tr>
-              <tr>
-                <td>MPR-45C9@2931</td>
-                <td>5</td>
-                <td>A / A</td>
-                <td>OK</td>
-                <td>TCP / IP</td>
-                <td>2024-04-01 10:43:19</td>
-              </tr>
-              <tr>
-                <td>MPR-45C9@2931</td>
-                <td>192.168.1.147</td>
-                <td>A / A</td>
-                <td>OK</td>
-                <td>TCP / IP</td>
-                <td>2024-04-01 10:43:19</td>
-              </tr>
-              <tr>
-                <td>MPR-45C9@2931</td>
-                <td>5</td>
-                <td>A / A</td>
-                <td>OK</td>
-                <td>TCP / IP</td>
-                <td>2024-04-01 10:43:19</td>
-              </tr>
-              <tr>
-                <td>MPR-45C9@2931</td>
-                <td>192.168.1.147</td>
-                <td>A / A</td>
-                <td>OK</td>
-                <td>TCP / IP</td>
-                <td>2024-04-01 10:43:19</td>
-              </tr>
-              <tr>
-                <td>MPR-45C9@2931</td>
-                <td>5</td>
-                <td>A / A</td>
-                <td>OK</td>
-                <td>TCP / IP</td>
-                <td>2024-04-01 10:43:19</td>
-              </tr>
-              <tr>
-                <td>MPR-45C9@2931</td>
-                <td>192.168.1.147</td>
-                <td>A / A</td>
-                <td>OK</td>
-                <td>TCP / IP</td>
-                <td>2024-04-01 10:43:19</td>
-              </tr>
-            </tbody>
-          </table>
-          <!-- Tablonun Sonu -->
+<!-- Equipment Test -->
+<div id="equipment-test" class="tab-content-test">
+  <div class="equipment-test-container">
+    <div class="equipment-test-card">
+      <!-- Tablonun Başlangıcı -->
+      <table class="equipment-table">
+        <thead>
+          <tr>
+            <th>Serial Number</th>
+            <th>SID/IP</th>
+            <th>Status / Configuration</th>
+            <th>Connection</th>
+            <th>Connection Protocol</th>
+            <th>Equipment Date / Connection Date</th>
+          </tr>
+        </thead>
+        <tbody id="equipment-table-body">
+          <!-- Dinamik veriler buraya eklenecek -->
+        </tbody>
+      </table>
+      <!-- Tablonun Sonu -->
 
-          <!-- Butonlar ve Durum Bilgileri -->
-          <div class="equipment-actions">
-            <div class="equipment-scan-status">
-              <button class="equipment-scan-btn">
-                Perform a scanning test
-              </button>
-              <span class="equipment-scan-success"
-                >Local Network Connection Scan Successful.</span
-              >
-              <span class="equipment-scan-failed"
-                >Local Network Connection Scan Failed.</span
-              >
-            </div>
-            <button class="equipment-update-btn">
-              Update the equipment table with the equipment found during
-              scanning
-            </button>
-          </div>
+      <!-- Butonlar ve Durum Bilgileri -->
+      <div class="equipment-actions">
+        <div class="equipment-scan-status">
+          <button class="equipment-scan-btn" onclick="fetchEquipments()">
+            Perform a scanning test
+          </button>
+          <span class="equipment-scan-success"
+            >Local Network Connection Scan Successful.</span
+          >
+          <span class="equipment-scan-failed"
+            >Local Network Connection Scan Failed.</span
+          >
         </div>
+        <button class="equipment-update-btn">
+          Update the equipment table with the equipment found during scanning
+        </button>
       </div>
     </div>
+  </div>
+</div>
+
 
     <!-- Cloud Connection Test -->
     <div id="cloud-test" class="cloud-test-container tab-content-test">
@@ -841,6 +778,88 @@ block content %}
         td.style.fontWeight = "bold";
       }
     });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+      fetchEquipments();
+  });
+  
+  function fetchEquipments() {
+      const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+  
+      if (!selectedDeviceIP) {
+          console.warn("No device selected for fetching equipments.");
+          document.getElementById("equipment-table-body").innerHTML =
+              "<tr><td colspan='6' style='color: red;'>No device selected.</td></tr>";
+          return;
+      }
+  
+      fetch("/equipments-with-models", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ip_address: selectedDeviceIP }),
+      })
+          .then((response) => response.json())
+          .then((data) => {
+              if (data.status === "success" && Array.isArray(data.data)) {
+                  updateEquipmentTable(data.data);
+              } else {
+                  console.warn("No equipments found.");
+                  document.getElementById("equipment-table-body").innerHTML =
+                      "<tr><td colspan='6' style='color: red;'>No equipments found</td></tr>";
+              }
+          })
+          .catch((error) => {
+              console.error("Error fetching equipments:", error);
+              document.getElementById("equipment-table-body").innerHTML =
+                  "<tr><td colspan='6' style='color: red;'>Error fetching equipments</td></tr>";
+          });
+  }
+  
+  function updateEquipmentTable(equipments) {
+      const tableBody = document.getElementById("equipment-table-body");
+      tableBody.innerHTML = ""; // Önceki verileri temizle
+  
+      equipments.forEach((equipment) => {
+          const row = document.createElement("tr");
+  
+          // Serial Number
+          const serialNumber = `${equipment.model_name}@${equipment.serial_number}`;
+  
+          // SID / IP
+          const sidIP = equipment.modbus_address || "N/A";
+  
+          // Status / Configuration
+          const statusText = equipment.configuration_data === 1 ? "A / A " : "P / P";
+          const statusColor = equipment.configuration_data === 1 ? "green" : "red";
+  
+          // Connection (Static "OK" and green color)
+          const connectionStatus = `<span style="color: green; font-weight: bold;">OK</span>`;
+  
+          // Connection Protocol
+          const connectionProtocol = equipment.communication_protocol_code || "Unknown";
+  
+          // Equipment Date / Connection Date
+          const formattedDate = formatDateTime(equipment.created_at);
+  
+          row.innerHTML = `
+              <td>${serialNumber}</td>
+              <td>${sidIP}</td>
+              <td style="color: ${statusColor}; font-weight: bold;">${statusText}</td>
+              <td>${connectionStatus}</td>
+              <td>${connectionProtocol}</td>
+              <td>${formattedDate}</td>
+          `;
+  
+          tableBody.appendChild(row);
+      });
+  }
+  
+  function formatDateTime(dateTimeString) {
+      const date = new Date(dateTimeString);
+      return date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0];
+  }
+  
 </script>
 
 <style>
@@ -894,5 +913,38 @@ block content %}
       transform: rotate(360deg);
     }
   }
+
+  .equipment-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0b1734;
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: 14px;
+}
+
+.equipment-table th,
+.equipment-table td {
+    border: none;
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+}
+
+.equipment-table th {
+    background: #0b1734;
+    font-weight: bold;
+    color: #ef8018;
+    border-bottom: 1px solid #ffffff;
+}
+
+.equipment-table td {
+    border-bottom: 1px solid #ef8018;
+}
+
+.equipment-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
 </style>
 {% endblock %}
