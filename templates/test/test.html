@@ -937,10 +937,10 @@ block content %}
     document.getElementById("scan-status").style.display = "inline";
     document.getElementById("scan-status").textContent =
       "Scanning in progress...";
-
+  
     // Yükleme simgesini göster
     document.getElementById("scan-spinner").style.display = "inline-block";
-
+  
     fetch("/get_slave_data", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -948,7 +948,7 @@ block content %}
       .then((response) => response.json())
       .then((data) => {
         console.log("📡 Backend'den Gelen Veri:", data);
-
+  
         if (
           data.status === "success" &&
           Array.isArray(data.data) &&
@@ -959,7 +959,7 @@ block content %}
         } else {
           console.warn("❌ No new data found.");
         }
-
+  
         document.getElementById("scan-status").style.display = "none";
       })
       .catch((error) => {
@@ -971,46 +971,61 @@ block content %}
         document.getElementById("scan-spinner").style.display = "none";
       });
   }
-
+  
   function addNewDataToTable(newData) {
     console.log("🔍 Yeni cihazlar tabloya ekleniyor...");
     const tableBody = document.getElementById("equipment-table-body");
-
+  
     const newEquipments = newData.filter(
       (item) =>
         !previousEquipmentData.some(
           (prev) =>
             prev.slave_id === item.slave_id &&
-            prev.model_name === item.model_name
+            prev.model_name === item.model_name &&
+            prev.ip === item.ip
         )
     );
-
+  
     if (newEquipments.length === 0) {
       console.log("❌ Yeni veri bulunamadı.");
       return;
     }
-
+  
     // İlk yeni satırdan önce bir ayırıcı çizgi ekleyelim
     const separatorRow = document.createElement("tr");
-    separatorRow.innerHTML = `<td colspan="6" class="new-equipment-separator">Equipment Scan Results</td>`;
+    separatorRow.innerHTML = `<td colspan="6" class="new-equipment-separator">--- Equipment Scan Results ---</td>`;
     tableBody.appendChild(separatorRow);
-
+  
     newEquipments.forEach((item) => {
       const row = document.createElement("tr");
+  
+      // Eğer hem slave_id hem ip varsa, ikisini de göster
+      let sidOrIP = "";
+      if (item.slave_id && item.ip) {
+        sidOrIP = `Slave ID: ${item.slave_id} | IP: ${item.ip}`;
+      } else if (item.slave_id) {
+        sidOrIP = `Slave ID: ${item.slave_id}`;
+      } else if (item.ip) {
+        sidOrIP = `IP: ${item.ip}`;
+      } else {
+        sidOrIP = "N/A";
+      }
+  
       row.innerHTML = `
         <td>${item.model_name}</td>
-        <td>${item.slave_id}</td>
-        <td class="status-static">P / P</td>
+        <td>${sidOrIP}</td>
+        <td class="status-static" style="color: red; font-weight: bold;">P / P</td>
         <td>-</td>
         <td>-</td>
         <td>-</td>
       `;
       tableBody.appendChild(row);
     });
-
+  
     // Yeni eklenen verileri sakla
     previousEquipmentData = [...previousEquipmentData, ...newEquipments];
   }
+  
 
   function fetchEquipments() {
     console.log("🔄 fetchEquipments() çağrıldı!");

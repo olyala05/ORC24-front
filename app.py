@@ -19,6 +19,8 @@ import nmap
 import socket
 from datetime import datetime
 import logging
+import pymodbus.client.tcp 
+
 
 
 app = Flask(__name__)
@@ -1012,8 +1014,7 @@ def electric_alarm_detail():
     return render_template(
         "alarms/electric_alarm_details.html", page_title="Electric Alarm Details"
     )
-
-
+    
 # !! Alarm End
 @app.route("/logout", methods=["POST"])
 def logout():
@@ -1033,7 +1034,7 @@ def get_slave_data():
         )
 
     try:
-        url = f"http://{selected_ip}:8085/get_modbus_data"
+        url = f"http://{selected_ip}:8085/scan_all"
         response = requests.get(url, timeout=500)  
         response.raise_for_status()
         try:
