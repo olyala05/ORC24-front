@@ -454,7 +454,7 @@
 }
 .equipment-test-card .equipment-table tbody tr td:first-child {
   word-break: break-word;
-  padding: 1px;
+  padding: 5px;
 }
 .equipment-test-card .equipment-actions {
   display: flex;

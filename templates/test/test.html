@@ -212,27 +212,20 @@ block content %}
           </table>
           <!-- Tablonun Sonu -->
 
-          <!-- Yeni Veriler -->
-          <div id="extra-data-container">
-            <h3>Newly Found Equipment</h3>
-            <table class="equipment-table">
-              <thead>
-                <tr>
-                  <th>Slave ID</th>
-                  <th>Model Name</th>
-                </tr>
-              </thead>
-              <tbody id="extra-data-body">
-                <!-- Yeni bulunan cihazlar buraya eklenecek -->
-              </tbody>
-            </table>
-          </div>
-
           <!-- Butonlar ve Durum Bilgileri -->
           <div class="equipment-actions">
             <div class="equipment-scan-status">
-              <button class="equipment-scan-btn" onclick="startScanning()">
+              <button
+                class="equipment-scan-btn"
+                onclick="startScanning()"
+                id="scan-btn"
+              >
                 Perform a scanning test
+                <span
+                  id="scan-spinner"
+                  class="loader"
+                  style="display: none"
+                ></span>
               </button>
               <span id="scan-status" style="display: none; color: green">
                 Scanning in progress...
@@ -940,79 +933,93 @@ block content %}
   let previousEquipmentData = [];
 
   function startScanning() {
-    console.log("🟡 startScanning() çağrıldı! Tarama başlıyor...");
+    console.log("🟡 Scanning started...");
     document.getElementById("scan-status").style.display = "inline";
-    document.getElementById("scan-status").textContent = "Scanning in progress...";
-  
+    document.getElementById("scan-status").textContent =
+      "Scanning in progress...";
+
+    // Yükleme simgesini göster
+    document.getElementById("scan-spinner").style.display = "inline-block";
+
     fetch("/get_slave_data", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
-      .then((response) => {
-        console.log("🟡 Response bekleniyor...");
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         console.log("📡 Backend'den Gelen Veri:", data);
-  
-        if (data.status === "success" && Array.isArray(data.data)) {
+
+        if (
+          data.status === "success" &&
+          Array.isArray(data.data) &&
+          data.data.length > 0
+        ) {
           console.log("✅ Yeni cihazlar bulundu!");
-          findNewData(data.data);
-          previousEquipmentData = [...previousEquipmentData, ...data.data]; // Önceki tarama verilerini güncelle
+          addNewDataToTable(data.data);
         } else {
           console.warn("❌ No new data found.");
-          document.getElementById("extra-data-body").innerHTML =
-            "<tr><td colspan='2' style='color: blue;'>No new equipment found.</td></tr>";
         }
-  
+
         document.getElementById("scan-status").style.display = "none";
       })
       .catch((error) => {
         console.error("🚨 Error during scanning:", error);
         document.getElementById("scan-status").textContent = "Scanning failed!";
         document.getElementById("scan-status").style.color = "red";
+      })
+      .finally(() => {
+        document.getElementById("scan-spinner").style.display = "none";
       });
   }
 
-  function findNewData(newData) {
-    console.log("🔍 Yeni cihazlar kontrol ediliyor...");
-    const extraDataBody = document.getElementById("extra-data-body");
-    extraDataBody.innerHTML = "";
-  
+  function addNewDataToTable(newData) {
+    console.log("🔍 Yeni cihazlar tabloya ekleniyor...");
+    const tableBody = document.getElementById("equipment-table-body");
+
     const newEquipments = newData.filter(
       (item) =>
         !previousEquipmentData.some(
           (prev) =>
-            prev.slave_id === item.slave_id && prev.model_name === item.model_name
+            prev.slave_id === item.slave_id &&
+            prev.model_name === item.model_name
         )
     );
-  
+
     if (newEquipments.length === 0) {
-      console.log("🟡 Yeni veri bulunamadı, No new equipment found mesajı gösteriliyor.");
-      extraDataBody.innerHTML =
-        "<tr><td colspan='2' style='color: blue;'>No new equipment found.</td></tr>";
+      console.log("❌ Yeni veri bulunamadı.");
       return;
     }
-  
-    console.log("✅ Yeni bulunan cihazlar:", newEquipments);
-  
+
+    // İlk yeni satırdan önce bir ayırıcı çizgi ekleyelim
+    const separatorRow = document.createElement("tr");
+    separatorRow.innerHTML = `<td colspan="6" class="new-equipment-separator">Equipment Scan Results</td>`;
+    tableBody.appendChild(separatorRow);
+
     newEquipments.forEach((item) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-          <td>${item.slave_id}</td>
-          <td>${item.model_name}</td>
-        `;
-      extraDataBody.appendChild(row);
+        <td>${item.model_name}</td>
+        <td>${item.slave_id}</td>
+        <td class="status-static">P / P</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      `;
+      tableBody.appendChild(row);
     });
+
+    // Yeni eklenen verileri sakla
+    previousEquipmentData = [...previousEquipmentData, ...newEquipments];
   }
 
   function fetchEquipments() {
+    console.log("🔄 fetchEquipments() çağrıldı!");
     const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
 
     if (!selectedDeviceIP) {
-      console.warn("No device selected for fetching equipments.");
+      console.warn("⚠ No device selected for fetching equipments.");
       document.getElementById("equipment-table-body").innerHTML =
-        "<tr><td colspan='6' style='color: red;'>No device selected.</td></tr>";
+        "<tr><td colspan='6' style='color: red;'>⚠ No device selected.</td></tr>";
       return;
     }
 
@@ -1023,18 +1030,24 @@ block content %}
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.status === "success" && Array.isArray(data.data)) {
+        console.log("📡 Equipment Data Fetched:", data);
+
+        if (
+          data.status === "success" &&
+          Array.isArray(data.data) &&
+          data.data.length > 0
+        ) {
           updateEquipmentTable(data.data);
         } else {
-          console.warn("No equipments found.");
+          console.warn("❌ No equipments found.");
           document.getElementById("equipment-table-body").innerHTML =
             "<tr><td colspan='6' style='color: red;'>No equipments found</td></tr>";
         }
       })
       .catch((error) => {
-        console.error("Error fetching equipments:", error);
+        console.error("🚨 Error fetching equipments:", error);
         document.getElementById("equipment-table-body").innerHTML =
-          "<tr><td colspan='6' style='color: red;'>Error fetching equipments</td></tr>";
+          "<tr><td colspan='6' style='color: red;'>⚠ Error fetching equipments</td></tr>";
       });
   }
 
@@ -1049,31 +1062,18 @@ block content %}
 
     equipments.forEach((equipment) => {
       const row = document.createElement("tr");
-
-      const serialNumber = `${equipment.model_name || "Unknown"} @ ${
-        equipment.serial_number || "N/A"
-      }`;
-      const sidIP = equipment.modbus_address || "N/A";
-      const statusText = equipment.status === 1 ? "A / A" : "P / P";
-      const statusColor = equipment.status === 1 ? "green" : "red";
-      const connectionStatusText =
-        equipment.configuration_data === 1 ? "OK" : "NO";
-      const connectionStatusColor =
-        equipment.configuration_data === 1 ? "green" : "red";
-      const connectionStatus = `<span style="color: ${connectionStatusColor}; font-weight: bold;">${connectionStatusText}</span>`;
-      const connectionProtocol =
-        equipment.communication_protocol_code || "Unknown";
-      const formattedDate = formatDateTime(equipment.created_at);
-
       row.innerHTML = `
-        <td>${serialNumber}</td>
-        <td>${sidIP}</td>
-        <td style="color: ${statusColor}; font-weight: bold;">${statusText}</td>
-        <td>${connectionStatus}</td>
-        <td>${connectionProtocol}</td>
-        <td>${formattedDate}</td>
+        <td>${equipment.model_name || "Unknown"}</td>
+        <td>${equipment.modbus_address || "N/A"}</td>
+        <td style="color: ${
+          equipment.status === 1 ? "green" : "red"
+        }; font-weight: bold;">
+          ${equipment.status === 1 ? "A / A" : "P / P"}
+        </td>
+        <td>${equipment.configuration_data === 1 ? "OK" : "NO"}</td>
+        <td>${equipment.communication_protocol_code || "Unknown"}</td>
+        <td>${formatDateTime(equipment.created_at)}</td>
       `;
-
       tableBody.appendChild(row);
     });
   }
@@ -1386,6 +1386,54 @@ block content %}
   .error {
     color: red;
     font-size: 14px;
+  }
+
+  .equipment-scan-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Buton içindeki elemanlar arasında boşluk bırak */
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .equipment-scan-btn:hover {
+    background-color: #2980b9;
+  }
+
+  .loader {
+    width: 14px;
+    height: 14px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    border-top: 2px solid white;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .new-equipment-separator {
+    text-align: center;
+    font-weight: bold;
+    color: #ef8018;
+  }
+
+  .status-static {
+    color: red !important;
+    font-weight: bold;
   }
 </style>
 {% endblock %}

@@ -1034,7 +1034,7 @@ def get_slave_data():
 
     try:
         url = f"http://{selected_ip}:8085/get_modbus_data"
-        response = requests.get(url, timeout=100)  
+        response = requests.get(url, timeout=500)  
         response.raise_for_status()
         try:
             result = response.json()
