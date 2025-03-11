@@ -212,20 +212,33 @@ block content %}
           </table>
           <!-- Tablonun Sonu -->
 
+          <!-- Farklı Bulunan Veriler -->
+          <div id="extra-data-container">
+            <h3>Newly Found Equipment</h3>
+            <table class="equipment-table">
+              <thead>
+                <tr>
+                  <th>Slave ID</th>
+                  <th>Model Name</th>
+                </tr>
+              </thead>
+              <tbody id="extra-data-body">
+                <!-- Yeni bulunan cihazlar buraya eklenecek -->
+              </tbody>
+            </table>
+          </div>
+
           <!-- Butonlar ve Durum Bilgileri -->
           <div class="equipment-actions">
             <div class="equipment-scan-status">
-              <button class="equipment-scan-btn" onclick="fetchEquipments()">
+              <button class="equipment-scan-btn" onclick="startScanning()">
                 Perform a scanning test
               </button>
-              <span class="equipment-scan-success"
-                >Local Network Connection Scan Successful.</span
-              >
-              <span class="equipment-scan-failed"
-                >Local Network Connection Scan Failed.</span
-              >
+              <span id="scan-status" style="display: none; color: green">
+                Scanning in progress...
+              </span>
             </div>
-            <button class="equipment-update-btn">
+            <button class="equipment-update-btn" onclick="fetchEquipments()">
               Update the equipment table with the equipment found during
               scanning
             </button>
@@ -923,6 +936,69 @@ block content %}
     fetchEquipments();
   });
 
+  let previousEquipmentData = [];
+
+  function startScanning() {
+    document.getElementById("scan-status").style.display = "inline";
+    document.getElementById("scan-status").textContent =
+      "Scanning in progress...";
+
+    fetch("/get_slave_data", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("📡 Slave Scanning Data:", data);
+
+        if (data.status === "success" && Array.isArray(data.data)) {
+          updateEquipmentTable(data.data);
+          findNewData(data.data);
+          previousEquipmentData = data.data; 
+        } else {
+          console.warn("No data found.");
+          document.getElementById("equipment-table-body").innerHTML =
+            "<tr><td colspan='6' style='color: red;'>No equipment found</td></tr>";
+        }
+
+        document.getElementById("scan-status").style.display = "none";
+      })
+      .catch((error) => {
+        console.error("🚨 Error during scanning:", error);
+        document.getElementById("scan-status").textContent = "Scanning failed!";
+        document.getElementById("scan-status").style.color = "red";
+      });
+  }
+
+  function findNewData(newData) {
+    const extraDataBody = document.getElementById("extra-data-body");
+    extraDataBody.innerHTML = "";
+
+    const newEquipments = newData.filter(
+      (item) =>
+        !previousEquipmentData.some(
+          (prev) =>
+            prev.slave_id === item.slave_id &&
+            prev.model_name === item.model_name
+        )
+    );
+
+    if (newEquipments.length === 0) {
+      extraDataBody.innerHTML =
+        "<tr><td colspan='2' style='color: blue;'>No new equipment found.</td></tr>";
+      return;
+    }
+
+    newEquipments.forEach((item) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+          <td>${item.slave_id}</td>
+          <td>${item.model_name}</td>
+        `;
+      extraDataBody.appendChild(row);
+    });
+  }
+  
   function fetchEquipments() {
     const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
 
@@ -957,44 +1033,46 @@ block content %}
 
   function updateEquipmentTable(equipments) {
     const tableBody = document.getElementById("equipment-table-body");
-    tableBody.innerHTML = ""; 
+    tableBody.innerHTML = "";
 
     equipments.forEach((equipment) => {
       const row = document.createElement("tr");
-    
+
       // Serial Number
       const serialNumber = `${equipment.model_name}@${equipment.serial_number}`;
-    
+
       // SID / IP
       const sidIP = equipment.modbus_address || "N/A";
-    
+
       // Status
       const statusText = equipment.status === 1 ? "A / A" : "P / P";
-      const statusColor = equipment.status=== 1 ? "green" : "red";
-    
-      // Connection (Status'a göre dinamik olarak belirleniyor)
-      let connectionStatusText = equipment.configuration_data === 1 ? "OK" : "NO";
-      let connectionStatusColor = equipment.configuration_data === 1 ? "green" : "red";
+      const statusColor = equipment.status === 1 ? "green" : "red";
+
+      // Connection Status
+      let connectionStatusText =
+        equipment.configuration_data === 1 ? "OK" : "NO";
+      let connectionStatusColor =
+        equipment.configuration_data === 1 ? "green" : "red";
       const connectionStatus = `<span style="color: ${connectionStatusColor}; font-weight: bold;">${connectionStatusText}</span>`;
-    
+
       // Connection Protocol
-      const connectionProtocol = equipment.communication_protocol_code || "Unknown";
-    
+      const connectionProtocol =
+        equipment.communication_protocol_code || "Unknown";
+
       // Equipment Date / Connection Date
       const formattedDate = formatDateTime(equipment.created_at);
-    
+
       row.innerHTML = `
-              <td>${serialNumber}</td>
-              <td>${sidIP}</td>
-              <td style="color: ${statusColor}; font-weight: bold;">${statusText}</td>
-              <td>${connectionStatus}</td>
-              <td>${connectionProtocol}</td>
-              <td>${formattedDate}</td>
-          `;
-    
+        <td>${serialNumber}</td>
+        <td>${sidIP}</td>
+        <td style="color: ${statusColor}; font-weight: bold;">${statusText}</td>
+        <td>${connectionStatus}</td>
+        <td>${connectionProtocol}</td>
+        <td>${formattedDate}</td>
+      `;
+
       tableBody.appendChild(row);
     });
-    
   }
 
   function formatDateTime(dateTimeString) {

@@ -798,35 +798,58 @@ def logout():
     session.clear() 
     return redirect(url_for("login"))
 
-@app.route("/get_modbus_data", methods=["POST", "GET"])
-def get_modbus_data():
+@app.route("/get_slave_data", methods=["GET"])
+def get_slave_data():
     selected_ip = session.get("selected_device_ip")
 
     if not selected_ip:
-        return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
+        return ResponseHandler.error(
+            message="Device IP missing", 
+            code=400, 
+            details="Selected device IP is required"
+        )
+
     try:
         url = f"http://{selected_ip}:8085/get_modbus_data"
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)  # Zaman aşımı ekledim
         response.raise_for_status()
-        
-        result = response.json()  
+
+        try:
+            result = response.json()
+        except ValueError:
+            return ResponseHandler.error(
+                message="Invalid JSON response",
+                code=500,
+                details="Failed to parse JSON response from device."
+            )
+
         if result.get("status") == "success":
-            return ResponseHandler.success(message="successful", data=result.get("data", []))
+            return ResponseHandler.success(message="Successful", data=result.get("data", []))
+
         return ResponseHandler.error(
-            message="failed", 
-            code=400, 
+            message="Failed",
+            code=400,
             details=result.get("message", "No valid response")
         )
+
+    except requests.Timeout:
+        return ResponseHandler.error(
+            message="Request timeout",
+            code=504,
+            details=f"Timeout while connecting to {selected_ip}"
+        )
+
     except requests.RequestException as e:
         return ResponseHandler.error(
-            message="Device connection error", 
-            code=500, 
+            message="Device connection error",
+            code=500,
             details=f"Failed to connect to {selected_ip}: {str(e)}"
         )
+
     except Exception as e:
         return ResponseHandler.error(
-            message="Unexpected error occurred", 
-            code=500, 
+            message="Unexpected error occurred",
+            code=500,
             details=str(e)
         )
 
