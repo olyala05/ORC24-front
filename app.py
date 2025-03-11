@@ -299,7 +299,7 @@ def wi_fi_list():
 def connect_wifi():
     try:
         data = request.json
-        print("Gelen JSON:", data)  # 💡 Gelen veriyi logla
+        print("Gelen JSON:", data)
         ssid = data.get("ssid")
         password = data.get("password")
         selected_ip = session.get("selected_device_ip")
@@ -797,6 +797,38 @@ def electric_alarm_detail():
 def logout():
     session.clear() 
     return redirect(url_for("login"))
+
+@app.route("/get_modbus_data", methods=["POST", "GET"])
+def get_modbus_data():
+    selected_ip = session.get("selected_device_ip")
+
+    if not selected_ip:
+        return ResponseHandler.error(message="Device IP missing", code=400, details="Selected device IP is required")
+    try:
+        url = f"http://{selected_ip}:8085/get_modbus_data"
+        response = requests.get(url)
+        response.raise_for_status()
+        
+        result = response.json()  
+        if result.get("status") == "success":
+            return ResponseHandler.success(message="successful", data=result.get("data", []))
+        return ResponseHandler.error(
+            message="failed", 
+            code=400, 
+            details=result.get("message", "No valid response")
+        )
+    except requests.RequestException as e:
+        return ResponseHandler.error(
+            message="Device connection error", 
+            code=500, 
+            details=f"Failed to connect to {selected_ip}: {str(e)}"
+        )
+    except Exception as e:
+        return ResponseHandler.error(
+            message="Unexpected error occurred", 
+            code=500, 
+            details=str(e)
+        )
 
 class ResponseHandler:
     @staticmethod

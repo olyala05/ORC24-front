@@ -200,8 +200,8 @@ block content %}
               <tr>
                 <th>Serial Number</th>
                 <th>SID/IP</th>
-                <th>Status / Configuration</th>
-                <th>Connection</th>
+                <th>Status</th>
+                <th>Configuration Connection</th>
                 <th>Connection Protocol</th>
                 <th>Equipment Date / Connection Date</th>
               </tr>
@@ -957,32 +957,32 @@ block content %}
 
   function updateEquipmentTable(equipments) {
     const tableBody = document.getElementById("equipment-table-body");
-    tableBody.innerHTML = ""; // Önceki verileri temizle
+    tableBody.innerHTML = ""; 
 
     equipments.forEach((equipment) => {
       const row = document.createElement("tr");
-
+    
       // Serial Number
       const serialNumber = `${equipment.model_name}@${equipment.serial_number}`;
-
+    
       // SID / IP
       const sidIP = equipment.modbus_address || "N/A";
-
-      // Status / Configuration
-      const statusText =
-        equipment.configuration_data === 1 ? "A / A " : "P / P";
-      const statusColor = equipment.configuration_data === 1 ? "green" : "red";
-
-      // Connection (Static "OK" and green color)
-      const connectionStatus = `<span style="color: green; font-weight: bold;">OK</span>`;
-
+    
+      // Status
+      const statusText = equipment.status === 1 ? "A / A" : "P / P";
+      const statusColor = equipment.status=== 1 ? "green" : "red";
+    
+      // Connection (Status'a göre dinamik olarak belirleniyor)
+      let connectionStatusText = equipment.configuration_data === 1 ? "OK" : "NO";
+      let connectionStatusColor = equipment.configuration_data === 1 ? "green" : "red";
+      const connectionStatus = `<span style="color: ${connectionStatusColor}; font-weight: bold;">${connectionStatusText}</span>`;
+    
       // Connection Protocol
-      const connectionProtocol =
-        equipment.communication_protocol_code || "Unknown";
-
+      const connectionProtocol = equipment.communication_protocol_code || "Unknown";
+    
       // Equipment Date / Connection Date
       const formattedDate = formatDateTime(equipment.created_at);
-
+    
       row.innerHTML = `
               <td>${serialNumber}</td>
               <td>${sidIP}</td>
@@ -991,9 +991,10 @@ block content %}
               <td>${connectionProtocol}</td>
               <td>${formattedDate}</td>
           `;
-
+    
       tableBody.appendChild(row);
     });
+    
   }
 
   function formatDateTime(dateTimeString) {

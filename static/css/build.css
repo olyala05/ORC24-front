@@ -1840,7 +1840,7 @@ body {
   font-weight: 500;
   border-bottom: 1px;
   font-size: 12px;
-  padding: 5px 9px;
+  padding: 5px 4px;
   max-height: 116px;
   overflow-y: auto;
 }
@@ -1914,21 +1914,6 @@ body {
   display: flex;
   z-index: 25;
   margin-top: 10px;
-}
-.popup-content .show-password-set {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-}
-.popup-content .check-box-set {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-}
-.popup-content .show-pass {
-  font-size: 14px;
-  color: #333;
 }
 .popup-content .popup-buttons {
   display: flex;
@@ -2178,6 +2163,10 @@ body {
   padding: 5px 5px;
   border-radius: 10px;
   margin-right: 5px;
+  min-height: 365px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .equipment-test-card .equipment-table {
   width: 100%;
