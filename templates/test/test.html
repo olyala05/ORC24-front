@@ -212,7 +212,7 @@ block content %}
           </table>
           <!-- Tablonun Sonu -->
 
-          <!-- Farklı Bulunan Veriler -->
+          <!-- Yeni Veriler -->
           <div id="extra-data-container">
             <h3>Newly Found Equipment</h3>
             <table class="equipment-table">
@@ -933,34 +933,38 @@ block content %}
     });
 
   document.addEventListener("DOMContentLoaded", function () {
+    console.log("Page Loaded, Fetching Equipments...");
     fetchEquipments();
   });
 
   let previousEquipmentData = [];
 
   function startScanning() {
+    console.log("🟡 startScanning() çağrıldı! Tarama başlıyor...");
     document.getElementById("scan-status").style.display = "inline";
-    document.getElementById("scan-status").textContent =
-      "Scanning in progress...";
-
+    document.getElementById("scan-status").textContent = "Scanning in progress...";
+  
     fetch("/get_slave_data", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        console.log("🟡 Response bekleniyor...");
+        return response.json();
+      })
       .then((data) => {
-        console.log("📡 Slave Scanning Data:", data);
-
+        console.log("📡 Backend'den Gelen Veri:", data);
+  
         if (data.status === "success" && Array.isArray(data.data)) {
-          updateEquipmentTable(data.data);
+          console.log("✅ Yeni cihazlar bulundu!");
           findNewData(data.data);
-          previousEquipmentData = data.data; 
+          previousEquipmentData = [...previousEquipmentData, ...data.data]; // Önceki tarama verilerini güncelle
         } else {
-          console.warn("No data found.");
-          document.getElementById("equipment-table-body").innerHTML =
-            "<tr><td colspan='6' style='color: red;'>No equipment found</td></tr>";
+          console.warn("❌ No new data found.");
+          document.getElementById("extra-data-body").innerHTML =
+            "<tr><td colspan='2' style='color: blue;'>No new equipment found.</td></tr>";
         }
-
+  
         document.getElementById("scan-status").style.display = "none";
       })
       .catch((error) => {
@@ -971,24 +975,27 @@ block content %}
   }
 
   function findNewData(newData) {
+    console.log("🔍 Yeni cihazlar kontrol ediliyor...");
     const extraDataBody = document.getElementById("extra-data-body");
     extraDataBody.innerHTML = "";
-
+  
     const newEquipments = newData.filter(
       (item) =>
         !previousEquipmentData.some(
           (prev) =>
-            prev.slave_id === item.slave_id &&
-            prev.model_name === item.model_name
+            prev.slave_id === item.slave_id && prev.model_name === item.model_name
         )
     );
-
+  
     if (newEquipments.length === 0) {
+      console.log("🟡 Yeni veri bulunamadı, No new equipment found mesajı gösteriliyor.");
       extraDataBody.innerHTML =
         "<tr><td colspan='2' style='color: blue;'>No new equipment found.</td></tr>";
       return;
     }
-
+  
+    console.log("✅ Yeni bulunan cihazlar:", newEquipments);
+  
     newEquipments.forEach((item) => {
       const row = document.createElement("tr");
       row.innerHTML = `
@@ -998,7 +1005,7 @@ block content %}
       extraDataBody.appendChild(row);
     });
   }
-  
+
   function fetchEquipments() {
     const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
 
@@ -1033,33 +1040,29 @@ block content %}
 
   function updateEquipmentTable(equipments) {
     const tableBody = document.getElementById("equipment-table-body");
-    tableBody.innerHTML = "";
+
+    if (!equipments || equipments.length === 0) {
+      tableBody.innerHTML =
+        "<tr><td colspan='6' style='color: red;'>No equipment found</td></tr>";
+      return;
+    }
 
     equipments.forEach((equipment) => {
       const row = document.createElement("tr");
 
-      // Serial Number
-      const serialNumber = `${equipment.model_name}@${equipment.serial_number}`;
-
-      // SID / IP
+      const serialNumber = `${equipment.model_name || "Unknown"} @ ${
+        equipment.serial_number || "N/A"
+      }`;
       const sidIP = equipment.modbus_address || "N/A";
-
-      // Status
       const statusText = equipment.status === 1 ? "A / A" : "P / P";
       const statusColor = equipment.status === 1 ? "green" : "red";
-
-      // Connection Status
-      let connectionStatusText =
+      const connectionStatusText =
         equipment.configuration_data === 1 ? "OK" : "NO";
-      let connectionStatusColor =
+      const connectionStatusColor =
         equipment.configuration_data === 1 ? "green" : "red";
       const connectionStatus = `<span style="color: ${connectionStatusColor}; font-weight: bold;">${connectionStatusText}</span>`;
-
-      // Connection Protocol
       const connectionProtocol =
         equipment.communication_protocol_code || "Unknown";
-
-      // Equipment Date / Connection Date
       const formattedDate = formatDateTime(equipment.created_at);
 
       row.innerHTML = `
