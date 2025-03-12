@@ -914,12 +914,10 @@ block content %}
     .forEach((td) => {
       let text = td.innerText.trim();
 
-      if (text === "A / A" || text === "OK") {
+      if (text === "A") {
         td.style.color = "green";
         td.style.fontWeight = "bold";
-      }
-
-      if (text === "No") {
+      } else if (text === "P") {
         td.style.color = "red";
         td.style.fontWeight = "bold";
       }
@@ -933,37 +931,37 @@ block content %}
   let previousEquipmentData = [];
 
   function startScanning() {
-    console.log("🟡 Scanning started...");
+    console.log("Scanning started...");
     document.getElementById("scan-status").style.display = "inline";
     document.getElementById("scan-status").textContent =
       "Scanning in progress...";
-  
+
     // Yükleme simgesini göster
     document.getElementById("scan-spinner").style.display = "inline-block";
-  
+
     fetch("/get_slave_data", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("📡 Backend'den Gelen Veri:", data);
-  
+        console.log("Backend'den Gelen Veri:", data);
+
         if (
           data.status === "success" &&
           Array.isArray(data.data) &&
           data.data.length > 0
         ) {
-          console.log("✅ Yeni cihazlar bulundu!");
+          console.log("Yeni cihazlar bulundu!");
           addNewDataToTable(data.data);
         } else {
-          console.warn("❌ No new data found.");
+          console.warn("No new data found.");
         }
-  
+
         document.getElementById("scan-status").style.display = "none";
       })
       .catch((error) => {
-        console.error("🚨 Error during scanning:", error);
+        console.error("Error during scanning:", error);
         document.getElementById("scan-status").textContent = "Scanning failed!";
         document.getElementById("scan-status").style.color = "red";
       })
@@ -971,11 +969,11 @@ block content %}
         document.getElementById("scan-spinner").style.display = "none";
       });
   }
-  
+
   function addNewDataToTable(newData) {
-    console.log("🔍 Yeni cihazlar tabloya ekleniyor...");
+    console.log("Yeni cihazlar tabloya ekleniyor...");
     const tableBody = document.getElementById("equipment-table-body");
-  
+
     const newEquipments = newData.filter(
       (item) =>
         !previousEquipmentData.some(
@@ -985,20 +983,20 @@ block content %}
             prev.ip === item.ip
         )
     );
-  
+
     if (newEquipments.length === 0) {
-      console.log("❌ Yeni veri bulunamadı.");
+      console.log("Yeni veri bulunamadı.");
       return;
     }
-  
+
     // İlk yeni satırdan önce bir ayırıcı çizgi ekleyelim
     const separatorRow = document.createElement("tr");
-    separatorRow.innerHTML = `<td colspan="6" class="new-equipment-separator">--- Equipment Scan Results ---</td>`;
+    separatorRow.innerHTML = `<td colspan="6" class="new-equipment-separator">Equipment Scan Results</td>`;
     tableBody.appendChild(separatorRow);
-  
+
     newEquipments.forEach((item) => {
       const row = document.createElement("tr");
-  
+
       // Eğer hem slave_id hem ip varsa, ikisini de göster
       let sidOrIP = "";
       if (item.slave_id && item.ip) {
@@ -1010,7 +1008,7 @@ block content %}
       } else {
         sidOrIP = "N/A";
       }
-  
+
       row.innerHTML = `
         <td>${item.model_name}</td>
         <td>${sidOrIP}</td>
@@ -1021,14 +1019,13 @@ block content %}
       `;
       tableBody.appendChild(row);
     });
-  
+
     // Yeni eklenen verileri sakla
     previousEquipmentData = [...previousEquipmentData, ...newEquipments];
   }
-  
 
   function fetchEquipments() {
-    console.log("🔄 fetchEquipments() çağrıldı!");
+    console.log("fetchEquipments() çağrıldı!");
     const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
 
     if (!selectedDeviceIP) {
@@ -1045,7 +1042,7 @@ block content %}
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("📡 Equipment Data Fetched:", data);
+        console.log("Equipment Data Fetched:", data);
 
         if (
           data.status === "success" &&
@@ -1054,13 +1051,13 @@ block content %}
         ) {
           updateEquipmentTable(data.data);
         } else {
-          console.warn("❌ No equipments found.");
+          console.warn("No equipments found.");
           document.getElementById("equipment-table-body").innerHTML =
             "<tr><td colspan='6' style='color: red;'>No equipments found</td></tr>";
         }
       })
       .catch((error) => {
-        console.error("🚨 Error fetching equipments:", error);
+        console.error("Error fetching equipments:", error);
         document.getElementById("equipment-table-body").innerHTML =
           "<tr><td colspan='6' style='color: red;'>⚠ Error fetching equipments</td></tr>";
       });
@@ -1078,17 +1075,19 @@ block content %}
     equipments.forEach((equipment) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td>${equipment.model_name || "Unknown"}</td>
-        <td>${equipment.modbus_address || "N/A"}</td>
-        <td style="color: ${
-          equipment.status === 1 ? "green" : "red"
-        }; font-weight: bold;">
-          ${equipment.status === 1 ? "A / A" : "P / P"}
-        </td>
-        <td>${equipment.configuration_data === 1 ? "OK" : "NO"}</td>
-        <td>${equipment.communication_protocol_code || "Unknown"}</td>
-        <td>${formatDateTime(equipment.created_at)}</td>
-      `;
+         <td>${equipment.model_name || "Unknown"}</td>
+         <td>${equipment.modbus_address || "N/A"}</td>
+         <td style="color: ${equipment.status === "A" ? "green" : "red"}; font-weight: bold;">
+           ${equipment.status}
+         </td>
+         <td style="color: ${equipment.configuration_data === "A" ? "green" : "red"}; font-weight: bold;">
+           ${equipment.configuration_data}
+         </td>
+         <td style="color: ${equipment.communication_protocol_code === 1 ? "green" : "red"}; font-weight: bold;">
+           ${equipment.communication_protocol_code === 1 ? "OK" : "No"}
+         </td>
+         <td>${formatDateTime(equipment.created_at)}</td>
+        `;
       tableBody.appendChild(row);
     });
   }

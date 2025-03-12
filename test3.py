@@ -12,5 +12,5 @@ with pymodbus.client.tcp.ModbusTcpClient(host=ip_address) as connection:
         slave=slave_id
     )
     print(response.registers)
-    
+     
     
