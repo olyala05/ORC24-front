@@ -12,8 +12,6 @@
 
     <!-- Genel Stil Dosyası (Tüm Sayfalarda Kullanılacak) -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/build.css') }}" />
-
-
   </head>
   <body>
     <body class="{% if request.endpoint == 'dashboard' %}dashboard-body{% endif %}">
@@ -30,25 +28,18 @@
     <!-- Sweet Alert -->
     <script src="{{ url_for('static', filename='sweetalert/sweetalert.js') }}"></script>
     <!-- URL'yi HTML içine ekleyelim -->
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@3/build/css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@3/build/index.js"></script>
+    
     <script>
       var loginURL = "{{ url_for('login') }}"
     </script>
 
     <!-- My Js -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='simple-keyboard-master/build/index.js') }}"></script>
+    
     <style>
-      #keyboard-container {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: #ddd;
-        padding: 10px;
-        display: none; /* İlk başta kapalı */
-        z-index: 9999;
-      }
       
     </style>
   </body>

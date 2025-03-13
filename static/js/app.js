@@ -82,42 +82,82 @@ setTimeout(function () {
 
 // Simple Keyboard
 document.addEventListener("DOMContentLoaded", function () {
-    let Keyboard = new window.SimpleKeyboard.default({
-      onChange: input => onInputChange(input),
-      onKeyPress: button => onKeyPress(button),
+    // Klavyeyi kontrol etmek için değişkenler
+    const keyboardContainer = document.getElementById("keyboard-container");
+
+    // SimpleKeyboard Başlat
+    const Keyboard = new window.SimpleKeyboard.default({
+        onChange: input => onInputChange(input),
+        onKeyPress: button => onKeyPress(button),
+        layout: {
+            default: [
+                "1 2 3 4 5 6 7 8 9 0 @ # $ % & * ( )",
+                "q w e r t y u i o p {bksp}",
+                "a s d f g h j k l ; : ' \"",
+                "z x c v b n m , . / ? !",
+                "{shift} {space} {enter}"
+            ],
+            shift: [
+                "! @ # $ % ^ & * ( ) _ +",
+                "Q W E R T Y U I O P {bksp}",
+                "A S D F G H J K L ; : ' \"",
+                "Z X C V B N M , . / ? !",
+                "{shift} {space} {enter}"
+            ]
+        },
+        theme: "hg-theme-default myTheme",
     });
-  
+
     let activeInput = null;
-  
+
+    // Klavyeye Yazma Fonksiyonu
     function onInputChange(input) {
-      if (activeInput) {
-        activeInput.value = input;
-      }
-    }
-  
-    function onKeyPress(button) {
-      if (button === "{bksp}") {
         if (activeInput) {
-          activeInput.value = activeInput.value.slice(0, -1);
+            activeInput.value = input;
         }
-      }
     }
-  
+
+    // Tuş Basılınca Çalışacak Fonksiyon
+    function onKeyPress(button) {
+        if (!activeInput) return;
+
+        if (button === "{bksp}") {
+            activeInput.value = activeInput.value.slice(0, -1);
+        } else if (button === "{space}") {
+            activeInput.value += " ";
+        } else if (button === "{enter}") {
+            activeInput.value += "\n";
+        } else if (button === "{shift}") {
+            Keyboard.setOptions({
+                layoutName: Keyboard.options.layoutName === "default" ? "shift" : "default"
+            });
+        } else {
+            activeInput.value += button;
+        }
+    }
+
+    // Input Alanına Tıklanınca Klavyeyi Aç
     document.querySelectorAll("input").forEach(input => {
-      input.addEventListener("focus", event => {
-        activeInput = event.target;
-        Keyboard.setOptions({
-          input: event.target.value
+        input.addEventListener("focus", event => {
+            activeInput = event.target;
+            Keyboard.setOptions({ input: activeInput.value });
+
+            // Klavyeyi aktif hale getir
+            keyboardContainer.style.display = "block";  // Görünür yap
+            setTimeout(() => {
+                keyboardContainer.style.bottom = "0";  // Yavaşça yukarı çıkart
+            }, 10);
         });
-        document.getElementById("keyboard-container").style.display = "block"; // Klavyeyi aç
-      });
     });
-  
-    // Klavyeyi kapatmak için tıklama dışı olayını ekleyelim
+
+    // Input dışında bir yere tıklanınca klavyeyi kapat
     document.addEventListener("click", function (event) {
-      if (!event.target.closest("input") && !event.target.closest("#keyboard-container")) {
-        document.getElementById("keyboard-container").style.display = "none"; // Klavyeyi gizle
-      }
+        if (!event.target.closest("input") && !event.target.closest("#keyboard-container")) {
+            keyboardContainer.style.bottom = "-100%";  // Klavyeyi aşağı kaydırarak gizle
+            setTimeout(() => {
+                keyboardContainer.style.display = "none"; // Tamamen kaldır
+            }, 300);
+            activeInput = null;
+        }
     });
-  });
-  
+});
