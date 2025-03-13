@@ -2,8 +2,8 @@
 block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
-  <!-- Virtual Keyboard -->   
-  <div id="keyboard-container" class="simple-keyboard"></div>
+<!-- Virtual Keyboard -->
+<div id="keyboard-container" class="simple-keyboard"></div>
 
 <!-- Yeni İçerik (İlk başta gizli olacak) -->
 <div class="test-switch-content">
@@ -67,7 +67,7 @@ block content %}
               </button>
               <button id="joinWifiBtn" class="join-btn">
                 <span class="button-text">Join</span>
-                <span class="spinner" style="display: none;"></span>
+                <span class="spinner" style="display: none"></span>
               </button>
             </div>
           </div>
@@ -1082,16 +1082,30 @@ block content %}
       row.innerHTML = `
          <td>${equipment.model_name || "Unknown"}</td>
          <td>${equipment.modbus_address || "N/A"}</td>
-         <td style="color: ${equipment.status === "A" ? "green" : "red"}; font-weight: bold;">
+         <td style="color: ${
+           equipment.status === "A" ? "green" : "red"
+         }; font-weight: bold;">
            ${equipment.status}
          </td>
-         <td style="color: ${equipment.configuration_data === "A" ? "green" : "red"}; font-weight: bold;">
-          ${equipment.configuration_data === "A" ? "Configured" : 
-          equipment.configuration_data === "P" ? "No Configure" : "N/A"}
+         <td style="color: ${
+           equipment.configuration_data === "A" ? "green" : "red"
+         }; font-weight: bold;">
+          ${
+            equipment.configuration_data === "A"
+              ? "Configured"
+              : equipment.configuration_data === "P"
+              ? "No Configure"
+              : "N/A"
+          }
           </td>
          <td>
-          ${equipment.communication_protocol_code === 1 ? "SERIAL" : 
-            equipment.communication_protocol_code === 2 ? "TCP" : "N/A"}
+          ${
+            equipment.communication_protocol_code === 1
+              ? "SERIAL"
+              : equipment.communication_protocol_code === 2
+              ? "TCP"
+              : "N/A"
+          }
           </td>
           <td>${formatDateTime(equipment.created_at)}</td>
         `;
@@ -1309,24 +1323,6 @@ block content %}
         failedMessage.style.display = "block";
       });
   }
-
-
-  document.getElementById("joinWifiBtn").addEventListener("click", function () {
-    let joinButton = document.getElementById("joinWifiBtn");
-    let buttonText = joinButton.querySelector(".button-text");
-    let spinner = joinButton.querySelector(".spinner");
-
-    // Butona tıklanınca spinner'ı göster, yazıyı değiştir
-    buttonText.innerText = "Connecting...";
-    spinner.style.display = "inline-block";
-
-    // Simülasyon: 3 saniye sonra düğmeyi eski haline döndür
-    setTimeout(() => {
-        buttonText.innerText = "Join";
-        spinner.style.display = "none";
-    }, 3000);
-});
-
 </script>
 
 <style>
@@ -1473,6 +1469,27 @@ block content %}
   .status-static {
     color: red !important;
     font-weight: bold;
+  }
+
+  div:where(.swal2-container) h2:where(.swal2-title) {
+    padding: 0em 1em 0;
+  }
+
+  div:where(.swal2-container) div:where(.swal2-actions) {
+    margin: 0.25em auto 0;
+  }
+
+  div:where(.swal2-container) div:where(.swal2-html-container) {
+    padding: 0.5em 0.5em 0.1em;
+  }
+
+  div:where(.swal2-container) div:where(.swal2-popup) {
+    width: 27em;
+    font-size: 0.9rem;
+  }
+
+  div:where(.swal2-icon) {
+    margin: 1.1em auto 0.4em;
   }
 </style>
 {% endblock %}

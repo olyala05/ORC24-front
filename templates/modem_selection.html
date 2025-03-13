@@ -105,7 +105,7 @@ block content %}
       .then((response) => response.json())
       .then((data) => {
         let dropdown = document.getElementById("modem");
-        dropdown.innerHTML = ""; 
+        dropdown.innerHTML = "";
 
         let defaultOption = document.createElement("option");
         defaultOption.value = "";
@@ -146,7 +146,7 @@ block content %}
         if (data.success) {
           sessionStorage.setItem("selected_device_ip", selectedDevice);
           Swal.fire({
-            position: "bottom-end", 
+            position: "bottom-end",
             icon: "success",
             title: "Cihaz başarıyla bağlandı!",
             showConfirmButton: false,
@@ -160,7 +160,7 @@ block content %}
           status.innerHTML =
             "<p style='color: red;'>Bağlantı hatası: " + data.error + "</p>";
           Swal.fire({
-            position: "bottom-end", 
+            position: "bottom-end",
             icon: "error",
             title: "Bağlantı hatası!",
             showConfirmButton: false,
@@ -175,11 +175,11 @@ block content %}
       .catch((error) => {
         console.error("Bağlantı hatası:", error);
         Swal.fire({
-          position: "bottom-end", 
+          position: "bottom-end",
           icon: "error",
           title: "Bağlantı sırasında hata oluştu!",
           showConfirmButton: false,
-          timer: 5000, 
+          timer: 5000,
           toast: true,
           customClass: {
             popup: "small-toast",
@@ -190,7 +190,7 @@ block content %}
 
   function goToORCStatus() {
     let dropdown = document.getElementById("modem");
-    let selectedDeviceIP = dropdown ? dropdown.value : null; 
+    let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
       Swal.fire({
@@ -257,7 +257,7 @@ block content %}
         text: "Lütfen önce bir cihaz seçiniz!",
         confirmButtonText: "Tamam",
       });
-      return; 
+      return;
     }
 
     // **Loading ekranını ekleyelim**
@@ -494,5 +494,28 @@ block content %}
     }
   });
 </script>
+
+<style>
+  div:where(.swal2-container) div:where(.swal2-popup) {
+    width: 28em;
+  }
+
+  div:where(.swal2-container) h2:where(.swal2-title) {
+    padding: 0.1em 0;
+  }
+
+  div:where(.swal2-icon) {
+    width: 4em;
+    height: 4em;
+    margin: 0.8em auto 0.6em;
+  }
+  div:where(.swal2-container) div:where(.swal2-actions) {
+    margin: 0.25em auto 0;
+  }
+
+  div:where(.swal2-container) div:where(.swal2-html-container) {
+    padding: 0.25em 1.4em 0.2em;
+  }
+</style>
 
 {% endblock %}
