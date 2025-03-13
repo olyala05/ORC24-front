@@ -3812,7 +3812,11 @@ body {
 }
 
 .simple-keyboard .hg-button:hover {
-  background: #ddd;
+  color: #fff;
+}
+
+.simple-keyboard .hg-button:hover {
+  background: #EF742A;
 }
 
 .simple-keyboard .hg-button.hg-standardBtn {

@@ -67,26 +67,17 @@ def login():
             try:
                 api_response = response.json()
                 session["access_token"] = api_response.get("access_token")
-
-                # 🎯 Başarılı giriş bilgisini session içinde sakla
                 session["login_success"] = True
-
-                return redirect(
-                    url_for("dashboard")
-                )  # 🎯 Dashboard sayfasına yönlendir
+                return redirect(url_for("dashboard")) 
             except Exception as e:
                 flash("Sunucudan geçersiz yanıt alındı!", "danger")
                 return redirect(url_for("login"))
 
         flash("Hatalı e-posta veya şifre!", "danger")
         return redirect(url_for("login"))
-
-    # 🎯 Başarılı girişten sonra mesajı göstermek için
     login_success = session.pop("login_success", None)
     return render_template("login.html", login_success=login_success)
 
-
-# Dashboard Sayfası
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html", page_title="Dashboard")

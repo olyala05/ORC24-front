@@ -72,20 +72,44 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-
 setTimeout(function () {
     if (window.location.pathname === "/" || window.location.pathname === "/index.html") {
         window.location.href = loginURL;
     }
 }, 5000);
 
+// Tarayıcı önerisini engeller
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("input").forEach(input => {
+        input.setAttribute("readonly", "readonly");
+        input.setAttribute("autocomplete", "off"); 
+        input.setAttribute("autocorrect", "off");
+        input.setAttribute("spellcheck", "false");
+
+        setTimeout(() => {
+            input.removeAttribute("readonly");
+        }, 100);
+    });
+});
+
 // Simple Keyboard
 document.addEventListener("DOMContentLoaded", function () {
-    // Klavyeyi kontrol etmek için değişkenler
     const keyboardContainer = document.getElementById("keyboard-container");
+    const loginButton = document.querySelector(".login-btn");
 
-    // SimpleKeyboard Başlat
+    // Sadece login sayfasında çalışmasını sağla
+    if (window.location.pathname === "/login") {
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Formun otomatik gönderilmesini engelle
+                if (loginButton) {
+                    loginButton.click(); // Butona tıklamayı tetikle
+                }
+            }
+        });
+    }
+
+    // SimpleKeyboard başlat
     const Keyboard = new window.SimpleKeyboard.default({
         onChange: input => onInputChange(input),
         onKeyPress: button => onKeyPress(button),
@@ -110,14 +134,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let activeInput = null;
 
-    // Klavyeye Yazma Fonksiyonu
     function onInputChange(input) {
         if (activeInput) {
             activeInput.value = input;
         }
     }
 
-    // Tuş Basılınca Çalışacak Fonksiyon
     function onKeyPress(button) {
         if (!activeInput) return;
 
@@ -126,7 +148,9 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (button === "{space}") {
             activeInput.value += " ";
         } else if (button === "{enter}") {
-            activeInput.value += "\n";
+            if (loginButton) {
+                loginButton.click(); // Sanal klavyede Enter basıldığında butonu tıklat
+            }
         } else if (button === "{shift}") {
             Keyboard.setOptions({
                 layoutName: Keyboard.options.layoutName === "default" ? "shift" : "default"
@@ -136,16 +160,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Input Alanına Tıklanınca Klavyeyi Aç
+    // Input alanına tıklanınca klavyeyi aç
     document.querySelectorAll("input").forEach(input => {
         input.addEventListener("focus", event => {
             activeInput = event.target;
             Keyboard.setOptions({ input: activeInput.value });
 
-            // Klavyeyi aktif hale getir
-            keyboardContainer.style.display = "block";  
+            keyboardContainer.style.display = "block";
             setTimeout(() => {
-                keyboardContainer.style.bottom = "0";  
+                keyboardContainer.style.bottom = "0";
             }, 10);
         });
     });
@@ -153,11 +176,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Input dışında bir yere tıklanınca klavyeyi kapat
     document.addEventListener("click", function (event) {
         if (!event.target.closest("input") && !event.target.closest("#keyboard-container")) {
-            keyboardContainer.style.bottom = "-100%";  
+            keyboardContainer.style.bottom = "-100%";
             setTimeout(() => {
-                keyboardContainer.style.display = "none"; 
+                keyboardContainer.style.display = "none";
             }, 300);
             activeInput = null;
         }
     });
 });
+
