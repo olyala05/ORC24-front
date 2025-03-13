@@ -247,18 +247,24 @@ title%} {% block content %}
   document.addEventListener("DOMContentLoaded", function () {
     function updateDateTime() {
         const now = new Date();
-        const options = { month: "long", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: false };
-        const formattedDateTime = now.toLocaleDateString("en-US", options).replace(",", "");
+
+        // Ay ismini al, max 5 harfe düşür
+        const monthShort = now.toLocaleString("en-US", { month: "long" }).substring(0, 5);
+        const formattedDateTime = `${monthShort} ${now.getDate()}, ${now.getFullYear()}, ${now.getHours()}:${now.getMinutes().toString().padStart(2, "0")}`;
 
         document.getElementById("current-date-time").innerText = formattedDateTime;
 
         // Rapor tarihini güncelle (Son 30 gün)
         const lastMonth = new Date();
         lastMonth.setDate(lastMonth.getDate() - 30);
-        const reportStart = lastMonth.toLocaleDateString("en-US", { month: "long", day: "numeric" });
-        const reportEnd = now.toLocaleDateString("en-US", { month: "long", day: "numeric" });
 
-        document.getElementById("report-date").innerText = `${reportStart} - ${reportEnd}`;
+        const reportStartMonth = lastMonth.toLocaleString("en-US", { month: "long" }).substring(0, 5);
+        const reportEndMonth = now.toLocaleString("en-US", { month: "long" }).substring(0, 5);
+
+        const reportStart = `${reportStartMonth} ${lastMonth.getDate()}`;
+        const reportEnd = `${reportEndMonth} ${now.getDate()}`;
+
+        document.getElementById("report-date").innerText = `Report Date: ${reportStart} - ${reportEnd}`;
     }
 
     // İlk tarih-saat güncellemesi
