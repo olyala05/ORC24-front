@@ -28,7 +28,7 @@
     }
 
     equipmentData.forEach(equipment => {
-        let statusClass = equipment.status === 1 ? "green" : "red";
+        let statusClass = equipment.status === "A" ? "green" : "red";
         let equipmentBox = document.createElement("div");
         equipmentBox.className = `equipment-box ${statusClass}`;
         equipmentBox.innerHTML = `${equipment.model_name}`;

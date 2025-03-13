@@ -47,7 +47,7 @@
       <div class="eq-detail-item">
         <span>Connection Protocol:</span> <span>Modbus</span>
       </div>
-      <div class="eq-detail-item"><span>GMT:</span> <span>3</span></div> 
+      <div class="eq-detail-item"><span>GMT:</span> <span>3</span></div>
       <div class="eq-detail-item">
         <span>Daylight Saving Time:</span>
         <span class="eq-detail-dot eq-active"></span>
@@ -155,82 +155,114 @@
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
     let equipmentContainer = document.querySelector(".eq-detail-info");
 
     fetch("/fetch_equipment_details")
-        .then(response => response.json())
-        .then(data => {
-            if (data.status !== "success") {
-                equipmentContainer.innerHTML = `<p style='color: red;'>${data.message}</p>`;
-                return;
-            }
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status !== "success") {
+          equipmentContainer.innerHTML = `<p style='color: red;'>${data.message}</p>`;
+          return;
+        }
 
-            let equipment = data.data;
+        let equipment = data.data;
 
-            // **Tarihleri `YYYY-MM-DD HH:mm:ss` formatına çeviren fonksiyon**
-            function formatDate(dateString) {
-                if (!dateString) return "N/A";
-                let date = new Date(dateString);
-                return date.getFullYear() + "-" +
-                       String(date.getMonth() + 1).padStart(2, "0") + "-" +
-                       String(date.getDate()).padStart(2, "0") + " " +
-                       String(date.getHours()).padStart(2, "0") + ":" +
-                       String(date.getMinutes()).padStart(2, "0") + ":" +
-                       String(date.getSeconds()).padStart(2, "0");
-            }
+        // **Tarihleri `YYYY-MM-DD HH:mm:ss` formatına çeviren fonksiyon**
+        function formatDate(dateString) {
+          if (!dateString) return "N/A";
+          let date = new Date(dateString);
+          return (
+            date.getFullYear() +
+            "-" +
+            String(date.getMonth() + 1).padStart(2, "0") +
+            "-" +
+            String(date.getDate()).padStart(2, "0") +
+            " " +
+            String(date.getHours()).padStart(2, "0") +
+            ":" +
+            String(date.getMinutes()).padStart(2, "0") +
+            ":" +
+            String(date.getSeconds()).padStart(2, "0")
+          );
+        }
 
-            // **Equipment Name güncellemesi (model_name@serial_number)**
-            document.querySelector(".eq-detail-status").innerText = 
-                `${equipment.model_name || "Bilinmiyor"}@${equipment.serial_number || "N/A"}`;
+        // **Equipment Name güncellemesi (model_name@serial_number)**
+        document.querySelector(".eq-detail-status").innerText = `${
+          equipment.model_name || "Bilinmiyor"
+        }@${equipment.serial_number || "N/A"}`;
 
-            // **Modem Name Güncellemesi**
-            document.querySelector(".eq-detail-item:nth-child(3) span:last-child").innerText = 
-                equipment.modem_name || "N/A";
+        // **Modem Name Güncellemesi**
+        document.querySelector(
+          ".eq-detail-item:nth-child(3) span:last-child"
+        ).innerText = equipment.modem_name || "N/A";
 
-            // **Marka ve Model bilgilerini göster**
-            document.querySelector(".eq-detail-item:nth-child(4) span:last-child").innerText = 
-                `${equipment.brand_name || "N/A"} / ${equipment.model_name || "N/A"}`;
+        // **Marka ve Model bilgilerini göster**
+        document.querySelector(
+          ".eq-detail-item:nth-child(4) span:last-child"
+        ).innerText = `${equipment.brand_name || "N/A"} / ${
+          equipment.model_name || "N/A"
+        }`;
 
-            // **Diğer alanları güncelle**
-            document.querySelector(".eq-detail-item:nth-child(2) span:last-child").innerText = equipment.modbus_address || "N/A";
-            document.querySelector(".eq-detail-item:nth-child(5) span:last-child").innerText = equipment.equipment_type || "Analyzer";
-            document.querySelector(".eq-detail-item:nth-child(6) span:last-child").innerText = equipment.serial_number || "N/A";
-            document.querySelector(".eq-detail-item:nth-child(8) span:last-child").innerText = equipment.device_id || "N/A";
-            document.querySelector(".eq-detail-item:nth-child(9) span:last-child").innerText = equipment.modbus_address || "N/A";
-            document.querySelector(".eq-detail-item:nth-child(12) span:last-child").innerText = equipment.communication_protocol_code || "N/A";
-            document.querySelector(".eq-detail-item:nth-child(15) span:last-child").innerText = formatDate(equipment.created_at);
-            document.querySelector(".eq-detail-item:nth-child(16) span:last-child").innerText = formatDate(equipment.updated_at);
+        // **Diğer alanları güncelle**
+        document.querySelector(
+          ".eq-detail-item:nth-child(2) span:last-child"
+        ).innerText = equipment.modbus_address || "N/A";
+        document.querySelector(
+          ".eq-detail-item:nth-child(5) span:last-child"
+        ).innerText = equipment.equipment_type || "Analyzer";
+        document.querySelector(
+          ".eq-detail-item:nth-child(6) span:last-child"
+        ).innerText = equipment.serial_number || "N/A";
+        document.querySelector(
+          ".eq-detail-item:nth-child(8) span:last-child"
+        ).innerText = equipment.device_id || "N/A";
+        document.querySelector(
+          ".eq-detail-item:nth-child(9) span:last-child"
+        ).innerText = equipment.modbus_address || "N/A";
+        document.querySelector(
+          ".eq-detail-item:nth-child(12) span:last-child"
+        ).innerText = equipment.communication_protocol_code || "N/A";
+        document.querySelector(
+          ".eq-detail-item:nth-child(15) span:last-child"
+        ).innerText = formatDate(equipment.created_at);
+        document.querySelector(
+          ".eq-detail-item:nth-child(16) span:last-child"
+        ).innerText = formatDate(equipment.updated_at);
 
-            // **Configuration Data Güncellemesi (1: Configured, 0: Not Configured)**
-            let configElement = document.querySelector(".eq-detail-item:nth-child(10) span:last-child");
-            if (equipment.configuration_data == 1) {
-                configElement.innerText = "Configured";
-                configElement.style.color = "green";  
-            } else if (equipment.configuration_data == 0) {
-                configElement.innerText = "Not Configured";
-                configElement.style.color = "red";  
-            } else {
-                configElement.innerText = "N/A";
-            }
+        // **Configuration Data Güncellemesi (A: Configured (Yeşil), P: Not Configured (Kırmızı))**
+        let configElement = document.querySelector(
+          ".eq-detail-item:nth-child(10) span:last-child"
+        );
+        if (equipment.configuration_data === "A") {
+          configElement.innerText = "Configured";
+          configElement.style.color = "green";
+        } else if (equipment.configuration_data === "P") {
+          configElement.innerText = "Not Configured";
+          configElement.style.color = "red";
+        } else {
+          configElement.innerText = "N/A";
+        }
 
-            // **Status Güncellemesi (1: A (Yeşil), 0: P (Kırmızı))**
-            let statusElement = document.querySelector(".eq-detail-item:nth-child(7) span:last-child");
-            if (equipment.status == 1) {
-                statusElement.innerText = "A";
-                statusElement.style.color = "green";
-            } else if (equipment.status == 0) {
-                statusElement.innerText = "P";
-                statusElement.style.color = "red";
-            } else {
-                statusElement.innerText = "N/A";
-            }
-
-        })
-        .catch(error => {
-            console.error("Ekipman detayları yüklenirken hata oluştu:", error);
-            equipmentContainer.innerHTML = "<p style='color: red;'>Ekipman bilgisi alınamadı.</p>";
-        });
+        // **Status Güncellemesi (A: Yeşil, P: Kırmızı)**
+        let statusElement = document.querySelector(
+          ".eq-detail-item:nth-child(7) span:last-child"
+        );
+        if (equipment.status === "A") {
+          statusElement.innerText = "A";
+          statusElement.style.color = "green";
+        } else if (equipment.status === "P") {
+          statusElement.innerText = "P";
+          statusElement.style.color = "red";
+        } else {
+          statusElement.innerText = "N/A";
+        }
+      })
+      .catch((error) => {
+        console.error("Ekipman detayları yüklenirken hata oluştu:", error);
+        equipmentContainer.innerHTML =
+          "<p style='color: red;'>Ekipman bilgisi alınamadı.</p>";
+      });
   });
 </script>
 
