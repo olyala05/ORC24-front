@@ -40,12 +40,13 @@ title%} {% block content %}
   </div>
 
   <div class="header-right-dashboard">
-    <div class="date-time">May 23, 2024, 12:34</div>
+    <div class="date-time" id="current-date-time">Loading...</div>
     <div class="report-line">
       <div class="line"></div>
     </div>
-    <div class="report-date">Report Date: April 12 - May 23</div>
-  </div>
+    <div class="report-date" id="report-date">Report Date: Loading...</div>
+</div>
+
 </header>
 
 <!-- Ana Tablo -->
@@ -242,4 +243,30 @@ title%} {% block content %}
   </div>
 </section>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    function updateDateTime() {
+        const now = new Date();
+        const options = { month: "long", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: false };
+        const formattedDateTime = now.toLocaleDateString("en-US", options).replace(",", "");
+
+        document.getElementById("current-date-time").innerText = formattedDateTime;
+
+        // Rapor tarihini güncelle (Son 30 gün)
+        const lastMonth = new Date();
+        lastMonth.setDate(lastMonth.getDate() - 30);
+        const reportStart = lastMonth.toLocaleDateString("en-US", { month: "long", day: "numeric" });
+        const reportEnd = now.toLocaleDateString("en-US", { month: "long", day: "numeric" });
+
+        document.getElementById("report-date").innerText = `${reportStart} - ${reportEnd}`;
+    }
+
+    // İlk tarih-saat güncellemesi
+    updateDateTime();
+
+    // Saatin her dakika güncellenmesi
+    setInterval(updateDateTime, 60000);
+});
+
+</script> 
 {% endblock content %}
