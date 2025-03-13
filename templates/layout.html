@@ -19,6 +19,9 @@
     <body class="{% if request.endpoint == 'dashboard' %}dashboard-body{% endif %}">
     {% block content %}
 
+      <!-- Sanal Klavye Konteyneri -->
+      <div id="keyboard-container" class="simple-keyboard"></div>
+
     {% endblock %}
 
     <!-- Bootstrap -->
@@ -34,5 +37,19 @@
 
     <!-- My Js -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+    <style>
+      #keyboard-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #ddd;
+        padding: 10px;
+        display: none; /* İlk başta kapalı */
+        z-index: 9999;
+      }
+      
+    </style>
   </body>
 </html>

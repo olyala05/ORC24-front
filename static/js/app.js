@@ -80,3 +80,44 @@ setTimeout(function () {
     }
 }, 5000);
 
+// Simple Keyboard
+document.addEventListener("DOMContentLoaded", function () {
+    let Keyboard = new window.SimpleKeyboard.default({
+      onChange: input => onInputChange(input),
+      onKeyPress: button => onKeyPress(button),
+    });
+  
+    let activeInput = null;
+  
+    function onInputChange(input) {
+      if (activeInput) {
+        activeInput.value = input;
+      }
+    }
+  
+    function onKeyPress(button) {
+      if (button === "{bksp}") {
+        if (activeInput) {
+          activeInput.value = activeInput.value.slice(0, -1);
+        }
+      }
+    }
+  
+    document.querySelectorAll("input").forEach(input => {
+      input.addEventListener("focus", event => {
+        activeInput = event.target;
+        Keyboard.setOptions({
+          input: event.target.value
+        });
+        document.getElementById("keyboard-container").style.display = "block"; // Klavyeyi aç
+      });
+    });
+  
+    // Klavyeyi kapatmak için tıklama dışı olayını ekleyelim
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest("input") && !event.target.closest("#keyboard-container")) {
+        document.getElementById("keyboard-container").style.display = "none"; // Klavyeyi gizle
+      }
+    });
+  });
+  
