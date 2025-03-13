@@ -91,16 +91,16 @@ document.addEventListener("DOMContentLoaded", function () {
         onKeyPress: button => onKeyPress(button),
         layout: {
             default: [
-                "1 2 3 4 5 6 7 8 9 0 @ # $ % & * ( )",
-                "q w e r t y u i o p {bksp}",
-                "a s d f g h j k l ; : ' \"",
+                "1 2 3 4 5 6 7 8 9 0 @ # $ % & * ( ) {bksp}",
+                "q w e r t y u i o p",
+                "a s d f g h j k l ; :",
                 "z x c v b n m , . / ? !",
                 "{shift} {space} {enter}"
             ],
             shift: [
-                "! @ # $ % ^ & * ( ) _ +",
-                "Q W E R T Y U I O P {bksp}",
-                "A S D F G H J K L ; : ' \"",
+                "! @ # $ % ^ & * ( ) _ + {bksp}",
+                "Q W E R T Y U I O P",
+                "A S D F G H J K L ; :",
                 "Z X C V B N M , . / ? !",
                 "{shift} {space} {enter}"
             ]
@@ -143,9 +143,9 @@ document.addEventListener("DOMContentLoaded", function () {
             Keyboard.setOptions({ input: activeInput.value });
 
             // Klavyeyi aktif hale getir
-            keyboardContainer.style.display = "block";  // Görünür yap
+            keyboardContainer.style.display = "block";  
             setTimeout(() => {
-                keyboardContainer.style.bottom = "0";  // Yavaşça yukarı çıkart
+                keyboardContainer.style.bottom = "0";  
             }, 10);
         });
     });
@@ -153,9 +153,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Input dışında bir yere tıklanınca klavyeyi kapat
     document.addEventListener("click", function (event) {
         if (!event.target.closest("input") && !event.target.closest("#keyboard-container")) {
-            keyboardContainer.style.bottom = "-100%";  // Klavyeyi aşağı kaydırarak gizle
+            keyboardContainer.style.bottom = "-100%";  
             setTimeout(() => {
-                keyboardContainer.style.display = "none"; // Tamamen kaldır
+                keyboardContainer.style.display = "none"; 
             }, 300);
             activeInput = null;
         }
