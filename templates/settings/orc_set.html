@@ -423,7 +423,7 @@
         fetch("/get_modem_info")
           .then((response) => response.json())
           .then((data) => {
-            if (data.status === "success") {
+            if (data.status === "A") {
               const modem = data.data;
               modemNameInput.value = modem.name || "Unknown";
               modemStatusSelect.value = modem.status.toLowerCase();
