@@ -21,8 +21,6 @@ from datetime import datetime
 import logging
 import pymodbus.client.tcp 
 
-
-
 app = Flask(__name__)
 CORS(app)
 app.secret_key = "supersecretkey"

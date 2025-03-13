@@ -1,6 +1,6 @@
 @charset "UTF-8";
 @import '../fontawesome/css/all.min.css';
-@import '../simple-keyboard/build/css/index.css';
+@import '../simple-keyboard-master/build/css/index.css';
 /* Genel Stil */
 body {
   background-color: #1c2747;
