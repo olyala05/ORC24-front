@@ -220,9 +220,17 @@
         document.querySelector(
           ".eq-detail-item:nth-child(9) span:last-child"
         ).innerText = equipment.modbus_address || "N/A";
+
+        // **communication_protocol_code için kontrol (1 = SERIAL, 2 = TCP)**
+        let protocolText = "N/A";
+        if (equipment.communication_protocol_code == 1) {
+          protocolText = "SERIAL";
+        } else if (equipment.communication_protocol_code == 2) {
+          protocolText = "TCP";
+        }
         document.querySelector(
           ".eq-detail-item:nth-child(12) span:last-child"
-        ).innerText = equipment.communication_protocol_code || "N/A";
+        ).innerText = protocolText;
         document.querySelector(
           ".eq-detail-item:nth-child(15) span:last-child"
         ).innerText = formatDate(equipment.created_at);

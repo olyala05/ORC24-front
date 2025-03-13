@@ -529,7 +529,6 @@ def set_selected_equipment():
     session.modified = True
     return jsonify({"success": True, "message": "Ekipman seçildi!"})
 
-
 # Equipments Modbus
 @app.route("/modbus_request", methods=["POST"])
 def modbus_request():

@@ -28,6 +28,9 @@
   border-bottom: 1px solid #ef8018;
   padding: 3px 5px;
 }
+.eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item:last-child {
+  border-bottom: none;
+}
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item span {
   font-size: 13px;
 }
@@ -67,6 +70,10 @@
   padding: 0;
   max-height: 400px;
   overflow-y: auto;
+  margin: 0;
+}
+.eq-detail-container .eq-detail-log .eq-detail-log-list li:last-child {
+  border-bottom: none;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item {
   display: flex;

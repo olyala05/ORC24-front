@@ -138,8 +138,8 @@
     }
 
     equipments.forEach((device) => {
-      const statusText = device.status === 1 ? "A" : "P";
-      const statusClass = device.status === 1 ? "green" : "red";
+      const statusText = device.status === "A" ? "A" : "P";
+      const statusClass = device.status === "A" ? "green" : "red";
 
       let row = document.createElement("div");
       row.className = "table-row clickable";

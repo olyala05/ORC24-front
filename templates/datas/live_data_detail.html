@@ -93,9 +93,10 @@
       row.innerHTML = `
           <td>${equipment.model_name}@${equipment.serial_number}</td>
           <td>${equipment.modem_serial_number || "N/A"}</td>
-          <td class="live-data-detail-status">${
-            equipment.status === 1 ? "A / A" : "P / P"
-          }</td>
+          <td class="live-data-detail-status" 
+            style="color: ${equipment.status === 'A' ? 'green' : 'red'}; font-weight: bold;">
+              ${equipment.status === "A" ? "A" : "P"}
+          </td>
           <td class="live-data-detail-archive">
             <div class="status-circle"></div>
           </td>

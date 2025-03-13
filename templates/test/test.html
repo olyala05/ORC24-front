@@ -1081,12 +1081,14 @@ block content %}
            ${equipment.status}
          </td>
          <td style="color: ${equipment.configuration_data === "A" ? "green" : "red"}; font-weight: bold;">
-           ${equipment.configuration_data}
-         </td>
-         <td style="color: ${equipment.communication_protocol_code === 1 ? "green" : "red"}; font-weight: bold;">
-           ${equipment.communication_protocol_code === 1 ? "OK" : "No"}
-         </td>
-         <td>${formatDateTime(equipment.created_at)}</td>
+          ${equipment.configuration_data === "A" ? "Configured" : 
+          equipment.configuration_data === "P" ? "No Configure" : "N/A"}
+          </td>
+         <td>
+          ${equipment.communication_protocol_code === 1 ? "SERIAL" : 
+            equipment.communication_protocol_code === 2 ? "TCP" : "N/A"}
+          </td>
+          <td>${formatDateTime(equipment.created_at)}</td>
         `;
       tableBody.appendChild(row);
     });

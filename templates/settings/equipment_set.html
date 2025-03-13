@@ -257,7 +257,7 @@
             equipmentGrid.innerHTML = ""; // Önce mevcut listeyi temizle
 
             data.data.forEach((device) => {
-              const statusClass = device.status === 1 ? "green" : "red";
+              const statusClass = device.status === "A" ? "green" : "red";
               const equipmentBox = document.createElement("div");
 
               equipmentBox.classList.add("equipment-set-box", statusClass);
@@ -343,14 +343,23 @@
             updateInput("device-id", equipment.device_id || "");
             updateInput(
               "equipment-status",
-              equipment.status === 1 ? "Active" : "Passive"
+              equipment.status === "A" ? "Active" : "Passive"
             );
             updateInput(
               "config-status",
-              equipment.configuration_data === 1 ? "Active" : "Passive"
+              equipment.configuration_data === "A" ? "Active" : "Passive"
             );
             updateInput("equipment-brand", equipment.brand_name || "");
-            updateInput("communication-protocol", equipment.communication_protocol_code || "");
+
+            updateInput(
+                "communication-protocol",
+                equipment.communication_protocol_code === 1
+                ? "SERIAL"
+                : equipment.communication_protocol_code === 2
+                ? "TCP"
+                : ""
+              );
+
             updateInput("modem-name", equipment.modem_name || "");
     
             equipmentSetList.style.display = "none";
