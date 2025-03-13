@@ -32,7 +32,7 @@
               {% endif %}
           </span>
         </li>      
-        <li>CONNECTION PROTOCOL: <span>Modbus</span></li>
+        <li>CONNECTION PROTOCOL: <span id="connection-protocol">Loading...</span></li>
         <li>SOFTWARE VERSION: <span>V 1.02</span></li>
       </ul>
 
@@ -199,6 +199,35 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch(error => console.error("Error:", error));
   });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("/equipments-with-models", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" }
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.equipment_data && data.equipment_data.communication_protocol_code) {
+          let protocolText = "Unknown";
+
+          if (data.equipment_data.communication_protocol_code === 1) {
+              protocolText = "SERIAL";
+          } else if (data.equipment_data.communication_protocol_code === 2) {
+              protocolText = "TCP";
+          }
+
+          // HTML içindeki CONNECTION PROTOCOL değerini güncelle
+          document.getElementById("connection-protocol").innerText = protocolText;
+      } else {
+          document.getElementById("connection-protocol").innerText = "Unknown";
+      }
+  })
+  .catch(error => {
+      console.error("API isteği hatası:", error);
+      document.getElementById("connection-protocol").innerText = "Error fetching data";
+  });
+});
+
 </script>
 
 {% endblock %}

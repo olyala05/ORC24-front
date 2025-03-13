@@ -16,6 +16,8 @@
   <body>
     <body class="{% if request.endpoint == 'dashboard' %}dashboard-body{% endif %}">
     {% block content %}
+    <!-- Virtual Keyboard -->   
+    <div id="keyboard-container" class="simple-keyboard"></div>
 
     {% endblock %}
 

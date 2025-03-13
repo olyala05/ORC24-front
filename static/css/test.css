@@ -163,7 +163,7 @@
   margin-top: 0px;
 }
 .popup-content input[type=password],
-.popup-content #wifi-password {
+.popup-content #wifiPassword {
   width: 93%;
   padding: 12px 11px;
   margin-top: 0px;
@@ -190,16 +190,10 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
-}
-.popup-content .popup-buttons .cancel-btn {
+  min-width: 140px;
+  min-height: 50px !important;
   background: #ef8018;
   color: white;
-  padding: 15px 50px;
-}
-.popup-content .popup-buttons .join-btn {
-  background: #ef8018;
-  color: white;
-  padding: 15px 50px;
 }
 
 .wifi-icon-test {

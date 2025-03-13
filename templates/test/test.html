@@ -2,6 +2,8 @@
 block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
+  <!-- Virtual Keyboard -->   
+  <div id="keyboard-container" class="simple-keyboard"></div>
 
 <!-- Yeni İçerik (İlk başta gizli olacak) -->
 <div class="test-switch-content">
@@ -63,7 +65,10 @@ block content %}
               <button class="cancel-btn" onclick="closeWifiPopup()">
                 Cancel
               </button>
-              <button id="joinWifiBtn" class="join-btn">Join</button>
+              <button id="joinWifiBtn" class="join-btn">
+                <span class="button-text">Join</span>
+                <span class="spinner" style="display: none;"></span>
+              </button>
             </div>
           </div>
         </div>
@@ -1304,6 +1309,24 @@ block content %}
         failedMessage.style.display = "block";
       });
   }
+
+
+  document.getElementById("joinWifiBtn").addEventListener("click", function () {
+    let joinButton = document.getElementById("joinWifiBtn");
+    let buttonText = joinButton.querySelector(".button-text");
+    let spinner = joinButton.querySelector(".spinner");
+
+    // Butona tıklanınca spinner'ı göster, yazıyı değiştir
+    buttonText.innerText = "Connecting...";
+    spinner.style.display = "inline-block";
+
+    // Simülasyon: 3 saniye sonra düğmeyi eski haline döndür
+    setTimeout(() => {
+        buttonText.innerText = "Join";
+        spinner.style.display = "none";
+    }, 3000);
+});
+
 </script>
 
 <style>
