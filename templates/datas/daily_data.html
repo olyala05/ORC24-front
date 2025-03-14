@@ -1,7 +1,4 @@
-{% extends "layout.html" %} 
-
-{% block title %} Daily Data Details {% endblock %}
-
+{% extends "layout.html" %} {% block title %} Daily Data Details {% endblock %}
 {% block content %}
 
 <!-- Header -->
@@ -46,13 +43,12 @@
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.equipments) {
-          updateDailyDataTable(data.equipments);
-        } else {
-          console.error("Veri alınamadı:", data.message || data.error);
-        }
+        updateDailyDataTable(data.equipments || []);
       })
-      .catch((error) => console.error("Hata:", error));
+      .catch((error) => {
+        console.error("Hata:", error);
+        updateDailyDataTable([]);
+      });
   }
 
   function formatDateTime(dateTimeString) {
@@ -66,17 +62,25 @@
     const container = document.getElementById("daily-data-container");
     container.innerHTML = "";
 
-    dailyData.forEach((item, index) => {
+    if (!dailyData || dailyData.length === 0) {
+      const emptyMessage = document.createElement("div");
+      emptyMessage.className = "empty-message";
+      emptyMessage.innerText = "Daily Data is Empty";
+      container.appendChild(emptyMessage);
+      return;
+    }
+
+    dailyData.forEach((item) => {
       const formattedDate = formatDateTime(item.created_at);
 
       const row = document.createElement("div");
       row.className = "table-row";
       row.innerHTML = `
-          <div>${formattedDate}</div>
-          <div>${item.equipment_count}</div>
-          <div>${item.data_count}</div>
-          <div>0</div>
-      `;
+            <div>${formattedDate}</div>
+            <div>${item.equipment_count}</div>
+            <div>${item.data_count}</div>
+            <div>0</div>
+        `;
       container.appendChild(row);
     });
   }
@@ -130,7 +134,7 @@
 
   function updateTable(equipments) {
     const table = document.getElementById("equipment-table");
-    table.innerHTML = ""; // Önceki verileri temizle
+    table.innerHTML = ""; 
 
     if (equipments.length === 0) {
       table.innerHTML = "<p style='color: red;'>No equipments found</p>";
@@ -159,7 +163,7 @@
       // Cihaza tıklanınca ID'yi sessionStorage ve backend'e gönder
       row.addEventListener("click", function () {
         sessionStorage.setItem("selected_equipment_id", device.id);
-        console.log("✅ Seçilen Equipment ID Kaydedildi:", device.id);
+        console.log("Seçilen Equipment ID Kaydedildi:", device.id);
 
         // Backend'e POST isteği ile ID'yi gönder
         fetch("/set_selected_equipment", {
@@ -184,7 +188,9 @@
       table.appendChild(row);
     });
   }
+
 </script>
+
 <style>
   .table-row div:first-child {
     white-space: normal;
@@ -192,6 +198,14 @@
     max-width: 150px;
     overflow: visible;
     display: block;
+  }
+
+  .empty-message {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 20px 0;
   }
 </style>
 

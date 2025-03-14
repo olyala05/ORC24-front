@@ -43,13 +43,12 @@
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.equipments) {
-          updateHourlyDataTable(data.equipments);
-        } else {
-          console.error("Veri alınamadı:", data.message || data.error);
-        }
+        updateHourlyDataTable(data.equipments || []);
       })
-      .catch((error) => console.error("Hata:", error));
+      .catch((error) => {
+        console.error("Hata:", error);
+        updateHourlyDataTable([]);
+      });
   }
 
   function formatDateTime(dateTimeString) {
@@ -63,17 +62,25 @@
     const container = document.getElementById("hourly-data-container");
     container.innerHTML = "";
 
-    hourlyData.forEach((item, index) => {
+    if (!hourlyData || hourlyData.length === 0) {
+      const emptyMessage = document.createElement("div");
+      emptyMessage.className = "empty-message";
+      emptyMessage.innerText = "Hourly Data is Empty";
+      container.appendChild(emptyMessage);
+      return;
+    }
+
+    hourlyData.forEach((item) => {
       const formattedDate = formatDateTime(item.created_at);
 
       const row = document.createElement("div");
       row.className = "table-row";
       row.innerHTML = `
-          <div>${formattedDate}</div>
-          <div>${item.equipment_count}</div>
-          <div>${item.data_count}</div>
-          <div>0</div>
-      `;
+            <div>${formattedDate}</div>
+            <div>${item.equipment_count}</div>
+            <div>${item.data_count}</div>
+            <div>0</div>
+        `;
       container.appendChild(row);
     });
   }
@@ -156,7 +163,7 @@
       // Cihaza tıklanınca ID'yi sessionStorage ve backend'e gönder
       row.addEventListener("click", function () {
         sessionStorage.setItem("selected_equipment_id", device.id);
-        console.log("✅ Seçilen Equipment ID Kaydedildi:", device.id);
+        console.log("Seçilen Equipment ID Kaydedildi:", device.id);
 
         // Backend'e POST isteği ile ID'yi gönder
         fetch("/set_selected_equipment", {
@@ -189,6 +196,14 @@
     max-width: 150px;
     overflow: visible;
     display: block;
+  }
+
+  .empty-message {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 20px 0;
   }
 </style>
 

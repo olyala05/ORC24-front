@@ -1,11 +1,14 @@
-{% extends "layout.html" %} {% block title %} Hourly Data Details {% endblock %}
+{% extends "layout.html" %} 
+
+{% block title %} Hourly Data Details {% endblock %}
+
 {% block content %}
 
 <!-- Header -->
 {% include 'partials/header.html' %}
 
 <div class="hourly-data-detail-table-container">
-  <!-- Sabit duran ilk tablo -->
+  <!-- Equipment Details Table -->
   <table class="hourly-data-detail-data-table">
     <thead>
       <tr>
@@ -16,10 +19,12 @@
         <th>Number of Data</th>
       </tr>
     </thead>
-    <tbody id="equipment-details"></tbody>
+    <tbody id="equipment-details">
+      <tr><td colspan='5' class="empty-message">Loading...</td></tr>
+    </tbody>
   </table>
 
-  <!-- Scroll olacak ikinci tablo -->
+  <!-- Hourly Data Table with Scroll -->
   <div class="scrollable-table">
     <table class="hourly-data-detail-data-table">
       <thead>
@@ -31,7 +36,9 @@
           <th>Created Date</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="hourly-data-body">
+        <tr><td colspan='5' class="empty-message">Loading...</td></tr>
+      </tbody>
     </table>
   </div>
 </div>
@@ -39,53 +46,36 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     fetchEquipmentDetails();
+    fetchHourlyData(1);
   });
 
   function fetchEquipmentDetails() {
     const selectedEquipmentID = sessionStorage.getItem("selected_equipment_id");
 
     if (!selectedEquipmentID) {
-      console.error("❌ Ekipman seçilmedi!");
       document.getElementById("equipment-details").innerHTML =
-        "<tr><td colspan='5' style='color: red; text-align: center;'>Ekipman seçilmedi!</td></tr>";
+        "<tr><td colspan='5' class='empty-message'>No equipment selected.</td></tr>";
       return;
     }
 
-    console.log("🔍 Seçilen Equipment ID:", selectedEquipmentID);
-
     fetch(`/fetch_equipment_details?equipment_id=${selectedEquipmentID}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP Hatası! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("✅ Equipment Details Response:", data);
-
+      .then(response => response.json())
+      .then(data => {
         if (data.status === "success" && data.data) {
           updateDetailsTable([data.data]);
         } else {
-          console.warn("⚠️ Ekipman detayları bulunamadı.");
           document.getElementById("equipment-details").innerHTML =
-            "<tr><td colspan='5' style='color: red; text-align: center;'>Ekipman detayları bulunamadı.</td></tr>";
+            "<tr><td colspan='5' class='empty-message'>No equipment details found.</td></tr>";
         }
       })
-      .catch((error) => {
-        console.error("Detayları getirirken hata oluştu:", error);
+      .catch(() => {
         document.getElementById("equipment-details").innerHTML =
-          "<tr><td colspan='5' style='color: red; text-align: center;'>Hata oluştu.</td></tr>";
+          "<tr><td colspan='5' class='empty-message'>Error loading data.</td></tr>";
       });
   }
 
   function updateDetailsTable(equipments) {
     const tableBody = document.getElementById("equipment-details");
-
-    if (!tableBody) {
-      console.error("Hata: `equipment-details` ID'li element bulunamadı.");
-      return;
-    }
-
     tableBody.innerHTML = "";
 
     equipments.forEach((equipment) => {
@@ -93,85 +83,56 @@
       row.innerHTML = `
           <td>${equipment.model_name}@${equipment.serial_number}</td>
           <td>${equipment.modem_serial_number || "N/A"}</td>
-          <td class="hourly-data-detail-status" 
-              style="color: ${equipment.status === 'A' ? 'green' : 'red'}; font-weight: bold;">
+          <td style="color: ${equipment.status === 'A' ? 'green' : 'red'}; font-weight: bold;">
               ${equipment.status === "A" ? "A" : "P"}
           </td>
-          <td class="hourly-data-detail-archive">
-            <div class="status-circle"></div>
-          </td>
+          <td><div class="status-circle"></div></td>
           <td>${equipment.data_count || 0}</td>
       `;
       tableBody.appendChild(row);
     });
   }
 
-  // Hourly Data
   let currentPage = 1;
   const perPage = 20;
   let isFetching = false;
 
-  document.addEventListener("DOMContentLoaded", function () {
-    fetchHourlyData(currentPage);
+  document.querySelector(".scrollable-table tbody").addEventListener("scroll", function () {
+    if (this.scrollTop + this.clientHeight >= this.scrollHeight - 50) {
+      if (!isFetching) {
+        isFetching = true;
+        currentPage++;
+        fetchHourlyData(currentPage);
+      }
+    }
   });
 
-  // Scroll Event Listener
-  document
-    .querySelector(".scrollable-table tbody")
-    .addEventListener("scroll", function () {
-      const tableBody = this;
-      if (
-        tableBody.scrollTop + tableBody.clientHeight >=
-        tableBody.scrollHeight - 50
-      ) {
-        if (!isFetching) {
-          isFetching = true;
-          currentPage++;
-          fetchHourlyData(currentPage);
-        }
-      }
-    });
-
   function fetchHourlyData(page) {
-    const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
-
-    if (!selectedDeviceIP) {
-      console.warn("Cihaz IP adresi seçilmedi.");
-      return;
-    }
-
     fetch("/fetch_hourly_data_paginated", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ page: page, per_page: perPage }),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Hourly Data Response:", data);
-
-        if (
-          data.status === "success" &&
-          data.data &&
-          Array.isArray(data.data.data)
-        ) {
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success" && data.data && Array.isArray(data.data.data)) {
           updateHourlyDataTable(data.data.data);
-        } else {
-          console.warn("Yeni veri bulunamadı.");
+        } else if (page === 1) {
+          document.getElementById("hourly-data-body").innerHTML =
+            "<tr><td colspan='5' class='empty-message'>Hourly Data is Empty</td></tr>";
         }
       })
-      .catch((error) => console.error("Veri çekme hatası:", error))
+      .catch(() => {
+        document.getElementById("hourly-data-body").innerHTML =
+          "<tr><td colspan='5' class='empty-message'>Error loading data.</td></tr>";
+      })
       .finally(() => {
         isFetching = false;
       });
   }
 
   function updateHourlyDataTable(hourlyData) {
-    const tableBody = document.querySelector(".scrollable-table tbody");
-
-    if (!tableBody) {
-      console.error("Hata: `tbody` bulunamadı.");
-      return;
-    }
+    const tableBody = document.getElementById("hourly-data-body");
 
     hourlyData.forEach((data) => {
       let row = document.createElement("tr");
@@ -188,10 +149,18 @@
 
   function formatDateTime(dateTimeString) {
     const date = new Date(dateTimeString);
-    return (
-      date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0]
-    );
+    return date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0];
   }
 </script>
+
+<style>
+  .empty-message {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 15px;
+  }
+</style>
 
 {% endblock %}
