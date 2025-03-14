@@ -261,9 +261,11 @@ block content %}
             <tr data-status="A">
               <td class="cloud-test-status"></td>
               <td class="cloud-test-status"></td>
-              <td>Cloud connection</td>
-              <td>2024-04-03 13:55:00</td>
+              <td>Cloud Connection</td>
+              <td class="last-connection">Checking...</td>
+              <!-- Dinamik olarak güncellenecek -->
             </tr>
+
             <tr data-status="P">
               <td class="cloud-test-status"></td>
               <td class="cloud-test-status"></td>
@@ -387,8 +389,7 @@ block content %}
             <select id="slave-id">
               <option value="1">1</option>
               <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="3" selected>192.168.1.130:3</option>
+              <option value="3" selected>3</option>
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
@@ -1324,8 +1325,50 @@ block content %}
         failedMessage.style.display = "block";
       });
   }
-</script>
 
+  // Cloud Status
+  document.addEventListener("DOMContentLoaded", function () {
+    function updateCloudStatus() {
+      fetch("/cloud-status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const cloudStatusRow = document.querySelector("tr[data-status='A']");
+          const statusCells =
+            cloudStatusRow.querySelectorAll(".cloud-test-status");
+          const lastConnectionCell = cloudStatusRow.children[3]; // 4. sütundaki tarih güncellenecek
+
+          statusCells.forEach((cell) => {
+            cell.innerHTML = `<span class="status-indicator"></span>`; // Önce temizle
+
+            const indicator = cell.querySelector(".status-indicator");
+
+            if (data.status === "success" && data.data.cloud_connected) {
+              indicator.classList.add("status-green"); // Yeşil yap
+              lastConnectionCell.textContent =
+                data.data.last_connection_time || "No connection yet";
+            } else {
+              indicator.classList.add("status-red"); // Kırmızı yap
+              lastConnectionCell.textContent = "No connection yet";
+            }
+          });
+        })
+        .catch(() => {
+          console.error("Cloud connection check failed.");
+        });
+    }
+
+    // Sayfa yüklendiğinde kontrol et
+    updateCloudStatus();
+
+    // Bulut bağlantısını her 10 saniyede bir kontrol et
+    setInterval(updateCloudStatus, 10000);
+  });
+
+</script>
 <style>
   .connected-wifi {
     font-weight: bold;
@@ -1492,5 +1535,22 @@ block content %}
   div:where(.swal2-icon) {
     margin: 1.1em auto 0.4em;
   }
+
+  .status-indicator {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 2px solid transparent;
+  }
+
+  .status-green {
+    border-color: green;
+  }
+
+  .status-red {
+    border-color: red;
+  }
 </style>
+
 {% endblock %}

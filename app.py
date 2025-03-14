@@ -43,6 +43,7 @@ DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database":
 # Flask-SCSS'i başlat
 Scss(app, static_dir="static", asset_dir="assets")
 
+last_connection_time = None
 
 @app.route("/")
 def index():
@@ -435,8 +436,28 @@ def disconnect_wifi():
             message="Unexpected error occurred", code=500, details=str(e)
         )
 
-last_connection_time = None
+#Cloud Status
+@app.route("/cloud-status", methods=["POST"])
+def cloud_status():
+    global last_cloud_connection_time
+    try:
+        response = requests.get("https://pierenergytrackingsystem.com/v1/login", timeout=5)
+        
+        if response.status_code == 200:
+            last_cloud_connection_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            return ResponseHandler.success(
+                message="Cloud connection successful",
+                data={
+                    "cloud_connected": True,
+                    "last_connection_time": last_cloud_connection_time,
+                },
+            )
+        return ResponseHandler.error(message="Cloud connection failed", code=response.status_code)
 
+    except requests.RequestException:
+        return ResponseHandler.error(message="Cloud connection failed", code=500)
+
+# RabbitMQ Status
 @app.route("/rabbitmq-status", methods=["POST"])
 def rabbitmq_status():
     global last_connection_time

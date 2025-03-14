@@ -100,12 +100,14 @@
             {% endif %}
         </tr>
         
-          <tr>
+          <tr data-status="cloud">
             <td><span class="status-dot red"></span></td>
             <td><span class="status-dot red"></span></td>
-            <td>Bulut Connection</td>
-            <td>2024-04-03 13:55:00</td>
+            <td>Cloud Connection</td>
+            <td class="last-connection">Checking...</td> 
           </tr>
+      
+
           <tr data-status="rabbitmq">
             <td><span class="status-dot red"></span></td>
             <td><span class="status-dot red"></span></td>
@@ -277,6 +279,50 @@ document.addEventListener("DOMContentLoaded", function () {
   // RabbitMQ bağlantısını her 10 saniyede bir kontrol et
   setInterval(updateRabbitMQStatus, 10000);
 });
+
+// Cloud Status Checking  
+document.addEventListener("DOMContentLoaded", function () {
+  function updateCloudStatus() {
+    fetch("/cloud-status", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(data => {
+      const cloudStatusRow = document.querySelector("tr[data-status='cloud']");
+      const statusCells = cloudStatusRow.querySelectorAll(".status-dot");
+      const lastConnectionCell = cloudStatusRow.querySelector(".last-connection");
+
+      if (data.status === "success" && data.data.cloud_connected) {
+        statusCells.forEach(cell => {
+          cell.classList.remove("red");
+          cell.classList.add("green");
+        });
+      } else {
+        statusCells.forEach(cell => {
+          cell.classList.remove("green");
+          cell.classList.add("red");
+        });
+      }
+
+      // Son bağlantı tarihini güncelle
+      lastConnectionCell.textContent = data.data.last_connection_time
+        ? data.data.last_connection_time
+        : "No connection yet";
+    })
+    .catch(error => {
+      console.error("Error fetching Cloud status:", error);
+    });
+  }
+
+  // Sayfa yüklendiğinde kontrol et
+  updateCloudStatus();
+
+  // Bulut bağlantısını her 10 saniyede bir kontrol et
+  setInterval(updateCloudStatus, 10000);
+});
+
 
 </script>
 
