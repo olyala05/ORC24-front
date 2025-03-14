@@ -78,19 +78,6 @@ setTimeout(function () {
     }
 }, 5000);
 
-// Tarayıcı önerisini engeller
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll("input").forEach(input => {
-        input.setAttribute("readonly", "readonly");
-        input.setAttribute("autocomplete", "off"); 
-        input.setAttribute("autocorrect", "off");
-        input.setAttribute("spellcheck", "false");
-
-        setTimeout(() => {
-            input.removeAttribute("readonly");
-        }, 100);
-    });
-});
 
 // Simple Keyboard
 document.addEventListener("DOMContentLoaded", function () {
@@ -129,8 +116,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 "{shift} {space} {enter}"
             ]
         },
+        display: {
+            '{enter}': '↵',  
+            '{bksp}': '⌫',
+            '{shift}': '⇧',
+            '{space}': 'Space'
+        },
         theme: "hg-theme-default myTheme",
     });
+    
 
     let activeInput = null;
 
@@ -149,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
             activeInput.value += " ";
         } else if (button === "{enter}") {
             if (loginButton) {
-                loginButton.click(); // Sanal klavyede Enter basıldığında butonu tıklat
+                loginButton.click(); 
             }
         } else if (button === "{shift}") {
             Keyboard.setOptions({
@@ -164,14 +158,17 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll("input").forEach(input => {
         input.addEventListener("focus", event => {
             activeInput = event.target;
-            Keyboard.setOptions({ input: activeInput.value });
-
+    
+            // Mevcut içeriği sanal klavyeye aktarıyoruz
+            Keyboard.setInput(activeInput.value);
+    
             keyboardContainer.style.display = "block";
             setTimeout(() => {
                 keyboardContainer.style.bottom = "0";
             }, 10);
         });
     });
+    
 
     // Input dışında bir yere tıklanınca klavyeyi kapat
     document.addEventListener("click", function (event) {
