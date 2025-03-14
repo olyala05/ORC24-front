@@ -435,7 +435,6 @@ def disconnect_wifi():
             message="Unexpected error occurred", code=500, details=str(e)
         )
 
-
 @app.route("/rabbitmq-status", methods=["POST"])
 def rabbitmq_status():
     selected_ip = session.get("selected_device_ip")
@@ -446,10 +445,9 @@ def rabbitmq_status():
             code=400,
             details="Selected device IP is required",
         )
-
     try:
         url = f"http://{selected_ip}:8085/check_rabbitmq"
-        response = requests.get(url, timeout=5)  # 5 saniyelik timeout
+        response = requests.get(url, timeout=5)  
 
         response.raise_for_status()
         rabbitmq_status = response.json()
@@ -458,12 +456,10 @@ def rabbitmq_status():
             message="RabbitMQ status retrieved successfully",
             data={"rabbitmq_connected": rabbitmq_status["data"]["rabbitmq_connected"]},
         )
-
     except requests.RequestException as e:
         return ResponseHandler.error(
             message="Failed to fetch RabbitMQ status", code=500, details=str(e)
         )
-
 
 @app.route("/vpn-status", methods=["POST"])
 def vpn_status():
@@ -748,10 +744,7 @@ def equipment_setting():
     return render_template(
         "settings/equipment_set.html", page_title="Equipment Settings"
     )
-
-
 # !! Settings End
-
 
 # !! Test Start
 @app.route("/send_command", methods=["POST"])
@@ -783,22 +776,17 @@ def send_command():
         return ResponseHandler.error(
             message="Failed to send command to ORC24", code=500, details=str(e)
         )
-
-
 # !! Test End
-
 
 # !! Data Start
 @app.route("/data", endpoint="data")
 def data():
     return render_template("datas/data.html", page_title="Datas")
 
-
 # Live Data
 @app.route("/live-data", endpoint="live-data")
 def live_data():
     return render_template("datas/live_data.html", page_title="Live Data")
-
 
 # Live Data
 @app.route("/fetch_grouped_live_data", methods=["POST"])
@@ -821,7 +809,6 @@ def fetch_grouped_live_data():
 
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
-
 
 @app.route("/fetch_live_data_paginated", methods=["POST"])
 def fetch_live_data_paginated():
@@ -849,11 +836,9 @@ def fetch_live_data_paginated():
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
 
-
 @app.route("/live-data-detail", endpoint="live-data-detail")
 def live_data_detail():
     return render_template("datas/live_data_detail.html", page_title="Live Data Detail")
-
 
 # Hourly Data
 @app.route("/hourly-data", endpoint="hourly-data")
@@ -979,8 +964,6 @@ def daily_data_detail():
     return render_template(
         "datas/daily_data_detail.html", page_title="Daily Data Detail"
     )
-
-
 # !! Data End
 
 
@@ -988,7 +971,6 @@ def daily_data_detail():
 @app.route("/alarm", endpoint="alarm")
 def alarm():
     return render_template("alarms/alarm.html", page_title="Alarm")
-
 
 @app.route("/network-alarm-detail", endpoint="network-alarm-detail")
 def network_alarm_detail():
@@ -1020,7 +1002,6 @@ def get_slave_data():
             code=400,
             details="Selected device IP is required",
         )
-
     try:
         url = f"http://{selected_ip}:8085/scan_all"
         response = requests.get(url, timeout=500)  
@@ -1064,7 +1045,6 @@ def get_slave_data():
             message="Unexpected error occurred", code=500, details=str(e)
         )
 
-
 class ResponseHandler:
     @staticmethod
     def success(message=None, data=None):
@@ -1079,7 +1059,6 @@ class ResponseHandler:
             "error": {"code": code, "details": details},
         }
         return jsonify(response), code
-
 
 if __name__ == "__main__":
     app.run(debug=True, port=5004)

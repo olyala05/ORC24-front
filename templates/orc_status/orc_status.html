@@ -106,7 +106,7 @@
             <td>Bulut Connection</td>
             <td>2024-04-03 13:55:00</td>
           </tr>
-          <tr>
+          <tr data-status="rabbitmq">
             <td><span class="status-dot red"></span></td>
             <td><span class="status-dot red"></span></td>
             <td>Rabbit Mq</td>
@@ -228,6 +228,42 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// RabbitMQ Status Checking
+document.addEventListener("DOMContentLoaded", function () {
+  function updateRabbitMQStatus() {
+    fetch("/rabbitmq-status", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(data => {
+      const rabbitmqStatusRow = document.querySelector("tr[data-status='rabbitmq']");
+      const statusCells = rabbitmqStatusRow.querySelectorAll(".status-dot");
+
+      if (data.status === "success" && data.data.rabbitmq_connected) {
+        statusCells.forEach(cell => {
+          cell.classList.remove("red");
+          cell.classList.add("green");
+        });
+      } else {
+        statusCells.forEach(cell => {
+          cell.classList.remove("green");
+          cell.classList.add("red");
+        });
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching RabbitMQ status:", error);
+    });
+  }
+
+  // Sayfa yüklendiğinde RabbitMQ bağlantısını kontrol et
+  updateRabbitMQStatus();
+
+  // RabbitMQ bağlantısını her 10 saniyede bir kontrol et
+  setInterval(updateRabbitMQStatus, 10000);
+});
 </script>
 
 {% endblock %}
