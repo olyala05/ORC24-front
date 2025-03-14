@@ -109,9 +109,11 @@
           <tr data-status="rabbitmq">
             <td><span class="status-dot red"></span></td>
             <td><span class="status-dot red"></span></td>
-            <td>Rabbit Mq</td>
-            <td>2024-04-03 13:55:11</td>
+            <td>Rabbit MQ</td>
+            <td class="last-connection">Checking...</td>
           </tr>
+        
+
           <tr>
             {% if network.ethernet_connected %}
                 <td><span class="status-dot green"></span></td>
@@ -243,6 +245,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(data => {
       const rabbitmqStatusRow = document.querySelector("tr[data-status='rabbitmq']");
       const statusCells = rabbitmqStatusRow.querySelectorAll(".status-dot");
+      const lastConnectionCell = rabbitmqStatusRow.querySelector(".last-connection");
 
       if (data.status === "success" && data.data.rabbitmq_connected) {
         statusCells.forEach(cell => {
@@ -254,6 +257,13 @@ document.addEventListener("DOMContentLoaded", function () {
           cell.classList.remove("green");
           cell.classList.add("red");
         });
+      }
+
+      // Last Connection Date'yi güncelle
+      if (data.data.last_connection_time) {
+        lastConnectionCell.textContent = data.data.last_connection_time;
+      } else {
+        lastConnectionCell.textContent = "No connection yet";
       }
     })
     .catch(error => {
@@ -267,6 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // RabbitMQ bağlantısını her 10 saniyede bir kontrol et
   setInterval(updateRabbitMQStatus, 10000);
 });
+
 </script>
 
 {% endblock %}

@@ -435,8 +435,11 @@ def disconnect_wifi():
             message="Unexpected error occurred", code=500, details=str(e)
         )
 
+last_connection_time = None
+
 @app.route("/rabbitmq-status", methods=["POST"])
 def rabbitmq_status():
+    global last_connection_time
     selected_ip = session.get("selected_device_ip")
 
     if not selected_ip:
@@ -448,19 +451,30 @@ def rabbitmq_status():
     try:
         url = f"http://{selected_ip}:8085/check_rabbitmq"
         response = requests.get(url, timeout=5)  
-
         response.raise_for_status()
         rabbitmq_status = response.json()
 
+        if rabbitmq_status["data"]["rabbitmq_connected"]:
+            last_connection_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
         return ResponseHandler.success(
             message="RabbitMQ status retrieved successfully",
-            data={"rabbitmq_connected": rabbitmq_status["data"]["rabbitmq_connected"]},
+            data={
+                "rabbitmq_connected": rabbitmq_status["data"]["rabbitmq_connected"],
+                "last_connection_time": last_connection_time
+            },
         )
     except requests.RequestException as e:
         return ResponseHandler.error(
-            message="Failed to fetch RabbitMQ status", code=500, details=str(e)
+            message="Failed to fetch RabbitMQ status",
+            code=500,
+            details=str(e),
+            data={
+                "rabbitmq_connected": False,
+                "last_connection_time": last_connection_time
+            }
         )
-
+        
 @app.route("/vpn-status", methods=["POST"])
 def vpn_status():
     selected_ip = session.get("selected_device_ip")

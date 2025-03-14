@@ -119,7 +119,7 @@
           updateDailyDataTable(data.data.data);
         } else if (page === 1) {
           document.getElementById("daily-data-body").innerHTML =
-            "<tr><td colspan='5' class='empty-message'>No daily data available.</td></tr>";
+            "<tr><td colspan='5' class='empty-message'>Daily Data is Empty.</td></tr>";
         }
       })
       .catch(() => {
