@@ -637,7 +637,7 @@ def modbus_test():
 
 @app.route("/disconnect_request", methods=["POST"])
 def disconnect_request():
-    selected_ip = session.get("selected_device_ip")  # Seçili cihazın IP'sini al
+    selected_ip = session.get("selected_device_ip")  
 
     if not selected_ip:
         logger.warning("Cihaz seçilmedi!")
@@ -660,13 +660,13 @@ def disconnect_request():
 
 @app.route("/equipments-with-models", methods=["POST"])
 def equipments_with_models():
-    data = request.json
-    ip_address = data.get("ip_address")
+    
+    selected_ip = session.get("selected_device_ip")
 
-    if not ip_address:
+    if not selected_ip:
         return jsonify({"error": "IP adresi belirtilmedi"}), 400
     try:
-        url = f"http://{ip_address}:8085/get_equipments_with_models"
+        url = f"http://{selected_ip}:8085/get_equipments_with_models"
         response = requests.get(url, timeout=200)
         response.raise_for_status()
         equipment_data = response.json()

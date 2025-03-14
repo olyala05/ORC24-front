@@ -207,12 +207,15 @@ document.addEventListener("DOMContentLoaded", function () {
   })
   .then(response => response.json())
   .then(data => {
-      if (data.equipment_data && data.equipment_data.communication_protocol_code) {
-          let protocolText = "Unknown";
+      console.log("Gelen JSON:", data);  // Hata ayıklama için veriyi yazdır
 
-          if (data.equipment_data.communication_protocol_code === 1) {
+      if (data.data && data.data.length > 0) { // data.data dizisi boş mu kontrol et
+          let protocolText = "Unknown";
+          let equipment = data.data[0];  // İlk elemanı al
+
+          if (equipment.communication_protocol_code === 1) {
               protocolText = "SERIAL";
-          } else if (data.equipment_data.communication_protocol_code === 2) {
+          } else if (equipment.communication_protocol_code === 2) {
               protocolText = "TCP";
           }
 
