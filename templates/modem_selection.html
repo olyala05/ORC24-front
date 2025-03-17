@@ -216,38 +216,12 @@ block content %}
         </div>`;
     document.body.appendChild(loadingOverlay);
 
-    fetch("/get_selected_device")
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data.ip_address) {
-          Swal.fire({
-            icon: "warning",
-            title: "Uyarı",
-            text: "Lütfen önce bir cihaz seçiniz!",
-            confirmButtonText: "Tamam",
-          });
-          return;
-        }
+    window.location.href = `/orc-status?ip_address=${selectedDeviceIP}`;
 
-        setTimeout(() => {
-          window.location.href = `/orc-status?ip_address=${data.ip_address}`;
-        }, 1000);
-      })
-      .catch((error) => {
-        console.error("Cihaz seçme hatası:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Hata!",
-          text: "Cihaz bilgisi alınamadı. Lütfen tekrar deneyin.",
-          confirmButtonText: "Tamam",
-        });
-      })
-      .finally(() => {
-        setTimeout(() => {
-          let loader = document.getElementById("loading-overlay");
-          if (loader) loader.remove();
-        }, 1500);
-      });
+    window.addEventListener("pageshow", function () {
+      let loader = document.getElementById("loading-overlay");
+      if (loader) loader.remove();
+    });
   }
 
   // Equipment With Model
