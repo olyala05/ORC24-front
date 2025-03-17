@@ -191,6 +191,7 @@ block content %}
       });
   }
 
+  // ORC Status
   function goToORCStatus() {
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null;
@@ -205,7 +206,6 @@ block content %}
       return;
     }
 
-    // **Loading ekranını ekleyelim**
     let loadingOverlay = document.createElement("div");
     loadingOverlay.id = "loading-overlay";
     loadingOverlay.className = "loading-overlay";
@@ -229,8 +229,9 @@ block content %}
           return;
         }
 
-        // **Yönlendirme**
-        window.location.href = `/orc-status?ip_address=${data.ip_address}`;
+        setTimeout(() => {
+          window.location.href = `/orc-status?ip_address=${data.ip_address}`;
+        }, 1000);
       })
       .catch((error) => {
         console.error("Cihaz seçme hatası:", error);
@@ -242,9 +243,10 @@ block content %}
         });
       })
       .finally(() => {
-        // **Loading ekranını kaldır**
-        let loader = document.getElementById("loading-overlay");
-        if (loader) loader.remove();
+        setTimeout(() => {
+          let loader = document.getElementById("loading-overlay");
+          if (loader) loader.remove();
+        }, 1500);
       });
   }
 
@@ -292,11 +294,14 @@ block content %}
           });
           return;
         }
-        // **Modbus verilerini sakla**
         sessionStorage.setItem("equipment_data", JSON.stringify(data.data));
 
-        // **Equipment sayfasına yönlendir**
         window.location.href = "/equipment";
+
+        window.addEventListener("pageshow", function () {
+          let loader = document.getElementById("loading-overlay");
+          if (loader) loader.remove();
+        });
       })
       .catch((error) => {
         console.error("Ekipman verisi alırken hata oluştu:", error);
@@ -306,9 +311,7 @@ block content %}
           text: "Modbus verisi alınamadı. Lütfen tekrar deneyin.",
           confirmButtonText: "Tamam",
         });
-      })
-      .finally(() => {
-        // **Loading ekranını kaldır**
+
         let loader = document.getElementById("loading-overlay");
         if (loader) loader.remove();
       });
@@ -576,6 +579,16 @@ block content %}
 
   div:where(.swal2-container) div:where(.swal2-html-container) {
     padding: 0.25em 1.4em 0.2em;
+  }
+
+  div:where(.swal2-icon).swal2-error [class^="swal2-x-mark-line"] {
+    display: block;
+    position: absolute;
+    top: 2em;
+    width: 1.9375em;
+    height: 0.3125em;
+    border-radius: 0.125em;
+    background-color: #f27474;
   }
 </style>
 
