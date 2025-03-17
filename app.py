@@ -1036,8 +1036,34 @@ def electric_alarm_detail():
     return render_template(
         "alarms/electric_alarm_details.html", page_title="Electric Alarm Details"
     )
-    
-# !! Alarm End
+
+@app.route("/get_electric_alarm_data")
+def get_electric_alarm_data():
+    selected_ip = session.get("selected_device_ip")
+
+    logging.info(f"Electric Alarm Detayları İstendi - Seçili IP: {selected_ip}")
+
+    if not selected_ip:
+        logging.warning("Cihazın seri numarası bulunamadı!")
+        return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
+    try:
+        url_alarm = f"http://{selected_ip}:8085/get_electric_alarms"
+        logging.info(f"Alarm verileri için istek gönderiliyor: {url_alarm}")
+
+        response_alarm = requests.get(url_alarm, params={"serial_number": selected_ip}, timeout=5)
+        response_alarm.raise_for_status()
+
+        alarms = response_alarm.json().get("data", [])
+
+        logging.info(f"{len(alarms)} Alarm Verisi Alındı")
+
+        return jsonify({"status": "success", "data": alarms})
+
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Alarm verileri alınamadı: {e}")
+        return jsonify({"status": "error", "message": f"Alarm verileri alınamadı: {e}"}), 500
+
+
 @app.route("/logout", methods=["POST"])
 def logout():
     session.clear()
