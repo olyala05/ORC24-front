@@ -1,48 +1,70 @@
-{% extends "layout.html" %} {% block title %} Alarm {% endblock %} {% block
-    extra_css %}
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/alarm.css') }}"
-    />
-    {% endblock %} {% block content %}
-    
-    <!-- Header -->
-    {% include 'partials/header.html' %}
-    
-    <div class="alarm-network-container">
-      <div class="alarm-network-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Modem - Mac</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="alarm-network-error"><a href="#">Cannot Retrieve CPU Value</a></td>
-              <td>Network</td>
-              <td class="alarm-network-mac">00:00:5e:00:53:af</td>
-              <td>2023-04-05 11:20</td>
-            </tr>
-            <tr>
-              <td class="alarm-network-error"><a href="#">Cannot Retrieve RAM Value</a></td>
-              <td>Network</td>
-              <td class="alarm-network-mac">00:00:5e:00:53:af</td>
-              <td>2023-04-05 11:20</td>
-            </tr>
-            <tr>
-              <td class="alarm-network-error"><a href="#">Cannot Retrieve RAM Value</a></td>
-              <td>Network</td>
-              <td class="alarm-network-mac">00:00:5e:00:53:af</td>
-              <td>2023-04-05 11:20</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    
-    {% endblock %}
-    
+{% extends "layout.html" %} 
+
+{% block title %} Alarm {% endblock %} 
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/alarm.css') }}"/>
+{% endblock %}
+
+{% block content %}
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<div class="alarm-network-container">
+  <div class="alarm-network-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Modem Name</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+        </tr>
+      </thead>
+      <tbody id="networkAlarmsTable">
+        <tr><td colspan="4" style="text-align: center;">Yükleniyor...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/get_network_alarm_data")
+      .then(response => response.json())
+      .then(data => {
+        let tableBody = document.getElementById("networkAlarmsTable");
+        tableBody.innerHTML = "";
+
+        if (data.status === "success") {
+          data.data.forEach(alarm => {
+            let row = `<tr>
+              <td class="highlight">${alarm.alarm_title}</td>
+              <td class="highlight">${alarm.serial_number}</td>
+              <td>${formatDate(alarm.start_at)}</td>
+              <td>${formatDate(alarm.end_at)}</td>
+            </tr>`;
+            tableBody.innerHTML += row;
+          });
+        } else {
+          tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: red;">Veri çekme hatası: ${data.message}</td></tr>`;
+        }
+      })
+      .catch(error => {
+        document.getElementById("networkAlarmsTable").innerHTML = `<tr><td colspan="4" style="text-align: center; color: red;">Sunucuya bağlanılamadı!</td></tr>`;
+      });
+  });
+
+  function formatDate(dateString) {
+    return dateString ? new Date(dateString).toLocaleString("tr-TR") : "N/A";
+  }
+</script>
+
+
+<style>
+  .highlight {
+    color: #EF742A;
+  }
+</style>
+
+{% endblock %}

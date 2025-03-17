@@ -678,8 +678,7 @@ def disconnect_request():
         logger.warning("Cihaz seçilmedi!")
         return (
             jsonify({"error": "Cihaz seçilmedi. Lütfen önce bir cihaz bağlayın."}),
-            400,
-        )
+            400,)
     try:
         logger.info(f"Wi-Fi bağlantısı kesiliyor: {selected_ip}")
         url = f"http://{selected_ip}:8085/disconnect_wifi"
@@ -729,7 +728,6 @@ def equipment_setting():
         page_title="Equipment Setting",
     )
 
-
 # Diger Sayfalar
 @app.route("/modem-selection", endpoint="modem_selection")
 def modem_selection():
@@ -772,7 +770,6 @@ def orc_setting():
 @app.route("/osos-settings", endpoint="osos_settings")
 def osos_setting():
     return render_template("settings/osos_set.html", pgae_title="Osos Settings")
-
 
 @app.route("/equipment-settings", endpoint="equipment_settings")
 def equipment_setting():
@@ -880,7 +877,6 @@ def live_data_detail():
 def hourly_data():
     return render_template("datas/hourly_data.html", page_title="Hourly Data")
 
-
 @app.route("/fetch_grouped_hourly_data", methods=["POST"])
 def fetch_grouped_hourly_data():
     selected_ip = session.get("selected_device_ip")
@@ -901,7 +897,6 @@ def fetch_grouped_hourly_data():
 
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
-
 
 @app.route("/fetch_hourly_data_paginated", methods=["POST"])
 def fetch_hourly_data_paginated():
@@ -931,19 +926,16 @@ def fetch_hourly_data_paginated():
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
 
-
 @app.route("/hourly-data-detail", endpoint="hourly-data-detail")
 def hourly_data_detail():
     return render_template(
         "datas/hourly_data_detail.html", page_title="Hourly Data Detail"
     )
 
-
 # Daily Data
 @app.route("/daily-data", endpoint="daily-data")
 def daily_data():
     return render_template("datas/daily_data.html", page_title="Daily Data")
-
 
 @app.route("/fetch_grouped_daily_data", methods=["POST"])
 def fetch_grouped_daily_data():
@@ -965,7 +957,6 @@ def fetch_grouped_daily_data():
 
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
-
 
 @app.route("/fetch_daily_data_paginated", methods=["POST"])
 def fetch_daily_data_paginated():
@@ -1001,20 +992,46 @@ def daily_data_detail():
     )
 # !! Data End
 
-
 # !! Alarm Start
 @app.route("/alarm", endpoint="alarm")
 def alarm():
     return render_template("alarms/alarm.html", page_title="Alarm")
 
-@app.route("/network-alarm-detail", endpoint="network-alarm-detail")
+@app.route("/network-alarm-detail", endpoint="network_alarm_detail")
 def network_alarm_detail():
     return render_template(
         "alarms/network-alarm_details.html", page_title="Network Alarm Details"
     )
 
+@app.route("/get_network_alarm_data")
+def get_network_alarm_data():
+    selected_ip = session.get("selected_device_ip")
 
-@app.route("/electric-alarm-detail", endpoint="electric-alarm-detail")
+    logging.info(f"Network Alarm Detayları İstendi - Seçili IP: {selected_ip}")
+
+    if not selected_ip:
+        logging.warning("Cihazın seri numarası bulunamadı!")
+        return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
+
+    try:
+        url_alarm = f"http://{selected_ip}:8085/get_network_alarms"
+        logging.info(f"📡 Alarm verileri için istek gönderiliyor: {url_alarm}")
+
+        response_alarm = requests.get(url_alarm, params={"serial_number": selected_ip}, timeout=5)
+        response_alarm.raise_for_status()
+
+        alarms = response_alarm.json().get("data", [])
+
+        logging.info(f"{len(alarms)} Alarm Verisi Alındı")
+
+        return jsonify({"status": "success", "data": alarms})
+
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Alarm verileri alınamadı: {e}")
+        return jsonify({"status": "error", "message": f"Alarm verileri alınamadı: {e}"}), 500
+
+
+@app.route("/electric-alarm-detail", endpoint="electric_alarm_detail")
 def electric_alarm_detail():
     return render_template(
         "alarms/electric_alarm_details.html", page_title="Electric Alarm Details"
@@ -1079,6 +1096,7 @@ def get_slave_data():
         return ResponseHandler.error(
             message="Unexpected error occurred", code=500, details=str(e)
         )
+
 
 class ResponseHandler:
     @staticmethod
