@@ -1,132 +1,135 @@
-{% extends "layout.html" %} {% block title %} ORC Status - Error Log {% endblock
-%} {% block extra_css %}
+{% extends "layout.html" %}
+
+{% block title %} ORC Status - Error Log {% endblock %}
+
+{% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
-{% endblock %} {% block content %}
+{% endblock %}
+
+{% block content %}
 
 <!-- Header -->
 {% include 'partials/header.html' %}
 
 <div class="log-container">
-  <div class="log-table">
-    <div class="log-table-content">
-      <!-- Scroll buraya eklendi -->
-      <table>
-        <thead>
-          <tr>
-            <th>Archive</th>
-            <th>End</th>
-            <th>Log Description</th>
-            <th>Timestamp</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Equipment Comparison Successful.</td>
-            <td>2024-04-03 13:54:31</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modem Task Cycle Completed.</td>
-            <td>2024-04-03 13:54:31</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot red"></span></td>
-            <td>Register Read.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot red"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-          <tr>
-            <td><span class="status-dot green"></span></td>
-            <td><span class="status-dot green"></span></td>
-            <td>Modbus Connection is Being Established.</td>
-            <td>2024-04-03 13:55:14</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="log-table">
+        <div class="log-table-content">
+            <!-- Loading message -->
+            <div id="loading-message" style="display: none;">Loading logs...</div>
+
+            <!-- Scrollable Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Archive</th>
+                        <th>End</th>
+                        <th>Log Description</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                        <tr>
+                            <!-- Status Column (Archive) -->
+                            <td><span class="status-dot {% if log['visibility'] == 'active' %}green{% else %}red{% endif %}"></span></td>
+
+                            <!-- End Status Column -->
+                            <td><span class="status-dot {% if log['end_status'] == 'complete' %}green{% else %}red{% endif %}"></span></td>
+
+                            <!-- Log Description Column -->
+                            <td>{{ log['tag'] }} - {{ log['data'] }}</td>
+
+                            <!-- Timestamp Column -->
+                            <td>{{ log['created_at'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- End of log-table-content -->
     </div>
-    <!-- log-table-content BİTİŞ -->
-  </div>
 </div>
+
+<script>
+  // Fetch logs function
+  function fetchLogs(year, month, day, hour = null) {
+    const loadingMessage = document.getElementById("loading-message");
+    if (loadingMessage) {
+        loadingMessage.style.display = "block"; // Show loading message
+    }
+
+    // Prepare the data object to send as the body of the POST request
+    const data = {
+        year: year,
+        month: month,
+        day: day,
+        hour: hour
+    };
+
+    fetch('/get_logs', {
+        method: 'POST',  
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data) 
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            updateLogTable(data.data);
+        } else {
+            alert("Failed to load logs.");
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching logs:", error);
+        alert("An error occurred while fetching the logs.");
+    })
+    .finally(() => {
+        if (loadingMessage) {
+            loadingMessage.style.display = "none"; 
+        }
+    });
+}
+
+  // Function to update the log table with the fetched data
+  function updateLogTable(logs) {
+      const logTableBody = document.querySelector(".log-table-content tbody");
+      logTableBody.innerHTML = "";  // Clear existing rows
+
+      logs.forEach(log => {
+          const row = document.createElement("tr");
+
+          // Archive column (Status)
+          const archiveCell = document.createElement("td");
+          archiveCell.innerHTML = `<span class="status-dot ${log.visibility === 'active' ? 'green' : 'red'}"></span>`;
+          row.appendChild(archiveCell);
+
+          // End column (Status)
+          const endCell = document.createElement("td");
+          endCell.innerHTML = `<span class="status-dot ${log.end_status === 'complete' ? 'green' : 'red'}"></span>`;
+          row.appendChild(endCell);
+
+          // Log Description column
+          const descriptionCell = document.createElement("td");
+          descriptionCell.innerText = `${log.tag} - ${log.data}`;
+          row.appendChild(descriptionCell);
+
+          // Timestamp column
+          const timestampCell = document.createElement("td");
+          timestampCell.innerText = log.created_at;
+          row.appendChild(timestampCell);
+
+          // Append the row to the table
+          logTableBody.appendChild(row);
+      });
+  }
+
+  // Initialize page with the current date logs
+  document.addEventListener("DOMContentLoaded", () => {
+      const currentDate = new Date();
+      fetchLogs(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
+  });
+</script>
 
 {% endblock %}

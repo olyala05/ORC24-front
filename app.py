@@ -733,12 +733,6 @@ def equipment_setting():
 def modem_selection():
     return render_template("modem_selection.html", page_title="Modem Selection")
 
-
-@app.route("/log", endpoint="log")
-def log():
-    return render_template("logs/log.html", page_title="Log")
-
-
 @app.route("/switch", endpoint="switch")
 def switch():
     return render_template("test/switch.html", page_title="Switch")
@@ -1123,7 +1117,54 @@ def get_slave_data():
             message="Unexpected error occurred", code=500, details=str(e)
         )
 
+# Logs
+@app.route("/log", endpoint="log")
+def log():
+    return render_template("logs/log.html", page_title="Log")
 
+@app.route("/get_logs", methods=["POST"])
+def get_logs():
+    selected_ip = session.get("selected_device_ip")
+    if not selected_ip:
+        logging.error("Selected device IP not found.")
+        return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
+
+    try:
+        data = request.get_json()  # Use get_json() to parse the JSON body
+        if not data:
+            logging.error("No data received in the request.")
+            return jsonify({"error": "No data received"}), 400
+
+        # Get the parameters from the request body
+        year = data.get("year")
+        month = data.get("month")
+        day = data.get("day")
+        hour = data.get("hour", None)  # hour can be optional, so default it to None if not provided
+        
+        logging.info(f"Fetching logs with params: Year: {year}, Month: {month}, Day: {day}, Hour: {hour}")
+
+        # Proceed with fetching logs based on the given parameters
+        url_alarm = f"http://{selected_ip}:8085/get_all_logs"
+        params = {
+            "year": year,
+            "month": month,
+            "day": day,
+            "hour": hour
+        }
+
+        # Fetch logs from the second Flask app (this part remains unchanged)
+        response_alarm = requests.get(url_alarm, params=params, timeout=5)
+        response_alarm.raise_for_status()
+
+        logs = response_alarm.json().get("data", [])
+        logging.info(f"Fetched {len(logs)} logs successfully.")
+        return jsonify({"status": "success", "data": logs})
+
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Error fetching logs: {e}")
+        return jsonify({"status": "error", "message": f"LOGS verileri alınamadı: {e}"}), 500
+    
+    
 class ResponseHandler:
     @staticmethod
     def success(message=None, data=None):
