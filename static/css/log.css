@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   background-color: #1c2747;
   color: #fff;
@@ -8,10 +9,13 @@ body {
 }
 
 .log-container {
-  margin-top: 79px;
+  /* margin-top: 70px; */
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-content: flex-start;
+  justify-content: flex-start;
+  height: 61vh;
 }
 
 .log-table {
@@ -63,4 +67,15 @@ body {
 }
 .log-table table .status-dot.red {
   background-color: #ff0000;
+}
+
+#no-logs-message {
+  color: red;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  top: 0;
+  margin-bottom: 20px; /* Mesaj ile log tablosu arasında biraz boşluk */
+  display: none; /* Başlangıçta gizli */
 }/*# sourceMappingURL=log.css.map */
