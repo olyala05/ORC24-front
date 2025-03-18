@@ -1,17 +1,27 @@
 <div class="header">
   <div class="header-left">
     <button class="header-button" onclick="goBack()">
-      Back <img src="{{ url_for('static', filename='images/svg/20.svg') }}" alt="Logout" width="20" height="20"  style="padding: 7px 7px; background: #0B1734; border-radius: 5px;">
+      Back
+      <img
+        src="{{ url_for('static', filename='images/svg/20.svg') }}"
+        alt="Logout"
+        width="20"
+        height="20"
+        style="padding: 7px 7px; background: #0b1734; border-radius: 5px"
+      />
     </button>
 
     <!-- Alarm Butonu -->
     <button class="alarm-button" onclick="goToAlarm()" title="Alarm">
-      <img
-        src="{{ url_for('static', filename='images/svg/31.svg') }}"
-        alt="Alarm"
-        width="35"
-        height="35"
-      />
+      <div class="alarm-icon-container">
+        <img
+          src="{{ url_for('static', filename='images/svg/31.svg') }}"
+          alt="Alarm"
+          width="35"
+          height="35"
+        />
+        <span id="alarm-count" class="alarm-badge">0</span>
+      </div>
     </button>
   </div>
 
@@ -36,7 +46,6 @@
   function goBack() {
     history.go(-1);
   }
-  
 
   function updateDateTime() {
     const now = new Date();
@@ -55,4 +64,130 @@
   // Sayfa yüklendiğinde ve her saniye güncelle
   updateDateTime();
   setInterval(updateDateTime, 1000);
+
+  // Aalrm Sayfasına Yönlendirir
+  function goToAlarm() {
+    // Önce sessionStorage içinden kayıtlı IP adresini al
+    let selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+
+    // Eğer IP adresi yoksa yani cihaz seçilmemişse uyarı göster
+    if (!selectedDeviceIP) {
+      Swal.fire({
+        icon: "warning",
+        title: "Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return;
+    }
+
+    // **Loading ekranını ekleyelim**
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
+            <div class="loading-box">
+              <p> Alarm sayfasına yönlendiriliyor...</p>
+              <div class="loader"></div>
+            </div>`;
+    document.body.appendChild(loadingOverlay);
+
+    // **Seçili cihaz varsa alarm sayfasına yönlendir**
+    window.location.href = `/alarm?ip_address=${selectedDeviceIP}`;
+
+    // Yönlendirme tamamlandığında loading ekranını kaldır
+    window.addEventListener("pageshow", function () {
+      let loader = document.getElementById("loading-overlay");
+      if (loader) loader.remove();
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    updateAlarmCount(); // Sayfa yüklendiğinde çalıştır
+
+    setInterval(updateAlarmCount, 10000); 
+  });
+
+  function updateAlarmCount() {
+    let totalAlarms = 0;
+
+    fetch("/get_network_alarm_data")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          totalAlarms += data.data.length;
+        }
+
+        return fetch("/get_electric_alarm_data"); 
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          totalAlarms += data.data.length;
+        }
+
+        let alarmBadge = document.getElementById("alarm-count");
+        if (totalAlarms > 0) {
+          alarmBadge.textContent = totalAlarms;
+          alarmBadge.style.display = "inline-block";
+        } else {
+          alarmBadge.textContent = "0";
+          alarmBadge.style.display = "none"; 
+        }
+      })
+      .catch((error) => console.error("Alarm verisi alınamadı:", error));
+  }
 </script>
+
+<style>
+  div:where(.swal2-container) div:where(.swal2-popup) {
+    width: 28em;
+  }
+
+  div:where(.swal2-container) h2:where(.swal2-title) {
+    padding: 0.1em 0;
+  }
+
+  div:where(.swal2-icon) {
+    width: 4em;
+    height: 4em;
+    margin: 0.8em auto 0.6em;
+  }
+  div:where(.swal2-container) div:where(.swal2-actions) {
+    margin: 0.25em auto 0;
+  }
+
+  div:where(.swal2-container) div:where(.swal2-html-container) {
+    padding: 0.25em 1.4em 0.2em;
+  }
+
+  div:where(.swal2-icon).swal2-error [class^="swal2-x-mark-line"] {
+    display: block;
+    position: absolute;
+    top: 2em;
+    width: 1.9375em;
+    height: 0.3125em;
+    border-radius: 0.125em;
+    background-color: #f27474;
+  }
+
+  .alarm-icon-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .alarm-badge {
+    position: absolute;
+    top: 0px;
+    right: -2px;
+    background-color: red;
+    color: white;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 2px 2px;
+    border-radius: 50%;
+    display: none;
+    min-width: 11px;
+    text-align: center;
+  }
+</style>

@@ -17,12 +17,15 @@ block content %}
 
     <!-- Alarm Butonu -->
     <button class="alarm-button" onclick="goToAlarm()" title="Alarm">
-      <img
-        src="{{ url_for('static', filename='images/svg/31.svg') }}"
-        alt="Alarm"
-        width="35"
-        height="35"
-      />
+      <div class="alarm-icon-container">
+        <img
+          src="{{ url_for('static', filename='images/svg/31.svg') }}"
+          alt="Alarm"
+          width="35"
+          height="35"
+        />
+        <span id="alarm-count" class="alarm-badge">0</span>
+      </div>
     </button>
   </div>
 
@@ -531,6 +534,80 @@ block content %}
         if (loader) loader.remove();
       });
   }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    updateAlarmCount(); // Sayfa yüklendiğinde çalıştır
+
+    setInterval(updateAlarmCount, 10000); // Her 10 saniyede bir güncelle
+  });
+
+  function updateAlarmCount() {
+    let totalAlarms = 0;
+
+    // 📌 Network Alarms'ı al
+    fetch("/get_network_alarm_data")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          totalAlarms += data.data.length;
+        }
+
+        return fetch("/get_electric_alarm_data"); // 📌 Electric Alarms'ı çek
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          totalAlarms += data.data.length;
+        }
+
+        // 📌 Alarm sayısını güncelle
+        let alarmBadge = document.getElementById("alarm-count");
+        if (totalAlarms > 0) {
+          alarmBadge.textContent = totalAlarms;
+          alarmBadge.style.display = "inline-block"; // Göster
+        } else {
+          alarmBadge.textContent = "0";
+          alarmBadge.style.display = "none"; // Eğer 0 ise gizle
+        }
+      })
+      .catch((error) => console.error("Alarm verisi alınamadı:", error));
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    updateAlarmCount(); // Sayfa yüklendiğinde çalıştır
+
+    setInterval(updateAlarmCount, 10000); // Her 10 saniyede bir güncelle
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  updateAlarmCount(); // Sayfa yüklendiğinde çalıştır
+  setInterval(updateAlarmCount, 10000); // Her 10 saniyede bir güncelle
+});
+
+function updateAlarmCount() {
+  let selectedDeviceIP = sessionStorage.getItem("selected_device_ip"); // Seçili cihazı al
+  if (!selectedDeviceIP) {
+      console.warn("Cihaz seçilmedi, alarm verileri alınmayacak.");
+      return;
+  }
+
+  let totalAlarms = 0;
+
+  // 📌 Seçilen modemin alarm verisini al
+  fetch(`/get_device_alarm_data?ip=${selectedDeviceIP}`)
+      .then(response => response.json())
+      .then(data => {
+          if (data.status === "success") {
+              totalAlarms = data.data.length;
+          }
+
+          let alarmBadge = document.getElementById("alarm-count");
+          alarmBadge.textContent = totalAlarms;
+          alarmBadge.style.display = "inline-block"; // 0 olsa bile göster
+      })
+      .catch(error => console.error("Seçilen cihaz için alarm verisi alınamadı:", error));
+}
+
 </script>
 
 <style>
@@ -564,6 +641,27 @@ block content %}
     border-radius: 0.125em;
     background-color: #f27474;
   }
+
+  .alarm-icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.alarm-badge {
+    position: absolute;
+    top: 0px;
+    right: -2px;
+    background-color: red;
+    color: white;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 50%;
+    display: none;
+    min-width: 12px;
+    text-align: center;
+}
+
 </style>
 
 {% endblock %}

@@ -994,7 +994,7 @@ def alarm():
 @app.route("/network-alarm-detail", endpoint="network_alarm_detail")
 def network_alarm_detail():
     return render_template(
-        "alarms/network-alarm_details.html", page_title="Network Alarm Details"
+        "alarms/network_alarm_details.html", page_title="Network Alarm Details"
     )
 
 @app.route("/get_network_alarm_data")
