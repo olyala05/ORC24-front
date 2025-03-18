@@ -85,20 +85,19 @@ body {
   }
 }
 
-
-  /* Log türüne göre renk kodlaması */
-  .status-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .status-info {
-    background-color: green;
-  }
-  .status-warning {
-    background-color: orange;
-  }
-  .status-exception {
-    background-color: red;
-  }
+/* Log türüne göre renk kodlaması */
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.status-info {
+  background-color: green;
+}
+.status-warning {
+  background-color: orange;
+}
+.status-exception {
+  background-color: red;
+}
