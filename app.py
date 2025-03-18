@@ -210,7 +210,7 @@ def orc_status():
 
     try:
         # Modem bilgilerini al
-        url_modem = f"http://{selected_ip}:8086/get_modems"
+        url_modem = f"http://{selected_ip}:8085/get_modems"
         response_modem = requests.get(url_modem, timeout=5)
         response_modem.raise_for_status()
         modems = response_modem.json().get("data", [])
@@ -229,7 +229,7 @@ def orc_status():
                     selected_modem["created_at"] = "Tarih formatı hatalı"
 
         # Ağ bilgilerini al
-        url_network = f"http://{selected_ip}:8086/check_network"
+        url_network = f"http://{selected_ip}:8085/check_network"
         try:
             response_network = requests.get(url_network, timeout=5)
             response_network.raise_for_status()
@@ -282,7 +282,7 @@ def get_modem_info():
 
     try:
         # Fetch modem data from the device
-        url_modem = f"http://{selected_ip}:8086/get_modems"
+        url_modem = f"http://{selected_ip}:8085/get_modems"
         response = requests.get(url_modem, timeout=5)
         response.raise_for_status()
         modems = response.json().get("data", [])
@@ -326,7 +326,7 @@ def wi_fi_list():
 
     try:
         print(f"📡 Wi-Fi listesi için cihazdan veri alınıyor: {selected_ip}")
-        url = f"http://{selected_ip}:8086/check_network"
+        url = f"http://{selected_ip}:8085/check_network"
         response = requests.get(url)
         print(f"Cihazdan cevap alındı: {response.status_code}")
 
@@ -376,7 +376,7 @@ def connect_wifi():
                 details="Selected device IP is required",
             )
 
-        url = f"http://{selected_ip}:8086/connect_wifi"
+        url = f"http://{selected_ip}:8085/connect_wifi"
         response = requests.post(url, json={"ssid": ssid, "password": password})
         response.raise_for_status()
         result = response.json()
@@ -413,7 +413,7 @@ def disconnect_wifi():
             )
 
         # Cihaza bağlantıyı kesme isteği gönder
-        url = f"http://{selected_ip}:8086/disconnect_wifi"
+        url = f"http://{selected_ip}:8085/disconnect_wifi"
         response = requests.post(url)
         response.raise_for_status()
         result = response.json()
@@ -470,7 +470,7 @@ def rabbitmq_status():
             details="Selected device IP is required",
         )
     try:
-        url = f"http://{selected_ip}:8086/check_rabbitmq"
+        url = f"http://{selected_ip}:8085/check_rabbitmq"
         response = requests.get(url, timeout=5)  
         response.raise_for_status()
         rabbitmq_status = response.json()
@@ -508,7 +508,7 @@ def vpn_status():
         )
 
     try:
-        url = f"http://{selected_ip}:8086/check_vpn"
+        url = f"http://{selected_ip}:8085/check_vpn"
         response = requests.get(url)
         response.raise_for_status()
         vpn_data = response.json()
@@ -540,7 +540,7 @@ def fetch_equipment_details():
     print(f"Backend'e Gelen Equipment ID: {equipment_id}")
 
     try:
-        url = f"http://{selected_ip}:8086/get_equipment_details/{equipment_id}"
+        url = f"http://{selected_ip}:8085/get_equipment_details/{equipment_id}"
         response = requests.get(url, timeout=10)
         response.raise_for_status()
         equipment_data = response.json()
@@ -572,7 +572,7 @@ def modbus_request():
         )
     try:
         logger.info(f"Modbus verisi alınıyor: {selected_ip}")
-        url = f"http://{selected_ip}:8086/get_modbus_data"
+        url = f"http://{selected_ip}:8085/get_modbus_data"
         response = requests.get(url, timeout=500)
         response.raise_for_status()
 
@@ -614,7 +614,7 @@ def validate_modbus():
         return ResponseHandler.error(message="Modbus parameters missing", code=400)
 
     try:
-        url = f"http://{selected_ip}:8086/modbus_config"
+        url = f"http://{selected_ip}:8085/modbus_config"
         response = requests.post(url, json=modbus_params)
         response.raise_for_status()
         return ResponseHandler.success(
@@ -639,7 +639,7 @@ def modbus_test():
         )
 
     try:
-        url = f"http://{selected_ip}:8086/modbus_test"
+        url = f"http://{selected_ip}:8085/modbus_test"
         response = requests.get(url)
         response.raise_for_status()
 
@@ -681,7 +681,7 @@ def disconnect_request():
             400,)
     try:
         logger.info(f"Wi-Fi bağlantısı kesiliyor: {selected_ip}")
-        url = f"http://{selected_ip}:8086/disconnect_wifi"
+        url = f"http://{selected_ip}:8085/disconnect_wifi"
         response = requests.post(url, timeout=10)
         response.raise_for_status()
         logger.info("Wi-Fi başarıyla kapatıldı.")
@@ -700,7 +700,7 @@ def equipments_with_models():
     if not selected_ip:
         return jsonify({"error": "IP adresi belirtilmedi"}), 400
     try:
-        url = f"http://{selected_ip}:8086/get_equipments_with_models"
+        url = f"http://{selected_ip}:8085/get_equipments_with_models"
         response = requests.get(url, timeout=200)
         response.raise_for_status()
         equipment_data = response.json()
@@ -792,7 +792,7 @@ def send_command():
             message="Command missing", code=400, details="Command is required"
         )
     try:
-        url = f"http://{selected_ip}:8086/execute_command"
+        url = f"http://{selected_ip}:8085/execute_command"
         response = requests.post(url, json={"command": command})
         response.raise_for_status()
         return ResponseHandler.success(
@@ -822,7 +822,7 @@ def fetch_grouped_live_data():
         return jsonify({"error": "Lütfen önce bir cihaz seçin!"}), 400
 
     try:
-        url = f"http://{selected_ip}:8086/get_grouped_live_data"
+        url = f"http://{selected_ip}:8085/get_grouped_live_data"
         response = requests.get(url)
         response.raise_for_status()
         live_data = response.json().get("data", [])
@@ -853,7 +853,7 @@ def fetch_live_data_paginated():
 
     try:
         # IP adresine göre cihazdan veri al
-        url = f"http://{selected_ip}:8086/get_live_data?page={page}&per_page={per_page}"
+        url = f"http://{selected_ip}:8085/get_live_data?page={page}&per_page={per_page}"
         response = requests.get(url)
         response.raise_for_status()
         live_data = response.json()
@@ -878,7 +878,7 @@ def fetch_grouped_hourly_data():
         return jsonify({"error": "Lütfen önce bir cihaz seçin!"}), 400
 
     try:
-        url = f"http://{selected_ip}:8086/get_grouped_hourly_data"
+        url = f"http://{selected_ip}:8085/get_grouped_hourly_data"
         response = requests.get(url)
         response.raise_for_status()
         hourly_data = response.json().get("data", [])
@@ -910,7 +910,7 @@ def fetch_hourly_data_paginated():
     try:
         # IP adresine göre cihazdan veri al
         url = (
-            f"http://{selected_ip}:8086/get_hourly_data?page={page}&per_page={per_page}"
+            f"http://{selected_ip}:8085/get_hourly_data?page={page}&per_page={per_page}"
         )
         response = requests.get(url)
         response.raise_for_status()
@@ -938,7 +938,7 @@ def fetch_grouped_daily_data():
         return jsonify({"error": "Lütfen önce bir cihaz seçin!"}), 400
 
     try:
-        url = f"http://{selected_ip}:8086/get_grouped_daily_data"
+        url = f"http://{selected_ip}:8085/get_grouped_daily_data"
         response = requests.get(url)
         response.raise_for_status()
         daily_data = response.json().get("data", [])
@@ -968,7 +968,7 @@ def fetch_daily_data_paginated():
     try:
         # IP adresine göre cihazdan veri al
         url = (
-            f"http://{selected_ip}:8086/get_daily_data?page={page}&per_page={per_page}"
+            f"http://{selected_ip}:8085/get_daily_data?page={page}&per_page={per_page}"
         )
         response = requests.get(url)
         response.raise_for_status()
@@ -1008,7 +1008,7 @@ def get_network_alarm_data():
         return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
 
     try:
-        url_alarm = f"http://{selected_ip}:8086/get_network_alarms"
+        url_alarm = f"http://{selected_ip}:8085/get_network_alarms"
         logging.info(f"📡 Alarm verileri için istek gönderiliyor: {url_alarm}")
 
         response_alarm = requests.get(url_alarm, params={"serial_number": selected_ip}, timeout=5)
@@ -1041,7 +1041,7 @@ def get_electric_alarm_data():
         logging.warning("Cihazın seri numarası bulunamadı!")
         return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
     try:
-        url_alarm = f"http://{selected_ip}:8086/get_electric_alarms"
+        url_alarm = f"http://{selected_ip}:8085/get_electric_alarms"
         logging.info(f"Alarm verileri için istek gönderiliyor: {url_alarm}")
 
         response_alarm = requests.get(url_alarm, params={"serial_number": selected_ip}, timeout=5)
@@ -1075,7 +1075,7 @@ def get_slave_data():
             details="Selected device IP is required",
         )
     try:
-        url = f"http://{selected_ip}:8086/scan_all"
+        url = f"http://{selected_ip}:8085/scan_all"
         response = requests.get(url, timeout=500)  
         response.raise_for_status()
         try:
@@ -1128,31 +1128,26 @@ def get_logs():
     if not selected_ip:
         logging.error("Selected device IP not found.")
         return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
-
     try:
-        data = request.get_json()  # Use get_json() to parse the JSON body
+        data = request.get_json()  
         if not data:
             logging.error("No data received in the request.")
             return jsonify({"error": "No data received"}), 400
 
-        # Get the parameters from the request body
         year = data.get("year")
         month = data.get("month")
         day = data.get("day")
-        hour = data.get("hour", None)  # hour can be optional, so default it to None if not provided
+        hour = data.get("hour", None)  
         
         logging.info(f"Fetching logs with params: Year: {year}, Month: {month}, Day: {day}, Hour: {hour}")
 
-        # Proceed with fetching logs based on the given parameters
-        url_alarm = f"http://{selected_ip}:8086/get_all_logs"
+        url_alarm = f"http://{selected_ip}:8085/get_all_logs"
         params = {
             "year": year,
             "month": month,
             "day": day,
             "hour": hour
         }
-
-        # Fetch logs from the second Flask app (this part remains unchanged)
         response_alarm = requests.get(url_alarm, params=params, timeout=5)
         response_alarm.raise_for_status()
 
@@ -1163,8 +1158,7 @@ def get_logs():
     except requests.exceptions.RequestException as e:
         logging.error(f"Error fetching logs: {e}")
         return jsonify({"status": "error", "message": f"LOGS verileri alınamadı: {e}"}), 500
-    
-    
+   
 class ResponseHandler:
     @staticmethod
     def success(message=None, data=None):

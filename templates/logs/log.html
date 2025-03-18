@@ -1,153 +1,179 @@
-{% extends "layout.html" %}
-
-{% block title %} ORC Status - Error Log {% endblock %}
-
-{% block extra_css %}
+{% extends "layout.html" %} {% block title %} ORC Status - Error Log {% endblock
+%} {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
-{% endblock %}
 
-{% block content %}
+{% endblock %} {% block content %}
 
 <!-- Header -->
 {% include 'partials/header.html' %}
 
 <div class="log-container">
-    <div class="log-table">
-        <div class="log-table-content">
-            <!-- Loading message -->
-            <div id="loading-message" style="display: none;">Loading logs...</div>
+  <div class="log-table">
+    <div class="log-table-content">
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Log Description</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody id="log-table-body">
+          <tr
+            id="loading-message"
+            style="display: none; text-align: center; font-size: 14px"
+          >
+            <td colspan="3">Loading logs...</td>
+          </tr>
+        </tbody>
+      </table>
 
-            <!-- No Logs message (Centered) -->
-            <div id="no-logs-message" style="display: none; color: red; text-align: center; font-size: 20px; font-weight: bold;">
-                Bu güne ait loglar bulunamadı.
-            </div>
+      <!-- No Logs message -->
+      <div
+        id="no-logs-message"
+        style="
+          display: none;
+          color: red;
+          text-align: center;
+          font-size: 14px;
+          margin-top: 10px;
+        "
+      >
+        Bu güne ait loglar bulunamadı. Lütfen aşağıdaki takvimden başka bir
+        tarih seçin.
+      </div>
 
-            <!-- Scrollable Table -->
-            <table>
-                <thead>
-                    <tr>
-                        <th>Archive</th>
-                        <th>End</th>
-                        <th>Log Description</th>
-                        <th>Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for log in logs %}
-                        <tr>
-                            <!-- Status Column (Archive) -->
-                            <td><span class="status-dot {% if log['visibility'] == 'active' %}green{% else %}red{% endif %}"></span></td>
-
-                            <!-- End Status Column -->
-                            <td><span class="status-dot {% if log['end_status'] == 'complete' %}green{% else %}red{% endif %}"></span></td>
-
-                            <!-- Log Description Column -->
-                            <td>{{ log['tag'] }} - {{ log['data'] }}</td>
-
-                            <!-- Timestamp Column -->
-                            <td>{{ log['created_at'] }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <!-- End of log-table-content -->
+      <!-- Calendar Selector -->
+      <div
+        id="calendar-container"
+        style="display: block; text-align: center; margin-top: 15px"
+      >
+        <input type="date" id="log-date-picker" onchange="fetchLogsByDate()" />
+      </div>
     </div>
+  </div>
 </div>
 
 <script>
-  // Fetch logs function
-  function fetchLogs(year, month, day, hour = null) {
-    const loadingMessage = document.getElementById("loading-message");
-    const noLogsMessage = document.getElementById("no-logs-message");
+  document.addEventListener("DOMContentLoaded", function () {
+    fetchLogs();
+  });
 
-    if (loadingMessage) {
-        loadingMessage.style.display = "block"; // Show loading message
-    }
+  function fetchLogs() {
+    document.getElementById("loading-message").style.display = "table-row";
+    document.getElementById("no-logs-message").style.display = "none";
+    document.getElementById("calendar-container").style.display = "none";
 
-    // Hide the no logs message initially
-    if (noLogsMessage) {
-        noLogsMessage.style.display = "none";
-    }
-
-    // Prepare the data object to send as the body of the POST request
-    const data = {
-        year: year,
-        month: month,
-        day: day,
-        hour: hour
-    };
-
-    fetch('/get_logs', {
-        method: 'POST',  
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data) 
+    fetch("/get_logs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1,
+        day: new Date().getDate(),
+      }),
     })
-    .then(response => response.json())
-    .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Fetched logs:", data);
+        document.getElementById("loading-message").style.display = "none";
+
         if (data.status === "success") {
-            updateLogTable(data.data);
-            if (data.data.length === 0) {
-                // Show the no logs message if there are no logs
-                if (noLogsMessage) {
-                    noLogsMessage.style.display = "block";
-                }
+          let logs = data.data;
+
+          // Eğer logs bir string ise JSON parse yap
+          if (typeof logs === "string") {
+            try {
+              logs = JSON.parse(logs); // Düzgün bir dizi haline getir
+            } catch (error) {
+              console.error("Error parsing logs JSON:", error);
+              logs = []; // Hata olursa boş bir dizi olarak ayarla
             }
+          }
+
+          if (Array.isArray(logs) && logs.length > 0) {
+            updateTable(logs);
+          } else {
+            document.getElementById("no-logs-message").style.display = "block";
+            document.getElementById("calendar-container").style.display =
+              "block";
+          }
         } else {
-            // Handle error by showing no logs message if needed
-            console.error("Failed to load logs.");
+          document.getElementById("no-logs-message").style.display = "block";
+          document.getElementById("calendar-container").style.display = "block";
         }
-    })
-    .catch(error => {
+      })
+      .catch((error) => {
         console.error("Error fetching logs:", error);
-    })
-    .finally(() => {
-        if (loadingMessage) {
-            loadingMessage.style.display = "none"; // Hide loading message
-        }
-    });
-}
-
-  // Function to update the log table with the fetched data
-  function updateLogTable(logs) {
-      const logTableBody = document.querySelector(".log-table-content tbody");
-      logTableBody.innerHTML = "";  // Clear existing rows
-
-      logs.forEach(log => {
-          const row = document.createElement("tr");
-
-          // Archive column (Status)
-          const archiveCell = document.createElement("td");
-          archiveCell.innerHTML = `<span class="status-dot ${log.visibility === 'active' ? 'green' : 'red'}"></span>`;
-          row.appendChild(archiveCell);
-
-          // End column (Status)
-          const endCell = document.createElement("td");
-          endCell.innerHTML = `<span class="status-dot ${log.end_status === 'complete' ? 'green' : 'red'}"></span>`;
-          row.appendChild(endCell);
-
-          // Log Description column
-          const descriptionCell = document.createElement("td");
-          descriptionCell.innerText = `${log.tag} - ${log.data}`;
-          row.appendChild(descriptionCell);
-
-          // Timestamp column
-          const timestampCell = document.createElement("td");
-          timestampCell.innerText = log.created_at;
-          row.appendChild(timestampCell);
-
-          // Append the row to the table
-          logTableBody.appendChild(row);
+        document.getElementById("loading-message").style.display = "none";
+        document.getElementById("no-logs-message").style.display = "block";
+        document.getElementById("calendar-container").style.display = "block";
       });
   }
 
-  // Initialize page with the current date logs
-  document.addEventListener("DOMContentLoaded", () => {
-      const currentDate = new Date();
-      fetchLogs(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
-  });
+  function updateTable(logs) {
+    console.log("Updating table with logs:", logs);
+    if (!Array.isArray(logs)) {
+      console.error("Logs is not an array:", logs);
+      return;
+    }
+
+    const tableBody = document.querySelector("#log-table-body");
+    tableBody.innerHTML = "";
+
+    logs.forEach((log) => {
+      const row = document.createElement("tr");
+      let shortText = log.tag + " - " + (log.data || "N/A");
+      let displayText =
+        shortText.length > 100
+          ? shortText.substring(0, 100) + "..."
+          : shortText;
+      let expandText =
+        shortText.length > 100
+          ? `<span class='expand' onclick='toggleExpand(this)'>Devamını Oku</span>`
+          : "";
+
+      let statusClass = getStatusClass(log.type); // Renk belirleme
+
+      row.innerHTML = `
+        <td><span class="status-dot ${statusClass}"></span></td>
+        <td class="truncate" style="max-width: 300px;">${displayText} ${expandText}</td>
+        <td style="white-space: nowrap;">${log.created_at}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  }
+
+  function getStatusClass(type) {
+    switch (type) {
+      case 1:
+        return "status-info"; // Info (Yeşil)
+      case 2:
+        return "status-warning"; // Warning (Turuncu)
+      case 3:
+        return "status-exception"; // Exception (Kırmızı)
+      default:
+        return "status-info"; // Varsayılan olarak yeşil
+    }
+  }
+
+  function toggleExpand(element) {
+    let cell = element.parentElement;
+    let fullText = cell.getAttribute("data-full-text");
+    if (!fullText) {
+      fullText = cell.textContent.replace("Devamını Oku", "");
+      cell.setAttribute("data-full-text", fullText);
+    }
+    if (element.textContent === "Devamını Oku") {
+      cell.innerHTML =
+        fullText +
+        " <span class='expand' onclick='toggleExpand(this)'>Kısalt</span>";
+    } else {
+      cell.innerHTML =
+        fullText.substring(0, 500) +
+        "... <span class='expand' onclick='toggleExpand(this)'>Devamını Oku</span>";
+    }
+  }
 </script>
 
 {% endblock %}

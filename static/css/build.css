@@ -1320,7 +1320,7 @@ body {
   z-index: 2;
 }
 .log-table table td {
-  padding: 8px;
+  padding: 3px;
   font-size: 14px;
   border-bottom: 1px solid #ef742a;
   text-align: center;
@@ -1341,15 +1341,24 @@ body {
   background-color: #ff0000;
 }
 
-#no-logs-message {
-  color: red;
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  position: relative;
-  top: 0;
-  margin-bottom: 20px; /* Mesaj ile log tablosu arasında biraz boşluk */
-  display: none; /* Başlangıçta gizli */
+/* Log türüne göre renk kodlaması */
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-info {
+  background-color: green;
+}
+
+.status-warning {
+  background-color: orange;
+}
+
+.status-exception {
+  background-color: red;
 }
 
 body {
