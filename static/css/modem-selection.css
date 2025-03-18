@@ -122,4 +122,23 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+.alarm-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.alarm-badge {
+  position: absolute;
+  top: 0px;
+  right: -2px;
+  background-color: red;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 3px;
+  border-radius: 50%;
+  display: none;
+  min-width: 11px;
+  text-align: center;
 }/*# sourceMappingURL=modem-selection.css.map */
