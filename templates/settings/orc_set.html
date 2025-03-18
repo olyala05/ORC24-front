@@ -2,7 +2,7 @@
 {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
-<!-- Virtual Keyboard --> 
+<!-- Virtual Keyboard -->
 <div id="keyboard-container" class="simple-keyboard"></div>
 
 <!-- Yeni İçerik (İlk başta gizli olacak) -->
@@ -106,7 +106,7 @@
       </div>
     </div>
 
-    <!-- Router Set -->
+    <!-- ORC Set -->
     <div id="orc-set" class="orc-settings-container" style="display: none">
       <div class="orc-settings-card">
         <div class="orc-input-group">
@@ -135,6 +135,7 @@
         <button class="orc-save-btn">Kaydet</button>
       </div>
     </div>
+
   </div>
 
   <script>
@@ -423,7 +424,7 @@
         fetch("/get_modem_info")
           .then((response) => response.json())
           .then((data) => {
-            if (data.status === "A") {
+            if (data.status === "success") {
               const modem = data.data;
               modemNameInput.value = modem.name || "Unknown";
               modemStatusSelect.value = modem.status.toLowerCase();

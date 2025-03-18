@@ -16,7 +16,6 @@ block content %}
     </button>
 
     <!-- Alarm Butonu -->
-    <!-- Alarm Butonu -->
     <button class="alarm-button" onclick="goToAlarm()" title="Alarm">
       <div class="alarm-icon-container">
         <img
@@ -123,85 +122,6 @@ block content %}
         });
       })
       .catch((error) => console.error("Cihazları alırken hata:", error));
-  }
-
-  function connectDevice() {
-    let dropdown = document.getElementById("modem");
-    let selectedDevice = dropdown.value;
-
-    if (
-      !selectedDevice ||
-      selectedDevice === "null" ||
-      selectedDevice.trim() === "" ||
-      selectedDevice === "undefined"
-    ) {
-      sessionStorage.removeItem("selected_device_ip");
-      document.getElementById("alarm-count").style.display = "none"; // Eğer cihaz yoksa alarm sayacı gizlensin
-      return;
-    }
-
-    fetch("/connect_device", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ip_address: selectedDevice }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        let status = document.getElementById("status");
-
-        if (data.success) {
-          sessionStorage.setItem("selected_device_ip", selectedDevice);
-          updateAlarmCount(); // **Cihaz bağlanınca alarmları güncelle**
-
-          Swal.fire({
-            position: "bottom-end",
-            icon: "success",
-            title: "Cihaz başarıyla bağlandı!",
-            showConfirmButton: false,
-            timer: 5000,
-            toast: true,
-            customClass: {
-              popup: "small-toast",
-            },
-          });
-        } else {
-          sessionStorage.removeItem("selected_device_ip");
-          status.innerHTML =
-            "<p style='color: red;'>Bağlantı hatası: " + data.error + "</p>";
-          document.getElementById("alarm-count").style.display = "none"; // Hata olursa alarm sayacı gizlensin
-
-          Swal.fire({
-            position: "bottom-end",
-            icon: "error",
-            title: "Bağlantı hatası!",
-            showConfirmButton: false,
-            timer: 5000,
-            toast: true,
-            customClass: {
-              popup: "small-toast",
-            },
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("Bağlantı hatası:", error);
-        sessionStorage.removeItem("selected_device_ip");
-        document.getElementById("alarm-count").style.display = "none"; // Bağlantı hatası olursa alarm sayacı gizlensin
-
-        Swal.fire({
-          position: "bottom-end",
-          icon: "error",
-          title: "Bağlantı sırasında hata oluştu!",
-          showConfirmButton: false,
-          timer: 5000,
-          toast: true,
-          customClass: {
-            popup: "small-toast",
-          },
-        });
-      });
   }
 
   // ORC Status
@@ -541,81 +461,180 @@ block content %}
       });
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    updateAlarmCount(); // Sayfa yüklendiğinde çalıştır
-
-    setInterval(updateAlarmCount, 10000); // Her 10 saniyede bir güncelle
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    updateAlarmCount(); // Sayfa yüklendiğinde çalıştır
-    setInterval(updateAlarmCount, 10000); // Her 10 saniyede bir güncelle
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    updateAlarmCount();
-    setInterval(updateAlarmCount, 10000);
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    updateAlarmCount(); // Sayfa yüklendiğinde çalıştır
-    setInterval(updateAlarmCount, 10000); // Her 10 saniyede bir güncelle
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    updateAlarmCount(); // Sayfa yüklendiğinde çalıştır
-    setInterval(updateAlarmCount, 10000); // Her 10 saniyede bir güncelle
-  });
+  // 📌 AbortController değişkenleri (İlk başta boş)
+  let networkAlarmController = new AbortController();
+  let electricAlarmController = new AbortController();
+  let alarmUpdateInterval = null; // 🔹 Interval ID'yi saklayacağız
 
   function updateAlarmCount() {
     let selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
     let alarmBadge = document.getElementById("alarm-count");
 
+    // 📌 Eğer cihaz seçili değilse API çağrılarını durdur ve alarmı sıfırla
     if (!selectedDeviceIP || selectedDeviceIP.trim() === "") {
-      console.warn("Cihaz seçilmedi, alarm verileri çekilmeyecek!");
-      alarmBadge.style.display = "none";
+      console.warn("Cihaz seçili değil, alarm sıfırlandı!");
+
+      // 🔹 Eski istekleri iptal et
+      networkAlarmController.abort();
+      electricAlarmController.abort();
+
+      // 🔹 Yeni istekler için yeni AbortController oluştur
+      networkAlarmController = new AbortController();
+      electricAlarmController = new AbortController();
+
+      // 🔹 Interval çalışıyorsa durdur
+      if (alarmUpdateInterval) {
+        clearInterval(alarmUpdateInterval);
+        alarmUpdateInterval = null;
+      }
+
+      // 🔹 Alarm sayısını sıfırla
+      localStorage.removeItem("last_alarm_count");
+      alarmBadge.textContent = "0";
+      alarmBadge.style.display = "inline-block";
       return;
     }
 
     console.log("Seçili cihaz:", selectedDeviceIP);
 
     let totalAlarms = 0;
+    let errorOccurred = false;
 
-    fetch(`/get_network_alarm_data?ip=${selectedDeviceIP}`)
+    // **Network Alarmlarını Çek**
+    fetch(`/get_network_alarm_data?ip=${selectedDeviceIP}`, {
+      signal: networkAlarmController.signal,
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "success") {
           totalAlarms += data.data.length;
+        } else {
+          console.error("Network alarm verisi alınamadı:", data.message);
+          errorOccurred = true;
         }
-        return fetch(`/get_electric_alarm_data?ip=${selectedDeviceIP}`);
+        return fetch(`/get_electric_alarm_data?ip=${selectedDeviceIP}`, {
+          signal: electricAlarmController.signal,
+        });
       })
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "success") {
           totalAlarms += data.data.length;
-        }
-
-        console.log("Toplam alarm sayısı:", totalAlarms);
-
-        if (totalAlarms > 0) {
-          alarmBadge.textContent = totalAlarms;
-          alarmBadge.style.display = "inline-block";
         } else {
-          alarmBadge.textContent = "0";
-          alarmBadge.style.display = "inline-block";
+          console.error("Electric alarm verisi alınamadı:", data.message);
+          errorOccurred = true;
         }
+
+        // 📌 Eğer hata olduysa alarm sayısını sıfırla
+        if (errorOccurred) {
+          console.warn("Hata oluştuğu için alarm sıfırlandı.");
+          totalAlarms = 0;
+        }
+
+        // 📌 Alarm değerini göster
+        alarmBadge.textContent = totalAlarms;
+        alarmBadge.style.display = "inline-block";
+
+        // 📌 Yeni alarm değerini localStorage'a kaydet
+        localStorage.setItem("last_alarm_count", totalAlarms);
       })
       .catch((error) => {
-        console.error("Seçilen cihaz için alarm verisi alınamadı:", error);
-        alarmBadge.style.display = "none";
+        if (error.name === "AbortError") {
+          console.warn("Alarm verisi isteği iptal edildi.");
+        } else {
+          console.error("Seçilen cihaz için alarm verisi alınamadı:", error);
+        }
+
+        // 📌 Hata durumunda alarmı sıfırla
+        alarmBadge.textContent = "0";
+        alarmBadge.style.display = "inline-block";
       });
   }
 
+  // 📌 Cihaz Seçme Fonksiyonu
+  function connectDevice() {
+    let dropdown = document.getElementById("modem");
+    let selectedDevice = dropdown.value;
+
+    // 📌 Eğer cihaz seçilmediyse her şeyi sıfırla ve çık
+    if (!selectedDevice || selectedDevice.trim() === "") {
+      console.warn("Cihaz seçilmedi, alarm sıfırlanıyor.");
+
+      sessionStorage.removeItem("selected_device_ip");
+      localStorage.removeItem("last_alarm_count");
+
+      // 🔹 Eski istekleri iptal et
+      networkAlarmController.abort();
+      electricAlarmController.abort();
+
+      // 🔹 Yeni istekler için controller oluştur
+      networkAlarmController = new AbortController();
+      electricAlarmController = new AbortController();
+
+      document.getElementById("alarm-count").textContent = "0";
+      document.getElementById("alarm-count").style.display = "inline-block";
+
+      return;
+    }
+
+    // 📌 Cihaz bağlanırken alarm isteklerini resetle
+    fetch("/connect_device", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ip_address: selectedDevice }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          sessionStorage.setItem("selected_device_ip", selectedDevice);
+
+          // 🔹 Eski istekleri iptal et ve yenilerini başlat
+          networkAlarmController.abort();
+          electricAlarmController.abort();
+
+          networkAlarmController = new AbortController();
+          electricAlarmController = new AbortController();
+
+          updateAlarmCount();
+
+          // 🔹 Alarm sayısını 10 saniyede bir güncellemek için setInterval başlat (Tekrar çağrılmasını önlemek için önce temizliyoruz)
+          if (alarmUpdateInterval) {
+            clearInterval(alarmUpdateInterval);
+          }
+          alarmUpdateInterval = setInterval(updateAlarmCount, 10000);
+        } else {
+          sessionStorage.removeItem("selected_device_ip");
+          console.error("Bağlantı hatası:", data.error);
+          document.getElementById("alarm-count").textContent = "0";
+        }
+      })
+      .catch((error) => {
+        console.error("Bağlantı hatası:", error);
+        sessionStorage.removeItem("selected_device_ip");
+        document.getElementById("alarm-count").textContent = "0";
+      });
+  }
+
+  // 📌 Sayfa Yüklendiğinde Çalıştır
   document.addEventListener("DOMContentLoaded", function () {
     let selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
-    if (selectedDeviceIP) {
+    let alarmBadge = document.getElementById("alarm-count");
+
+    if (!selectedDeviceIP) {
+      console.warn("Sayfa yenilendi, cihaz yok, alarm sıfırlandı!");
+
+      networkAlarmController.abort();
+      electricAlarmController.abort();
+
+      networkAlarmController = new AbortController();
+      electricAlarmController = new AbortController();
+
+      localStorage.removeItem("last_alarm_count");
+
+      alarmBadge.textContent = "0";
+      alarmBadge.style.display = "inline-block";
+    } else {
       updateAlarmCount();
-      setInterval(updateAlarmCount, 10000);
     }
   });
 </script>
@@ -651,7 +670,5 @@ block content %}
     border-radius: 0.125em;
     background-color: #f27474;
   }
-
-
 </style>
 {% endblock %}
