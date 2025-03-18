@@ -72,4 +72,56 @@
   border: none;
   padding: 0;
   cursor: pointer;
+}
+
+div:where(.swal2-container) div:where(.swal2-popup) {
+  width: 28em;
+}
+
+div:where(.swal2-container) h2:where(.swal2-title) {
+  padding: 0.1em 0;
+}
+
+div:where(.swal2-icon) {
+  width: 4em;
+  height: 4em;
+  margin: 0.8em auto 0.6em;
+}
+
+div:where(.swal2-container) div:where(.swal2-actions) {
+  margin: 0.25em auto 0;
+}
+
+div:where(.swal2-container) div:where(.swal2-html-container) {
+  padding: 0.25em 1.4em 0.2em;
+}
+
+div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line] {
+  display: block;
+  position: absolute;
+  top: 2em;
+  width: 1.9375em;
+  height: 0.3125em;
+  border-radius: 0.125em;
+  background-color: #f27474;
+}
+
+.alarm-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.alarm-badge {
+  position: absolute;
+  top: 0px;
+  right: -2px;
+  background-color: red;
+  color: white;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 2px 2px;
+  border-radius: 50%;
+  display: none;
+  min-width: 11px;
+  text-align: center;
 }/*# sourceMappingURL=header.css.map */

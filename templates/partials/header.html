@@ -50,9 +50,8 @@
   function updateDateTime() {
     const now = new Date();
     const formattedDate = now.toLocaleString("tr-TR", {
-      // weekday: "long", // Haftaisimleirni isterseler buun yorum satırından aç
       year: "numeric",
-      month: "long", // Ocak, Şubat vs.
+      month: "long",
       day: "numeric",
       hour: "2-digit",
       minute: "2-digit",
@@ -61,16 +60,11 @@
     document.getElementById("currentDateTime").textContent = formattedDate;
   }
 
-  // Sayfa yüklendiğinde ve her saniye güncelle
   updateDateTime();
   setInterval(updateDateTime, 1000);
-
-  // Aalrm Sayfasına Yönlendirir
   function goToAlarm() {
-    // Önce sessionStorage içinden kayıtlı IP adresini al
     let selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
 
-    // Eğer IP adresi yoksa yani cihaz seçilmemişse uyarı göster
     if (!selectedDeviceIP) {
       Swal.fire({
         icon: "warning",
@@ -81,7 +75,6 @@
       return;
     }
 
-    // **Loading ekranını ekleyelim**
     let loadingOverlay = document.createElement("div");
     loadingOverlay.id = "loading-overlay";
     loadingOverlay.className = "loading-overlay";
@@ -91,11 +84,7 @@
               <div class="loader"></div>
             </div>`;
     document.body.appendChild(loadingOverlay);
-
-    // **Seçili cihaz varsa alarm sayfasına yönlendir**
     window.location.href = `/alarm?ip_address=${selectedDeviceIP}`;
-
-    // Yönlendirme tamamlandığında loading ekranını kaldır
     window.addEventListener("pageshow", function () {
       let loader = document.getElementById("loading-overlay");
       if (loader) loader.remove();
@@ -103,22 +92,19 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    updateAlarmCount(); // Sayfa yüklendiğinde çalıştır
-
-    setInterval(updateAlarmCount, 10000); 
+    updateAlarmCount();
+    setInterval(updateAlarmCount, 10000);
   });
 
   function updateAlarmCount() {
     let totalAlarms = 0;
-
     fetch("/get_network_alarm_data")
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "success") {
           totalAlarms += data.data.length;
         }
-
-        return fetch("/get_electric_alarm_data"); 
+        return fetch("/get_electric_alarm_data");
       })
       .then((response) => response.json())
       .then((data) => {
@@ -132,62 +118,9 @@
           alarmBadge.style.display = "inline-block";
         } else {
           alarmBadge.textContent = "0";
-          alarmBadge.style.display = "none"; 
+          alarmBadge.style.display = "none";
         }
       })
       .catch((error) => console.error("Alarm verisi alınamadı:", error));
   }
 </script>
-
-<style>
-  div:where(.swal2-container) div:where(.swal2-popup) {
-    width: 28em;
-  }
-
-  div:where(.swal2-container) h2:where(.swal2-title) {
-    padding: 0.1em 0;
-  }
-
-  div:where(.swal2-icon) {
-    width: 4em;
-    height: 4em;
-    margin: 0.8em auto 0.6em;
-  }
-  div:where(.swal2-container) div:where(.swal2-actions) {
-    margin: 0.25em auto 0;
-  }
-
-  div:where(.swal2-container) div:where(.swal2-html-container) {
-    padding: 0.25em 1.4em 0.2em;
-  }
-
-  div:where(.swal2-icon).swal2-error [class^="swal2-x-mark-line"] {
-    display: block;
-    position: absolute;
-    top: 2em;
-    width: 1.9375em;
-    height: 0.3125em;
-    border-radius: 0.125em;
-    background-color: #f27474;
-  }
-
-  .alarm-icon-container {
-    position: relative;
-    display: inline-block;
-  }
-
-  .alarm-badge {
-    position: absolute;
-    top: 0px;
-    right: -2px;
-    background-color: red;
-    color: white;
-    font-size: 9px;
-    font-weight: bold;
-    padding: 2px 2px;
-    border-radius: 50%;
-    display: none;
-    min-width: 11px;
-    text-align: center;
-  }
-</style>

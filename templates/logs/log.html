@@ -1,5 +1,7 @@
-{% extends "layout.html" %} {% block title %} ORC Status - Error Log {% endblock
-%} {% block extra_css %}
+{% extends "layout.html" %} 
+{% block title %} ORC Status - Error Log {% endblock%} 
+
+{% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
 
 {% endblock %} {% block content %}
@@ -80,14 +82,13 @@
 
         if (data.status === "success") {
           let logs = data.data;
-
-          // Eğer logs bir string ise JSON parse yap
+ 
           if (typeof logs === "string") {
             try {
-              logs = JSON.parse(logs); // Düzgün bir dizi haline getir
+              logs = JSON.parse(logs); 
             } catch (error) {
               console.error("Error parsing logs JSON:", error);
-              logs = []; // Hata olursa boş bir dizi olarak ayarla
+              logs = []; 
             }
           }
 
@@ -133,7 +134,7 @@
           ? `<span class='expand' onclick='toggleExpand(this)'>Devamını Oku</span>`
           : "";
 
-      let statusClass = getStatusClass(log.type); // Renk belirleme
+      let statusClass = getStatusClass(log.type); 
 
       row.innerHTML = `
         <td><span class="status-dot ${statusClass}"></span></td>
@@ -147,13 +148,13 @@
   function getStatusClass(type) {
     switch (type) {
       case 1:
-        return "status-info"; // Info (Yeşil)
+        return "status-info";
       case 2:
-        return "status-warning"; // Warning (Turuncu)
+        return "status-warning"; 
       case 3:
-        return "status-exception"; // Exception (Kırmızı)
+        return "status-exception"; 
       default:
-        return "status-info"; // Varsayılan olarak yeşil
+        return "status-info";
     }
   }
 

@@ -396,7 +396,6 @@ block content %}
     window.location.href = "/data";
   }
 
-  // Equipment Buttonununa gider onclick="goToEquipmentSetting()"
   function goToEquipmentSetting() {
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
@@ -473,13 +472,10 @@ block content %}
     ).textContent = `${formattedDate} ${formattedTime}`;
   }
 
-  // Sayfa yüklendiğinde çalıştır
   updateDateTime();
 
-  // 📌 Her 1 dakikada bir tarihi ve saati güncelle
   setInterval(updateDateTime, 60000);
 
-  // Sayfa geri yüklenirse loading ekranını kaldır
   window.addEventListener("pageshow", function (event) {
     let loader = document.getElementById("loading-overlay");
     if (loader) {
@@ -487,7 +483,7 @@ block content %}
     }
   });
 
-  // Aalrm Sayfasına Yönlendirir
+  // Alarm Sayfasına Yönlendirir
   function goToAlarm() {
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null;
@@ -557,8 +553,8 @@ block content %}
   });
 
   document.addEventListener("DOMContentLoaded", function () {
-    updateAlarmCount(); // Sayfa yüklendiğinde çalıştır
-    setInterval(updateAlarmCount, 10000); // Her 10 saniyede bir güncelle
+    updateAlarmCount();
+    setInterval(updateAlarmCount, 10000);
   });
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -576,7 +572,7 @@ block content %}
     let alarmBadge = document.getElementById("alarm-count");
 
     if (!selectedDeviceIP || selectedDeviceIP.trim() === "") {
-      console.warn("⚠️ Cihaz seçilmedi, alarm verileri çekilmeyecek!");
+      console.warn("Cihaz seçilmedi, alarm verileri çekilmeyecek!");
       alarmBadge.style.display = "none";
       return;
     }
@@ -585,7 +581,6 @@ block content %}
 
     let totalAlarms = 0;
 
-    // 📡 **Sadece seçilen cihazın alarmlarını getir**
     fetch(`/get_network_alarm_data?ip=${selectedDeviceIP}`)
       .then((response) => response.json())
       .then((data) => {
@@ -616,8 +611,6 @@ block content %}
       });
   }
 
-
-  // **Cihaz seçiliyse alarm verilerini güncelle**
   document.addEventListener("DOMContentLoaded", function () {
     let selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
     if (selectedDeviceIP) {
@@ -679,5 +672,4 @@ block content %}
     text-align: center;
   }
 </style>
-
 {% endblock %}
