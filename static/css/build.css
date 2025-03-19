@@ -2656,6 +2656,13 @@ body {
   resize: none;
 }
 
+.empty-message-02 {
+  text-align: center;
+  color: red;
+  font-size: 14px;
+  padding: 10px;
+}
+
 .settings-content {
   display: flex;
   gap: 10px;

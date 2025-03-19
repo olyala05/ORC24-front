@@ -943,7 +943,6 @@ block content %}
     document.getElementById("scan-status").textContent =
       "Scanning in progress...";
 
-    // Yükleme simgesini göster
     document.getElementById("scan-spinner").style.display = "inline-block";
 
     fetch("/get_slave_data", {
@@ -953,6 +952,7 @@ block content %}
       .then((response) => response.json())
       .then((data) => {
         console.log("Backend'den Gelen Veri:", data);
+        const tableBody = document.getElementById("equipment-table-body");
 
         if (
           data.status === "success" &&
@@ -960,9 +960,25 @@ block content %}
           data.data.length > 0
         ) {
           console.log("Yeni cihazlar bulundu!");
+
+          // **Boş mesajını kaldır**
+          const emptyMessage = document.getElementById("empty-message-row");
+          if (emptyMessage) {
+            emptyMessage.remove();
+          }
+
           addNewDataToTable(data.data);
         } else {
           console.warn("No new data found.");
+
+          const emptyRow = document.createElement("tr");
+          emptyRow.id = "empty-message-row"; 
+          const emptyCell = document.createElement("td");
+          emptyCell.setAttribute("colspan", "6"); 
+          emptyCell.classList.add("empty-message");
+          emptyCell.textContent = "Equipments is Empty";
+          emptyRow.appendChild(emptyCell);
+          tableBody.appendChild(emptyRow);
         }
 
         document.getElementById("scan-status").style.display = "none";
@@ -996,25 +1012,22 @@ block content %}
       return;
     }
 
-    // İlk yeni satırdan önce bir ayırıcı çizgi ekleyelim
+    // **Yeni satırdan önce bir separator ekleyelim**
     const separatorRow = document.createElement("tr");
-    separatorRow.innerHTML = `<td colspan="6" class="new-equipment-separator">Equipment Scan Results</td>`;
+    separatorRow.innerHTML = `<td colspan="6" class="new-equipment-separator">New Equipment Scan Results</td>`;
     tableBody.appendChild(separatorRow);
 
     newEquipments.forEach((item) => {
       const row = document.createElement("tr");
 
-      // Eğer hem slave_id hem ip varsa, ikisini de göster
-      let sidOrIP = "";
-      if (item.slave_id && item.ip) {
-        sidOrIP = `Slave ID: ${item.slave_id} | IP: ${item.ip}`;
-      } else if (item.slave_id) {
-        sidOrIP = `Slave ID: ${item.slave_id}`;
-      } else if (item.ip) {
-        sidOrIP = `IP: ${item.ip}`;
-      } else {
-        sidOrIP = "N/A";
-      }
+      let sidOrIP =
+        item.slave_id && item.ip
+          ? `Slave ID: ${item.slave_id} | IP: ${item.ip}`
+          : item.slave_id
+          ? `Slave ID: ${item.slave_id}`
+          : item.ip
+          ? `IP: ${item.ip}`
+          : "N/A";
 
       row.innerHTML = `
         <td>${item.model_name}</td>
@@ -1027,7 +1040,7 @@ block content %}
       tableBody.appendChild(row);
     });
 
-    // Yeni eklenen verileri sakla
+    // **Yeni eklenen verileri sakla**
     previousEquipmentData = [...previousEquipmentData, ...newEquipments];
   }
 
@@ -1367,7 +1380,6 @@ block content %}
     // Bulut bağlantısını her 10 saniyede bir kontrol et
     setInterval(updateCloudStatus, 10000);
   });
-
 </script>
 <style>
   .connected-wifi {
@@ -1493,8 +1505,8 @@ block content %}
     border-radius: 50%;
     border-top: 2px solid white;
     animation: spin 1s linear infinite;
-    margin:0;
-    margin-left: 10px;  
+    margin: 0;
+    margin-left: 10px;
   }
 
   @keyframes spin {
@@ -1553,6 +1565,8 @@ block content %}
   .status-red {
     border-color: red;
   }
+
+
 </style>
 
 {% endblock %}
