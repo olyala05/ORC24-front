@@ -43,10 +43,6 @@
 </div>
 
 <script>
-  function goBack() {
-    history.go(-1);
-  }
-
   function updateDateTime() {
     const now = new Date();
     const formattedDate = now.toLocaleString("tr-TR", {
@@ -62,6 +58,7 @@
 
   updateDateTime();
   setInterval(updateDateTime, 1000);
+
   function goToAlarm() {
     let selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
 
@@ -123,4 +120,98 @@
       })
       .catch((error) => console.error("Alarm verisi alınamadı:", error));
   }
+
+  // **** Test sayfasında olup olmadığımızı kontrol eden fonksiyon ***
+  function isTestPage() {
+    return window.location.pathname.includes("test");
+  }
+
+  function goBack() {
+    if (isTestPage()) {
+      Swal.fire({
+        text: "System will start again when you leave the test mode.",
+        icon: "info",
+        backdrop: false,
+        showCancelButton: true,
+        confirmButtonColor: "#fff",
+        confirmButtonText: "OK",
+        cancelButtonText: "Cancel",
+        customClass: {
+          popup: "swal-custom-bg",
+          confirmButton: "swal-button",  
+          cancelButton: "swal-button",
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Kullanıcı Yes'e bastıysa
+          fetch("/send_command", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              command: "systemctl start iot_main.service",
+            }),
+          })
+            .then(() => {
+              history.go(-1);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              history.go(-1);
+            });
+        }
+      });
+    } else {
+      history.go(-1);
+    }
+  }
+
+  // Test sayfasına girildiğinde stop komutunu çalıştır
+  document.addEventListener("DOMContentLoaded", function () {
+    if (isTestPage()) {
+      fetch("/send_command", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          command: "systemctl stop iot_main.service",
+        }),
+      }).catch((error) => console.error("Error stopping system:", error));
+    }
+  });
 </script>
+
+<style>
+  .swal-custom-bg {
+    background-color: #fff !important;
+    color: black !important;
+  }
+
+  div:where(.swal2-actions) button.swal2-confirm {
+    color: black !important; 
+    font-weight: bold !important;
+  }
+
+  div:where(.swal2-actions) button.swal2-confirm {
+    background-color: #ef742a !important;
+    color: white !important;
+  }
+
+  div:where(.swal2-actions) button.swal2-cancel {
+    color: white !important;
+    background-color: grey !important;
+  }
+
+  div:where(.swal2-icon) {
+    width: 4em;
+    height: 4em;
+  }
+
+  div:where(.swal2-icon).swal2-info {
+    border-color: #ef742a;
+    color: #ef742a;
+  }
+</style>
+
