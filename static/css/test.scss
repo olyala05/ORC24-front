@@ -177,7 +177,7 @@
   }
 
   input[type="password"],
-  #wifiPassword  {
+  #wifiPassword {
     width: 93%;
     padding: 12px 11px;
     margin-top: 0px;
@@ -472,6 +472,10 @@
     margin-bottom: 5px;
 
     thead {
+      position: sticky;
+      top: 0;
+      background: #0b1734;
+      z-index: 2;
       tr {
         th {
           text-align: left;
@@ -483,6 +487,20 @@
           text-align: center;
         }
       }
+    }
+
+    tbody {
+      display: block;
+      max-height: 235px;
+      overflow-y: auto;
+      width: 100%;
+    }
+
+    thead,
+    tbody tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
     }
 
     tbody {
@@ -886,7 +904,6 @@
     resize: none;
   }
 }
-
 
 .empty-message {
   text-align: center;

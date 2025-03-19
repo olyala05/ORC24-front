@@ -126,10 +126,12 @@ def arp_scan(ip_range):
 def nmap_scan(ip_range):
     """Belirtilen IP aralığında Nmap taraması yaparak 02 veya 12 ile başlayan MAC adreslerini bulur"""
     nm = nmap.PortScanner()
-    nm.scan(hosts=ip_range, arguments="-sn")
-
+    # res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
+    res = nm.scan(hosts=ip_range, arguments="-sn")
+    print(res)
     ip_list = []
     for host in nm.all_hosts():
+        print(host)
         mac_address = nm[host]["addresses"].get("mac", "")
         if mac_address.startswith("02") or mac_address.startswith("12"):
             ip_list.append({"ip": host, "mac": mac_address})
