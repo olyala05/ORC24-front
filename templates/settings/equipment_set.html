@@ -254,7 +254,7 @@
           console.log("Equipments Response:", data);
 
           if (data.status === "success" && Array.isArray(data.data)) {
-            equipmentGrid.innerHTML = ""; // Önce mevcut listeyi temizle
+            equipmentGrid.innerHTML = ""; 
 
             data.data.forEach((device) => {
               const statusClass = device.status === "A" ? "green" : "red";
@@ -290,8 +290,8 @@
 
       if (!equipmentId) return;
 
-      sessionStorage.setItem("selected_equipment_id", equipmentId); // ID'yi kaydet
-      fetchEquipmentDetails(equipmentId); // Detayları çek
+      sessionStorage.setItem("selected_equipment_id", equipmentId); 
+      fetchEquipmentDetails(equipmentId); 
     });
 
     function fetchEquipmentDetails(equipmentId) {

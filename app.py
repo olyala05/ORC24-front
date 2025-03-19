@@ -533,22 +533,33 @@ def fetch_equipment_details():
     if not selected_ip:
         return jsonify({"error": "Cihaz seçilmedi. Lütfen önce bir cihaz seçin!"}), 400
     if not equipment_id:
-        return (
-            jsonify({"error": "Ekipman seçilmedi. Lütfen önce bir ekipman seçin!"}),
-            400,
-        )
+        return jsonify({"error": "Ekipman seçilmedi. Lütfen önce bir ekipman seçin!"}), 400
 
-    print(f"Backend'e Gelen Equipment ID: {equipment_id}")
+    print(f"📌 Backend'e Gelen Equipment ID: {equipment_id}")
 
     try:
         url = f"http://{selected_ip}:8085/get_equipment_details/{equipment_id}"
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        equipment_data = response.json()
+        print(f"📡 Equipment detaylarını çekiyor: {url}")
 
+        response = requests.get(url, timeout=10)
+
+        if response.status_code != 200:
+            print(f"❌ HATA: {response.status_code} - {response.text}")
+            return jsonify({"error": f"Modbus bağlantı hatası: {response.text}"}), response.status_code
+
+        equipment_data = response.json()
         return jsonify(equipment_data)
-    except requests.exceptions.RequestException as e:
+
+    except requests.Timeout:
+        print("❌ Modbus bağlantısı zaman aşımına uğradı.")
+        return jsonify({"error": "Modbus bağlantısı zaman aşımına uğradı."}), 500
+    except requests.ConnectionError:
+        print("❌ Modbus bağlantısı kurulamadı.")
+        return jsonify({"error": "Modbus bağlantısı kurulamadı."}), 500
+    except requests.RequestException as e:
+        print(f"❌ Modbus bağlantı hatası: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
+
 
 
 @app.route("/set_selected_equipment", methods=["POST"])

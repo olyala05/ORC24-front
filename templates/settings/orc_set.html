@@ -427,6 +427,7 @@
               const modem = data.data;
               modemNameInput.value = modem.name || "Unknown";
               modemStatusSelect.value = modem.status.toLowerCase();
+              console.log("Modem Info:", modem);
             } else {
               console.error("Failed to load modem info:", data.message);
             }
