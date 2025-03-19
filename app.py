@@ -706,24 +706,38 @@ def disconnect_request():
 
 @app.route("/equipments-with-models", methods=["POST"])
 def equipments_with_models():
-    
     selected_ip = session.get("selected_device_ip")
 
     if not selected_ip:
         return jsonify({"error": "IP adresi belirtilmedi"}), 400
+
     try:
         url = f"http://{selected_ip}:8085/get_equipments_with_models"
-        response = requests.get(url, timeout=200)
+        print(f"📡 İstek yapılıyor: {url}")  # Debug log
+
+        response = requests.get(url, timeout=20)
         response.raise_for_status()
         equipment_data = response.json()
 
-        if "warning" in equipment_data:
-            return jsonify({"warning": equipment_data["warning"]}), 200
+        if "status" in equipment_data and equipment_data["status"] == "error":
+            print("🚨 Hata: Backend'ten gelen error mesajı:", equipment_data)
+            return jsonify({"error": equipment_data["message"]}), 500
+
+        # **Equipment verisini session içinde tutabiliriz**
         session["equipment_data"] = equipment_data
+        print(f"✅ Başarıyla çekildi: {len(equipment_data['data'])} ekipman bulundu.")
+
         return jsonify(equipment_data)
+
+    except requests.exceptions.Timeout:
+        print("❌ Zaman aşımı hatası!")
+        return jsonify({"error": "Timeout: Ekipman verisi alınamadı."}), 500
+    except requests.exceptions.ConnectionError:
+        print("❌ Bağlantı hatası! Flask instance'ı çalışıyor mu?")
+        return jsonify({"error": "Connection Error: Flask instance'ı çalışıyor mu?"}), 500
     except requests.exceptions.RequestException as e:
-        logging.error(f"Equipment isteği hatası: {e}")
-        return jsonify({"error": f"Equipment Boş"})
+        print(f"❌ RequestException: {e}")
+        return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
 
 
 @app.route("/equipment", endpoint="equipment")

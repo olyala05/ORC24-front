@@ -163,13 +163,13 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-      Swal.fire({
-        icon: "warning",
-        title: "Uyarı",
-        text: "Lütfen önce bir cihaz seçiniz!",
-        confirmButtonText: "Tamam",
-      });
-      return;
+        Swal.fire({
+            icon: "warning",
+            title: "Uyarı",
+            text: "Lütfen önce bir cihaz seçiniz!",
+            confirmButtonText: "Tamam",
+        });
+        return;
     }
 
     // **Loading ekranını ekleyelim**
@@ -183,51 +183,59 @@ block content %}
         </div>`;
     document.body.appendChild(loadingOverlay);
 
+    console.log("📡 `fetch` başlatılıyor: /equipments-with-models");
+
     fetch("/equipments-with-models", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ip_address: selectedDeviceIP }),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ip_address: selectedDeviceIP })
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          Swal.fire({
-            icon: "error",
-            title: "Hata",
-            text: data.error,
-            confirmButtonText: "Tamam",
-          });
-          return;
+    .then(response => response.json())
+    .then(data => {
+        console.log("✅ Equipment Response:", data);
+
+        if (!data || data.error) {
+            console.warn("🚨 Backend Hatası:", data.error);
+            Swal.fire({
+                icon: "error",
+                title: "Hata!",
+                text: data.error || "Ekipman verisi alınamadı.",
+                confirmButtonText: "Tamam",
+            });
+            return;
         }
+
+        // **SessionStorage içine kaydet**
         sessionStorage.setItem("equipment_data", JSON.stringify(data.data));
 
+        // **Yeni sayfaya yönlendir**
         window.location.href = "/equipment";
 
+        // **Loading overlay kaldır**
         window.addEventListener("pageshow", function () {
-          let loader = document.getElementById("loading-overlay");
-          if (loader) loader.remove();
+            let loader = document.getElementById("loading-overlay");
+            if (loader) loader.remove();
         });
-      })
-      .catch((error) => {
-        console.error("Ekipman verisi alırken hata oluştu:", error);
+    })
+    .catch((error) => {
+        console.error("🚨 Ekipman verisi alırken hata oluştu:", error);
         Swal.fire({
-          icon: "error",
-          title: "Hata!",
-          text: "Modbus verisi alınamadı. Lütfen tekrar deneyin.",
-          confirmButtonText: "Tamam",
+            icon: "error",
+            title: "Hata!",
+            text: "Modbus verisi alınamadı. Lütfen tekrar deneyin.",
+            confirmButtonText: "Tamam",
         });
 
         let loader = document.getElementById("loading-overlay");
         if (loader) loader.remove();
-      });
-  }
+    });
+}
+
 
   // Setting
   function goToSetting() {
     let dropdown = document.getElementById("modem");
-    let selectedDeviceIP = dropdown ? dropdown.value : null; // Seçili cihazın IP'sini al
+    let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
       // Kullanıcıya uyarı ver
@@ -364,7 +372,7 @@ block content %}
       })
       .catch((error) => {
         console.error("Modbus verisi alırken hata oluştu:", error);
-        alert("Modbus verisi alınamadı. Lütfen tekrar deneyin.");
+        alert("Eqıipment verisi alınamadı. Lütfen tekrar deneyin.");
       })
       .finally(() => {
         // **Loading ekranını kaldır**
@@ -577,7 +585,7 @@ block content %}
       return;
     }
 
-    // 📌 Cihaz bağlanırken alarm isteklerini resetle
+    //  Cihaz bağlanırken alarm isteklerini resetle
     fetch("/connect_device", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -615,7 +623,7 @@ block content %}
       });
   }
 
-  // 📌 Sayfa Yüklendiğinde Çalıştır
+  // Sayfa Yüklendiğinde Çalıştır
   document.addEventListener("DOMContentLoaded", function () {
     let selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
     let alarmBadge = document.getElementById("alarm-count");
