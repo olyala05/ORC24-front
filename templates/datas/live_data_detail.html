@@ -53,45 +53,47 @@
     const selectedEquipmentID = sessionStorage.getItem("selected_equipment_id");
 
     if (!selectedEquipmentID) {
-      document.getElementById("equipment-details").innerHTML =
-        "<tr><td colspan='5' class='empty-message'>No equipment selected.</td></tr>";
-      return;
+        document.getElementById("equipment-details").innerHTML =
+            "<tr><td colspan='5' class='empty-message'>No equipment selected.</td></tr>";
+        return;
     }
 
-    fetch(`/fetch_equipment_details?equipment_id=${selectedEquipmentID}`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === "success" && data.data) {
-          updateDetailsTable([data.data]);
-        } else {
-          document.getElementById("equipment-details").innerHTML =
-            "<tr><td colspan='5' class='empty-message'>No equipment details found.</td></tr>";
-        }
-      })
-      .catch(() => {
-        document.getElementById("equipment-details").innerHTML =
-          "<tr><td colspan='5' class='empty-message'>Error loading data.</td></tr>";
-      });
-  }
+    fetch(`/get_equipment_details/${selectedEquipmentID}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success" && data.data) {
+                updateDetailsTable([data.data]);
+            } else {
+                document.getElementById("equipment-details").innerHTML =
+                    "<tr><td colspan='5' class='empty-message'>No equipment details found.</td></tr>";
+            }
+        })
+        .catch(() => {
+            document.getElementById("equipment-details").innerHTML =
+                "<tr><td colspan='5' class='empty-message'>Error loading data.</td></tr>";
+        });
+}
 
-  function updateDetailsTable(equipments) {
-    const tableBody = document.getElementById("equipment-details");
-    tableBody.innerHTML = "";
+function updateDetailsTable(equipments) {
+  const tableBody = document.getElementById("equipment-details");
+  tableBody.innerHTML = "";
 
-    equipments.forEach((equipment) => {
-      let row = document.createElement("tr");
-      row.innerHTML = `
-          <td>${equipment.model_name}@${equipment.serial_number}</td>
-          <td>${equipment.modem_serial_number || "N/A"}</td>
-          <td style="color: ${equipment.status === 'A' ? 'green' : 'red'}; font-weight: bold;">
-              ${equipment.status === "A" ? "A" : "P"}
-          </td>
-          <td><div class="status-circle"></div></td>
-          <td>${equipment.data_count || 0}</td>
-      `;
-      tableBody.appendChild(row);
-    });
-  }
+  equipments.forEach((equipment) => {
+    let row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${equipment.model_name}@${equipment.serial_number}</td>
+        <td>${equipment.modem_serial_number || "N/A"}</td>
+        <td style="color: ${equipment.status === 'A' ? 'green' : 'red'}; font-weight: bold;">
+            ${equipment.status === "A" ? "A" : "P"}
+        </td>
+        <td><div class="status-circle"></div></td>
+        <td>${equipment.data_count || 0}</td>
+    `;
+
+    tableBody.appendChild(row);
+  });
+}
+
 
   let currentPage = 1;
   const perPage = 20;

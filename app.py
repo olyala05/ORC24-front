@@ -842,7 +842,7 @@ def fetch_live_data_paginated():
     """
     Sayfalama ile canlı veri döndüren endpoint.
     """
-    selected_ip = session.get("selected_device_ip")  # Seçili cihazın IP adresi
+    selected_ip = session.get("selected_device_ip") 
     data = request.json
     page = int(data.get("page", 1))
     per_page = int(data.get("per_page", 20))
