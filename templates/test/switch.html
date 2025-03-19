@@ -43,18 +43,17 @@
             command: "systemctl stop iot_main.service",
           }),
         })
-        .then(() => {
-          window.location.href = "{{ url_for('test') }}";
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          window.location.href = "{{ url_for('test') }}";
-        });
+          .then(() => {
+            window.location.href = "{{ url_for('test') }}";
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            window.location.href = "{{ url_for('test') }}";
+          });
       }
     });
   }
 </script>
-
 
 <style>
   .swal-custom-bg {
@@ -78,6 +77,10 @@
 
   .swal-button:hover {
     background-color: #f0f0f0 !important;
+  }
+  div:where(.swal2-icon).swal2-warning {
+    border-color: #ef8018;
+    color: #ef8018;
   }
 </style>
 
