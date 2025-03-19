@@ -601,7 +601,7 @@ block content %}
           if (alarmUpdateInterval) {
             clearInterval(alarmUpdateInterval);
           }
-          alarmUpdateInterval = setInterval(updateAlarmCount, 10000);
+          alarmUpdateInterval = setInterval(updateAlarmCount, 1000000);
         } else {
           sessionStorage.removeItem("selected_device_ip");
           console.error("Bağlantı hatası:", data.error);
