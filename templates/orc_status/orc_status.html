@@ -11,9 +11,9 @@
   <div class="orc-content">
     <div class="device-info">
       <ul>
-        <li>S/N: <span>{{modem.serial_no}}</span></li>
-        <li>MODEM NAME: <span>{{ modem.name }}</span></li>
-        <li>MODEM BRAND / MODEL: <span>ORC 23 OwL</span></li>
+        <li>S/N: <span>{{ modem.serial_no if modem.serial_no else '-' }}</span></li>
+        <li>MODEM NAME: <span>{{ modem.name if modem.name else '-' }}</span></li>
+        <li>MODEM BRAND / MODEL: <span>{{ modem.brand_model if modem.brand_model else '-' }}</span></li>
         <li>
           MODEM STATUS:
           <span
@@ -21,7 +21,7 @@
             %}</span
           >
         </li>
-        <li>DATE OF INSTALLATION: <span>{{modem.created_at}}</span></li>
+        <li>DATE OF INSTALLATION: <span>{{modem.created_at if modem.created_at else '-'}}</span></li>
         <li>DATA READING INTERVAL: <span>1380 Seconds</span></li>
         <li>NETWORK TYPE: 
           <span>
@@ -32,7 +32,7 @@
               {% endif %}
           </span>
         </li>      
-        <li>CONNECTION PROTOCOL: <span id="connection-protocol">Loading...</span></li>
+        <li>CONNECTION PROTOCOL: <span id="connection-protocol">-</span></li>
         <li>SOFTWARE VERSION: <span>V 1.02</span></li>
       </ul>
 
@@ -211,11 +211,11 @@ document.addEventListener("DOMContentLoaded", function () {
   })
   .then(response => response.json())
   .then(data => {
-      console.log("Gelen JSON:", data);  // Hata ayıklama için veriyi yazdır
+      console.log("Gelen JSON:", data);  
 
-      if (data.data && data.data.length > 0) { // data.data dizisi boş mu kontrol et
-          let protocolText = "Unknown";
-          let equipment = data.data[0];  // İlk elemanı al
+      if (data.data && data.data.length > 0) { 
+          let protocolText = "-";
+          let equipment = data.data[0];  
 
           if (equipment.communication_protocol_code === 1) {
               protocolText = "SERIAL";
@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
           // HTML içindeki CONNECTION PROTOCOL değerini güncelle
           document.getElementById("connection-protocol").innerText = protocolText;
       } else {
-          document.getElementById("connection-protocol").innerText = "Unknown";
+          document.getElementById("connection-protocol").innerText = "-";
       }
   })
   .catch(error => {
