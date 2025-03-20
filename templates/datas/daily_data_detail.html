@@ -1,7 +1,4 @@
-{% extends "layout.html" %} 
-
-{% block title %} Daily Data Details {% endblock %}
-
+{% extends "layout.html" %} {% block title %} Daily Data Details {% endblock %}
 {% block content %}
 
 <!-- Header -->
@@ -20,7 +17,9 @@
       </tr>
     </thead>
     <tbody id="equipment-details">
-      <tr><td colspan='5' class="empty-message">Loading...</td></tr>
+      <tr>
+        <td colspan="5" class="empty-message"></td>
+      </tr>
     </tbody>
   </table>
 
@@ -37,7 +36,9 @@
         </tr>
       </thead>
       <tbody id="daily-data-body">
-        <tr><td colspan='5' class="empty-message">Loading...</td></tr>
+        <tr>
+          <td colspan="5" class="empty-message"></td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -59,8 +60,8 @@
     }
 
     fetch(`/fetch_equipment_details?equipment_id=${selectedEquipmentID}`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         if (data.status === "success" && data.data) {
           updateDetailsTable([data.data]);
         } else {
@@ -83,7 +84,9 @@
       row.innerHTML = `
           <td>${equipment.model_name}@${equipment.serial_number}</td>
           <td>${equipment.modem_serial_number || "N/A"}</td>
-          <td style="color: ${equipment.status === 'A' ? 'green' : 'red'}; font-weight: bold;">
+          <td style="color: ${
+            equipment.status === "A" ? "green" : "red"
+          }; font-weight: bold;">
               ${equipment.status === "A" ? "A" : "P"}
           </td>
           <td><div class="status-circle"></div></td>
@@ -97,15 +100,17 @@
   const perPage = 20;
   let isFetching = false;
 
-  document.querySelector(".scrollable-table tbody").addEventListener("scroll", function () {
-    if (this.scrollTop + this.clientHeight >= this.scrollHeight - 50) {
-      if (!isFetching) {
-        isFetching = true;
-        currentPage++;
-        fetchDailyData(currentPage);
+  document
+    .querySelector(".scrollable-table tbody")
+    .addEventListener("scroll", function () {
+      if (this.scrollTop + this.clientHeight >= this.scrollHeight - 50) {
+        if (!isFetching) {
+          isFetching = true;
+          currentPage++;
+          fetchDailyData(currentPage);
+        }
       }
-    }
-  });
+    });
 
   function fetchDailyData(page) {
     fetch("/fetch_daily_data_paginated", {
@@ -113,9 +118,13 @@
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ page: page, per_page: perPage }),
     })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === "success" && data.data && Array.isArray(data.data.data)) {
+      .then((response) => response.json())
+      .then((data) => {
+        if (
+          data.status === "success" &&
+          data.data &&
+          Array.isArray(data.data.data)
+        ) {
           updateDailyDataTable(data.data.data);
         } else if (page === 1) {
           document.getElementById("daily-data-body").innerHTML =
@@ -149,7 +158,9 @@
 
   function formatDateTime(dateTimeString) {
     const date = new Date(dateTimeString);
-    return date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0];
+    return (
+      date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0]
+    );
   }
 </script>
 

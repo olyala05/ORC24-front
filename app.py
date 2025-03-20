@@ -205,8 +205,8 @@ def connect_device():
 
     try:
         with socket.create_connection((ip_address, 80), timeout=5):
-            session["selected_device_ip"] = ip_address  # 📌 Cihazı session'a kaydet
-            session.permanent = True  # 📌 Session'ın kalıcı olması için
+            session["selected_device_ip"] = ip_address  
+            session.permanent = True 
             return jsonify(success=True)
     except Exception as e:
         return jsonify(success=False, error=f"Bağlantı hatası: {str(e)}")
@@ -730,40 +730,37 @@ def equipments_with_models():
 
     if not selected_ip:
         return jsonify({"error": "IP adresi belirtilmedi"}), 400
-
     try:
         url = f"http://{selected_ip}:8085/get_equipments_with_models"
-        print(f"📡 İstek yapılıyor: {url}")  # Debug log
+        print(f"📡 İstek yapılıyor: {url}")  
 
         response = requests.get(url, timeout=20)
         response.raise_for_status()
         equipment_data = response.json()
 
         if "status" in equipment_data and equipment_data["status"] == "error":
-            print("🚨 Hata: Backend'ten gelen error mesajı:", equipment_data)
+            print("Hata: Backend'ten gelen error mesajı:", equipment_data)
             return jsonify({"error": equipment_data["message"]}), 500
 
         # **Equipment verisini session içinde tutabiliriz**
         session["equipment_data"] = equipment_data
-        print(f"✅ Başarıyla çekildi: {len(equipment_data['data'])} ekipman bulundu.")
+        print(f"Başarıyla çekildi: {len(equipment_data['data'])} ekipman bulundu.")
 
         return jsonify(equipment_data)
 
     except requests.exceptions.Timeout:
-        print("❌ Zaman aşımı hatası!")
+        print("Zaman aşımı hatası!")
         return jsonify({"error": "Timeout: Ekipman verisi alınamadı."}), 500
     except requests.exceptions.ConnectionError:
-        print("❌ Bağlantı hatası! Flask instance'ı çalışıyor mu?")
+        print("Bağlantı hatası! Flask instance'ı çalışıyor mu?")
         return jsonify({"error": "Connection Error: Flask instance'ı çalışıyor mu?"}), 500
     except requests.exceptions.RequestException as e:
-        print(f"❌ RequestException: {e}")
+        print(f"RequestException: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
-
 
 @app.route("/equipment", endpoint="equipment")
 def equipment():
     return render_template("equipments/equipments.html", page_title="Equipments")
-
 
 @app.route("/equipment-setting", methods=["GET"])
 def equipment_setting():

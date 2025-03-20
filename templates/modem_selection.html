@@ -163,13 +163,13 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-        Swal.fire({
-            icon: "warning",
-            title: "Uyarı",
-            text: "Lütfen önce bir cihaz seçiniz!",
-            confirmButtonText: "Tamam",
-        });
-        return;
+      Swal.fire({
+        icon: "warning",
+        title: "Uyarı",
+        text: "Lütfen önce bir cihaz seçiniz!",
+        confirmButtonText: "Tamam",
+      });
+      return;
     }
 
     // **Loading ekranını ekleyelim**
@@ -186,23 +186,23 @@ block content %}
     console.log("📡 `fetch` başlatılıyor: /equipments-with-models");
 
     fetch("/equipments-with-models", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ip_address: selectedDeviceIP })
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ip_address: selectedDeviceIP }),
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log("✅ Equipment Response:", data);
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Equipment Response:", data);
 
         if (!data || data.error) {
-            console.warn("🚨 Backend Hatası:", data.error);
-            Swal.fire({
-                icon: "error",
-                title: "Hata!",
-                text: data.error || "Ekipman verisi alınamadı.",
-                confirmButtonText: "Tamam",
-            });
-            return;
+          console.warn("Backend Hatası:", data.error);
+          Swal.fire({
+            icon: "error",
+            title: "Hata!",
+            text: data.error || "Ekipman verisi alınamadı.",
+            confirmButtonText: "Tamam",
+          });
+          return;
         }
 
         // **SessionStorage içine kaydet**
@@ -210,27 +210,21 @@ block content %}
 
         // **Yeni sayfaya yönlendir**
         window.location.href = "/equipment";
-
-        // **Loading overlay kaldır**
-        window.addEventListener("pageshow", function () {
-            let loader = document.getElementById("loading-overlay");
-            if (loader) loader.remove();
-        });
-    })
-    .catch((error) => {
-        console.error("🚨 Ekipman verisi alırken hata oluştu:", error);
+      })
+      .catch((error) => {
+        console.error("Ekipman verisi alırken hata oluştu:", error);
         Swal.fire({
-            icon: "error",
-            title: "Hata!",
-            text: "Modbus verisi alınamadı. Lütfen tekrar deneyin.",
-            confirmButtonText: "Tamam",
+          icon: "error",
+          title: "Hata!",
+          text: "Equipment verisi alınamadı. Lütfen tekrar deneyin.",
+          confirmButtonText: "Tamam",
         });
-
+      })
+      .finally(() => {
         let loader = document.getElementById("loading-overlay");
         if (loader) loader.remove();
-    });
-}
-
+      });
+  }
 
   // Setting
   function goToSetting() {
@@ -384,17 +378,17 @@ block content %}
   function updateDateTime() {
     const now = new Date();
 
-    // 📌 Gün, ay, yıl formatında al (DD Month YYYY)
+    // Gün, ay, yıl formatında al (DD Month YYYY)
     const options = { day: "2-digit", month: "long", year: "numeric" };
     const formattedDate = now.toLocaleDateString("tr-TR", options);
 
-    // 📌 Saat ve dakikayı ekle (HH:MM formatında)
+    // Saat ve dakikayı ekle (HH:MM formatında)
     const formattedTime = now.toLocaleTimeString("tr-TR", {
       hour: "2-digit",
       minute: "2-digit",
     });
 
-    // 📌 HTML içine ekle
+    // HTML içine ekle
     document.getElementById(
       "currentDateTime"
     ).textContent = `${formattedDate} ${formattedTime}`;
