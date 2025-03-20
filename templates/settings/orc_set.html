@@ -413,32 +413,38 @@
     });
 
     document.addEventListener("DOMContentLoaded", function () {
-      const modemNameInput = document.querySelector(
-        "#orc-set .orc-input-group input"
-      );
-      const modemStatusSelect = document.querySelector(
-        "#orc-set .orc-input-group select"
-      );
+      const modemNameInput = document.querySelector("#orc-set .orc-input-group input");
+      const modemStatusSelect = document.querySelector("#orc-set .orc-input-group select");
+    
       function fetchModemInfo() {
         fetch("/get_modem_info")
           .then((response) => response.json())
           .then((data) => {
             if (data.status === "success") {
               const modem = data.data;
-              modemNameInput.value = modem.name || "Unknown";
-              modemStatusSelect.value = modem.status.toLowerCase();
+  
+              modemNameInput.value = modem.name && modem.name.trim() ? modem.name : "-";
+    
+              modemStatusSelect.value = modem.status && modem.status.trim()
+                ? modem.status.toLowerCase()
+                : "-";
+    
               console.log("Modem Info:", modem);
             } else {
               console.error("Failed to load modem info:", data.message);
+              modemNameInput.value = "-";
+              modemStatusSelect.value = "-";
             }
           })
           .catch((error) => {
             console.error("Error while fetching modem info:", error);
+            modemNameInput.value = "-";
+            modemStatusSelect.value = "-";
           });
       }
-
       fetchModemInfo();
     });
+    
   </script>
 
   <style>
