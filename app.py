@@ -20,6 +20,8 @@ import socket
 from datetime import datetime
 import logging
 import pymodbus.client.tcp 
+import os
+
 
 app = Flask(__name__)
 CORS(app)
@@ -27,9 +29,9 @@ app.secret_key = "supersecretkey"
 app.config["JWT_SECRET_KEY"] = "jwt_secret_key"
 jwt = JWTManager(app)
 
-# Flask logları ayarla
-logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger(__name__)
+
 
 # Laravel API'nin URL'si
 LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"

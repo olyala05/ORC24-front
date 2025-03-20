@@ -17,9 +17,7 @@
         <li>
           MODEM STATUS:
           <span
-            >{% if modem.status == "A" %} Active {% else %} Passive {% endif
-            %}</span
-          >
+            >{% if modem.status == "A" %} Active {% else %} Passive {% endif %}</span>
         </li>
         <li>DATE OF INSTALLATION: <span>{{modem.created_at if modem.created_at else '-'}}</span></li>
         <li>DATA READING INTERVAL: <span>1380 Seconds</span></li>
