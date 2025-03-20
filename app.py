@@ -1173,8 +1173,11 @@ def get_logs():
     if not selected_ip:
         logging.error("Selected device IP not found.")
         return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
+    
     try:
-        data = request.get_json()  
+        data = request.get_json()
+        logging.debug(f"[DEBUG] Received request body: {data}")
+
         if not data:
             logging.error("No data received in the request.")
             return jsonify({"error": "No data received"}), 400
@@ -1182,28 +1185,29 @@ def get_logs():
         year = data.get("year")
         month = data.get("month")
         day = data.get("day")
-        hour = data.get("hour", None)  
-        
+        hour = data.get("hour", None)
+
         logging.info(f"Fetching logs with params: Year: {year}, Month: {month}, Day: {day}, Hour: {hour}")
 
         url_alarm = f"http://{selected_ip}:8085/get_all_logs"
-        params = {
-            "year": year,
-            "month": month,
-            "day": day,
-            "hour": hour
-        }
-        response_alarm = requests.get(url_alarm, params=params, timeout=5)
-        response_alarm.raise_for_status()
+        params = {"year": year, "month": month, "day": day, "hour": hour}
 
+        logging.debug(f"[DEBUG] Sending request to: {url_alarm} with params {params}")
+
+        response_alarm = requests.get(url_alarm, params=params, timeout=5)
+        logging.debug(f"[DEBUG] Received response: {response_alarm.status_code}")
+
+        response_alarm.raise_for_status()
         logs = response_alarm.json().get("data", [])
-        logging.info(f"Fetched {len(logs)} logs successfully.")
+
+        logging.info(f"Fetched {len(logs)} logs successfully: {logs}")
+
         return jsonify({"status": "success", "data": logs})
 
     except requests.exceptions.RequestException as e:
-        logging.error(f"Error fetching logs: {e}")
+        logging.error(f"[ERROR] Error fetching logs: {e}")
         return jsonify({"status": "error", "message": f"LOGS verileri alınamadı: {e}"}), 500
-   
+
 class ResponseHandler:
     @staticmethod
     def success(message=None, data=None):

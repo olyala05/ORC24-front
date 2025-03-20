@@ -66,126 +66,84 @@
     document.getElementById("no-logs-message").style.display = "none";
     document.getElementById("calendar-container").style.display = "none";
 
-    let today = new Date();
-    let year = today.getFullYear();
-    let month = String(today.getMonth() + 1).padStart(2, "0"); // Ay formatı düzeltildi
-    let day = String(today.getDate()).padStart(2, "0");
-
-    let postData = { year, month, day };
-
-    console.log("[DEBUG] Sending request with data:", postData);
-
     fetch("/get_logs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(postData),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1,
+        day: new Date().getDate(),
+      }),
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log("[DEBUG] Response received:", data);
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Fetched logs:", data);
         document.getElementById("loading-message").style.display = "none";
 
         if (data.status === "success") {
-            let logs = data.data;
-
-            console.log("[DEBUG] Logs received:", logs);
-
-            if (typeof logs === "string") {
-                try {
-                    logs = JSON.parse(logs);
-                    console.log("[DEBUG] Parsed logs:", logs);
-                } catch (error) {
-                    console.error("[DEBUG] JSON parse error:", error);
-                    logs = [];
-                }
+          let logs = data.data;
+ 
+          if (typeof logs === "string") {
+            try {
+              logs = JSON.parse(logs); 
+            } catch (error) {
+              console.error("Error parsing logs JSON:", error);
+              logs = []; 
             }
+          }
 
-            if (Array.isArray(logs) && logs.length > 0) {
-                updateTable(logs);
-            } else {
-                console.log("[DEBUG] No logs found.");
-                document.getElementById("no-logs-message").style.display = "block";
-                document.getElementById("calendar-container").style.display = "block";
-            }
-        } else {
-            console.log("[DEBUG] API returned an error:", data);
+          if (Array.isArray(logs) && logs.length > 0) {
+            updateTable(logs);
+          } else {
             document.getElementById("no-logs-message").style.display = "block";
-            document.getElementById("calendar-container").style.display = "block";
+            document.getElementById("calendar-container").style.display =
+              "block";
+          }
+        } else {
+          document.getElementById("no-logs-message").style.display = "block";
+          document.getElementById("calendar-container").style.display = "block";
         }
-    })
-    .catch(error => {
-        console.error("[DEBUG] Fetch error:", error);
+      })
+      .catch((error) => {
+        console.error("Error fetching logs:", error);
         document.getElementById("loading-message").style.display = "none";
         document.getElementById("no-logs-message").style.display = "block";
         document.getElementById("calendar-container").style.display = "block";
-    });
-}
+      });
+  }
 
-function updateTable(logs) {
-    console.log("[DEBUG] Updating table with logs:", logs);
-
-    if (!Array.isArray(logs) || logs.length === 0) {
-        console.error("Logs is not an array or is empty:", logs);
-        document.getElementById("no-logs-message").style.display = "block";
-        return;
+  function updateTable(logs) {
+    console.log("Updating table with logs:", logs);
+    if (!Array.isArray(logs)) {
+      console.error("Logs is not an array:", logs);
+      return;
     }
 
     const tableBody = document.querySelector("#log-table-body");
     tableBody.innerHTML = "";
 
-    logs.forEach((log, index) => {
-        const row = document.createElement("tr");
+    logs.forEach((log) => {
+      const row = document.createElement("tr");
+      let shortText = log.tag + " - " + (log.data || "N/A");
+      let displayText =
+        shortText.length > 100
+          ? shortText.substring(0, 100) + "..."
+          : shortText;
+      let expandText =
+        shortText.length > 100
+          ? `<span class='expand' onclick='toggleExpand(this)'>Devamını Oku</span>`
+          : "";
 
-        let shortText = log.tag + " - " + (log.data || "N/A");
-        let fullText = JSON.stringify(log.data, null, 2);
-        let displayText = shortText.length > 100 ? shortText.substring(0, 100) + "..." : shortText;
-        let expandText = shortText.length > 100 ? `<span class='expand' onclick='toggleExpand(this, ${index})'>Devamını Oku</span>` : "";
+      let statusClass = getStatusClass(log.type); 
 
-        let statusClass = getStatusClass(log.type);
-
-        row.innerHTML = `
-            <td><span class="status-dot ${statusClass}"></span></td>
-            <td class="truncate" style="max-width: 300px;">
-                <span id="short-${index}">${displayText}</span>
-                <span id="full-${index}" style="display:none;">${fullText}</span>
-                ${expandText}
-            </td>
-            <td style="white-space: nowrap;">${log.created_at}</td>
-        `;
-
-        tableBody.appendChild(row);
+      row.innerHTML = `
+        <td><span class="status-dot ${statusClass}"></span></td>
+        <td class="truncate" style="max-width: 300px;">${displayText} ${expandText}</td>
+        <td style="white-space: nowrap;">${log.created_at}</td>
+      `;
+      tableBody.appendChild(row);
     });
-}
-
-function getStatusClass(type) {
-    switch (type) {
-        case 1:
-            return "status-info";
-        case 2:
-            return "status-warning"; 
-        case 3:
-            return "status-exception"; 
-        default:
-            return "status-info";
-    }
-}
-
-function toggleExpand(element, index) {
-    let shortText = document.getElementById(`short-${index}`);
-    let fullText = document.getElementById(`full-${index}`);
-
-    if (shortText.style.display === "none") {
-        shortText.style.display = "inline";
-        fullText.style.display = "none";
-        element.textContent = "Devamını Oku";
-    } else {
-        shortText.style.display = "none";
-        fullText.style.display = "inline";
-        element.textContent = "Kısalt";
-    }
-}
-
-
+  }
 
   function getStatusClass(type) {
     switch (type) {
@@ -217,44 +175,6 @@ function toggleExpand(element, index) {
         "... <span class='expand' onclick='toggleExpand(this)'>Devamını Oku</span>";
     }
   }
-
-  function fetchLogsByDate() {
-    let selectedDate = document.getElementById("log-date-picker").value;
-    
-    if (!selectedDate) {
-        console.error("No date selected.");
-        return;
-    }
-
-    let [year, month, day] = selectedDate.split("-").map(Number);
-
-    console.log(`Fetching logs for selected date: ${year}-${month}-${day}`);
-
-    fetch("/get_logs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ year, month, day }),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log("Fetched logs:", data);
-        document.getElementById("loading-message").style.display = "none";
-
-        if (data.status === "success" && data.data.length > 0) {
-            updateTable(data.data);
-        } else {
-            document.getElementById("no-logs-message").style.display = "block";
-            document.getElementById("calendar-container").style.display = "block";
-        }
-    })
-    .catch((error) => {
-        console.error("Error fetching logs:", error);
-        document.getElementById("loading-message").style.display = "none";
-        document.getElementById("no-logs-message").style.display = "block";
-        document.getElementById("calendar-container").style.display = "block";
-    });
-}
-
 </script>
 
 {% endblock %}
