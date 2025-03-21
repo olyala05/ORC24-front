@@ -1,10 +1,11 @@
-{% extends "layout.html" %} 
-{% block title %} ORC Status - Error Log {% endblock%} 
+{% extends "layout.html" %}
+{% block title %} ORC Status - Error Log {% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
+{% endblock %}
 
-{% endblock %} {% block content %}
+{% block content %}
 
 <!-- Header -->
 {% include 'partials/header.html' %}
@@ -21,35 +22,24 @@
           </tr>
         </thead>
         <tbody id="log-table-body">
-          <tr
-            id="loading-message"
-            style="display: none; text-align: center; font-size: 14px"
-          >
+          <tr id="loading-message" style="display: none; text-align: center; font-size: 14px">
             <td colspan="3">Loading logs...</td>
           </tr>
         </tbody>
       </table>
 
       <!-- No Logs message -->
-      <div
-        id="no-logs-message"
-        style="
-          display: none;
-          color: red;
-          text-align: center;
-          font-size: 14px;
-          margin-top: 10px;
-        "
-      >
-        Bu güne ait loglar bulunamadı. Lütfen aşağıdaki takvimden başka bir
-        tarih seçin.
+      <div id="no-logs-message" style="display: none; color: red; text-align: center; font-size: 14px; margin-top: 10px;">
+        Bu güne ait loglar bulunamadı. Lütfen aşağıdaki takvimden başka bir tarih seçin.
+      </div>
+
+      <!-- Message for navigating back in time -->
+      <div id="info-message" style="display: none; color: green; text-align: center; font-size: 14px; margin-top: 15px;">
+        Geriye dönük logları görmek için takvimden seçim yapabilirsiniz.
       </div>
 
       <!-- Calendar Selector -->
-      <div
-        id="calendar-container"
-        style="display: block; text-align: center; margin-top: 15px"
-      >
+      <div id="calendar-container" style="display: block; text-align: center; margin-top: 15px">
         <input type="date" id="log-date-picker" onchange="fetchLogsByDate()" />
       </div>
     </div>
@@ -58,13 +48,14 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    fetchLogs();
+    fetchLogs(); // Fetch logs for the current date initially
   });
 
   function fetchLogs() {
     document.getElementById("loading-message").style.display = "table-row";
     document.getElementById("no-logs-message").style.display = "none";
     document.getElementById("calendar-container").style.display = "none";
+    document.getElementById("info-message").style.display = "none"; // Hide info message initially
 
     fetch("/get_logs", {
       method: "POST",
@@ -77,68 +68,65 @@
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Fetched logs:", data);
         document.getElementById("loading-message").style.display = "none";
 
         if (data.status === "success") {
           let logs = data.data;
- 
           if (typeof logs === "string") {
             try {
-              logs = JSON.parse(logs); 
+              logs = JSON.parse(logs);
             } catch (error) {
               console.error("Error parsing logs JSON:", error);
-              logs = []; 
+              logs = [];
             }
           }
 
           if (Array.isArray(logs) && logs.length > 0) {
+            document.getElementById("info-message").style.display = "block"; // Show info message when logs are fetched
             updateTable(logs);
+            document.getElementById("no-logs-message").style.display = "none"; // Hide "no logs" message
           } else {
-            document.getElementById("no-logs-message").style.display = "block";
-            document.getElementById("calendar-container").style.display =
-              "block";
+            document.getElementById("no-logs-message").style.display = "block"; // Show "no logs" message
           }
         } else {
-          document.getElementById("no-logs-message").style.display = "block";
-          document.getElementById("calendar-container").style.display = "block";
+          document.getElementById("no-logs-message").style.display = "block"; // Show "no logs" message
         }
+
+        document.getElementById("calendar-container").style.display = "block"; // Show the calendar
       })
       .catch((error) => {
         console.error("Error fetching logs:", error);
         document.getElementById("loading-message").style.display = "none";
-        document.getElementById("no-logs-message").style.display = "block";
-        document.getElementById("calendar-container").style.display = "block";
+        document.getElementById("no-logs-message").style.display = "block"; // Show "no logs" message
+        document.getElementById("calendar-container").style.display = "block"; // Show the calendar
       });
   }
 
   function updateTable(logs) {
-    console.log("Updating table with logs:", logs);
-    if (!Array.isArray(logs)) {
-      console.error("Logs is not an array:", logs);
-      return;
-    }
-
     const tableBody = document.querySelector("#log-table-body");
     tableBody.innerHTML = "";
+
+    // Show the info message above the log table
+    const infoMessage = document.getElementById("info-message");
+    if (infoMessage) {
+      const infoRow = document.createElement("tr");
+      const infoCell = document.createElement("td");
+      infoCell.colSpan = 3;
+      infoCell.style.textAlign = "center";
+      infoCell.innerHTML = infoMessage.innerHTML;
+      infoRow.appendChild(infoCell);
+      tableBody.appendChild(infoRow);
+    }
 
     logs.forEach((log) => {
       const row = document.createElement("tr");
       let shortText = log.tag + " - " + (log.data || "N/A");
-      let displayText =
-        shortText.length > 100
-          ? shortText.substring(0, 100) + "..."
-          : shortText;
-      let expandText =
-        shortText.length > 100
-          ? `<span class='expand' onclick='toggleExpand(this)'>Devamını Oku</span>`
-          : "";
-
-      let statusClass = getStatusClass(log.type); 
+      let displayText = shortText.length > 100 ? shortText.substring(0, 100) + "..." : shortText;
+      let statusClass = getStatusClass(log.type);
 
       row.innerHTML = `
         <td><span class="status-dot ${statusClass}"></span></td>
-        <td class="truncate" style="max-width: 300px;">${displayText} ${expandText}</td>
+        <td class="truncate" style="max-width: 300px;">${displayText}</td>
         <td style="white-space: nowrap;">${log.created_at}</td>
       `;
       tableBody.appendChild(row);
@@ -147,83 +135,52 @@
 
   function getStatusClass(type) {
     switch (type) {
-      case 1:
-        return "status-info";
-      case 2:
-        return "status-warning"; 
-      case 3:
-        return "status-exception"; 
-      default:
-        return "status-info";
-    }
-  }
-
-  function toggleExpand(element) {
-    let cell = element.parentElement;
-    let fullText = cell.getAttribute("data-full-text");
-    if (!fullText) {
-      fullText = cell.textContent.replace("Devamını Oku", "");
-      cell.setAttribute("data-full-text", fullText);
-    }
-    if (element.textContent === "Devamını Oku") {
-      cell.innerHTML =
-        fullText +
-        " <span class='expand' onclick='toggleExpand(this)'>Kısalt</span>";
-    } else {
-      cell.innerHTML =
-        fullText.substring(0, 500) +
-        "... <span class='expand' onclick='toggleExpand(this)'>Devamını Oku</span>";
+      case 1: return "status-info";
+      case 2: return "status-warning";
+      case 3: return "status-exception";
+      default: return "status-info";
     }
   }
 
   function fetchLogsByDate() {
     let selectedDate = document.getElementById("log-date-picker").value;
-
     if (!selectedDate) {
-        console.error("[ERROR] No date selected.");
-        return;
+      console.error("[ERROR] No date selected.");
+      return;
     }
 
     let [year, month, day] = selectedDate.split("-").map(Number);
-
     console.log(`[DEBUG] Fetching logs for selected date: ${year}-${month}-${day}`);
 
     fetch("/get_logs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ year, month, day }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ year, month, day }),
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log("[DEBUG] API Response:", data);
+      .then((response) => response.json())
+      .then((data) => {
         document.getElementById("loading-message").style.display = "none";
+        document.getElementById("info-message").style.display = "none"; // Hide info message initially
 
         if (data.status === "success" && data.data) {
-            let logs;
-            try {
-                logs = typeof data.data === "string" ? JSON.parse(data.data) : data.data;
-                console.log("[DEBUG] Logs parsed successfully:", logs);
-            } catch (error) {
-                console.error("[ERROR] JSON Parse Error:", error);
-                logs = [];
-            }
-
-            if (Array.isArray(logs) && logs.length > 0) {
-                updateTable(logs);
-            } else {
-                console.log("[DEBUG] No logs found.");
-                document.getElementById("no-logs-message").style.display = "block";
-            }
+          let logs = typeof data.data === "string" ? JSON.parse(data.data) : data.data;
+          if (Array.isArray(logs) && logs.length > 0) {
+            document.getElementById("info-message").style.display = "block"; // Show info message when logs are fetched
+            updateTable(logs);
+            document.getElementById("no-logs-message").style.display = "none"; // Hide "no logs" message
+          } else {
+            document.getElementById("no-logs-message").style.display = "block"; // Show "no logs" message
+          }
         } else {
-            document.getElementById("no-logs-message").style.display = "block";
+          document.getElementById("no-logs-message").style.display = "block"; // Show "no logs" message
         }
-    })
-    .catch(error => {
+      })
+      .catch((error) => {
         console.error("[ERROR] Fetch error:", error);
         document.getElementById("loading-message").style.display = "none";
-        document.getElementById("no-logs-message").style.display = "block";
-    });
-}
+        document.getElementById("no-logs-message").style.display = "block"; // Show "no logs" message
+      });
+  }
 </script>
 
 {% endblock %}
