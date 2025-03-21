@@ -175,6 +175,55 @@
         "... <span class='expand' onclick='toggleExpand(this)'>Devamını Oku</span>";
     }
   }
+
+  function fetchLogsByDate() {
+    let selectedDate = document.getElementById("log-date-picker").value;
+
+    if (!selectedDate) {
+        console.error("[ERROR] No date selected.");
+        return;
+    }
+
+    let [year, month, day] = selectedDate.split("-").map(Number);
+
+    console.log(`[DEBUG] Fetching logs for selected date: ${year}-${month}-${day}`);
+
+    fetch("/get_logs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ year, month, day }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("[DEBUG] API Response:", data);
+        document.getElementById("loading-message").style.display = "none";
+
+        if (data.status === "success" && data.data) {
+            let logs;
+            try {
+                logs = typeof data.data === "string" ? JSON.parse(data.data) : data.data;
+                console.log("[DEBUG] Logs parsed successfully:", logs);
+            } catch (error) {
+                console.error("[ERROR] JSON Parse Error:", error);
+                logs = [];
+            }
+
+            if (Array.isArray(logs) && logs.length > 0) {
+                updateTable(logs);
+            } else {
+                console.log("[DEBUG] No logs found.");
+                document.getElementById("no-logs-message").style.display = "block";
+            }
+        } else {
+            document.getElementById("no-logs-message").style.display = "block";
+        }
+    })
+    .catch(error => {
+        console.error("[ERROR] Fetch error:", error);
+        document.getElementById("loading-message").style.display = "none";
+        document.getElementById("no-logs-message").style.display = "block";
+    });
+}
 </script>
 
 {% endblock %}

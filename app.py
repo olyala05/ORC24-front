@@ -124,44 +124,44 @@ def arp_scan(ip_range):
 
     return ip_list
 
-def nmap_scan(ip_range):
-    """Belirtilen IP aralığında Nmap taraması yaparak 02 veya 12 ile başlayan MAC adreslerini bulur"""
-    nm = nmap.PortScanner()
-    # res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
-    res = nm.scan(hosts=ip_range, arguments="-sn")
-    ip_list = []
-    for host in nm.all_hosts():
-        mac_address = nm[host]["addresses"].get("mac", "")
-        if mac_address.startswith("02") or mac_address.startswith("12"):
-            ip_list.append({"ip": host, "mac": mac_address})
-
-    return ip_list
-
-# def get_mac_from_device(ip): 
-#     """Cihaza HTTP isteği atarak MAC adresini almaya çalışır"""
-#     try:
-#         response = requests.get(f"http://{ip}:8085/mac_address", timeout=2)
-#         if response.status_code == 200:
-#             return response.text.strip()  # Gelen MAC adresini döndür
-#     except requests.exceptions.RequestException:
-#         pass
-#     return None  
-
-# def nmap_scan(ip_range): 
-#     """Belirtilen IP aralığında Nmap taraması yapar ve cihazlardan MAC adresi ister"""
+# def nmap_scan(ip_range):
+#     """Belirtilen IP aralığında Nmap taraması yaparak 02 veya 12 ile başlayan MAC adreslerini bulur"""
 #     nm = nmap.PortScanner()
-#     res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
-#     print("Nmap taraması sonucu:", res) 
-    
-#     valid_devices = []
-    
+#     # res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
+#     res = nm.scan(hosts=ip_range, arguments="-sn")
+#     ip_list = []
 #     for host in nm.all_hosts():
-#         print(f"Bulunan cihaz IP'si: {host}") 
-#         mac_address = get_mac_from_device(host)  
-#         print(f"MAC Adresi: {mac_address}")  
-#         if mac_address and (mac_address.startswith("02") or mac_address.startswith("12")):
-#             valid_devices.append({"ip": host, "mac": mac_address})
-#     return valid_devices
+#         mac_address = nm[host]["addresses"].get("mac", "")
+#         if mac_address.startswith("02") or mac_address.startswith("12"):
+#             ip_list.append({"ip": host, "mac": mac_address})
+
+#     return ip_list
+
+def get_mac_from_device(ip): 
+    """Cihaza HTTP isteği atarak MAC adresini almaya çalışır"""
+    try:
+        response = requests.get(f"http://{ip}:8085/mac_address", timeout=2)
+        if response.status_code == 200:
+            return response.text.strip()  # Gelen MAC adresini döndür
+    except requests.exceptions.RequestException:
+        pass
+    return None  
+
+def nmap_scan(ip_range): 
+    """Belirtilen IP aralığında Nmap taraması yapar ve cihazlardan MAC adresi ister"""
+    nm = nmap.PortScanner()
+    res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
+    print("Nmap taraması sonucu:", res) 
+    
+    valid_devices = []
+    
+    for host in nm.all_hosts():
+        print(f"Bulunan cihaz IP'si: {host}") 
+        mac_address = get_mac_from_device(host)  
+        print(f"MAC Adresi: {mac_address}")  
+        if mac_address and (mac_address.startswith("02") or mac_address.startswith("12")):
+            valid_devices.append({"ip": host, "mac": mac_address})
+    return valid_devices
 
 
 def get_connected_devices():
