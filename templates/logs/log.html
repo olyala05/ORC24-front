@@ -1,11 +1,7 @@
-{% extends "layout.html" %}
-{% block title %} ORC Status - Error Log {% endblock %}
-
-{% block extra_css %}
+{% extends "layout.html" %} {% block title %} ORC Status - Error Log {% endblock
+%} {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 
 <!-- Header -->
 {% include 'partials/header.html' %}
@@ -13,23 +9,45 @@
 <div class="log-container">
   <div class="log-table">
     <div class="log-table-content">
-      
       <div id="calendar-container">
-        <input type="date" id="log-date-picker" onchange="fetchLogsByDate()" class="calendar-input" />
+        <input
+          type="date"
+          id="log-date-picker"
+          onchange="fetchLogsByDate()"
+          class="calendar-input"
+        />
       </div>
 
-      <!-- Message for navigating back in time -->
-      <div id="info-message" style="display: none; color: green; text-align: center; font-size: 14px; margin-top: 15px;">
-        Geriye dönük logları görmek için takvimden seçim yapabilirsiniz.
+      <!-- Message for navigating back in time İsterler ise aç -->
+      <div
+        id="info-message"
+        style="
+          display: none;
+          color: green;
+          text-align: center;
+          font-size: 14px;
+          margin-top: 5px;
+        "
+      >
+      You can select a date from the calendar to view past logs.
       </div>
 
       <!-- No Logs message -->
-      <div id="no-logs-message" style="display: none; color: red; text-align: center; font-size: 14px; margin-top: 10px;">
-        Bu güne ait loglar bulunamadı. Lütfen aşağıdaki takvimden başka bir tarih seçin.
+      <div
+        id="no-logs-message"
+        style="
+          display: none;
+          color: red;
+          text-align: center;
+          font-size: 14px;
+          margin-top: 10px;
+        "
+      >
+      No logs found for today. Please select another date from the calendar.
       </div>
 
       <table>
-        <thead id="log-table-head" style="display: none;">
+        <thead id="log-table-head" style="display: none">
           <tr>
             <th>Status</th>
             <th>Log Description</th>
@@ -37,12 +55,14 @@
           </tr>
         </thead>
         <tbody id="log-table-body">
-          <tr id="loading-message" style="display: none; text-align: center; font-size: 14px">
+          <tr
+            id="loading-message"
+            style="display: none; text-align: center; font-size: 14px"
+          >
             <td colspan="3">Loading logs...</td>
           </tr>
         </tbody>
       </table>
-
     </div>
   </div>
 </div>
@@ -106,22 +126,34 @@
   function updateTable(logs) {
     const tableBody = document.querySelector("#log-table-body");
     const tableHead = document.querySelector("#log-table-head");
-    
-    tableBody.innerHTML = ""; 
+
+    tableBody.innerHTML = "";
 
     if (logs.length > 0) {
       tableHead.style.display = "table-header-group"; // Thead göster
-      logs.forEach((log) => {
+
+      logs.forEach((log, index) => {
         const row = document.createElement("tr");
-        let shortText = log.tag + " - " + (log.data || "N/A");
-        let displayText = shortText.length > 100 ? shortText.substring(0, 100) + "..." : shortText;
+        let fullText = log.tag + " - " + (log.data || "N/A");
+        let truncatedText =
+          fullText.length > 100 ? fullText.substring(0, 100) + "..." : fullText;
         let statusClass = getStatusClass(log.type);
+        let logId = `log-${index}`;
 
         row.innerHTML = `
-          <td><span class="status-dot ${statusClass}"></span></td>
-          <td class="truncate" style="max-width: 300px;">${displayText}</td>
-          <td style="white-space: nowrap;">${log.created_at}</td>
-        `;
+                <td><span class="status-dot ${statusClass}"></span></td>
+                <td style="max-width: 300px;">
+                    <span id="${logId}-short">${truncatedText}</span>
+                    <span id="${logId}-full" style="display: none;">${fullText}</span>
+                    ${
+                      fullText.length > 100
+                        ? `<a href="#" onclick="toggleLog('${logId}'); return false;" id="${logId}-toggle" style="color: #fe5f00; text-decoration: none;">Read more</a>`
+                        : ""
+                    }
+                </td>
+                <td style="white-space: nowrap;">${log.created_at}</td>
+            `;
+
         tableBody.appendChild(row);
       });
     } else {
@@ -129,12 +161,33 @@
     }
   }
 
+  // Log açıklamalarını genişletme/daraltma fonksiyonu
+  function toggleLog(logId) {
+    let shortText = document.getElementById(`${logId}-short`);
+    let fullText = document.getElementById(`${logId}-full`);
+    let toggleLink = document.getElementById(`${logId}-toggle`);
+
+    if (shortText.style.display === "none") {
+      shortText.style.display = "inline";
+      fullText.style.display = "none";
+      toggleLink.textContent = "Read More";
+    } else {
+      shortText.style.display = "none";
+      fullText.style.display = "inline";
+      toggleLink.textContent = "Read Less";
+    }
+  }
+
   function getStatusClass(type) {
     switch (type) {
-      case 1: return "status-info";
-      case 2: return "status-warning";
-      case 3: return "status-exception";
-      default: return "status-info";
+      case 1:
+        return "status-info";
+      case 2:
+        return "status-warning";
+      case 3:
+        return "status-exception";
+      default:
+        return "status-info";
     }
   }
 
@@ -146,7 +199,9 @@
     }
 
     let [year, month, day] = selectedDate.split("-").map(Number);
-    console.log(`[DEBUG] Fetching logs for selected date: ${year}-${month}-${day}`);
+    console.log(
+      `[DEBUG] Fetching logs for selected date: ${year}-${month}-${day}`
+    );
 
     fetch("/get_logs", {
       method: "POST",
@@ -159,7 +214,8 @@
         document.getElementById("info-message").style.display = "none"; // Hide info message initially
 
         if (data.status === "success" && data.data) {
-          let logs = typeof data.data === "string" ? JSON.parse(data.data) : data.data;
+          let logs =
+            typeof data.data === "string" ? JSON.parse(data.data) : data.data;
           if (Array.isArray(logs) && logs.length > 0) {
             document.getElementById("info-message").style.display = "block"; // Show info message when logs are fetched
             updateTable(logs);

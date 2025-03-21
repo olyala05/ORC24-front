@@ -1333,7 +1333,6 @@ body {
 }
 
 .log-container {
-  /* margin-top: 70px; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1376,6 +1375,10 @@ body {
   font-size: 14px;
   border-bottom: 1px solid #ef742a;
   text-align: center;
+  max-width: 300px;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 .log-table table tr:last-child td {
   border-bottom: none;
@@ -1413,6 +1416,7 @@ body {
   background-color: red;
 }
 
+/* 📌 Takvim Girişi */
 #calendar-container {
   display: flex;
   justify-content: center;
