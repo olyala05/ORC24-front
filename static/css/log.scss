@@ -101,3 +101,33 @@ body {
 .status-exception {
   background-color: red;
 }
+
+
+#calendar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+
+  .calendar-input {
+    appearance: none;
+    border: 2px solid #fe5f00; // Turuncu dış çizgi
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'Arial', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      border-color: #e66900; // Koyu turuncu hover efekti
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #cc5c00; // Daha koyu turuncu focus efekti
+      box-shadow: 0 0 5px rgba(255, 127, 0, 0.5);
+    }
+  }
+}
+

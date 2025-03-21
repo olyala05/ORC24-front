@@ -87,4 +87,31 @@ body {
 
 .status-exception {
   background-color: red;
+}
+
+#calendar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+#calendar-container .calendar-input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: 2px solid #fe5f00;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: "Arial", sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+#calendar-container .calendar-input:hover {
+  border-color: #e66900;
+}
+#calendar-container .calendar-input:focus {
+  outline: none;
+  border-color: #cc5c00;
+  box-shadow: 0 0 5px rgba(255, 127, 0, 0.5);
 }/*# sourceMappingURL=log.css.map */
