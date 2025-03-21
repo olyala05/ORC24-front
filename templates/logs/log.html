@@ -13,8 +13,24 @@
 <div class="log-container">
   <div class="log-table">
     <div class="log-table-content">
+      
+      <!-- Calendar Selector -->
+      <div id="calendar-container" style="display: block; text-align: center; margin-top: 15px">
+        <input type="date" id="log-date-picker" onchange="fetchLogsByDate()" />
+      </div>
+
+      <!-- Message for navigating back in time -->
+      <div id="info-message" style="display: none; color: green; text-align: center; font-size: 14px; margin-top: 15px;">
+        Geriye dönük logları görmek için takvimden seçim yapabilirsiniz.
+      </div>
+
+      <!-- No Logs message -->
+      <div id="no-logs-message" style="display: none; color: red; text-align: center; font-size: 14px; margin-top: 10px;">
+        Bu güne ait loglar bulunamadı. Lütfen aşağıdaki takvimden başka bir tarih seçin.
+      </div>
+
       <table>
-        <thead>
+        <thead id="log-table-head" style="display: none;">
           <tr>
             <th>Status</th>
             <th>Log Description</th>
@@ -28,20 +44,6 @@
         </tbody>
       </table>
 
-      <!-- No Logs message -->
-      <div id="no-logs-message" style="display: none; color: red; text-align: center; font-size: 14px; margin-top: 10px;">
-        Bu güne ait loglar bulunamadı. Lütfen aşağıdaki takvimden başka bir tarih seçin.
-      </div>
-
-      <!-- Message for navigating back in time -->
-      <div id="info-message" style="display: none; color: green; text-align: center; font-size: 14px; margin-top: 15px;">
-        Geriye dönük logları görmek için takvimden seçim yapabilirsiniz.
-      </div>
-
-      <!-- Calendar Selector -->
-      <div id="calendar-container" style="display: block; text-align: center; margin-top: 15px">
-        <input type="date" id="log-date-picker" onchange="fetchLogsByDate()" />
-      </div>
     </div>
   </div>
 </div>
@@ -104,33 +106,28 @@
 
   function updateTable(logs) {
     const tableBody = document.querySelector("#log-table-body");
-    tableBody.innerHTML = "";
+    const tableHead = document.querySelector("#log-table-head");
+    
+    tableBody.innerHTML = ""; 
 
-    // Show the info message above the log table
-    const infoMessage = document.getElementById("info-message");
-    if (infoMessage) {
-      const infoRow = document.createElement("tr");
-      const infoCell = document.createElement("td");
-      infoCell.colSpan = 3;
-      infoCell.style.textAlign = "center";
-      infoCell.innerHTML = infoMessage.innerHTML;
-      infoRow.appendChild(infoCell);
-      tableBody.appendChild(infoRow);
+    if (logs.length > 0) {
+      tableHead.style.display = "table-header-group"; // Thead göster
+      logs.forEach((log) => {
+        const row = document.createElement("tr");
+        let shortText = log.tag + " - " + (log.data || "N/A");
+        let displayText = shortText.length > 100 ? shortText.substring(0, 100) + "..." : shortText;
+        let statusClass = getStatusClass(log.type);
+
+        row.innerHTML = `
+          <td><span class="status-dot ${statusClass}"></span></td>
+          <td class="truncate" style="max-width: 300px;">${displayText}</td>
+          <td style="white-space: nowrap;">${log.created_at}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    } else {
+      tableHead.style.display = "none"; // Thead gizle
     }
-
-    logs.forEach((log) => {
-      const row = document.createElement("tr");
-      let shortText = log.tag + " - " + (log.data || "N/A");
-      let displayText = shortText.length > 100 ? shortText.substring(0, 100) + "..." : shortText;
-      let statusClass = getStatusClass(log.type);
-
-      row.innerHTML = `
-        <td><span class="status-dot ${statusClass}"></span></td>
-        <td class="truncate" style="max-width: 300px;">${displayText}</td>
-        <td style="white-space: nowrap;">${log.created_at}</td>
-      `;
-      tableBody.appendChild(row);
-    });
   }
 
   function getStatusClass(type) {
