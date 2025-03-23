@@ -557,29 +557,12 @@ block content %}
   function connectDevice() {
     let dropdown = document.getElementById("modem");
     let selectedDevice = dropdown.value;
-
-    // 📌 Eğer cihaz seçilmediyse her şeyi sıfırla ve çık
+  
     if (!selectedDevice || selectedDevice.trim() === "") {
-      console.warn("Cihaz seçilmedi, alarm sıfırlanıyor.");
-
-      sessionStorage.removeItem("selected_device_ip");
-      localStorage.removeItem("last_alarm_count");
-
-      // 🔹 Eski istekleri iptal et
-      networkAlarmController.abort();
-      electricAlarmController.abort();
-
-      // 🔹 Yeni istekler için controller oluştur
-      networkAlarmController = new AbortController();
-      electricAlarmController = new AbortController();
-
-      document.getElementById("alarm-count").textContent = "0";
-      document.getElementById("alarm-count").style.display = "inline-block";
-
+      showToast("Lütfen önce bir cihaz seçiniz!", "error");
       return;
     }
-
-    //  Cihaz bağlanırken alarm isteklerini resetle
+  
     fetch("/connect_device", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -588,34 +571,34 @@ block content %}
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
+          showToast("Cihaza başarıyla bağlandınız!", "success");
           sessionStorage.setItem("selected_device_ip", selectedDevice);
-
-          // 🔹 Eski istekleri iptal et ve yenilerini başlat
-          networkAlarmController.abort();
-          electricAlarmController.abort();
-
-          networkAlarmController = new AbortController();
-          electricAlarmController = new AbortController();
-
-          updateAlarmCount();
-
-          // 🔹 Alarm sayısını 10 saniyede bir güncellemek için setInterval başlat (Tekrar çağrılmasını önlemek için önce temizliyoruz)
-          if (alarmUpdateInterval) {
-            clearInterval(alarmUpdateInterval);
-          }
-          alarmUpdateInterval = setInterval(updateAlarmCount, 10000000000000);
         } else {
+          showToast("Cihaza bağlanılamadı! İnternet bağlantısını kontrol edin.", "error");
           sessionStorage.removeItem("selected_device_ip");
-          console.error("Bağlantı hatası:", data.error);
-          document.getElementById("alarm-count").textContent = "0";
         }
       })
       .catch((error) => {
         console.error("Bağlantı hatası:", error);
+        showToast("Bağlantı sırasında bir hata oluştu.", "error");
         sessionStorage.removeItem("selected_device_ip");
-        document.getElementById("alarm-count").textContent = "0";
       });
   }
+  function showToast(message, type) {
+    let toast = document.createElement("div");
+    toast.className = `toast-message ${type}`;
+    toast.innerText = message;
+    
+    document.body.appendChild(toast);
+  
+    setTimeout(() => {
+      toast.classList.add("fade-out");
+      setTimeout(() => {
+        toast.remove();
+      }, 500);
+    }, 3000);
+  }
+  
 
   // Sayfa Yüklendiğinde Çalıştır
   document.addEventListener("DOMContentLoaded", function () {
@@ -672,5 +655,31 @@ block content %}
     border-radius: 0.125em;
     background-color: #f27474;
   }
+
+  .toast-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .toast-message.success {
+    background-color: #28a745;
+  }
+  
+  .toast-message.error {
+    background-color: #dc3545;
+  }
+  
+  .fade-out {
+    opacity: 0;
+  }
+  
 </style>
 {% endblock %}
