@@ -1114,53 +1114,36 @@ def get_slave_data():
     selected_ip = session.get("selected_device_ip")
 
     if not selected_ip:
-        return ResponseHandler.error(
-            message="Device IP missing",
-            code=400,
-            details="Selected device IP is required",
-        )
+        print("🚨 HATA: Seçili cihazın IP'si yok!")
+        return ResponseHandler.error(message="Device IP missing", code=400)
+
     try:
         url = f"http://{selected_ip}:8085/scan_all"
-        response = requests.get(url, timeout=500)  
+        print(f"🔍 {selected_ip} adresine istek gönderiliyor: {url}")
+
+        response = requests.get(url, timeout=500)
+        print(f"✅ API Yanıt Durumu: {response.status_code}")
+
         response.raise_for_status()
-        try:
-            result = response.json()
-        except ValueError:
-            return ResponseHandler.error(
-                message="Invalid JSON response",
-                code=500,
-                details="Failed to parse JSON response from device.",
-            )
+        result = response.json()
+        print(f"✅ API JSON Yanıtı: {result}")
 
         if result.get("status") == "success":
-            return ResponseHandler.success(
-                message="Successful", data=result.get("data", [])
-            )
+            return ResponseHandler.success(message="Successful", data=result.get("data", []))
 
-        return ResponseHandler.error(
-            message="Failed",
-            code=400,
-            details=result.get("message", "No valid response"),
-        )
+        return ResponseHandler.error(message="Failed", code=400, details=result.get("message", "No valid response"))
 
     except requests.Timeout:
-        return ResponseHandler.error(
-            message="Request timeout",
-            code=504,
-            details=f"Timeout while connecting to {selected_ip}",
-        )
+        print(f"⏳ {selected_ip} yanıt vermedi, zaman aşımı!")
+        return ResponseHandler.error(message="Request timeout", code=504)
 
     except requests.RequestException as e:
-        return ResponseHandler.error(
-            message="Device connection error",
-            code=500,
-            details=f"Failed to connect to {selected_ip}: {str(e)}",
-        )
+        print(f"❌ Cihaz bağlantı hatası: {e}")
+        return ResponseHandler.error(message="Device connection error", code=500)
 
     except Exception as e:
-        return ResponseHandler.error(
-            message="Unexpected error occurred", code=500, details=str(e)
-        )
+        print(f"❌ Beklenmedik hata: {e}")
+        return ResponseHandler.error(message="Unexpected error", code=500)
 
 # Logs
 @app.route("/log", endpoint="log")
