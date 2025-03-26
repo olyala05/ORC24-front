@@ -22,16 +22,13 @@ import logging
 import pymodbus.client.tcp 
 import os
 
-
 app = Flask(__name__)
 CORS(app)
 app.secret_key = "supersecretkey"
 app.config["JWT_SECRET_KEY"] = "jwt_secret_key"
 jwt = JWTManager(app)
 
-
 logger = logging.getLogger(__name__)
-
 
 # Laravel API'nin URL'si
 LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
@@ -50,7 +47,6 @@ last_connection_time = None
 @app.route("/")
 def index():
     return render_template("index.html")
-
 
 # Giriş Sayfası
 @app.route("/login", methods=["GET", "POST"])
@@ -124,44 +120,44 @@ def arp_scan(ip_range):
 
     return ip_list
 
-# def nmap_scan(ip_range):
-#     """Belirtilen IP aralığında Nmap taraması yaparak 02 veya 12 ile başlayan MAC adreslerini bulur"""
-#     nm = nmap.PortScanner()
-#     # res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
-#     res = nm.scan(hosts=ip_range, arguments="-sn")
-#     ip_list = []
-#     for host in nm.all_hosts():
-#         mac_address = nm[host]["addresses"].get("mac", "")
-#         if mac_address.startswith("02") or mac_address.startswith("12"):
-#             ip_list.append({"ip": host, "mac": mac_address})
-
-#     return ip_list
-
-def get_mac_from_device(ip): 
-    """Cihaza HTTP isteği atarak MAC adresini almaya çalışır"""
-    try:
-        response = requests.get(f"http://{ip}:8085/mac_address", timeout=2)
-        if response.status_code == 200:
-            return response.text.strip()  # Gelen MAC adresini döndür
-    except requests.exceptions.RequestException:
-        pass
-    return None  
-
-def nmap_scan(ip_range): 
-    """Belirtilen IP aralığında Nmap taraması yapar ve cihazlardan MAC adresi ister"""
+def nmap_scan(ip_range):
+    """Belirtilen IP aralığında Nmap taraması yaparak 02 veya 12 ile başlayan MAC adreslerini bulur"""
     nm = nmap.PortScanner()
-    res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
-    print("Nmap taraması sonucu:", res) 
-    
-    valid_devices = []
-    
+    # res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
+    res = nm.scan(hosts=ip_range, arguments="-sn")
+    ip_list = []
     for host in nm.all_hosts():
-        print(f"Bulunan cihaz IP'si: {host}") 
-        mac_address = get_mac_from_device(host)  
-        print(f"MAC Adresi: {mac_address}")  
-        if mac_address and (mac_address.startswith("02") or mac_address.startswith("12")):
-            valid_devices.append({"ip": host, "mac": mac_address})
-    return valid_devices
+        mac_address = nm[host]["addresses"].get("mac", "")
+        if mac_address.startswith("02") or mac_address.startswith("12"):
+            ip_list.append({"ip": host, "mac": mac_address})
+
+    return ip_list
+
+# def get_mac_from_device(ip): 
+#     """Cihaza HTTP isteği atarak MAC adresini almaya çalışır"""
+#     try:
+#         response = requests.get(f"http://{ip}:8085/mac_address", timeout=2)
+#         if response.status_code == 200:
+#             return response.text.strip()  # Gelen MAC adresini döndür
+#     except requests.exceptions.RequestException:
+#         pass
+#     return None  
+
+# def nmap_scan(ip_range): 
+#     """Belirtilen IP aralığında Nmap taraması yapar ve cihazlardan MAC adresi ister"""
+#     nm = nmap.PortScanner()
+#     res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
+#     print("Nmap taraması sonucu:", res) 
+    
+#     valid_devices = []
+    
+#     for host in nm.all_hosts():
+#         print(f"Bulunan cihaz IP'si: {host}") 
+#         mac_address = get_mac_from_device(host)  
+#         print(f"MAC Adresi: {mac_address}")  
+#         if mac_address and (mac_address.startswith("02") or mac_address.startswith("12")):
+#             valid_devices.append({"ip": host, "mac": mac_address})
+#     return valid_devices
 
 
 def get_connected_devices():
@@ -583,7 +579,6 @@ def fetch_equipment_details():
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
 
 
-
 @app.route("/set_selected_equipment", methods=["POST"])
 def set_selected_equipment():
     data = request.get_json()
@@ -759,6 +754,40 @@ def equipments_with_models():
     except requests.exceptions.RequestException as e:
         print(f"RequestException: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
+
+@app.route("/get-all-equipments", methods=["POST"])
+def get_all_equipments():
+    selected_ip = session.get("selected_device_ip")
+    if not selected_ip:
+        return jsonify({"error": "IP adresi belirtilmedi"}), 400
+    try:
+        url = f"http://{selected_ip}:8085/get_equipments"
+        print(f"İstek yapılıyor: {url}")
+
+        response = requests.get(url, timeout=20)
+        response.raise_for_status()
+        equipment_data = response.json()
+
+        if "status" in equipment_data and equipment_data["status"] == "error":
+            print("Hata: Backend'ten gelen error mesajı:", equipment_data)
+            return jsonify({"error": equipment_data["message"]}), 500
+
+        # **Equipment verisini session içinde tutabiliriz**
+        session["equipment_data"] = equipment_data
+        print(f"Başarıyla çekildi: {len(equipment_data['data'])} ekipman bulundu.")
+
+        return jsonify(equipment_data)
+
+    except requests.exceptions.Timeout:
+        print("Zaman aşımı hatası!")
+        return jsonify({"error": "Timeout: Ekipman verisi alınamadı."}), 500
+    except requests.exceptions.ConnectionError:
+        print("Bağlantı hatası! Flask instance'ı çalışıyor mu?")
+        return jsonify({"error": "Connection Error: Flask instance'ı çalışıyor mu?"}), 500
+    except requests.exceptions.RequestException as e:
+        print(f"RequestException: {e}")
+        return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
+
 
 @app.route("/equipment", endpoint="equipment")
 def equipment():

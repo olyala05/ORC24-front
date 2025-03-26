@@ -13,7 +13,8 @@
       <ul>
         <li>S/N: <span>{{ modem.serial_no if modem.serial_no else '-' }}</span></li>
         <li>MODEM NAME: <span>{{ modem.name if modem.name else '-' }}</span></li>
-        <li>MODEM BRAND / MODEL: <span>{{ modem.brand_model if modem.brand_model else '-' }}</span></li>
+        <!-- <li>MODEM BRAND / MODEL: <span>{{ modem.brand_model if modem.brand_model else '-' }}</span></li>-->
+        <li>MODEM BRAND / MODEL: <span id="brand-model">-</span></li>
         <li>
           MODEM STATUS:
           <span
@@ -164,6 +165,7 @@
     window.location.href = "{{ url_for('log')}}"
   }
 
+  
 function retryConnection() {
   fetch("/check_network")
     .then(response => response.json())
@@ -320,6 +322,36 @@ document.addEventListener("DOMContentLoaded", function () {
   // Bulut bağlantısını her 10 saniyede bir kontrol et
   setInterval(updateCloudStatus, 10000);
 });
+
+async function fetchBrandModel() {
+  try {
+      const response = await fetch("/get-all-equipments", { method: "POST" });
+
+      if (!response.ok) {
+          throw new Error("Server hatası: " + response.status);
+      }
+
+      const data = await response.json();
+      if (data.status === "error") {
+          throw new Error("API Hatası: " + data.message);
+      }
+
+      const equipments = data.data;
+      if (!equipments.length) {
+          throw new Error("Ekipman bilgisi bulunamadı.");
+      }
+
+      const brandModel = equipments[0].equipment_model_name || "-"; 
+      document.getElementById("brand-model").textContent = brandModel;
+
+  } catch (error) {
+      console.error("Hata:", error);
+      document.getElementById("brand-model").textContent = "Veri alınamadı";
+  }
+}
+
+// Sayfa yüklendiğinde otomatik olarak modem model bilgisini çek
+window.onload = fetchBrandModel;
 
 </script>
 
