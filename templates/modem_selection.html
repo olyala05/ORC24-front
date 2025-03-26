@@ -555,12 +555,13 @@ block content %}
   function connectDevice() {
     let dropdown = document.getElementById("modem");
     let selectedDevice = dropdown.value;
-
+  
     if (!selectedDevice || selectedDevice.trim() === "") {
       showToast("Lütfen önce bir cihaz seçiniz!", "error");
+      setButtonsDisabled(true); // cihaz seçili değilse butonları devre dışı bırak
       return;
     }
-
+  
     // Loader oluştur ve göster
     let loadingOverlay = document.createElement("div");
     loadingOverlay.id = "loading-overlay";
@@ -571,7 +572,7 @@ block content %}
       <div class="loader"></div>
     </div>`;
     document.body.appendChild(loadingOverlay);
-
+  
     fetch("/connect_device", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -582,15 +583,30 @@ block content %}
         if (data.success) {
           showToast("Cihaza başarıyla bağlandınız!", "success");
           sessionStorage.setItem("selected_device_ip", selectedDevice);
+          setButtonsDisabled(false); 
         } else {
           showToast("Cihaza bağlanılamadı!", "error");
           sessionStorage.removeItem("selected_device_ip");
+          setButtonsDisabled(true); 
+          Swal.fire({
+            icon: "error",
+            title: "Bağlantı Hatası",
+            text: "Cihazınıza bağlanamadığınız için işlem yapılamaz!",
+            confirmButtonText: "Tamam",
+          });
         }
       })
       .catch((error) => {
         console.error("Bağlantı hatası:", error);
         showToast("Bağlantı sırasında bir hata oluştu.", "error");
         sessionStorage.removeItem("selected_device_ip");
+        setButtonsDisabled(true); 
+        Swal.fire({
+          icon: "error",
+          title: "Bağlantı Hatası",
+          text: "Cihazınıza bağlanamadığınız için işlem yapılamaz!",
+          confirmButtonText: "Tamam",
+        });
       })
       .finally(() => {
         // Loader'ı kaldır
@@ -598,6 +614,7 @@ block content %}
         if (loader) loader.remove();
       });
   }
+  
 
   function showToast(message, type) {
     let toast = document.createElement("div");
@@ -635,6 +652,19 @@ block content %}
     } else {
       updateAlarmCount();
     }
+  });
+
+  // Tüm işlem butonlarını etkinleştirme/devre dışı bırakma
+  function setButtonsDisabled(isDisabled) {
+    let buttons = document.querySelectorAll(
+      ".button-container .btn, .bottom-buttons .btn"
+    );
+    buttons.forEach((btn) => (btn.disabled = isDisabled));
+  }
+
+  // Sayfa ilk yüklendiğinde tüm butonlar devre dışı kalsın (cihaz seçilmedi henüz)
+  document.addEventListener("DOMContentLoaded", () => {
+    setButtonsDisabled(true);
   });
 </script>
 
