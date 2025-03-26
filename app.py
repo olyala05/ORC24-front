@@ -244,6 +244,7 @@ def orc_status():
         response_modem = requests.get(url_modem, timeout=5)
         response_modem.raise_for_status()
         modems = response_modem.json().get("data", [])
+        
 
         if modems:
             selected_modem = modems[0]
@@ -320,16 +321,12 @@ def get_modem_info():
             return ResponseHandler.error(
                 message="No modem data found", code=404, details="Modem list is empty"
             )
-
-        # Get the first modem (assuming only one is active)
         modem = modems[0]
 
-        # Extract required fields
         modem_info = {
             "name": modem.get("name", "Unknown"),
             "status": "Active" if modem.get("status") == 1 else "Inactive",
         }
-
         return ResponseHandler.success(
             message="Modem info retrieved successfully", data=modem_info
         )
@@ -563,7 +560,7 @@ def fetch_equipment_details():
     if not equipment_id:
         return jsonify({"error": "Ekipman seçilmedi. Lütfen önce bir ekipman seçin!"}), 400
 
-    print(f"📌 Backend'e Gelen Equipment ID: {equipment_id}")
+    print(f"Backend'e Gelen Equipment ID: {equipment_id}")
 
     try:
         url = f"http://{selected_ip}:8085/get_equipment_details/{equipment_id}"
