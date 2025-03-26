@@ -254,7 +254,7 @@
           console.log("Equipments Response:", data);
 
           if (data.status === "success" && Array.isArray(data.data)) {
-            equipmentGrid.innerHTML = ""; 
+            equipmentGrid.innerHTML = "";
 
             data.data.forEach((device) => {
               const statusClass = device.status === "A" ? "green" : "red";
@@ -290,8 +290,8 @@
 
       if (!equipmentId) return;
 
-      sessionStorage.setItem("selected_equipment_id", equipmentId); 
-      fetchEquipmentDetails(equipmentId); 
+      sessionStorage.setItem("selected_equipment_id", equipmentId);
+      fetchEquipmentDetails(equipmentId);
     });
 
     function fetchEquipmentDetails(equipmentId) {
@@ -314,22 +314,25 @@
           console.log("Equipment ID saved:", equipmentId);
     
           if (setResponse.success) {
-            // Promise (söz) oluşturur ve 300 milisaniye bekledikten sonra çözülmesini (resolve) sağlar.
-            // new Promise((resolve) => { ... }) → Yeni bir Promise oluşturur.
-            // setTimeout(resolve, 300) → 300 ms sonra resolve fonksiyonunu çalıştırır.
-            // Bu kod, 300 ms bekleyen ve sonra devam eden bir asenkron işlem oluşturur.
-            return new Promise((resolve) => setTimeout(resolve, 300)); 
+            return new Promise((resolve) => setTimeout(resolve, 300));
           } else {
             throw new Error("Failed to set selected equipment");
           }
         })
-        .then(() => fetch("/fetch_equipment_details", { method: "GET" }))
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Equipment Details Response:", data);
+        .then(() => 
+          // **Modem ve Equipment bilgilerini paralel olarak çekiyoruz**
+          Promise.all([
+            fetch("/fetch_equipment_details", { method: "GET" }).then((res) => res.json()),
+            fetch("/get_modem_info").then((res) => res.json())
+          ])
+        )
+        .then(([equipmentData, modemData]) => {
+          console.log("Equipment Details Response:", equipmentData);
+          console.log("📡 Modem API Yanıtı:", modemData);
     
-          if (data.status === "success" && data.data) {
-            const equipment = data.data;
+          if (equipmentData.status === "success" && equipmentData.data) {
+            const equipment = equipmentData.data;
+            const modem = modemData.status === "success" ? modemData.data : null;
     
             const updateInput = (id, value) => {
               const input = document.getElementById(id);
@@ -350,17 +353,18 @@
               equipment.configuration_data === "A" ? "Active" : "Passive"
             );
             updateInput("equipment-brand", equipment.brand_name || "");
-
+    
             updateInput(
-                "communication-protocol",
-                equipment.communication_protocol_code === 1
+              "communication-protocol",
+              equipment.communication_protocol_code === 1
                 ? "SERIAL"
                 : equipment.communication_protocol_code === 2
                 ? "TCP"
                 : ""
-              );
-
-            updateInput("modem-name", equipment.modem_name || "");
+            );
+    
+            // **Modem Name Güncellemesi**
+            updateInput("modem-name", modem && modem.name ? modem.name : "Modem Bulunamadı");
     
             equipmentSetList.style.display = "none";
             equipmentSettings.style.display = "block";
