@@ -202,11 +202,21 @@ def connect_device():
         return jsonify(success=False, error="Geçersiz IP adresi.")
 
     try:
-        with socket.create_connection((ip_address, 80), timeout=5):
+        # Asıl Flask uygulamasının çalıştığı endpointi kontrol et
+        url = f"http://{ip_address}:8085/execute_command"
+        payload = {"command": "echo test"}
+
+        response = requests.post(url, json=payload, timeout=5)
+        response.raise_for_status()
+
+        if response.json().get("status") == "success":
             session["selected_device_ip"] = ip_address  
             session.permanent = True 
             return jsonify(success=True)
-    except Exception as e:
+        else:
+            return jsonify(success=False, error="Cihaz yanıt vermiyor veya hata döndü.")
+
+    except requests.exceptions.RequestException as e:
         return jsonify(success=False, error=f"Bağlantı hatası: {str(e)}")
 
 

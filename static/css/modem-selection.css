@@ -103,10 +103,10 @@ body {
   color: #ff9800;
 }
 
-/* 📌 Yükleme animasyonu */
+
 .loader {
   border: 6px solid #f3f3f3;
-  border-top: 6px solid #ff9800; /* Turuncu yükleme animasyonu */
+  border-top: 6px solid #ff9800; 
   border-radius: 50%;
   width: 40px;
   height: 40px;
