@@ -362,37 +362,20 @@ block content %}
             </select>
           </div>
 
+          <!-- 📌 INPUT olarak değiştirildi -->
           <div class="read-test-group">
             <label for="register">Register</label>
-            <select id="register">
-              <option value="1" selected>1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+            <input type="number" id="register" value="1" min="0" step="1" />
           </div>
 
           <div class="read-test-group">
             <label for="count">Count</label>
-            <select id="count">
-              <option value="1" selected>1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+            <input type="number" id="count" value="1" min="1" step="1" />
           </div>
 
           <div class="read-test-group">
             <label for="slave-id">Slave ID</label>
-            <select id="slave-id">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3" selected>3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+            <input type="number" id="slave-id" value="3" min="1" step="1" />
           </div>
 
           <div class="read-test-group">
@@ -550,7 +533,6 @@ block content %}
         </div>
       </div>
     </div>
-    
   </div>
 </div>
 
@@ -973,9 +955,9 @@ block content %}
           console.warn("No new data found.");
 
           const emptyRow = document.createElement("tr");
-          emptyRow.id = "empty-message-row"; 
+          emptyRow.id = "empty-message-row";
           const emptyCell = document.createElement("td");
-          emptyCell.setAttribute("colspan", "6"); 
+          emptyCell.setAttribute("colspan", "6");
           emptyCell.classList.add("empty-message");
           emptyCell.textContent = "Equipments is Empty";
           emptyRow.appendChild(emptyCell);
@@ -1152,6 +1134,25 @@ block content %}
       return;
     }
 
+    // Kullanıcıdan inputları al
+    const registerValue = parseInt(document.getElementById("register").value);
+    const countValue = parseInt(document.getElementById("count").value);
+    const slaveIdValue = parseInt(document.getElementById("slave-id").value);
+
+    // 🛠 Hatalı girişleri önlemek için kontroller
+    if (isNaN(registerValue) || registerValue < 0) {
+      alert("Register address must be a valid number and >= 0");
+      return;
+    }
+    if (isNaN(countValue) || countValue <= 0) {
+      alert("Count must be a valid number and greater than 0");
+      return;
+    }
+    if (isNaN(slaveIdValue) || slaveIdValue <= 0) {
+      alert("Slave ID must be a valid number and greater than 0");
+      return;
+    }
+
     const modbusParams = {
       port: document.getElementById("port").value,
       baudrate: parseInt(document.getElementById("baud-rate").value),
@@ -1159,9 +1160,9 @@ block content %}
       stopbits: parseInt(document.getElementById("stop-bit").value),
       bytesize: parseInt(document.getElementById("bytesize").value),
       timeout: parseFloat(document.getElementById("timeout").value),
-      address: parseInt(document.getElementById("register").value),
-      count: 2,
-      slave_id: parseInt(document.getElementById("slave-id").value),
+      address: registerValue, // 📌 Kullanıcının girdiği değeri al
+      count: countValue, // 📌 Kullanıcının girdiği değeri al
+      slave_id: slaveIdValue, // 📌 Kullanıcının girdiği değeri al
       method: "rtu",
     };
 
@@ -1566,8 +1567,6 @@ block content %}
   .status-red {
     border-color: red;
   }
-
-
 </style>
 
 {% endblock %}

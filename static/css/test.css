@@ -657,11 +657,11 @@
   margin-bottom: 4px;
 }
 .read-test-group input {
-  color: #757678;
   border: 1px solid #444;
   padding: 6px;
   border-radius: 5px;
   width: 90%;
+  color: #000;
 }
 .read-test-group select {
   color: #000;

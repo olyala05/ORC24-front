@@ -1,0 +1,16 @@
+[Unit]
+Description=ORC Flask Uygulaması
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/orc_24_flask_app/
+ExecStart=/home/pi/orc_24_flask_app/.venv/bin/python3 /home/pi/orc_24_flask_app/app.py
+Restart=always
+RestartSec=10
+StandardOutput=append:/var/log/flask-app.log
+StandardError=append:/var/log/flask-app-error.log
+
+[Install]
+WantedBy=multi-user.target
