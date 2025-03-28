@@ -417,6 +417,7 @@ block content %}
               <option value="/dev/ttyS1">/dev/ttyS1</option>
             </select>
           </div>
+
           <div class="write-test-group">
             <label for="baud-rate">Baud Rate</label>
             <select id="baud-rate">
@@ -426,6 +427,7 @@ block content %}
               <option value="38400">38400</option>
             </select>
           </div>
+
           <div class="write-test-group">
             <label for="parity">Parity</label>
             <select id="parity">
@@ -434,20 +436,21 @@ block content %}
               <option value="O">O</option>
             </select>
           </div>
+
           <div class="write-test-group">
             <label for="stop-bit">Stop Bits</label>
             <select id="stop-bit">
               <option value="1" selected>1</option>
               <option value="2">2</option>
-              <option value="3">3</option>
             </select>
           </div>
+
           <div class="write-test-group">
-            <label for="bytessize">Byte Size</label>
+            <label for="bytesize">Byte Size</label>
             <select id="bytesize">
-              <option value="1" selected>1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
+              <option value="8" selected>8</option>
+              <option value="7">7</option>
+              <option value="6">6</option>
             </select>
           </div>
 
@@ -457,78 +460,48 @@ block content %}
               <option value="1" selected>1</option>
               <option value="2">2</option>
               <option value="3">3</option>
-              <option value="4">4</option>
+              <option value="5">5</option>
             </select>
           </div>
 
+          <!-- 📌 INPUT olarak değiştirildi -->
           <div class="write-test-group">
             <label for="register">Register</label>
-            <select id="register">
-              <option value="1" selected>1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
+            <input type="number" id="register" value="1" min="0" step="1" />
           </div>
 
           <div class="write-test-group">
             <label for="count">Count</label>
-            <select id="count">
-              <option value="1" selected>1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
+            <input type="number" id="count" value="1" min="1" step="1" />
           </div>
 
           <div class="write-test-group">
             <label for="slave-id">Slave ID</label>
-            <select id="slave-id">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3" selected>3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+            <input type="number" id="slave-id" value="3" min="1" step="1" />
           </div>
 
           <div class="write-test-group">
             <label for="data-type">Data Type</label>
             <select id="data-type">
-              <option value="unit32">unit32</option>
+              <option value="uint32" selected>uint32</option>
               <option value="uint16">uint16</option>
-              <option value="init32" selected>init32</option>
+              <option value="int32">int32</option>
               <option value="float">float</option>
             </select>
           </div>
         </div>
 
         <div class="write-test-footer">
-          <button class="write-test-button" onclick="performWriteTest()">
-            Perform a Scanning Test
+          <button class="write-test-button" onclick="sendWriteModbusRequest()">
+            Send Write Request
           </button>
-          <div class="write-test-status">
-            <p
-              id="write-test-success"
-              class="write-test-success"
-              style="display: none; color: green"
-            >
-              Local Network Connection Scan Successful.
-            </p>
-            <p
-              id="write-test-failed"
-              class="write-test-failed"
-              style="display: none; color: red"
-            >
-              Local Network Connection Scan Failed.
-            </p>
-          </div>
+          <span id="write-status-message" class="status-message"></span>
         </div>
 
         <div class="write-test-terminal">
           <label for="write-terminal">Terminal</label>
           <textarea id="write-terminal" readonly>
-            Waiting for response...</textarea
+Waiting for response...</textarea
           >
         </div>
       </div>
@@ -1204,74 +1177,85 @@ block content %}
       });
   }
 
-  // Write Modbus
-  function sendModbusRequest() {
-    const terminal = document.getElementById("terminal");
-    const statusMessage = document.getElementById("status-message"); // Durum mesajı
+// Write Modbus
+// Write Modbus
+function sendWriteModbusRequest() {
+  const terminal = document.getElementById("write-terminal");
+  const statusMessage = document.getElementById("write-status-message");
+  terminal.value = "🔍 Sending Write Modbus request... Please wait.";
+  statusMessage.textContent = "";
+  statusMessage.className = "status-message";
 
-    terminal.value = "Sending Modbus request... Please wait.";
-    statusMessage.textContent = "";
-    statusMessage.className = "status-message"; // Önceki class'ı sıfırla
-
-    const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
-    if (!selectedDeviceIP) {
-      terminal.value = "No device selected.";
-      statusMessage.textContent = "Local Network Connection Scan Failed.";
-      statusMessage.classList.add("error");
-      return;
-    }
-
-    const modbusParams = {
-      port: document.getElementById("port").value,
-      baudrate: parseInt(document.getElementById("baud-rate").value),
-      parity: document.getElementById("parity").value,
-      stopbits: parseInt(document.getElementById("stop-bit").value),
-      bytesize: parseInt(document.getElementById("bytesize").value),
-      timeout: parseFloat(document.getElementById("timeout").value),
-      address: parseInt(document.getElementById("register").value),
-      count: parseInt(document.getElementById("count").value),
-      slave_id: parseInt(document.getElementById("slave-id").value),
-      method: "rtu",
-    };
-
-    console.log(
-      "Sending JSON:",
-      JSON.stringify({ modbus_params: modbusParams })
-    );
-
-    fetch("/validate_modbus", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ modbus_params: modbusParams }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Received Response:", data);
-
-        const registers = data.data?.data;
-
-        if (
-          data.status === "success" &&
-          Array.isArray(registers) &&
-          registers.length > 0
-        ) {
-          terminal.value = `Registers: ${registers.join(", ")}`;
-          statusMessage.textContent =
-            "Local Network Connection Scan Successful.";
-          statusMessage.classList.add("success");
-        } else {
-          terminal.value = `Error: ${data.message}`;
-          statusMessage.textContent = "Local Network Connection Scan Failed.";
-          statusMessage.classList.add("error");
-        }
-      })
-      .catch((error) => {
-        console.error("Request Failed:", error);
-        terminal.value = `Request failed:\n${error}`;
-        statusMessage.textContent = "Local Network Connection Scan Failed.";
-        statusMessage.classList.add("error");
-      });
+  const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+  if (!selectedDeviceIP) {
+    terminal.value = "No device selected.";
+    statusMessage.textContent = "Local Network Connection Scan Failed.";
+    statusMessage.classList.add("error");
+    return;
   }
+
+  // Kullanıcıdan inputları al
+  const registerValue = parseInt(document.getElementById("register").value);
+  const countValue = parseInt(document.getElementById("count").value);
+  const slaveIdValue = parseInt(document.getElementById("slave-id").value);
+
+  // 🛠 Hatalı girişleri önlemek için kontroller
+  if (isNaN(registerValue) || registerValue < 0) {
+    alert("Register address must be a valid number and >= 0");
+    return;
+  }
+  if (isNaN(countValue) || countValue <= 0) {
+    alert("Count must be a valid number and greater than 0");
+    return;
+  }
+  if (isNaN(slaveIdValue) || slaveIdValue <= 0) {
+    alert("Slave ID must be a valid number and greater than 0");
+    return;
+  }
+
+  const modbusParams = {
+    port: document.getElementById("port").value,
+    baudrate: parseInt(document.getElementById("baud-rate").value),
+    parity: document.getElementById("parity").value,
+    stopbits: parseInt(document.getElementById("stop-bit").value),
+    bytesize: parseInt(document.getElementById("bytesize").value),
+    timeout: parseFloat(document.getElementById("timeout").value),
+    address: registerValue,  // 📌 Kullanıcının girdiği register adresi
+    count: countValue,  // 📌 Kullanıcının belirttiği count
+    slave_id: slaveIdValue,  // 📌 Kullanıcının belirttiği slave ID
+    method: "rtu",
+  };
+
+  console.log("Sending JSON:", JSON.stringify({ modbus_params: modbusParams }));
+
+  fetch("/validate_modbus", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ modbus_params: modbusParams }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Received Response:", data);
+
+      if (data.status === "success") {
+        terminal.value = `✅ Write successful: Register ${registerValue}`;
+        statusMessage.textContent = "Write Operation Successful.";
+        statusMessage.classList.add("success");
+      } else {
+        terminal.value = `❌ Error: ${data.message}`;
+        statusMessage.textContent = "Write Operation Failed.";
+        statusMessage.classList.add("error");
+      }
+    })
+    .catch((error) => {
+      console.error("Request Failed:", error);
+      terminal.value = `❌ Request failed:\n${error}`;
+      statusMessage.textContent = "Write Operation Failed.";
+      statusMessage.classList.add("error");
+    });
+}
+
+
 
   function performWriteTest() {
     const terminal = document.getElementById("write-terminal");
@@ -1383,6 +1367,7 @@ block content %}
     setInterval(updateCloudStatus, 10000);
   });
 </script>
+
 <style>
   .connected-wifi {
     font-weight: bold;
