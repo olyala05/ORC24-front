@@ -1186,42 +1186,93 @@ def get_slave_data():
 def log():
     return render_template("logs/log.html", page_title="Log")
 
+# @app.route("/get_logs", methods=["POST"])
+# def get_logs():
+#     selected_ip = session.get("selected_device_ip")
+#     if not selected_ip:
+#         logging.error("Selected device IP not found.")
+#         return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
+    
+#     try:
+#         data = request.get_json()
+#         logging.debug(f"[DEBUG] Received request body: {data}")
+
+#         if not data:
+#             logging.error("No data received in the request.")
+#             return jsonify({"error": "No data received"}), 400
+
+#         year = data.get("year")
+#         month = data.get("month")
+#         day = data.get("day")
+#         hour = data.get("hour", None)
+
+#         logging.info(f"Fetching logs with params: Year: {year}, Month: {month}, Day: {day}, Hour: {hour}")
+
+#         url_alarm = f"http://{selected_ip}:8085/get_all_logs"
+#         params = {"year": year, "month": month, "day": day, "hour": hour}
+
+#         logging.debug(f"[DEBUG] Sending request to: {url_alarm} with params {params}")
+
+#         response_alarm = requests.get(url_alarm, params=params, timeout=5)
+#         logging.debug(f"[DEBUG] Received response: {response_alarm.status_code}")
+
+#         response_alarm.raise_for_status()
+#         logs = response_alarm.json().get("data", [])
+
+#         logging.info(f"Fetched {len(logs)} logs successfully: {logs}")
+
+#         return jsonify({"status": "success", "data": logs})
+
+#     except requests.exceptions.RequestException as e:
+#         logging.error(f"[ERROR] Error fetching logs: {e}")
+#         return jsonify({"status": "error", "message": f"LOGS verileri alınamadı: {e}"}), 500
+
 @app.route("/get_logs", methods=["POST"])
 def get_logs():
     selected_ip = session.get("selected_device_ip")
     if not selected_ip:
         logging.error("Selected device IP not found.")
         return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
-    
+
     try:
         data = request.get_json()
-        logging.debug(f"[DEBUG] Received request body: {data}")
-
-        if not data:
-            logging.error("No data received in the request.")
-            return jsonify({"error": "No data received"}), 400
 
         year = data.get("year")
         month = data.get("month")
         day = data.get("day")
         hour = data.get("hour", None)
+        page = data.get("page", 1)
+        per_page = data.get("per_page", 20)
 
-        logging.info(f"Fetching logs with params: Year: {year}, Month: {month}, Day: {day}, Hour: {hour}")
+        # ŞU SATIR ÖNEMLİ (page ve per_page eklenmeli!)
+        params = {
+            "year": year,
+            "month": month,
+            "day": day,
+            "page": page,
+            "per_page": per_page
+        }
+
+        if hour:
+            params["hour"] = hour
 
         url_alarm = f"http://{selected_ip}:8085/get_all_logs"
-        params = {"year": year, "month": month, "day": day, "hour": hour}
-
-        logging.debug(f"[DEBUG] Sending request to: {url_alarm} with params {params}")
-
         response_alarm = requests.get(url_alarm, params=params, timeout=5)
-        logging.debug(f"[DEBUG] Received response: {response_alarm.status_code}")
-
         response_alarm.raise_for_status()
-        logs = response_alarm.json().get("data", [])
 
-        logging.info(f"Fetched {len(logs)} logs successfully: {logs}")
+        logs_data = response_alarm.json()
 
-        return jsonify({"status": "success", "data": logs})
+        return jsonify({
+            "status": "success",
+            "data": logs_data["data"],
+            "has_more": logs_data.get("has_more", False),
+            "page": logs_data.get("page", page)
+        })
+
+    except requests.exceptions.RequestException as e:
+        logging.error(f"[ERROR] Error fetching logs: {e}")
+        return jsonify({"status": "error", "message": f"LOGS verileri alınamadı: {e}"}), 500
+
 
     except requests.exceptions.RequestException as e:
         logging.error(f"[ERROR] Error fetching logs: {e}")
