@@ -1,8 +1,6 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %}
 
-{% block title %} ORC Status - Error Log {% endblock%} 
-
-{% block extra_css %}
+{% block title %} ORC Status - Error Log {% endblock%} {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
 {% endblock %} {% block content %}
 
@@ -71,20 +69,54 @@
 </div>
 
 <script>
+  let currentPage = 1;
+  let isLoading = false;
+  let hasMoreLogs = true;
+
   document.addEventListener("DOMContentLoaded", function () {
-    fetchLogs(); // Fetch logs for the current date initially
+    fetchLogs();
   });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    fetchLogs();
+  
+    const container = document.querySelector('.log-table-content');
+    if (container) {
+      container.addEventListener("scroll", function () {
+        const scrollTop = container.scrollTop;
+        const scrollHeight = container.scrollHeight;
+        const containerHeight = container.clientHeight;
+  
+        if (scrollTop + containerHeight >= scrollHeight - 100) {
+          console.log("SCROLL TETİKLENDİ (log-table-content)!");
+          fetchLogs();
+        }
+      });
+    } else {
+      console.error("log-table-content bulunamadı!");
+    }
+  });
+  
+
   function formatDateTime(dateTimeStr) {
     const date = new Date(dateTimeStr);
     if (isNaN(date)) return dateTimeStr;
-    return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
+    return `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")} ${date
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")}`;
   }
 
   function fetchLogs() {
+    if (isLoading || !hasMoreLogs) return;
+    isLoading = true;
+
     document.getElementById("loading-message").style.display = "table-row";
-    document.getElementById("no-logs-message").style.display = "none";
-    document.getElementById("calendar-container").style.display = "none";
-    document.getElementById("info-message").style.display = "none";
 
     fetch("/get_logs", {
       method: "POST",
@@ -93,11 +125,14 @@
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1,
         day: new Date().getDate(),
+        page: currentPage,
+        per_page: 20,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         document.getElementById("loading-message").style.display = "none";
+        isLoading = false;
 
         if (data.status === "success") {
           let logs = data.data;
@@ -111,67 +146,71 @@
           }
 
           if (Array.isArray(logs) && logs.length > 0) {
-            document.getElementById("info-message").style.display = "block";
-            updateTable(logs);
-            document.getElementById("no-logs-message").style.display = "none";
-          } else {
-            document.getElementById("no-logs-message").style.display = "block";
+            updateTable(logs, true);
           }
-        } else {
-          document.getElementById("no-logs-message").style.display = "block";
-        }
 
-        document.getElementById("calendar-container").style.display = "block";
+          currentPage += 1;
+          hasMoreLogs = data.has_more;
+        }
+        console.log(`Fetching page ${currentPage}, hasMore: ${hasMoreLogs}`);
       })
       .catch((error) => {
+        isLoading = false;
         console.error("Error fetching logs:", error);
         document.getElementById("loading-message").style.display = "none";
-        document.getElementById("no-logs-message").style.display = "block";
-        document.getElementById("calendar-container").style.display = "block";
       });
   }
 
-  function updateTable(logs) {
+  function updateTable(logs, append = false) {
     const tableBody = document.querySelector("#log-table-body");
     const tableHead = document.querySelector("#log-table-head");
-  
-    tableBody.innerHTML = "";
-  
-    if (logs.length === 0) {
+
+    if (!append) tableBody.innerHTML = "";
+
+    if (logs.length === 0 && !append) {
       tableHead.style.display = "none";
       return;
     }
-  
+
     tableHead.style.display = "table-header-group";
-  
+
     logs.forEach((log, index) => {
       const row = document.createElement("tr");
-      const logId = `log-${index}`;
+      const logId = `log-${Date.now()}-${Math.random()}`; // Benzersiz ID
+
       const fullText = log.tag + " - " + (log.data || "N/A");
-  
-      // Güvenli hale getir
-      const fullTextEscaped = fullText.replace(/[&<>"']/g, function(match) {
-        const chars = { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' };
+      const fullTextEscaped = fullText.replace(/[&<>"']/g, function (match) {
+        const chars = {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        };
         return chars[match];
       });
-  
+
       const statusClass = getStatusClass(log.type);
-      const needsToggle = fullText.length > 100; 
-  
+      const needsToggle = fullText.length > 100;
+
       row.innerHTML = `
         <td><span class="status-dot ${statusClass}"></span></td>
         <td>
           <span class="ellipsis" id="${logId}-short">${fullTextEscaped}</span>
           <span class="log-full" id="${logId}-full">${fullTextEscaped}</span>
-          ${needsToggle ? `<a href="#" class="toggle-link" data-log-id="${logId}">Read More</a>` : ""}
+          ${
+            needsToggle
+              ? `<a href="#" class="toggle-link" data-log-id="${logId}">Read More</a>`
+              : ""
+          }
         </td>
         <td style="white-space: nowrap;">${formatDateTime(log.created_at)}</td>
       `;
-  
+
       tableBody.appendChild(row);
     });
   }
-  
+
   document
     .querySelector("#log-table-body")
     .addEventListener("click", function (event) {
@@ -236,20 +275,20 @@
           let logs =
             typeof data.data === "string" ? JSON.parse(data.data) : data.data;
           if (Array.isArray(logs) && logs.length > 0) {
-            document.getElementById("info-message").style.display = "block"; 
+            document.getElementById("info-message").style.display = "block";
             updateTable(logs);
-            document.getElementById("no-logs-message").style.display = "none"; 
+            document.getElementById("no-logs-message").style.display = "none";
           } else {
-            document.getElementById("no-logs-message").style.display = "block"; 
+            document.getElementById("no-logs-message").style.display = "block";
           }
         } else {
-          document.getElementById("no-logs-message").style.display = "block"; 
+          document.getElementById("no-logs-message").style.display = "block";
         }
       })
       .catch((error) => {
         console.error("[ERROR] Fetch error:", error);
         document.getElementById("loading-message").style.display = "none";
-        document.getElementById("no-logs-message").style.display = "block"; 
+        document.getElementById("no-logs-message").style.display = "block";
       });
   }
 </script>

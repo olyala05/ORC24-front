@@ -1252,10 +1252,8 @@ def get_logs():
     if not selected_ip:
         logging.error("Selected device IP not found.")
         return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
-
     try:
         data = request.get_json()
-
         year = data.get("year")
         month = data.get("month")
         day = data.get("day")
@@ -1271,10 +1269,8 @@ def get_logs():
             "page": page,
             "per_page": per_page
         }
-
         if hour:
             params["hour"] = hour
-
         url_alarm = f"http://{selected_ip}:8085/get_all_logs"
         response_alarm = requests.get(url_alarm, params=params, timeout=5)
         response_alarm.raise_for_status()
