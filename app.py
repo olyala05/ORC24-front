@@ -62,7 +62,10 @@ def set_language():
         session['lang'] = lang
     return redirect(request.referrer or url_for("index"))
 
-
+@app.context_processor
+def inject_locale():
+    from flask_babel import get_locale
+    return dict(get_locale=get_locale)
 
 @app.route("/")
 def index():

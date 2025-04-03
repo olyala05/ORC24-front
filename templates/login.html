@@ -27,12 +27,12 @@
         <form method="POST" action="{{ url_for('login') }}"> 
           <div class="input-group">
             <span class="icon icon-left"><img src="{{ url_for('static', filename='images/svg/22.svg') }}" alt="User" width="20" height="20" ></span>
-            <input type="text" name="email" placeholder="Email" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" required />
+            <input type="text" name="email" placeholder="{{ _('Email') }}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" required />
           </div>
 
           <div class="input-group">
             <span class="icon icon-left"><img src="{{ url_for('static', filename='images/svg/21.svg') }}" alt="Lock" width="20" height="20" ></span>
-            <input type="password" name="password" id="password-input" placeholder="Password"  autocomplete="new-password" autocorrect="off" autocapitalize="none" spellcheck="false" required />
+            <input type="password" name="password" id="password-input" placeholder="{{ _('Password') }}"  autocomplete="new-password" autocorrect="off" autocapitalize="none" spellcheck="false" required />
             <span class="icon icon-right" id="toggle-password"><i class="fa-solid fa-eye"></i></span>
           </div>
           

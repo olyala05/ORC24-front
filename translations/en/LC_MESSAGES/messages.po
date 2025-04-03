@@ -323,3 +323,6 @@ msgstr "Login"
 
 msgid "Email"
 msgstr "Email"
+
+msgid "Password"
+msgstr "Password"

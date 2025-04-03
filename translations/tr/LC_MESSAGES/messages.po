@@ -317,3 +317,43 @@ msgstr "Giriş"
 
 msgid "Email"
 msgstr "E-posta"
+
+msgid "Password"
+msgstr "Şifre"
+
+msgid "Logout"
+msgstr "Çıkış"
+
+msgid "Menu"    
+msgstr "Menü"   
+
+msgid "Report Date"    
+msgstr "Rapor Tarihi"
+
+msgid "Energy Drawn From The Grid"    
+msgstr "Şebekeden Çekilen Enerji"
+
+msgid "Generated Energy"    
+msgstr "Üretilen Enerji"
+
+msgid "Consumed Energy"
+msgstr "Tüketilen Enerji"
+
+# ******* Alarms ********
+msgid "REACTIVE POWER"   
+msgstr "REAKTİF GÜÇ" 
+
+msgid "HARMONIC"   
+msgstr "HARMONİK"  
+
+msgid "ACTIVE"   
+msgstr "AKTİF" 
+
+msgid "VOLTAGE"   
+msgstr "GERİLİM" 
+
+msgid "NETWORK"
+msgstr "NETWORK"  
+
+msgid "POWER"
+msgstr "GÜÇ" 

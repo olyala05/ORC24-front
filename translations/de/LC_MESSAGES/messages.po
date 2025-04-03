@@ -324,3 +324,6 @@ msgstr "Anmelden"
 
 msgid "Email"
 msgstr "E-Mail"
+
+msgid "Password"
+msgstr "Password"
