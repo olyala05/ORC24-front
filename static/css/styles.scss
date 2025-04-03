@@ -277,3 +277,77 @@ input:-webkit-autofill:focus {
     font-size: 12px;
   }
 }
+.language-switcher {
+  position: relative;
+  display: inline-block;
+
+  .language-toggle {
+    background: white;
+    border-radius: 50%;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transform: scale(1.05);
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .language-dropdown {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background: white;
+    color: #0e1734;
+    border-radius: 8px;
+    padding: 8px;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+
+    button {
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      font-size: 14px;
+      font-weight: 600;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.3s;
+
+      img {
+        width: 20px;
+        height: 14px;
+      }
+
+      input[type="radio"] {
+        accent-color: $primary-color;
+        margin: 0;
+      }
+
+      &:hover {
+        background: rgba(255, 127, 50, 0.1);
+        border-radius: 6px;
+      }
+    }
+  }
+
+  &:hover .language-dropdown {
+    display: flex;
+  }
+}

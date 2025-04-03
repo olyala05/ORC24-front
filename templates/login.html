@@ -37,10 +37,47 @@
           </div>
           
           <div class="login-actions">
-            <button type="submit" class="login-btn">LOGIN  <img src="{{ url_for('static', filename='images/svg/17.svg') }}" alt="Login" width="30" height="30"  style="padding: 7px 9px; background: #0B1734; border-radius: 5px;"> </button>
+            <button type="submit" class="login-btn">{{ _('Login') }}  <img src="{{ url_for('static', filename='images/svg/17.svg') }}" alt="Login" width="30" height="30"  style="padding: 7px 9px; background: #0B1734; border-radius: 5px;"> </button>
+
+            <!-- DİL SEÇİCİ -->
+            <div class="language-switcher">
+              <button class="language-toggle">
+                <img src="{{ url_for('static', filename='images/svg/globe.svg') }}" width="24" height="24" alt="Globe Icon">
+              </button>
+                <div class="language-dropdown">
+                  <button type="button" onclick="setLanguage('tr')">
+                    <img src="{{ url_for('static', filename='images/flags/tr.png') }}" width="20"> TR
+                  </button>
+                  <button type="button" onclick="setLanguage('en')">
+                    <img src="{{ url_for('static', filename='images/flags/uk.png') }}" width="20"> EN
+                  </button>
+                  <button type="button" onclick="setLanguage('de')">
+                    <img src="{{ url_for('static', filename='images/flags/de.png') }}" width="20"> DE
+                  </button>
+                </div>
+              
+            </div>
+            
+
           </div>
         </form>
       </div>
     </div>
   </div>
+
+
+  <script>
+    function setLanguage(lang) {
+      fetch("{{ url_for('set_language') }}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "lang=" + lang
+      }).then(() => {
+        window.location.reload();  
+      });
+    }
+  </script>
+  
 {% endblock %}

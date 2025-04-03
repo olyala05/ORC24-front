@@ -21,6 +21,7 @@ from datetime import datetime
 import logging
 import pymodbus.client.tcp 
 import os
+from flask_babel import Babel, gettext as _
 
 app = Flask(__name__)
 CORS(app)
@@ -43,6 +44,25 @@ DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database":
 Scss(app, static_dir="static", asset_dir="assets")
 
 last_connection_time = None
+
+app.config['BABEL_DEFAULT_LOCALE'] = 'tr'
+app.config['BABEL_SUPPORTED_LOCALES'] = ['tr', 'en', 'de']
+
+babel = Babel(app)
+
+@babel.localeselector
+def get_locale():
+    print("SEÇİLEN DİL:", session.get("lang", "tr"))
+    return session.get("lang", "tr")  # Eğer session'da dil yoksa varsayılan "tr"
+
+@app.route('/set_language', methods=['POST'])
+def set_language():
+    lang = request.form.get("lang")
+    if lang in ['tr', 'en', 'de']:
+        session['lang'] = lang
+    return redirect(request.referrer or url_for("index"))
+
+
 
 @app.route("/")
 def index():
