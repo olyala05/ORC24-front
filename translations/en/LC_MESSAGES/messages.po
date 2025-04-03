@@ -326,3 +326,297 @@ msgstr "Email"
 
 msgid "Password"
 msgstr "Password"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Report Date"
+msgstr "Report Date"
+
+msgid "Energy Drawn From The Grid"
+msgstr "Energy Drawn From The Grid"
+
+msgid "Generated Energy"
+msgstr "Generated Energy"
+
+msgid "Consumed Energy"
+msgstr "Consumed Energy"
+
+# ******* Alarms ********
+msgid "REACTIVE POWER"
+msgstr "REACTIVE POWER"
+
+msgid "HARMONIC"
+msgstr "HARMONIC"
+
+msgid "ACTIVE"
+msgstr "ACTIVE"
+
+msgid "VOLTAGE"
+msgstr "VOLTAGE"
+
+msgid "NETWORK"
+msgstr "NETWORK"
+
+msgid "POWER"
+msgstr "POWER"
+
+#  ******** Modem Selection ********
+msgid "Home"
+msgstr "Home"
+
+msgid "Modem Selection"
+msgstr "Modem Selection"
+
+msgid "Select Modem or Device"
+msgstr "Select Modem or Device"
+
+msgid "ORC Status"
+msgstr "ORC Status"
+
+msgid "Equipment"
+msgstr "Equipment"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Loading devices"
+msgstr "Loading devices"
+
+msgid "Successfully connected to the device!"
+msgstr "Successfully connected to the device!"
+
+msgid "Failed to connect to the device!"
+msgstr "Failed to connect to the device!"
+
+msgid "Unable to proceed as the device could not be connected!"
+msgstr "Unable to proceed as the device could not be connected!"
+
+msgid "Connection Error"
+msgstr "Connection Error"
+
+msgid "An error occurred during the connection."
+msgstr "An error occurred during the connection."
+
+msgid "Ok"
+msgstr "Ok"
+
+msgid "Connecting to the device , please wait..."
+msgstr "Connecting to the device, please wait..."
+
+msgid "Please select a device first!"
+msgstr "Please select a device first!"
+
+msgid "The page has been refreshed, no device found, alarm reset!"
+msgstr "The page has been refreshed, no device found, alarm reset!"
+
+# *********** Header ***********
+msgid "Back"
+msgstr "Back"
+
+msgid "System will start again when you leave the test mode."
+msgstr "System will start again when you leave the test mode."
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Alarm data could not be retrieved"
+msgstr "Alarm data could not be retrieved"
+
+msgid "Redirecting to the alarm page..."
+msgstr "Redirecting to the alarm page..."
+
+msgid "ORC Status is loading..."
+msgstr "ORC Status is loading..."
+
+msgid "Warning"
+msgstr "Warning"
+
+msgid "Error while retrieving devices:"
+msgstr "Error while retrieving devices:"
+
+msgid "Equipments are loading..."
+msgstr "Equipments are loading..."
+
+msgid "Backend Error"
+msgstr "Backend Error"
+
+msgid "Error!"
+msgstr "Error!"
+
+msgid "Equipment data could not be retrieved."
+msgstr "Equipment data could not be retrieved."
+
+msgid "Equipment data could not be retrieved. Please try again."
+msgstr "Equipment data could not be retrieved. Please try again."
+
+msgid "Settings are loading..."
+msgstr "Settings are loading..."
+
+msgid "Test is loading..."
+msgstr "Test is loading..."
+
+msgid "Data is loading..."
+msgstr "Data is loading..."
+
+msgid "Equipments are being scanned..."
+msgstr "Equipments are being scanned..."
+
+msgid "An error occurred while retrieving Modbus data:"
+msgstr "An error occurred while retrieving Modbus data:"
+
+msgid "Equipment data could not be retrieved. Please try again."
+msgstr "Equipment data could not be retrieved. Please try again."
+
+msgid "Redirecting to the alarm page..."
+msgstr "Redirecting to the alarm page..."
+
+msgid "Device information could not be retrieved. Please try again."
+msgstr "Device information could not be retrieved. Please try again."
+
+msgid "Alarm data could not be retrieved for the selected device:"
+msgstr "Alarm data could not be retrieved for the selected device:"
+
+msgid "The alarm data request has been canceled."
+msgstr "The alarm data request has been canceled."
+
+msgid "S/N:"
+msgstr "S/N:"
+
+msgid "MODEM NAME"
+msgstr "MODEM NAME"
+
+msgid "MODEM BRAND / MODEL"
+msgstr "MODEM BRAND / MODEL"
+
+msgid "MODEM STATUS"
+msgstr "MODEM STATUS"
+
+msgid "DATE OF INSTALLATION"
+msgstr "DATE OF INSTALLATION"
+
+msgid "DATA READING INTERVAL"
+msgstr "DATA READING INTERVAL"
+
+msgid "NETWORK TYPE"
+msgstr "NETWORK TYPE"
+
+msgid "CONNECTION PROTOCOL"
+msgstr "CONNECTION PROTOCOL"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Passive"
+msgstr "Passive"
+
+msgid "Disconnected"
+msgstr "Disconnected"
+
+msgid "SOFTWARE VERSION"
+msgstr "SOFTWARE VERSION"
+
+msgid "Connected"
+msgstr "Connected"
+
+msgid "Not Connected"
+msgstr "Not Connected"
+
+msgid "Checking the network cables, modem and router"
+msgstr "Checking the network cables, modem and router"
+
+msgid "Reconnecting to Wi-Fi"
+msgstr "Reconnecting to Wi-Fi"
+
+msgid "No Internet"
+msgstr "No Internet"
+
+msgid "Retry"
+msgstr "Retry"
+
+msgid "Archive"
+msgstr "Archive"
+
+msgid "End"
+msgstr "End"
+
+msgid "Modem Name"
+msgstr "Modem Name"
+
+msgid "Last Connection Date"
+msgstr "Last Connection Date"
+
+msgid "Lora Disconnection"
+msgstr "Lora Disconnection"
+
+msgid "WiFi Connection"
+msgstr "WiFi Connection"
+
+msgid "WiFi Disconnected"
+msgstr "WiFi Disconnected"
+
+msgid "Cloud Connection"
+msgstr "Cloud Connection"
+
+msgid "Rabbit MQ"
+msgstr "Rabbit MQ"
+
+msgid "Ethernet Connection"
+msgstr "Ethernet Connection"
+
+msgid "Ethernet Disconnected"
+msgstr "Ethernet Disconnected"
+
+msgid "VPN Connection"
+msgstr "VPN Connection"
+
+msgid "VPN Disconnected"
+msgstr "VPN Disconnected"
+
+msgid "Algorithm Processes"
+msgstr "Algorithm Processes"
+
+msgid "ORC Process Procedures"
+msgstr "ORC Process Procedures"
+
+msgid "Normal / Error (Red)"
+msgstr "Normal / Error (Red)"
+
+msgid "Please select a device first!"
+msgstr "Please select a device first!"
+
+msgid "Modem info retrieved successfully"
+msgstr "Modem info retrieved successfully"
+
+msgid "Failed to fetch modem data"
+msgstr "Failed to fetch modem data"
+
+msgid "Unexpected error occurred"
+msgstr "Unexpected error occurred"
+
+msgid "Unexpected error:"
+msgstr "Unexpected error:"
+
+msgid "Frequency (Hz)"
+msgstr "Frequency (Hz)"
+
+msgid "Reactive Penalty"
+msgstr "Reactive Penalty"
+
+msgid "Does not Exist"
+msgstr "Does not Exist"
+
+msgid "Power Factor"
+msgstr "Power Factor"

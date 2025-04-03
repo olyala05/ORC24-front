@@ -326,4 +326,298 @@ msgid "Email"
 msgstr "E-Mail"
 
 msgid "Password"
-msgstr "Password"
+msgstr "Passwort"
+
+msgid "Logout"
+msgstr "Abmelden"
+
+msgid "Menu"
+msgstr "Menü"
+
+msgid "Report Date"
+msgstr "Berichtsdatum"
+
+msgid "Energy Drawn From The Grid"
+msgstr "Energie aus dem Netz entnommen"
+
+msgid "Generated Energy"
+msgstr "Erzeugte Energie"
+
+msgid "Consumed Energy"
+msgstr "Verbrauchte Energie"
+
+# ******* Alarms ********
+msgid "REACTIVE POWER"
+msgstr "REAKTIVE LEISTUNG"
+
+msgid "HARMONIC"
+msgstr "HARMONISCH"
+
+msgid "ACTIVE"
+msgstr "AKTIV"
+
+msgid "VOLTAGE"
+msgstr "SPANNUNG"
+
+msgid "NETWORK"
+msgstr "NETZWERK"
+
+msgid "POWER"
+msgstr "LEISTUNG"
+
+#  ******** Modem Selection ********
+msgid "Home"
+msgstr "Startseite"
+
+msgid "Modem Selection"
+msgstr "Modemauswahl"
+
+msgid "Select Modem or Device"
+msgstr "Modem oder Gerät auswählen"
+
+msgid "ORC Status"
+msgstr "ORC Status"
+
+msgid "Equipment"
+msgstr "Ausrüstung"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "Date"
+msgstr "Daten"
+
+msgid "Loading devices"
+msgstr "Geräte werden geladen"
+
+msgid "Successfully connected to the device!"
+msgstr "Erfolgreich mit dem Gerät verbunden!"
+
+msgid "Failed to connect to the device!"
+msgstr "Verbindung zum Gerät fehlgeschlagen!"
+
+msgid "Unable to proceed as the device could not be connected!"
+msgstr "Vorgang kann nicht fortgesetzt werden, da das Gerät nicht verbunden werden konnte!"
+
+msgid "Connection Error"
+msgstr "Verbindungsfehler"
+
+msgid "An error occurred during the connection."
+msgstr "Ein Fehler ist während der Verbindung aufgetreten."
+
+msgid "Ok"
+msgstr "Okay"
+
+msgid "Connecting to the device , please wait..."
+msgstr "Verbinde mit dem Gerät, bitte warten..."
+
+msgid "Please select a device first!"
+msgstr "Bitte wählen Sie zuerst ein Gerät aus!"
+
+msgid "The page has been refreshed, no device found, alarm reset!"
+msgstr "Die Seite wurde aktualisiert, kein Gerät gefunden, Alarm zurückgesetzt!"
+
+# *********** Header ***********
+msgid "Back"
+msgstr "Zurück"
+
+msgid "System will start again when you leave the test mode."
+msgstr "Das System wird neu gestartet, wenn Sie den Testmodus verlassen."
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "OK"
+msgstr "Okay"
+
+msgid "Alarm data could not be retrieved"
+msgstr "Alarmdaten konnten nicht abgerufen werden"
+
+msgid "Redirecting to the alarm page..."
+msgstr "Wird zur Alarmseite weitergeleitet..."
+
+msgid "ORC Status is loading..."
+msgstr "ORC-Status wird geladen..."
+
+msgid "Warning"
+msgstr "Warnung"
+
+msgid "Error while retrieving devices:"
+msgstr "Fehler beim Abrufen von Geräten:"
+
+msgid "Equipments are loading..."
+msgstr "Ausrüstungen werden geladen..."
+
+msgid "Backend Error"
+msgstr "Backend-Fehler"
+
+msgid "Error!"
+msgstr "Fehler!"
+
+msgid "Equipment data could not be retrieved."
+msgstr "Ausrüstungsdaten konnten nicht abgerufen werden."
+
+msgid "Equipment data could not be retrieved. Please try again."
+msgstr "Ausrüstungsdaten konnten nicht abgerufen werden. Bitte versuchen Sie es erneut."
+
+msgid "Settings are loading..."
+msgstr "Einstellungen werden geladen..."
+
+msgid "Test is loading..."
+msgstr "Test wird geladen..."
+
+msgid "Data is loading..."
+msgstr "Daten werden geladen..."
+
+msgid "Equipments are being scanned..."
+msgstr "Ausrüstungen werden gescannt..."
+
+msgid "An error occurred while retrieving Modbus data:"
+msgstr "Fehler beim Abrufen von Modbus-Daten:"
+
+msgid "Equipment data could not be retrieved. Please try again."
+msgstr "Ausrüstungsdaten konnten nicht abgerufen werden. Bitte versuchen Sie es erneut."
+
+msgid "Redirecting to the alarm page..."
+msgstr "Wird zur Alarmseite weitergeleitet..."
+
+msgid "Device information could not be retrieved. Please try again."
+msgstr "Geräteinformationen konnten nicht abgerufen werden. Bitte versuchen Sie es erneut."
+
+msgid "Alarm data could not be retrieved for the selected device:"
+msgstr "Alarmdaten konnten für das ausgewählte Gerät nicht abgerufen werden:"
+
+msgid "The alarm data request has been canceled."
+msgstr "Die Anfrage für Alarmdaten wurde abgebrochen."
+
+msgid "S/N:"
+msgstr "S/N:"
+
+msgid "MODEM NAME"
+msgstr "MODEMNAME"
+
+msgid "MODEM BRAND / MODEL"
+msgstr "MODEMMARKE / MODELL"
+
+msgid "MODEM STATUS"
+msgstr "MODEMSTATUS"
+
+msgid "DATE OF INSTALLATION"
+msgstr "INSTALLATIONSDATUM"
+
+msgid "DATA READING INTERVAL"
+msgstr "DATENLESINTERVALL"
+
+msgid "NETWORK TYPE"
+msgstr "NETZWERKTYPE"
+
+msgid "CONNECTION PROTOCOL"
+msgstr "VERBINDUNGSPROTOKOLL"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Passive"
+msgstr "Passiv"
+
+msgid "Disconnected"
+msgstr "Getrennt"
+
+msgid "SOFTWARE VERSION"
+msgstr "SOFTWAREVERSION"
+
+msgid "Connected"
+msgstr "Verbunden"
+
+msgid "Not Connected"
+msgstr "Nicht verbunden"
+
+msgid "Checking the network cables, modem and router"
+msgstr "Überprüfung der Netzwerkkabel, Modem und Router"
+
+msgid "Reconnecting to Wi-Fi"
+msgstr "Wiederverbinden mit Wi-Fi"
+
+msgid "No Internet"
+msgstr "Kein Internet"
+
+msgid "Retry"
+msgstr "Erneut versuchen"
+
+msgid "Archive"
+msgstr "Archiv"
+
+msgid "End"
+msgstr "Ende"
+
+msgid "Modem Name"
+msgstr "Modemname"
+
+msgid "Last Connection Date"
+msgstr "Letztes Verbindungsdatum"
+
+msgid "Lora Disconnection"
+msgstr "Lora-Verbindung getrennt"
+
+msgid "WiFi Connection"
+msgstr "Wi-Fi Verbindung"
+
+msgid "WiFi Disconnected"
+msgstr "Wi-Fi getrennt"
+
+msgid "Cloud Connection"
+msgstr "Cloud-Verbindung"
+
+msgid "Rabbit MQ"
+msgstr "Rabbit MQ"
+
+msgid "Ethernet Connection"
+msgstr "Ethernet-Verbindung"
+
+msgid "Ethernet Disconnected"
+msgstr "Ethernet getrennt"
+
+msgid "VPN Connection"
+msgstr "VPN-Verbindung"
+
+msgid "VPN Disconnected"
+msgstr "VPN getrennt"
+
+msgid "Algorithm Processes"
+msgstr "Algorithmusprozesse"
+
+msgid "ORC Process Procedures"
+msgstr "ORC-Prozessverfahren"
+
+msgid "Normal / Error (Red)"
+msgstr "Normal / Fehler (Rot)"
+
+msgid "Please select a device first!"
+msgstr "Bitte wählen Sie zuerst ein Gerät aus!"
+
+msgid "Modem info retrieved successfully"
+msgstr "Modem-Informationen erfolgreich abgerufen"
+
+msgid "Failed to fetch modem data"
+msgstr "Modem-Daten konnten nicht abgerufen werden"
+
+msgid "Unexpected error occurred"
+msgstr "Unerwarteter Fehler aufgetreten"
+
+msgid "Unexpected error:"
+msgstr "Unerwarteter Fehler:"
+
+msgid "Frequency (Hz)"
+msgstr "Frequenz (Hz)"
+
+msgid "Reactive Penalty"
+msgstr "Reaktive Strafe"
+
+msgid "Does not Exist"
+msgstr "Existiert nicht"
+
+msgid "Power Factor"
+msgstr "Leistungsfaktor"

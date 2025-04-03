@@ -607,21 +607,21 @@ msgstr "Beklenmeyen bir hata oluştu."
 msgid "Unexpected error:"
 msgstr "Beklenmeyen hata:"
 
-msgid ""
-msgstr ""
+msgid "Frequency (Hz)"
+msgstr "Frekans (Hz)"   
 
 
-msgid ""
-msgstr ""
+msgid "Reactive Penalty"
+msgstr "Reaktif Cezada"
 
-msgid ""
-msgstr ""
+msgid "Does not Exist"
+msgstr "Değil"
 
-msgid ""
-msgstr ""
+msgid "Power Factor"
+msgstr "Güç Faktörü"
 
-msgid ""
-msgstr ""
+msgid "Log"
+msgstr "Loglar"
 
 msgid ""
 msgstr ""
