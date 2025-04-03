@@ -39,7 +39,7 @@
             <!-- Wi-Fi Bağlıysa -->
             <span class="status-title">
               {% if network and network.active_connections %}
-                  {{('Connected')}} {{ network.active_connections | join(" / ") }}
+                  {{ _('Connected') }} {{ network.active_connections | join(" / ") }}
               {% else %}
                   {{ _('Disconnected') }}
               {% endif %}

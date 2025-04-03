@@ -526,7 +526,7 @@ msgid "SOFTWARE VERSION"
 msgstr "YAZILIM SÜRÜMÜ"
 
 msgid "Connected"
-msgstr "Bağlantı kuruldu"
+msgstr "Bağlantı var"
 
 msgid "Not Connected"
 msgstr "Bağlantı yok"
