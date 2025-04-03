@@ -1,7 +1,7 @@
 <div class="header">
   <div class="header-left">
     <button class="header-button" onclick="goBack()">
-      Back
+      {{ _('Back') }}
       <img
         src="{{ url_for('static', filename='images/svg/20.svg') }}"
         alt="Logout"
@@ -65,9 +65,9 @@
     if (!selectedDeviceIP) {
       Swal.fire({
         icon: "warning",
-        title: "Uyarı",
-        text: "Lütfen önce bir cihaz seçiniz!",
-        confirmButtonText: "Tamam",
+        title: "{{ _('Warning') }}",
+        text: "{{ _('Please select a device first!')}}",
+        confirmButtonText: "{{ _('OK')}}",
       });
       return;
     }
@@ -77,7 +77,7 @@
     loadingOverlay.className = "loading-overlay";
     loadingOverlay.innerHTML = `
             <div class="loading-box">
-              <p> Alarm sayfasına yönlendiriliyor...</p>
+              <p> {{ _('Redirecting to the alarm page...') }}</p>
               <div class="loader"></div>
             </div>`;
     document.body.appendChild(loadingOverlay);
@@ -118,7 +118,7 @@
           alarmBadge.style.display = "none";
         }
       })
-      .catch((error) => console.error("Alarm verisi alınamadı:", error));
+      .catch((error) => console.error("{{ _('Alarm data could not be retrieved') }}:", error));
   }
 
   // **** Test sayfasında olup olmadığımızı kontrol eden fonksiyon ***
@@ -129,13 +129,13 @@
   function goBack() {
     if (isTestPage()) {
       Swal.fire({
-        text: "System will start again when you leave the test mode.",
+        text: "{{ _('System will start again when you leave the test mode.') }}",
         icon: "info",
         backdrop: false,
         showCancelButton: true,
         confirmButtonColor: "#fff",
-        confirmButtonText: "OK",
-        cancelButtonText: "Cancel",
+        confirmButtonText: "{{ _('OK') }}",
+        cancelButtonText: "{{ _('Cancel') }}",
         customClass: {
           popup: "swal-custom-bg",
           confirmButton: "swal-button",  

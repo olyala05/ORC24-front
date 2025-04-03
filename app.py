@@ -249,11 +249,11 @@ def orc_status():
     selected_ip = session.get("selected_device_ip")
 
     if not selected_ip:
-        flash("Lütfen önce bir cihaz seçin!", "danger")
+        flash(_("Please select a device first!"), "danger")
         return render_template(
             "orc_status/orc_status.html",
-            page_title="ORC Status",
-            error="Lütfen önce bir cihaz seçin!",
+            page_title=_("ORC Status"),
+            error=_("Please select a device first!"),
             modem=None,
             network=None,
         )
@@ -267,8 +267,6 @@ def orc_status():
         response_modem = requests.get(url_modem, timeout=5)
         response_modem.raise_for_status()
         modems = response_modem.json().get("data", [])
-        
-
         if modems:
             selected_modem = modems[0]
             if "created_at" in selected_modem and selected_modem["created_at"]:
@@ -282,7 +280,6 @@ def orc_status():
                 except ValueError:
                     selected_modem["created_at"] = "Tarih formatı hatalı"
 
-        # Ağ bilgilerini al
         url_network = f"http://{selected_ip}:8085/check_network"
         try:
             response_network = requests.get(url_network, timeout=5)
@@ -290,7 +287,6 @@ def orc_status():
             network_full = response_network.json()
             network_data = network_full.get("data", {})
 
-            # Aktif bağlantıları belirleme
             active_connections = []
             if network_data.get("wifi_connected"):
                 active_connections.append("Wi-Fi")
@@ -307,7 +303,7 @@ def orc_status():
 
         return render_template(
             "orc_status/orc_status.html",
-            page_title="ORC Status",
+            page_title=_("ORC Status"),
             modem=selected_modem,
             network=network_data,
             error=None,
@@ -316,8 +312,8 @@ def orc_status():
     except Exception as e:
         return render_template(
             "orc_status/orc_status.html",
-            page_title="ORC Status",
-            error=f"Beklenmeyen hata: {e}",
+            page_title=_("ORC Status"),
+            error=_("Unexpected error: ") + str(e),
             modem=None,
             network=None,
         )
@@ -351,16 +347,16 @@ def get_modem_info():
             "status": "Active" if modem.get("status") == 1 else "Inactive",
         }
         return ResponseHandler.success(
-            message="Modem info retrieved successfully", data=modem_info
+            message=_("Modem info retrieved successfully"), data=modem_info
         )
 
     except requests.RequestException as e:
         return ResponseHandler.error(
-            message="Failed to fetch modem data", code=500, details=str(e)
+            message=_("Failed to fetch modem data"), code=500, details=str(e)
         )
     except Exception as e:
         return ResponseHandler.error(
-            message="Unexpected error occurred", code=500, details=str(e)
+            message=_("Unexpected error occurred"), code=500, details=str(e)
         )
 
 
@@ -374,7 +370,7 @@ def wi_fi_list():
         return jsonify({"error": "IP address is missing"}), 400
 
     try:
-        print(f"📡 Wi-Fi listesi için cihazdan veri alınıyor: {selected_ip}")
+        print(f"Wi-Fi listesi için cihazdan veri alınıyor: {selected_ip}")
         url = f"http://{selected_ip}:8085/check_network"
         response = requests.get(url)
         print(f"Cihazdan cevap alındı: {response.status_code}")

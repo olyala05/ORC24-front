@@ -11,38 +11,37 @@
   <div class="orc-content">
     <div class="device-info">
       <ul>
-        <li>S/N: <span>{{ modem.serial_no if modem.serial_no else '-' }}</span></li>
-        <li>MODEM NAME: <span>{{ modem.name if modem.name else '-' }}</span></li>
-        <!-- <li>MODEM BRAND / MODEL: <span>{{ modem.brand_model if modem.brand_model else '-' }}</span></li>-->
-        <li>MODEM BRAND / MODEL: <span id="brand-model">-</span></li>
+        <li>{{ _('S/N') }} <span>{{ modem.serial_no if modem.serial_no else '-' }}</span></li>
+        <li>{{ _('MODEM NAME') }} <span>{{ modem.name if modem.name else '-' }}</span></li>
+        <li>{{ _('MODEM BRAND / MODEL')}} <span id="brand-model">-</span></li>
         <li>
-          MODEM STATUS:
+          {{ _('MODEM STATUS')}}
           <span
-            >{% if modem.status == "A" %} Active {% else %} Passive {% endif %}</span>
+            >{% if modem.status == "A" %} {{ _('Active')}} {% else %} {{ _('Passive')}} {% endif %}</span>
         </li>
-        <li>DATE OF INSTALLATION: <span>{{modem.created_at if modem.created_at else '-'}}</span></li>
-        <li>DATA READING INTERVAL: <span>1380 Seconds</span></li>
-        <li>NETWORK TYPE: 
+        <li>{{ _('DATE OF INSTALLATION')}} <span>{{modem.created_at if modem.created_at else '-'}}</span></li>
+        <li>{{ _('DATA READING INTERVAL')}} <span>1380 Seconds</span></li>
+        <li>{{ _('NETWORK TYPE')}} 
           <span>
               {% if network and network.network_type_list %}
                   {{ network.network_type_list | join(" / ") }}
               {% else %}
-                  Disconnected
+                  {{ _('Disconnected')}}
               {% endif %}
           </span>
         </li>      
-        <li>CONNECTION PROTOCOL: <span id="connection-protocol">-</span></li>
-        <li>SOFTWARE VERSION: <span>V 1.02</span></li>
+        <li>{{ _('CONNECTION PROTOCOL') }} <span id="connection-protocol">-</span></li>
+        <li>{{ _('SOFTWARE VERSION')}} <span>V 1.02</span></li>
       </ul>
 
       <div class="connection-status">
-        {% if network and network.connected_ssid and network.connected_ssid != "Not Connected" %}
+        {% if network and network.connected_ssid and network.connected_ssid != "{{ _('Not Connected')}}" %}
             <!-- Wi-Fi Bağlıysa -->
             <span class="status-title">
               {% if network and network.active_connections %}
-                  Connected {{ network.active_connections | join(" / ") }}
+                  {{('Connected')}} {{ network.active_connections | join(" / ") }}
               {% else %}
-                  Disconnected
+                  {{ _('Disconnected') }}
               {% endif %}
             </span>
             <div class="separator"></div>
@@ -54,14 +53,13 @@
         {% else %}
             <!-- Wi-Fi Bağlı Değilse -->
             <span class="status-title error-message">
-                Checking the network cables, modem and router <br>
-                Reconnecting to Wi-Fi
+                {{ _('Checking the network cables, modem and router')}} <br> {{ _('Reconnecting to Wi-Fi')}}
             </span>
             <div class="separator"></div>
             <div class="status-details">
               <div class="status-left">
-                <img  src="{{ url_for('static', filename='images/svg/11.svg') }}" alt="No Wi Fi"></img> No Internet</div>
-                <button class="retry-btn" onclick="retryConnection()">Retry</button>
+                <img  src="{{ url_for('static', filename='images/svg/11.svg') }}" alt="No Wi Fi"></img> {{ _('No Internet')}}</div>
+                <button class="retry-btn" onclick="retryConnection()">{{ _('Retry') }}</button>
             </div>
         {% endif %}
     </div>
@@ -71,17 +69,17 @@
       <table>
         <thead>
           <tr>
-            <th>Archive</th>
-            <th>End</th>
-            <th>Modem Name</th>
-            <th>Last Connection Date</th>
+            <th>{{ _('Archive')}}</th>
+            <th>{{ _('End')}}</th>
+            <th>{{ _('Modem Name')}}</th>
+            <th>{{ _('Last Connection Date')}}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><span class="status-dot red"></span></td>
             <td><span class="status-dot red"></span></td>
-            <td>Lora Disconnection</td>
+            <td>{{ _('Lora Disconnection')}}</td>
             <td>2024-04-03 13:54:31</td>
           </tr>
 
@@ -89,12 +87,12 @@
             {% if network.wifi_connected %}
                 <td><span class="status-dot green"></span></td>
                 <td><span class="status-dot green"></span></td>
-                <td>WiFi Connection</td>
+                <td>{{ _('WiFi Connection')}}</td>
                 <td>{{ network.last_connected_time }}</td> 
             {% else %}
                 <td><span class="status-dot red"></span></td>
                 <td><span class="status-dot red"></span></td>
-                <td>WiFi Disconnected</td>
+                <td>{{ _('WiFi Disconnected')}}</td>
                 <td>{{ network.last_connected_time }}</td> 
             {% endif %}
         </tr>
@@ -102,16 +100,16 @@
           <tr data-status="cloud">
             <td><span class="status-dot red"></span></td>
             <td><span class="status-dot red"></span></td>
-            <td>Cloud Connection</td>
-            <td class="last-connection">Checking...</td> 
+            <td>{{ _('Cloud Connection')}}</td>
+            <td class="last-connection">{{ _('Checking...')}}</td> 
           </tr>
       
 
           <tr data-status="rabbitmq">
             <td><span class="status-dot red"></span></td>
             <td><span class="status-dot red"></span></td>
-            <td>Rabbit MQ</td>
-            <td class="last-connection">Checking...</td>
+            <td>{{ _('Rabbit MQ')}}</td>
+            <td class="last-connection">{{ _('Checking...')}}</td>
           </tr>
         
 
@@ -119,12 +117,12 @@
             {% if network.ethernet_connected %}
                 <td><span class="status-dot green"></span></td>
                 <td><span class="status-dot green"></span></td>
-                <td>Ethernet Connection</td>
+                <td>{{ _('Ethernet Connection')}}</td>
                 <td>{{ network.last_connected_time }}</td> 
             {% else %}
                 <td><span class="status-dot red"></span></td>
                 <td><span class="status-dot red"></span></td>
-                <td>Ethernet Disconnected</td>
+                <td>{{ _('Ethernet Disconnected')}}</td>
                 <td>{{ network.last_connected_time }}</td> 
             {% endif %}
           </tr>
@@ -132,12 +130,12 @@
             {% if network.vpn_connected %}
                 <td><span class="status-dot green"></span></td>
                 <td><span class="status-dot green"></span></td>
-                <td>VPN Connection</td>
+                <td>{{ _('VPN Connection')}}</td>
                 <td>{{ network.last_connected_time }}</td> 
             {% else %}
                 <td><span class="status-dot red"></span></td>
                 <td><span class="status-dot red"></span></td>
-                <td>VPN Disconnected</td>
+                <td>{{ _('VPN Disconnected')}}</td>
                 <td>{{ network.last_connected_time }}</td> 
             {% endif %}
         </tr>
@@ -146,14 +144,15 @@
       </table>
 
       <div class="algorithm-section">
-        <h3>Algorithm Processes</h3>
+        <h3>{{ _('Algorithm Processes')}}</h3>
         <div class="separator"></div>
         <!-- Turuncu çizgi -->
         <div class="algorithm-box">
           <div class="algorithm-left">
-            <i class="fas fa-cog"></i> <span class="margin-right-70" style="margin-right: 70px;">ORC Process Procedures</span>          
+            <i class="fas fa-cog"></i> <span class="margin-right-70" style="margin-right: 70px;">{{ _('ORC Process Procedures')}}</span>          
           </div>
-          <button class="status-btn" onclick="redirectToLog()">Normal / Error (Red)</button>
+          <!-- !! burada eğer hata var ise kırmızız yap buttonu  !!-->
+          <button class="status-btn" onclick="redirectToLog()">{{ _('Normal / Error (Red)')}}</button>
         </div>
       </div>
     </div>

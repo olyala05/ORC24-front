@@ -357,3 +357,640 @@ msgstr "NETWORK"
 
 msgid "POWER"
 msgstr "GÜÇ" 
+
+#  ******** Modem Selection ********
+msgid "Home"
+msgstr "Ana Sayfa"
+
+msgid "Modem Selection"
+msgstr "Modem Seçimi"   
+
+msgid "Select Modem or Device"
+msgstr "Modem veya Cihaz seçin"
+
+msgid "ORC Status"
+msgstr "ORC Durumu"
+
+msgid "Equipment"
+msgstr "Ekipman"
+
+msgid "Settings"
+msgstr "Ayarılar"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "Date"
+msgstr "Datalar"
+
+msgid "Loading devices"
+msgstr "Cihazlar yükleniyor"
+
+msgid "Successfully connected to the device!"
+msgstr "Cihaza başarıyla bağlandınız!"
+
+msgid "Failed to connect to the device!"
+msgstr "Cihaza bağlanılamadı!"
+
+msgid "Unable to proceed as the device could not be connected!"
+msgstr "Cihazınıza bağlanamadığınız için işlem yapılamaz!"
+
+msgid "Connection Error"
+msgstr "Bağlantı Hatası"
+
+msgid "An error occurred during the connection."
+msgstr "Bağlantı sırasında bir hata oluştu."
+
+msgid "Ok"
+msgstr "Tamam"
+
+msgid "Connecting to the device , please wait..."
+msgstr "Cihaza bağlanıyor, lütfen bekleyiniz..."
+
+msgid "Please select a device first!"
+msgstr "Lütfen önce bir cihaz seçiniz!"
+
+msgid "The page has been refreshed, no device found, alarm reset!"
+msgstr "Sayfa yenilendi, cihaz yok, alarm sıfırlandı!"
+
+
+# *********** Header ***********
+msgid "Back"
+msgstr "Geri"
+
+msgid "System will start again when you leave the test mode."
+msgstr "Sistem, test modundan çıktığınızda yeniden başlayacaktır."
+
+msgid "Cancel"
+msgstr "İptal"
+
+msgid "OK"
+msgstr "Tamam"
+
+msgid "Alarm data could not be retrieved"
+msgstr "Alarm verisi alınamadı"
+
+msgid "Redirecting to the alarm page..."
+msgstr "Alarm sayfasına yönlendiriliyor..."
+
+
+msgid "ORC Status is loading..."
+msgstr "ORC Status yükleniyor..."
+
+msgid "Warning"
+msgstr "Uyarı"
+
+msgid "Error while retrieving devices:"
+msgstr "Cihazları alırken hata:"
+
+msgid "Equipments are loading..."
+msgstr "Equipments yükleniyor..."
+
+msgid "Backend Error"
+msgstr "Backend Hatası"
+
+msgid "Error!"
+msgstr "Hata!"
+
+msgid "Equipment data could not be retrieved."
+msgstr "Ekipman verisi alınamadı."
+
+msgid "Equipment data could not be retrieved. Please try again."
+msgstr "Equipment verisi alınamadı. Lütfen tekrar deneyin."
+
+msgid "Settings are loading..."
+msgstr "Ayarlar yükleniyor..."
+
+msgid "Test is loading..."
+msgstr "Test yükleniyor..."
+
+msgid "Data is loading..."
+msgstr "Veriler yükleniyor..."
+
+msgid "Equipments are being scanned..."
+msgstr "Ekipmanlar taranıyor..."
+
+msgid "An error occurred while retrieving Modbus data:"
+msgstr "Modbus verisi alırken hata oluştu:"
+
+msgid "Equipment data could not be retrieved. Please try again."
+msgstr "Eqıipment verisi alınamadı. Lütfen tekrar deneyin."
+
+msgid "Redirecting to the alarm page..."
+msgstr "Alarm sayfasına yönlendiriliyor..."
+
+msgid "Device information could not be retrieved. Please try again."
+msgstr "Cihaz bilgisi alınamadı. Lütfen tekrar deneyin."
+
+msgid "Alarm data could not be retrieved for the selected device:"
+msgstr "Seçilen cihaz için alarm verisi alınamadı:"
+
+msgid "The alarm data request has been canceled."
+msgstr "Alarm verisi isteği iptal edildi."
+
+
+msgid "S/N:"
+msgstr "SERİ NO"
+
+msgid "MODEM NAME"
+msgstr "MODEM ADI"
+
+msgid "MODEM BRAND / MODEL"
+msgstr "MODEM MARKA / MODEL"
+
+msgid "MODEM STATUS"
+msgstr "MODEM DURUMU"
+
+msgid "DATE OF INSTALLATION"
+msgstr "SİSTEME EKLENME TARİHİ"
+
+msgid "DATA READING INTERVAL"
+msgstr "VERİ OKUMA PERİODU"
+
+msgid "NETWORK TYPE"
+msgstr "NETWORK TİPİ"
+
+msgid "CONNECTION PROTOCOL"
+msgstr "BAĞLANTI PROTOKOLÜ"
+
+msgid "Active"
+msgstr "Aktif"
+
+msgid "Passive"
+msgstr "Pasif"
+
+msgid "Disconnected"
+msgstr "Bağlantı kesildi"
+
+msgid "SOFTWARE VERSION"
+msgstr "YAZILIM SÜRÜMÜ"
+
+msgid "Connected"
+msgstr "Bağlantı kuruldu"
+
+msgid "Not Connected"
+msgstr "Bağlantı yok"
+
+msgid "Checking the network cables, modem and router"
+msgstr "Ağ kabloları, modem ve yönlendirici kontrol ediliyor"
+
+msgid "Reconnecting to Wi-Fi"
+msgstr "Wi-Fi'ye yeniden bağlanılıyor"
+
+msgid "No Internet"
+msgstr "İnternet yok"
+
+msgid "Retry"
+msgstr "Yeniden deneyin"
+
+msgid "Archive"
+msgstr "Arşiv"
+
+msgid "End"
+msgstr "Son"
+
+msgid "Modem Name"
+msgstr "Modem Adı"
+
+msgid "Last Connection Date"
+msgstr "Son Bağlantı Tarihi"
+
+msgid "Lora Disconnection"
+msgstr "Lora Bağlantısı Yok"
+
+msgid "WiFi Connection"
+msgstr "WiFi Bağlantısı"
+
+msgid "WiFi Disconnected"
+msgstr "Wi-Fi Bağlantısı Yok"
+
+
+msgid "Cloud Connection"
+msgstr "Bulut Bağlantısı"
+
+msgid "Rabbit MQ"
+msgstr "Rabbit MQ"
+
+msgid "Ethernet Connection"
+msgstr "Ethernet Bağlantısı"
+
+msgid "Ethernet Disconnected"
+msgstr "Ethernet Bağlantısı Yok"
+
+msgid "VPN Connection"
+msgstr "VPN Bağlantısı"
+
+msgid "VPN Disconnected"
+msgstr "VPN Bağlantısı Yok"
+
+msgid "Algorithm Processes"
+msgstr "Algoritma Süreçlerin"
+
+msgid "ORC Process Procedures"
+msgstr "ORC Proses Süeçleri"
+
+msgid "Normal / Error (Red)"
+msgstr "Normal / Hata Var (Kırmızı)"
+
+msgid "Please select a device first!"
+msgstr "Lütfen önce bir cihaz seçin!"
+
+msgid "Modem info retrieved successfully"
+msgstr "Modem bilgisi başarıyla alındı."
+
+msgid "Failed to fetch modem data"
+msgstr "Modem verisi alınamadı."
+
+msgid "Unexpected error occurred"
+msgstr "Beklenmeyen bir hata oluştu."
+
+msgid "Unexpected error:"
+msgstr "Beklenmeyen hata:"
+
+msgid ""
+msgstr ""
+
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
