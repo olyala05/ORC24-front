@@ -1111,6 +1111,7 @@ msgstr "Modem bilgisi yüklenemedi"
 msgid "Error while fetching modem info"
 msgstr "Modem bilgisi alınırken hata oluştu"
 
+# *********** Settings (setting.html) ********* 
 msgid ""
 msgstr ""
 
