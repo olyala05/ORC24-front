@@ -1,6 +1,6 @@
 {% extends "layout.html" %} 
 
-{% block title %} Alarm {% endblock %} 
+{% block title %} {{ _('Network Alarms')}} {% endblock %} 
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/alarm.css') }}"/>
@@ -15,14 +15,14 @@
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Modem Name</th>
-          <th>Start Date</th>
-          <th>End Date</th>
+          <th>{{ _('Name')}}</th>
+          <th>{{ _('Modem Name')}}</th>
+          <th>{{ _('Start Date')}}</th>
+          <th>{{ _('End Date')}}</th>
         </tr>
       </thead>
       <tbody id="networkAlarmsTable">
-        <tr><td colspan="4" style="text-align: center;">Yükleniyor...</td></tr>
+        <tr><td colspan="4" style="text-align: center;">{{ _('Loading...')}}</td></tr>
       </tbody>
     </table>
   </div>
@@ -47,11 +47,11 @@
             tableBody.innerHTML += row;
           });
         } else {
-          tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: red;">Veri çekme hatası: ${data.message}</td></tr>`;
+          tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: red;">{{ _('Data Retrieval Error:')}} ${data.message}</td></tr>`;
         }
       })
       .catch(error => {
-        document.getElementById("networkAlarmsTable").innerHTML = `<tr><td colspan="4" style="text-align: center; color: red;">Sunucuya bağlanılamadı!</td></tr>`;
+        document.getElementById("networkAlarmsTable").innerHTML = `<tr><td colspan="4" style="text-align: center; color: red;">{{ _('Unable to connect to the server!')}}</td></tr>`;
       });
   });
 
