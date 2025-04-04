@@ -1,6 +1,8 @@
-{% extends "layout.html" %} {% block title %} Alarm {% endblock %} {% block
-extra_css %}
+{% extends "layout.html" %} 
 
+{% block title %} {{ _('Alarm')}} {% endblock %} 
+
+{% block extra_css %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/alarm.css') }}"
@@ -14,16 +16,16 @@ extra_css %}
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Equipments Serial</th>
-          <th>Data Value</th>
-          <th>Start Date</th>
-          <th>End Date</th>
+          <th>{{ _('Name')}}</th>
+          <th>{{ _('Equipments Serial')}}</th>
+          <th>{{ _('Data Value')}}</th>
+          <th>{{ _('Start Date')}}</th>
+          <th>{{ _('End Date')}}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td colspan="5" style="text-align: center">Yükleniyor...</td>
+          <td colspan="5" style="text-align: center">{{ _('Loading...')}}</td>
         </tr>
       </tbody>
     </table>
@@ -40,7 +42,7 @@ extra_css %}
 
         if (data.status === "success") {
           if (data.data.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">Electric Alarms Veritabanı Boş</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">{{ _('The Electric Alarms Database is Empty')}}</td></tr>`;
             return;
           }
 
@@ -55,13 +57,13 @@ extra_css %}
             tableBody.innerHTML += row;
           });
         } else {
-          tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">Veri çekme hatası: ${data.message}</td></tr>`;
+          tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">{{ _('Data Retrieval Error:')}} ${data.message}</td></tr>`;
         }
       })
       .catch((error) => {
         document.querySelector(
           ".alarm-electric-table tbody"
-        ).innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">Sunucuya bağlanılamadı!</td></tr>`;
+        ).innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">{{ _('Unable to connect to the server!')}}</td></tr>`;
       });
   });
 

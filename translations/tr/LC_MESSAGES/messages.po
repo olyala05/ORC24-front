@@ -780,43 +780,42 @@ msgid "Error loading data."
 msgstr "Veri yüklenirken hata oluştu."
 
 
-# ****** Alarms Page ******** 
+# ****** Alarms Page ******** # 
 msgid "Network Alarms"
 msgstr "Ağ Alarmı"
 
 msgid "Electric Alarms"
 msgstr "Elektrik Alarmı"
 
-msgid ""
-msgstr ""
+msgid "Name"
+msgstr "Adı"
 
-msgid ""
-msgstr ""
+msgid "Equipments Serial"
+msgstr "Ekipman Seri Numarası"
 
-msgid ""
-msgstr ""
+msgid "Data Value"
+msgstr "Veri Değeri"
 
-msgid ""
-msgstr ""
+msgid "Start Date"
+msgstr "Başlangıç Tarihi"
 
+msgid "End Date"
+msgstr "Bitiş Tarihi"
 
-msgid ""
-msgstr ""
+msgid "Loading..."
+msgstr "Yükleniyor..."
 
-msgid ""
-msgstr ""
+msgid "The Electric Alarms Database is Empty"
+msgstr "Electric Alarms Veritabanı Boş"
 
-msgid ""
-msgstr ""
+msgid "Data Retrieval Error:"
+msgstr "Veri çekme hatası:"
 
-msgid ""
-msgstr ""
+msgid "Unable to connect to the server!"
+msgstr "Sunucuya bağlanılamadı!"
 
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
+msgid "Alarms"
+msgstr "Alarmlar"
 
 msgid ""
 msgstr ""
