@@ -1,4 +1,7 @@
-{% extends "layout.html" %} {% block title %} Equipment Settings {% endblock %}
+{% extends "layout.html" %} 
+
+{% block title %} {{ _('Equipment Settings')}} {% endblock %}
+
 {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
@@ -7,16 +10,16 @@
   <!-- Sol Sidebar -->
   <div class="equ-set-sidebar">
     <button class="equ-set-btn active" data-target="modbus-settings">
-      Modbus Settings
+      {{ _('Modbus Settings')}}
     </button>
     <button class="equ-set-btn" data-target="tcp-settings" disabled>
-      TCP/IP Settings
+      {{ _('TCP/IP Settings')}}
     </button>
     <button class="equ-set-btn" data-target="obis-settings" disabled>
-      Obis Settings
+      {{ _('Obis Settings')}}
     </button>
     <button class="equ-set-btn" data-target="equipment-settings">
-      Equipment Settings
+      {{ _('Equipment Settings')}}
     </button>
   </div>
 
@@ -90,21 +93,21 @@
         </div>
       </div>
 
-      <button class="modbus-setting-btn-test">Test</button>
+      <button class="modbus-setting-btn-test">{{ _('Test')}}</button>
 
       <!-- Test Results -->
-      <p class="modbus-setting-success">Modbus connection successful</p>
-      <p class="modbus-setting-failed">Modbus connection failed</p>
+      <p class="modbus-setting-success">{{ _('Modbus connection successful')}}</p>
+      <p class="modbus-setting-failed">{{ _('Modbus connection failed')}}</p>
     </div>
 
     <!-- TCP/IP Settings -->
     <div id="tcp-settings" class="tcp-setting-form" style="display: none">
-      <h3>TCP/IP Settings</h3>
+      <h3>{{ _('TCP/IP Settings') }}</h3>
     </div>
 
     <!-- Obis Settings -->
     <div id="obis-settings" class="obis-setting-form" style="display: none">
-      <h3>Obis Settings</h3>
+      <h3>{{ _('Obis Settings') }}</h3>
     </div>
 
     <!-- Equipments list Settings  İlk burası açılacak sonra -->
@@ -131,65 +134,65 @@
       <div class="equip-setting-card">
         <!-- Equipment Name -->
         <div class="equip-setting-group">
-          <label>Equipment Name</label>
+          <label>{{ _('Equipment Name')}}</label>
           <input type="text" id="equipment-name" />
         </div>
 
         <!-- Equipment Slave ID -->
         <div class="equip-setting-group">
-          <label>Equipment Slave ID</label>
+          <label>{{ _('Equipment Slave ID')}}</label>
           <input type="text" id="slave-id" />
         </div>
 
         <!-- Modem Serial No -->
         <div class="equip-setting-group">
-          <label>Modem Serial No</label>
+          <label>{{ _('Modem Serial No')}}</label>
           <input type="text" id="modem-serial" />
         </div>
 
         <!-- Equipment Serial No -->
         <div class="equip-setting-group">
-          <label>Equipment Serial No</label>
+          <label>{{ _('Equipment Serial No')}}</label>
           <input type="text" id="equipment-serial" />
         </div>
 
         <!-- Device ID -->
         <div class="equip-setting-group">
-          <label>Device ID</label>
+          <label>{{ _('Device ID')}}</label>
           <input type="text" id="device-id" />
         </div>
 
         <!-- Equipment Status -->
         <div class="equip-setting-group">
-          <label>Equipment Status</label>
+          <label>{{ _('Equipment Status')}}</label>
           <input type="text" id="equipment-status" />
         </div>
 
         <!-- Equipment Config Status -->
         <div class="equip-setting-group">
-          <label>Equipment Config Status</label>
+          <label>{{ _('Equipment Config Status')}}</label>
           <input type="text" id="config-status" />
         </div>
 
         <!-- Equipment Brand -->
         <div class="equip-setting-group">
-          <label>Equipment Brand</label>
+          <label>{{ _('Equipment Brand')}}</label>
           <input type="text" id="equipment-brand" />
         </div>
 
         <!-- Communication Protocol -->
         <div class="equip-setting-group">
-          <label>Communication Protocol</label>
+          <label>{{ _('Communication Protocol')}}</label>
           <input type="text" id="communication-protocol" />
         </div>
 
         <!-- Modem Name -->
         <div class="equip-setting-group">
-          <label>Modem Name</label>
+          <label>{{ _('Modem Name')}}</label>
           <input type="text" id="modem-name" />
         </div>
 
-        <button class="equip-setting-save-btn">Save</button>
+        <button class="equip-setting-save-btn">{{ _('Save')}}</button>
       </div>
     </div>
   </div>
@@ -229,10 +232,9 @@
       });
     });
 
-    // 📌 "Equipment Settings" butonuna tıklanınca API'den cihazları çek ve listele
     equipmentSettingsButton.addEventListener("click", function () {
       sections.forEach((section) => (section.style.display = "none"));
-      equipmentSetList.style.display = "block"; // Listeyi aç
+      equipmentSetList.style.display = "block"; 
       fetchEquipments();
     });
 
@@ -267,19 +269,18 @@
               equipmentGrid.appendChild(equipmentBox);
             });
           } else {
-            console.warn("No equipments found.");
+            console.warn("{{ _('No equipments found')}}");
             equipmentGrid.innerHTML =
-              "<p style='color: red;'>No equipments found</p>";
+              "<p style='color: red;'>{{ _('No equipments found')}}</p>";
           }
         })
         .catch((error) => {
-          console.error("Error fetching equipments:", error);
+          console.error("{{ _('Error fetching equipments')}}:", error);
           equipmentGrid.innerHTML =
-            "<p style='color: red;'>Error fetching equipments</p>";
+            "<p style='color: red;'>{{ _('Error fetching equipments')}}</p>";
         });
     }
 
-    // 📌 Event delegation ile dinamik olarak oluşturulan `equipment-set-box` öğelerine tıklanabilirlik ekleme
     document.addEventListener("click", function (event) {
       const clickedEquipment = event.target.closest(".equipment-set-box");
 
@@ -320,7 +321,6 @@
           }
         })
         .then(() => 
-          // **Modem ve Equipment bilgilerini paralel olarak çekiyoruz**
           Promise.all([
             fetch("/fetch_equipment_details", { method: "GET" }).then((res) => res.json()),
             fetch("/get_modem_info").then((res) => res.json())
@@ -328,7 +328,7 @@
         )
         .then(([equipmentData, modemData]) => {
           console.log("Equipment Details Response:", equipmentData);
-          console.log("📡 Modem API Yanıtı:", modemData);
+          console.log("Modem API Yanıtı:", modemData);
     
           if (equipmentData.status === "success" && equipmentData.data) {
             const equipment = equipmentData.data;
@@ -346,11 +346,11 @@
             updateInput("device-id", equipment.device_id || "");
             updateInput(
               "equipment-status",
-              equipment.status === "A" ? "Active" : "Passive"
+              equipment.status === "A" ? "{{ _('Active')}}" : "{{ _('Passive')}}"
             );
             updateInput(
               "config-status",
-              equipment.configuration_data === "A" ? "Active" : "Passive"
+              equipment.configuration_data === "A" ? "{{ _('Active')}}" : "{{ _('Passive')}}"
             );
             updateInput("equipment-brand", equipment.brand_name || "");
     
@@ -363,20 +363,17 @@
                 : ""
             );
     
-            // **Modem Name Güncellemesi**
-            updateInput("modem-name", modem && modem.name ? modem.name : "Modem Bulunamadı");
-    
+            updateInput("modem-name", modem && modem.name ? modem.name : "{{ _('Modem Not Found')}}");
             equipmentSetList.style.display = "none";
             equipmentSettings.style.display = "block";
           } else {
-            console.warn("Equipment details not found.");
+            console.warn("{{ _('Equipment details not found')}}.");
           }
         })
         .catch((error) => {
-          console.error("Error fetching equipment details:", error);
+          console.error("{{ _('Error fetching equipment details')}}:", error);
         });
     }
-    
   });
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -391,8 +388,8 @@
       const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
 
       if (!selectedDeviceIP) {
-        console.warn("No device selected for Modbus test.");
-        failureMessage.innerText = "No device selected for Modbus test.";
+        console.warn("{{ _('No device selected for Modbus test.')}}");
+        failureMessage.innerText = "{{ _('No device selected for Modbus test')}}.";
         failureMessage.style.display = "block";
         return;
       }
@@ -408,9 +405,7 @@
 
       console.log("Selected Modbus Parameters:", selectedModbusParams);
       testButton.disabled = true;
-      testButton.innerHTML = `<span class="spinner"></span> Testing...`;
-
-      // 📌 Doğru endpoint çağrılıyor: "/modbus_test"
+      testButton.innerHTML = `<span class="spinner"></span> {{ _('Testing...')}}`;
       fetch("/modbus_test", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -422,40 +417,35 @@
         .then((response) => response.json())
         .then((data) => {
           console.log("Response from Backend:", data);
-
           if (
             data.status === "success" &&
             Array.isArray(data.data) &&
             data.data.length > 0
           ) {
-            successMessage.innerText = "Modbus connection successful!";
+            successMessage.innerText = "{{ _('Modbus connection successful!')}}";
             successMessage.style.display = "block";
             failureMessage.style.display = "none";
-
-            // 📌 Gelen cihaz verisini göster (İlk bulunan cihaz)
             const device = data.data[0];
-
-            // 📌 Gelen değerler varsa değiştir, yoksa seçili değerleri koru
             if (device.port)
               document.getElementById("portSelect").value = device.port;
-            if (device.baudrate && device.baudrate !== "Unknown")
+            if (device.baudrate && device.baudrate !== "{{ _('Unknown')}}")
               document.getElementById("baudRateSelect").value = device.baudrate;
-            if (device.parity && device.parity !== "Unknown")
+            if (device.parity && device.parity !== "{{ _('Unknown')}}")
               document.getElementById("paritySelect").value = device.parity;
-            if (device.stopbits && device.stopbits !== "Unknown")
+            if (device.stopbits && device.stopbits !== "{{ _('Unknown')}}")
               document.getElementById("stopBitsSelect").value = device.stopbits;
-            if (device.bytesize && device.bytesize !== "Unknown")
+            if (device.bytesize && device.bytesize !== "{{ _('Unknown')}}")
               document.getElementById("byteSizeSelect").value = device.bytesize;
           } else {
-            failureMessage.innerText = "Modbus test failed: No valid response";
+            failureMessage.innerText = "{{ _('Modbus test failed: No valid response')}}";
             failureMessage.style.display = "block";
             successMessage.style.display = "none";
           }
         })
         .catch((error) => {
-          console.error("Error during Modbus test:", error);
+          console.error("{{ _('Error during Modbus test')}}:", error);
           failureMessage.innerText =
-            "Error during Modbus test: " + error.message;
+            "{{ _('Error during Modbus test')}}: " + error.message;
           failureMessage.style.display = "block";
           successMessage.style.display = "none";
         })

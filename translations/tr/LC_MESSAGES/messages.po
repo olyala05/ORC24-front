@@ -805,51 +805,6 @@ msgstr "Canlı Veri Detayları"
 msgid "Live Data ID"
 msgstr "Canlı Veri ID'si"
 
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
 # *********** Daily Data Details ********* 
 msgid "Daily Data Details"
 msgstr "Günlük Veri Detayları"
@@ -934,67 +889,67 @@ msgstr "Sunucuya bağlanılamadı!"
 msgid "Alarms"
 msgstr "Alarmlar"
 
-msgid ""
-msgstr ""
+# *********** Equimpent Settings ********* 
+msgid "Equipment Settings"
+msgstr "Ekipman Ayarları"
 
-msgid ""
-msgstr ""
+msgid "Modbus Settings"
+msgstr "Modbus Ayarları"
 
-msgid ""
-msgstr ""
+msgid "TCP/IP Settings"
+msgstr "TCP/IP Ayarları"
 
-msgid ""
-msgstr ""
+msgid "Obis Settings"
+msgstr "Obis Ayarları"
 
-msgid ""
-msgstr ""
+msgid "Modbus connection successful"
+msgstr "Modbus bağlantısı başarılı"
 
-msgid ""
-msgstr ""
+msgid "Modbus connection failed"
+msgstr "Modbus bağlantısı başarısız"
 
-msgid ""
-msgstr ""
+msgid "Equipment Slave ID"
+msgstr "Ekipman Slave Kimliği"
 
-msgid ""
-msgstr ""
+msgid "Equipment Serial No"
+msgstr "Ekipman Seri Numarası"
 
-msgid ""
-msgstr ""
+msgid "Equipment Status"
+msgstr "Ekipman Durumu"
 
+msgid "Equipment Config Status"
+msgstr "Ekipman Yapılandırma Durumu"
 
-msgid ""
-msgstr ""
+msgid "Equipment Brand"
+msgstr "Ekipman Markası"
 
-msgid ""
-msgstr ""
+msgid "Communication Protocol"
+msgstr "İletişim Protokolü"
 
-msgid ""
-msgstr ""
+msgid "Save"
+msgstr "Kaydet"
 
-msgid ""
-msgstr ""
+msgid "Equipment details not found"
+msgstr "Ekipman detayları bulunamadı"
 
-msgid ""
-msgstr ""
+msgid "Error fetching equipment details"
+msgstr "Ekipman detayları alınırken hata oluştu"
 
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
+msgid "No device selected for Modbus test"
+msgstr "Modbus testi için hiçbir cihaz seçilmedi"
 
 
-msgid ""
-msgstr ""
+msgid "Testing..."
+msgstr "Test ediliyor..."
+
+msgid "Modbus connection successful!"
+msgstr "Modbus bağlantısı başarılı!"
+
+msgid "Modbus test failed: No valid response"
+msgstr "Modbus testi başarısız: Geçerli yanıt yok"
+
+msgid "Error during Modbus test"
+msgstr "Modbus testi sırasında hata"
 
 msgid ""
 msgstr ""
