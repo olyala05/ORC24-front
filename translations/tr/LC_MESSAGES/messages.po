@@ -938,7 +938,6 @@ msgstr "Ekipman detayları alınırken hata oluştu"
 msgid "No device selected for Modbus test"
 msgstr "Modbus testi için hiçbir cihaz seçilmedi"
 
-
 msgid "Testing..."
 msgstr "Test ediliyor..."
 
@@ -951,54 +950,166 @@ msgstr "Modbus testi başarısız: Geçerli yanıt yok"
 msgid "Error during Modbus test"
 msgstr "Modbus testi sırasında hata"
 
-msgid ""
-msgstr ""
 
-msgid ""
-msgstr ""
+# *********** ORC Settings ********* 
+msgid "ORC Settings"
+msgstr "ORC Ayarları"
 
-msgid ""
-msgstr ""
+msgid "Wi-fi Settings"
+msgstr "Wi-fi Ayarları"
 
-msgid ""
-msgstr ""
+msgid "LoRa Settings"
+msgstr "LoRa Ayarları"
 
-msgid ""
-msgstr ""
+msgid "Ethernet Settings"
+msgstr "Ethernet Ayarları"
 
-msgid ""
-msgstr ""
+msgid "GSM Settings"
+msgstr "GSM Ayarları"
 
-msgid ""
-msgstr ""
+msgid "Available Wi-Fi"
+msgstr "Mevcut Wi-Fi"
 
-msgid ""
-msgstr ""
+msgid "Wi-Fi Password"
+msgstr "Wi-Fi Şifresi"
 
-msgid ""
-msgstr ""
+msgid "Wi-Fi SSID:"
+msgstr "Wi-Fi SSID:"
 
-msgid ""
-msgstr ""
+msgid "Not Connected"
+msgstr "Bağlantı Yok"
 
-msgid ""
-msgstr ""
+msgid "Password:"
+msgstr "Şifre:"
 
-msgid ""
-msgstr ""
+msgid "Show Password"
+msgstr "Şifreyi Göster"
 
-msgid ""
-msgstr ""
+msgid "Cancel"
+msgstr "İptal"
 
-msgid ""
-msgstr ""
+msgid "Connect"
+msgstr "Bağlan"
 
+msgid "Connected"
+msgstr "Bağlandı"
 
-msgid ""
-msgstr ""
+msgid "Not Connected"
+msgstr "Bağlantı Yok"
 
-msgid ""
-msgstr ""
+msgid "Disconnect"
+msgstr "Bağlantıyı Kes"
+
+msgid "Modem Status"
+msgstr "Modem Durumu"
+
+msgid "Inactive"
+msgstr "Pasif"
+
+msgid "Query Update Time (Hour - Minute)"
+msgstr "Sorgu Güncelleme Zamanı (Saat - Dakika)"
+
+msgid "Select"
+msgstr "Seç"
+
+msgid "Wi-Fi networks loading error"
+msgstr "Wi-Fi ağları yüklenirken hata oluştu"
+
+msgid "Wi-Fi information could not be retrieved"
+msgstr "Wi-Fi bilgisi alınamadı"
+
+msgid "Wi-Fi not selected!"
+msgstr "Wi-Fi Seçilmedi!"
+
+msgid "Please select a Wi-Fi network."
+msgstr "Lütfen bir Wi-Fi ağı seçin."
+
+msgid "Password not entered!"
+msgstr "Şifre Girilmedi!"
+
+msgid "Please enter the password."
+msgstr "Lütfen şifre girin."
+
+msgid "Connecting..."
+msgstr "Bağlanıyor..."
+
+msgid "Connection Successful!"
+msgstr "Bağlantı Başarılı!"
+
+msgid "Wi-Fi connection successfully established"
+msgstr "Wi-Fi bağlantısı başarıyla kuruldu"
+
+msgid "Connection Failed!"
+msgstr "Bağlantı Başarısız!"
+
+msgid "Unable to connect. Please try again."
+msgstr "Bağlanılamadı. Lütfen tekrar deneyin."
+
+msgid "Error occurred during Wi-Fi connection"
+msgstr "Wi-Fi bağlantısı sırasında hata oluştu"
+
+msgid "Connection Error!"
+msgstr "Bağlantı Hatası!"
+
+msgid "An error occurred while establishing the Wi-Fi connection."
+msgstr "Wi-Fi bağlantısı kurulurken bir hata oluştu."
+
+msgid "No Active Connection!"
+msgstr "Aktif Bağlantı Yok!"
+
+msgid "You are not currently connected to any Wi-Fi network."
+msgstr "Şu anda herhangi bir Wi-Fi ağına bağlı değilsiniz."
+
+msgid "Disconnect Wi-Fi?"
+msgstr "Wi-Fi'dan Bağlantıyı Kes?"
+
+msgid "Are you sure you want to disconnect from the Wi-Fi network?"
+msgstr "Wi-Fi ağından bağlantıyı kesmek istediğinizden emin misiniz?"
+
+msgid "Yes, disconnect"
+msgstr "Evet, bağlantıyı kes"
+
+msgid "Cancel"
+msgstr "İptal"
+
+msgid "Disconnecting..."
+msgstr "Bağlantı Kesiliyor..."
+
+msgid "Wi-Fi Disconnected!"
+msgstr "Wi-Fi Bağlantısı Kesildi!"
+
+msgid "You have successfully disconnected from the Wi-Fi network."
+msgstr "Wi-Fi ağından başarıyla bağlantıyı kestiniz."
+
+msgid "Not Connected"
+msgstr "Bağlantı Yok"
+
+msgid "Disconnection Failed!"
+msgstr "Bağlantı Kesilemedi!"
+
+msgid "An error occurred while disconnecting from Wi-Fi."
+msgstr "Wi-Fi'dan bağlantı kesilirken bir hata oluştu."
+
+msgid "Error while disconnecting"
+msgstr "Bağlantı kesilirken hata oluştu"
+
+msgid "Disconnection Error!"
+msgstr "Bağlantı Kesme Hatası!"
+
+msgid "An unexpected error occurred while disconnecting."
+msgstr "Bağlantı kesilirken beklenmedik bir hata oluştu."
+
+msgid "Disconnect"
+msgstr "Bağlantıyı Kes"
+
+msgid "Modem Info"
+msgstr "Modem Bilgisi"
+
+msgid "Failed to load modem info"
+msgstr "Modem bilgisi yüklenemedi"
+
+msgid "Error while fetching modem info"
+msgstr "Modem bilgisi alınırken hata oluştu"
 
 msgid ""
 msgstr ""

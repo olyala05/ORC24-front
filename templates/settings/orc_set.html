@@ -1,4 +1,7 @@
-{% extends "layout.html" %} {% block title %} Equipment Details {% endblock %}
+{% extends "layout.html" %} 
+
+{% block title %} {{ _('ORC Settings')}} {% endblock %}
+
 {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
@@ -8,17 +11,17 @@
 <!-- Yeni İçerik (İlk başta gizli olacak) -->
 <div class="settings-content">
   <div class="orc-sidebar-set">
-    <button class="tab-btn-set" data-target="wifi-set">Wi-fi Settings</button>
+    <button class="tab-btn-set" data-target="wifi-set">{{ _('Wi-fi Settings')}}</button>
     <button class="tab-btn-set" data-target="lora-set" disabled>
-      LoRa Settings
+      {{ _('LoRa Settings')}}
     </button>
     <button class="tab-btn-set" data-target="eth-set" disabled>
-      Ethernet Settings
+      {{ _('Ethernet Settings')}}
     </button>
     <button class="tab-btn-set" data-target="gsm-set" disabled>
-      GSM Settingsead
+      {{ _('GSM Settings')}}
     </button>
-    <button class="tab-btn-set" data-target="orc-set">ORC Settings</button>
+    <button class="tab-btn-set" data-target="orc-set">{{ _('ORC Settings')}}</button>
   </div>
 
   <div class="content-area-set">
@@ -29,7 +32,7 @@
         <div class="network-box-set">
           <div id="wifi-list" class="wifi-list-set">
             <h4 style="margin: 6px 0 5px 0px; padding: 0; padding: 0 20px">
-              Available Wi-Fi
+              {{ _('Available Wi-Fi')}}
             </h4>
             <div class="available-wifi-underline"></div>
             <ul id="wifi-networks">
@@ -46,38 +49,38 @@
                 src="{{ url_for('static', filename='images/svg/12.svg') }}"
                 alt="No Wi-Fi"
               />
-              <h4>Wi-Fi Password</h4>
+              <h4>{{ _('Wi-Fi Password')}}</h4>
             </div>
 
-            <p id="wifi-ssid">Wi-Fi SSID: <span>Not Connected</span></p>
+            <p id="wifi-ssid">{{ _('Wi-Fi SSID:')}} <span>{{ _('Not Connected')}}</span></p>
             <div class="password-intput-set">
-              <label>Password:</label>
+              <label>{{ _('Password:')}}</label>
               <input type="password" id="wifi-password" />
             </div>
             <div class="show-password-set">
               <input type="checkbox" id="showPass" class="check-box-set" />
-              <label for="showPass" class="show-pass">Show Password</label>
+              <label for="showPass" class="show-pass">{{ _('Show Password')}}</label>
             </div>
             <div class="btn-group-set">
-              <button class="btn-set cancel-set">Cancel</button>
+              <button class="btn-set cancel-set">{{ _('Cancel')}}</button>
               <button class="btn-set connec-set" id="connect-btn">
-                Connect
+                {{ _('Connect')}}
               </button>
             </div>
           </div>
 
           <!-- Connected Wi-Fi -->
           <div class="wifi-card-set connected">
-            <h4>Connected</h4>
+            <h4>{{ _('Connected')}}</h4>
             <div class="underline"></div>
             <div class="wifi-info-set">
               <img
                 src="{{ url_for('static', filename='images/svg/12.svg') }}"
                 alt="No Wi-Fi"
               />
-              <span id="connected-wifi">Not Connected</span>
+              <span id="connected-wifi">{{ _('Not Connected')}}</span>
               <button class="btn disconnect" id="disconnect-btn">
-                Disconnect
+                {{ _('Disconnect')}}
               </button>
             </div>
           </div>
@@ -88,21 +91,21 @@
     <!-- LoRa Set -->
     <div id="lora-set" class="lora-settings-container" style="display: none">
       <div class="lora-settings-card">
-        <h3>LoRa Settings</h3>
+        <h3>{{ _('LoRa Settings')}}</h3>
       </div>
     </div>
 
     <!-- Ethernet Set -->
     <div id="eth-set" class="eth-settings-container" style="display: none">
       <div class="eth-settings-card">
-        <h3>Ethernet Settings</h3>
+        <h3>{{ _('Ethernet Settings')}}</h3>
       </div>
     </div>
 
     <!-- GSM Set -->
     <div id="gsm-set" class="gsm-settings-container" style="display: none">
       <div class="gsm-settings-card">
-        <h3>GSM Settings</h3>
+        <h3>{{ _('GSM Settings')}}</h3>
       </div>
     </div>
 
@@ -110,29 +113,29 @@
     <div id="orc-set" class="orc-settings-container" style="display: none">
       <div class="orc-settings-card">
         <div class="orc-input-group">
-          <label>Modem Name</label>
-          <input type="text" placeholder="Modem Name" readonly />
+          <label>{{ _('Modem Name')}}</label>
+          <input type="text" placeholder="{{ _('Modem Name')}}" readonly />
         </div>
 
         <div class="orc-input-group">
-          <label>Modem Status</label>
+          <label>{{ _('Modem Status')}}</label>
           <select>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
+            <option value="active">{{ _('Active')}}</option>
+            <option value="inactive">{{ _('Inactive')}}</option>
           </select>
         </div>
 
         <div class="orc-input-group">
-          <label>Query Update Time (Hour - Minute)</label>
+          <label>{{ _('Query Update Time (Hour - Minute)')}}</label>
           <select>
-            <option value="">Select</option>
+            <option value="">{{ _('Select')}}</option>
             <option value="00:30">00:30</option>
             <option value="01:00">01:00</option>
             <option value="01:30">01:30</option>
             <option value="02:00">02:00</option>
           </select>
         </div>
-        <button class="orc-save-btn">Kaydet</button>
+        <button class="orc-save-btn">{{ _('Save')}}</button>
       </div>
     </div>
   </div>
@@ -210,24 +213,22 @@
 
             wifiListElement.innerHTML = wifiHTML;
 
-            // Bağlı Wi-Fi'yi güncelle
             if (connectedSSID) {
               selectedSSID = connectedSSID;
               wifiSSIDElement.innerText = connectedSSID;
               connectedWifiSpan.innerText = connectedSSID;
               wifiPasswordInput.value = connectedPassword;
             } else {
-              connectedWifiSpan.innerText = "Not Connected";
+              connectedWifiSpan.innerText = "{{ _('Not Connected')}}";
             }
           })
           .catch((error) => {
-            console.error("Wi-Fi ağları yüklenirken hata oluştu:", error);
+            console.error("{{ _('Wi-Fi networks loading error')}}:", error);
             wifiListElement.innerHTML =
-              "<p style='color: red;'>Wi-Fi bilgisi alınamadı.</p>";
+              "<p style='color: red;'>{{ _('Wi-Fi information could not be retrieved')}}.</p>";
           });
       }
 
-      // Seçilen Wi-Fi'yi inputa ekle
       window.selectWifi = function (ssid) {
         selectedSSID = ssid;
         wifiSSIDElement.innerText = ssid;
@@ -244,8 +245,8 @@
         if (!selectedSSID) {
           Swal.fire({
             icon: "warning",
-            title: "Wi-Fi Seçilmedi!",
-            text: "Lütfen bir Wi-Fi ağı seçin.",
+            title: "{{ _('Wi-Fi not selected!')}}",
+            text: "{{ _('Please select a Wi-Fi network.')}}",
             width: "280px",
             customClass: {
               popup: "small-swal-popup",
@@ -258,8 +259,8 @@
         if (!password) {
           Swal.fire({
             icon: "warning",
-            title: "Şifre Girilmedi!",
-            text: "Lütfen şifre girin.",
+            title: "{{ _('Password not entered!')}}",
+            text: "{{ _('Please enter the password.')}}",
             width: "280px",
             customClass: {
               popup: "small-swal-popup",
@@ -270,7 +271,7 @@
 
         // Butonu loading durumuna geçir
         connectButton.disabled = true;
-        connectButton.innerHTML = `<span class="spinner"></span> Connecting...`;
+        connectButton.innerHTML = `<span class="spinner"></span> {{ _('Connecting...')}}`;
 
         // Bağlantıyı başlat
         fetch("/connect_wifi", {
@@ -283,8 +284,8 @@
             if (data.status === "success") {
               Swal.fire({
                 icon: "success",
-                title: "Bağlantı Başarılı!",
-                text: `Wi-Fi bağlantısı başarıyla kuruldu: ${selectedSSID}`,
+                title: "{{ _('Connection Successful!')}}",
+                text: `{{ _('Wi-Fi connection successfully established')}}: ${selectedSSID}`,
                 width: "280px",
                 customClass: {
                   popup: "small-swal-popup",
@@ -296,8 +297,8 @@
             } else {
               Swal.fire({
                 icon: "error",
-                title: "Bağlantı Başarısız!",
-                text: data.message || "Bağlanılamadı. Lütfen tekrar deneyin.",
+                title: "{{ _('Connection Failed!')}}",
+                text: data.message || "{{ _('Unable to connect. Please try again.')}}",
                 width: "280px",
                 customClass: {
                   popup: "small-swal-popup",
@@ -306,11 +307,11 @@
             }
           })
           .catch((error) => {
-            console.error("Wi-Fi bağlantısı sırasında hata oluştu:", error);
+            console.error("{{ _('Error occurred during Wi-Fi connection')}}:", error);
             Swal.fire({
               icon: "error",
-              title: "Bağlantı Hatası!",
-              text: "Wi-Fi bağlantısı kurulurken bir hata oluştu.",
+              title: "{{ _('Connection Error!')}}",
+              text: "{{ _('An error occurred while establishing the Wi-Fi connection.')}}",
               width: "280px",
               customClass: {
                 popup: "small-swal-popup",
@@ -320,17 +321,17 @@
           .finally(() => {
             // Butonu eski haline getirir
             connectButton.disabled = false;
-            connectButton.innerHTML = "Connect";
+            connectButton.innerHTML = "{{ _('Connect')}}";
           });
       });
 
       // Wi-Fi Disconnection
       disconnectButton.addEventListener("click", function () {
-        if (connectedWifiSpan.innerText === "Not Connected") {
+        if (connectedWifiSpan.innerText === "{{ _('Not Connected')}}") {
           Swal.fire({
             icon: "info",
-            title: "No Active Connection!",
-            text: "You are not currently connected to any Wi-Fi network.",
+            title: "{{ _('No Active Connection!')}}",
+            text: "{{ _('You are not currently connected to any Wi-Fi network.')}}",
             width: "280px",
             customClass: {
               popup: "small-swal-popup",
@@ -341,12 +342,12 @@
 
         Swal.fire({
           icon: "warning",
-          title: "Disconnect Wi-Fi?",
-          text: "Are you sure you want to disconnect from the Wi-Fi network?",
+          title: "{{ _('Disconnect Wi-Fi?')}}",
+          text: "{{ _('Are you sure you want to disconnect from the Wi-Fi network?')}}",
           width: "280px",
           showCancelButton: true,
-          confirmButtonText: "Yes, disconnect",
-          cancelButtonText: "Cancel",
+          confirmButtonText: "{{ _('Yes, disconnect')}}",
+          cancelButtonText: "{{ _('Cancel')}}",
           customClass: {
             popup: "small-swal-popup",
             confirmButton: "btn-confirm",
@@ -355,7 +356,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             disconnectButton.disabled = true;
-            disconnectButton.innerHTML = `<span class="spinner"></span> Disconnecting...`;
+            disconnectButton.innerHTML = `<span class="spinner"></span> {{ _('Disconnecting...')}}`;
 
             fetch("/disconnect_wifi", { method: "POST" })
               .then((response) => response.json())
@@ -363,25 +364,25 @@
                 if (data.status === "success") {
                   Swal.fire({
                     icon: "success",
-                    title: "Wi-Fi Disconnected!",
-                    text: "You have successfully disconnected from the Wi-Fi network.",
+                    title: "{{ _('Wi-Fi Disconnected!')}}",
+                    text: "{{ _('You have successfully disconnected from the Wi-Fi network.')}}",
                     width: "280px",
                     customClass: {
                       popup: "small-swal-popup",
                     },
                   });
                   wifiListElement.innerHTML = "";
-                  wifiSSIDElement.innerText = "Not Connected";
+                  wifiSSIDElement.innerText = "{{ _('Not Connected')}}";
                   wifiPasswordInput.value = "";
-                  connectedWifiSpan.innerText = "Not Connected";
+                  connectedWifiSpan.innerText = "{{ _('Not Connected')}}";
                   fetchWifiNetworks();
                 } else {
                   Swal.fire({
                     icon: "error",
-                    title: "Disconnection Failed!",
+                    title: "{{ _('Disconnection Failed!')}}",
                     text:
                       data.message ||
-                      "An error occurred while disconnecting from Wi-Fi.",
+                      "{{ _('An error occurred while disconnecting from Wi-Fi.')}}",
                     width: "280px",
                     customClass: {
                       popup: "small-swal-popup",
@@ -390,11 +391,11 @@
                 }
               })
               .catch((error) => {
-                console.error("Error while disconnecting:", error);
+                console.error("{{ _('Error while disconnecting')}}:", error);
                 Swal.fire({
                   icon: "error",
-                  title: "Disconnection Error!",
-                  text: "An unexpected error occurred while disconnecting.",
+                  title: "{{ _('Disconnection Error!')}}",
+                  text: "{{ _('An unexpected error occurred while disconnecting.')}}",
                   width: "280px",
                   customClass: {
                     popup: "small-swal-popup",
@@ -403,7 +404,7 @@
               })
               .finally(() => {
                 disconnectButton.disabled = false;
-                disconnectButton.innerHTML = "Disconnect";
+                disconnectButton.innerHTML = "{{ _('Disconnect')}}";
               });
           }
         });
@@ -429,15 +430,15 @@
                 ? modem.status.toLowerCase()
                 : "-";
     
-              console.log("Modem Info:", modem);
+              console.log("{{ _('Modem Info')}}:", modem);
             } else {
-              console.error("Failed to load modem info:", data.message);
+              console.error("{{ _('Failed to load modem info')}}:", data.message);
               modemNameInput.value = "-";
               modemStatusSelect.value = "-";
             }
           })
           .catch((error) => {
-            console.error("Error while fetching modem info:", error);
+            console.error("{{ _('Error while fetching modem info')}}:", error);
             modemNameInput.value = "-";
             modemStatusSelect.value = "-";
           });
