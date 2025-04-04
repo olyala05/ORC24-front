@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} Equipment Details {% endblock %}
+{% block title %} {{ _('Equipment Details') }} {% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/equipment.css') }}" />
@@ -24,8 +24,8 @@
         let equipmentData = JSON.parse(sessionStorage.getItem("equipment_data")) || [];
     
         if (equipmentData.length === 0) {
-            console.warn("🚨 Ekipman verisi bulunamadı!");
-            equipmentList.innerHTML = "<p style='color: red;'>Ekipman verisi bulunamadı.</p>";
+            console.warn("{{ _('No equipment data found')}}");
+            equipmentList.innerHTML = "<p style='color: red;'>{{ _('No equipment data found')}}</p>";
             return;
         }
     

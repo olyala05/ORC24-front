@@ -380,7 +380,7 @@ msgstr "Ayarılar"
 msgid "Test"
 msgstr "Test"
 
-msgid "Date"
+msgid "Data"
 msgstr "Datalar"
 
 msgid "Loading devices"
@@ -623,107 +623,108 @@ msgstr "Güç Faktörü"
 msgid "Log"
 msgstr "Loglar"
 
-msgid ""
-msgstr ""
 
-msgid ""
-msgstr ""
+# equipments.html
+msgid "Equipment Details"
+msgstr "Ekipman Detayları"
 
-msgid ""
-msgstr ""
+msgid "No equipment data found"
+msgstr "Ekipman verisi bulunamadı!"
 
-msgid ""
-msgstr ""
+msgid "Equipment Name"
+msgstr "Ekipman Adı"
 
-msgid ""
-msgstr ""
+msgid "Slave ID"
+msgstr "Slave ID"
 
-msgid ""
-msgstr ""
+msgid "Brand / Model"
+msgstr "Marka / Model"
 
+msgid "Modem Name"
+msgstr "Modem Adı"
 
-msgid ""
-msgstr ""
+msgid "Equipment Type"
+msgstr "Ekipman Tipi"
 
-msgid ""
-msgstr ""
+msgid "Analyzer"
+msgstr "Analizör"
 
-msgid ""
-msgstr ""
+msgid "Equipment Serial NO"
+msgstr "Ekipman Seri NO"
 
-msgid ""
-msgstr ""
+msgid "Activity Status"
+msgstr "Aktiflik Durumu"
 
-msgid ""
-msgstr ""
+msgid "Device ID"
+msgstr "Device ID"
 
-msgid ""
-msgstr ""
+msgid "SID/IP"
+msgstr "SID/IP"
 
-msgid ""
-msgstr ""
+msgid "Status / Configuration"
+msgstr "Durum / Yapılandırma"
 
-msgid ""
-msgstr ""
+msgid "Connection Protocol"
+msgstr "Bağlantı Protokolü"
 
-msgid ""
-msgstr ""
+msgid "GMT"
+msgstr "GMT"
 
-msgid ""
-msgstr ""
+msgid "Daylight Saving Time"
+msgstr "Yaz Saati Zamanı"
 
-msgid ""
-msgstr ""
+msgid "Date Created"
+msgstr "Oluşturulan Tarih"
 
-msgid ""
-msgstr ""
+msgid "Last Connection Date"
+msgstr "Son Bağlantı Tarihi"
 
-msgid ""
-msgstr ""
+msgid "Equipment information could not be retrieved"
+msgstr "Ekipman bilgisi alınamadı"
 
-msgid ""
-msgstr ""
+msgid "Error occurred while loading equipment details:"
+msgstr "Ekipman detayları yüklenirken hata oluştu:"
 
-msgid ""
-msgstr ""
-
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
+msgid "Unknown"
+msgstr "Bilinmiyor"
 
 
-msgid ""
-msgstr ""
+msgid "Modem Not Found"
+msgstr "Modem Bulunamadı"
 
-msgid ""
-msgstr ""
+msgid "Error occurred while retrieving modem information:"
+msgstr "Modem bilgisi alınırken hata oluştu:"
+
+msgid "Modem data could not be retrieved:"
+msgstr "Modem verisi alınamadı:"
+
+msgid "Data Transfer Cycle"
+msgstr "Veri Transfer Döngüsü"
+
+msgid "Modem Task Cycle"
+msgstr "Modem İşlem Döngüsü"
+
+msgid "Equipment Data Collecting"
+msgstr "Ekipman Veri Toplama"
+
+msgid "32000 register error etc."
+msgstr "32000 kayıt hatası vb."
+
+msgid "Register Read"
+msgstr "Kayıt Okuma"
+
+msgid "Modbus Connection"
+msgstr "Modbus Bağlantısı"
+
+msgid "Equipment not found etc."
+msgstr "Ekipman bulunamadı vb."
+
+
+msgid "Modbus connection established"
+msgstr "Modbus bağlantısı kuruldu"
+
+msgid "Service Started"
+msgstr "Hizmet Başlatıldı"
 
 msgid ""
 msgstr ""

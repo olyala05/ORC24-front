@@ -1,11 +1,12 @@
-{% extends "layout.html" %} {% block title %} Equipment Details {% endblock %}
-{% block extra_css %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/equipment.scss') }}"
-/>
-{% endblock %} {% block content %}
+{% extends "layout.html" %} 
 
+{% block title %} {{ _('Equipment Details') }} {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/equipment.scss') }}" />
+{% endblock %} 
+
+{% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
 
@@ -14,47 +15,47 @@
   <div class="eq-detail-panel">
     <div class="eq-detail-info">
       <div class="eq-detail-item">
-        <span>Equipment Name:</span>
+        <span>{{ _('Equipment Name')}}</span>
         <span class="eq-detail-status">EMR-53CS@3630748023</span>
       </div>
-      <div class="eq-detail-item"><span>Slave ID:</span> <span>12</span></div>
-      <div class="eq-detail-item"><span>Modem Name:</span> <span>-</span></div>
+      <div class="eq-detail-item"><span>{{ _('Slave ID') }}</span> <span>12</span></div>
+      <div class="eq-detail-item"><span>{{ _('Modem Name') }}</span> <span>-</span></div>
       <div class="eq-detail-item">
-        <span>Brand / Model:</span> <span>Entes / 46s</span>
+        <span>{{ _(Brand / Model)}}</span> <span>Entes / 46s</span>
       </div>
       <div class="eq-detail-item">
-        <span>Equipment Type:</span> <span>Analyzer</span>
+        <span>{{ _(Equipment Type)}}</span> <span>{{ _('Analyzer')}}</span>
       </div>
       <div class="eq-detail-item">
-        <span>Equipment Serial NO:</span> <span>asj-234</span>
+        <span>{{ _(Equipment Serial NO)}}</span> <span>asj-234</span>
       </div>
       <div class="eq-detail-item">
-        <span>Activity Status:</span> <span>5</span>
+        <span>{{ _(Activity Status)}}</span> <span>5</span>
       </div>
       <div class="eq-detail-item">
-        <span>Device ID:</span> <span>Active</span>
+        <span>{{ _(Device ID)}}</span> <span>{{ _(Active)}}</span>
       </div>
-      <div class="eq-detail-item"><span>SID/IP:</span> <span>5</span></div>
+      <div class="eq-detail-item"><span>{{ _(SID/IP)}}</span> <span>5</span></div>
       <div class="eq-detail-item">
-        <span>Status / Configuration:</span>
+        <span>{{ _(Status / Configuration)}}</span>
         <span class="eq-detail-green">A / A</span>
       </div>
       <div class="eq-detail-item">
-        <span>Archive:</span> <span class="eq-detail-dot eq-active"></span>
+        <span>{{ _('Archive')}}:</span> <span class="eq-detail-dot eq-active"></span>
       </div>
       <div class="eq-detail-item">
-        <span>Connection Protocol:</span> <span>Modbus</span>
+        <span>{{ _('Connection Protocol') }}</span> <span>Modbus</span>
       </div>
       <div class="eq-detail-item"><span>GMT:</span> <span>+3</span></div>
       <div class="eq-detail-item">
-        <span>Daylight Saving Time:</span>
+        <span>{{ _('Daylight Saving Time') }}</span>
         <span class="eq-detail-dot eq-active"></span>
       </div>
       <div class="eq-detail-item">
-        <span>Equipment Date:</span> <span>2024-04-01 10:43:19</span>
+        <span>{{ _('Date Created') }}</span> <span>2024-04-01 10:43:19</span>
       </div>
       <div class="eq-detail-item">
-        <span>Connection Date:</span> <span>2024-04-01 10:43:19</span>
+        <span>{{ _('Last Connection Date') }}</span> <span>2024-04-01 10:43:19</span>
       </div>
     </div>
   </div>
@@ -62,15 +63,15 @@
   <!-- Archive Log Panel -->
   <div class="eq-detail-log">
     <div class="eq-detail-log-header">
-      <span>Archive</span>
-      <span>End</span>
+      <span>{{ _('Archive') }}</span>
+      <span>{{ _('End')}}</span>
     </div>
     <ul class="eq-detail-log-list">
       <li class="eq-detail-log-item">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>Service Started</span>
+          <span>{{ _('Service Started')}}</span>
         </span>
         <span>2024-04-03 13:54:31</span>
       </li>
@@ -79,7 +80,7 @@
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>Modbus connection established</span>
+          <span>{{ _('Modbus connection established')}}</span>
         </span>
         <span>2024-04-03 13:55:00</span>
       </li>
@@ -87,7 +88,7 @@
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>32000 register error etc.</span>
+          <span>{{ _('32000 register error etc.')}}</span>
         </span>
         <span>2024-04-03 13:55:00</span>
       </li>
@@ -95,7 +96,7 @@
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>equipment not found etc.</span>
+          <span>{{ _('Equipment not found etc.')}}</span>
         </span>
         <span>2024-04-03 13:55:00</span>
       </li>
@@ -104,7 +105,7 @@
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>Modbus Connection</span>
+          <span>{{ _('Modbus Connection')}}</span>
         </span>
         <span>2024-04-03 13:55:00</span>
       </li>
@@ -112,7 +113,7 @@
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>Register Read</span>
+          <span>{{ _('Register Read')}}</span>
         </span>
         <span>2024-04-03 13:55:00</span>
       </li>
@@ -120,7 +121,7 @@
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>32000 register error etc.</span>
+          <span>{{ _('32000 register error etc.')}}</span>
         </span>
         <span>2024-04-03 13:55:00</span>
       </li>
@@ -128,7 +129,7 @@
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-passive"></span>
           <span class="eq-detail-dot eq-passive"></span>
-          <span>Equipment Data Collecting </span>
+          <span>{{ _('Equipment Data Collecting')}} </span>
         </span>
         <span>2024-04-03 13:55:00</span>
       </li>
@@ -136,7 +137,7 @@
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>Modem Task Cycle</span>
+          <span>{{ _('Modem Task Cycle')}}</span>
         </span>
         <span>2024-04-03 13:55:00</span>
       </li>
@@ -144,7 +145,7 @@
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-passive"></span>
-          <span>Data Transfer Cycle</span>
+          <span>{{ _('Data Transfer Cycle')}}</span>
         </span>
         <span>2024-04-03 13:55:00</span>
       </li>
@@ -161,13 +162,13 @@
         .then((response) => response.json())
         .then((data) => {
           if (data.status !== "success" || !data.data) {
-            console.error("❌ Modem verisi alınamadı:", data.message);
+            console.error("{{ _('Modem data could not be retrieved:') }}", data.message);
             return null;
           }
-          return data.data; // Modem bilgisi döndür
+          return data.data; 
         })
         .catch((error) => {
-          console.error("❌ Modem bilgisi alınırken hata oluştu:", error);
+          console.error("{{ _('Error occurred while retrieving modem information:')}}", error);
           return null;
         });
     }
@@ -180,12 +181,12 @@
             equipmentContainer.innerHTML = `<p style='color: red;'>${data.message}</p>`;
             return null;
           }
-          return data.data; // Ekipman bilgisi döndür
+          return data.data; 
         })
         .catch((error) => {
-          console.error("❌ Ekipman detayları yüklenirken hata oluştu:", error);
+          console.error("{{ _('Error occurred while loading equipment details:')}}", error);
           equipmentContainer.innerHTML =
-            "<p style='color: red;'>Ekipman bilgisi alınamadı.</p>";
+            "<p style='color: red;'>{{ _('Equipment information could not be retrieved') }}</p>";
           return null;
         });
     }
@@ -196,13 +197,13 @@
         if (!equipment) return;
   
         document.querySelector(".eq-detail-status").innerText = `${
-          equipment.model_name || "Bilinmiyor"
+          equipment.model_name || "{{ _('Unknown') }}"
         }@${equipment.serial_number || "N/A"}`;
   
         // **Modem Bilgisi Güncelle**
         document.querySelector(
           ".eq-detail-item:nth-child(3) span:last-child"
-        ).innerText = modem && modem.name ? modem.name : "Modem Bulunamadı";
+        ).innerText = modem && modem.name ? modem.name : "{{ _('Modem Not Found')}}";
   
         document.querySelector(
           ".eq-detail-item:nth-child(4) span:last-child"
@@ -215,7 +216,7 @@
         ).innerText = equipment.modbus_address || "N/A";
         document.querySelector(
           ".eq-detail-item:nth-child(5) span:last-child"
-        ).innerText = equipment.equipment_type || "Analyzer";
+        ).innerText = equipment.equipment_type || "{{ _('Analyzer')}}";
         document.querySelector(
           ".eq-detail-item:nth-child(6) span:last-child"
         ).innerText = equipment.serial_number || "N/A";
