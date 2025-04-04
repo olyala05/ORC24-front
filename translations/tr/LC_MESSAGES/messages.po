@@ -802,8 +802,8 @@ msgstr "Ekipmanları almak için hiçbir cihaz seçilmedi."
 msgid "Live Data Details"
 msgstr "Canlı Veri Detayları"
 
-msgid ""
-msgstr ""
+msgid "Live Data ID"
+msgstr "Canlı Veri ID'si"
 
 msgid ""
 msgstr ""

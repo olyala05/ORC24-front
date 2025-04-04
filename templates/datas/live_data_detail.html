@@ -29,11 +29,11 @@
     <table class="live-data-detail-data-table">
       <thead>
         <tr>
-          <th>Live Data ID</th>
-          <th>Device ID</th>
-          <th>Value List</th>
-          <th>Data Value</th>
-          <th>Created Date</th>
+          <th>{{ _('Live Data ID') }}</th>
+          <th>{{ _('Device ID') }}</th>
+          <th>{{ _('Value List') }}</th>
+          <th>{{ _('Data Value') }}</th>
+          <th>{{ _('Created Date') }}</th>
         </tr>
       </thead>
       <tbody id="live-data-body">
@@ -54,7 +54,7 @@
 
     if (!selectedEquipmentID) {
         document.getElementById("equipment-details").innerHTML =
-            "<tr><td colspan='5' class='empty-message'>No equipment selected.</td></tr>";
+            "<tr><td colspan='5' class='empty-message'>{{ _('No equipment selected')}}</td></tr>";
         return;
     }
 
@@ -65,12 +65,12 @@
                 updateDetailsTable([data.data]);
             } else {
                 document.getElementById("equipment-details").innerHTML =
-                    "<tr><td colspan='5' class='empty-message'>No equipment details found.</td></tr>";
+                    "<tr><td colspan='5' class='empty-message'>{{ _('No equipment details found.')}}</td></tr>";
             }
         })
         .catch(() => {
             document.getElementById("equipment-details").innerHTML =
-                "<tr><td colspan='5' class='empty-message'>Error loading data.</td></tr>";
+                "<tr><td colspan='5' class='empty-message'>{{ _('Error loading data.')}}</td></tr>";
         });
 }
 
@@ -121,12 +121,12 @@ function updateDetailsTable(equipments) {
           updateLiveDataTable(data.data.data);
         } else if (page === 1) {
           document.getElementById("live-data-body").innerHTML =
-            "<tr><td colspan='5' class='empty-message'>Live Data is Empty.</td></tr>";
+            "<tr><td colspan='5' class='empty-message'>{{ _('Live Data is Empty') }}</td></tr>";
         }
       })
       .catch(() => {
         document.getElementById("live-data-body").innerHTML =
-          "<tr><td colspan='5' class='empty-message'>Error loading data.</td></tr>";
+          "<tr><td colspan='5' class='empty-message'>{{ _('Error loading data.')}}</td></tr>";
       })
       .finally(() => {
         isFetching = false;
