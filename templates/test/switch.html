@@ -1,4 +1,6 @@
-{% extends "layout.html" %} {% block title %} Switch to Test Mode {% endblock %}
+{% extends "layout.html" %} 
+
+{% block title %}{{ _(' Switch to Test Mode')}} {% endblock %}
 {% block content %}
 
 <!-- Header -->
@@ -6,19 +8,19 @@
 
 <div class="switch-container">
   <button class="switch-button" onclick="confirmSwitch()">
-    Switch to Test Mode
+    {{ _('Switch to Test Mode')}}
   </button>
 </div>
 <script>
   function confirmSwitch() {
     Swal.fire({
-      text: "If you switch to test mode, services will shut down.\nDo you want to switch to test mode?",
+      text: `{{ _('If you switch to test mode, services will shut down.') }}\n{{ _('Do you want to switch to test mode?') }}`,
       icon: "warning",
       backdrop: false,
       showCancelButton: true,
       confirmButtonColor: "#ffffff",
-      confirmButtonText: "Yes",
-      cancelButtonText: "No",
+      confirmButtonText: `{{ _('Yes') }}`,
+      cancelButtonText: `{{ _('No') }}`,
       customClass: {
         popup: "swal-custom-bg",
         confirmButton: "swal-button",

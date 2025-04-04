@@ -1,5 +1,8 @@
-{% extends "layout.html" %} {% block title %} Test Details {% endblock %} {%
-block content %}
+{% extends "layout.html" %} 
+
+{% block title %} {{ _('Test Details')}} {% endblock %} 
+
+{% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
 <!-- Virtual Keyboard -->
@@ -10,16 +13,16 @@ block content %}
   <!-- Sidebar Buttons -->
   <div class="test-sidebar-switch">
     <button class="switch-btn-test" data-target="wifi-test">
-      Wifi / Ethernet Connection Test
+      {{ _('Wifi / Ethernet Connection Test')}}
     </button>
     <button class="switch-btn-test" data-target="equipment-test">
-      Equipment
+      {{ _('Equipment')}}
     </button>
     <button class="switch-btn-test" data-target="cloud-test">
-      Cloud Connection Test
+      {{ _('Cloud Connection Test')}}
     </button>
-    <button class="switch-btn-test" data-target="read">Read</button>
-    <button class="switch-btn-test" data-target="write">Write</button>
+    <button class="switch-btn-test" data-target="read">{{ _('Read')}}</button>
+    <button class="switch-btn-test" data-target="write">{{ _('Write')}}</button>
   </div>
 
   <div class="switch-content-area">
@@ -29,7 +32,7 @@ block content %}
         <!-- Available Wi-Fi -->
         <div class="network-box-test">
           <button class="network-header-test" id="wifiToggleBtn">
-            Available Wi-Fi
+            {{ _('Available Wi-Fi')}}
             <span class="wifi-icon-test">
               <img
                 src="{{ url_for('static', filename='images/svg/12.svg') }}"
@@ -39,9 +42,9 @@ block content %}
           </button>
 
           <div class="wifi-list-test" id="wifiList">
-            <div class="wifi-category-test">Other Networks</div>
+            <div class="wifi-category-test">{{ _('Other Networks')}}</div>
             <div id="dynamicWifiList">
-              <p>Loading available networks...</p>
+              <p>{{ _('Loading available networks...')}}</p>
             </div>
           </div>
         </div>
@@ -54,19 +57,19 @@ block content %}
                 src="{{ url_for('static', filename='images/svg/12.svg') }}"
                 alt="Wi-Fi"
               />
-              Enter the Wi-Fi password for '<span id="wifiName"></span>'
+              {{ _('Enter the Wi-Fi password for')}} '<span id="wifiName"></span>'
             </h3>
-            <label for="wifiPassword">Password</label>
+            <label for="wifiPassword">{{ _('Password')}}</label>
             <input type="password" id="wifiPassword" placeholder="Password" />
             <div class="text-show-pass">
-              <input type="checkbox" id="showPassword" /> Show Password
+              <input type="checkbox" id="showPassword" />{{ _(' Show Password')}}
             </div>
             <div class="popup-buttons">
               <button class="cancel-btn" onclick="closeWifiPopup()">
-                Cancel
+                {{ _('Cancel')}}
               </button>
               <button id="joinWifiBtn" class="join-btn">
-                <span class="button-text">Join</span>
+                <span class="button-text">{{ _('Join')}}</span>
                 <span class="spinner" style="display: none"></span>
               </button>
             </div>
@@ -77,33 +80,33 @@ block content %}
         <div class="wifi-test-box">
           <!-- Network Name -->
           <div class="wifi-test-row">
-            <label class="wifi-test-label">Network Name</label>
+            <label class="wifi-test-label">{{ _('Network Name')}}</label>
             <span class="wifi-test-value" id="wifiNetworkName">-</span>
           </div>
 
           <!-- Password -->
           <div class="wifi-test-row">
-            <label class="wifi-test-label">Password</label>
+            <label class="wifi-test-label">{{ _('Password')}}</label>
             <span class="wifi-test-value" id="wifiPasswordDisplay">-</span>
           </div>
 
           <!-- Connection Status -->
           <div class="wifi-test-row">
-            <label class="wifi-test-label">Connection Status</label>
+            <label class="wifi-test-label">{{ _('Connection Status')}}</label>
             <span class="wifi-test-value" id="wifiConnectionStatus"
-              >No connection</span
+              >{{ _('No connection')}}</span
             >
           </div>
 
           <!-- Connection Mac -->
           <div class="wifi-test-row">
-            <label class="wifi-test-label">Connection Mac</label>
+            <label class="wifi-test-label">{{ _('Connection Mac')}}</label>
             <span class="wifi-test-value" id="wifiMacAddress">-</span>
           </div>
 
           <!-- Test Button ve WiFi Status -->
           <div class="wifi-test-action">
-            <button class="wifi-test-btn">Test</button>
+            <button class="wifi-test-btn">{{ _('Test')}}</button>
             <div style="display: flex; flex-direction: column; gap: 5px">
               <span class="wifi-success" id="wifiSuccess" style="display: none">
                 <img
@@ -111,7 +114,7 @@ block content %}
                   alt="No Wi-Fi"
                   class="ethernet-icon"
                 />
-                WiFi Connection Successful.
+                {{ _('WiFi Connection Successful.')}}
               </span>
               <span class="wifi-failed" id="wifiFailed" style="display: none">
                 <img
@@ -119,7 +122,7 @@ block content %}
                   alt="No Wi-Fi"
                   class="ethernet-icon"
                 />
-                WiFi Connection Failed.
+                {{ _('WiFi Connection Failed.')}}
               </span>
             </div>
           </div>
@@ -139,29 +142,29 @@ block content %}
               alt="No Wi-Fi"
               class="ethernet-icon"
             />
-            <span class="ethernet-text">Ethernet</span>
+            <span class="ethernet-text">{{ _('Ethernet')}}</span>
           </div>
 
           <!-- Ethernet Test Paneli -->
           <div class="ethernet-test-box">
             <!-- Connection Status -->
             <div class="ethernet-test-row">
-              <label class="ethernet-test-label">Connection Status</label>
+              <label class="ethernet-test-label">{{ _('Connection Status')}}</label>
               <span id="ethernetConnectionStatus" class="ethernet-test-value"
-                >No connection</span
+                >{{ _('No connection')}}</span
               >
             </div>
 
             <!-- Connection Mac -->
             <div class="ethernet-test-row">
-              <label class="ethernet-test-label">Connection Mac</label>
+              <label class="ethernet-test-label">{{ _('Connection Mac')}}</label>
               <span id="ethernetMacAddress" class="ethernet-test-value">-</span>
             </div>
 
             <!-- Test Button ve Ethernet Status -->
             <div class="ethernet-test-action">
               <button id="testEthernetBtn" class="ethernet-test-btn">
-                Test
+                {{ _('Test')}}
               </button>
               <div style="display: flex; flex-direction: column; gap: 5px">
                 <span
@@ -174,7 +177,7 @@ block content %}
                     alt="Ethernet Connected"
                     class="ethernet-icon"
                   />
-                  Ethernet Connection Successful.
+                  {{ _('Ethernet Connection Successful.')}}
                 </span>
                 <span
                   id="ethernetFailed"
@@ -186,7 +189,7 @@ block content %}
                     alt="Ethernet Disconnected"
                     class="ethernet-icon"
                   />
-                  Ethernet Connection Failed.
+                  {{ _('Ethernet Connection Failed.')}}
                 </span>
               </div>
             </div>
@@ -203,12 +206,12 @@ block content %}
           <table class="equipment-table">
             <thead>
               <tr>
-                <th>Serial Number</th>
-                <th>SID/IP</th>
-                <th>Status</th>
-                <th>Configuration Connection</th>
-                <th>Connection Protocol</th>
-                <th>Equipment Date / Connection Date</th>
+                <th>{{ _('Serial Number')}}</th>
+                <th>{{ _('SID/IP')}}</th>
+                <th>{{ _('Status')}}</th>
+                <th>{{ _('Configuration Connection')}}</th>
+                <th>{{ _('Connection Protocol')}}</th>
+                <th>{{ _('Equipment Date / Connection Date')}}</th>
               </tr>
             </thead>
             <tbody id="equipment-table-body">
@@ -225,7 +228,7 @@ block content %}
                 onclick="startScanning()"
                 id="scan-btn"
               >
-                Perform a scanning test
+                {{ _('Perform a scanning test')}}
                 <span
                   id="scan-spinner"
                   class="loader"
@@ -233,12 +236,11 @@ block content %}
                 ></span>
               </button>
               <span id="scan-status" style="display: none; color: green">
-                Scanning in progress...
+                {{ _('Scanning in progress...')}}
               </span>
             </div>
             <button class="equipment-update-btn" onclick="fetchEquipments()">
-              Update the equipment table with the equipment found during
-              scanning
+              {{ _('Update the equipment table with the equipment found during scanning')}}
             </button>
           </div>
         </div>
@@ -253,49 +255,49 @@ block content %}
             <tr>
               <th>{{ _('Archive') }}</th>
               <th>{{ _('End') }}</th>
-              <th>Connection</th>
-              <th>Date</th>
+              <th>{{ _('Connection')}}</th>
+              <th>{{ _('Date')}}</th>
             </tr>
           </thead>
           <tbody>
             <tr data-status="A">
               <td class="cloud-test-status"></td>
               <td class="cloud-test-status"></td>
-              <td>Cloud Connection</td>
-              <td class="last-connection">Checking...</td>
+              <td>Cloud {{ _('Connection')}}</td>
+              <td class="last-connection">{{ _('Checking...')}}</td>
               <!-- Dinamik olarak güncellenecek -->
             </tr>
 
             <tr data-status="P">
               <td class="cloud-test-status"></td>
               <td class="cloud-test-status"></td>
-              <td>Rabbit MQ</td>
+              <td>{{ _('Rabbit MQ')}}</td>
               <!-- Bağlıysa yeşil, değilse kırmızı olacak -->
               <td>2024-04-03 13:55:11</td>
             </tr>
             <tr data-status="A">
               <td class="cloud-test-status"></td>
               <td class="cloud-test-status"></td>
-              <td>VPN Port</td>
+              <td>{{ _('VPN Port')}}</td>
               <td>2024-04-03 13:55:14</td>
             </tr>
           </tbody>
         </table>
         <p class="cloud-test-info">
-          *Does the ORC have connection with cloud and other devices or not?
+          {{ _('*Does the ORC have connection with cloud and other devices or not?')}}
         </p>
 
         <!-- Buton ve Yazıları Yan Yana Düzenleme -->
         <div class="cloud-test-footer">
           <button class="cloud-test-button" onclick="updateRabbitMQStatus()">
-            Perform a scanning test
+            {{ _('Perform a scanning test')}}
           </button>
           <div class="cloud-test-status-text">
             <p class="cloud-test-success">
-              Local Network Connection Scan Successful.
+              {{ _('Local Network Connection Scan Successful.')}}
             </p>
             <p class="cloud-test-failed">
-              Local Network Connection Scan Failed.
+              {{ _('Local Network Connection Scan Failed.')}}
             </p>
           </div>
         </div>
@@ -391,15 +393,15 @@ block content %}
 
         <div class="read-test-footer">
           <button class="read-test-button" onclick="sendModbusRequest()">
-            Send Modbus Request
+            {{ _('Send Modbus Request')}}
           </button>
           <span id="status-message" class="status-message"></span>
           <!-- Durum mesajı için -->
         </div>
 
         <div class="read-test-terminal">
-          <label for="terminal">Terminal</label>
-          <textarea id="terminal" readonly>Waiting for response...</textarea>
+          <label for="terminal">{{ _('Terminal')}}</label>
+          <textarea id="terminal" readonly>{{ _('Waiting for response...')}}</textarea>
         </div>
       </div>
     </div>
@@ -489,19 +491,19 @@ block content %}
               <option value="float">float</option>
             </select>
           </div>
+
         </div>
 
         <div class="write-test-footer">
           <button class="write-test-button" onclick="sendWriteModbusRequest()">
-            Send Write Request
+            {{ _('Send Write Request')}}
           </button>
           <span id="write-status-message" class="status-message"></span>
         </div>
 
         <div class="write-test-terminal">
-          <label for="write-terminal">Terminal</label>
-          <textarea id="write-terminal" readonly>
-Waiting for response...</textarea
+          <label for="write-terminal">{{ _('Terminal')}}</label>
+          <textarea id="write-terminal" readonly> {{ _('Waiting for response...')}}</textarea
           >
         </div>
       </div>
@@ -534,7 +536,7 @@ Waiting for response...</textarea
         const networkName = item.getAttribute("data-wifi");
         wifiName.textContent = networkName;
         passwordInput.value = "";
-        wifiPopup.style.display = "flex"; // Popup aç
+        wifiPopup.style.display = "flex"; 
       });
     });
 
@@ -589,17 +591,16 @@ Waiting for response...</textarea
             const ethernetConnected = data.data.ethernet_connected;
             const ethernetMac = data.data.ethernet_mac;
 
-            // 📌 Wi-Fi Bilgilerini Güncelle
             if (connectedSSID) {
               networkNameSpan.textContent = connectedSSID;
-              passwordSpan.textContent = password ? password : "No Password";
-              connectionStatusSpan.textContent = "Connected";
+              passwordSpan.textContent = password ? password : "{{ _('No Password')}}";
+              connectionStatusSpan.textContent = "{{ _('Connected')}}";
               connectionStatusSpan.style.color = "green";
-              macAddressSpan.textContent = macAddress || "Unknown";
+              macAddressSpan.textContent = macAddress || "{{ _('Unknown')}}";
               wifiSuccess.style.display = "block";
               wifiFailed.style.display = "none";
             } else {
-              connectionStatusSpan.textContent = "No connection";
+              connectionStatusSpan.textContent = "{{ _('No connection')}}";
               connectionStatusSpan.style.color = "red";
               wifiSuccess.style.display = "none";
               wifiFailed.style.display = "block";
@@ -607,13 +608,13 @@ Waiting for response...</textarea
 
             // Ethernet Bilgilerini Güncelle
             if (ethernetConnected) {
-              ethernetStatusSpan.textContent = "Connected";
+              ethernetStatusSpan.textContent = "{{ _('Connected')}}";
               ethernetStatusSpan.style.color = "green";
-              ethernetMacSpan.textContent = ethernetMac || "Unknown";
+              ethernetMacSpan.textContent = ethernetMac || "{{ _('Unknown')}}";
               ethernetSuccess.style.display = "block";
               ethernetFailed.style.display = "none";
             } else {
-              ethernetStatusSpan.textContent = "No connection";
+              ethernetStatusSpan.textContent = "{{ _('No connection')}}";
               ethernetStatusSpan.style.color = "red";
               ethernetSuccess.style.display = "none";
               ethernetFailed.style.display = "block";
@@ -624,7 +625,7 @@ Waiting for response...</textarea
           }
         })
         .catch((error) =>
-          console.error("Error fetching network details:", error)
+          console.error("{{ _('Error fetching network details')}}:", error)
         );
     }
 
@@ -657,7 +658,7 @@ Waiting for response...</textarea
           wifiListContainer.appendChild(wifiItem);
         });
       } else {
-        wifiListContainer.innerHTML = "<p>No available networks found.</p>";
+        wifiListContainer.innerHTML = "<p>{{ _('No available networks found')}}.</p>";
       }
     }
 
@@ -690,7 +691,7 @@ Waiting for response...</textarea
         return;
       }
 
-      joinButton.innerHTML = `<span class="spinner"></span> Connecting...`;
+      joinButton.innerHTML = `<span class="spinner"></span> {{ _('Connecting...')}}`;
       joinButton.disabled = true;
 
       fetch("/connect_wifi", {
@@ -703,13 +704,13 @@ Waiting for response...</textarea
           if (data.status === "success") {
             Swal.fire({
               icon: "success",
-              title: "Connected!",
-              text: `Successfully connected to ${ssid}.`,
+              title: `{{_('Connected!')}}`,
+              text: `{{ _('Successfully connected to')}} ${ssid}.`,
             });
 
             networkNameSpan.textContent = ssid;
             passwordSpan.textContent = password ? password : "No Password";
-            connectionStatusSpan.textContent = "Connected";
+            connectionStatusSpan.textContent = `{{_('Connected')}}`;
             connectionStatusSpan.style.color = "green";
 
             getNetworkDetails(true);
@@ -717,8 +718,8 @@ Waiting for response...</textarea
           } else {
             Swal.fire({
               icon: "error",
-              title: "Connection Failed",
-              text: data.message || "Failed to connect to Wi-Fi.",
+              title: "{{ _('Connection Failed')}}",
+              text: data.message || "{{ _('Failed to connect to Wi-Fi.')}}",
             });
             connectionStatusSpan.textContent = "No connection";
             connectionStatusSpan.style.color = "red";

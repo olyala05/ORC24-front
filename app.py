@@ -834,7 +834,7 @@ def modem_selection():
 
 @app.route("/switch", endpoint="switch")
 def switch():
-    return render_template("test/switch.html", page_title=_("Switch"))
+    return render_template("test/switch.html", page_title=_("Test Mode Page"))
 
 
 @app.route("/test", endpoint="test")

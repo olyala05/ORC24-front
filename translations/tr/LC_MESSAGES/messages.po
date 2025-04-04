@@ -1111,85 +1111,206 @@ msgstr "Modem bilgisi yüklenemedi"
 msgid "Error while fetching modem info"
 msgstr "Modem bilgisi alınırken hata oluştu"
 
-# *********** Settings (setting.html) ********* 
-msgid ""
-msgstr ""
+# *********** Test ********* 
+msgid "Switch to Test Mode"
+msgstr "Test Moduna Geç"
 
-msgid ""
-msgstr ""
+msgid "If you switch to test mode, services will shut down."
+msgstr "Test moduna geçerseniz, hizmetler kapanacaktır."
 
-msgid ""
-msgstr ""
+msgid "Do you want to switch to test mode?"
+msgstr "Test moduna geçmek istiyor musunuz?"
 
-msgid ""
-msgstr ""
+msgid "Yes"
+msgstr "Evet"
 
-msgid ""
-msgstr ""
+msgid "No"
+msgstr "Hayır"
 
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
+msgid "Test Mode Page"
+msgstr "Test Modu Sayfası"
 
 
-msgid ""
-msgstr ""
+# *********** Test Details *********
+msgid "Test Details"
+msgstr "Test Detayları"
 
-msgid ""
-msgstr ""
+msgid "Wifi / Ethernet Connection Test"
+msgstr "Wi-Fi / Ethernet Bağlantı Testi"
 
-msgid ""
-msgstr ""
+msgid "Cloud Connection Test"
+msgstr "Bulut Bağlantı Testi"
 
-msgid ""
-msgstr ""
+msgid "Read"
+msgstr "Oku"
 
-msgid ""
-msgstr ""
+msgid "Write"
+msgstr "Yaz"
 
-msgid ""
-msgstr ""
+msgid "Available Wi-Fi"
+msgstr "Mevcut Wi-Fi"
 
-msgid ""
-msgstr ""
+msgid "Other Networks"
+msgstr "Diğer Ağlar"
 
-msgid ""
-msgstr ""
+msgid "Loading available networks..."
+msgstr "Mevcut ağlar yükleniyor..."
 
-msgid ""
-msgstr ""
+msgid "Enter the Wi-Fi password for"
+msgstr "Şu Wi-Fi ağı için şifreyi girin"
 
-msgid ""
-msgstr ""
+msgid "Password"
+msgstr "Şifre"
 
-msgid ""
-msgstr ""
+msgid "Show Password"
+msgstr "Şifreyi Göster"
 
-msgid ""
-msgstr ""
+msgid "Cancel"
+msgstr "İptal"
 
-msgid ""
-msgstr ""
+msgid "Join"
+msgstr "Katıl"
 
-msgid ""
-msgstr ""
+msgid "Network Name"
+msgstr "Ağ Adı"
 
-msgid ""
-msgstr ""
+msgid "Password"
+msgstr "Şifre"
 
-msgid ""
-msgstr ""
+msgid "Connection Status"
+msgstr "Bağlantı Durumu"
 
-msgid ""
-msgstr ""
+msgid "No connection"
+msgstr "Bağlantı Yok"
 
-msgid ""
-msgstr ""
+msgid "Connection Mac"
+msgstr "Bağlantı MAC Adresi"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "WiFi Connection Successful."
+msgstr "Wi-Fi Bağlantısı Başarılı."
+
+msgid "WiFi Connection Failed."
+msgstr "Wi-Fi Bağlantısı Başarısız."
+
+msgid "Ethernet"
+msgstr "Ethernet"
+
+msgid "Connection Status"
+msgstr "Bağlantı Durumu"
+
+msgid "No connection"
+msgstr "Bağlantı Yok"
+
+msgid "Connection Mac"
+msgstr "Bağlantı MAC Adresi"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "Ethernet Connection Successful."
+msgstr "Ethernet Bağlantısı Başarılı."
+
+msgid "Ethernet Connection Failed."
+msgstr "Ethernet Bağlantısı Başarısız."
+
+msgid "Serial Number"
+msgstr "Seri Numarası"
+
+msgid "SID/IP"
+msgstr "SID/IP"
+
+msgid "Status"
+msgstr "Durum"
+
+msgid "Configuration Connection"
+msgstr "Yapılandırma Bağlantısı"
+
+msgid "Connection Protocol"
+msgstr "Bağlantı Protokolü"
+
+msgid "Equipment Date / Connection Date"
+msgstr "Ekipman Tarihi / Bağlantı Tarihi"
+
+msgid "Perform a scanning test"
+msgstr "Tarama testi yap"
+
+msgid "Scanning in progress..."
+msgstr "Tarama devam ediyor..."
+
+msgid "Update the equipment table with the equipment found during scanning"
+msgstr "Tarama sırasında bulunan ekipmanlarla ekipman tablosunu güncelle"
+
+msgid "Connection"
+msgstr "Bağlantı"
+
+msgid "Date"
+msgstr "Tarih"
+
+msgid "Checking..."
+msgstr "Kontrol ediliyor..."
+
+msgid "Rabbit MQ"
+msgstr "Rabbit MQ"
+
+msgid "VPN Port"
+msgstr "VPN Portu"
+
+msgid "*Does the ORC have connection with cloud and other devices or not?"
+msgstr "*ORC'nin bulut ve diğer cihazlarla bağlantısı var mı?"
+
+msgid "Perform a scanning test"
+msgstr "Tarama testi yap"
+
+msgid "Local Network Connection Scan Successful."
+msgstr "Yerel Ağ Bağlantısı Taraması Başarılı."
+
+msgid "Local Network Connection Scan Failed."
+msgstr "Yerel Ağ Bağlantısı Taraması Başarısız."
+
+msgid "Send Modbus Request"
+msgstr "Modbus İsteği Gönder"
+
+msgid "Terminal"
+msgstr "Terminal"
+
+msgid "Waiting for response..."
+msgstr "Yanıt bekleniyor..."
+
+msgid "Send Write Request"
+msgstr "Yazma İsteği Gönder"
+
+msgid "Terminal"
+msgstr "Terminal"
+
+msgid "Waiting for response..."
+msgstr "Yanıt bekleniyor..."
+
+msgid "No Password"
+msgstr "Şifre Yok"
+
+msgid "Error fetching network details"
+msgstr "Ağ bilgileri alınırken hata oluştu"
+
+msgid "No available networks found"
+msgstr "Mevcut ağlar bulunamadı"
+
+msgid "Connecting..."
+msgstr "Bağlanıyor..."
+
+msgid "Successfully connected to"
+msgstr "Başarıyla bağlanıldı"
+
+msgid "Connected!"
+msgstr "Bağlantı Kuruldu!"
+
+msgid "Connection Failed"
+msgstr "Bağlantı Başarısız"
+
+msgid "Failed to connect to Wi-Fi."
+msgstr "Wi-Fi'ye bağlanılamadı."
 
 msgid ""
 msgstr ""
