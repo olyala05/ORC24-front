@@ -859,7 +859,7 @@ def orc_setting():
 
 @app.route("/osos-settings", endpoint="osos_settings")
 def osos_setting():
-    return render_template("settings/osos_set.html", page_title=_()"Osos Settings")
+    return render_template("settings/osos_set.html", page_title=_("Osos Settings"))
 
 @app.route("/equipment-settings", endpoint="equipment_settings")
 def equipment_setting():
