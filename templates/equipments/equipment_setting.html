@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} Equipment Setting {% endblock %}
+{% block title %} {{ _('Equipment Setting')}} {% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/equipment-setting.css') }}" />
@@ -24,16 +24,16 @@
     let modbusData = JSON.parse(sessionStorage.getItem("modbus_data")) || [];
 
     if (modbusData.length === 0) {
-      equipmentList.innerHTML = "<p style='color: red;'>Modbus verisi alınamadı.</p>";
+      equipmentList.innerHTML = "<p style='color: red;'>{{ _('Modbus data could not be retrieved')}}</p>";
       return;
     }
 
     // Dinamik olarak cihazları oluştur
     modbusData.forEach(device => {
-      let statusClass = device.slave_id ? "green" : "red";  // Eğer slave_id varsa cihaz bağlıdır
+      let statusClass = device.slave_id ? "green" : "red"; 
       let equipmentBox = document.createElement("div");
       equipmentBox.className = `equipment-box ${statusClass}`;
-      equipmentBox.innerHTML = `${device.model_name}<br>Slave ID: ${device.slave_id}`;
+      equipmentBox.innerHTML = `${device.model_name}<br>{{ _('Slave ID') }}: ${device.slave_id}`;
       equipmentList.appendChild(equipmentBox);
     });
   });

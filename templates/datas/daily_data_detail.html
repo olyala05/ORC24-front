@@ -1,4 +1,7 @@
-{% extends "layout.html" %} {% block title %} Daily Data Details {% endblock %}
+{% extends "layout.html" %} 
+
+{% block title %} {{ _('Daily Data Details')}} {% endblock %}
+
 {% block content %}
 
 <!-- Header -->
@@ -9,11 +12,11 @@
   <table class="daily-data-detail-data-table">
     <thead>
       <tr>
-        <th>Serial Number</th>
-        <th>Modem Serial No</th>
-        <th>Status / Configuration</th>
+        <th>{{ _('Serial Number') }}</th>
+        <th>{{ _('Modem Serial No') }}</th>
+        <th>{{ _('Status / Configuration') }}</th>
         <th>{{ _('Archive') }}</th>
-        <th>Number of Data</th>
+        <th>{{ _('Number of Data') }}</th>
       </tr>
     </thead>
     <tbody id="equipment-details">
@@ -28,11 +31,11 @@
     <table class="daily-data-detail-data-table">
       <thead>
         <tr>
-          <th>Daily Data ID</th>
-          <th>Device ID</th>
-          <th>Value List</th>
-          <th>Data Value</th>
-          <th>Created Date</th>
+          <th>{{ _('Daily Data ID') }}</th>
+          <th>{{ _('Device ID') }}</th>
+          <th>{{ _('Value List') }}</th>
+          <th>{{ _('Data Value') }}</th>
+          <th>{{ _('Created Date') }}</th>
         </tr>
       </thead>
       <tbody id="daily-data-body">
@@ -55,7 +58,7 @@
 
     if (!selectedEquipmentID) {
       document.getElementById("equipment-details").innerHTML =
-        "<tr><td colspan='5' class='empty-message'>No equipment selected.</td></tr>";
+        "<tr><td colspan='5' class='empty-message'>{{ _('No equipment selected.')}}</td></tr>";
       return;
     }
 
@@ -66,12 +69,12 @@
           updateDetailsTable([data.data]);
         } else {
           document.getElementById("equipment-details").innerHTML =
-            "<tr><td colspan='5' class='empty-message'>No equipment details found.</td></tr>";
+            "<tr><td colspan='5' class='empty-message'>{{ _('No equipment details found.')}}</td></tr>";
         }
       })
       .catch(() => {
         document.getElementById("equipment-details").innerHTML =
-          "<tr><td colspan='5' class='empty-message'>Error loading data.</td></tr>";
+          "<tr><td colspan='5' class='empty-message'>{{ _('Error loading data.')}}</td></tr>";
       });
   }
 
@@ -128,12 +131,12 @@
           updateDailyDataTable(data.data.data);
         } else if (page === 1) {
           document.getElementById("daily-data-body").innerHTML =
-            "<tr><td colspan='5' class='empty-message'>Daily Data is Empty.</td></tr>";
+            "<tr><td colspan='5' class='empty-message'>{{ _('Daily Data is Empty.')}}</td></tr>";
         }
       })
       .catch(() => {
         document.getElementById("daily-data-body").innerHTML =
-          "<tr><td colspan='5' class='empty-message'>Error loading data.</td></tr>";
+          "<tr><td colspan='5' class='empty-message'>{{ _('Error loading data.')}}</td></tr>";
       })
       .finally(() => {
         isFetching = false;
