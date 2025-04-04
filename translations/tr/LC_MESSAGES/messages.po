@@ -310,8 +310,10 @@ msgid "{len_type} values are required, but {len_value} was given."
 msgid_plural "{len_type} values are required, but {len_value} were given."
 msgstr[0] ""
 
-
 #: templates/login.html:20
+msgid "Dashboard"
+msgstr "Gösterge Paneli"
+
 msgid "Login"
 msgstr "Giriş"
 
@@ -451,6 +453,9 @@ msgstr "Backend Hatası"
 
 msgid "Error!"
 msgstr "Hata!"
+
+msgid "Error:"
+msgstr "Hata:"
 
 msgid "Equipment data could not be retrieved."
 msgstr "Ekipman verisi alınamadı."
@@ -732,6 +737,118 @@ msgstr "Ekipman Ayarı"
 msgid "Modbus data could not be retrieved"
 msgstr "Modbus verisi alınamadı"
 
+
+# *********** Daily Data ********* 
+msgid "Daily Data"
+msgstr "Günlük Veri"
+
+msgid "Number of Equipment"
+msgstr "Ekipman Sayısı"
+
+msgid "Number of Data"
+msgstr "Veri Sayısı"
+
+msgid "Time (Sec)"
+msgstr "Zaman (Saniye)"
+
+msgid "Serial Number"
+msgstr "Seri Numarası"
+
+msgid "Status / Config."
+msgstr "Durum / Yapılandırma"
+
+msgid "No device selected."
+msgstr "Cihaz seçilmedi."
+
+msgid "Equipments Response:"
+msgstr "Ekipman Yanıtı:"
+
+msgid "No equipments found"
+msgstr "Ekipman bulunamadı"
+
+msgid "Error fetching equipments"
+msgstr "Ekipman çekme hatası"
+
+msgid "Equipment ID updated in the backend:"
+msgstr "Backend'de Equipment ID Güncellendi:"
+
+msgid "ID could not be updated in the backend!"
+msgstr "Backend'de ID güncellenemedi!"
+
+msgid "Error while updating ID in the backend:"
+msgstr "Backend'de ID güncellenirken hata:"
+
+msgid "Selected Equipment ID saved:"
+msgstr "Seçilen Equipment ID Kaydedildi:"
+
+#  ******** Data data.html *********
+msgid "Live Data"
+msgstr "Canlı Veriler"
+
+msgid "Hourly Data"
+msgstr "Saatlik Veriler"
+
+msgid "Daily Data"
+msgstr "Günlük Veriler"
+
+#  ******** Live Data live_data.html *********
+msgid "Live Data is Empty"
+msgstr "Canlı Veri Boş"
+
+msgid "No device selected for fetching equipments."
+msgstr "Ekipmanları almak için hiçbir cihaz seçilmedi."
+
+#  ******** Live Data live_data_details.html *********
+msgid "Live Data Details"
+msgstr "Canlı Veri Detayları"
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
 
 # *********** Daily Data Details ********* 
 msgid "Daily Data Details"

@@ -1,6 +1,6 @@
 {% extends "layout.html" %} 
 
-{% block title %} Live Data Details {% endblock %}
+{% block title %} {{ _('Live Data Details') }} {% endblock %}
 
 {% block content %}
 
@@ -12,11 +12,11 @@
   <table class="live-data-detail-data-table">
     <thead>
       <tr>
-        <th>Serial Number</th>
-        <th>Modem Serial No</th>
-        <th>Status / Configuration</th>
+        <th>{{ _('Serial Number')}}</th>
+        <th>{{ _('Modem Serial No')}}</th>
+        <th>{{ _('Status / Configuration')}}</th>
         <th>{{ _('Archive') }}</th>
-        <th>Number of Data</th>
+        <th>{{ _('Number of Data')}}</th>
       </tr>
     </thead>
     <tbody id="equipment-details">

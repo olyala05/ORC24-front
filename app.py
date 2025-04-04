@@ -102,7 +102,7 @@ def login():
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html", page_title="Dashboard")
+    return render_template("dashboard.html", page_title=_("Dashboard"))
 
 
 # Alarm Status API'sinden veri çek
@@ -110,7 +110,6 @@ def dashboard():
 def alarm_status():
     if "access_token" not in session:
         return jsonify({"error": "Unauthorized"}), 401
-
     headers = {
         "Authorization": f"Bearer {session['access_token']}",
         "Accept": "application/json",
@@ -817,7 +816,7 @@ def get_all_equipments():
 
 @app.route("/equipment", endpoint="equipment")
 def equipment():
-    return render_template("equipments/equipments.html", page_title="Equipments")
+    return render_template("equipments/equipments.html", page_title=_("Equipments"))
 
 @app.route("/equipment-setting", methods=["GET"])
 def equipment_setting():
@@ -825,72 +824,62 @@ def equipment_setting():
     return render_template(
         "equipments/equipment_setting.html",
         modbus_data=modbus_data,
-        page_title="Equipment Setting",
+        page_title=_("Equipment Setting"),
     )
 
 # Diger Sayfalar
 @app.route("/modem-selection", endpoint="modem_selection")
 def modem_selection():
-    return render_template("modem_selection.html", page_title="Modem Selection")
+    return render_template("modem_selection.html", page_title=_("Modem Selection"))
 
 @app.route("/switch", endpoint="switch")
 def switch():
-    return render_template("test/switch.html", page_title="Switch")
+    return render_template("test/switch.html", page_title=_("Switch"))
 
 
 @app.route("/test", endpoint="test")
 def test():
-    return render_template("test/test.html", page_title="Test")
+    return render_template("test/test.html", page_title=_("Test"))
 
 
 @app.route("/equipment-details", endpoint="equipment_details")
 def equipment_details():
-    return render_template(
-        "equipments/equipment_details.html", page_title="Equipments Details"
-    )
-
+    return render_template("equipments/equipment_details.html", page_title=_("Equipments Details"))
 
 # !! Settings Start
 @app.route("/settings", endpoint="settings")
 def settings():
-    return render_template("settings/setting.html", page_title="Settings")
+    return render_template("settings/setting.html", page_title=_("Settings"))
 
 
 @app.route("/orc-settings", endpoint="orc_settings")
 def orc_setting():
-    return render_template("settings/orc_set.html", page_title="Orc Settings")
+    return render_template("settings/orc_set.html", page_title=_("Orc Settings"))
 
 
 @app.route("/osos-settings", endpoint="osos_settings")
 def osos_setting():
-    return render_template("settings/osos_set.html", pgae_title="Osos Settings")
+    return render_template("settings/osos_set.html", page_title=_()"Osos Settings")
 
 @app.route("/equipment-settings", endpoint="equipment_settings")
 def equipment_setting():
-    return render_template(
-        "settings/equipment_set.html", page_title="Equipment Settings"
-    )
+    return render_template("settings/equipment_set.html", page_title=_("Equipment Settings"))
 # !! Settings End
 
 # !! Test Start
 @app.route("/send_command", methods=["POST"])
 def send_command():
     selected_ip = session.get("selected_device_ip")
-
     if not selected_ip:
         return ResponseHandler.error(
             message="Device IP missing",
             code=400,
-            details="Selected device IP is required",
-        )
-
+            details="Selected device IP is required",)
     data = request.json
     command = data.get("command")
-
     if not command:
         return ResponseHandler.error(
-            message="Command missing", code=400, details="Command is required"
-        )
+            message="Command missing", code=400, details="Command is required")
     try:
         url = f"http://{selected_ip}:8085/execute_command"
         response = requests.post(url, json={"command": command})
@@ -907,12 +896,12 @@ def send_command():
 # !! Data Start
 @app.route("/data", endpoint="data")
 def data():
-    return render_template("datas/data.html", page_title="Datas")
+    return render_template("datas/data.html", page_title=_("Data"))
 
 # Live Data
 @app.route("/live-data", endpoint="live-data")
 def live_data():
-    return render_template("datas/live_data.html", page_title="Live Data")
+    return render_template("datas/live_data.html", page_title=_("Live Data"))
 
 # Live Data
 @app.route("/fetch_grouped_live_data", methods=["POST"])
@@ -964,12 +953,12 @@ def fetch_live_data_paginated():
 
 @app.route("/live-data-detail", endpoint="live-data-detail")
 def live_data_detail():
-    return render_template("datas/live_data_detail.html", page_title="Live Data Detail")
+    return render_template("datas/live_data_detail.html", page_title=_("Live Data Detail"))
 
 # Hourly Data
 @app.route("/hourly-data", endpoint="hourly-data")
 def hourly_data():
-    return render_template("datas/hourly_data.html", page_title="Hourly Data")
+    return render_template("datas/hourly_data.html", page_title=_("Hourly Data"))
 
 @app.route("/fetch_grouped_hourly_data", methods=["POST"])
 def fetch_grouped_hourly_data():
@@ -1023,13 +1012,12 @@ def fetch_hourly_data_paginated():
 @app.route("/hourly-data-detail", endpoint="hourly-data-detail")
 def hourly_data_detail():
     return render_template(
-        "datas/hourly_data_detail.html", page_title="Hourly Data Detail"
-    )
+        "datas/hourly_data_detail.html", page_title=_("Hourly Data Detail"))
 
 # Daily Data
 @app.route("/daily-data", endpoint="daily-data")
 def daily_data():
-    return render_template("datas/daily_data.html", page_title="Daily Data")
+    return render_template("datas/daily_data.html", page_title=_("Daily Data"))
 
 @app.route("/fetch_grouped_daily_data", methods=["POST"])
 def fetch_grouped_daily_data():
@@ -1082,19 +1070,18 @@ def fetch_daily_data_paginated():
 @app.route("/daily-data-detail", endpoint="daily-data-detail")
 def daily_data_detail():
     return render_template(
-        "datas/daily_data_detail.html", page_title="Daily Data Detail"
-    )
+        "datas/daily_data_detail.html", page_title=_("Daily Data Detail"))
 # !! Data End
 
 # !! Alarm Start
 @app.route("/alarm", endpoint="alarm")
 def alarm():
-    return render_template("alarms/alarm.html", page_title="Alarm")
+    return render_template("alarms/alarm.html", page_title=_("Alarm"))
 
 @app.route("/network-alarm-detail", endpoint="network_alarm_detail")
 def network_alarm_detail():
     return render_template(
-        "alarms/network_alarm_details.html", page_title="Network Alarm Details"
+        "alarms/network_alarm_details.html", page_title=_("Network Alarm Details")
     )
 
 @app.route("/get_network_alarm_data")
@@ -1128,8 +1115,7 @@ def get_network_alarm_data():
 @app.route("/electric-alarm-detail", endpoint="electric_alarm_detail")
 def electric_alarm_detail():
     return render_template(
-        "alarms/electric_alarm_details.html", page_title="Electric Alarm Details"
-    )
+        "alarms/electric_alarm_details.html", page_title=_("Electric Alarm Details"))
 
 @app.route("/get_electric_alarm_data")
 def get_electric_alarm_data():
@@ -1203,7 +1189,7 @@ def get_slave_data():
 # Logs
 @app.route("/log", endpoint="log")
 def log():
-    return render_template("logs/log.html", page_title="Log")
+    return render_template("logs/log.html", page_title=_("Log"))
 
 # @app.route("/get_logs", methods=["POST"])
 # def get_logs():

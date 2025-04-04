@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
-{% block title %} Data {% endblock %}
+
+{% block title %} {{ _('Data')}} {% endblock %}
 
 {% block content %}
 
@@ -7,9 +8,9 @@
 {% include 'partials/header.html' %}
 <div class="main-data-container">
     <div class="main-data-buttons">
-        <button class="main-data-btn active" data-url="{{url_for('live-data')}}">Live Data</button>
-        <button class="main-data-btn" data-url="{{url_for('hourly-data')}}">Hourly Data</button>
-        <button class="main-data-btn" data-url="{{url_for('daily-data')}}">Daily Data</button>
+        <button class="main-data-btn active" data-url="{{url_for('live-data')}}">{{ _('Live Data') }}</button>
+        <button class="main-data-btn" data-url="{{url_for('hourly-data')}}">{{ _('Hourly Data') }}</button>
+        <button class="main-data-btn" data-url="{{url_for('daily-data')}}">{{ _('Daily Data') }}</button>
     </div>
 </div>
 
@@ -19,13 +20,8 @@
 
         buttons.forEach((button) => {
             button.addEventListener("click", function () {
-                // 📌 Önce tüm butonlardan 'active' sınıfını kaldır
                 buttons.forEach((btn) => btn.classList.remove("active"));
-
-                // 📌 Tıklanan butona 'active' ekle
                 this.classList.add("active");
-
-                // 📌 Sayfayı yönlendir
                 const url = this.getAttribute("data-url");
                 if (url) {
                     window.location.href = url; 
@@ -33,7 +29,6 @@
             });
         });
 
-        // 📌 Sayfa yenilendiğinde hangi sayfadaysa, o butonu 'active' yap
         const currentPath = window.location.pathname;
         buttons.forEach((button) => {
             if (button.getAttribute("data-url") === currentPath) {
