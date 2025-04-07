@@ -2597,7 +2597,7 @@ body {
   border: 1px solid #444;
   padding: 6px;
   border-radius: 5px;
-  width: 90%;
+  width: 83%;
   color: #000;
 }
 .read-test-group select {
@@ -2700,11 +2700,11 @@ body {
   margin-bottom: 3px;
 }
 .write-test-group input {
-  color: #757678;
+  color: #000;
   border: 1px solid #444;
   padding: 7px;
   border-radius: 5px;
-  width: 90%;
+  width: 83%;
 }
 .write-test-group select {
   color: #000;

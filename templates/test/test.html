@@ -1,8 +1,5 @@
-{% extends "layout.html" %} 
-
-{% block title %} {{ _('Test Details')}} {% endblock %} 
-
-{% block content %}
+{% extends "layout.html" %} {% block title %} {{ _('Test Details')}} {% endblock
+%} {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
 <!-- Virtual Keyboard -->
@@ -57,12 +54,14 @@
                 src="{{ url_for('static', filename='images/svg/12.svg') }}"
                 alt="Wi-Fi"
               />
-              {{ _('Enter the Wi-Fi password for')}} '<span id="wifiName"></span>'
+              {{ _('Enter the Wi-Fi password for')}} '<span id="wifiName"></span
+              >'
             </h3>
             <label for="wifiPassword">{{ _('Password')}}</label>
             <input type="password" id="wifiPassword" placeholder="Password" />
             <div class="text-show-pass">
-              <input type="checkbox" id="showPassword" />{{ _(' Show Password')}}
+              <input type="checkbox" id="showPassword" />{{ _(' Show
+              Password')}}
             </div>
             <div class="popup-buttons">
               <button class="cancel-btn" onclick="closeWifiPopup()">
@@ -149,7 +148,9 @@
           <div class="ethernet-test-box">
             <!-- Connection Status -->
             <div class="ethernet-test-row">
-              <label class="ethernet-test-label">{{ _('Connection Status')}}</label>
+              <label class="ethernet-test-label"
+                >{{ _('Connection Status')}}</label
+              >
               <span id="ethernetConnectionStatus" class="ethernet-test-value"
                 >{{ _('No connection')}}</span
               >
@@ -157,7 +158,9 @@
 
             <!-- Connection Mac -->
             <div class="ethernet-test-row">
-              <label class="ethernet-test-label">{{ _('Connection Mac')}}</label>
+              <label class="ethernet-test-label"
+                >{{ _('Connection Mac')}}</label
+              >
               <span id="ethernetMacAddress" class="ethernet-test-value">-</span>
             </div>
 
@@ -240,7 +243,8 @@
               </span>
             </div>
             <button class="equipment-update-btn" onclick="fetchEquipments()">
-              {{ _('Update the equipment table with the equipment found during scanning')}}
+              {{ _('Update the equipment table with the equipment found during
+              scanning')}}
             </button>
           </div>
         </div>
@@ -284,7 +288,8 @@
           </tbody>
         </table>
         <p class="cloud-test-info">
-          {{ _('*Does the ORC have connection with cloud and other devices or not?')}}
+          {{ _('*Does the ORC have connection with cloud and other devices or
+          not?')}}
         </p>
 
         <!-- Buton ve Yazıları Yan Yana Düzenleme -->
@@ -380,13 +385,27 @@
             <input type="number" id="slave-id" value="3" min="1" step="1" />
           </div>
 
+          <!-- Data Type -->
           <div class="read-test-group">
-            <label for="data-type">Data Type</label>
-            <select id="data-type">
-              <option value="uint32" selected>uint32</option>
-              <option value="uint16">uint16</option>
-              <option value="int32">int32</option>
-              <option value="float">float</option>
+            <label for="read-data-type">Data Type</label>
+            <select id="read-data-type"></select>
+          </div>
+
+          <!-- Byte Order -->
+          <div class="read-test-group">
+            <label for="read-byte-order">Byte Order</label>
+            <select id="read-byte-order">
+              <option value="little" selected>little</option>
+              <option value="big">big</option>
+            </select>
+          </div>
+
+          <!-- Word Order -->
+          <div class="read-test-group">
+            <label for="read-word-order">Word Order</label>
+            <select id="read-word-order">
+              <option value="little" selected>little</option>
+              <option value="big">big</option>
             </select>
           </div>
         </div>
@@ -401,7 +420,9 @@
 
         <div class="read-test-terminal">
           <label for="terminal">{{ _('Terminal')}}</label>
-          <textarea id="terminal" readonly>{{ _('Waiting for response...')}}</textarea>
+          <textarea id="terminal" readonly>
+            {{ _('Waiting for response...')}}</textarea
+          >
         </div>
       </div>
     </div>
@@ -472,9 +493,10 @@
             <input type="number" id="register" value="1" min="0" step="1" />
           </div>
 
+          <!-- Data -->
           <div class="write-test-group">
-            <label for="count">Count</label>
-            <input type="number" id="count" value="1" min="1" step="1" />
+            <label for="write-data">Data</label>
+            <input type="text" id="write-data" placeholder="Enter value" />
           </div>
 
           <div class="write-test-group">
@@ -482,16 +504,29 @@
             <input type="number" id="slave-id" value="3" min="1" step="1" />
           </div>
 
+          <!-- Data Type -->
           <div class="write-test-group">
-            <label for="data-type">Data Type</label>
-            <select id="data-type">
-              <option value="uint32" selected>uint32</option>
-              <option value="uint16">uint16</option>
-              <option value="int32">int32</option>
-              <option value="float">float</option>
+            <label for="write-data-type">Data Type</label>
+            <select id="write-data-type"></select>
+          </div>
+          
+          <!-- Byte Order -->
+          <div class="write-test-group">
+            <label for="write-byte-order">Byte Order</label>
+            <select id="write-byte-order">
+              <option value="little" selected>little</option>
+              <option value="big">big</option>
             </select>
           </div>
 
+          <!-- Word Order -->
+          <div class="write-test-group">
+            <label for="write-word-order">Word Order</label>
+            <select id="write-word-order">
+              <option value="little" selected>little</option>
+              <option value="big">big</option>
+            </select>
+          </div>
         </div>
 
         <div class="write-test-footer">
@@ -503,7 +538,8 @@
 
         <div class="write-test-terminal">
           <label for="write-terminal">{{ _('Terminal')}}</label>
-          <textarea id="write-terminal" readonly> {{ _('Waiting for response...')}}</textarea
+          <textarea id="write-terminal" readonly>
+            {{ _('Waiting for response...')}}</textarea
           >
         </div>
       </div>
@@ -536,7 +572,7 @@
         const networkName = item.getAttribute("data-wifi");
         wifiName.textContent = networkName;
         passwordInput.value = "";
-        wifiPopup.style.display = "flex"; 
+        wifiPopup.style.display = "flex";
       });
     });
 
@@ -593,7 +629,9 @@
 
             if (connectedSSID) {
               networkNameSpan.textContent = connectedSSID;
-              passwordSpan.textContent = password ? password : "{{ _('No Password')}}";
+              passwordSpan.textContent = password
+                ? password
+                : "{{ _('No Password')}}";
               connectionStatusSpan.textContent = "{{ _('Connected')}}";
               connectionStatusSpan.style.color = "green";
               macAddressSpan.textContent = macAddress || "{{ _('Unknown')}}";
@@ -658,7 +696,8 @@
           wifiListContainer.appendChild(wifiItem);
         });
       } else {
-        wifiListContainer.innerHTML = "<p>{{ _('No available networks found')}}.</p>";
+        wifiListContainer.innerHTML =
+          "<p>{{ _('No available networks found')}}.</p>";
       }
     }
 
@@ -1178,85 +1217,85 @@
       });
   }
 
-// Write Modbus
-// Write Modbus
-function sendWriteModbusRequest() {
-  const terminal = document.getElementById("write-terminal");
-  const statusMessage = document.getElementById("write-status-message");
-  terminal.value = "🔍 Sending Write Modbus request... Please wait.";
-  statusMessage.textContent = "";
-  statusMessage.className = "status-message";
+  // Write Modbus
+  function sendWriteModbusRequest() {
+    const terminal = document.getElementById("write-terminal");
+    const statusMessage = document.getElementById("write-status-message");
+    terminal.value = "🔍 Sending Write Modbus request... Please wait.";
+    statusMessage.textContent = "";
+    statusMessage.className = "status-message";
 
-  const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
-  if (!selectedDeviceIP) {
-    terminal.value = "No device selected.";
-    statusMessage.textContent = "Local Network Connection Scan Failed.";
-    statusMessage.classList.add("error");
-    return;
-  }
+    const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+    if (!selectedDeviceIP) {
+      terminal.value = "No device selected.";
+      statusMessage.textContent = "Local Network Connection Scan Failed.";
+      statusMessage.classList.add("error");
+      return;
+    }
 
-  // Kullanıcıdan inputları al
-  const registerValue = parseInt(document.getElementById("register").value);
-  const countValue = parseInt(document.getElementById("count").value);
-  const slaveIdValue = parseInt(document.getElementById("slave-id").value);
+    // Kullanıcıdan inputları al
+    const registerValue = parseInt(document.getElementById("register").value);
+    const countValue = parseInt(document.getElementById("count").value);
+    const slaveIdValue = parseInt(document.getElementById("slave-id").value);
 
-  // 🛠 Hatalı girişleri önlemek için kontroller
-  if (isNaN(registerValue) || registerValue < 0) {
-    alert("Register address must be a valid number and >= 0");
-    return;
-  }
-  if (isNaN(countValue) || countValue <= 0) {
-    alert("Count must be a valid number and greater than 0");
-    return;
-  }
-  if (isNaN(slaveIdValue) || slaveIdValue <= 0) {
-    alert("Slave ID must be a valid number and greater than 0");
-    return;
-  }
+    // 🛠 Hatalı girişleri önlemek için kontroller
+    if (isNaN(registerValue) || registerValue < 0) {
+      alert("Register address must be a valid number and >= 0");
+      return;
+    }
+    if (isNaN(countValue) || countValue <= 0) {
+      alert("Count must be a valid number and greater than 0");
+      return;
+    }
+    if (isNaN(slaveIdValue) || slaveIdValue <= 0) {
+      alert("Slave ID must be a valid number and greater than 0");
+      return;
+    }
 
-  const modbusParams = {
-    port: document.getElementById("port").value,
-    baudrate: parseInt(document.getElementById("baud-rate").value),
-    parity: document.getElementById("parity").value,
-    stopbits: parseInt(document.getElementById("stop-bit").value),
-    bytesize: parseInt(document.getElementById("bytesize").value),
-    timeout: parseFloat(document.getElementById("timeout").value),
-    address: registerValue,  // 📌 Kullanıcının girdiği register adresi
-    count: countValue,  // 📌 Kullanıcının belirttiği count
-    slave_id: slaveIdValue,  // 📌 Kullanıcının belirttiği slave ID
-    method: "rtu",
-  };
+    const modbusParams = {
+      port: document.getElementById("port").value,
+      baudrate: parseInt(document.getElementById("baud-rate").value),
+      parity: document.getElementById("parity").value,
+      stopbits: parseInt(document.getElementById("stop-bit").value),
+      bytesize: parseInt(document.getElementById("bytesize").value),
+      timeout: parseFloat(document.getElementById("timeout").value),
+      address: registerValue, // 📌 Kullanıcının girdiği register adresi
+      count: countValue, // 📌 Kullanıcının belirttiği count
+      slave_id: slaveIdValue, // 📌 Kullanıcının belirttiği slave ID
+      method: "rtu",
+    };
 
-  console.log("Sending JSON:", JSON.stringify({ modbus_params: modbusParams }));
+    console.log(
+      "Sending JSON:",
+      JSON.stringify({ modbus_params: modbusParams })
+    );
 
-  fetch("/validate_modbus", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ modbus_params: modbusParams }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Received Response:", data);
+    fetch("/validate_modbus", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ modbus_params: modbusParams }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Received Response:", data);
 
-      if (data.status === "success") {
-        terminal.value = `✅ Write successful: Register ${registerValue}`;
-        statusMessage.textContent = "Write Operation Successful.";
-        statusMessage.classList.add("success");
-      } else {
-        terminal.value = `❌ Error: ${data.message}`;
+        if (data.status === "success") {
+          terminal.value = `✅ Write successful: Register ${registerValue}`;
+          statusMessage.textContent = "Write Operation Successful.";
+          statusMessage.classList.add("success");
+        } else {
+          terminal.value = `❌ Error: ${data.message}`;
+          statusMessage.textContent = "Write Operation Failed.";
+          statusMessage.classList.add("error");
+        }
+      })
+      .catch((error) => {
+        console.error("Request Failed:", error);
+        terminal.value = `❌ Request failed:\n${error}`;
         statusMessage.textContent = "Write Operation Failed.";
         statusMessage.classList.add("error");
-      }
-    })
-    .catch((error) => {
-      console.error("Request Failed:", error);
-      terminal.value = `❌ Request failed:\n${error}`;
-      statusMessage.textContent = "Write Operation Failed.";
-      statusMessage.classList.add("error");
-    });
-}
-
-
+      });
+  }
 
   function performWriteTest() {
     const terminal = document.getElementById("write-terminal");
@@ -1325,6 +1364,36 @@ function sendWriteModbusRequest() {
         failedMessage.style.display = "block";
       });
   }
+
+  const dataTypes = {
+    read: [
+      "int16",
+      "uint16",
+      "int32",
+      "uint32",
+      "int64",
+      "uint64",
+      "float16",
+      "float32",
+      "float64",
+      "unix_time32",
+      "string",
+      "hexadecimal",
+      "numeric",
+    ],
+    write: [
+      "from_int16",
+      "from_uint16",
+      "from_int32",
+      "from_uint32",
+      "from_int64",
+      "from_uint64",
+      "from_float16",
+      "from_float32",
+      "from_float64",
+      "from_unix_time32",
+    ],
+  };
 
   // Cloud Status
   document.addEventListener("DOMContentLoaded", function () {
