@@ -1318,76 +1318,6 @@
       });
   }
 
-  function performWriteTest() {
-    const terminal = document.getElementById("write-terminal");
-    const successMessage = document.getElementById("write-test-success");
-    const failedMessage = document.getElementById("write-test-failed");
-
-    successMessage.style.display = "none";
-    failedMessage.style.display = "none";
-
-    terminal.value = "Sending write request... Please wait.";
-
-    const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
-    if (!selectedDeviceIP) {
-      terminal.value = "No device selected.";
-      failedMessage.style.display = "block";
-      return;
-    }
-
-    const modbusParams = {
-      port: document.getElementById("port").value,
-      baudrate: parseInt(document.getElementById("baud-rate").value),
-      parity: document.getElementById("parity").value,
-      stopbits: parseInt(document.getElementById("stop-bit").value),
-      bytesize: parseInt(document.getElementById("bytesize").value),
-      timeout: parseFloat(document.getElementById("timeout").value),
-      slave_id: parseInt(document.getElementById("slave-id").value),
-      count: parseInt(document.getElementById("count").value),
-      register: parseInt(document.getElementById("register").value),
-      data_type: document.getElementById("data-type").value,
-      method: "rtu",
-    };
-
-    console.log(
-      "Sending JSON:",
-      JSON.stringify({ modbus_params: modbusParams })
-    );
-
-    fetch("/validate_modbus", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ modbus_params: modbusParams }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Received Response:", data);
-
-        const innerData = data.data;
-        const resultValue = innerData?.data;
-
-        if (
-          data.status === "success" &&
-          innerData.status === "success" &&
-          resultValue !== undefined
-        ) {
-          terminal.value = `📥 Response: ${resultValue}`;
-          statusMessage.textContent = "Modbus request successful.";
-          statusMessage.classList.add("success");
-        } else {
-          terminal.value = `❌ Error: ${innerData?.message || data.message}`;
-          statusMessage.textContent = "Modbus request failed.";
-          statusMessage.classList.add("error");
-        }
-      })
-      .catch((error) => {
-        console.error("Request Failed:", error);
-        terminal.value = `Request failed:\n${error}`;
-        statusMessage.textContent = "Modbus request failed.";
-        statusMessage.classList.add("error");
-      });
-  }
-
   // Sayfa yüklendiğinde select'leri doldur
   document.addEventListener("DOMContentLoaded", () => {
     const readSelect = document.getElementById("read-data-type");
@@ -1482,6 +1412,7 @@
     // Bulut bağlantısını her 10 saniyede bir kontrol et
     setInterval(updateCloudStatus, 10000);
   });
+
 </script>
 
 <style>
