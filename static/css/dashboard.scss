@@ -1,6 +1,6 @@
 /* Header */
 .header {
-  position: fixed; // Header'ı ekranın üst kısmına sabitler
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -58,11 +58,6 @@
   }
 }
 
-/* Sağ kısım (Tarih ve Rapor Tarihi) */
-.header-right-dashboard {
-
-}
-
 .date-time {
   font-weight: bold;
 }
@@ -101,34 +96,36 @@
   padding: 13px;
   background-color: #1c2747;
   color: #fff;
-  height: 65vh;
+  height: 60vh;
+  width: 97%;
 }
 
 /* Enerji Tablosu */
 .energy-table {
-  background: #0e1734;
-  padding: 6px;
+  background: #0b1734;
+  padding: 15px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   text-align: center;
+  gap: 7px;
 
   .energy-header {
     display: flex;
     justify-content: space-between;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
     color: #ffffff;
-    padding-bottom: 10px;
+    padding-bottom: 17px;
     position: relative;
   }
 
   .energy-header::after {
     content: "";
     display: block;
-    width: 100%; /* Tam genişlikte çizgi */
-    height: 1px; /* Çizgi kalınlığı */
-    background: #ffffff; /* Beyaz renk */
+    width: 100%;
+    height: 1px;
+    background: #ffffff;
     position: absolute;
     bottom: 5px;
     left: 0;
@@ -153,130 +150,108 @@
   }
 }
 
-/* System Info */
 .system-info {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); // 3 sütun olacak
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
-  width: 70%; // Sol tarafın genişliği küçültüldü
+  width: 46%;
 
   .info-box {
-    background: #b1b1b1;
-    padding: 10px; // Daha küçük padding
-    border-radius: 5px;
-    font-size: 12px; // Font boyutu küçültüldü
+    background: #fff;
+    border-radius: 8px;
+    font-size: 12px;
     font-weight: bold;
     text-align: center;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-width: 80px; // Daha küçük kutular için
-    height: 70px; // Daha küçük yükseklik
+    min-width: 80px;
+    height: 70px;
+    padding: 6px;
+    color: #1c2747;
+
+    img {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 4px; // ikonla yazı arası boşluk
+    }
   }
 
   .harmonic {
-    background: #e63946;
+    background: #cd2727;
+    color: #fff;
   }
 
   .active {
-    background: #28a745;
+    background: #fff;
+    color: #1c2747;
   }
 
   .power {
-    background: #ff7f32;
+    background: #cd2727;
+    color: #fff;
   }
 }
 
-/* Device Status */
 .device-status {
   display: flex;
-  background: #0e1734;
-  padding: 17px 17px;
-  border-radius: 8px;
-  gap: 8px;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+}
 
-  /* System Info Kutuları */
+.system-info-wrapper {
+  background: #0e1734;
+  padding: 12px;
+  border-radius: 8px;
+  width: 40%;
+
   .system-info {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
-    width: 33%;
-    justify-content: center;
-    margin-bottom: 17px;
-    margin-top: 14px;
+    gap: 10px;
 
     .info-box {
-      background: #b1b1b1;
-      border-radius: 5px;
-      font-size: 12px;
-      font-weight: 600;
+      background: #ffffff;
+      color: #0e1734;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-width: 60px;
       height: 70px;
-      line-height: 1.2;
 
       img {
-        width: 30px;
-        height: 30px;
-        margin-bottom: 22px;
-      }
-
-      .reactive-power {
-        margin-bottom: 6px !important;
+        width: 24px;
+        height: 24px;
+        margin-bottom: 6px;
       }
     }
 
+    .power,
     .harmonic {
       background: #e63946;
+      color: white;
     }
 
     .active {
-      background: #28a745;
-    }
-
-    .power {
-      background: #ff7f32;
-    }
-  }
-
-  /* Cihaz Bilgileri */
-  .status-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: #0e1734;
-    padding: 5px;
-    border-radius: 8px;
-    width: 21%;
-    p {
-      margin: 6px 0px;
-      font-size: 14px;
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      padding-bottom: 1px;
-      color: #fff;
-    }
-
-    strong {
-      color: #ff7f32;
+      background: #ffffff;
+      color: #0e1734;
     }
   }
 }
 
-/* Göstergeler */
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  width: 50%;
-  background: #1c2747;
-  padding: 0px;
-  border-radius: 8px;
-  gap: 17px;
+  width: 60%;
+  padding: 0;
+  gap: 0px;
 }
 
 /* Gösterge Alanı */
@@ -286,7 +261,7 @@
   align-items: center;
   gap: 0px;
   padding-top: 0px;
-  margin: 9px 5px;
+  margin: 0px 0px;
 }
 
 /* Gösterge Kutuları */
@@ -299,8 +274,8 @@
 }
 
 .gauge-circle {
-  width: 106px;
-  height: 106px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
@@ -313,9 +288,13 @@
 }
 
 /* Farklı göstergeler için özel renkler */
-.frequency {
-  background: radial-gradient(circle at center, #1c2747 60%, transparent 61%), 
-              conic-gradient(#28a745 40%, #ff7f32 40% 80%, #1c2747 80%);
+.gauge-circle.frequency {
+  background: radial-gradient(circle at center, #0b1734 60%, transparent 61%),
+    conic-gradient(
+      #28a745 0deg 90deg,
+      #ff7f32 90deg 180deg,
+      #0b1734 180deg 360deg
+    );
   position: relative;
 }
 
@@ -342,63 +321,52 @@
   opacity: 0.7;
 }
 .reactive {
-  background: #0DA100;
-  
+  background: #0da100;
 }
 
 .power-factor {
-  background: radial-gradient(circle at center, #1c2747 60%, transparent 61%), 
-  conic-gradient( #ff7f32 40% 80%, #1c2747 80%);
+  background: radial-gradient(circle at center, #1c2747 60%, transparent 61%),
+    conic-gradient(#ff7f32 40% 80%, #1c2747 80%);
   position: relative;
 }
 
-/* Voltaj ve Akım Bilgileri */
 .voltage-table {
   display: flex;
   justify-content: space-between;
-  padding-top: 10px;
-  background: #0e1734;
-  border-radius: 8px;
-  padding: 5px;
-  height: 54px;
-  margin-top: 26px;
   align-items: center;
-  margin: 6px 8px 2px 4px;
 }
 
-.voltage-box-1,
-.voltage-box-2,
-.voltage-box-3,
-.voltage-box-4,
-.voltage-box-5,
-.voltage-box-6 {
-  text-align: center;
-  padding: 6px;
-  font-size: 12px;
+.voltage-box {
+  display: flex;
+  align-items: center;
+  background-color: #0e1734;
+  border-radius: 3px;
+  padding: 8px 25px;
+  margin: 4px 6px;
+  font-size: 14px;
   color: #fff;
-  border-radius: 6px;
-  width: 12%;
-}
-.voltage-box-1 {
-  background: #2a3559;
-}
-.voltage-box-2 {
-  background: #1b3b6a;
-}
-.voltage-box-3 {
-  background: #1c3d89;
-}
-.voltage-box-4 {
-  background: #102648;
-}
-.voltage-box-5 {
-  background: #1b3b6a;
-}
-.voltage-box-6 {
-  background: #1c3d89;
-}
+  font-weight: 600;
+  gap: 9px;
+  white-space: nowrap;
 
+  .icon {
+    display: flex;
+    align-items: center;
 
+    img {
+      width: 16px;
+      height: 16px;
+      margin-left: -20px;
+    }
+  }
 
+  .value {
+    font-weight: bold;
+  }
 
-
+  .phase {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-left: 2px;
+  }
+}

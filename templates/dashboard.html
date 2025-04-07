@@ -5,13 +5,12 @@ title%} {% block content %}
   <div class="header-left">
     <form action="{{ url_for('logout') }}" method="POST">
       <button type="submit" class="header-button">
-        {{ _('Logout') }}
         <img
           src="{{ url_for('static', filename='images/svg/17.svg') }}"
           alt="Logout"
-          width="20"
-          height="20"
-          style="padding: 7px 7px; background: #0b1734; border-radius: 5px"
+          width="40"
+          height="40"
+          style="padding: 0px 0px; border-radius: 5px"
         />
       </button>
     </form>
@@ -25,10 +24,23 @@ title%} {% block content %}
           alt="Logout"
           width="20"
           height="20"
-          style="padding: 7px 7px; background: #0b1734; border-radius: 5px"
+          style="padding: 12px 12px; background: #0b1734; border-radius: 5px"
         />
       </button>
     </form>
+  </div>
+
+  <!-- Alarm icon -->
+  <div class="alarm-icon-container">
+    <button class="alarm-button">
+      <img
+        src="{{ url_for('static', filename='images/svg/32.svg') }}"
+        alt="Alarm"
+        width="32"
+        height="32"
+      />
+    </button>
+    <span class="alarm-badge">0</span>
   </div>
 
   <div class="header-logo">
@@ -44,9 +56,10 @@ title%} {% block content %}
     <div class="report-line">
       <div class="line"></div>
     </div>
-    <div class="report-date" id="report-date">{{ _('Report Date') }}: Loading...</div>
-</div>
-
+    <div class="report-date" id="report-date">
+      {{ _('Report Date') }}: Loading...
+    </div>
+  </div>
 </header>
 
 <!-- Ana Tablo -->
@@ -132,111 +145,139 @@ title%} {% block content %}
 
   <div class="device-status">
     <div class="system-info">
-      <div class="info-box">
+      <div class="info-box power">
         <img
-          class="reactive-power"
-          src="{{ url_for('static', filename='images/svg/02.svg') }}"
-          alt="{{ _('REACTIVE POWER') }}"
+          src="{{ url_for('static', filename='images/svg/07.svg') }}"
+          alt="Güç"
         />
-        {{ _('REACTIVE POWER') }}
-      </div>
-      <div class="info-box harmonic">
-        <img
-          src="{{ url_for('static', filename='images/svg/03.svg') }}"
-          alt="{{ _('HARMONIC') }}"
-        />
-        {{ _('HARMONIC') }}
+        {{ _('Güç') }}
       </div>
       <div class="info-box active">
         <img
           src="{{ url_for('static', filename='images/svg/04.svg') }}"
-          alt="{{ _('ACTIVE') }}"
+          alt="Aktif"
         />
-        {{ _('ACTIVE') }}
+        {{ _('Aktif') }}
+      </div>
+      <div class="info-box harmonic">
+        <img
+          src="{{ url_for('static', filename='images/svg/03.svg') }}"
+          alt="Harmonik"
+        />
+        {{ _('Harmonik') }}
+      </div>
+      <div class="info-box">
+        <img
+          src="{{ url_for('static', filename='images/svg/02.svg') }}"
+          alt="Reaktif Güç"
+        />
+        {{ _('Reaktif Güç') }}
       </div>
       <div class="info-box">
         <img
           src="{{ url_for('static', filename='images/svg/05.svg') }}"
-          alt="{{ _('VOLTAGE') }}"
+          alt="Gerilim"
         />
-        {{ _('VOLTAGE') }}
+        {{ _('Gerilim') }}
       </div>
       <div class="info-box">
         <img
-          src="{{ url_for('static', filename='images/svg/06.svg') }}"
-          alt="{{ _('NETWORK') }}"
+          src="{{ url_for('static', filename='images/svg/35.svg') }}"
+          alt="Network"
         />
-        {{ _('NETWORK') }}
+        {{ _('Network') }}
       </div>
-      <div class="info-box power">
-        <img
-          src="{{ url_for('static', filename='images/svg/07.svg') }}"
-          alt="{{ _('POWER') }}"
-        />
-        {{ _('POWER') }}
-      </div>
-    </div>
-
-    <div class="status-info">
-      <p><strong>Mac:</strong> Mac</p>
-      <p><strong>IP:</strong> 100.54.26.2</p>
-      <p><strong>Modem:</strong> Modem ID</p>
-      <p><strong>CPU:</strong> 37%</p>
-      <p><strong>RAM:</strong> 72%</p>
-      <p><strong>Temperature:</strong> 9%</p>
-      <p><strong>Lag:</strong> 16%</p>
     </div>
 
     <div class="dashboard-container">
-      <!-- Gösterge Alanı (Ekranın Yarısını Kaplayacak) -->
       <div class="gauge-container">
         <div class="gauge">
           <div class="gauge-circle frequency">
+            <div class="gauge-ring"></div> <!-- dıştaki halka -->
             <span>50,04</span>
-            <p>{{ _('Frequency (Hz)') }}</p>
+            <p>Frekans<br>(Hz)</p>
           </div>
         </div>
+        
 
         <div class="gauge">
           <div class="gauge-circle reactive">
-            <span>{{ _('Reactive Penalty')}}</span>
-            <p>{{ _('Does not Exist')}}</p>
+            <span>{{ _('Reaktif Cezada') }}</span>
+            <p>{{ _('Değil') }}</p>
           </div>
         </div>
 
         <div class="gauge">
           <div class="gauge-circle power-factor">
             <span>%87,45</span>
-            <p>{{ _('Power Factor')}}</p>
+            <p>{{ _('Güç Faktörü') }}</p>
           </div>
         </div>
       </div>
 
-      <!-- Voltaj ve Akım Bilgileri -->
       <div class="voltage-table">
-        <div class="voltage-box-1">
-          V1-N (V) <br />
-          212,53
+        <div class="voltage-box">
+          <span class="icon">
+            <img
+              src="{{ url_for('static', filename='images/svg/33.svg') }}"
+              alt="Voltage"
+            />
+          </span>
+          <span class="value">220 V</span>
+          <span class="phase">V1-N</span>
         </div>
-        <div class="voltage-box-2">
-          V2-N (V) <br />
-          217
+        <div class="voltage-box">
+          <span class="icon">
+            <img
+              src="{{ url_for('static', filename='images/svg/33.svg') }}"
+              alt="Voltage"
+            />
+          </span>
+          <span class="value">220 V</span>
+          <span class="phase">V2-N</span>
         </div>
-        <div class="voltage-box-3">
-          V3-N (V) <br />
-          215,17
+        <div class="voltage-box">
+          <span class="icon">
+            <img
+              src="{{ url_for('static', filename='images/svg/33.svg') }}"
+              alt="Voltage"
+            />
+          </span>
+          <span class="value">220 V</span>
+          <span class="phase">V3-N</span>
         </div>
-        <div class="voltage-box-4">
-          IL1-N (A) <br />
-          6.023,21
+      </div>
+
+      <div class="voltage-table">
+        <div class="voltage-box">
+          <span class="icon">
+            <img
+              src="{{ url_for('static', filename='images/svg/34.svg') }}"
+              alt="Current"
+            />
+          </span>
+          <span class="value">300 A</span>
+          <span class="phase">I1-N</span>
         </div>
-        <div class="voltage-box-5">
-          IL2-N (A) <br />
-          6.027,78
+        <div class="voltage-box">
+          <span class="icon">
+            <img
+              src="{{ url_for('static', filename='images/svg/34.svg') }}"
+              alt="Current"
+            />
+          </span>
+          <span class="value">250 A</span>
+          <span class="phase">I2-N</span>
         </div>
-        <div class="voltage-box-5">
-          IL3-N (A) <br />
-          6.117,42
+        <div class="voltage-box">
+          <span class="icon">
+            <img
+              src="{{ url_for('static', filename='images/svg/34.svg') }}"
+              alt="Current"
+            />
+          </span>
+          <span class="value">220 A</span>
+          <span class="phase">I3-N</span>
         </div>
       </div>
     </div>
@@ -247,28 +288,38 @@ title%} {% block content %}
   document.addEventListener("DOMContentLoaded", function () {
     function updateDateTime() {
       const userLang = document.body.dataset.lang || "en"; // HTML'den alınan aktif dil
-  
+
       const now = new Date();
-      const monthShort = now.toLocaleString(userLang, { month: "long" }).substring(0, 5);
-      const formattedDateTime = `${monthShort} ${now.getDate()}, ${now.getFullYear()}, ${now.getHours()}:${now.getMinutes().toString().padStart(2, "0")}`;
-      document.getElementById("current-date-time").innerText = formattedDateTime;
-  
+      const monthShort = now
+        .toLocaleString(userLang, { month: "long" })
+        .substring(0, 5);
+      const formattedDateTime = `${monthShort} ${now.getDate()}, ${now.getFullYear()}, ${now.getHours()}:${now
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
+      document.getElementById("current-date-time").innerText =
+        formattedDateTime;
+
       const lastMonth = new Date();
       lastMonth.setDate(lastMonth.getDate() - 30);
-  
-      const reportStartMonth = lastMonth.toLocaleString(userLang, { month: "long" }).substring(0, 5);
-      const reportEndMonth = now.toLocaleString(userLang, { month: "long" }).substring(0, 5);
-  
+
+      const reportStartMonth = lastMonth
+        .toLocaleString(userLang, { month: "long" })
+        .substring(0, 5);
+      const reportEndMonth = now
+        .toLocaleString(userLang, { month: "long" })
+        .substring(0, 5);
+
       const reportStart = `${reportStartMonth} ${lastMonth.getDate()}`;
       const reportEnd = `${reportEndMonth} ${now.getDate()}`;
-  
-      document.getElementById("report-date").innerText = `{{ _('Report Date') }}: ${reportStart} - ${reportEnd}`;
+
+      document.getElementById(
+        "report-date"
+      ).innerText = `{{ _('Report Date') }}: ${reportStart} - ${reportEnd}`;
     }
-  
+
     updateDateTime();
     setInterval(updateDateTime, 60000);
   });
-  
-
-</script> 
+</script>
 {% endblock content %}
