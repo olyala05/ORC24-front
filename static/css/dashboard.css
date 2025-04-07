@@ -92,11 +92,12 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 13px;
+  padding: 0.5rem;
   background-color: #1c2747;
   color: #fff;
-  height: 60vh;
+  height: calc(100vh - 84px);
   width: 97%;
+  margin-top: 84px;
 }
 
 /* Enerji Tablosu */
@@ -147,10 +148,13 @@
 .system-info {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  gap: 11px;
   width: 43%;
   margin-top: 0;
-  margin: 6px;
+  margin: 0px;
+  background-color: #0b1734;
+  padding: 12px;
+  border-radius: 7px;
 }
 .system-info .info-box {
   background: #fff;
@@ -162,10 +166,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 92px;
-  height: 74px;
+  min-width: 90px;
+  height: 70px;
   padding: 6px;
   color: #1c2747;
+  box-shadow: 0px 0 3px rgba(11, 23, 52, 0.2);
 }
 .system-info .info-box img {
   width: 40px;
@@ -187,10 +192,10 @@
 
 .device-status {
   display: flex;
-  gap: 10px;
   width: 100%;
   height: 100%;
-  padding: 12px;
+  justify-content: space-between;
+  padding: 0;
 }
 
 .system-info-wrapper {
@@ -235,9 +240,7 @@
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  width: 60%;
-  padding: 0;
-  gap: 0px;
+  gap: 8px;
 }
 
 /* Gösterge Alanı */
