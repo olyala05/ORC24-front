@@ -147,28 +147,30 @@
 .system-info {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  width: 46%;
+  gap: 8px;
+  width: 43%;
+  margin-top: 0;
+  margin: 6px;
 }
 .system-info .info-box {
   background: #fff;
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 80px;
-  height: 70px;
+  min-width: 92px;
+  height: 74px;
   padding: 6px;
   color: #1c2747;
 }
 .system-info .info-box img {
-  width: 24px;
-  height: 24px;
-  margin-bottom: 4px;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
 }
 .system-info .harmonic {
   background: #cd2727;
