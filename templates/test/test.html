@@ -509,7 +509,7 @@
             <label for="write-data-type">Data Type</label>
             <select id="write-data-type"></select>
           </div>
-          
+
           <!-- Byte Order -->
           <div class="write-test-group">
             <label for="write-byte-order">Byte Order</label>
@@ -1165,7 +1165,7 @@
       alert("Slave ID must be a valid number and greater than 0");
       return;
     }
-
+    const dataTypeValue = document.getElementById("read-data-type").value;
     const modbusParams = {
       port: document.getElementById("port").value,
       baudrate: parseInt(document.getElementById("baud-rate").value),
@@ -1173,12 +1173,16 @@
       stopbits: parseInt(document.getElementById("stop-bit").value),
       bytesize: parseInt(document.getElementById("bytesize").value),
       timeout: parseFloat(document.getElementById("timeout").value),
-      address: registerValue, // 📌 Kullanıcının girdiği değeri al
-      count: countValue, // 📌 Kullanıcının girdiği değeri al
-      slave_id: slaveIdValue, // 📌 Kullanıcının girdiği değeri al
+      address: registerValue,
+      count: countValue,
+      slave_id: slaveIdValue,
       method: "rtu",
+      data_type: dataTypeValue, // 📌 EKLENMESİ GEREKEN SATIR
+      byte_order:
+        document.getElementById("read-byte-order").value === "big" ? 1 : 0,
+      word_order:
+        document.getElementById("read-word-order").value === "big" ? 1 : 0,
     };
-
     console.log(
       "Sending JSON:",
       JSON.stringify({ modbus_params: modbusParams })
@@ -1192,27 +1196,28 @@
       .then((response) => response.json())
       .then((data) => {
         console.log("Received Response:", data);
-        const registers = data.data?.data;
+
+        const innerData = data.data;
+        const resultValue = innerData?.data;
 
         if (
           data.status === "success" &&
-          Array.isArray(registers) &&
-          registers.length > 0
+          innerData.status === "success" &&
+          resultValue !== undefined
         ) {
-          terminal.value = `Registers: ${registers.join(", ")}`;
-          statusMessage.textContent =
-            "Local Network Connection Scan Successful.";
+          terminal.value = `📥 Response: ${resultValue}`;
+          statusMessage.textContent = "Modbus request successful.";
           statusMessage.classList.add("success");
         } else {
-          terminal.value = `Error: ${data.message}`;
-          statusMessage.textContent = "Local Network Connection Scan Failed.";
+          terminal.value = `❌ Error: ${innerData?.message || data.message}`;
+          statusMessage.textContent = "Modbus request failed.";
           statusMessage.classList.add("error");
         }
       })
       .catch((error) => {
         console.error("Request Failed:", error);
         terminal.value = `Request failed:\n${error}`;
-        statusMessage.textContent = "Local Network Connection Scan Failed.";
+        statusMessage.textContent = "Modbus request failed.";
         statusMessage.classList.add("error");
       });
   }
@@ -1252,6 +1257,9 @@
       return;
     }
 
+    const dataTypeValue = document.getElementById("write-data-type").value;
+    const writeValue = document.getElementById("write-data").value;
+
     const modbusParams = {
       port: document.getElementById("port").value,
       baudrate: parseInt(document.getElementById("baud-rate").value),
@@ -1259,10 +1267,16 @@
       stopbits: parseInt(document.getElementById("stop-bit").value),
       bytesize: parseInt(document.getElementById("bytesize").value),
       timeout: parseFloat(document.getElementById("timeout").value),
-      address: registerValue, // 📌 Kullanıcının girdiği register adresi
-      count: countValue, // 📌 Kullanıcının belirttiği count
-      slave_id: slaveIdValue, // 📌 Kullanıcının belirttiği slave ID
+      address: registerValue,
+      count: countValue,
+      slave_id: slaveIdValue,
       method: "rtu",
+      data_type: dataTypeValue, // 📌 EKLENDİ
+      data: writeValue, // 📌 Yazılacak veri
+      byte_order:
+        document.getElementById("write-byte-order").value === "big" ? 1 : 0,
+      word_order:
+        document.getElementById("write-word-order").value === "big" ? 1 : 0,
     };
 
     console.log(
@@ -1279,20 +1293,27 @@
       .then((data) => {
         console.log("Received Response:", data);
 
-        if (data.status === "success") {
-          terminal.value = `✅ Write successful: Register ${registerValue}`;
-          statusMessage.textContent = "Write Operation Successful.";
+        const innerData = data.data;
+        const resultValue = innerData?.data;
+
+        if (
+          data.status === "success" &&
+          innerData.status === "success" &&
+          resultValue !== undefined
+        ) {
+          terminal.value = `📥 Response: ${resultValue}`;
+          statusMessage.textContent = "Modbus request successful.";
           statusMessage.classList.add("success");
         } else {
-          terminal.value = `❌ Error: ${data.message}`;
-          statusMessage.textContent = "Write Operation Failed.";
+          terminal.value = `❌ Error: ${innerData?.message || data.message}`;
+          statusMessage.textContent = "Modbus request failed.";
           statusMessage.classList.add("error");
         }
       })
       .catch((error) => {
         console.error("Request Failed:", error);
-        terminal.value = `❌ Request failed:\n${error}`;
-        statusMessage.textContent = "Write Operation Failed.";
+        terminal.value = `Request failed:\n${error}`;
+        statusMessage.textContent = "Modbus request failed.";
         statusMessage.classList.add("error");
       });
   }
@@ -1342,58 +1363,83 @@
       .then((data) => {
         console.log("Received Response:", data);
 
-        const registers = data.data?.data;
+        const innerData = data.data;
+        const resultValue = innerData?.data;
 
         if (
           data.status === "success" &&
-          Array.isArray(registers) &&
-          registers.length > 0
+          innerData.status === "success" &&
+          resultValue !== undefined
         ) {
-          terminal.value = `Write successful. Read value: ${registers.join(
-            ", "
-          )}`;
-          successMessage.style.display = "block";
+          terminal.value = `📥 Response: ${resultValue}`;
+          statusMessage.textContent = "Modbus request successful.";
+          statusMessage.classList.add("success");
         } else {
-          terminal.value = `Error: ${data.message}`;
-          failedMessage.style.display = "block";
+          terminal.value = `❌ Error: ${innerData?.message || data.message}`;
+          statusMessage.textContent = "Modbus request failed.";
+          statusMessage.classList.add("error");
         }
       })
       .catch((error) => {
         console.error("Request Failed:", error);
         terminal.value = `Request failed:\n${error}`;
-        failedMessage.style.display = "block";
+        statusMessage.textContent = "Modbus request failed.";
+        statusMessage.classList.add("error");
       });
   }
 
-  const dataTypes = {
-    read: [
-      "int16",
-      "uint16",
-      "int32",
-      "uint32",
-      "int64",
-      "uint64",
-      "float16",
-      "float32",
-      "float64",
-      "unix_time32",
-      "string",
-      "hexadecimal",
-      "numeric",
-    ],
-    write: [
-      "from_int16",
-      "from_uint16",
-      "from_int32",
-      "from_uint32",
-      "from_int64",
-      "from_uint64",
-      "from_float16",
-      "from_float32",
-      "from_float64",
-      "from_unix_time32",
-    ],
-  };
+  // Sayfa yüklendiğinde select'leri doldur
+  document.addEventListener("DOMContentLoaded", () => {
+    const readSelect = document.getElementById("read-data-type");
+    const writeSelect = document.getElementById("write-data-type");
+
+    // Data types
+    const dataTypes = {
+      read: [
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64",
+        "unix_time32",
+        "string",
+        "hexadecimal",
+        "numeric",
+      ],
+      write: [
+        "from_int16",
+        "from_uint16",
+        "from_int32",
+        "from_uint32",
+        "from_int64",
+        "from_uint64",
+        "from_float16",
+        "from_float32",
+        "from_float64",
+        "from_unix_time32",
+      ],
+    };
+
+    // Read tiplerini doldur
+    dataTypes.read.forEach((type) => {
+      const option = document.createElement("option");
+      option.value = type;
+      option.textContent = type;
+      readSelect.appendChild(option);
+    });
+
+    // Write tiplerini doldur
+    dataTypes.write.forEach((type) => {
+      const option = document.createElement("option");
+      option.value = type;
+      option.textContent = type;
+      writeSelect.appendChild(option);
+    });
+  });
 
   // Cloud Status
   document.addEventListener("DOMContentLoaded", function () {
