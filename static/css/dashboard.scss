@@ -292,24 +292,24 @@
 }
 
 .gauge-border {
-  padding: 4px; /* Dış border için boşluk */
+  padding: 4px;
   border-radius: 50%;
-  border: 2px solid #0da100; /* Dış çerçeve rengi gauge-circle ile aynı */
+  border: 2px solid #0da100; 
   display: inline-flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Farklı göstergeler için özel renkler */
 .gauge-circle.frequency {
   background: radial-gradient(circle at center, #0b1734 60%, transparent 61%),
     conic-gradient(
-      #28a745 0deg 90deg,
-      #ff7f32 90deg 180deg,
-      #0b1734 180deg 360deg
+      #28a745 0deg 90deg,   /* Yeşil, 0-90 derece arasında, üstte */
+      #ff7f32 90deg 180deg, /* Turuncu, 90-180 derece arasında, sağda */
+      #0b1734 180deg 360deg  /* Mavi dış kenar */
     );
   position: relative;
 }
+
 
 /* İç kısım için ayrı bir katman oluştur */
 .gauge-circle::before {
@@ -379,7 +379,6 @@
 
   .phase {
     font-size: 12px;
-    opacity: 0.7;
     margin-left: 2px;
   }
 }

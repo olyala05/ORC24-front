@@ -807,15 +807,14 @@ input:-webkit-autofill:focus {
 }
 
 .gauge-border {
-  padding: 4px; /* Dış border için boşluk */
+  padding: 4px;
   border-radius: 50%;
-  border: 2px solid #0da100; /* Dış çerçeve rengi gauge-circle ile aynı */
+  border: 2px solid #0da100;
   display: inline-flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Farklı göstergeler için özel renkler */
 .gauge-circle.frequency {
   background: radial-gradient(circle at center, #0b1734 60%, transparent 61%), conic-gradient(#28a745 0deg 90deg, #ff7f32 90deg 180deg, #0b1734 180deg 360deg);
   position: relative;
@@ -886,7 +885,6 @@ input:-webkit-autofill:focus {
 }
 .voltage-box .phase {
   font-size: 12px;
-  opacity: 0.7;
   margin-left: 2px;
 }
 
@@ -1326,7 +1324,7 @@ body {
 .header .header-button-logout {
   background-color: #ef8018;
   color: black;
-  padding: 8px 11px;
+  padding: 6px 11px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 8px;
@@ -1339,7 +1337,7 @@ body {
 .header .header-button {
   background-color: #ef8018;
   color: black;
-  padding: 11px 20px;
+  padding: 6px 20px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 8px;
