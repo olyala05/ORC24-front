@@ -373,6 +373,9 @@ msgstr "Modem Seçimi"
 msgid "Select Modem or Device"
 msgstr "Modem veya Cihaz seçin"
 
+msgid "Select Modem"
+msgstr "Modem Seçin"
+
 msgid "ORC Status"
 msgstr "ORC Durumu"
 

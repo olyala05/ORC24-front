@@ -9,31 +9,11 @@ block content %}
       <img
         src="{{ url_for('static', filename='images/svg/19.svg') }}"
         alt="Logout"
-        width="20"
-        height="20"
-        style="padding: 7px 7px; background: #0b1734; border-radius: 5px"
+        width="30"
+        height="30"
+        style="padding: 9px 9px; background: #0b1734; border-radius: 5px"
       />
     </button>
-
-    <!-- 
-    
-    Alarm Butonu 
-
-    <button class="alarm-button" onclick="goToAlarm()" title="Alarm">
-      <div class="alarm-icon-container">
-        <img
-          src="{{ url_for('static', filename='images/svg/31.svg') }}"
-          alt="Alarm"
-          width="35"
-          height="35"
-        />
-        <span id="alarm-count" class="alarm-badge" style="display: none"
-          >0</span
-        >
-      </div>
-    </button> 
-    -->
-
     <!-- Alarm icon -->
     <div class="alarm-icon-container">
       <button class="alarm-button" onclick="goToAlarm()" title="Alarm">
@@ -69,12 +49,19 @@ block content %}
 <main class="content">
   <div class="modem-selection">
     <div class="dropdown-container">
-      <label for="modem">{{ _('Select Modem or Device') }}</label>
-      <select id="modem" class="modem-dropdown" onchange="connectDevice()">
-        <option value="" disabled selected>
-          {{ _('Loading devices') }}...
-        </option>
-      </select>
+      <div class="modem-dropdown-wrapper">
+        <img 
+          src="{{ url_for('static', filename='images/svg/38.svg') }}" 
+          alt="Modems" 
+          class="modem-dropdown-icon"
+        />
+        <select id="modem" class="modem-dropdown" onchange="connectDevice()">
+          <option value="" disabled selected>
+            {{ _('Loading...') }}
+          </option>
+        </select>
+      </div>
+      
     </div>
 
     <div class="button-container">
@@ -129,18 +116,27 @@ block content %}
       .then((data) => {
         let dropdown = document.getElementById("modem");
         dropdown.innerHTML = "";
-
+  
+        // Create the default "Select Modem" option
         let defaultOption = document.createElement("option");
         defaultOption.value = "";
         defaultOption.disabled = true;
         defaultOption.selected = true;
-        defaultOption.textContent = "{{ _('Select Modem or Device') }}";
+        defaultOption.textContent = "{{ _('Select Modem') }}";
         dropdown.appendChild(defaultOption);
-
+  
+        // Populate the dropdown with devices
         data.forEach((device) => {
           let option = document.createElement("option");
           option.value = device.ip;
-          option.textContent = `${device.ip} (${device.mac})`;
+  
+          // Create custom option text with IP and MAC address
+          let ipText = `${device.ip}`;
+          let macText = `(${device.mac})`;
+  
+          // Set option text with IP and MAC on separate lines
+          option.innerHTML = `<span class="device-ip">${ipText}</span><br><span class="device-mac">${macText}</span>`;
+          
           dropdown.appendChild(option);
         });
       })
@@ -148,6 +144,7 @@ block content %}
         console.error("{{ _('Error while retrieving devices:')}}", error)
       );
   }
+  
 
   // ORC Status
   function goToORCStatus() {
@@ -317,7 +314,7 @@ block content %}
   // data
   function goToData() {
     let dropdown = document.getElementById("modem");
-    let selectedDeviceIP = dropdown ? dropdown.value : null; 
+    let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
       // Kullanıcıya uyarı ver
@@ -761,5 +758,24 @@ block content %}
   .fade-out {
     opacity: 0;
   }
+  .modem-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .modem-dropdown-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    background: #1C2747;
+    border-radius: 5px;
+    padding: 5px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
 </style>
 {% endblock %}
