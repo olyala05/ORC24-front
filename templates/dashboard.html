@@ -18,14 +18,7 @@ title%} {% block content %}
     <!-- Menu butonunu modem-selection sayfasına yönlendirme -->
     <form action="{{ url_for('modem_selection') }}" method="GET">
       <button type="submit" class="header-button">
-        {{ _('Modems') }}
-        <img
-          src="{{ url_for('static', filename='images/svg/18.svg') }}"
-          alt="Logout"
-          width="20"
-          height="20"
-          style="padding: 12px 12px; background: #0b1734; border-radius: 5px"
-        />
+        <span style="padding: 14px 13px;">{{ _('Modems') }}</span>
       </button>
     </form>
   </div>
@@ -324,51 +317,52 @@ title%} {% block content %}
   });
 
   document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("logout-button").addEventListener("click", function(event) {
-      event.preventDefault(); // Prevent form submission
+    document
+      .getElementById("logout-button")
+      .addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent form submission
 
-      // Trigger SweetAlert confirmation with custom styling
-      Swal.fire({
-        title: 'Çıkış yapmak istediğinize emin misiniz?',
-        icon: 'warning',
-        background: '#0B1734', 
-        iconColor: '#EF8018', 
-        confirmButtonText: 'Evet',
-        cancelButtonText: 'Hayır',
-        reverseButtons: true,  
-        customClass: {
-          confirmButton: 'swal-button-yes',
-          cancelButton: 'swal-button-no',
-        },
-        buttonsStyling: false
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // If 'Evet' is clicked, submit the form
-          document.getElementById("logout-form").submit();
-        }
+        // Trigger SweetAlert confirmation with custom styling
+        Swal.fire({
+          title: "Çıkış yapmak istediğinize emin misiniz?",
+          icon: "warning",
+          background: "#0B1734",
+          iconColor: "#EF8018",
+          showCancelButton: true,
+          confirmButtonText: "Evet", // Sağda
+          cancelButtonText: "Hayır", // Solda
+          reverseButtons: false, // Bu zaten varsayılan
+          customClass: {
+            confirmButton: "swal-button-yes", // Sağdaki buton
+            cancelButton: "swal-button-no", // Soldaki buton
+          },
+          buttonsStyling: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            document.getElementById("logout-form").submit();
+          }
+        });
       });
-    });
   });
 </script>
 
 <style>
   .swal-button-yes {
     background-color: #fff;
-    color: #0B1734;
+    color: #0b1734;
     border-radius: 5px;
-    padding: 10px 20px;
+    padding: 17px 19px;
     font-size: 16px;
     border: none;
   }
 
   .swal-button-no {
     background-color: #fff;
-    color: #0B1734;
+    color: #0b1734;
     border-radius: 5px;
-    padding: 10px 20px;
+    padding: 17px 19px;
     font-size: 16px;
-    font-weight: 500;
-    border: none;
+    border: 2px solid #0b1734;
   }
 
   .swal2-popup {
@@ -376,28 +370,57 @@ title%} {% block content %}
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
   }
 
-  /* Adjusting button visibility */
-  .swal-button-no {
-    border: 2px solid #fff; 
-  }
-
+  /* Ensuring buttons are properly spaced and displayed */
   .swal2-actions {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between; /* Space the buttons properly */
+    width: 100%; /* Ensure full width for button spacing */
+  }
+
+  .swal2-confirm {
+    width: 48%;
+    margin-right: 4%;
+  }
+
+  .swal2-cancel {
+    width: 48%;
   }
 
   div:where(.swal2-container) h2:where(.swal2-title) {
     position: relative;
     max-width: 100%;
-    margin: 0;
     padding: 1em 1em 1em;
     color: #ffffff;
     font-size: 16px;
     font-weight: 500;
-    text-align: center;
-    text-transform: none;
-    word-wrap: break-word;
-    cursor: initial;
-}
+  }
+
+  .swal2-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 94%;
+  }
+
+  body.swal2-shown {
+    padding-right: 0 !important;
+    overflow: hidden !important;
+  }
+  .header,
+  .fixed-element {
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+  div:where(.swal2-container).swal2-backdrop-show,
+  div:where(.swal2-container).swal2-noanimation {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  div:where(.swal2-container).swal2-center > .swal2-popup {
+    grid-column: 2;
+    grid-row: 2;
+    place-self: center center;
+    margin-top: 64px;
+  }
 </style>
 {% endblock content %}
