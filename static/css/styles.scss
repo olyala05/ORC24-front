@@ -41,20 +41,18 @@ body {
 }
 
 input:-webkit-autofill {
-  -webkit-text-fill-color: #ffff !important;  /* Yazı rengini zorla değiştir */
-  background-color: #0E1734 !important;  /* Arka plan rengini belirle */
-  -webkit-box-shadow: 0 0 0 30px #0E1734 inset !important;  /* Arka planı zorla değiştir */
+  -webkit-text-fill-color: #ffff !important; /* Yazı rengini zorla değiştir */
+  background-color: #0e1734 !important; /* Arka plan rengini belirle */
+  -webkit-box-shadow: 0 0 0 30px #0e1734 inset !important; /* Arka planı zorla değiştir */
   transition: background-color 5000s ease-in-out 0s; /* Renk değişimini kalıcı yap */
 }
 
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
-  -webkit-text-fill-color: #ffff !important;  /* Yazı rengini hover ve focus durumunda da zorla değiştir */
-  background-color: #0E1734 !important;
-  -webkit-box-shadow: 0 0 0 30px #0E1734 inset !important;
+  -webkit-text-fill-color: #ffff !important; /* Yazı rengini hover ve focus durumunda da zorla değiştir */
+  background-color: #0e1734 !important;
+  -webkit-box-shadow: 0 0 0 30px #0e1734 inset !important;
 }
-
-
 
 .container {
   display: flex;
@@ -152,10 +150,21 @@ input:-webkit-autofill:focus {
 
 /* Sağ İkon (Göz - Şifre Göster) */
 .icon-right {
-  right: 12px;
+  right: 20px;
   top: 50%;
-  transform: translateY(-50%); /* Dikey olarak ortalar */
+  transform: translateY(-50%);
   cursor: pointer;
+
+  display: flex;
+  align-items: center; // ikonları dikey ortala
+  gap: 8px; // çizgi ve ikon arası boşluk
+}
+.eye-divider {
+  width: 2px;
+  height: 63px;
+  background-color: #1c2747;
+  border-radius: 1px;
+  margin-right: 10px;
 }
 
 .login-actions {
@@ -169,7 +178,7 @@ input:-webkit-autofill:focus {
 
 /* Login Butonu */
 .login-btn {
-  background: #ff7f32;
+  background: #ef8018;
   color: #1c2747;
   padding: 10px 25px;
   border: none;
@@ -212,18 +221,30 @@ input:-webkit-autofill:focus {
     margin: 17px 0px 0px 0px;
   }
 
+  .language-dropdown::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    right: 20px; 
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 8px solid #fff; 
+  }
+  
   .language-dropdown {
     position: absolute;
     top: 100%;
     right: 0;
-    left: 0;
+    transform: translateX(8%); 
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     padding: 10px;
     display: none;
     flex-direction: column;
-    min-width: 120px;
+    min-width: 106px;
     z-index: 1000;
 
     button {
@@ -277,6 +298,14 @@ input:-webkit-autofill:focus {
     font-size: 12px;
   }
 }
+
+.language-switcher.fixed-top-right {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
 .language-switcher {
   position: relative;
   display: inline-block;
@@ -305,15 +334,14 @@ input:-webkit-autofill:focus {
   }
 
   .language-dropdown {
+    display: none;
+    flex-direction: column;
     position: absolute;
     top: 120%;
     right: 0;
     background: white;
-    color: #0e1734;
     border-radius: 8px;
     padding: 8px;
-    display: none;
-    flex-direction: column;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     z-index: 999;
 
@@ -350,4 +378,41 @@ input:-webkit-autofill:focus {
   &:hover .language-dropdown {
     display: flex;
   }
+
 }
+
+.language-switcher:hover .language-dropdown,
+.language-switcher.active .language-dropdown {
+  display: flex;
+}
+
+
+.radio-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #bbb;
+  background: white;
+  margin-right: 8px;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.lang-btn .radio-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #bbb;
+  background: white;
+  display: inline-block;
+  margin-right: 8px;
+  transition: 0.3s;
+}
+
+.lang-btn.selected .radio-indicator {
+  background-color: $primary-color;
+  border-color: $primary-color;
+}
+
