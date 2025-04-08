@@ -329,6 +329,9 @@ msgstr "Çıkış"
 msgid "Menu"    
 msgstr "Menü"   
 
+msgid "Modems"    
+msgstr "Modemler"   
+
 msgid "Report Date"    
 msgstr "Rapor Tarihi"
 

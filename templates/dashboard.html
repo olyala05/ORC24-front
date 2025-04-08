@@ -3,8 +3,8 @@ title%} {% block content %}
 
 <header class="header">
   <div class="header-left">
-    <form action="{{ url_for('logout') }}" method="POST">
-      <button type="submit" class="header-button-logout">
+    <form action="{{ url_for('logout') }}" method="POST" id="logout-form">
+      <button type="button" class="header-button-logout" id="logout-button">
         <img
           src="{{ url_for('static', filename='images/svg/37.svg') }}"
           alt="Logout"
@@ -18,7 +18,7 @@ title%} {% block content %}
     <!-- Menu butonunu modem-selection sayfasına yönlendirme -->
     <form action="{{ url_for('modem_selection') }}" method="GET">
       <button type="submit" class="header-button">
-        {{ _('Menu') }}
+        {{ _('Modems') }}
         <img
           src="{{ url_for('static', filename='images/svg/18.svg') }}"
           alt="Logout"
@@ -322,5 +322,82 @@ title%} {% block content %}
     updateDateTime();
     setInterval(updateDateTime, 60000);
   });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("logout-button").addEventListener("click", function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Trigger SweetAlert confirmation with custom styling
+      Swal.fire({
+        title: 'Çıkış yapmak istediğinize emin misiniz?',
+        icon: 'warning',
+        background: '#0B1734', 
+        iconColor: '#EF8018', 
+        confirmButtonText: 'Evet',
+        cancelButtonText: 'Hayır',
+        reverseButtons: true,  
+        customClass: {
+          confirmButton: 'swal-button-yes',
+          cancelButton: 'swal-button-no',
+        },
+        buttonsStyling: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // If 'Evet' is clicked, submit the form
+          document.getElementById("logout-form").submit();
+        }
+      });
+    });
+  });
 </script>
+
+<style>
+  .swal-button-yes {
+    background-color: #fff;
+    color: #0B1734;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+  }
+
+  .swal-button-no {
+    background-color: #fff;
+    color: #0B1734;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+  }
+
+  .swal2-popup {
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Adjusting button visibility */
+  .swal-button-no {
+    border: 2px solid #fff; 
+  }
+
+  .swal2-actions {
+    display: flex;
+    justify-content: space-between; 
+  }
+
+  div:where(.swal2-container) h2:where(.swal2-title) {
+    position: relative;
+    max-width: 100%;
+    margin: 0;
+    padding: 1em 1em 1em;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    text-transform: none;
+    word-wrap: break-word;
+    cursor: initial;
+}
+</style>
 {% endblock content %}

@@ -3,32 +3,44 @@ block content %}
 
 <div class="header">
   <div class="header-left">
-    <!-- Home Butonu -->
-    <button class="header-button" onclick="goToDashboard()">
-      {{ _('Home')}}
+    <form action="{{ url_for('logout') }}" method="POST">
+      <button type="submit" class="header-button-logout">
+        <img
+          src="{{ url_for('static', filename='images/svg/37.svg') }}"
+          alt="Logout"
+          width="40"
+          height="40"
+          style="padding: 0px 0px; border-radius: 5px"
+        />
+      </button>
+    </form>
+
+    <!-- Menu butonunu modem-selection sayfasına yönlendirme -->
+    <form action="{{ url_for('modem_selection') }}" method="GET">
+      <button class="header-button" onclick="goToDashboard()">
+        {{ _('Home')}}
+        <img
+          src="{{ url_for('static', filename='images/svg/19.svg') }}"
+          alt="Logout"
+          width="30"
+          height="30"
+          style="padding: 9px 9px; background: #0b1734; border-radius: 8px"
+        />
+      </button>
+    </form>
+  </div>
+
+  <!-- Alarm icon -->
+  <div class="alarm-icon-container">
+    <button class="alarm-button">
       <img
-        src="{{ url_for('static', filename='images/svg/19.svg') }}"
-        alt="Logout"
-        width="20"
-        height="20"
-        style="padding: 7px 7px; background: #0b1734; border-radius: 5px"
+        src="{{ url_for('static', filename='images/svg/32.svg') }}"
+        alt="Alarm"
+        width="32"
+        height="32"
       />
     </button>
-
-    <!-- Alarm Butonu -->
-    <button class="alarm-button" onclick="goToAlarm()" title="Alarm">
-      <div class="alarm-icon-container">
-        <img
-          src="{{ url_for('static', filename='images/svg/31.svg') }}"
-          alt="Alarm"
-          width="35"
-          height="35"
-        />
-        <span id="alarm-count" class="alarm-badge" style="display: none"
-          >0</span
-        >
-      </div>
-    </button>
+    <span class="alarm-badge">0</span>
   </div>
 
   <div class="header-logo">
