@@ -130,12 +130,13 @@ block content %}
           let option = document.createElement("option");
           option.value = device.ip;
   
-          // Create custom option text with IP and MAC address
+          // Create custom option text with image, IP, and MAC address
+          let imageHTML = `<img src="{{ url_for('static', filename='images/png/01.png') }}" alt="Modems" width="30" height="30" style="padding: 9px 9px; background: #0b1734; border-radius: 5px; margin-right: 10px;" />`;
           let ipText = `${device.ip}`;
           let macText = `(${device.mac})`;
-  
+
           // Set option text with IP and MAC on separate lines
-          option.innerHTML = `<span class="device-ip">${ipText}</span><br><span class="device-mac">${macText}</span>`;
+          option.innerHTML = `${imageHTML}<span class="device-ip">${ipText}</span><br><span class="device-mac">${macText}</span>`;
           
           dropdown.appendChild(option);
         });
@@ -144,7 +145,6 @@ block content %}
         console.error("{{ _('Error while retrieving devices:')}}", error)
       );
   }
-  
 
   // ORC Status
   function goToORCStatus() {

@@ -11,17 +11,19 @@
   <div class="orc-content">
     <div class="device-info">
       <ul>
-        <li>{{ _('S/N') }} <span>{{ modem.serial_no if modem.serial_no else '-' }}</span></li>
-        <li>{{ _('MODEM NAME') }} <span>{{ modem.name if modem.name else '-' }}</span></li>
-        <li>{{ _('MODEM BRAND / MODEL')}} <span id="brand-model">-</span></li>
+        <li><span class="highlight">{{ _('S/N') }}</span> <span>{{ modem.serial_no if modem.serial_no else '-' }}</span></li>
+        <li><span class="highlight">{{ _('MODEM NAME') }}</span> <span>{{ modem.name if modem.name else '-' }}</span></li>
+        <li><span class="highlight">{{ _('MODEM BRAND / MODEL') }}</span> <span id="brand-model">-</span></li>
+        
         <li>
-          {{ _('MODEM STATUS')}}
+          <span class="highlight"> {{ _('MODEM STATUS')}}</span>
+         
           <span
             >{% if modem.status == "A" %} {{ _('Active')}} {% else %} {{ _('Passive')}} {% endif %}</span>
         </li>
-        <li>{{ _('DATE OF INSTALLATION')}} <span>{{modem.created_at if modem.created_at else '-'}}</span></li>
-        <li>{{ _('DATA READING INTERVAL')}} <span>1380 Seconds</span></li>
-        <li>{{ _('NETWORK TYPE')}} 
+        <li><span class="highlight">{{ _('DATE OF INSTALLATION')}} </span><span>{{modem.created_at if modem.created_at else '-'}}</span></li>
+        <li><span class="highlight">{{ _('DATA READING INTERVAL')}}</span> <span>1380 Seconds</span></li>
+        <li><span class="highlight">{{ _('NETWORK TYPE')}} </span>
           <span>
               {% if network and network.network_type_list %}
                   {{ network.network_type_list | join(" / ") }}
@@ -30,8 +32,8 @@
               {% endif %}
           </span>
         </li>      
-        <li>{{ _('CONNECTION PROTOCOL') }} <span id="connection-protocol">-</span></li>
-        <li>{{ _('SOFTWARE VERSION')}} <span>V 1.02</span></li>
+        <li><span class="highlight">{{ _('CONNECTION PROTOCOL') }}</span> <span id="connection-protocol">-</span></li>
+        <li><span class="highlight">{{ _('SOFTWARE VERSION')}}</span> <span>V 1.02</span></li>
       </ul>
 
       <div class="connection-status">
@@ -144,7 +146,7 @@
       </table>
 
       <div class="algorithm-section">
-        <h3>{{ _('Algorithm Processes')}}</h3>
+        <h3 style="text-align: start; margin-left: 17px;">{{ _('Algorithm Processes')}}</h3>
         <div class="separator"></div>
         <!-- Turuncu çizgi -->
         <div class="algorithm-box">
@@ -354,5 +356,11 @@ window.onload = fetchBrandModel;
 
 </script>
 
+<style>
+  .highlight {
+    color: #88ACFF;
+  }
+  
+</style>
 {% endblock %}
 

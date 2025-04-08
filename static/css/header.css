@@ -157,4 +157,15 @@ div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line] {
   display: none;
   min-width: 11px;
   text-align: center;
+}
+
+.header-button-back {
+  background-color: #ef8018;
+  color: #1C2747;
+  padding: 0px 0px;
+  font-size: 6px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  gap: 22px;
 }/*# sourceMappingURL=header.css.map */

@@ -1462,6 +1462,17 @@ div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line] {
   text-align: center;
 }
 
+.header-button-back {
+  background-color: #ef8018;
+  color: #1C2747;
+  padding: 0px 0px;
+  font-size: 6px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  gap: 22px;
+}
+
 body {
   background-color: #1c2747;
   color: #fff;
@@ -1637,14 +1648,6 @@ body {
   background-color: #fff;
   color: #000;
 }
-.modem-selection .dropdown-container .modem-dropdown #modem.with-icons {
-  background-image: url("{{ url_for('static', filename='images/png/01.png') }}");
-  background-repeat: no-repeat;
-  background-position: 8px center;
-  background-size: 20px 20px;
-  padding-left: 36px;
-  background-color: #000;
-}
 
 .button-container,
 .bottom-buttons {
@@ -1792,12 +1795,14 @@ body {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 .device-info .connection-status .status-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   color: #1c2747;
   display: block;
   margin-bottom: 5px;
   margin-top: 8px;
+  text-align: left;
+  margin-left: 17px;
 }
 .device-info .connection-status .separator {
   width: 90%;
@@ -1901,7 +1906,7 @@ body {
   color: black;
 }
 .algorithm-section h3 {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   color: #1c2747;
   margin-bottom: 5px;
@@ -1939,7 +1944,7 @@ body {
   margin-right: 70px;
 }
 .algorithm-section .algorithm-box .status-btn {
-  background-color: #ff6f00;
+  background-color: #EF8018;
   padding: 3px 17px;
   margin: 0px 0px;
   font-size: 14px;
@@ -1974,13 +1979,13 @@ body {
 
 /* 🔁 Retry Butonu */
 .retry-btn {
-  background: #ff6f00;
+  background: #EF8018;
   color: white;
-  padding: 8px 16px;
+  padding: 15px 24px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .retry-btn:hover {

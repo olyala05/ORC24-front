@@ -49,12 +49,14 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 .device-info .connection-status .status-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   color: #1c2747;
   display: block;
   margin-bottom: 5px;
   margin-top: 8px;
+  text-align: left;
+  margin-left: 17px;
 }
 .device-info .connection-status .separator {
   width: 90%;
@@ -158,7 +160,7 @@
   color: black;
 }
 .algorithm-section h3 {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   color: #1c2747;
   margin-bottom: 5px;
@@ -196,7 +198,7 @@
   margin-right: 70px;
 }
 .algorithm-section .algorithm-box .status-btn {
-  background-color: #ff6f00;
+  background-color: #EF8018;
   padding: 3px 17px;
   margin: 0px 0px;
   font-size: 14px;
@@ -231,13 +233,13 @@
 
 /* 🔁 Retry Butonu */
 .retry-btn {
-  background: #ff6f00;
+  background: #EF8018;
   color: white;
-  padding: 8px 16px;
+  padding: 15px 24px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .retry-btn:hover {

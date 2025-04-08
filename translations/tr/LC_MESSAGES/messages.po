@@ -552,7 +552,7 @@ msgid "No Internet"
 msgstr "İnternet yok"
 
 msgid "Retry"
-msgstr "Yeniden deneyin"
+msgstr "Yeniden Dene"
 
 msgid "Archive"
 msgstr "Arşiv"
