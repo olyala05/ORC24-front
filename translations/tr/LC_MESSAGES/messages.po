@@ -824,6 +824,15 @@ msgstr "Modem Seri Numarası"
 msgid "Status / Configuration"
 msgstr "Durum / Yapılandırma"
 
+msgid "Status"
+msgstr "Durum"
+
+msgid "Log Description"
+msgstr "Log Açıklaması"
+
+msgid "Timestamp"
+msgstr "Son Bağlantı Tarihi"
+
 msgid "Number of Data"
 msgstr "Veri Sayısı"
 

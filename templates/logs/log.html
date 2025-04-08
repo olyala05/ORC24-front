@@ -1,6 +1,5 @@
-{% extends "layout.html" %}
-
-{% block title %} ORC Status - Error Log {% endblock%} {% block extra_css %}
+{% extends "layout.html" %} {% block title %} ORC Status - Error Log {%
+endblock%} {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
 {% endblock %} {% block content %}
 
@@ -8,17 +7,16 @@
 {% include 'partials/header.html' %}
 
 <div class="log-container">
+  <div id="calendar-container">
+    <input
+      type="date"
+      id="log-date-picker"
+      onchange="fetchLogsByDate()"
+      class="calendar-input"
+    />
+  </div>
   <div class="log-table">
     <div class="log-table-content">
-      <div id="calendar-container">
-        <input
-          type="date"
-          id="log-date-picker"
-          onchange="fetchLogsByDate()"
-          class="calendar-input"
-        />
-      </div>
-
       <!-- Message for navigating back in time İsterler ise aç -->
       <div
         id="info-message"
@@ -50,9 +48,9 @@
       <table>
         <thead id="log-table-head" style="display: none">
           <tr>
-            <th>Status</th>
-            <th>Log Description</th>
-            <th>Timestamp</th>
+            <th>{{ _('Status')}}</th>
+            <th>{{ _('Log Description')}}</th>
+            <th>{{ _('Timestamp')}}</th>
           </tr>
         </thead>
         <tbody id="log-table-body">
@@ -79,14 +77,14 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     fetchLogs();
-  
-    const container = document.querySelector('.log-table-content');
+
+    const container = document.querySelector(".log-table-content");
     if (container) {
       container.addEventListener("scroll", function () {
         const scrollTop = container.scrollTop;
         const scrollHeight = container.scrollHeight;
         const containerHeight = container.clientHeight;
-  
+
         if (scrollTop + containerHeight >= scrollHeight - 100) {
           console.log("SCROLL TETİKLENDİ (log-table-content)!");
           fetchLogs();
@@ -96,7 +94,6 @@
       console.error("log-table-content bulunamadı!");
     }
   });
-  
 
   function formatDateTime(dateTimeStr) {
     const date = new Date(dateTimeStr);
@@ -291,6 +288,26 @@
         document.getElementById("no-logs-message").style.display = "block";
       });
   }
+
+  function updateDateRangeDisplay(logs) {
+    if (!logs || logs.length === 0) return;
+  
+    // Tarihleri al ve sırala
+    const dates = logs.map(log => new Date(log.created_at)).sort((a, b) => a - b);
+    const start = dates[0];
+    const end = dates[dates.length - 1];
+  
+    const format = (date) =>
+      date.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: '2-digit',
+      }).replace(/ /g, ' '); // "28 Dec 22"
+  
+    const rangeText = `${format(start)} – ${format(end)}`;
+    document.getElementById("date-range-display").innerText = rangeText;
+  }
+  
 </script>
 
 <style>
@@ -349,5 +366,17 @@
   .toggle-link:hover {
     text-decoration: underline;
   }
+
+  .date-range-box {
+    background-color: #1f2235;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'Arial', sans-serif;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  
 </style>
 {% endblock %}

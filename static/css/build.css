@@ -1493,16 +1493,17 @@ body {
 
 .log-table {
   width: 763px;
-  max-height: 351px;
+  max-height: 319px;
   background-color: #0b1734;
-  padding: 11px;
+  padding: 7px;
   border-radius: 8px;
   text-align: center;
   color: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  margin-top: 10px;
 }
 .log-table .log-table-content {
-  max-height: 354px;
+  max-height: 315px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -1512,7 +1513,7 @@ body {
 }
 .log-table table th {
   background: #0b1734;
-  padding: 9px;
+  padding: 0px 9px 8px;
   font-size: 14px;
   border-bottom: 1px solid #fff;
   text-align: center;
@@ -1566,32 +1567,34 @@ body {
   background-color: red;
 }
 
-/* 📌 Takvim Girişi */
+/* Takvim Konteyneri */
 #calendar-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  margin-top: 15px;
+  background-color: #0b1734;
+  gap: 10px;
+  margin-left: 0;
 }
-#calendar-container .calendar-input {
+
+/* Takvim Input Rengi ve Stili */
+.calendar-input {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  border: 2px solid #fe5f00;
-  border-radius: 6px;
+  border-radius: 5px;
   padding: 8px 12px;
   font-size: 14px;
   font-family: "Arial", sans-serif;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  background: #0B1734;
+  color: #fff;
 }
-#calendar-container .calendar-input:hover {
-  border-color: #e66900;
-}
-#calendar-container .calendar-input:focus {
+
+.calendar-input:focus {
+  border-color: #ff6f00;
   outline: none;
-  border-color: #cc5c00;
-  box-shadow: 0 0 5px rgba(255, 127, 0, 0.5);
 }
 
 body {
