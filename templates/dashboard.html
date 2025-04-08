@@ -4,9 +4,9 @@ title%} {% block content %}
 <header class="header">
   <div class="header-left">
     <form action="{{ url_for('logout') }}" method="POST">
-      <button type="submit" class="header-button">
+      <button type="submit" class="header-button-logout">
         <img
-          src="{{ url_for('static', filename='images/svg/17.svg') }}"
+          src="{{ url_for('static', filename='images/svg/37.svg') }}"
           alt="Logout"
           width="40"
           height="40"
@@ -57,7 +57,7 @@ title%} {% block content %}
       <div class="line"></div>
     </div>
     <div class="report-date" id="report-date">
-      {{ _('Report Date') }}: Loading...
+      <span style="color: #6384d1">{{ _('Report Date') }}:</span> Loading...
     </div>
   </div>
 </header>
@@ -193,12 +193,13 @@ title%} {% block content %}
       <div class="gauge-container">
         <div class="gauge">
           <div class="gauge-circle frequency">
-            <div class="gauge-ring"></div> <!-- dıştaki halka -->
+            <div class="gauge-ring"></div>
+            <!-- dıştaki halka -->
             <span>50,04</span>
-            <p>Frekans<br>(Hz)</p>
+            <p>Frekans</p>
+            <p style="margin: 2px;">(Hz)</p>
           </div>
         </div>
-        
 
         <div class="gauge">
           <div class="gauge-circle reactive">
@@ -209,8 +210,8 @@ title%} {% block content %}
 
         <div class="gauge">
           <div class="gauge-circle power-factor">
-            <span>%87,45</span>
-            <p>{{ _('Güç Faktörü') }}</p>
+            <span>{{ _('Güç Faktörü') }}</span>
+            <p>%87,45</p>
           </div>
         </div>
       </div>
@@ -313,9 +314,8 @@ title%} {% block content %}
       const reportStart = `${reportStartMonth} ${lastMonth.getDate()}`;
       const reportEnd = `${reportEndMonth} ${now.getDate()}`;
 
-      document.getElementById(
-        "report-date"
-      ).innerText = `{{ _('Report Date') }}: ${reportStart} - ${reportEnd}`;
+      const reportDateEl = document.getElementById("report-date");
+      reportDateEl.innerHTML = `<span style="color: #6384D1;">{{ _('Report Date') }}:</span> ${reportStart} - ${reportEnd}`;
     }
 
     updateDateTime();

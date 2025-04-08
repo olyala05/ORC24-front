@@ -17,10 +17,23 @@
   align-items: center;
   margin-left: 15px;
 }
-.header .header-button {
-  background-color: #ff6f00;
+.header .header-button-logout {
+  background-color: #ef8018;
   color: black;
-  padding: 9px 15px;
+  padding: 8px 11px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  gap: 22px;
+}
+.header .header-button-logout:hover {
+  background-color: #ff8c33;
+}
+.header .header-button {
+  background-color: #ef8018;
+  color: black;
+  padding: 11px 20px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 8px;
