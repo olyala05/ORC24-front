@@ -806,6 +806,15 @@ input:-webkit-autofill:focus {
   color: #fff;
 }
 
+.gauge-border {
+  padding: 4px; /* Dış border için boşluk */
+  border-radius: 50%;
+  border: 2px solid #0da100; /* Dış çerçeve rengi gauge-circle ile aynı */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Farklı göstergeler için özel renkler */
 .gauge-circle.frequency {
   background: radial-gradient(circle at center, #0b1734 60%, transparent 61%), conic-gradient(#28a745 0deg 90deg, #ff7f32 90deg 180deg, #0b1734 180deg 360deg);
