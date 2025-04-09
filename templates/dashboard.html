@@ -17,7 +17,14 @@ title%} {% block content %}
 
     <!-- Menu butonunu modem-selection sayfasına yönlendirme -->
     <form action="{{ url_for('modem_selection') }}" method="GET">
-      <button type="submit" class="header-button">
+      <button type="submit" class="header-button" style="gap:0;">
+        <img
+          src="{{ url_for('static', filename='images/svg/39.svg') }}"
+          alt="Logout"
+          width="30"
+          height="30"
+          style="padding: 0px 0px; border-radius: 5px"
+        />
         <span style="padding: 14px 13px;">{{ _('Modems') }}</span>
       </button>
     </form>
