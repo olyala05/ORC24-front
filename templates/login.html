@@ -83,32 +83,63 @@ endblock %} {% block content %}
           <!-- Dil seçici -->
           <div class="language-switcher fixed-top-right" id="languageSwitcher">
             <button type="button" class="language-toggle" id="languageToggle">
-              <img src="{{ url_for('static', filename='images/svg/globe.svg') }}" width="24" height="24" alt="Globe Icon" />
+              <img
+                src="{{ url_for('static', filename='images/svg/globe.svg') }}"
+                width="24"
+                height="24"
+                alt="Globe Icon"
+              />
+              <span class="selected-lang-txt"
+                >{{ g.get('lang', 'TR').upper() }}</span
+              >
             </button>
-          
+
             <div class="language-dropdown" id="languageDropdown">
-              <!-- Üçgen -->
               <div class="dropdown-arrow"></div>
-          
-              <!-- Seçenekler -->
-              <button type="button" class="lang-btn {% if g.get('lang') == 'tr' %}selected{% endif %}" data-lang="tr" onclick="setLanguage('tr')">
+
+              <button
+                type="button"
+                class="lang-btn {% if g.get('lang') == 'tr' %}selected{% endif %}"
+                data-lang="tr"
+                onclick="setLanguage('tr')"
+              >
                 <span class="radio-indicator"></span>
-                <img src="{{ url_for('static', filename='images/flags/tr.png') }}" width="20" /> TR
+                <img
+                  src="{{ url_for('static', filename='images/flags/tr.png') }}"
+                  width="20"
+                />
+                TR
               </button>
-              
-              <button type="button" class="lang-btn {% if g.get('lang') == 'en' %}selected{% endif %}" data-lang="en" onclick="setLanguage('en')">
+
+              <button
+                type="button"
+                class="lang-btn {% if g.get('lang') == 'en' %}selected{% endif %}"
+                data-lang="en"
+                onclick="setLanguage('en')"
+              >
                 <span class="radio-indicator"></span>
-                <img src="{{ url_for('static', filename='images/flags/uk.png') }}" width="20" /> EN
+                <img
+                  src="{{ url_for('static', filename='images/flags/uk.png') }}"
+                  width="20"
+                />
+                EN
               </button>
-              
-              <button type="button" class="lang-btn {% if g.get('lang') == 'de' %}selected{% endif %}" data-lang="de" onclick="setLanguage('de')">
+
+              <button
+                type="button"
+                class="lang-btn {% if g.get('lang') == 'de' %}selected{% endif %}"
+                data-lang="de"
+                onclick="setLanguage('de')"
+              >
                 <span class="radio-indicator"></span>
-                <img src="{{ url_for('static', filename='images/flags/de.png') }}" width="20" /> DE
+                <img
+                  src="{{ url_for('static', filename='images/flags/de.png') }}"
+                  width="20"
+                />
+                DE
               </button>
-              
             </div>
           </div>
-          
         </div>
       </form>
     </div>
@@ -116,17 +147,25 @@ endblock %} {% block content %}
 </div>
 
 <script>
+  document.getElementById("selectedLangLabel").innerText = lang.toUpperCase();
+
   function setLanguage(lang) {
-    // Seçili butonu işaretle (UI'da turuncu içli yuvarlak)
-    document.querySelectorAll(".lang-btn").forEach(btn => {
-      btn.classList.remove("selected");
-    });
-    const selectedBtn = document.querySelector(`.lang-btn[data-lang="${lang}"]`);
+    document
+      .querySelectorAll(".lang-btn")
+      .forEach((btn) => btn.classList.remove("selected"));
+    const selectedBtn = document.querySelector(
+      `.lang-btn[data-lang="${lang}"]`
+    );
     if (selectedBtn) {
       selectedBtn.classList.add("selected");
     }
-
-    // Sunucuya POST isteği gönder (dili değiştir)
+  
+    // Globe yanındaki TR / EN / DE yazısını güncelle
+    const label = document.getElementById("selectedLangLabel");
+    if (label) {
+      label.innerText = lang.toUpperCase();
+    }
+  
     fetch("{{ url_for('set_language') }}", {
       method: "POST",
       headers: {
@@ -134,33 +173,38 @@ endblock %} {% block content %}
       },
       body: "lang=" + lang,
     }).then(() => {
-      window.location.reload(); 
+      window.location.reload(); // Yeni dilin yüklendiği halini göster
     });
   }
+  
+
   document.addEventListener("DOMContentLoaded", function () {
     const toggle = document.getElementById("languageToggle");
     const switcher = document.getElementById("languageSwitcher");
-  
+
     toggle.addEventListener("click", function (event) {
       event.stopPropagation();
       switcher.classList.toggle("active");
     });
-  
+
     document.addEventListener("click", function (e) {
       if (!switcher.contains(e.target)) {
         switcher.classList.remove("active");
       }
     });
-  
+
     // Aktif dili işaretle
-    const selectedBtn = document.querySelector(`.lang-btn[data-lang="${lang}"]`);
-    const activeBtn = document.querySelector(`.lang-btn[data-lang="${activeLang}"]`);
-  
+    const selectedBtn = document.querySelector(
+      `.lang-btn[data-lang="${lang}"]`
+    );
+    const activeBtn = document.querySelector(
+      `.lang-btn[data-lang="${activeLang}"]`
+    );
+
     if (activeBtn) {
       activeBtn.classList.add("selected");
     }
   });
-  
 </script>
 
 {% endblock %}

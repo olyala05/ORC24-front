@@ -311,7 +311,6 @@ input:-webkit-autofill:focus {
   display: inline-block;
 
   .language-toggle {
-    background: white;
     border-radius: 50%;
     padding: 5px;
     border: none;
@@ -319,7 +318,6 @@ input:-webkit-autofill:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 
     &:hover {
@@ -399,6 +397,51 @@ input:-webkit-autofill:focus {
   box-sizing: border-box;
   transition: all 0.2s ease;
 }
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+
+  &:hover {
+    background: rgba(255, 127, 50, 0.1);
+  }
+
+  img {
+    width: 20px;
+    height: 14px;
+    margin-right: 8px;
+  }
+
+  .radio-indicator {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #bbb;
+    background-color: white;
+    transition: 0.3s;
+  }
+
+  &.selected .radio-indicator {
+    background-color: #ff7f32;
+    border-color: #ff7f32;
+  }
+}
+
+.selected-lang-txt {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  margin-left: 6px;
+}
+
 
 .lang-btn .radio-indicator {
   width: 14px;
