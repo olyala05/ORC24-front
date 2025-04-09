@@ -23,6 +23,7 @@ import pymodbus.client.tcp
 import os
 from flask_babel import Babel, gettext as _
 
+
 app = Flask(__name__)
 CORS(app)
 app.secret_key = "supersecretkey"
@@ -53,7 +54,7 @@ babel = Babel(app)
 @babel.localeselector
 def get_locale():
     print("SEÇİLEN DİL:", session.get("lang", "tr"))
-    return session.get("lang", "tr")  # Eğer session'da dil yoksa varsayılan "tr"
+    return session.get("lang", "tr") 
 
 @app.route('/set_language', methods=['POST'])
 def set_language():
@@ -128,7 +129,7 @@ def alarm_status():
 
 
 def arp_scan(ip_range):
-    """Belirtilen IP aralığında ARP taraması yaparak 02 veya 12 ile başlayan MAC adreslerini bulur"""
+    """Belirtilen IP aralığında ARP taraması yaparak 02, 12 veya 2C ile başlayan MAC adreslerini bulur"""
     arp_request = scapy.ARP(pdst=ip_range)
     broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
     arp_request_broadcast = broadcast / arp_request
@@ -136,14 +137,14 @@ def arp_scan(ip_range):
 
     ip_list = []
     for element in answered_list:
-        mac_address = element[1].hwsrc
-        if mac_address.startswith("02") or mac_address.startswith("12"):
+        mac_address = element[1].hwsrc.lower()  # MAC adresini küçük harfe çevir
+        if mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c"):
             ip_list.append({"ip": element[1].psrc, "mac": mac_address})
 
     return ip_list
 
 def nmap_scan(ip_range):
-    """Belirtilen IP aralığında Nmap taraması yaparak 02 veya 12 ile başlayan MAC adreslerini bulur"""
+    """Belirtilen IP aralığında Nmap taraması yaparak 02 veya 12  veya 2c ile başlayan MAC adreslerini bulur"""
     nm = nmap.PortScanner()
     # res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
     res = nm.scan(hosts=ip_range, arguments="-sn")
@@ -155,15 +156,16 @@ def nmap_scan(ip_range):
 
     return ip_list
 
+# ?? VPN ile cihaz ip lerini getiren kod
 # def get_mac_from_device(ip): 
 #     """Cihaza HTTP isteği atarak MAC adresini almaya çalışır"""
 #     try:
 #         response = requests.get(f"http://{ip}:8085/mac_address", timeout=2)
 #         if response.status_code == 200:
-#             return response.text.strip()  # Gelen MAC adresini döndür
+#             return response.text.strip()  
 #     except requests.exceptions.RequestException:
 #         pass
-#     return None  
+#     return None
 
 # def nmap_scan(ip_range): 
 #     """Belirtilen IP aralığında Nmap taraması yapar ve cihazlardan MAC adresi ister"""
@@ -177,18 +179,45 @@ def nmap_scan(ip_range):
 #         print(f"Bulunan cihaz IP'si: {host}") 
 #         mac_address = get_mac_from_device(host)  
 #         print(f"MAC Adresi: {mac_address}")  
-#         if mac_address and (mac_address.startswith("02") or mac_address.startswith("12")):
+#         if mac_address and (mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c")):
 #             valid_devices.append({"ip": host, "mac": mac_address})
 #     return valid_devices
+# ?? VPN ile cihaz ip lerini getiren kod
 
+# def get_connected_devices():
+#     """Önce ARP taraması, başarısız olursa Nmap taraması ile cihazları bulur"""
+#     devices = arp_scan(IP_RANGE)
+#     if not devices:
+#         print("ARP taraması başarısız, Nmap taraması başlatılıyor...")
+#         devices = nmap_scan(IP_RANGE)
+#     print("Bağlı cihazlar:", devices)
+#     return devices
 
 def get_connected_devices():
-    """Önce ARP taraması, başarısız olursa Nmap taraması ile cihazları bulur"""
     devices = arp_scan(IP_RANGE)
     if not devices:
         print("ARP taraması başarısız, Nmap taraması başlatılıyor...")
         devices = nmap_scan(IP_RANGE)
-    print("Bağlı cihazlar:", devices)
+
+    for device in devices:
+        mac = device["mac"]
+        ip = device["ip"]
+        try:
+            # Her cihaza kendi /get_modem_name_by_mac endpoint'inden istek at
+            response = requests.get(
+                f"http://{ip}:8085/get_modem_name_by_mac", 
+                params={"mac": mac},
+                timeout=3
+            )
+            if response.status_code == 200:
+                name = response.json()["data"]["modem_name"]
+                device["name"] = name
+            else:
+                device["name"] = "Bilinmeyen Cihaz"
+        except Exception as e:
+            print(f"{ip} için modem adı alınamadı: {e}")
+            device["name"] = "Bağlantı Hatası"
+
     return devices
 
 

@@ -37,7 +37,7 @@ body {
   text-align: center;
 }
 .modem-selection .dropdown-container .modem-dropdown {
-  width: 100%;
+  width: 400px;
   padding: 0px 48px;
   font-size: 18px;
   border-radius: 4px;

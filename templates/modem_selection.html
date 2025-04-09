@@ -48,6 +48,7 @@ block content %}
 <!-- Sayfa İçeriği -->
 <main class="content">
   <div class="modem-selection">
+
     <div class="dropdown-container">
       <div class="modem-dropdown-wrapper">
         <img 
@@ -110,41 +111,38 @@ block content %}
     });
   });
 
+
+
   function fetchDevices() {
     fetch("/devices")
       .then((response) => response.json())
       .then((data) => {
         let dropdown = document.getElementById("modem");
         dropdown.innerHTML = "";
-  
-        // Create the default "Select Modem" option
+
         let defaultOption = document.createElement("option");
         defaultOption.value = "";
         defaultOption.disabled = true;
         defaultOption.selected = true;
         defaultOption.textContent = "{{ _('Select Modem') }}";
         dropdown.appendChild(defaultOption);
-  
-        // Populate the dropdown with devices
+
         data.forEach((device) => {
           let option = document.createElement("option");
           option.value = device.ip;
-  
-          // Create custom option text with image, IP, and MAC address
-          let imageHTML = `<img src="{{ url_for('static', filename='images/png/01.png') }}" alt="Modems" width="30" height="30" style="padding: 9px 9px; background: #0b1734; border-radius: 5px; margin-right: 10px;" />`;
-          let ipText = `${device.ip}`;
+
+          let nameText = `${device.name}`;
           let macText = `(${device.mac})`;
 
-          // Set option text with IP and MAC on separate lines
-          option.innerHTML = `${imageHTML}<span class="device-ip">${ipText}</span><br><span class="device-mac">${macText}</span>`;
-          
+          option.textContent = `${nameText} ${macText}`;
           dropdown.appendChild(option);
         });
       })
       .catch((error) =>
         console.error("{{ _('Error while retrieving devices:')}}", error)
       );
-  }
+}
+
 
   // ORC Status
   function goToORCStatus() {
