@@ -83,7 +83,7 @@
 
 .report-date {
   font-size: 16px;
-  color: #3B5FFF;
+  color: #3b5fff;
   font-weight: bold;
 }
 
@@ -236,12 +236,6 @@
   color: #0e1734;
 }
 
-.dashboard-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
 /* Gösterge Alanı */
 .gauge-container {
   display: flex;
@@ -342,7 +336,10 @@
 }
 .voltage-box .icon {
   display: flex;
-  align-items: center;
+  align-items: end;
+  margin-left: 0px;
+  margin-right: 42px;
+  margin-bottom: 18px;
 }
 .voltage-box .icon img {
   width: 16px;
@@ -355,4 +352,140 @@
 .voltage-box .phase {
   font-size: 12px;
   margin-left: 2px;
+}
+
+.device-status {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 0;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.voltage-section {
+  display: flex;
+  flex-direction: column;
+  background-color: #0e1734;
+  padding: 20px 10px;
+  border-radius: 8px;
+}
+
+.voltage-table {
+  display: flex;
+  justify-content: center;
+  gap: 0px;
+}
+
+.voltage-box {
+  background-color: #1c2747;
+  border-radius: 6px;
+  padding: 13px 0px;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  gap: 8px;
+  min-width: 100px;
+  justify-content: center;
+  flex-direction: column;
+  margin: 6px;
+}
+
+.voltage-box .icon img {
+  width: 16px;
+  height: 16px;
+  margin-bottom: 2px;
+}
+
+.voltage-box .value {
+  font-size: 15px;
+}
+
+.voltage-box .phase {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.gauge-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.gauge {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gauge-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.gauge-circle.frequency {
+  background: radial-gradient(circle at center, #0b1734 60%, transparent 61%), conic-gradient(#28a745 0deg 90deg, #ff7f32 90deg 180deg, #0b1734 180deg 360deg);
+}
+
+.gauge-circle.frequency::before {
+  content: "";
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: #1c2747;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.gauge-circle span,
+.gauge-circle p {
+  z-index: 1;
+  margin: 0;
+}
+
+.gauge-circle span {
+  font-size: 18px;
+}
+
+.gauge-circle p {
+  font-size: 13px;
+  line-height: 0;
+  font-weight: 200;
+}
+
+.gauge-border {
+  padding: 4px;
+  border-radius: 50%;
+  border: 2px solid #0da100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gauge-circle.reactive {
+  background-color: #0da100;
+}
+
+.gauge-circle.power-factor {
+  background: radial-gradient(circle at center, #1c2747 60%, transparent 61%), conic-gradient(#ff7f32 40% 80%, #1c2747 80%);
 }/*# sourceMappingURL=dashboard.css.map */

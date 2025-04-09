@@ -131,62 +131,68 @@ title%} {% block content %}
   </div>
 
   <div class="device-status">
-    <div class="system-info">
-      <div class="info-box power">
-        <img
-          src="{{ url_for('static', filename='images/svg/07.svg') }}"
-          alt="Güç"
-        />
-        {{ _('Güç') }}
-      </div>
-      <div class="info-box active">
-        <img
-          src="{{ url_for('static', filename='images/svg/04.svg') }}"
-          alt="Aktif"
-        />
-        {{ _('Aktif') }}
-      </div>
-      <div class="info-box harmonic">
-        <img
-          src="{{ url_for('static', filename='images/svg/03.svg') }}"
-          alt="Harmonik"
-        />
-        {{ _('Harmonik') }}
-      </div>
-      <div class="info-box">
-        <img
-          src="{{ url_for('static', filename='images/svg/02.svg') }}"
-          alt="Reaktif Güç"
-        />
-        {{ _('Reaktif Güç') }}
-      </div>
-      <div class="info-box">
-        <img
-          src="{{ url_for('static', filename='images/svg/05.svg') }}"
-          alt="Gerilim"
-        />
-        {{ _('Gerilim') }}
-      </div>
-      <div class="info-box">
-        <img
-          src="{{ url_for('static', filename='images/svg/35.svg') }}"
-          alt="Network"
-        />
-        {{ _('Network') }}
-      </div>
-    </div>
-
     <div class="dashboard-container">
+      <!-- Voltaj ve Akım Kutuları -->
+      <div class="voltage-section">
+        <div class="voltage-table">
+          <div class="voltage-box">
+            <span class="icon">
+              <img src="{{ url_for('static', filename='images/svg/33.svg') }}" alt="Voltage" />
+            </span>
+            <span class="value">220 V</span>
+            <span class="phase">V1-N</span>
+          </div>
+          <div class="voltage-box">
+            <span class="icon">
+              <img src="{{ url_for('static', filename='images/svg/33.svg') }}" alt="Voltage" />
+            </span>
+            <span class="value">220 V</span>
+            <span class="phase">V2-N</span>
+          </div>
+          <div class="voltage-box">
+            <span class="icon">
+              <img src="{{ url_for('static', filename='images/svg/33.svg') }}" alt="Voltage" />
+            </span>
+            <span class="value">220 V</span>
+            <span class="phase">V3-N</span>
+          </div>
+        </div>
+  
+        <div class="voltage-table">
+          <div class="voltage-box">
+            <span class="icon">
+              <img src="{{ url_for('static', filename='images/svg/34.svg') }}" alt="Current" />
+            </span>
+            <span class="value">300 A</span>
+            <span class="phase">I1-N</span>
+          </div>
+          <div class="voltage-box">
+            <span class="icon">
+              <img src="{{ url_for('static', filename='images/svg/34.svg') }}" alt="Current" />
+            </span>
+            <span class="value">250 A</span>
+            <span class="phase">I2-N</span>
+          </div>
+          <div class="voltage-box">
+            <span class="icon">
+              <img src="{{ url_for('static', filename='images/svg/34.svg') }}" alt="Current" />
+            </span>
+            <span class="value">220 A</span>
+            <span class="phase">I3-N</span>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Göstergeler -->
       <div class="gauge-container">
         <div class="gauge">
           <div class="gauge-circle frequency">
-            <div class="gauge-ring"></div>
             <span>50,04</span>
             <p>Frekans</p>
-            <p style="margin: 2px">(Hz)</p>
+            <p>(Hz)</p>
           </div>
         </div>
-
+  
         <div class="gauge">
           <div class="gauge-border">
             <div class="gauge-circle reactive">
@@ -195,7 +201,7 @@ title%} {% block content %}
             </div>
           </div>
         </div>
-
+  
         <div class="gauge">
           <div class="gauge-circle power-factor">
             <span>{{ _('Güç Faktörü') }}</span>
@@ -203,74 +209,9 @@ title%} {% block content %}
           </div>
         </div>
       </div>
-
-      <div class="voltage-table">
-        <div class="voltage-box">
-          <span class="icon">
-            <img
-              src="{{ url_for('static', filename='images/svg/33.svg') }}"
-              alt="Voltage"
-            />
-          </span>
-          <span class="value">220 V</span>
-          <span class="phase">V1-N</span>
-        </div>
-        <div class="voltage-box">
-          <span class="icon">
-            <img
-              src="{{ url_for('static', filename='images/svg/33.svg') }}"
-              alt="Voltage"
-            />
-          </span>
-          <span class="value">220 V</span>
-          <span class="phase">V2-N</span>
-        </div>
-        <div class="voltage-box">
-          <span class="icon">
-            <img
-              src="{{ url_for('static', filename='images/svg/33.svg') }}"
-              alt="Voltage"
-            />
-          </span>
-          <span class="value">220 V</span>
-          <span class="phase">V3-N</span>
-        </div>
-      </div>
-
-      <div class="voltage-table">
-        <div class="voltage-box">
-          <span class="icon">
-            <img
-              src="{{ url_for('static', filename='images/svg/34.svg') }}"
-              alt="Current"
-            />
-          </span>
-          <span class="value">300 A</span>
-          <span class="phase">I1-N</span>
-        </div>
-        <div class="voltage-box">
-          <span class="icon">
-            <img
-              src="{{ url_for('static', filename='images/svg/34.svg') }}"
-              alt="Current"
-            />
-          </span>
-          <span class="value">250 A</span>
-          <span class="phase">I2-N</span>
-        </div>
-        <div class="voltage-box">
-          <span class="icon">
-            <img
-              src="{{ url_for('static', filename='images/svg/34.svg') }}"
-              alt="Current"
-            />
-          </span>
-          <span class="value">220 A</span>
-          <span class="phase">I3-N</span>
-        </div>
-      </div>
     </div>
   </div>
+  
 </section>
 
 <script>
