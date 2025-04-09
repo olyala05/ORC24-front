@@ -296,7 +296,7 @@ title%} {% block content %}
       const reportEnd = `${reportEndMonth} ${now.getDate()}`;
 
       const reportDateEl = document.getElementById("report-date");
-      reportDateEl.innerHTML = `<span style="color: #6384D1;">{{ _('Report Date') }}:</span> ${reportStart} - ${reportEnd}`;
+      reportDateEl.innerHTML = `<span style="color: #6384D1;">{{ _('Report Date') }}:</span> <span style="color: #fff;">${reportStart} - ${reportEnd}</span>`;
     }
 
     updateDateTime();
@@ -307,7 +307,7 @@ title%} {% block content %}
     document
       .getElementById("logout-button")
       .addEventListener("click", function (event) {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault(); 
 
         // Trigger SweetAlert confirmation with custom styling
         Swal.fire({
