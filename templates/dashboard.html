@@ -281,7 +281,6 @@ title%} {% block content %}
   });
 
     // Echarts 1 Frekans (Hz)
-
     var chart = echarts.init(document.getElementById("frequencyGauge"));
     var option = {
       graphic: [
@@ -306,24 +305,23 @@ title%} {% block content %}
           startAngle: 180,
           endAngle: 0,
           radius: "88%",
-          center: ["50%", "52%"],
+          center: ["50%", "52%"], // Frekans yazısının tam ortada görünmesini sağlanıyor
 
           progress: {
             show: true,
             width: 12, // Çubuğun genişliğini biraz daha daraltıyoruz
             itemStyle: {
-              color: function (params) {
-                return params.value < 50 ? "#4caf50" : "#f57c00";
-              },
+              color: "#4caf50", // Sabit yeşil renk
             },
+            animation: false, // Animasyonu kapattık
           },
 
           axisLine: {
             lineStyle: {
               width: 12, // Çubuğun etrafındaki çizgi de daraltıldı
               color: [
-                [0.5, "#4caf50"],
-                [1, "#f57c00"],
+                [0.5, "#4caf50"], // Yeşil (0 - 50 arası)
+                [1, "#f57c00"],   // Turuncu (50 - 100 arası)
               ],
             },
           },
@@ -346,18 +344,18 @@ title%} {% block content %}
 
           title: {
             show: true,
-            offsetCenter: [0, "-10%"],
-            color: "#0EB100",
+            offsetCenter: [0, "0%"], // Ortada görünmesi için
+            color: "#ffffff", // Beyaz renk sadece başlık için
             fontSize: 14,
             fontWeight: "bold",
-            text: "Frekans\n(Hz)",
+            text: `{{ _('Frequency') }}\n{{ _('(Hz)') }}`, // Başlık iki satır olacak
           },
 
           detail: {
             valueAnimation: true,
             formatter: "50,04",
-            color: "#0EB100",
-            fontSize: 14,
+            color: "#ffffff", // Beyaz renk sadece detay (sayısal değer) için
+            fontSize: 16,
             offsetCenter: [0, "-50%"],
           },
 
@@ -370,74 +368,76 @@ title%} {% block content %}
       ],
     };
 
+    chart.setOption(option);
 
-  chart.setOption(option);
-    // Echarts 2 Reaktif Cezada
     var chart = echarts.init(document.getElementById("reactiveStatus"));
     var option = {
-    graphic: [
-      // Dış çerçeve (daha büyük daire, sadece çizgi)
-      {
-        type: "circle",
-        left: "center",
-        top: "center",
-        shape: {
-          r: 58, // Dış daire yarıçapı
+      graphic: [
+        // Dış çerçeve (daha büyük daire, sadece çizgi)
+        {
+          type: "circle",
+          left: "center",
+          top: "center",
+          shape: {
+            r: 58, // Dış daire yarıçapı
+          },
+          style: {
+            fill: "transparent",
+            stroke: "#00a000",
+            lineWidth: 4,
+          },
+          z: 1,
         },
-        style: {
-          fill: "transparent",
-          stroke: "#00a000",
-          lineWidth: 4,
+        // İç yeşil dolgu (biraz daha küçük)
+        {
+          type: "circle",
+          left: "center",
+          top: "center",
+          shape: {
+            r: 52, // İç daire yarıçapı (dıştan küçük olacak)
+          },
+          style: {
+            fill: "green",
+            stroke: "none",
+          },
+          z: 2,
         },
-        z: 1,
-      },
-      // İç yeşil dolgu (biraz daha küçük)
-      {
-        type: "circle",
-        left: "center",
-        top: "center",
-        shape: {
-          r: 52, // İç daire yarıçapı (dıştan küçük olacak)
+        // Üst yazı (Reaktif Cezada) -> Reactive Penalty'yi iki satıra böldük
+        {
+          type: "text",
+          left: "center",
+          top: "center",
+          style: {
+            text: `{{ _('Reactive') }}\n{{ _('Penalty') }}`, // "Reactive" ve "Penalty" ayrı satırlara yerleştirildi
+            fill: "#fff",
+            font: "bold 16px sans-serif",
+            textAlign: "center",
+            textVerticalAlign: "middle",
+          },
+          top: "28%", // Yazılar arasındaki mesafeyi artırdık
+          z: 3,
         },
-        style: {
-          fill: "green",
-          stroke: "none",
+        // Alt yazı (Değil)
+        {
+          type: "text",
+          left: "center",
+          top: "center",
+          style: {
+            text: `{{ _('Does not Exist') }}`, // Yerelleştirilmiş metin
+            fill: "#fff",
+            font: "14px sans-serif",
+            textAlign: "center",
+            textVerticalAlign: "middle",
+          },
+          top: "60%", // Alt yazıyı biraz daha aşağıya kaydırdık
+          z: 3,
         },
-        z: 2,
-      },
-      // Üst yazı (Reaktif Cezada)
-      {
-        type: "text",
-        left: "center",
-        top: "center",
-        style: {
-          text: "Reaktif\nCezada",
-          fill: "#fff",
-          font: "bold 18px sans-serif",
-          textAlign: "center",
-          textVerticalAlign: "middle",
-        },
-        top: "42%",
-        z: 3,
-      },
-      // Alt yazı (Değil)
-      {
-        type: "text",
-        left: "center",
-        top: "center",
-        style: {
-          text: "Değil",
-          fill: "#fff",
-          font: "16px sans-serif",
-          textAlign: "center",
-          textVerticalAlign: "middle",
-        },
-        top: "60%",
-        z: 3,
-      },
       ],
-      };
+    };
+
     chart.setOption(option);
+
+
 
     // Echarts 3 Güç Faktörü
     var chart = echarts.init(document.getElementById("powerFactorGauge"));

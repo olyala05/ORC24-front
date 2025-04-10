@@ -621,6 +621,11 @@ msgstr "Beklenmeyen hata:"
 msgid "Frequency (Hz)"
 msgstr "Frekans (Hz)"   
 
+msgid "Frequency"
+msgstr "Frekans" 
+
+msgid "(Hz)"
+msgstr "(Hz)" 
 
 msgid "Reactive Penalty"
 msgstr "Reaktif Cezada"
