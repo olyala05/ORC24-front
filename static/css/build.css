@@ -362,49 +362,43 @@ input:-webkit-autofill:focus {
   display: flex;
 }
 
-.radio-indicator {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 2px solid #bbb;
-  background: white;
-  margin-right: 8px;
-  display: inline-block;
-  position: relative;
-  box-sizing: border-box;
-  transition: all 0.2s ease;
+/* Aktif dilin butonunu turuncu yapmak için */
+.lang-btn.selected .radio-indicator {
+  background-color: #ff7f32; /* Turuncu renk */
+  border-color: #ff7f32;
 }
 
+/* Dil butonlarına stil ekleme */
 .lang-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: none;
   border: none;
-  width: 100%;
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
+  width: 100%;
   transition: background 0.3s;
 }
+
 .lang-btn:hover {
   background: rgba(255, 127, 50, 0.1);
 }
-.lang-btn img {
-  width: 20px;
-  height: 14px;
-  margin-right: 8px;
-}
-.lang-btn .radio-indicator {
+
+.radio-indicator {
   width: 14px;
   height: 14px;
   border-radius: 50%;
   border: 2px solid #bbb;
   background-color: white;
+  display: inline-block;
+  margin-right: 8px;
   transition: 0.3s;
 }
+
 .lang-btn.selected .radio-indicator {
-  background-color: #ff7f32;
+  background-color: #ff7f32; /* Turuncu renk */
   border-color: #ff7f32;
 }
 
@@ -413,22 +407,6 @@ input:-webkit-autofill:focus {
   font-weight: 600;
   color: white;
   margin-left: 6px;
-}
-
-.lang-btn .radio-indicator {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 2px solid #bbb;
-  background: white;
-  display: inline-block;
-  margin-right: 8px;
-  transition: 0.3s;
-}
-
-.lang-btn.selected .radio-indicator {
-  background-color: #ff7f32;
-  border-color: #ff7f32;
 }
 
 .main-alarm-container {

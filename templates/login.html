@@ -1,5 +1,8 @@
-{% extends 'layout.html' %} {% block title %} ORC 24 - Login - Pier MTTP {%
-endblock %} {% block content %}
+{% extends 'layout.html' %} 
+
+{% block title %} ORC 24 - Login - Pier MTTP {% endblock %} 
+
+{% block content %}
 <!-- Virtual Keyboard -->
 <div id="keyboard-container" class="simple-keyboard"></div>
 
@@ -80,7 +83,7 @@ endblock %} {% block content %}
             />
           </button>
 
-          <!-- Dil seçici -->
+          <!-- Dil Seçici -->
           <div class="language-switcher fixed-top-right" id="languageSwitcher">
             <button type="button" class="language-toggle" id="languageToggle">
               <img
@@ -89,7 +92,7 @@ endblock %} {% block content %}
                 height="24"
                 alt="Globe Icon"
               />
-              <span class="selected-lang-txt"
+              <span class="selected-lang-txt" id="selectedLangLabel"
                 >{{ g.get('lang', 'TR').upper() }}</span
               >
             </button>
@@ -147,38 +150,64 @@ endblock %} {% block content %}
 </div>
 
 <script>
-  document.getElementById("selectedLangLabel").innerText = lang.toUpperCase();
-
-  function setLanguage(lang) {
-    document
-      .querySelectorAll(".lang-btn")
-      .forEach((btn) => btn.classList.remove("selected"));
-    const selectedBtn = document.querySelector(
-      `.lang-btn[data-lang="${lang}"]`
-    );
-    if (selectedBtn) {
-      selectedBtn.classList.add("selected");
-    }
-  
-    // Globe yanındaki TR / EN / DE yazısını güncelle
-    const label = document.getElementById("selectedLangLabel");
-    if (label) {
-      label.innerText = lang.toUpperCase();
-    }
-  
-    fetch("{{ url_for('set_language') }}", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: "lang=" + lang,
-    }).then(() => {
-      window.location.reload(); // Yeni dilin yüklendiği halini göster
-    });
-  }
-  
-
   document.addEventListener("DOMContentLoaded", function () {
+    // Sayfa yüklendiğinde aktif dilin gösterilmesini sağla
+    const lang = "{{ g.get('lang', 'EN') }}"; // Flask'tan alınan aktif dil
+    const selectedLangLabel = document.getElementById("selectedLangLabel");
+
+    // Globe üzerindeki dil kodunu güncelle
+    if (selectedLangLabel) {
+      selectedLangLabel.innerText = lang.toUpperCase(); // Globe üzerindeki dil kodunu güncelle
+      console.log(
+        "Globe üzerindeki dil kodu (sayfa yüklendi):",
+        lang.toUpperCase()
+      ); // Log ekledik
+    }
+
+    // Dil seçeneği değiştirildiğinde çalışan fonksiyon
+    function setLanguage(lang) {
+      console.log("Dil değiştiriliyor:", lang); // Dil değişikliği yapılmadan önce log
+
+      // Tüm dil butonlarından selected sınıfını kaldır
+      document
+        .querySelectorAll(".lang-btn")
+        .forEach((btn) => btn.classList.remove("selected"));
+
+      // Seçilen dil butonuna selected sınıfını ekle
+      const selectedBtn = document.querySelector(
+        `.lang-btn[data-lang="${lang}"]`
+      );
+      if (selectedBtn) {
+        selectedBtn.classList.add("selected");
+      }
+
+      // Globe yanındaki TR / EN / DE yazısını güncelle
+      if (selectedLangLabel) {
+        selectedLangLabel.innerText = lang.toUpperCase(); // Globe üzerindeki dil kodunu değiştir
+      }
+
+      // Backend dil güncellemesi yap
+      fetch("{{ url_for('set_language') }}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "lang=" + lang,
+      }).then(() => {
+        console.log("Backend'e gönderilen dil:", lang); // Dil backend'e gönderildiğini logla
+        window.location.reload(); // Yeni dilin yüklendiği halini göster
+      });
+    }
+
+    // Dil butonlarına tıklandığında setLanguage fonksiyonunu çalıştır
+    document.querySelectorAll(".lang-btn").forEach((button) => {
+      button.addEventListener("click", function () {
+        const lang = button.getAttribute("data-lang");
+        setLanguage(lang); // Seçilen dil ile setLanguage fonksiyonunu çağır
+      });
+    });
+
+    // Dil seçici butonunun tıklama olayı
     const toggle = document.getElementById("languageToggle");
     const switcher = document.getElementById("languageSwitcher");
 
@@ -192,18 +221,6 @@ endblock %} {% block content %}
         switcher.classList.remove("active");
       }
     });
-
-    // Aktif dili işaretle
-    const selectedBtn = document.querySelector(
-      `.lang-btn[data-lang="${lang}"]`
-    );
-    const activeBtn = document.querySelector(
-      `.lang-btn[data-lang="${activeLang}"]`
-    );
-
-    if (activeBtn) {
-      activeBtn.classList.add("selected");
-    }
   });
 </script>
 

@@ -51,17 +51,23 @@ app.config['BABEL_SUPPORTED_LOCALES'] = ['tr', 'en', 'de']
 
 babel = Babel(app)
 
+# Dil seçimi için Babel'le ilgili fonksiyon
 @babel.localeselector
 def get_locale():
-    print("SEÇİLEN DİL:", session.get("lang", "tr"))
-    return session.get("lang", "tr") 
+    # session'dan dil bilgisi alınır
+    lang = session.get('lang', 'tr')  # Varsayılan dil 'tr' olacak
+    logging.debug(f"GET LOCALE: Aktif Dil: {lang}")  # Log ekledik
+    return lang
 
 @app.route('/set_language', methods=['POST'])
 def set_language():
     lang = request.form.get("lang")
     if lang in ['tr', 'en', 'de']:
-        session['lang'] = lang
-    return redirect(request.referrer or url_for("index"))
+        session['lang'] = lang  # Seçilen dil session'a kaydedilir
+        logging.debug(f"SET LANGUAGE: Seçilen dil: {lang}")  # Log ekledik
+    else:
+        logging.debug(f"SET LANGUAGE: Geçersiz dil seçimi: {lang}")  # Geçersiz dil hatası
+    return redirect(request.referrer or url_for("index"))  # Sayfayı yeniden yönlendir
 
 @app.context_processor
 def inject_locale():
