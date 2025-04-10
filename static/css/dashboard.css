@@ -364,7 +364,7 @@
 .dashboard-container {
   display: flex;
   flex-direction: row;
-  gap: 15px;
+  gap: 10px;
   justify-content: center;
   align-items: center;
 }

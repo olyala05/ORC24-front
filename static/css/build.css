@@ -306,7 +306,6 @@ input:-webkit-autofill:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
 }
 .language-switcher .language-toggle:hover {
@@ -933,7 +932,7 @@ input:-webkit-autofill:focus {
 .dashboard-container {
   display: flex;
   flex-direction: row;
-  gap: 15px;
+  gap: 10px;
   justify-content: center;
   align-items: center;
 }

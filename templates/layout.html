@@ -5,20 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
       {% block title %}
-
       {% endblock %}
     </title>
-
-
     <!-- Genel Stil Dosyası (Tüm Sayfalarda Kullanılacak) -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/build.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='select2-develop/css/select2.min.css') }}" />
   </head>
-  <body>
-    <body data-lang="{{ get_locale() }}" class="{% if request.endpoint == 'dashboard' %}dashboard-body{% endif %}">
+  <body data-lang="{{ get_locale() }}" class="{% if request.endpoint == 'dashboard' %}dashboard-body{% endif %}">
 
     {% block content %}
-
     {% endblock %}
+
+    <!-- jQuery (select2 için gerekli) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Bootstrap -->
     <script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -30,8 +29,17 @@
       var loginURL = "{{ url_for('login') }}"
     </script>
 
+    <!-- Echarts -->
+    <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
+
     <!-- My Js -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
     <script src="{{ url_for('static', filename='simple-keyboard-master/build/index.js') }}"></script>
+    
+    <!-- Select2 -->
+    <script src="{{ url_for('static', filename='select2-develop/js/select2.min.js') }}"></script>
+
+    {% block scripts %}{% endblock %}
+
   </body>
 </html>

@@ -1,6 +1,7 @@
 {% extends "layout.html" %} {% block title %} ORC 24 Dashboard {% endblock
 title%} {% block content %}
-
+<!-- Echarts -->
+<script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
 <header class="header">
   <div class="header-left">
     <form action="{{ url_for('logout') }}" method="POST" id="logout-form">
@@ -17,7 +18,7 @@ title%} {% block content %}
 
     <!-- Menu butonunu modem-selection sayfasına yönlendirme -->
     <form action="{{ url_for('modem_selection') }}" method="GET">
-      <button type="submit" class="header-button" style="gap:0;">
+      <button type="submit" class="header-button" style="gap: 0">
         <img
           src="{{ url_for('static', filename='images/svg/39.svg') }}"
           alt="Logout"
@@ -25,7 +26,7 @@ title%} {% block content %}
           height="30"
           style="padding: 0px 0px; border-radius: 5px"
         />
-        <span style="padding: 14px 13px;">{{ _('Modems') }}</span>
+        <span style="padding: 14px 13px">{{ _('Modems') }}</span>
       </button>
     </form>
   </div>
@@ -137,81 +138,80 @@ title%} {% block content %}
         <div class="voltage-table">
           <div class="voltage-box">
             <span class="icon">
-              <img src="{{ url_for('static', filename='images/svg/33.svg') }}" alt="Voltage" />
+              <img
+                src="{{ url_for('static', filename='images/svg/33.svg') }}"
+                alt="Voltage"
+              />
             </span>
             <span class="value">220 V</span>
             <span class="phase">V1-N</span>
           </div>
           <div class="voltage-box">
             <span class="icon">
-              <img src="{{ url_for('static', filename='images/svg/33.svg') }}" alt="Voltage" />
+              <img
+                src="{{ url_for('static', filename='images/svg/33.svg') }}"
+                alt="Voltage"
+              />
             </span>
             <span class="value">220 V</span>
             <span class="phase">V2-N</span>
           </div>
           <div class="voltage-box">
             <span class="icon">
-              <img src="{{ url_for('static', filename='images/svg/33.svg') }}" alt="Voltage" />
+              <img
+                src="{{ url_for('static', filename='images/svg/33.svg') }}"
+                alt="Voltage"
+              />
             </span>
             <span class="value">220 V</span>
             <span class="phase">V3-N</span>
           </div>
         </div>
-  
+
         <div class="voltage-table">
           <div class="voltage-box">
             <span class="icon">
-              <img src="{{ url_for('static', filename='images/svg/34.svg') }}" alt="Current" />
+              <img
+                src="{{ url_for('static', filename='images/svg/34.svg') }}"
+                alt="Current"
+              />
             </span>
             <span class="value">300 A</span>
             <span class="phase">I1-N</span>
           </div>
           <div class="voltage-box">
             <span class="icon">
-              <img src="{{ url_for('static', filename='images/svg/34.svg') }}" alt="Current" />
+              <img
+                src="{{ url_for('static', filename='images/svg/34.svg') }}"
+                alt="Current"
+              />
             </span>
             <span class="value">250 A</span>
             <span class="phase">I2-N</span>
           </div>
           <div class="voltage-box">
             <span class="icon">
-              <img src="{{ url_for('static', filename='images/svg/34.svg') }}" alt="Current" />
+              <img
+                src="{{ url_for('static', filename='images/svg/34.svg') }}"
+                alt="Current"
+              />
             </span>
             <span class="value">220 A</span>
             <span class="phase">I3-N</span>
           </div>
         </div>
       </div>
-  
-      <!-- Göstergeler -->
-      <div class="gauge-container">
-        <div class="gauge">
-          <div class="gauge-circle frequency">
-            <span>50,04</span>
-            <p>Frekans</p>
-            <p>(Hz)</p>
-          </div>
-        </div>
-  
-        <div class="gauge">
-          <div class="gauge-border">
-            <div class="gauge-circle reactive">
-              <span>{{ _('Reaktif Cezada') }}</span>
-              <p>{{ _('Değil') }}</p>
-            </div>
-          </div>
-        </div>
-  
-        <div class="gauge">
-          <div class="gauge-circle power-factor">
-            <span>{{ _('Güç Faktörü') }}</span>
-            <p>%87,45</p>
-          </div>
-        </div>
+
+      <!-- ECHARTS -->
+        <div id="frequencyGauge" style="width: 130px; height: 130px;"></div>
+
+        <div id="reactiveStatus" style="width: 130px; height: 120px;"></div>
+
+        <div id="powerFactorGauge" style="width: 130px; height: 130px"></div>
+
       </div>
     </div>
   </div>
-  
 </section>
 
 <script>
@@ -255,7 +255,7 @@ title%} {% block content %}
     document
       .getElementById("logout-button")
       .addEventListener("click", function (event) {
-        event.preventDefault(); 
+        event.preventDefault();
 
         // Trigger SweetAlert confirmation with custom styling
         Swal.fire({
@@ -279,6 +279,238 @@ title%} {% block content %}
         });
       });
   });
+
+    // Echarts 1 Frekans (Hz)
+
+    var chart = echarts.init(document.getElementById("frequencyGauge"));
+    var option = {
+      graphic: [
+        {
+          type: "circle",
+          left: "center",
+          top: "center",
+          shape: {
+            r: 60, // Yarıçapı 60 olarak sabitledik
+          },
+          style: {
+            fill: "#0B1734",
+            stroke: "#0D1A36",
+            lineWidth: 4,
+          },
+          z: 0,
+        },
+      ],
+      series: [
+        {
+          type: "gauge",
+          startAngle: 180,
+          endAngle: 0,
+          radius: "88%",
+          center: ["50%", "52%"],
+
+          progress: {
+            show: true,
+            width: 12, // Çubuğun genişliğini biraz daha daraltıyoruz
+            itemStyle: {
+              color: function (params) {
+                return params.value < 50 ? "#4caf50" : "#f57c00";
+              },
+            },
+          },
+
+          axisLine: {
+            lineStyle: {
+              width: 12, // Çubuğun etrafındaki çizgi de daraltıldı
+              color: [
+                [0.5, "#4caf50"],
+                [1, "#f57c00"],
+              ],
+            },
+          },
+
+          pointer: {
+            show: false,
+          },
+
+          axisTick: {
+            show: false,
+          },
+
+          splitLine: {
+            show: false,
+          },
+
+          axisLabel: {
+            show: false,
+          },
+
+          title: {
+            show: true,
+            offsetCenter: [0, "-10%"],
+            color: "#0EB100",
+            fontSize: 14,
+            fontWeight: "bold",
+            text: "Frekans\n(Hz)",
+          },
+
+          detail: {
+            valueAnimation: true,
+            formatter: "50,04",
+            color: "#0EB100",
+            fontSize: 14,
+            offsetCenter: [0, "-50%"],
+          },
+
+          data: [
+            {
+              value: 50.04,
+            },
+          ],
+        },
+      ],
+    };
+
+
+  chart.setOption(option);
+    // Echarts 2 Reaktif Cezada
+    var chart = echarts.init(document.getElementById("reactiveStatus"));
+    var option = {
+    graphic: [
+      // Dış çerçeve (daha büyük daire, sadece çizgi)
+      {
+        type: "circle",
+        left: "center",
+        top: "center",
+        shape: {
+          r: 58, // Dış daire yarıçapı
+        },
+        style: {
+          fill: "transparent",
+          stroke: "#00a000",
+          lineWidth: 4,
+        },
+        z: 1,
+      },
+      // İç yeşil dolgu (biraz daha küçük)
+      {
+        type: "circle",
+        left: "center",
+        top: "center",
+        shape: {
+          r: 52, // İç daire yarıçapı (dıştan küçük olacak)
+        },
+        style: {
+          fill: "green",
+          stroke: "none",
+        },
+        z: 2,
+      },
+      // Üst yazı (Reaktif Cezada)
+      {
+        type: "text",
+        left: "center",
+        top: "center",
+        style: {
+          text: "Reaktif\nCezada",
+          fill: "#fff",
+          font: "bold 18px sans-serif",
+          textAlign: "center",
+          textVerticalAlign: "middle",
+        },
+        top: "42%",
+        z: 3,
+      },
+      // Alt yazı (Değil)
+      {
+        type: "text",
+        left: "center",
+        top: "center",
+        style: {
+          text: "Değil",
+          fill: "#fff",
+          font: "16px sans-serif",
+          textAlign: "center",
+          textVerticalAlign: "middle",
+        },
+        top: "60%",
+        z: 3,
+      },
+      ],
+      };
+    chart.setOption(option);
+
+    // Echarts 3 Güç Faktörü
+    var chart = echarts.init(document.getElementById("powerFactorGauge"));
+    var option = {
+      graphic: [
+        {
+          type: "circle",
+          left: "center",
+          top: "center",
+          shape: {
+            r: 60, // yarıçap
+          },
+          style: {
+            fill: "#0B1734", // Arka yuvarlak renk (senin istediğin gibi daha açık)
+          },
+          z: 0, // Arka planda kalsın
+        },
+      ],
+      series: [
+        {
+          type: "gauge",
+          radius: "82%",
+          center: ["50%", "50%"],
+          startAngle: 225,
+          endAngle: -45,
+          progress: {
+            show: true,
+            width: 12,
+            itemStyle: {
+              color: "#f57c00",
+            },
+          },
+          axisLine: {
+            lineStyle: {
+              width: 12,
+              color: [[1, "#2b2f4b"]],
+            },
+          },
+          pointer: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
+          splitLine: {
+            show: false,
+          },
+          axisLabel: {
+            show: false,
+          },
+          detail: {
+            valueAnimation: true,
+            formatter: "{value}%",
+            color: "#fff",
+            fontSize: 14,
+            offsetCenter: [0, "40%"],
+          },
+          title: {
+            offsetCenter: [0, "-20%"],
+            color: "#fff",
+            fontSize: 16,
+            text: "Güç\nFaktörü",
+          },
+          data: [
+            {
+              value: 87.45,
+            },
+          ],
+        },
+      ],
+    };
+    chart.setOption(option);
+
 </script>
 
 <style>
