@@ -58,7 +58,11 @@ block content %}
           class="modem-dropdown-icon"
         />
         <select id="modem" class="modem-dropdown" onchange="connectDevice()">
-          <option value="" disabled selected>{{ _('Loading...') }}</option>
+          <option value="" disabled selected>
+            <span id="loadingText"
+              >{{ _('Loading') }}<span class="dots">...</span></span
+            >
+          </option>
         </select>
       </div>
     </div>
@@ -131,7 +135,7 @@ block content %}
 
     // Loading yazısını başlangıçta gösteriyoruz
     let defaultOption = dropdown.querySelector("option");
-    defaultOption.textContent = "Loading..."; // Loading yazısı görünsün
+    defaultOption.textContent = "Loading...";
 
     // Loading simgesini gösteriyoruz (40.svg)
     modemIcon.src = "{{ url_for('static', filename='images/svg/40.svg') }}"; // "40.svg" simgesini başta gösteriyoruz
@@ -234,6 +238,106 @@ block content %}
   // Sayfa yüklendiğinde fetchDevices fonksiyonunu çağırıyoruz
   document.addEventListener("DOMContentLoaded", fetchDevices);
 
+  
+    // Hata mesajlarını gösteren fonksiyon
+  function showErrorAlert(title, text = "") {
+    Swal.fire({
+      toast: true,
+      position: "bottom-end",
+      icon: "error", // Hata simgesi
+      title: title,
+      text: text,
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      background: "#fff",
+      color: "#F44336", // Kırmızı yazı
+      iconColor: "#F44336", // Kırmızı ikon
+      customClass: {
+        container: "toast-container",
+        timerProgressBar: "error-progress-bar",
+      },
+      showClass: {
+        popup: "toast-popup-show",
+      },
+      hideClass: {
+        popup: "toast-popup-hide",
+      },
+    });
+  }
+
+  // Başarı mesajlarını gösteren fonksiyon
+  function showSuccessAlert(title, text = "") {
+    Swal.fire({
+      toast: true,
+      position: "bottom-end",
+      icon: "success", // Başarı simgesi
+      title: title,
+      text: text,
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      background: "#fff",
+      color: "#4CAF50", // Yeşil yazı
+      iconColor: "#4CAF50", // Yeşil ikon
+      customClass: {
+        container: "toast-container",
+        timerProgressBar: "success-progress-bar",
+      },
+      showClass: {
+        popup: "toast-popup-show",
+      },
+      hideClass: {
+        popup: "toast-popup-hide",
+      },
+    });
+  }
+
+  // Uyarı mesajlarını gösteren fonksiyon
+  function showWarningAlert(title, text = "") {
+    Swal.fire({
+      toast: true,
+      position: "bottom-end",
+      icon: "warning", // Uyarı simgesi
+      title: title,
+      text: text,
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      background: "#fff",
+      color: "#FFC107", // Sarı yazı
+      iconColor: "#FFC107", // Sarı ikon
+      customClass: {
+        container: "toast-container",
+        timerProgressBar: "warning-progress-bar",
+      },
+      showClass: {
+        popup: "toast-popup-show",
+      },
+      hideClass: {
+        popup: "toast-popup-hide",
+      },
+    });
+  }
+
+  // Yükleme ekranını gösteren yardımcı fonksiyon
+  function showLoading(message) {
+    let loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loading-overlay";
+    loadingOverlay.className = "loading-overlay";
+    loadingOverlay.innerHTML = `
+    <div class="loading-box">
+      <p> ${message} </p>
+      <div class="loader"></div>
+    </div>`;
+    document.body.appendChild(loadingOverlay);
+  }
+
+  // Yükleme ekranını kaldırma
+  function hideLoading() {
+    let loader = document.getElementById("loading-overlay");
+    if (loader) loader.remove();
+  }
 
   // ORC Status
   function goToORCStatus() {
@@ -241,99 +345,26 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-      // Warning mesajı: Beyaz arka plan, sarı yazı, sarı çizgi, uyarı ikonu
-      Swal.fire({
-        toast: true, // Toast modunu aktif ediyoruz
-        position: "bottom-end", // Aşağı sağda görünsün
-        icon: "warning", // Uyarı simgesi kullanıyoruz
-        title: "{{ _('Please select a device first!') }}", // Mesaj
-        showConfirmButton: false, // Confirm butonunu gizliyoruz
-        timer: 3000, // 3 saniye sonra kaybolur
-        timerProgressBar: true, // Timer progress bar'ı göster
-        background: "#fff", // Beyaz arka plan
-        color: "#FFC107", // Sarı yazı
-        iconColor: "#FFC107", // Uyarı ikonu sarı
-        customClass: {
-          container: "toast-container",
-          timerProgressBar: "warning-progress-bar", // Progress bar için özel sınıf
-        },
-        showClass: {
-          popup: "toast-popup-show", // Animasyonlu giriş
-        },
-        hideClass: {
-          popup: "toast-popup-hide", // Animasyonlu çıkış
-        },
-      });
+      // Uyarıyı göster
+      showWarningAlert(
+        "warning",
+        "{{ _('Please select a device first!') }}",
+        "",
+        3000,
+        "#fff",
+        "#FFC107",
+        "#FFC107"
+      );
       return;
     }
 
-    let loadingOverlay = document.createElement("div");
-    loadingOverlay.id = "loading-overlay";
-    loadingOverlay.className = "loading-overlay";
-    loadingOverlay.innerHTML = `
-    <div class="loading-box">
-      <p> {{ _('ORC Status is loading...')}}</p>
-      <div class="loader"></div>
-    </div>`;
-    document.body.appendChild(loadingOverlay);
+    // Yükleme ekranını göster
+    showLoading("{{ _('ORC Status is loading...') }}");
 
     window.location.href = `/orc-status?ip_address=${selectedDeviceIP}`;
 
     window.addEventListener("pageshow", function () {
-      let loader = document.getElementById("loading-overlay");
-      if (loader) loader.remove();
-    });
-  }
-
-  // Success Toast (Yeşil yazı, yeşil çizgi, başarılı ikon)
-  function showSuccessMessage() {
-    Swal.fire({
-      toast: true,
-      position: "bottom-end",
-      icon: "success",
-      title: "Operation Successful!",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      background: "#fff", // Beyaz arka plan
-      color: "#4CAF50", // Yeşil yazı
-      iconColor: "#4CAF50", // Yeşil ikon
-      customClass: {
-        container: "toast-container",
-        timerProgressBar: "success-progress-bar", // Progress bar için özel sınıf
-      },
-      showClass: {
-        popup: "toast-popup-show", // Animasyonlu giriş
-      },
-      hideClass: {
-        popup: "toast-popup-hide", // Animasyonlu çıkış
-      },
-    });
-  }
-
-  // Error Toast (Kırmızı yazı, kırmızı çizgi, hata ikonu)
-  function showErrorMessage() {
-    Swal.fire({
-      toast: true,
-      position: "bottom-end",
-      icon: "error",
-      title: "Error: Something went wrong!",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      background: "#fff", // Beyaz arka plan
-      color: "#F44336", // Kırmızı yazı
-      iconColor: "#F44336", // Kırmızı ikon
-      customClass: {
-        container: "toast-container",
-        timerProgressBar: "error-progress-bar", // Progress bar için özel sınıf
-      },
-      showClass: {
-        popup: "toast-popup-show", // Animasyonlu giriş
-      },
-      hideClass: {
-        popup: "toast-popup-hide", // Animasyonlu çıkış
-      },
+      hideLoading(); // Yükleme ekranını kaldır
     });
   }
 
@@ -343,27 +374,19 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-      Swal.fire({
-        icon: "warning",
-        title: "{{ _('Warning') }}",
-        text: "{{ _('Please select a device first!') }}",
-        confirmButtonText: "{{ _('OK')}}",
-      });
+      showWarningAlert(
+        "warning",
+        "{{ _('Please select a device first!') }}",
+        "",
+        3000,
+        "#fff",
+        "#FFC107",
+        "#FFC107"
+      );
       return;
     }
 
-    // **Loading ekranını ekleyelim**
-    let loadingOverlay = document.createElement("div");
-    loadingOverlay.id = "loading-overlay";
-    loadingOverlay.className = "loading-overlay";
-    loadingOverlay.innerHTML = `
-          <div class="loading-box">
-            <p> {{ _('Equipments are loading...') }}</p>
-            <div class="loader"></div>
-          </div>`;
-    document.body.appendChild(loadingOverlay);
-
-    console.log(" `fetch` başlatılıyor: /equipments-with-models");
+    showLoading("{{ _('Equipments are loading...') }}");
 
     fetch("/equipments-with-models", {
       method: "POST",
@@ -372,38 +395,35 @@ block content %}
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Equipment Response:", data);
-
         if (!data || data.error) {
-          console.warn("{{ _('Backend Error')}}:", data.error);
-          Swal.fire({
-            icon: "error",
-            title: "{{ _('Error!') }}",
-            text:
-              data.error || "{{ _('Equipment data could not be retrieved.')}}",
-            confirmButtonText: "{{ _('OK') }}",
-          });
+          showErrorAlert(
+            "error",
+            "{{ _('Error!') }}",
+            data.error || "{{ _('Equipment data could not be retrieved.')}}",
+            3000,
+            "#fff",
+            "#F44336",
+            "#F44336"
+          );
           return;
         }
 
-        // **SessionStorage içine kaydet**
         sessionStorage.setItem("equipment_data", JSON.stringify(data.data));
-
-        // **Yeni sayfaya yönlendir**
         window.location.href = "/equipment";
       })
       .catch((error) => {
-        console.error("Ekipman verisi alırken hata oluştu:", error);
-        Swal.fire({
-          icon: "error",
-          title: "{{ _('Error!') }}",
-          text: "{{ _('Equipment data could not be retrieved. Please try again.')}}",
-          confirmButtonText: "{{ _('OK') }}",
-        });
+        showErrorAlert(
+          "error",
+          "{{ _('Error!') }}",
+          "{{ _('Equipment data could not be retrieved. Please try again.')}}",
+          3000,
+          "#fff",
+          "#F44336",
+          "#F44336"
+        );
       })
       .finally(() => {
-        let loader = document.getElementById("loading-overlay");
-        if (loader) loader.remove();
+        hideLoading();
       });
   }
 
@@ -413,26 +433,19 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-      // Kullanıcıya uyarı ver
-      Swal.fire({
-        icon: "warning",
-        title: "{{ _('Warning') }}",
-        text: "{{ _('Please select a device first!') }}",
-        confirmButtonText: "{{ _('OK') }}",
-      });
+      showWarningAlert(
+        "warning",
+        "{{ _('Please select a device first!') }}",
+        "",
+        3000,
+        "#fff",
+        "#FFC107",
+        "#FFC107"
+      );
       return; // İşlemi durdur
     }
 
-    // **Loading ekranını ekleyelim**
-    let loadingOverlay = document.createElement("div");
-    loadingOverlay.id = "loading-overlay";
-    loadingOverlay.className = "loading-overlay";
-    loadingOverlay.innerHTML = `
-            <div class="loading-box">
-              <p> {{ _('Settings are loading...') }}</p>
-              <div class="loader"></div>
-            </div>`;
-    document.body.appendChild(loadingOverlay);
+    showLoading("{{ _('Settings are loading...') }}");
 
     window.location.href = "/settings";
   }
@@ -443,26 +456,19 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-      // Kullanıcıya uyarı ver
-      Swal.fire({
-        icon: "warning",
-        title: "{{ _('Warning') }}",
-        text: "{{ _('Please select a device first!') }}",
-        confirmButtonText: "{{ _('OK') }}",
-      });
+      showWarningAlert(
+        "warning",
+        "{{ _('Please select a device first!') }}",
+        "",
+        3000,
+        "#fff",
+        "#FFC107",
+        "#FFC107"
+      );
       return;
     }
 
-    // **Loading ekranını ekleyelim**
-    let loadingOverlay = document.createElement("div");
-    loadingOverlay.id = "loading-overlay";
-    loadingOverlay.className = "loading-overlay";
-    loadingOverlay.innerHTML = `
-          <div class="loading-box">
-            <p> {{ _('Test is loading...')}}</p>
-            <div class="loader"></div>
-          </div>`;
-    document.body.appendChild(loadingOverlay); // **Sayfaya ekle**
+    showLoading("{{ _('Test is loading...') }}");
 
     setTimeout(() => {
       window.location.href = "/switch";
@@ -475,54 +481,44 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-      // Kullanıcıya uyarı ver
-      Swal.fire({
-        icon: "warning",
-        title: "{{ _('Warning') }}",
-        text: "{{ _('Please select a device first!') }}",
-        confirmButtonText: "{{ _('OK') }}",
-      });
+      showWarningAlert(
+        "warning",
+        "{{ _('Please select a device first!') }}",
+        "",
+        3000,
+        "#fff",
+        "#FFC107",
+        "#FFC107"
+      );
       return; // İşlemi durdur
     }
 
-    // **Loading ekranını ekleyelim**
-    let loadingOverlay = document.createElement("div");
-    loadingOverlay.id = "loading-overlay";
-    loadingOverlay.className = "loading-overlay";
-    loadingOverlay.innerHTML = `
-          <div class="loading-box">
-            <p> {{ _('Data is loading...')}}</p>
-            <div class="loader"></div>
-          </div>`;
-    document.body.appendChild(loadingOverlay);
+    showLoading("{{ _('Data is loading...') }}");
 
     window.location.href = "/data";
   }
 
+  // Equipment Setting
   function goToEquipmentSetting() {
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-      Swal.fire({
-        icon: "warning",
-        title: "{{ _('Warning') }}",
-        text: "{{ _('Please select a device first!') }}",
-        confirmButtonText: "{{ _('OK') }}",
-      });
-      return;
+      // Uyarıyı göster
+      showWarningAlert(
+        "warning",
+        "{{ _('Please select a device first!') }}",
+        "",
+        3000,
+        "#fff",
+        "#FFC107",
+        "#FFC107"
+      );
+      return; // İşlemi durdur
     }
 
-    // **Loading ekranını ekleyelim**
-    let loadingOverlay = document.createElement("div");
-    loadingOverlay.id = "loading-overlay";
-    loadingOverlay.className = "loading-overlay";
-    loadingOverlay.innerHTML = `
-          <div class="loading-box">
-            <p> {{ _('Equipments are being scanned...') }}</p>
-            <div class="loader"></div>
-          </div>`;
-    document.body.appendChild(loadingOverlay);
+    // Yükleme ekranını göster
+    showLoading("{{ _('Equipments are being scanned...') }}");
 
     fetch("/modbus_request", {
       method: "POST",
@@ -534,7 +530,15 @@ block content %}
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
-          alert("Hata: " + data.error);
+          showErrorAlert(
+            "error",
+            "{{ _('Error!') }}",
+            data.error,
+            3000,
+            "#fff",
+            "#F44336",
+            "#F44336"
+          );
           return;
         }
 
@@ -545,18 +549,19 @@ block content %}
         window.location.href = "/equipment-setting";
       })
       .catch((error) => {
-        console.error(
-          "{{ _('An error occurred while retrieving Modbus data:') }}",
-          error
-        );
-        alert(
-          "{{ _('Equipment data could not be retrieved. Please try again.') }}"
+        showErrorAlert(
+          "error",
+          "{{ _('Error!') }}",
+          "{{ _('An error occurred while retrieving Modbus data:') }} " + error,
+          3000,
+          "#fff",
+          "#F44336",
+          "#F44336"
         );
       })
       .finally(() => {
-        // **Loading ekranını kaldır**
-        let loader = document.getElementById("loading-overlay");
-        if (loader) loader.remove();
+        // Yükleme ekranını kaldır
+        hideLoading();
       });
   }
 
@@ -597,37 +602,35 @@ block content %}
 
     // Eğer cihaz seçilmemişse kesinlikle yönlendirme yapma ve uyarı ver
     if (!selectedDeviceIP) {
-      Swal.fire({
-        icon: "warning",
-        title: "{{ _('Warning') }}",
-        text: "{{ _('Please select a device first!') }}",
-        confirmButtonText: "{{ _('OK') }}",
-      });
+      showWarningAlert(
+        "warning",
+        "{{ _('Please select a device first!') }}",
+        "",
+        3000,
+        "#fff",
+        "#FFC107",
+        "#FFC107"
+      );
       return;
     }
 
-    // **Loading ekranını ekleyelim**
-    let loadingOverlay = document.createElement("div");
-    loadingOverlay.id = "loading-overlay";
-    loadingOverlay.className = "loading-overlay";
-    loadingOverlay.innerHTML = `
-          <div class="loading-box">
-            <p> {{ _('Redirecting to the alarm page...') }}</p>
-            <div class="loader"></div>
-          </div>`;
-    document.body.appendChild(loadingOverlay);
+    // Yükleme ekranını göster
+    showLoading("{{ _('Redirecting to the alarm page...') }}");
 
-    // **Cihaz bilgisi çekilip yönlendirme yapılacak**
+    // Cihaz bilgisi çekilip yönlendirme yapılacak
     fetch("/get_selected_device")
       .then((response) => response.json())
       .then((data) => {
         if (!data.ip_address) {
-          Swal.fire({
-            icon: "warning",
-            title: "{{ _('Warning')}}",
-            text: "{{ _('Please select a device first!') }}",
-            confirmButtonText: "{{ _('OK')}}",
-          });
+          showWarningAlert(
+            "warning",
+            "{{ _('Please select a device first!') }}",
+            "",
+            3000,
+            "#fff",
+            "#FFC107",
+            "#FFC107"
+          );
           return;
         }
 
@@ -635,16 +638,18 @@ block content %}
       })
       .catch((error) => {
         console.error("Cihaz seçme hatası:", error);
-        Swal.fire({
-          icon: "error",
-          title: "{{ _('Error!') }}",
-          text: "{{ _('Device information could not be retrieved. Please try again.')}}",
-          confirmButtonText: "{{ _('OK') }}",
-        });
+        showErrorAlert(
+          "error",
+          "{{ _('Error!') }}",
+          "{{ _('Device information could not be retrieved. Please try again.') }}",
+          3000,
+          "#fff",
+          "#F44336",
+          "#F44336"
+        );
       })
       .finally(() => {
-        let loader = document.getElementById("loading-overlay");
-        if (loader) loader.remove();
+        hideLoading(); 
       });
   }
 
@@ -743,22 +748,15 @@ block content %}
     let dropdown = document.getElementById("modem");
     let selectedDevice = dropdown.value;
 
+    // Cihaz seçilmediyse uyarı ver
     if (!selectedDevice || selectedDevice.trim() === "") {
-      showToast("{{ _('Please select a device first!') }}", "error");
+      showWarningAlert("{{ _('Please select a device first!') }}");
       setButtonsDisabled(true);
       return;
     }
 
-    // Loader oluştur ve göster
-    let loadingOverlay = document.createElement("div");
-    loadingOverlay.id = "loading-overlay";
-    loadingOverlay.className = "loading-overlay";
-    loadingOverlay.innerHTML = `
-      <div class="loading-box">
-        <p> {{ _('Connecting to the device , please wait...') }}</p>
-        <div class="loader"></div>
-      </div>`;
-    document.body.appendChild(loadingOverlay);
+    // Yükleme ekranını göster
+    showLoading("{{ _('Connecting to the device , please wait...') }}");
 
     fetch("/connect_device", {
       method: "POST",
@@ -768,59 +766,36 @@ block content %}
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          showToast(
-            "{{ _('Successfully connected to the device!') }}",
-            "success"
-          );
+          // Başarı mesajı
+          showSuccessAlert("{{ _('Successfully connected to the device!') }}");
           sessionStorage.setItem("selected_device_ip", selectedDevice);
           setButtonsDisabled(false);
         } else {
-          showToast("{{ _('Failed to connect to the device!') }}", "error");
+          // Hata mesajı
+          showErrorAlert("{{ _('Failed to connect to the device!') }}");
           sessionStorage.removeItem("selected_device_ip");
           setButtonsDisabled(true);
-          Swal.fire({
-            icon: "error",
-            title: "{{ _('Connection Error')}}",
-            text: "{{ _('Unable to proceed as the device could not be connected!')}}",
-            confirmButtonText: "{{ _('OK') }}",
-          });
+          showErrorAlert(
+            "{{ _('Connection Error') }}",
+            "{{ _('Unable to proceed as the device could not be connected!') }}"
+          );
         }
       })
       .catch((error) => {
-        console.error("{{ _('Connection Error')}}:", error);
-        showToast(
-          "{{ _('An error occurred during the connection.') }}",
-          "error"
-        );
+        console.error("{{ _('Connection Error') }}:", error);
+        // Genel hata mesajı
+        showErrorAlert("{{ _('An error occurred during the connection.') }}");
         sessionStorage.removeItem("selected_device_ip");
         setButtonsDisabled(true);
-        Swal.fire({
-          icon: "error",
-          title: "{{ _('Connection Error')}}",
-          text: "{{ _('An error occurred during the connection.') }}",
-          confirmButtonText: "{{ _('Ok')}}",
-        });
+        showErrorAlert(
+          "{{ _('Connection Error') }}",
+          "{{ _('An error occurred during the connection.') }}"
+        );
       })
       .finally(() => {
-        // Loader'ı kaldır
-        let loader = document.getElementById("loading-overlay");
-        if (loader) loader.remove();
+        // Yükleme ekranını kaldır
+        hideLoading();
       });
-  }
-
-  function showToast(message, type) {
-    let toast = document.createElement("div");
-    toast.className = `toast-message ${type}`;
-    toast.innerText = message;
-
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-      toast.classList.add("fade-out");
-      setTimeout(() => {
-        toast.remove();
-      }, 500);
-    }, 3000);
   }
 
   // Sayfa Yüklendiğinde Çalıştır
