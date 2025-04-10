@@ -52,7 +52,8 @@ block content %}
     <div class="dropdown-container">
       <div class="modem-dropdown-wrapper">
         <img
-          src="{{ url_for('static', filename='images/svg/38.svg') }}"
+          id="modem-icon"
+          src="{{ url_for('static', filename='images/svg/40.svg') }}"
           alt="Modems"
           class="modem-dropdown-icon"
         />
@@ -118,13 +119,16 @@ block content %}
     });
   });
 
-  // !! fetchDevices fonksiyonu
-  function fetchDevices() {
+function fetchDevices() {
     let dropdown = document.getElementById("modem");
+    let modemIcon = document.getElementById("modem-icon");  // Simgeyi kontrol etmek için ID ekledik
 
     // Loading yazısını başlangıçta gösteriyoruz
     let defaultOption = dropdown.querySelector("option");
     defaultOption.textContent = "Loading..."; // Loading yazısı görünsün
+
+    // Loading simgesini gösteriyoruz (40.svg)
+    modemIcon.src = "{{ url_for('static', filename='images/svg/40.svg') }}";  // "40.svg" simgesini başta gösteriyoruz
 
     // Fetch işlemi başlıyor
     fetch("/devices")
@@ -151,9 +155,18 @@ block content %}
           let ipText = `${device.ip}`; // IP adresi
 
           // Modem adı üstte, MAC ve IP'yi altta yan yana yazdırıyoruz
-          option.innerHTML = `${nameText}<div class="mac-ip"><span class="mac-address">${macText}</span><span class="ip-address">${ipText}</span></div>`;
+          option.innerHTML = `
+            <div class="modem-name">${nameText}</div>
+            <div class="mac-ip">
+              <span class="mac-address">${macText}</span>
+              <span class="ip-address">${ipText}</span>
+            </div>
+          `;
           dropdown.appendChild(option);
         });
+
+        // Veriler yüklendikten sonra "38.svg" simgesini gösteriyoruz
+        modemIcon.src = "{{ url_for('static', filename='images/svg/38.svg') }}";  // "38.svg" simgesine geçiş yapıyoruz
 
         // Select2'yi tekrar başlatıyoruz
         $(dropdown).select2({
@@ -164,31 +177,28 @@ block content %}
       .catch((error) => {
         console.error("{{ _('Error while retrieving devices:')}}", error);
       });
-  }
+}
 
-  // Custom Template for Option
-  function formatOption(option) {
-    if (!option.id) {
-      return option.text;
-    } // Return if it's the default "Select Modem" option
 
-    var $option = $("<span></span>");
-    var name = $('<div class="modem-name"></div>').text(option.text);
-    var mac = $('<div class="mac-address"></div>').text(
-      $(option.element).data("mac")
-    );
-    var ip = $('<div class="ip-address"></div>').text(
-      $(option.element).data("ip")
-    );
-
-    $option.append(name).append(mac).append(ip);
-    return $option;
-  }
-
-  // Custom Template for Selected Item
-  function formatSelection(option) {
+// Custom Template for Option
+function formatOption(option) {
+  if (!option.id) {
     return option.text;
-  }
+  } // Return if it's the default "Select Modem" option
+
+  var $option = $("<span></span>");
+  var name = $('<div class="modem-name"></div>').text(option.text);
+  var mac = $('<div class="mac-address"></div>').text($(option.element).data("mac"));
+  var ip = $('<div class="ip-address"></div>').text($(option.element).data("ip"));
+
+  $option.append(name).append(mac).append(ip);
+  return $option;
+}
+
+// Custom Template for Selected Item
+function formatSelection(option) {
+  return option.text;
+}
 
   // Sayfa yüklendiğinde fetchDevices fonksiyonunu çağırıyoruz
   document.addEventListener("DOMContentLoaded", fetchDevices);
@@ -817,7 +827,6 @@ block content %}
     transform: translateY(-50%);
     width: 28px;
     height: 28px;
-    background: #1c2747;
     border-radius: 5px;
     padding: 5px;
     pointer-events: none;
@@ -846,12 +855,12 @@ block content %}
   }
 
   .modem-dropdown .ip-address {
-    color: #6384d1; /* IP adresi için mavi */
+    color: #6384d1 !important; 
   }
 
   .modem-dropdown .modem-name {
-    color: #6384d1; /* Modem adı için mavi */
-    font-weight: bold;
+    color: #6384d1; 
+    font-weight: bold !important;
   }
 
   .select2-container--default .select2-selection--single {
