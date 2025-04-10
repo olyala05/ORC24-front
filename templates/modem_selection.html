@@ -238,7 +238,7 @@ block content %}
   // Sayfa yüklendiğinde fetchDevices fonksiyonunu çağırıyoruz
   document.addEventListener("DOMContentLoaded", fetchDevices);
 
-  
+
     // Hata mesajlarını gösteren fonksiyon
   function showErrorAlert(title, text = "") {
     Swal.fire({
@@ -343,28 +343,14 @@ block content %}
   function goToORCStatus() {
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null;
-
     if (!selectedDeviceIP) {
-      // Uyarıyı göster
-      showWarningAlert(
-        "warning",
-        "{{ _('Please select a device first!') }}",
-        "",
-        3000,
-        "#fff",
-        "#FFC107",
-        "#FFC107"
-      );
+      showWarningAlert("{{ _('Please select a device first!') }}",);
       return;
     }
-
-    // Yükleme ekranını göster
     showLoading("{{ _('ORC Status is loading...') }}");
-
     window.location.href = `/orc-status?ip_address=${selectedDeviceIP}`;
-
     window.addEventListener("pageshow", function () {
-      hideLoading(); // Yükleme ekranını kaldır
+      hideLoading();
     });
   }
 
@@ -372,22 +358,11 @@ block content %}
   function goToEquipment() {
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null;
-
     if (!selectedDeviceIP) {
-      showWarningAlert(
-        "warning",
-        "{{ _('Please select a device first!') }}",
-        "",
-        3000,
-        "#fff",
-        "#FFC107",
-        "#FFC107"
-      );
+      showWarningAlert("{{ _('Please select a device first!') }}", );
       return;
     }
-
     showLoading("{{ _('Equipments are loading...') }}");
-
     fetch("/equipments-with-models", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -397,13 +372,8 @@ block content %}
       .then((data) => {
         if (!data || data.error) {
           showErrorAlert(
-            "error",
             "{{ _('Error!') }}",
             data.error || "{{ _('Equipment data could not be retrieved.')}}",
-            3000,
-            "#fff",
-            "#F44336",
-            "#F44336"
           );
           return;
         }
@@ -413,13 +383,8 @@ block content %}
       })
       .catch((error) => {
         showErrorAlert(
-          "error",
           "{{ _('Error!') }}",
           "{{ _('Equipment data could not be retrieved. Please try again.')}}",
-          3000,
-          "#fff",
-          "#F44336",
-          "#F44336"
         );
       })
       .finally(() => {
@@ -434,15 +399,9 @@ block content %}
 
     if (!selectedDeviceIP) {
       showWarningAlert(
-        "warning",
         "{{ _('Please select a device first!') }}",
-        "",
-        3000,
-        "#fff",
-        "#FFC107",
-        "#FFC107"
       );
-      return; // İşlemi durdur
+      return; 
     }
 
     showLoading("{{ _('Settings are loading...') }}");
@@ -457,13 +416,7 @@ block content %}
 
     if (!selectedDeviceIP) {
       showWarningAlert(
-        "warning",
         "{{ _('Please select a device first!') }}",
-        "",
-        3000,
-        "#fff",
-        "#FFC107",
-        "#FFC107"
       );
       return;
     }
@@ -479,22 +432,11 @@ block content %}
   function goToData() {
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null;
-
     if (!selectedDeviceIP) {
-      showWarningAlert(
-        "warning",
-        "{{ _('Please select a device first!') }}",
-        "",
-        3000,
-        "#fff",
-        "#FFC107",
-        "#FFC107"
-      );
-      return; // İşlemi durdur
+      showWarningAlert("{{ _('Please select a device first!') }}");
+      return; 
     }
-
     showLoading("{{ _('Data is loading...') }}");
-
     window.location.href = "/data";
   }
 
@@ -504,22 +446,12 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-      // Uyarıyı göster
       showWarningAlert(
-        "warning",
         "{{ _('Please select a device first!') }}",
-        "",
-        3000,
-        "#fff",
-        "#FFC107",
-        "#FFC107"
       );
-      return; // İşlemi durdur
+      return;
     }
-
-    // Yükleme ekranını göster
     showLoading("{{ _('Equipments are being scanned...') }}");
-
     fetch("/modbus_request", {
       method: "POST",
       headers: {
@@ -530,37 +462,16 @@ block content %}
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
-          showErrorAlert(
-            "error",
-            "{{ _('Error!') }}",
-            data.error,
-            3000,
-            "#fff",
-            "#F44336",
-            "#F44336"
-          );
+          showErrorAlert("{{ _('Error!') }}", data.error,);
           return;
         }
-
-        // Modbus verilerini Equipment sayfasına yönlendirmeden önce sakla
         sessionStorage.setItem("modbus_data", JSON.stringify(data.modbus_data));
-
-        // Equipment sayfasına yönlendir
         window.location.href = "/equipment-setting";
       })
       .catch((error) => {
-        showErrorAlert(
-          "error",
-          "{{ _('Error!') }}",
-          "{{ _('An error occurred while retrieving Modbus data:') }} " + error,
-          3000,
-          "#fff",
-          "#F44336",
-          "#F44336"
-        );
+        showErrorAlert("{{ _('An error occurred while retrieving Modbus data:') }}" + error);
       })
       .finally(() => {
-        // Yükleme ekranını kaldır
         hideLoading();
       });
   }
@@ -599,55 +510,23 @@ block content %}
   function goToAlarm() {
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null;
-
-    // Eğer cihaz seçilmemişse kesinlikle yönlendirme yapma ve uyarı ver
     if (!selectedDeviceIP) {
-      showWarningAlert(
-        "warning",
-        "{{ _('Please select a device first!') }}",
-        "",
-        3000,
-        "#fff",
-        "#FFC107",
-        "#FFC107"
-      );
+      showWarningAlert("{{ _('Please select a device first!') }}");
       return;
     }
-
-    // Yükleme ekranını göster
     showLoading("{{ _('Redirecting to the alarm page...') }}");
-
-    // Cihaz bilgisi çekilip yönlendirme yapılacak
     fetch("/get_selected_device")
       .then((response) => response.json())
       .then((data) => {
         if (!data.ip_address) {
-          showWarningAlert(
-            "warning",
-            "{{ _('Please select a device first!') }}",
-            "",
-            3000,
-            "#fff",
-            "#FFC107",
-            "#FFC107"
-          );
+          showWarningAlert("{{ _('Please select a device first!') }}");
           return;
         }
-
         window.location.href = `/alarm?ip_address=${data.ip_address}`;
       })
       .catch((error) => {
         console.error("Cihaz seçme hatası:", error);
-        showErrorAlert(
-          "error",
-          "{{ _('Error!') }}",
-          "{{ _('Device information could not be retrieved. Please try again.') }}",
-          3000,
-          "#fff",
-          "#F44336",
-          "#F44336"
-        );
-      })
+        showErrorAlert("{{ _('Error!') }}", "{{ _('Device information could not be retrieved. Please try again.') }}");})
       .finally(() => {
         hideLoading(); 
       });
