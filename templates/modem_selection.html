@@ -48,21 +48,18 @@ block content %}
 <!-- Sayfa İçeriği -->
 <main class="content">
   <div class="modem-selection">
-
+    <!-- Modem Dropdown -->
     <div class="dropdown-container">
       <div class="modem-dropdown-wrapper">
-        <img 
-          src="{{ url_for('static', filename='images/svg/38.svg') }}" 
-          alt="Modems" 
+        <img
+          src="{{ url_for('static', filename='images/svg/38.svg') }}"
+          alt="Modems"
           class="modem-dropdown-icon"
         />
         <select id="modem" class="modem-dropdown" onchange="connectDevice()">
-          <option value="" disabled selected>
-            {{ _('Loading...') }}
-          </option>
+          <option value="" disabled selected>{{ _('Loading...') }}</option>
         </select>
       </div>
-      
     </div>
 
     <div class="button-container">
@@ -83,6 +80,16 @@ block content %}
     <div id="status"></div>
   </div>
 </main>
+<!-- Select2 -->
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='select2-develop/css/select2.min.css') }}"
+/>
+<!-- Javascript Kodu -->
+<script src="{{ url_for('static', filename='select2-develop/js/select2.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<!-- jQuery (select2 için gerekli) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
   // Sayfa yüklendiğinde cihazları getir
@@ -111,38 +118,80 @@ block content %}
     });
   });
 
-
-
+  // !! fetchDevices fonksiyonu
   function fetchDevices() {
+    let dropdown = document.getElementById("modem");
+
+    // Loading yazısını başlangıçta gösteriyoruz
+    let defaultOption = dropdown.querySelector("option");
+    defaultOption.textContent = "Loading..."; // Loading yazısı görünsün
+
+    // Fetch işlemi başlıyor
     fetch("/devices")
       .then((response) => response.json())
       .then((data) => {
-        let dropdown = document.getElementById("modem");
-        dropdown.innerHTML = "";
+        dropdown.innerHTML = ""; // Dropdown'ı temizliyoruz
 
-        let defaultOption = document.createElement("option");
-        defaultOption.value = "";
-        defaultOption.disabled = true;
-        defaultOption.selected = true;
-        defaultOption.textContent = "{{ _('Select Modem') }}";
-        dropdown.appendChild(defaultOption);
+        // Veriler yüklendikten sonra "Select Modem" yazısını gösteriyoruz
+        let newDefaultOption = document.createElement("option");
+        newDefaultOption.value = "";
+        newDefaultOption.disabled = true;
+        newDefaultOption.selected = true;
+        newDefaultOption.textContent = "{{ _('Select Modem') }}"; // "Select Modem"
+        dropdown.appendChild(newDefaultOption);
 
+        // Verileri ekliyoruz
         data.forEach((device) => {
           let option = document.createElement("option");
-          option.value = device.ip;
+          option.value = device.ip; // IP adresi kullanılacak
 
+          // Modem adı, MAC adresi ve IP adresi
           let nameText = `${device.name}`;
-          let macText = `(${device.mac})`;
+          let macText = `${device.mac}`; // MAC adresi
+          let ipText = `${device.ip}`; // IP adresi
 
-          option.textContent = `${nameText} ${macText}`;
+          // Modem adı üstte, MAC ve IP'yi altta yan yana yazdırıyoruz
+          option.innerHTML = `${nameText}<div class="mac-ip"><span class="mac-address">${macText}</span><span class="ip-address">${ipText}</span></div>`;
           dropdown.appendChild(option);
         });
-      })
-      .catch((error) =>
-        console.error("{{ _('Error while retrieving devices:')}}", error)
-      );
-}
 
+        // Select2'yi tekrar başlatıyoruz
+        $(dropdown).select2({
+          templateResult: formatOption, // Custom Template for Option
+          templateSelection: formatSelection, // Custom Template for Selection
+        });
+      })
+      .catch((error) => {
+        console.error("{{ _('Error while retrieving devices:')}}", error);
+      });
+  }
+
+  // Custom Template for Option
+  function formatOption(option) {
+    if (!option.id) {
+      return option.text;
+    } // Return if it's the default "Select Modem" option
+
+    var $option = $("<span></span>");
+    var name = $('<div class="modem-name"></div>').text(option.text);
+    var mac = $('<div class="mac-address"></div>').text(
+      $(option.element).data("mac")
+    );
+    var ip = $('<div class="ip-address"></div>').text(
+      $(option.element).data("ip")
+    );
+
+    $option.append(name).append(mac).append(ip);
+    return $option;
+  }
+
+  // Custom Template for Selected Item
+  function formatSelection(option) {
+    return option.text;
+  }
+
+  // Sayfa yüklendiğinde fetchDevices fonksiyonunu çağırıyoruz
+  document.addEventListener("DOMContentLoaded", fetchDevices);
 
   // ORC Status
   function goToORCStatus() {
@@ -760,7 +809,7 @@ block content %}
     position: relative;
     display: inline-block;
   }
-  
+
   .modem-dropdown-icon {
     position: absolute;
     top: 50%;
@@ -768,12 +817,112 @@ block content %}
     transform: translateY(-50%);
     width: 28px;
     height: 28px;
-    background: #1C2747;
+    background: #1c2747;
     border-radius: 5px;
     padding: 5px;
     pointer-events: none;
     z-index: 1;
   }
-  
+  /* Cihazlar için listede görünüm */
+  .modem-dropdown-wrapper {
+    position: relative;
+  }
+
+  .modem-dropdown option {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modem-dropdown .mac-ip {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .modem-dropdown .mac-address {
+    color: #ec7427; /* MAC adresi için turuncu */
+  }
+
+  .modem-dropdown .ip-address {
+    color: #6384d1; /* IP adresi için mavi */
+  }
+
+  .modem-dropdown .modem-name {
+    color: #6384d1; /* Modem adı için mavi */
+    font-weight: bold;
+  }
+
+  .select2-container--default .select2-selection--single {
+    background-color: #1c2747;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    height: 51px;
+    text-align: start;
+    padding-left: 47px;
+    padding-top: 12px;
+  }
+  .select2-container--default
+    .select2-selection--single
+    .select2-selection__rendered {
+    color: #fff;
+    line-height: 28px;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .select2-container--default
+    .select2-selection--single
+    .select2-selection__arrow
+    b {
+    border-color: #fff rgba(0, 0, 0, 0) #fff rgba(0, 0, 0, 0);
+    border-style: solid;
+    border-width: 10px 8px 0 8px;
+    height: 0;
+    left: -7%;
+    margin-left: -4px;
+    margin-top: -2px;
+    position: absolute;
+    top: 86%;
+    width: 0;
+  }
+  .select2-container--default.select2-container--open
+    .select2-selection--single
+    .select2-selection__arrow
+    b {
+    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #fff rgba(0, 0, 0, 0);
+    border-width: 0 8px 10px 8px;
+  }
+
+  /* select2 input kısmını gizle */
+  .select2-search__field {
+    display: none !important;
+  }
+
+  /* Dropdown menüsünü düzgün göster */
+  .select2-container--default .select2-selection--single {
+    padding-right: 0; /* Arama kutusunun sağındaki boşluğu kaldır */
+  }
+  .modem-dropdown {
+    -webkit-appearance: none; /* Safari/Chrome */
+    -moz-appearance: none; /* Firefox */
+    appearance: none; /* Diğer tarayıcılar */
+    background: none; /* Ok yerine arka plan düzleşir */
+    padding-right: 10px; /* Ok yoksa sağ boşluk ayarı */
+    border: 1px solid #ccc; /* İsteğe bağlı stil */
+  }
+
+  .select2-container--default
+    .select2-results__option--highlighted.select2-results__option--selectable {
+    background-color: #e2e2e2 !important;
+    color: #1b2746;
+  }
+
+  .select2-results__option--selectable {
+    cursor: pointer;
+    color: .select2-container--default
+      .select2-results__option--highlighted.select2-results__option--selectable;
+    color: #1b2746;
+  }
 </style>
 {% endblock %}

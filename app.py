@@ -209,7 +209,7 @@ def get_connected_devices():
         mac = device["mac"]
         ip = device["ip"]
         try:
-            # Her cihaza kendi /get_modem_name_by_mac endpoint'inden istek at
+            # Her cihaza kendi /get_modem_name_by_mac endpoint'inden istek atıyoruz
             response = requests.get(
                 f"http://{ip}:8085/get_modem_name_by_mac", 
                 params={"mac": mac},
@@ -223,6 +223,9 @@ def get_connected_devices():
         except Exception as e:
             print(f"{ip} için modem adı alınamadı: {e}")
             device["name"] = "Bağlantı Hatası"
+
+        device["ip"] = ip  # IP adresini de cihaz bilgilerine ekliyoruz
+        device["mac"] = mac  # MAC adresini de cihaz bilgilerine ekliyoruz
 
     return devices
 
