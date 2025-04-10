@@ -64,18 +64,24 @@ block content %}
     </div>
 
     <div class="button-container">
-      <button class="btn" onclick="goToORCStatus()">
+      <button id="orcStatusBtn" class="btn" onclick="goToORCStatus()" disabled>
         {{ _('ORC Status') }}
       </button>
-      <button class="btn" onclick="goToEquipment()">
+      <button id="equipmentBtn" class="btn" onclick="goToEquipment()" disabled>
         {{ _('Equipment') }}
       </button>
-      <button class="btn" onclick="goToSetting()">{{ _('Settings') }}</button>
+      <button id="settingBtn" class="btn" onclick="goToSetting()" disabled>
+        {{ _('Settings') }}
+      </button>
     </div>
 
     <div class="bottom-buttons">
-      <button class="btn" onclick="SwitchtTest()">{{ _('Test') }}</button>
-      <button class="btn" onclick="goToData()">{{ _('Data') }}</button>
+      <button id="testBtn" class="btn" onclick="SwitchtTest()" disabled>
+        {{ _('Test') }}
+      </button>
+      <button id="dataBtn" class="btn" onclick="goToData()" disabled>
+        {{ _('Data') }}
+      </button>
     </div>
 
     <div id="status"></div>
@@ -119,16 +125,16 @@ block content %}
     });
   });
 
-function fetchDevices() {
+  function fetchDevices() {
     let dropdown = document.getElementById("modem");
-    let modemIcon = document.getElementById("modem-icon");  // Simgeyi kontrol etmek için ID ekledik
+    let modemIcon = document.getElementById("modem-icon"); // Simgeyi kontrol etmek için ID ekledik
 
     // Loading yazısını başlangıçta gösteriyoruz
     let defaultOption = dropdown.querySelector("option");
     defaultOption.textContent = "Loading..."; // Loading yazısı görünsün
 
     // Loading simgesini gösteriyoruz (40.svg)
-    modemIcon.src = "{{ url_for('static', filename='images/svg/40.svg') }}";  // "40.svg" simgesini başta gösteriyoruz
+    modemIcon.src = "{{ url_for('static', filename='images/svg/40.svg') }}"; // "40.svg" simgesini başta gösteriyoruz
 
     // Fetch işlemi başlıyor
     fetch("/devices")
@@ -166,42 +172,68 @@ function fetchDevices() {
         });
 
         // Veriler yüklendikten sonra "38.svg" simgesini gösteriyoruz
-        modemIcon.src = "{{ url_for('static', filename='images/svg/38.svg') }}";  // "38.svg" simgesine geçiş yapıyoruz
+        modemIcon.src = "{{ url_for('static', filename='images/svg/38.svg') }}"; // "38.svg" simgesine geçiş yapıyoruz
 
         // Select2'yi tekrar başlatıyoruz
         $(dropdown).select2({
           templateResult: formatOption, // Custom Template for Option
           templateSelection: formatSelection, // Custom Template for Selection
         });
+
+        // Cihaz seçildiğinde butonları aktif et
+        toggleButtons(true); // Cihaz seçildiğinde butonları etkinleştir
       })
       .catch((error) => {
         console.error("{{ _('Error while retrieving devices:')}}", error);
+        toggleButtons(false); // Hata durumunda butonları devre dışı bırak
       });
-}
+  }
 
+  // Butonları etkinleştir veya devre dışı bırak
+  function toggleButtons(enable) {
+    const buttons = [
+      "orcStatusBtn",
+      "equipmentBtn",
+      "settingBtn",
+      "testBtn",
+      "dataBtn",
+    ];
 
-// Custom Template for Option
-function formatOption(option) {
-  if (!option.id) {
+    buttons.forEach((buttonId) => {
+      let button = document.getElementById(buttonId);
+      if (button) {
+        button.disabled = !enable;
+      }
+    });
+  }
+
+  // Custom Template for Option
+  function formatOption(option) {
+    if (!option.id) {
+      return option.text;
+    } // Return if it's the default "Select Modem" option
+
+    var $option = $("<span></span>");
+    var name = $('<div class="modem-name"></div>').text(option.text);
+    var mac = $('<div class="mac-address"></div>').text(
+      $(option.element).data("mac")
+    );
+    var ip = $('<div class="ip-address"></div>').text(
+      $(option.element).data("ip")
+    );
+
+    $option.append(name).append(mac).append(ip);
+    return $option;
+  }
+
+  // Custom Template for Selected Item
+  function formatSelection(option) {
     return option.text;
-  } // Return if it's the default "Select Modem" option
-
-  var $option = $("<span></span>");
-  var name = $('<div class="modem-name"></div>').text(option.text);
-  var mac = $('<div class="mac-address"></div>').text($(option.element).data("mac"));
-  var ip = $('<div class="ip-address"></div>').text($(option.element).data("ip"));
-
-  $option.append(name).append(mac).append(ip);
-  return $option;
-}
-
-// Custom Template for Selected Item
-function formatSelection(option) {
-  return option.text;
-}
+  }
 
   // Sayfa yüklendiğinde fetchDevices fonksiyonunu çağırıyoruz
   document.addEventListener("DOMContentLoaded", fetchDevices);
+
 
   // ORC Status
   function goToORCStatus() {
@@ -209,11 +241,28 @@ function formatSelection(option) {
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
+      // Warning mesajı: Beyaz arka plan, sarı yazı, sarı çizgi, uyarı ikonu
       Swal.fire({
-        icon: "warning",
-        title: "{{ _('Warning') }}",
-        text: "{{ _('Please select a device first!') }}",
-        confirmButtonText: "{{ _('OK') }}",
+        toast: true, // Toast modunu aktif ediyoruz
+        position: "bottom-end", // Aşağı sağda görünsün
+        icon: "warning", // Uyarı simgesi kullanıyoruz
+        title: "{{ _('Please select a device first!') }}", // Mesaj
+        showConfirmButton: false, // Confirm butonunu gizliyoruz
+        timer: 3000, // 3 saniye sonra kaybolur
+        timerProgressBar: true, // Timer progress bar'ı göster
+        background: "#fff", // Beyaz arka plan
+        color: "#FFC107", // Sarı yazı
+        iconColor: "#FFC107", // Uyarı ikonu sarı
+        customClass: {
+          container: "toast-container",
+          timerProgressBar: "warning-progress-bar", // Progress bar için özel sınıf
+        },
+        showClass: {
+          popup: "toast-popup-show", // Animasyonlu giriş
+        },
+        hideClass: {
+          popup: "toast-popup-hide", // Animasyonlu çıkış
+        },
       });
       return;
     }
@@ -222,10 +271,10 @@ function formatSelection(option) {
     loadingOverlay.id = "loading-overlay";
     loadingOverlay.className = "loading-overlay";
     loadingOverlay.innerHTML = `
-          <div class="loading-box">
-            <p> {{ _('ORC Status is loading...')}}</p>
-            <div class="loader"></div>
-          </div>`;
+    <div class="loading-box">
+      <p> {{ _('ORC Status is loading...')}}</p>
+      <div class="loader"></div>
+    </div>`;
     document.body.appendChild(loadingOverlay);
 
     window.location.href = `/orc-status?ip_address=${selectedDeviceIP}`;
@@ -233,6 +282,58 @@ function formatSelection(option) {
     window.addEventListener("pageshow", function () {
       let loader = document.getElementById("loading-overlay");
       if (loader) loader.remove();
+    });
+  }
+
+  // Success Toast (Yeşil yazı, yeşil çizgi, başarılı ikon)
+  function showSuccessMessage() {
+    Swal.fire({
+      toast: true,
+      position: "bottom-end",
+      icon: "success",
+      title: "Operation Successful!",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      background: "#fff", // Beyaz arka plan
+      color: "#4CAF50", // Yeşil yazı
+      iconColor: "#4CAF50", // Yeşil ikon
+      customClass: {
+        container: "toast-container",
+        timerProgressBar: "success-progress-bar", // Progress bar için özel sınıf
+      },
+      showClass: {
+        popup: "toast-popup-show", // Animasyonlu giriş
+      },
+      hideClass: {
+        popup: "toast-popup-hide", // Animasyonlu çıkış
+      },
+    });
+  }
+
+  // Error Toast (Kırmızı yazı, kırmızı çizgi, hata ikonu)
+  function showErrorMessage() {
+    Swal.fire({
+      toast: true,
+      position: "bottom-end",
+      icon: "error",
+      title: "Error: Something went wrong!",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      background: "#fff", // Beyaz arka plan
+      color: "#F44336", // Kırmızı yazı
+      iconColor: "#F44336", // Kırmızı ikon
+      customClass: {
+        container: "toast-container",
+        timerProgressBar: "error-progress-bar", // Progress bar için özel sınıf
+      },
+      showClass: {
+        popup: "toast-popup-show", // Animasyonlu giriş
+      },
+      hideClass: {
+        popup: "toast-popup-hide", // Animasyonlu çıkış
+      },
     });
   }
 
@@ -855,11 +956,11 @@ function formatSelection(option) {
   }
 
   .modem-dropdown .ip-address {
-    color: #6384d1 !important; 
+    color: #6384d1 !important;
   }
 
   .modem-dropdown .modem-name {
-    color: #6384d1; 
+    color: #6384d1;
     font-weight: bold !important;
   }
 
@@ -932,6 +1033,97 @@ function formatSelection(option) {
     color: .select2-container--default
       .select2-results__option--highlighted.select2-results__option--selectable;
     color: #1b2746;
+  }
+
+  /* Toast Container */
+  .toast-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+  }
+
+  .swal2-toast {
+    font-size: 16px;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: auto;
+    min-width: 300px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .toast-popup-show {
+    animation: toast-in 0.5s ease-out forwards;
+  }
+
+  .toast-popup-hide {
+    animation: toast-out 0.5s ease-out forwards;
+  }
+
+  /* Çizgi için animasyon */
+  @keyframes toast-in {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes toast-out {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+
+  /* Uyarı tipi için arka plan renkleri ve çizgi rengi */
+  .swal2-toast[aria-live="assertive"] {
+    border: 3px solid;
+    border-color: transparent;
+  }
+
+  .swal2-toast.swal2-success {
+    border-color: #4caf50; /* Yeşil çizgi */
+  }
+
+  .swal2-toast.swal2-error {
+    border-color: #f44336; /* Kırmızı çizgi */
+  }
+
+  .swal2-toast.swal2-warning {
+    border-color: #ffc107; /* Sarı çizgi */
+  }
+
+  /* Progress bar için renkler */
+  .swal2-timer-progress-bar-container {
+    height: 5px;
+    border-radius: 5px;
+    width: 100%;
+  }
+
+  /* Success (Yeşil) Progress Bar */
+  .swal2-timer-progress-bar-container.success-progress-bar {
+    background-color: #4caf50; /* Yeşil progress bar */
+  }
+
+  /* Error (Kırmızı) Progress Bar */
+  .swal2-timer-progress-bar-container.error-progress-bar {
+    background-color: #f44336; /* Kırmızı progress bar */
+  }
+
+  /* Warning (Sarı) Progress Bar */
+  .swal2-timer-progress-bar-container.warning-progress-bar {
+    background-color: #ffc107; /* Sarı progress bar */
   }
 </style>
 {% endblock %}

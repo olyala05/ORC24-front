@@ -1816,7 +1816,7 @@ body {
   font-size: 22px;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3sease;
+  transition: all 0.3s ease;
   font-weight: 700;
   min-width: 196px;
   min-height: 70px;
@@ -1824,6 +1824,13 @@ body {
 .button-container .btn:hover,
 .bottom-buttons .btn:hover {
   color: #000;
+}
+.button-container .btn:disabled,
+.bottom-buttons .btn:disabled {
+  background-color: #E2E2E2;
+  color: #6E6E6E;
+  cursor: not-allowed;
+  border: 1px solid #6E6E6E;
 }
 .button-container .btn.active,
 .bottom-buttons .btn.active {

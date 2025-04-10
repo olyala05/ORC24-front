@@ -86,7 +86,7 @@ body {
     font-size: 22px;
     border-radius: 12px;
     cursor: pointer;
-    transition: all 0.3sease;
+    transition: all 0.3s ease;
     font-weight: 700;
     min-width: 196px;
     min-height: 70px;
@@ -95,6 +95,14 @@ body {
       // background-color: $primary-color;
       color: #000;
     }
+
+    // Disabled butonlar için stil
+    &:disabled {
+      background-color: #E2E2E2; 
+      color: #6E6E6E;  // Beyaz yazı rengi
+      cursor: not-allowed;  // Fare işareti değişir
+      border: 1px solid #6E6E6E;  // Gri kenar rengi
+    } 
 
     &.active {
       background-color: #fff;
