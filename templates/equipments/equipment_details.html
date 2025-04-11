@@ -40,9 +40,7 @@
         <span>{{ _('Status / Configuration')}}</span>
         <span class="eq-detail-green">A / A</span>
       </div>
-      <div class="eq-detail-item">
-        <span>{{ _('Archive')}}</span> <span class="eq-detail-dot eq-active"></span>
-      </div>
+
       <div class="eq-detail-item">
         <span>{{ _('Connection Protocol') }}</span> <span>Modbus</span>
       </div>
@@ -156,7 +154,7 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     let equipmentContainer = document.querySelector(".eq-detail-info");
-  
+
     function fetchModems() {
       return fetch("/get_modem_info")
         .then((response) => response.json())
@@ -172,7 +170,7 @@
           return null;
         });
     }
-  
+
     function fetchEquipmentDetails() {
       return fetch("/fetch_equipment_details")
         .then((response) => response.json())
@@ -190,43 +188,53 @@
           return null;
         });
     }
-  
-    // **Modem ve ekipman bilgilerini aynı anda çek**
+
     Promise.all([fetchEquipmentDetails(), fetchModems()]).then(
       ([equipment, modem]) => {
         if (!equipment) return;
-  
+
         document.querySelector(".eq-detail-status").innerText = `${
           equipment.model_name || "{{ _('Unknown') }}"
         }@${equipment.serial_number || "N/A"}`;
-  
-        // **Modem Bilgisi Güncelle**
+
+        // Modem adı
         document.querySelector(
           ".eq-detail-item:nth-child(3) span:last-child"
         ).innerText = modem && modem.name ? modem.name : "{{ _('Modem Not Found')}}";
-  
+
+        // Marka / Model
         document.querySelector(
           ".eq-detail-item:nth-child(4) span:last-child"
         ).innerText = `${equipment.brand_name || "N/A"} / ${
           equipment.model_name || "N/A"
         }`;
-  
+
+        // Slave ID
         document.querySelector(
           ".eq-detail-item:nth-child(2) span:last-child"
         ).innerText = equipment.modbus_address || "N/A";
+
+        // Ekipman Tipi
         document.querySelector(
           ".eq-detail-item:nth-child(5) span:last-child"
         ).innerText = equipment.equipment_type || "{{ _('Analyzer')}}";
+
+        // Seri No
         document.querySelector(
           ".eq-detail-item:nth-child(6) span:last-child"
         ).innerText = equipment.serial_number || "N/A";
+
+        // Device ID
         document.querySelector(
           ".eq-detail-item:nth-child(8) span:last-child"
         ).innerText = equipment.device_id || "N/A";
+
+        // SID/IP
         document.querySelector(
           ".eq-detail-item:nth-child(9) span:last-child"
         ).innerText = equipment.modbus_address || "N/A";
-  
+
+        // Protokol
         let protocolText = "N/A";
         if (equipment.communication_protocol_code == 1) {
           protocolText = "SERIAL";
@@ -234,18 +242,21 @@
           protocolText = "TCP";
         }
         document.querySelector(
-          ".eq-detail-item:nth-child(12) span:last-child"
+          ".eq-detail-item:nth-child(11) span:last-child"
         ).innerText = protocolText;
-  
+
+        // Oluşturulma tarihi
+        document.querySelector(
+          ".eq-detail-item:nth-child(14) span:last-child"
+        ).innerText = formatDate(equipment.created_at);
+
+        // Son bağlantı tarihi
         document.querySelector(
           ".eq-detail-item:nth-child(15) span:last-child"
-        ).innerText = formatDate(equipment.created_at);
-        document.querySelector(
-          ".eq-detail-item:nth-child(16) span:last-child"
         ).innerText = formatDate(equipment.updated_at);
       }
     );
-  
+
     function formatDate(dateString) {
       if (!dateString) return "N/A";
       let date = new Date(dateString);
@@ -264,7 +275,7 @@
       );
     }
   });
-  
 </script>
+
 
 {% endblock %}

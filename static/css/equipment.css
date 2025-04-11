@@ -42,14 +42,14 @@ body {
 .equipment-box {
   padding: 30px 0px;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
   text-align: center;
   border-radius: 8px;
-  color: #000;
+  color: #fff;
 }
 
 .green {
-  background-color: #4caf50;
+  background-color: #46B649;
 }
 
 .red {

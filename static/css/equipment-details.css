@@ -43,13 +43,13 @@
   background-color: #3fb950;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-passive {
-  background-color: #f85149;
+  background-color: #FF0F00;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-detail-green {
   color: #3fb950;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-detail-red {
-  color: #f85149;
+  color: #FF0F00;
 }
 .eq-detail-container .eq-detail-log {
   width: 60%;
@@ -93,16 +93,16 @@
   border-radius: 50%;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-active {
-  background-color: #3fb950;
+  background-color: #33FF00;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-passive {
-  background-color: #f85149;
+  background-color: #FF0F00;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-green {
   color: #3fb950;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-red {
-  color: #f85149;
+  color: #FF0F00;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-gray {
   color: #8b949e;
