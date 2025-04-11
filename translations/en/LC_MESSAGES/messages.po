@@ -492,8 +492,8 @@ msgstr "Alarm data could not be retrieved for the selected device:"
 msgid "The alarm data request has been canceled."
 msgstr "The alarm data request has been canceled."
 
-msgid "S/N:"
-msgstr "S/N:"
+msgid "SERIAL NO"
+msgstr "SERIAL NO"
 
 msgid "MODEM NAME"
 msgstr "MODEM NAME"

@@ -500,7 +500,7 @@ msgid "The alarm data request has been canceled."
 msgstr "Alarm verisi isteği iptal edildi."
 
 
-msgid "S/N:"
+msgid "SERIAL NO"
 msgstr "SERİ NO"
 
 msgid "MODEM NAME"

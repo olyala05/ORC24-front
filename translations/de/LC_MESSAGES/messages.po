@@ -493,8 +493,8 @@ msgstr "Alarmdaten konnten für das ausgewählte Gerät nicht abgerufen werden:"
 msgid "The alarm data request has been canceled."
 msgstr "Die Anfrage für Alarmdaten wurde abgebrochen."
 
-msgid "S/N:"
-msgstr "S/N:"
+msgid "SERIAL NO"
+msgstr "SERIAL NO"
 
 msgid "MODEM NAME"
 msgstr "MODEMNAME"
