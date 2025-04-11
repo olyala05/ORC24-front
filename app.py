@@ -166,7 +166,7 @@ def nmap_scan(ip_range):
     ip_list = []
     for host in nm.all_hosts():
         mac_address = nm[host]["addresses"].get("mac", "")
-        if mac_address.startswith("02") or mac_address.startswith("12"):
+        if mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c"):
             ip_list.append({"ip": host, "mac": mac_address})
 
     return ip_list

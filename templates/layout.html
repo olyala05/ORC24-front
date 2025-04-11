@@ -13,17 +13,19 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ url_for('static', filename='select2-develop/css/select2.min.css') }}" />
 
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='toastr/css/toastr.min.css') }}" />
+
     <!-- jQuery Kütüphanesini Yükleyin -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <!-- Toastr -->
+    <script src="{{ url_for('static', filename='toastr/js/toastr.min.js') }}"></script>
   </head>
   <body data-lang="{{ get_locale() }}" class="{% if request.endpoint == 'dashboard' %}dashboard-body{% endif %}">
 
     {% block content %}
     {% endblock %}
-
-    <!-- jQuery (select2 için gerekli) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Bootstrap -->
     <script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -44,6 +46,9 @@
     
     <!-- Select2 -->
     <script src="{{ url_for('static', filename='select2-develop/js/select2.min.js') }}"></script>
+
+    <!-- Toastr -->
+    <script src="{{ url_for('static', filename='toastr/js/toastr.min.js') }}"></script>
 
     {% block scripts %}{% endblock %}
 

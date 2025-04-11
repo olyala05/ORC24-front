@@ -16,7 +16,7 @@ block content %}
     </button>
     
     <!-- Alarm icon Şimdilik Alarm yorum satırında  -->
-    <!--    
+   
     <div class="alarm-icon-container">
       <button class="alarm-button" onclick="goToAlarm()" title="Alarm">
         <img
@@ -28,7 +28,7 @@ block content %}
       </button>
       <span id="alarm-count" class="alarm-badge" display="none">0</span>
     </div> 
-    -->
+
 
   </div>
 
@@ -273,79 +273,87 @@ block content %}
     });
   }
 
-  // Başarı mesajlarını gösteren fonksiyon
-  function showSuccessAlert(title, text = "") {
-    Swal.fire({
-      toast: true,
-      position: "bottom-end",
-      icon: "success", // Başarı simgesi
-      title: title,
-      text: text,
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      background: "#fff",
-      color: "#4CAF50", // Yeşil yazı
-      iconColor: "#4CAF50", // Yeşil ikon
-      customClass: {
-        container: "toast-container",
-        timerProgressBar: "success-progress-bar",
-      },
-      showClass: {
-        popup: "toast-popup-show",
-      },
-      hideClass: {
-        popup: "toast-popup-hide",
-      },
-    });
-  }
+  // Hata mesajlarını gösteren fonksiyon
+function showErrorAlert(title, text = "") {
+  toastr["error"](text, title);
+  toastr.options = {
+    "closeButton": false,
+    "debug": true,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": true,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  };
+}
 
-  // Uyarı mesajlarını gösteren fonksiyon
-  function showWarningAlert(title, text = "") {
-    Swal.fire({
-      toast: true,
-      position: "bottom-end",
-      icon: "warning", 
-      title: title,
-      text: text,
-      showConfirmButton: false,
-      timer: 30000000,
-      timerProgressBar: true,
-      background: "#fff",
-      color: "#FFC107", 
-      iconColor: "#FFC107", 
-      customClass: {
-        container: "toast-container",
-        timerProgressBar: "warning-progress-bar",
-      },
-      showClass: {
-        popup: "toast-popup-show",
-      },
-      hideClass: {
-        popup: "toast-popup-hide",
-      },
-    });
-  }
+// Başarı mesajlarını gösteren fonksiyon
+function showSuccessAlert(title, text = "") {
+  toastr["success"](text, title);
+  toastr.options = {
+    "closeButton": false,
+    "debug": true,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": true,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  };
+}
 
-  // Yükleme ekranını gösteren yardımcı fonksiyon
-  function showLoading(message) {
-    let loadingOverlay = document.createElement("div");
-    loadingOverlay.id = "loading-overlay";
-    loadingOverlay.className = "loading-overlay";
-    loadingOverlay.innerHTML = `
-    <div class="loading-box">
-      <p> ${message} </p>
-      <div class="loader"></div>
-    </div>`;
-    document.body.appendChild(loadingOverlay);
-  }
+// Uyarı mesajlarını gösteren fonksiyon
+function showWarningAlert(title, text = "") {
+  toastr["warning"](text, title);
+  toastr.options = {
+    "closeButton": false,
+    "debug": true,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": true,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  };
+}
 
-  // Yükleme ekranını kaldırma
-  function hideLoading() {
-    let loader = document.getElementById("loading-overlay");
-    if (loader) loader.remove();
-  }
+// Yükleme ekranını gösteren yardımcı fonksiyon
+function showLoading(message) {
+  let loadingOverlay = document.createElement("div");
+  loadingOverlay.id = "loading-overlay";
+  loadingOverlay.className = "loading-overlay";
+  loadingOverlay.innerHTML = `
+  <div class="loading-box">
+    <p> ${message} </p>
+    <div class="loader"></div>
+  </div>`;
+  document.body.appendChild(loadingOverlay);
+}
 
+// Yükleme ekranını kaldırma
+function hideLoading() {
+  let loader = document.getElementById("loading-overlay");
+  if (loader) loader.remove();
+}
   // ORC Status
   function goToORCStatus() {
     let dropdown = document.getElementById("modem");
