@@ -22,7 +22,8 @@
             >{% if modem.status == "A" %} {{ _('Active')}} {% else %} {{ _('Passive')}} {% endif %}</span>
         </li>
         <li><span class="highlight">{{ _('DATE OF INSTALLATION')}} </span><span>{{modem.created_at if modem.created_at else '-'}}</span></li>
-        <li><span class="highlight">{{ _('DATA READING INTERVAL')}}</span> <span>1380 Seconds</span></li>
+        <!-- <li><span class="highlight">{{ _('DATA READING INTERVAL')}}</span> <span>1380 Seconds</span></li> -->
+        
         <li><span class="highlight">{{ _('NETWORK TYPE')}} </span>
           <span>
               {% if network and network.network_type_list %}
@@ -35,36 +36,6 @@
         <li><span class="highlight">{{ _('CONNECTION PROTOCOL') }}</span> <span id="connection-protocol">-</span></li>
         <li><span class="highlight">{{ _('SOFTWARE VERSION')}}</span> <span>V 1.02</span></li>
       </ul>
-
-      <div class="connection-status">
-        {% if network and network.connected_ssid and network.connected_ssid != "{{ _('Not Connected')}}" %}
-            <!-- Wi-Fi Bağlıysa -->
-            <span class="status-title">
-              {% if network and network.active_connections %}
-                  {{ _('Connected') }} {{ network.active_connections | join(" / ") }}
-              {% else %}
-                  {{ _('Disconnected') }}
-              {% endif %}
-            </span>
-            <div class="separator"></div>
-            <div class="status-details">
-                <div class="status-left">
-                    <i class="fas fa-wifi"></i> {{ network.connected_ssid }}
-                </div>
-            </div>
-        {% else %}
-            <!-- Wi-Fi Bağlı Değilse -->
-            <span class="status-title error-message">
-                {{ _('Checking the network cables, modem and router')}} <br> {{ _('Reconnecting to Wi-Fi')}}
-            </span>
-            <div class="separator"></div>
-            <div class="status-details">
-              <div class="status-left">
-                <img  src="{{ url_for('static', filename='images/svg/11.svg') }}" alt="No Wi Fi"></img> {{ _('No Internet')}}</div>
-                <button class="retry-btn" onclick="retryConnection()">{{ _('Retry') }}</button>
-            </div>
-        {% endif %}
-    </div>
     </div>
 
     <div class="connection-table">
@@ -151,7 +122,7 @@
         <!-- Turuncu çizgi -->
         <div class="algorithm-box">
           <div class="algorithm-left">
-            <i class="fas fa-cog"></i> <span class="margin-right-70" style="margin-right: 70px;">{{ _('ORC Process Procedures')}}</span>          
+            <i class="fa fa-refresh" aria-hidden="true"></i>  <span class="margin-right-70" style="margin-right: 70px;">{{ _('ORC Process Procedures')}}</span>        
           </div>
           <!-- !! burada eğer hata var ise kırmızız yap buttonu  !!-->
           <button class="status-btn" onclick="redirectToLog()">{{ _('Normal / Error (Red)')}}</button>
@@ -166,193 +137,192 @@
     window.location.href = "{{ url_for('log')}}"
   }
 
-  
-function retryConnection() {
-  fetch("/check_network")
+  function retryConnection() {
+    fetch("/check_network")
+      .then(response => response.json())
+      .then(result => {
+        console.log("Network Data:", result.data);
+        const network = result.data;
+        if (network && network.connected_ssid && network.connected_ssid !== "Not Connected") {
+          location.reload();
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Wi-Fi Bağlantısı Yok!",
+            text: "Lütfen modeminizi ve bağlantılarınızı kontrol edin.",
+            confirmButtonText: "Tamam"
+          });
+        }
+      })
+      .catch(error => {
+        console.error("Bağlantı kontrolü sırasında hata oluştu:", error);
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const disconnectBtn = document.querySelector(".disconnect-btn");
+    disconnectBtn.addEventListener("click", function () {
+        fetch("/disconnect_request", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            alert("Wi-Fi bağlantısı kapatıldı!");
+        })
+        .catch(error => console.error("Error:", error));
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/equipments-with-models", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+    })
     .then(response => response.json())
-    .then(result => {
-      console.log("Network Data:", result.data);
-      const network = result.data;
-      if (network && network.connected_ssid && network.connected_ssid !== "Not Connected") {
-        location.reload();
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Wi-Fi Bağlantısı Yok!",
-          text: "Lütfen modeminizi ve bağlantılarınızı kontrol edin.",
-          confirmButtonText: "Tamam"
-        });
-      }
+    .then(data => {
+        console.log("Gelen JSON:", data);  
+
+        if (data.data && data.data.length > 0) { 
+            let protocolText = "-";
+            let equipment = data.data[0];  
+
+            if (equipment.communication_protocol_code === 1) {
+                protocolText = "SERIAL";
+            } else if (equipment.communication_protocol_code === 2) {
+                protocolText = "TCP";
+            }
+
+            // HTML içindeki CONNECTION PROTOCOL değerini güncelle
+            document.getElementById("connection-protocol").innerText = protocolText;
+        } else {
+            document.getElementById("connection-protocol").innerText = "-";
+        }
     })
     .catch(error => {
-      console.error("Bağlantı kontrolü sırasında hata oluştu:", error);
+        console.error("API isteği hatası:", error);
+        document.getElementById("connection-protocol").innerText = "Error fetching data";
     });
-}
+  });
 
-document.addEventListener("DOMContentLoaded", function () {
-  const disconnectBtn = document.querySelector(".disconnect-btn");
-  disconnectBtn.addEventListener("click", function () {
-      fetch("/disconnect_request", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" }
+  // RabbitMQ Status Checking
+  document.addEventListener("DOMContentLoaded", function () {
+    function updateRabbitMQStatus() {
+      fetch("/rabbitmq-status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({})
       })
       .then(response => response.json())
       .then(data => {
-          console.log(data);
-          alert("Wi-Fi bağlantısı kapatıldı!");
+        const rabbitmqStatusRow = document.querySelector("tr[data-status='rabbitmq']");
+        const statusCells = rabbitmqStatusRow.querySelectorAll(".status-dot");
+        const lastConnectionCell = rabbitmqStatusRow.querySelector(".last-connection");
+
+        if (data.status === "success" && data.data.rabbitmq_connected) {
+          statusCells.forEach(cell => {
+            cell.classList.remove("red");
+            cell.classList.add("green");
+          });
+        } else {
+          statusCells.forEach(cell => {
+            cell.classList.remove("green");
+            cell.classList.add("red");
+          });
+        }
+
+        // Last Connection Date'yi güncelle
+        if (data.data.last_connection_time) {
+          lastConnectionCell.textContent = data.data.last_connection_time;
+        } else {
+          lastConnectionCell.textContent = "No connection yet";
+        }
       })
-      .catch(error => console.error("Error:", error));
+      .catch(error => {
+        console.error("Error fetching RabbitMQ status:", error);
+      });
+    }
+
+    // Sayfa yüklendiğinde RabbitMQ bağlantısını kontrol et
+    updateRabbitMQStatus();
+
+    // RabbitMQ bağlantısını her 10 saniyede bir kontrol et
+    setInterval(updateRabbitMQStatus, 10000);
   });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-  fetch("/equipments-with-models", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" }
-  })
-  .then(response => response.json())
-  .then(data => {
-      console.log("Gelen JSON:", data);  
+  // Cloud Status Checking  
+  document.addEventListener("DOMContentLoaded", function () {
+    function updateCloudStatus() {
+      fetch("/cloud-status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({})
+      })
+      .then(response => response.json())
+      .then(data => {
+        const cloudStatusRow = document.querySelector("tr[data-status='cloud']");
+        const statusCells = cloudStatusRow.querySelectorAll(".status-dot");
+        const lastConnectionCell = cloudStatusRow.querySelector(".last-connection");
 
-      if (data.data && data.data.length > 0) { 
-          let protocolText = "-";
-          let equipment = data.data[0];  
+        if (data.status === "success" && data.data.cloud_connected) {
+          statusCells.forEach(cell => {
+            cell.classList.remove("red");
+            cell.classList.add("green");
+          });
+        } else {
+          statusCells.forEach(cell => {
+            cell.classList.remove("green");
+            cell.classList.add("red");
+          });
+        }
 
-          if (equipment.communication_protocol_code === 1) {
-              protocolText = "SERIAL";
-          } else if (equipment.communication_protocol_code === 2) {
-              protocolText = "TCP";
-          }
+        // Son bağlantı tarihini güncelle
+        lastConnectionCell.textContent = data.data.last_connection_time
+          ? data.data.last_connection_time
+          : "No connection yet";
+      })
+      .catch(error => {
+        console.error("Error fetching Cloud status:", error);
+      });
+    }
 
-          // HTML içindeki CONNECTION PROTOCOL değerini güncelle
-          document.getElementById("connection-protocol").innerText = protocolText;
-      } else {
-          document.getElementById("connection-protocol").innerText = "-";
-      }
-  })
-  .catch(error => {
-      console.error("API isteği hatası:", error);
-      document.getElementById("connection-protocol").innerText = "Error fetching data";
+    // Sayfa yüklendiğinde kontrol et
+    updateCloudStatus();
+
+    // Bulut bağlantısını her 10 saniyede bir kontrol et
+    setInterval(updateCloudStatus, 10000);
   });
-});
 
-// RabbitMQ Status Checking
-document.addEventListener("DOMContentLoaded", function () {
-  function updateRabbitMQStatus() {
-    fetch("/rabbitmq-status", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({})
-    })
-    .then(response => response.json())
-    .then(data => {
-      const rabbitmqStatusRow = document.querySelector("tr[data-status='rabbitmq']");
-      const statusCells = rabbitmqStatusRow.querySelectorAll(".status-dot");
-      const lastConnectionCell = rabbitmqStatusRow.querySelector(".last-connection");
+  async function fetchBrandModel() {
+    try {
+        const response = await fetch("/get-all-equipments", { method: "POST" });
 
-      if (data.status === "success" && data.data.rabbitmq_connected) {
-        statusCells.forEach(cell => {
-          cell.classList.remove("red");
-          cell.classList.add("green");
-        });
-      } else {
-        statusCells.forEach(cell => {
-          cell.classList.remove("green");
-          cell.classList.add("red");
-        });
-      }
+        if (!response.ok) {
+            throw new Error("Server hatası: " + response.status);
+        }
 
-      // Last Connection Date'yi güncelle
-      if (data.data.last_connection_time) {
-        lastConnectionCell.textContent = data.data.last_connection_time;
-      } else {
-        lastConnectionCell.textContent = "No connection yet";
-      }
-    })
-    .catch(error => {
-      console.error("Error fetching RabbitMQ status:", error);
-    });
+        const data = await response.json();
+        if (data.status === "error") {
+            throw new Error("API Hatası: " + data.message);
+        }
+
+        const equipments = data.data;
+        if (!equipments.length) {
+            throw new Error("Ekipman bilgisi bulunamadı.");
+        }
+
+        const brandModel = equipments[0].equipment_model_name || "-"; 
+        document.getElementById("brand-model").textContent = brandModel;
+
+    } catch (error) {
+        console.error("Hata:", error);
+        document.getElementById("brand-model").textContent = "Veri alınamadı";
+    }
   }
 
-  // Sayfa yüklendiğinde RabbitMQ bağlantısını kontrol et
-  updateRabbitMQStatus();
-
-  // RabbitMQ bağlantısını her 10 saniyede bir kontrol et
-  setInterval(updateRabbitMQStatus, 10000);
-});
-
-// Cloud Status Checking  
-document.addEventListener("DOMContentLoaded", function () {
-  function updateCloudStatus() {
-    fetch("/cloud-status", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({})
-    })
-    .then(response => response.json())
-    .then(data => {
-      const cloudStatusRow = document.querySelector("tr[data-status='cloud']");
-      const statusCells = cloudStatusRow.querySelectorAll(".status-dot");
-      const lastConnectionCell = cloudStatusRow.querySelector(".last-connection");
-
-      if (data.status === "success" && data.data.cloud_connected) {
-        statusCells.forEach(cell => {
-          cell.classList.remove("red");
-          cell.classList.add("green");
-        });
-      } else {
-        statusCells.forEach(cell => {
-          cell.classList.remove("green");
-          cell.classList.add("red");
-        });
-      }
-
-      // Son bağlantı tarihini güncelle
-      lastConnectionCell.textContent = data.data.last_connection_time
-        ? data.data.last_connection_time
-        : "No connection yet";
-    })
-    .catch(error => {
-      console.error("Error fetching Cloud status:", error);
-    });
-  }
-
-  // Sayfa yüklendiğinde kontrol et
-  updateCloudStatus();
-
-  // Bulut bağlantısını her 10 saniyede bir kontrol et
-  setInterval(updateCloudStatus, 10000);
-});
-
-async function fetchBrandModel() {
-  try {
-      const response = await fetch("/get-all-equipments", { method: "POST" });
-
-      if (!response.ok) {
-          throw new Error("Server hatası: " + response.status);
-      }
-
-      const data = await response.json();
-      if (data.status === "error") {
-          throw new Error("API Hatası: " + data.message);
-      }
-
-      const equipments = data.data;
-      if (!equipments.length) {
-          throw new Error("Ekipman bilgisi bulunamadı.");
-      }
-
-      const brandModel = equipments[0].equipment_model_name || "-"; 
-      document.getElementById("brand-model").textContent = brandModel;
-
-  } catch (error) {
-      console.error("Hata:", error);
-      document.getElementById("brand-model").textContent = "Veri alınamadı";
-  }
-}
-
-// Sayfa yüklendiğinde otomatik olarak modem model bilgisini çek
-window.onload = fetchBrandModel;
+  // Sayfa yüklendiğinde otomatik olarak modem model bilgisini çek
+  window.onload = fetchBrandModel;
 
 </script>
 
