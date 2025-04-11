@@ -636,7 +636,7 @@ msgstr "Reaktif"
 msgid "Penalty"
 msgstr "Cezada"
 
-msgid "Does not Exist"
+msgid "Not Exist"
 msgstr "Değil"
 
 msgid "Power Factor"
