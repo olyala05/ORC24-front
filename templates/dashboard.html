@@ -280,95 +280,95 @@ title%} {% block content %}
       });
   });
 
-    // Echarts 1 Frekans (Hz)
-    var chart = echarts.init(document.getElementById("frequencyGauge"));
-    var option = {
-      graphic: [
-        {
-          type: "circle",
-          left: "center",
-          top: "center",
-          shape: {
-            r: 60, // Yarıçapı 60 olarak sabitledik
-          },
-          style: {
-            fill: "#0B1734",
-            stroke: "#0D1A36",
-            lineWidth: 4,
-          },
-          z: 0,
-        },
-      ],
-      series: [
-        {
-          type: "gauge",
-          startAngle: 180,
-          endAngle: 0,
-          radius: "88%",
-          center: ["50%", "52%"], // Frekans yazısının tam ortada görünmesini sağlanıyor
-
-          progress: {
-            show: true,
-            width: 12, // Çubuğun genişliğini biraz daha daraltıyoruz
-            itemStyle: {
-              color: "#4caf50", // Sabit yeşil renk
+      // Echarts 1 Frekans (Hz)
+      var chart = echarts.init(document.getElementById("frequencyGauge"));
+      var option = {
+        graphic: [
+          {
+            type: "circle",
+            left: "center",
+            top: "center",
+            shape: {
+              r: 60,
             },
-            animation: false, // Animasyonu kapattık
-          },
-
-          axisLine: {
-            lineStyle: {
-              width: 12, // Çubuğun etrafındaki çizgi de daraltıldı
-              color: [
-                [0.5, "#4caf50"], // Yeşil (0 - 50 arası)
-                [1, "#f57c00"],   // Turuncu (50 - 100 arası)
-              ],
+            style: {
+              fill: "#0B1734",
+              stroke: "#0D1A36",
+              lineWidth: 4,
             },
-          },
+            z: 0,
+          }
+        ],
+        series: [
+          {
+            type: "gauge",
+            startAngle: 180,
+            endAngle: 0,
+            radius: "88%",
+            center: ["50%", "52%"],
 
-          pointer: {
-            show: false,
-          },
-
-          axisTick: {
-            show: false,
-          },
-
-          splitLine: {
-            show: false,
-          },
-
-          axisLabel: {
-            show: false,
-          },
-
-          title: {
-            show: true,
-            offsetCenter: [0, "0%"], // Ortada görünmesi için
-            color: "#ffffff", // Beyaz renk sadece başlık için
-            fontSize: 14,
-            fontWeight: "bold",
-            text: `{{ _('Frequency') }}\n{{ _('(Hz)') }}`, // Başlık iki satır olacak
-          },
-
-          detail: {
-            valueAnimation: true,
-            formatter: "50,04",
-            color: "#ffffff", // Beyaz renk sadece detay (sayısal değer) için
-            fontSize: 16,
-            offsetCenter: [0, "-50%"],
-          },
-
-          data: [
-            {
-              value: 50.04,
+            progress: {
+              show: true,
+              width: 12,
+              itemStyle: {
+                color: "#4caf50",
+              },
+              animation: false,
             },
-          ],
-        },
-      ],
-    };
 
-    chart.setOption(option);
+            axisLine: {
+              lineStyle: {
+                width: 12,
+                color: [
+                  [0.5, "#4caf50"],
+                  [1, "#f57c00"],
+                ],
+              },
+            },
+
+            pointer: {
+              show: false,
+            },
+
+            axisTick: {
+              show: false,
+            },
+
+            splitLine: {
+              show: false,
+            },
+
+            axisLabel: {
+              show: false,
+            },
+
+            title: {
+              show: false, 
+            },
+
+            detail: {
+              valueAnimation: true,
+              formatter: function (value) {
+                return `${value.toFixed(2)}\n{{ _('Frequency') }}\n(Hz)`;
+              },
+              color: "#ffffff", 
+              fontSize: 16,
+              fontWeight: "bold",
+              offsetCenter: [0, "20%"],
+            },
+
+            data: [
+              {
+                value: 50.04,
+              },
+            ],
+          },
+        ],
+      };
+
+      chart.setOption(option);
+
+
 
     var chart = echarts.init(document.getElementById("reactiveStatus"));
     var option = {
