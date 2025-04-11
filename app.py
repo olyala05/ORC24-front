@@ -7,6 +7,7 @@ from flask import (
     redirect,
     url_for,
     session,
+    g,
     flash,
 )
 from flask_jwt_extended import JWTManager, create_access_token
@@ -50,6 +51,10 @@ app.config['BABEL_DEFAULT_LOCALE'] = 'tr'
 app.config['BABEL_SUPPORTED_LOCALES'] = ['tr', 'en', 'de']
 
 babel = Babel(app)
+
+@app.before_request
+def before_request_func():
+    g.lang = session.get('lang', 'tr') 
 
 # Dil seçimi için Babel'le ilgili fonksiyon
 @babel.localeselector
