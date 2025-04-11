@@ -280,106 +280,122 @@ title%} {% block content %}
       });
   });
 
-      // Echarts 1 Frekans (Hz)
-      var chart = echarts.init(document.getElementById("frequencyGauge"));
-      var option = {
-        graphic: [
-          {
-            type: "circle",
-            left: "center",
-            top: "center",
-            shape: {
-              r: 60,
-            },
-            style: {
-              fill: "#0B1734",
-              stroke: "#0D1A36",
-              lineWidth: 4,
-            },
-            z: 0,
-          }
-        ],
-        series: [
-          {
-            type: "gauge",
-            startAngle: 180,
-            endAngle: 0,
-            radius: "88%",
-            center: ["50%", "52%"],
+    // Echarts 1 Frekans (Hz)
+    var chart = echarts.init(document.getElementById("frequencyGauge"));
 
-            progress: {
-              show: true,
-              width: 12,
-              itemStyle: {
-                color: "#4caf50",
-              },
-              animation: false,
-            },
-
-            axisLine: {
-              lineStyle: {
-                width: 12,
-                color: [
-                  [0.5, "#4caf50"],
-                  [1, "#f57c00"],
-                ],
-              },
-            },
-
-            pointer: {
-              show: false,
-            },
-
-            axisTick: {
-              show: false,
-            },
-
-            splitLine: {
-              show: false,
-            },
-
-            axisLabel: {
-              show: false,
-            },
-
-            title: {
-              show: false, 
-            },
-
-            detail: {
-              valueAnimation: true,
-              formatter: function (value) {
-                return `${value.toFixed(2)}\n{{ _('Frequency') }}\n(Hz)`;
-              },
-              color: "#ffffff", 
-              fontSize: 16,
-              fontWeight: "bold",
-              offsetCenter: [0, "20%"],
-            },
-
-            data: [
-              {
-                value: 50.04,
-              },
-            ],
-          },
-        ],
-      };
-
-      chart.setOption(option);
-
-
-
-    var chart = echarts.init(document.getElementById("reactiveStatus"));
     var option = {
       graphic: [
-        // Dış çerçeve (daha büyük daire, sadece çizgi)
         {
           type: "circle",
           left: "center",
           top: "center",
           shape: {
-            r: 58, // Dış daire yarıçapı
+            r: 60,
+          },
+          style: {
+            fill: "#0B1734",
+            stroke: "#0D1A36",
+            lineWidth: 4,
+          },
+          z: 0,
+        }
+      ],
+      series: [
+        {
+          type: "gauge",
+          startAngle: 180,
+          endAngle: 0,
+          radius: "88%",
+          center: ["50%", "52%"],
+
+          progress: {
+            show: true,
+            width: 12,
+            itemStyle: {
+              color: "#4caf50",
+            },
+            animation: false,
+          },
+
+          axisLine: {
+            lineStyle: {
+              width: 12,
+              color: [
+                [0.5, "#4caf50"],
+                [1, "#f57c00"],
+              ],
+            },
+          },
+
+          pointer: {
+            show: false,
+          },
+
+          axisTick: {
+            show: false,
+          },
+
+          splitLine: {
+            show: false,
+          },
+
+          axisLabel: {
+            show: false,
+          },
+
+          title: {
+            show: false,
+          },
+
+          detail: {
+            valueAnimation: true,
+            formatter: function (value) {
+              return `{line1|${value.toFixed(2)}}\n{line2|{{ _('Frequency') }}}\n{line3|(Hz)}`;
+            },
+            rich: {
+              line1: {
+                fontSize: 16,
+                fontWeight: "bold",
+                color: "#ffffff",
+                lineHeight: 22,
+              },
+              line2: {
+                fontSize: 16,
+                color: "#ffffff",
+                lineHeight: 22,
+              },
+              line3: {
+                fontSize: 16,
+                color: "#ffffff",
+                lineHeight: 22,
+              },
+            },
+            offsetCenter: [0, "20%"],
+          },
+
+          data: [
+            {
+              value: 50.04,
+            },
+          ],
+        },
+      ],
+    };
+
+    chart.setOption(option);
+
+      // Echarts 2 
+    var chart = echarts.init(document.getElementById("reactiveStatus"));
+
+    var option = {
+      graphic: [
+        // Dış çerçeve
+        {
+          type: "circle",
+          left: "center",
+          top: "center",
+          shape: {
+            r: 58,
           },
           style: {
             fill: "transparent",
@@ -388,13 +404,13 @@ title%} {% block content %}
           },
           z: 1,
         },
-        // İç yeşil dolgu (biraz daha küçük)
+        // İç yeşil dolgu
         {
           type: "circle",
           left: "center",
           top: "center",
           shape: {
-            r: 52, // İç daire yarıçapı (dıştan küçük olacak)
+            r: 52,
           },
           style: {
             fill: "green",
@@ -402,42 +418,38 @@ title%} {% block content %}
           },
           z: 2,
         },
-        // Üst yazı (Reaktif Cezada) -> Reactive Penalty'yi iki satıra böldük
+        // Tüm metin: Reactive\nPenalty\nDoes not Exist
         {
           type: "text",
           left: "center",
           top: "center",
           style: {
-            text: `{{ _('Reactive') }}\n{{ _('Penalty') }}`, // "Reactive" ve "Penalty" ayrı satırlara yerleştirildi
+            text: `{line1|{{ _('Reactive') }}}\n{line2|{{ _('Penalty') }}}\n{line3|{{ _('Does not Exist') }}}`,
             fill: "#fff",
-            font: "bold 16px sans-serif",
             textAlign: "center",
             textVerticalAlign: "middle",
+            rich: {
+              line1: {
+                fontSize: 16,
+                fontWeight: "bold",
+                lineHeight: 22,
+              },
+              line2: {
+                fontSize: 16,
+                fontWeight: "bold",
+                lineHeight: 22,
+              },
+              line3: {
+                fontSize: 16,
+                lineHeight: 22,
+              },
+            },
           },
-          top: "28%", // Yazılar arasındaki mesafeyi artırdık
-          z: 3,
-        },
-        // Alt yazı (Değil)
-        {
-          type: "text",
-          left: "center",
-          top: "center",
-          style: {
-            text: `{{ _('Does not Exist') }}`, // Yerelleştirilmiş metin
-            fill: "#fff",
-            font: "14px sans-serif",
-            textAlign: "center",
-            textVerticalAlign: "middle",
-          },
-          top: "60%", // Alt yazıyı biraz daha aşağıya kaydırdık
           z: 3,
         },
       ],
     };
-
     chart.setOption(option);
-
-
 
     // Echarts 3 Güç Faktörü
     var chart = echarts.init(document.getElementById("powerFactorGauge"));
@@ -448,13 +460,13 @@ title%} {% block content %}
           left: "center",
           top: "center",
           shape: {
-            r: 60, // yarıçap
+            r: 60,
           },
           style: {
-            fill: "#0B1734", // Arka yuvarlak renk (senin istediğin gibi daha açık)
+            fill: "#0B1734",
           },
-          z: 0, // Arka planda kalsın
-        },
+          z: 0,
+        }
       ],
       series: [
         {
@@ -463,6 +475,7 @@ title%} {% block content %}
           center: ["50%", "50%"],
           startAngle: 225,
           endAngle: -45,
+
           progress: {
             show: true,
             width: 12,
@@ -470,37 +483,61 @@ title%} {% block content %}
               color: "#f57c00",
             },
           },
+
           axisLine: {
             lineStyle: {
               width: 12,
               color: [[1, "#2b2f4b"]],
             },
           },
+
           pointer: {
             show: false,
           },
+
           axisTick: {
             show: false,
           },
+
           splitLine: {
             show: false,
           },
+
           axisLabel: {
             show: false,
           },
+
+          title: {
+            show: false,
+          },
+
           detail: {
             valueAnimation: true,
-            formatter: "{value}%",
-            color: "#fff",
-            fontSize: 14,
-            offsetCenter: [0, "40%"],
+            formatter: function (value) {
+              return `{line1|{{ _('Power') }}}\n{line2|{{ _('Factor') }}}\n{line3|${value.toFixed(2)}%}`;
+            },
+            rich: {
+              line1: {
+                fontSize: 16,
+                fontWeight: "bold",
+                color: "#fff",
+                lineHeight: 22,
+              },
+              line2: {
+                fontSize: 16,
+                color: "#fff",
+                lineHeight: 22,
+              },
+              line3: {
+                fontSize: 16,
+                fontWeight: "bold",
+                color: "#fff",
+                lineHeight: 22,
+              },
+            },
+            offsetCenter: [0, "10%"],
           },
-          title: {
-            offsetCenter: [0, "-20%"],
-            color: "#fff",
-            fontSize: 16,
-            text: "Güç\nFaktörü",
-          },
+
           data: [
             {
               value: 87.45,

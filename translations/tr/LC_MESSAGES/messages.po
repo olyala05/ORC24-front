@@ -630,11 +630,23 @@ msgstr "(Hz)"
 msgid "Reactive Penalty"
 msgstr "Reaktif Cezada"
 
+msgid "Reactive"
+msgstr "Reaktif"
+
+msgid "Penalty"
+msgstr "Cezada"
+
 msgid "Does not Exist"
 msgstr "Değil"
 
 msgid "Power Factor"
 msgstr "Güç Faktörü"
+
+msgid "Power"
+msgstr "Güç"
+
+msgid "Factor"
+msgstr "Faktörü"
 
 msgid "Log"
 msgstr "Loglar"
