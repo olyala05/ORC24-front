@@ -218,26 +218,26 @@ input:-webkit-autofill:focus {
   }
   .selected-lang-txt {
     font-size: 16px;
-    margin: 17px 0px 0px 0px;
+    margin: 2px 0px 0px 0px;
   }
 
   .language-dropdown::before {
     content: "";
     position: absolute;
     top: -8px;
-    right: 20px; 
+    right: 47px;
     width: 0;
     height: 0;
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
-    border-bottom: 8px solid #fff; 
+    border-bottom: 8px solid #fff;
   }
-  
+
   .language-dropdown {
     position: absolute;
     top: 100%;
     right: 0;
-    transform: translateX(8%); 
+    transform: translateX(8%);
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -344,17 +344,19 @@ input:-webkit-autofill:focus {
     z-index: 999;
 
     button {
-      background: none;
+      background: #f1f1f1;
       border: none;
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 10px;
+      padding: 10px 14px;
       font-size: 14px;
       font-weight: 600;
       width: 100%;
       cursor: pointer;
       transition: background 0.3s;
+      border: 2px solid white;
+      border-radius: 88px;
 
       img {
         width: 20px;
@@ -376,7 +378,6 @@ input:-webkit-autofill:focus {
   &:hover .language-dropdown {
     display: flex;
   }
-
 }
 
 .language-switcher:hover .language-dropdown,
@@ -384,54 +385,57 @@ input:-webkit-autofill:focus {
   display: flex;
 }
 
-
 /* Aktif dilin butonunu turuncu yapmak için */
 .lang-btn.selected .radio-indicator {
-  background-color: #ff7f32; /* Turuncu renk */
+  background-color: #ff7f32;
   border-color: #ff7f32;
 }
 
-/* Dil butonlarına stil ekleme */
 .lang-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: none;
-  border: none;
+  border: 1px solid silver;
+  border-radius: 12px;
   padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  width: 100%;
-  transition: background 0.3s;
+  background: white;
+  margin-bottom: 8px;
+  transition: background 0.3s ease;
+}
+
+.lang-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0e1734;
+  font-weight: 600;
 }
 
 .lang-btn:hover {
-  background: rgba(255, 127, 50, 0.1);
+  background-color: rgba(255, 127, 50, 0.08);
+}
+
+.radio-indicator-cover {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid silver; /* dış çizgi rengi */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white; /* arka plan */
+  box-sizing: border-box;
+  transition: 0.3s;
 }
 
 .radio-indicator {
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  border: 2px solid #bbb;
-  background-color: white;
-  display: inline-block;
-  margin-right: 8px;
+  background-color: transparent; /* varsayılan boş */
   transition: 0.3s;
 }
 
 .lang-btn.selected .radio-indicator {
-  background-color: #ff7f32; /* Turuncu renk */
-  border-color: #ff7f32;
+  background-color: #ff7f32; /* iç turuncu renk */
 }
-
-
-.selected-lang-txt {
-  font-size: 14px;
-  font-weight: 600;
-  color: white;
-  margin-left: 6px;
-}
-
-
-

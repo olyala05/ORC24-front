@@ -1,13 +1,9 @@
-{% extends 'layout.html' %} 
-
-{% block title %} ORC 24 - Login - Pier MTTP {% endblock %} 
-
-{% block content %}
+{% extends 'layout.html' %} {% block title %} ORC 24 - Login - Pier MTTP {%
+endblock %} {% block content %}
 <!-- Virtual Keyboard -->
 <div id="keyboard-container" class="simple-keyboard"></div>
 
 <div class="container">
-
   <div class="login-header">
     <div class="line line-left"></div>
     <img
@@ -93,58 +89,72 @@
                 height="24"
                 alt="Globe Icon"
               />
-              <span class="selected-lang-txt" id="selectedLangLabel"
-                >{{ g.lang.upper() }}</span
-              >
+              <span class="selected-lang-txt" id="selectedLangLabel">
+                {{ g.lang.upper() }}
+              </span>
             </button>
 
             <div class="language-dropdown" id="languageDropdown">
               <div class="dropdown-arrow"></div>
 
+              <!-- Türkçe -->
               <button
                 type="button"
                 class="lang-btn {% if g.get('lang') == 'tr' %}selected{% endif %}"
                 data-lang="tr"
                 onclick="setLanguage('tr')"
               >
+                <div class="lang-content">
+                  <img
+                    src="{{ url_for('static', filename='images/flags/tr.png') }}"
+                    width="20"
+                  />
+                  <span>TR</span>
+                </div>
+
+                <div class="radio-indicator-cover">
                 <span class="radio-indicator"></span>
-                <img
-                  src="{{ url_for('static', filename='images/flags/tr.png') }}"
-                  width="20"
-                />
-                TR
+
+                </div>
               </button>
 
+              <!-- English -->
               <button
                 type="button"
                 class="lang-btn {% if g.get('lang') == 'en' %}selected{% endif %}"
                 data-lang="en"
                 onclick="setLanguage('en')"
               >
+                <div class="lang-content">
+                  <img
+                    src="{{ url_for('static', filename='images/flags/uk.png') }}"
+                    width="20"
+                  />
+                  <span>EN</span>
+                </div>
+                <div class="radio-indicator-cover">
                 <span class="radio-indicator"></span>
-                <img
-                  src="{{ url_for('static', filename='images/flags/uk.png') }}"
-                  width="20"
-                />
-                EN
               </button>
 
+              <!-- Deutsch -->
               <button
                 type="button"
                 class="lang-btn {% if g.get('lang') == 'de' %}selected{% endif %}"
                 data-lang="de"
                 onclick="setLanguage('de')"
               >
+                <div class="lang-content">
+                  <img
+                    src="{{ url_for('static', filename='images/flags/de.png') }}"
+                    width="20"
+                  />
+                  <span>DE</span>
+                </div>
+                <div class="radio-indicator-cover">
                 <span class="radio-indicator"></span>
-                <img
-                  src="{{ url_for('static', filename='images/flags/de.png') }}"
-                  width="20"
-                />
-                DE
               </button>
             </div>
           </div>
-
         </div>
       </form>
     </div>
