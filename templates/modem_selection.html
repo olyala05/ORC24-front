@@ -630,59 +630,49 @@ block content %}
   }
 
   // Cihaz Seçme Fonksiyonu
-  function connectDevice() {
-    let dropdown = document.getElementById("modem");
-    let selectedDevice = dropdown.value;
+function connectDevice() {
+  let dropdown = document.getElementById("modem");
+  let selectedDevice = dropdown.value;
+  let selectedOption = dropdown.options[dropdown.selectedIndex];
+  let modemName = selectedOption.getAttribute("data-name");
 
-    // Cihaz seçilmediyse uyarı ver
-    if (!selectedDevice || selectedDevice.trim() === "") {
-      showWarningAlert("{{ _('Please select a device first!') }}");
-      setButtonsDisabled(true);
-      return;
-    }
-
-    // Yükleme ekranını göster
-    showLoading("{{ _('Connecting to the device , please wait...') }}");
-
-    fetch("/connect_device", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ip_address: selectedDevice }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          // Başarı mesajı
-          showSuccessAlert("{{ _('Successfully connected to the device!') }}");
-          sessionStorage.setItem("selected_device_ip", selectedDevice);
-          setButtonsDisabled(false);
-        } else {
-          // Hata mesajı
-          showErrorAlert("{{ _('Failed to connect to the device!') }}");
-          sessionStorage.removeItem("selected_device_ip");
-          setButtonsDisabled(true);
-          showErrorAlert(
-            "{{ _('Connection Error') }}",
-            "{{ _('Unable to proceed as the device could not be connected!') }}"
-          );
-        }
-      })
-      .catch((error) => {
-        console.error("{{ _('Connection Error') }}:", error);
-        // Genel hata mesajı
-        showErrorAlert("{{ _('An error occurred during the connection.') }}");
-        sessionStorage.removeItem("selected_device_ip");
-        setButtonsDisabled(true);
-        showErrorAlert(
-          "{{ _('Connection Error') }}",
-          "{{ _('An error occurred during the connection.') }}"
-        );
-      })
-      .finally(() => {
-        // Yükleme ekranını kaldır
-        hideLoading();
-      });
+  if (!selectedDevice || selectedDevice.trim() === "") {
+    showWarningAlert("{{ _('Please select a device first!') }}");
+    setButtonsDisabled(true);
+    return;
   }
+
+  showLoading("{{ _('Connecting to the device , please wait...') }}");
+
+  fetch("/connect_device", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ip_address: selectedDevice }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        showSuccessAlert("{{ _('Successfully connected to the device!') }}");
+        sessionStorage.setItem("selected_device_ip", selectedDevice);
+        sessionStorage.setItem("selected_device_name", modemName); // BURASI ÖNEMLİ
+        setButtonsDisabled(false);
+      } else {
+        showErrorAlert("{{ _('Failed to connect to the device!') }}");
+        sessionStorage.removeItem("selected_device_ip");
+        sessionStorage.removeItem("selected_device_name");
+        setButtonsDisabled(true);
+      }
+    })
+    .catch((error) => {
+      showErrorAlert("{{ _('Connection Error') }}");
+      sessionStorage.removeItem("selected_device_ip");
+      sessionStorage.removeItem("selected_device_name");
+      setButtonsDisabled(true);
+    })
+    .finally(() => {
+      hideLoading();
+    });
+}
 
   // Sayfa Yüklendiğinde Çalıştır
   document.addEventListener("DOMContentLoaded", function () {

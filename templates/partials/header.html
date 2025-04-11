@@ -51,7 +51,9 @@
     <div class="report-line">
       <div class="line-header"></div>
     </div>
-    <div class="report-date">{{ page_title }}</div>
+    <div class="report-date">
+         {{ page_title }} - <span id="modemNameInHeader" style="font-weight: bold; color: #3B5FFF"></span>
+    </div>
   </div>
 </div>
 
@@ -71,7 +73,6 @@
 
   updateDateTime();
   setInterval(updateDateTime, 1000);
-
   function goToAlarm() {
     let selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
 
@@ -201,7 +202,20 @@
     function goToDashboard() {
       window.location.href = "/dashboard";
     }
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const modemName = sessionStorage.getItem("selected_device_name");
+    const headerSpan = document.getElementById("modemNameInHeader");
+
+    if (headerSpan && modemName) {
+      headerSpan.textContent = modemName;
+    }
+  });
 </script>
+
+
+
 
 <style>
   .swal-custom-bg {

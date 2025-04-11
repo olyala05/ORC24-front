@@ -47,5 +47,16 @@
 
     {% block scripts %}{% endblock %}
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const modemName = sessionStorage.getItem("selected_device_name");
+    const headerSpan = document.getElementById("modemNameInHeader");
+
+    if (headerSpan && modemName) {
+      headerSpan.textContent = modemName;
+    }
+  });
+</script>
+
   </body>
 </html>
