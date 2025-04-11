@@ -14,7 +14,8 @@ block content %}
         style="padding: 9px 9px; background: #0b1734; border-radius: 5px"
       />
     </button>
-    <!-- Alarm icon -->
+    <!-- Alarm icon Şimdilik Alarm yorum satırında  -->
+    <!--    
     <div class="alarm-icon-container">
       <button class="alarm-button" onclick="goToAlarm()" title="Alarm">
         <img
@@ -25,7 +26,9 @@ block content %}
         />
       </button>
       <span id="alarm-count" class="alarm-badge" display="none">0</span>
-    </div>
+    </div> 
+    -->
+
   </div>
 
   <div class="header-logo">
@@ -131,65 +134,59 @@ block content %}
 
   function fetchDevices() {
     let dropdown = document.getElementById("modem");
-    let modemIcon = document.getElementById("modem-icon"); // Simgeyi kontrol etmek için ID ekledik
+    let modemIcon = document.getElementById("modem-icon");
 
     // Loading yazısını başlangıçta gösteriyoruz
     let defaultOption = dropdown.querySelector("option");
     defaultOption.textContent = "Loading...";
 
     // Loading simgesini gösteriyoruz (40.svg)
-    modemIcon.src = "{{ url_for('static', filename='images/svg/40.svg') }}"; // "40.svg" simgesini başta gösteriyoruz
+    modemIcon.src = "{{ url_for('static', filename='images/svg/40.svg') }}";
 
     // Fetch işlemi başlıyor
     fetch("/devices")
       .then((response) => response.json())
       .then((data) => {
         dropdown.innerHTML = ""; // Dropdown'ı temizliyoruz
+        const select_data = [];
 
         // Veriler yüklendikten sonra "Select Modem" yazısını gösteriyoruz
         let newDefaultOption = document.createElement("option");
         newDefaultOption.value = "";
         newDefaultOption.disabled = true;
         newDefaultOption.selected = true;
-        newDefaultOption.textContent = "{{ _('Select Modem') }}"; // "Select Modem"
+        newDefaultOption.textContent = "{{ _('Select Modem') }}";
         dropdown.appendChild(newDefaultOption);
 
         // Verileri ekliyoruz
         data.forEach((device) => {
           let option = document.createElement("option");
-          option.value = device.ip; // IP adresi kullanılacak
+          option.value = device.ip;
 
-          // Modem adı, MAC adresi ve IP adresi
-          let nameText = `${device.name}`;
-          let macText = `${device.mac}`; // MAC adresi
-          let ipText = `${device.ip}`; // IP adresi
+          // Select2'nin custom template'lerinde kullanmak üzere verileri attribute olarak ekle
+          option.setAttribute("data-name", device.name);
+          option.setAttribute("data-mac", device.mac);
+          option.setAttribute("data-ip", device.ip);
 
-          // Modem adı üstte, MAC ve IP'yi altta yan yana yazdırıyoruz
-          option.innerHTML = `
-            <div class="modem-name">${nameText}</div>
-            <div class="mac-ip">
-              <span class="mac-address">${macText}</span>
-              <span class="ip-address">${ipText}</span>
-            </div>
-          `;
+          // option.textContent görünmeyecek ama yine de boş kalmasın
+          option.textContent = device.name;
+
           dropdown.appendChild(option);
         });
+        console.log(select_data);
 
-        // Veriler yüklendikten sonra "38.svg" simgesini gösteriyoruz
-        modemIcon.src = "{{ url_for('static', filename='images/svg/38.svg') }}"; // "38.svg" simgesine geçiş yapıyoruz
+        modemIcon.src = "{{ url_for('static', filename='images/svg/38.svg') }}";
 
         // Select2'yi tekrar başlatıyoruz
         $(dropdown).select2({
-          templateResult: formatOption, // Custom Template for Option
-          templateSelection: formatSelection, // Custom Template for Selection
+          templateResult: formatOption,
+          templateSelection: formatSelection,
         });
-
-        // Cihaz seçildiğinde butonları aktif et
-        toggleButtons(true); // Cihaz seçildiğinde butonları etkinleştir
+        toggleButtons(true);
       })
       .catch((error) => {
         console.error("{{ _('Error while retrieving devices:')}}", error);
-        toggleButtons(false); // Hata durumunda butonları devre dışı bırak
+        toggleButtons(false);
       });
   }
 
@@ -213,20 +210,30 @@ block content %}
 
   // Custom Template for Option
   function formatOption(option) {
-    if (!option.id) {
-      return option.text;
-    } // Return if it's the default "Select Modem" option
+    if (!option.id) return option.text;
 
-    var $option = $("<span></span>");
-    var name = $('<div class="modem-name"></div>').text(option.text);
-    var mac = $('<div class="mac-address"></div>').text(
+    // Ana wrapper
+    const $option = $("<div class='select2-custom-option'></div>");
+
+    // Modem adı - üstte ve mavi
+    const name = $("<div class='modem-name'></div>").text(
+      $(option.element).data("name")
+    );
+
+    // MAC (turuncu) ve IP (mavi) - yanyana
+    const infoRow = $("<div class='info-row'></div>");
+    const mac = $("<span class='mac-address'></span>").text(
       $(option.element).data("mac")
     );
-    var ip = $('<div class="ip-address"></div>').text(
+    const ip = $("<span class='ip-address'></span>").text(
       $(option.element).data("ip")
     );
 
-    $option.append(name).append(mac).append(ip);
+    infoRow.append(mac).append(" ").append(ip);
+
+    // Hepsini birleştir
+    $option.append(name).append(infoRow);
+
     return $option;
   }
 
@@ -238,8 +245,7 @@ block content %}
   // Sayfa yüklendiğinde fetchDevices fonksiyonunu çağırıyoruz
   document.addEventListener("DOMContentLoaded", fetchDevices);
 
-
-    // Hata mesajlarını gösteren fonksiyon
+  // Hata mesajlarını gösteren fonksiyon
   function showErrorAlert(title, text = "") {
     Swal.fire({
       toast: true,
@@ -344,7 +350,7 @@ block content %}
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null;
     if (!selectedDeviceIP) {
-      showWarningAlert("{{ _('Please select a device first!') }}",);
+      showWarningAlert("{{ _('Please select a device first!') }}");
       return;
     }
     showLoading("{{ _('ORC Status is loading...') }}");
@@ -359,7 +365,7 @@ block content %}
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null;
     if (!selectedDeviceIP) {
-      showWarningAlert("{{ _('Please select a device first!') }}", );
+      showWarningAlert("{{ _('Please select a device first!') }}");
       return;
     }
     showLoading("{{ _('Equipments are loading...') }}");
@@ -373,7 +379,7 @@ block content %}
         if (!data || data.error) {
           showErrorAlert(
             "{{ _('Error!') }}",
-            data.error || "{{ _('Equipment data could not be retrieved.')}}",
+            data.error || "{{ _('Equipment data could not be retrieved.')}}"
           );
           return;
         }
@@ -384,7 +390,7 @@ block content %}
       .catch((error) => {
         showErrorAlert(
           "{{ _('Error!') }}",
-          "{{ _('Equipment data could not be retrieved. Please try again.')}}",
+          "{{ _('Equipment data could not be retrieved. Please try again.')}}"
         );
       })
       .finally(() => {
@@ -398,10 +404,8 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-      showWarningAlert(
-        "{{ _('Please select a device first!') }}",
-      );
-      return; 
+      showWarningAlert("{{ _('Please select a device first!') }}");
+      return;
     }
 
     showLoading("{{ _('Settings are loading...') }}");
@@ -415,9 +419,7 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-      showWarningAlert(
-        "{{ _('Please select a device first!') }}",
-      );
+      showWarningAlert("{{ _('Please select a device first!') }}");
       return;
     }
 
@@ -434,7 +436,7 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null;
     if (!selectedDeviceIP) {
       showWarningAlert("{{ _('Please select a device first!') }}");
-      return; 
+      return;
     }
     showLoading("{{ _('Data is loading...') }}");
     window.location.href = "/data";
@@ -446,9 +448,7 @@ block content %}
     let selectedDeviceIP = dropdown ? dropdown.value : null;
 
     if (!selectedDeviceIP) {
-      showWarningAlert(
-        "{{ _('Please select a device first!') }}",
-      );
+      showWarningAlert("{{ _('Please select a device first!') }}");
       return;
     }
     showLoading("{{ _('Equipments are being scanned...') }}");
@@ -462,14 +462,16 @@ block content %}
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
-          showErrorAlert("{{ _('Error!') }}", data.error,);
+          showErrorAlert("{{ _('Error!') }}", data.error);
           return;
         }
         sessionStorage.setItem("modbus_data", JSON.stringify(data.modbus_data));
         window.location.href = "/equipment-setting";
       })
       .catch((error) => {
-        showErrorAlert("{{ _('An error occurred while retrieving Modbus data:') }}" + error);
+        showErrorAlert(
+          "{{ _('An error occurred while retrieving Modbus data:') }}" + error
+        );
       })
       .finally(() => {
         hideLoading();
@@ -526,9 +528,13 @@ block content %}
       })
       .catch((error) => {
         console.error("Cihaz seçme hatası:", error);
-        showErrorAlert("{{ _('Error!') }}", "{{ _('Device information could not be retrieved. Please try again.') }}");})
+        showErrorAlert(
+          "{{ _('Error!') }}",
+          "{{ _('Device information could not be retrieved. Please try again.') }}"
+        );
+      })
       .finally(() => {
-        hideLoading(); 
+        hideLoading();
       });
   }
 
@@ -800,24 +806,6 @@ block content %}
     flex-direction: column;
   }
 
-  .modem-dropdown .mac-ip {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .modem-dropdown .mac-address {
-    color: #ec7427; /* MAC adresi için turuncu */
-  }
-
-  .modem-dropdown .ip-address {
-    color: #6384d1 !important;
-  }
-
-  .modem-dropdown .modem-name {
-    color: #6384d1;
-    font-weight: bold !important;
-  }
-
   .select2-container--default .select2-selection--single {
     background-color: #1c2747;
     border: 1px solid #aaa;
@@ -858,14 +846,12 @@ block content %}
     border-width: 0 8px 10px 8px;
   }
 
-  /* select2 input kısmını gizle */
   .select2-search__field {
     display: none !important;
   }
 
-  /* Dropdown menüsünü düzgün göster */
   .select2-container--default .select2-selection--single {
-    padding-right: 0; /* Arama kutusunun sağındaki boşluğu kaldır */
+    padding-right: 0;
   }
   .modem-dropdown {
     -webkit-appearance: none; /* Safari/Chrome */
@@ -887,6 +873,32 @@ block content %}
     color: .select2-container--default
       .select2-results__option--highlighted.select2-results__option--selectable;
     color: #1b2746;
+  }
+  .select2-custom-option {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modem-name {
+    font-weight: 500;
+    color: #1B2746;
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+
+  .info-row {
+    display: flex;
+    gap: 8px;
+    font-size: 16px;
+    margin-top: 2px;
+  }
+
+  .mac-address {
+    color: #EC7427;
+  }
+
+  .ip-address {
+    color: #6384D1;
   }
 
   /* Toast Container */

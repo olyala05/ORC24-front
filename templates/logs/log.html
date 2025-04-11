@@ -1,20 +1,61 @@
-{% extends "layout.html" %} {% block title %} ORC Status - Error Log {%
-endblock%} {% block extra_css %}
+{% extends "layout.html" %} 
+
+{% block title %} ORC Status - Error Log {% endblock%} 
+
+{% block extra_css %}
+
+<!-- CSS logs -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
-{% endblock %} {% block content %}
+
+<!-- CSS calendar -->
+<link rel="stylesheet" href="{{ url_for('static', filename='calendar/css/flatpickr.min.css') }}">
+
+{% endblock %} 
+
+{% block content %}
 
 <!-- Header -->
 {% include 'partials/header.html' %}
 
 <div class="log-container">
+
+  <!--  Calendar -->
   <div id="calendar-container">
-    <input
+    <!-- Yeni:     <input
+      type="text"
+      id="log-date-picker"
+      class="calendar-input"
+      placeholder="Select Date"
+    />-->
+
+
+    <div class="calendar-input-wrapper">
+      <!-- Flatpickr'a bağlanacak gizli input -->
+      <input type="text" id="hidden-date-picker" style="display: none;" />
+
+      <!-- Kullanıcıya gösterilecek input -->
+      <input
+        type="text"
+        id="log-date-picker"
+        class="calendar-input"
+        placeholder="Select Date"
+        readonly
+      />
+
+      <!-- Aç/kapa butonu -->
+      <span class="calendar-icon" id="calendar-toggle">&#9662;</span>
+    </div>
+
+    <!-- Eskisi-->
+
+    <!--    <input    
       type="date"
       id="log-date-picker"
       onchange="fetchLogsByDate()"
-      class="calendar-input"
-    />
+      class="calendar-input" 
+    /> -->
   </div>
+
   <div class="log-table">
     <div class="log-table-content">
       <!-- Message for navigating back in time İsterler ise aç -->
@@ -66,7 +107,36 @@ endblock%} {% block extra_css %}
   </div>
 </div>
 
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='calendar/js/flatpickr.min.js') }}"></script>
+
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const calendarInput = document.getElementById("log-date-picker");
+  const calendarToggle = document.getElementById("calendar-toggle");
+
+  const fp = flatpickr(calendarInput, {
+    dateFormat: "Y-m-d",
+    defaultDate: new Date(),
+    clickOpens: false, // input'a tıklayınca açılmasın
+    onOpen: () => calendarToggle.classList.add("open"),
+    onClose: () => calendarToggle.classList.remove("open"),
+    onChange: function (selectedDates, dateStr, instance) {
+      calendarInput.value = dateStr;
+      fetchLogsByDate();
+    },
+  });
+
+  calendarToggle.addEventListener("click", function () {
+    fp.open(); // sadece oka tıklanınca aç
+  });
+});
+
+</script>
+
+<script>
+
   let currentPage = 1;
   let isLoading = false;
   let hasMoreLogs = true;

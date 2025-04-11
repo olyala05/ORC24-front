@@ -641,7 +641,6 @@ def fetch_equipment_details():
         print(f"❌ Modbus bağlantı hatası: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
 
-
 @app.route("/set_selected_equipment", methods=["POST"])
 def set_selected_equipment():
     data = request.get_json()
