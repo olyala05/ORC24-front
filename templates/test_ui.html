@@ -1,0 +1,114 @@
+{% extends "layout.html" %} 
+
+{% block title %} ORC Status - Error Log {% endblock%} 
+
+{% block extra_css %}
+
+<!-- CSS logs -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
+
+<!-- CSS calendar -->
+<link rel="stylesheet" href="{{ url_for('static', filename='daterangepicker/daterangepicker.min.css') }}">
+
+{% endblock %} 
+
+{% block content %}
+
+<!-- Header -->
+{% include 'partials/header.html' %}
+
+<div class="log-container">
+
+  <!--  Calendar -->
+  <div id="calendar-container">
+    <!-- Yeni:     <input
+      type="text"
+      id="log-date-picker"
+      class="calendar-input"
+      placeholder="Select Date"
+    />-->
+
+
+    <div class="calendar-input-wrapper">
+      <!-- Flatpickr'a bağlanacak gizli input -->
+      <input type="text" id="hidden-date-picker" style="display: none;" />
+
+      <!-- Kullanıcıya gösterilecek input -->
+      <input
+        type="text"
+        id="log-date-picker"
+        class="calendar-input"
+        placeholder="Select Date"
+        readonly
+      />
+
+      <!-- Aç/kapa butonu -->
+      <span class="calendar-icon" id="calendar-toggle">&#9662;</span>
+    </div>
+
+    <!-- Eskisi-->
+
+    <!--    <input    
+      type="date"
+      id="log-date-picker"
+      onchange="fetchLogsByDate()"
+      class="calendar-input" 
+    /> -->
+  </div>
+
+  <div class="log-table">
+    <div class="log-table-content">
+      <!-- Message for navigating back in time İsterler ise aç -->
+      <div
+        id="info-message"
+        style="
+          display: none;
+          color: green;
+          text-align: center;
+          font-size: 14px;
+          margin-top: 5px;
+        "
+      >
+        You can select a date from the calendar to view past logs.
+      </div>
+
+      <!-- No Logs message -->
+      <div
+        id="no-logs-message"
+        style="
+          display: none;
+          color: red;
+          text-align: center;
+          font-size: 14px;
+          margin-top: 10px;
+        "
+      >
+        No logs found for today. Please select another date from the calendar.
+      </div>
+
+      <table>
+        <thead id="log-table-head" style="display: none">
+          <tr>
+            <th>{{ _('Status')}}</th>
+            <th>{{ _('Log Description')}}</th>
+            <th>{{ _('Timestamp')}}</th>
+          </tr>
+        </thead>
+        <tbody id="log-table-body">
+          <tr
+            id="loading-message"
+            style="display: none; text-align: center; font-size: 14px"
+          >
+            <td colspan="3">Loading logs...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='daterangepicker/daterangepicker.min.js') }}"></script>
+
+{% endblock %}

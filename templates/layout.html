@@ -17,10 +17,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='toastr/css/toastr.min.css') }}" />
 
     <!-- jQuery Kütüphanesini Yükleyin -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
 
     <!-- Toastr -->
     <script src="{{ url_for('static', filename='toastr/js/toastr.min.js') }}"></script>
+    
   </head>
   <body data-lang="{{ get_locale() }}" class="{% if request.endpoint == 'dashboard' %}dashboard-body{% endif %}">
 

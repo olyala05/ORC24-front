@@ -886,6 +886,10 @@ def switch():
 def test():
     return render_template("test/test.html", page_title=_("Test"))
 
+@app.route("/test-ui", endpoint="test-ui")
+def test():
+    return render_template("test_ui.html", page_title=_("Test UI"))
+
 
 @app.route("/equipment-details", endpoint="equipment_details")
 def equipment_details():
