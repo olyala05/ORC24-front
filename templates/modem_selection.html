@@ -1,8 +1,5 @@
-{% extends "layout.html" %} 
-
-{% block title %} Modem Selection {% endblock %}
-
-{% block content %}
+{% extends "layout.html" %} {% block title %} Modem Selection {% endblock %} {%
+block content %}
 
 <div class="header">
   <div class="header-left">
@@ -17,10 +14,10 @@
         style="padding: 9px 9px; background: #0b1734; border-radius: 5px"
       />
     </button>
-    
+
     <!-- Alarm icon Şimdilik Alarm yorum satırında  -->
-   
-   <!--     
+
+    <!--     
     <div class="alarm-icon-container">
       <button class="alarm-button" onclick="goToAlarm()" title="Alarm">
         <img
@@ -57,8 +54,7 @@
   <div class="modem-selection">
     <!-- Modem Dropdown -->
     <div class="dropdown-container">
-    
-      <div class="modem-dropdown-wrapper" style="position: relative;">
+      <div class="modem-dropdown-wrapper" style="position: relative">
         <img
           id="modem-icon"
           src="{{ url_for('static', filename='images/svg/40.svg') }}"
@@ -68,16 +64,29 @@
 
         <select id="modem" class="modem-dropdown" onchange="connectDevice()">
           <option value="" disabled selected>
-            <span id="loadingText">{{ _('Loading') }}<span class="dots">...</span></span>
+            <span id="loadingText"
+              >{{ _('Loading') }}<span class="dots">...</span></span
+            >
           </option>
         </select>
 
         <!-- Ok ikonları -->
-        <img id="arrow-icon" class="arrow-icon" src="{{ url_for('static', filename='images/svg/down-arrow.svg') }}" alt="Arrow" width="16" height="16"
-          style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;" />
+        <img
+          id="arrow-icon"
+          class="arrow-icon"
+          src="{{ url_for('static', filename='images/svg/down-arrow.svg') }}"
+          alt="Arrow"
+          width="16"
+          height="16"
+          style="
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+          "
+        />
       </div>
-
-
     </div>
 
     <div class="button-container">
@@ -187,12 +196,14 @@
 
         // AÇILDIĞINDA yukarı ok
         $(dropdown).on("select2:open", function () {
-          arrowIcon.src = "{{ url_for('static', filename='images/svg/up-arrow.svg') }}";
+          arrowIcon.src =
+            "{{ url_for('static', filename='images/svg/up-arrow.svg') }}";
         });
 
         // KAPANDIĞINDA aşağı ok
         $(dropdown).on("select2:close", function () {
-          arrowIcon.src = "{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
+          arrowIcon.src =
+            "{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
         });
 
         toggleButtons(true);
@@ -202,7 +213,6 @@
         toggleButtons(false);
       });
   }
-
 
   // Butonları etkinleştir veya devre dışı bırak
   function toggleButtons(enable) {
@@ -259,91 +269,6 @@
   // Sayfa yüklendiğinde fetchDevices fonksiyonunu çağırıyoruz
   document.addEventListener("DOMContentLoaded", fetchDevices);
 
-  // Hata mesajlarını gösteren fonksiyon
-function showErrorAlert(title, text = "") {
-  toastr.options = {
-    "closeButton": false,
-    "debug": true,
-    "newestOnTop": false,
-    "progressBar": true,
-    "positionClass": "toast-bottom-right",
-    "preventDuplicates": true,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-  };
-
-  toastr["error"](text, title); 
-}
-
-// Başarı mesajlarını gösteren fonksiyon
-function showSuccessAlert(title, text = "") {
-  toastr.options = {
-    "closeButton": false,
-    "debug": true,
-    "newestOnTop": false,
-    "progressBar": true,
-    "positionClass": "toast-bottom-right",
-    "preventDuplicates": true,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-  }; 
-
-  toastr["success"](text, title);
-}
-
-// Uyarı mesajlarını gösteren fonksiyon
-function showWarningAlert(title, text = "") {
- 
-  toastr.options = {
-    "closeButton": false,
-    "debug": true,
-    "newestOnTop": false,
-    "progressBar": true,
-    "positionClass": "toast-bottom-right",
-    "preventDuplicates": true,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-  }; 
-  
-  toastr["warning"](text, title);
-}
-
-// Yükleme ekranını gösteren yardımcı fonksiyon
-function showLoading(message) {
-  let loadingOverlay = document.createElement("div");
-  loadingOverlay.id = "loading-overlay";
-  loadingOverlay.className = "loading-overlay";
-  loadingOverlay.innerHTML = `
-  <div class="loading-box">
-    <p> ${message} </p>
-    <div class="loader"></div>
-  </div>`;
-  document.body.appendChild(loadingOverlay);
-}
-
-// Yükleme ekranını kaldırma
-function hideLoading() {
-  let loader = document.getElementById("loading-overlay");
-  if (loader) loader.remove();
-}
   // ORC Status
   function goToORCStatus() {
     let dropdown = document.getElementById("modem");
@@ -628,49 +553,49 @@ function hideLoading() {
   }
 
   // Cihaz Seçme Fonksiyonu
-function connectDevice() {
-  let dropdown = document.getElementById("modem");
-  let selectedDevice = dropdown.value;
-  let selectedOption = dropdown.options[dropdown.selectedIndex];
-  let modemName = selectedOption.getAttribute("data-name");
+  function connectDevice() {
+    let dropdown = document.getElementById("modem");
+    let selectedDevice = dropdown.value;
+    let selectedOption = dropdown.options[dropdown.selectedIndex];
+    let modemName = selectedOption.getAttribute("data-name");
 
-  if (!selectedDevice || selectedDevice.trim() === "") {
-    showWarningAlert("{{ _('Please select a device first!') }}");
-    setButtonsDisabled(true);
-    return;
-  }
+    if (!selectedDevice || selectedDevice.trim() === "") {
+      showWarningAlert("{{ _('Please select a device first!') }}");
+      setButtonsDisabled(true);
+      return;
+    }
 
-  showLoading("{{ _('Connecting to the device , please wait...') }}");
+    showLoading("{{ _('Connecting to the device , please wait...') }}");
 
-  fetch("/connect_device", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ip_address: selectedDevice }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.success) {
-        showSuccessAlert("{{ _('Successfully connected to the device!') }}");
-        sessionStorage.setItem("selected_device_ip", selectedDevice);
-        sessionStorage.setItem("selected_device_name", modemName); 
-        setButtonsDisabled(false);
-      } else {
-        showErrorAlert("{{ _('Failed to connect to the device!') }}");
+    fetch("/connect_device", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ip_address: selectedDevice }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          showSuccessAlert("{{ _('Successfully connected to the device!') }}");
+          sessionStorage.setItem("selected_device_ip", selectedDevice);
+          sessionStorage.setItem("selected_device_name", modemName);
+          setButtonsDisabled(false);
+        } else {
+          showErrorAlert("{{ _('Failed to connect to the device!') }}");
+          sessionStorage.removeItem("selected_device_ip");
+          sessionStorage.removeItem("selected_device_name");
+          setButtonsDisabled(true);
+        }
+      })
+      .catch((error) => {
+        showErrorAlert("{{ _('Connection Error') }}");
         sessionStorage.removeItem("selected_device_ip");
         sessionStorage.removeItem("selected_device_name");
         setButtonsDisabled(true);
-      }
-    })
-    .catch((error) => {
-      showErrorAlert("{{ _('Connection Error') }}");
-      sessionStorage.removeItem("selected_device_ip");
-      sessionStorage.removeItem("selected_device_name");
-      setButtonsDisabled(true);
-    })
-    .finally(() => {
-      hideLoading();
-    });
-}
+      })
+      .finally(() => {
+        hideLoading();
+      });
+  }
 
   // Sayfa Yüklendiğinde Çalıştır
   document.addEventListener("DOMContentLoaded", function () {
@@ -780,14 +705,20 @@ function connectDevice() {
     height: 28px;
   }
 
-  /* select2 kendi ok icon nu kapattım */ 
-  .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+  /* select2 kendi ok icon nu kapattım */
+  .select2-container--default.select2-container--open
+    .select2-selection--single
+    .select2-selection__arrow
+    b {
     display: none !important;
   }
-  .select2-container--default .select2-selection--single .select2-selection__arrow b {
+  .select2-container--default
+    .select2-selection--single
+    .select2-selection__arrow
+    b {
     display: none !important;
   }
-  /* select2 kendi ok icon nu kapattım */ 
+  /* select2 kendi ok icon nu kapattım */
 
   .modem-dropdown-icon {
     position: absolute;
@@ -889,7 +820,7 @@ function connectDevice() {
 
   .modem-name {
     font-weight: 500;
-    color: #1B2746;
+    color: #1b2746;
     font-size: 18px;
     margin-bottom: 2px;
   }
@@ -902,11 +833,11 @@ function connectDevice() {
   }
 
   .mac-address {
-    color: #EC7427;
+    color: #ec7427;
   }
 
   .ip-address {
-    color: #6384D1;
+    color: #6384d1;
   }
 
   /* Toast Container */
