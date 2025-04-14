@@ -3,22 +3,25 @@
   justify-content: center;
   align-items: center;
   background: #0b1734;
-  padding: 14px;
+  padding: 20px;
   border-radius: 10px;
+  width: 80%;
 }
 
 .main-set-buttons {
   display: flex;
-  gap: 15px;
+  gap: 20px;
+  width: 100%;
 }
 
 .main-set-btn {
+  width: 100%;
   background: white;
   border: 3px solid transparent;
   color: black;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
-  padding: 25px 46px;
+  padding: 20px 46px;
   border-radius: 7px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;

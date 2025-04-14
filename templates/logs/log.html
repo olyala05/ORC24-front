@@ -7,9 +7,6 @@
 <!-- CSS logs -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
 
-<!-- CSS calendar -->
-<link rel="stylesheet" href="{{ url_for('static', filename='calendar/css/flatpickr.min.css') }}">
-
 {% endblock %} 
 
 {% block content %}
@@ -18,44 +15,16 @@
 {% include 'partials/header.html' %}
 
 <div class="log-container">
-
   <!--  Calendar -->
-  <div id="calendar-container">
-    <!-- Yeni:     <input
-      type="text"
-      id="log-date-picker"
-      class="calendar-input"
-      placeholder="Select Date"
-    />-->
-
-
+    <div id="calendar-container"></div>
     <div class="calendar-input-wrapper">
-      <!-- Flatpickr'a bağlanacak gizli input -->
-      <input type="text" id="hidden-date-picker" style="display: none;" />
-
-      <!-- Kullanıcıya gösterilecek input -->
-      <input
-        type="text"
-        id="log-date-picker"
-        class="calendar-input"
-        placeholder="Select Date"
-        readonly
-      />
-
-      <!-- Aç/kapa butonu -->
-      <span class="calendar-icon" id="calendar-toggle">&#9662;</span>
-    </div>
-
-    <!-- Eskisi-->
-
-    <!--    <input    
+      <input    
       type="date"
       id="log-date-picker"
       onchange="fetchLogsByDate()"
       class="calendar-input" 
-    /> -->
-  </div>
-
+    /> 
+    
   <div class="log-table">
     <div class="log-table-content">
       <!-- Message for navigating back in time İsterler ise aç -->
@@ -69,7 +38,6 @@
           margin-top: 5px;
         "
       >
-        You can select a date from the calendar to view past logs.
       </div>
 
       <!-- No Logs message -->
@@ -107,7 +75,6 @@
   </div>
 </div>
 
-
 <!-- JS -->
 <script src="{{ url_for('static', filename='calendar/js/flatpickr.min.js') }}"></script>
 
@@ -132,11 +99,9 @@ document.addEventListener("DOMContentLoaded", function () {
     fp.open(); // sadece oka tıklanınca aç
   });
 });
-
 </script>
 
 <script>
-
   let currentPage = 1;
   let isLoading = false;
   let hasMoreLogs = true;
@@ -377,7 +342,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const rangeText = `${format(start)} – ${format(end)}`;
     document.getElementById("date-range-display").innerText = rangeText;
   }
-  
 </script>
 
 <style>

@@ -1,8 +1,5 @@
-{% extends "layout.html" %} 
-
-{% block title %} {{ _('ORC Settings')}} {% endblock %}
-
-{% block content %}
+{% extends "layout.html" %} {% block title %} {{ _('ORC Settings')}} {% endblock
+%} {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
 <!-- Virtual Keyboard -->
@@ -11,7 +8,9 @@
 <!-- Yeni İçerik (İlk başta gizli olacak) -->
 <div class="settings-content">
   <div class="orc-sidebar-set">
-    <button class="tab-btn-set" data-target="wifi-set">{{ _('Wi-fi Settings')}}</button>
+    <button class="tab-btn-set" data-target="wifi-set">
+      {{ _('Wi-fi Settings')}}
+    </button>
     <button class="tab-btn-set" data-target="lora-set" disabled>
       {{ _('LoRa Settings')}}
     </button>
@@ -23,53 +22,17 @@
     <button class="tab-btn-set" data-target="gsm-set" disabled>
       {{ _('GSM Settings')}}
     </button>
-    <button class="tab-btn-set" data-target="orc-set">{{ _('ORC Settings')}}</button>
+    <button class="tab-btn-set" data-target="orc-set">
+      {{ _('ORC Settings')}}
+    </button>
   </div>
 
   <div class="content-area-set">
     <!-- Wi-Fi Set -->
     <div id="wifi-set" class="tab-content-set">
       <div class="wifi-container-set">
-        <!-- Available Wi-Fi -->
-        <div class="network-box-set">
-          <div id="wifi-list" class="wifi-list-set">
-            <h4 style="margin: 6px 0 5px 0px; padding: 0; padding: 0 20px">
-              {{ _('Available Wi-Fi')}}
-            </h4>
-            <div class="available-wifi-underline"></div>
-            <ul id="wifi-networks">
-              <!-- Buraya dinamik Wi-Fi listesi gelecek -->
-            </ul>
-          </div>
-        </div>
-
         <!-- Wi-Fi Password Form -->
         <div class="wifi-connection-set">
-          <div class="wifi-card-set">
-            <div class="wifi-icon-set">
-              <img
-                src="{{ url_for('static', filename='images/svg/12.svg') }}"
-                alt="No Wi-Fi"
-              />
-              <h4>{{ _('Wi-Fi Password')}}</h4>
-            </div>
-
-            <p id="wifi-ssid">{{ _('Wi-Fi SSID:')}} <span>{{ _('Not Connected')}}</span></p>
-            <div class="password-intput-set">
-              <label>{{ _('Password:')}}</label>
-              <input type="password" id="wifi-password" />
-            </div>
-            <div class="show-password-set">
-              <input type="checkbox" id="showPass" class="check-box-set" />
-              <label for="showPass" class="show-pass">{{ _('Show Password')}}</label>
-            </div>
-            <div class="btn-group-set">
-              <button class="btn-set cancel-set">{{ _('Cancel')}}</button>
-              <button class="btn-set connec-set" id="connect-btn">
-                {{ _('Connect')}}
-              </button>
-            </div>
-          </div>
 
           <!-- Connected Wi-Fi -->
           <div class="wifi-card-set connected">
@@ -81,10 +44,50 @@
                 alt="No Wi-Fi"
               />
               <span id="connected-wifi">{{ _('Not Connected')}}</span>
+              <!-- -->
               <button class="btn disconnect" id="disconnect-btn">
                 {{ _('Disconnect')}}
               </button>
             </div>
+          </div>
+
+          <div class="wifi-card-set">
+            <div class="wifi-icon-set">
+              <img
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                alt="No Wi-Fi"
+              />
+              <p id="wifi-ssid">{{ _('Wi-Fi SSID:')}} <span>{{ _('Not Connected')}}</span></p>
+            </div>
+            <div class="password-intput-set">
+              <label>{{ _('Password:')}}</label>
+              <input type="password" id="wifi-password" />
+            </div>
+            <div class="show-password-set">
+              <input type="checkbox" id="showPass" class="check-box-set" />
+              <label for="showPass" class="show-pass"
+                >{{ _('Show Password')}}</label
+              >
+            </div>
+            <div class="btn-group-set">
+              <button class="btn-set cancel-set">{{ _('Cancel')}}</button>
+              <button class="btn-set connec-set" id="connect-btn">
+                {{ _('Connect')}}
+              </button>
+            </div>
+          </div>
+
+        </div>
+        <!-- Available Wi-Fi -->
+        <div class="network-box-set">
+          <div id="wifi-list" class="wifi-list-set">
+            <h4 style="margin: 6px 0 5px 0px; padding: 0; padding: 0 20px">
+              {{ _('Available Wi-Fi')}}
+            </h4>
+            <div class="available-wifi-underline"></div>
+            <ul id="wifi-networks">
+              <!-- Buraya dinamik Wi-Fi listesi gelecek -->
+            </ul>
           </div>
         </div>
       </div>
@@ -104,7 +107,7 @@
       </div>
     </div> 
     -->
-   
+
     <!-- GSM Set -->
     <div id="gsm-set" class="gsm-settings-container" style="display: none">
       <div class="gsm-settings-card">
@@ -301,7 +304,9 @@
               Swal.fire({
                 icon: "error",
                 title: "{{ _('Connection Failed!')}}",
-                text: data.message || "{{ _('Unable to connect. Please try again.')}}",
+                text:
+                  data.message ||
+                  "{{ _('Unable to connect. Please try again.')}}",
                 width: "280px",
                 customClass: {
                   popup: "small-swal-popup",
@@ -310,7 +315,10 @@
             }
           })
           .catch((error) => {
-            console.error("{{ _('Error occurred during Wi-Fi connection')}}:", error);
+            console.error(
+              "{{ _('Error occurred during Wi-Fi connection')}}:",
+              error
+            );
             Swal.fire({
               icon: "error",
               title: "{{ _('Connection Error!')}}",
@@ -417,25 +425,34 @@
     });
 
     document.addEventListener("DOMContentLoaded", function () {
-      const modemNameInput = document.querySelector("#orc-set .orc-input-group input");
-      const modemStatusSelect = document.querySelector("#orc-set .orc-input-group select");
-    
+      const modemNameInput = document.querySelector(
+        "#orc-set .orc-input-group input"
+      );
+      const modemStatusSelect = document.querySelector(
+        "#orc-set .orc-input-group select"
+      );
+
       function fetchModemInfo() {
         fetch("/get_modem_info")
           .then((response) => response.json())
           .then((data) => {
             if (data.status === "success") {
               const modem = data.data;
-  
-              modemNameInput.value = modem.name && modem.name.trim() ? modem.name : "-";
-    
-              modemStatusSelect.value = modem.status && modem.status.trim()
-                ? modem.status.toLowerCase()
-                : "-";
-    
+
+              modemNameInput.value =
+                modem.name && modem.name.trim() ? modem.name : "-";
+
+              modemStatusSelect.value =
+                modem.status && modem.status.trim()
+                  ? modem.status.toLowerCase()
+                  : "-";
+
               console.log("{{ _('Modem Info')}}:", modem);
             } else {
-              console.error("{{ _('Failed to load modem info')}}:", data.message);
+              console.error(
+                "{{ _('Failed to load modem info')}}:",
+                data.message
+              );
               modemNameInput.value = "-";
               modemStatusSelect.value = "-";
             }
@@ -448,7 +465,6 @@
       }
       fetchModemInfo();
     });
-    
   </script>
 
   <style>

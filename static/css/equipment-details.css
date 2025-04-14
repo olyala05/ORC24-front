@@ -9,7 +9,7 @@
 }
 .eq-detail-container .eq-detail-panel {
   background-color: #0b1734;
-  padding: 8px;
+  padding: 7px;
   border-radius: 8px;
   width: 40%;
 }
@@ -26,13 +26,13 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #ef8018;
-  padding: 3px 5px;
+  padding: 4px 5px;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item:last-child {
   border-bottom: none;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item span {
-  font-size: 13px;
+  font-size: 14px;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-detail-dot {
   width: 12px;

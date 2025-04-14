@@ -20,6 +20,7 @@
     
     <!-- Alarm icon Şimdilik Alarm yorum satırında  -->
    
+   <!--     
     <div class="alarm-icon-container">
       <button class="alarm-button" onclick="goToAlarm()" title="Alarm">
         <img
@@ -31,8 +32,7 @@
       </button>
       <span id="alarm-count" class="alarm-badge" display="none">0</span>
     </div> 
-
-
+    -->
   </div>
 
   <div class="header-logo">
@@ -57,21 +57,27 @@
   <div class="modem-selection">
     <!-- Modem Dropdown -->
     <div class="dropdown-container">
-      <div class="modem-dropdown-wrapper">
+    
+      <div class="modem-dropdown-wrapper" style="position: relative;">
         <img
           id="modem-icon"
           src="{{ url_for('static', filename='images/svg/40.svg') }}"
           alt="Modems"
           class="modem-dropdown-icon"
         />
+
         <select id="modem" class="modem-dropdown" onchange="connectDevice()">
           <option value="" disabled selected>
-            <span id="loadingText"
-              >{{ _('Loading') }}<span class="dots">...</span></span
-            >
+            <span id="loadingText">{{ _('Loading') }}<span class="dots">...</span></span>
           </option>
         </select>
+
+        <!-- Ok ikonları -->
+        <img id="arrow-icon" class="arrow-icon" src="{{ url_for('static', filename='images/svg/down-arrow.svg') }}" alt="Arrow" width="16" height="16"
+          style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;" />
       </div>
+
+
     </div>
 
     <div class="button-container">
@@ -142,22 +148,17 @@
   function fetchDevices() {
     let dropdown = document.getElementById("modem");
     let modemIcon = document.getElementById("modem-icon");
+    let arrowIcon = document.getElementById("arrow-icon");
 
-    // Loading yazısını başlangıçta gösteriyoruz
     let defaultOption = dropdown.querySelector("option");
     defaultOption.textContent = "Loading...";
-
-    // Loading simgesini gösteriyoruz (40.svg)
     modemIcon.src = "{{ url_for('static', filename='images/svg/40.svg') }}";
 
-    // Fetch işlemi başlıyor
     fetch("/devices")
       .then((response) => response.json())
       .then((data) => {
-        dropdown.innerHTML = ""; // Dropdown'ı temizliyoruz
-        const select_data = [];
+        dropdown.innerHTML = "";
 
-        // Veriler yüklendikten sonra "Select Modem" yazısını gösteriyoruz
         let newDefaultOption = document.createElement("option");
         newDefaultOption.value = "";
         newDefaultOption.disabled = true;
@@ -165,30 +166,35 @@
         newDefaultOption.textContent = "{{ _('Select Modem') }}";
         dropdown.appendChild(newDefaultOption);
 
-        // Verileri ekliyoruz
         data.forEach((device) => {
           let option = document.createElement("option");
           option.value = device.ip;
-
-          // Select2'nin custom template'lerinde kullanmak üzere verileri attribute olarak ekle
           option.setAttribute("data-name", device.name);
           option.setAttribute("data-mac", device.mac);
           option.setAttribute("data-ip", device.ip);
-
-          // option.textContent görünmeyecek ama yine de boş kalmasın
           option.textContent = device.name;
-
           dropdown.appendChild(option);
         });
-        console.log(select_data);
 
         modemIcon.src = "{{ url_for('static', filename='images/svg/38.svg') }}";
 
-        // Select2'yi tekrar başlatıyoruz
+        // Select2'yi başlat
         $(dropdown).select2({
           templateResult: formatOption,
           templateSelection: formatSelection,
+          dropdownParent: $(".modem-dropdown-wrapper"), // Gerekirse
         });
+
+        // AÇILDIĞINDA yukarı ok
+        $(dropdown).on("select2:open", function () {
+          arrowIcon.src = "{{ url_for('static', filename='images/svg/up-arrow.svg') }}";
+        });
+
+        // KAPANDIĞINDA aşağı ok
+        $(dropdown).on("select2:close", function () {
+          arrowIcon.src = "{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
+        });
+
         toggleButtons(true);
       })
       .catch((error) => {
@@ -196,6 +202,7 @@
         toggleButtons(false);
       });
   }
+
 
   // Butonları etkinleştir veya devre dışı bırak
   function toggleButtons(enable) {
@@ -645,7 +652,7 @@ function connectDevice() {
       if (data.success) {
         showSuccessAlert("{{ _('Successfully connected to the device!') }}");
         sessionStorage.setItem("selected_device_ip", selectedDevice);
-        sessionStorage.setItem("selected_device_name", modemName); // BURASI ÖNEMLİ
+        sessionStorage.setItem("selected_device_name", modemName); 
         setButtonsDisabled(false);
       } else {
         showErrorAlert("{{ _('Failed to connect to the device!') }}");
@@ -762,6 +769,25 @@ function connectDevice() {
     position: relative;
     display: inline-block;
   }
+
+  .arrow-icon {
+    position: absolute;
+    right: 16px;
+    top: 54%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    width: 28px;
+    height: 28px;
+  }
+
+  /* select2 kendi ok icon nu kapattım */ 
+  .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    display: none !important;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    display: none !important;
+  }
+  /* select2 kendi ok icon nu kapattım */ 
 
   .modem-dropdown-icon {
     position: absolute;
