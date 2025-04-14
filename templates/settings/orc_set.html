@@ -1,4 +1,7 @@
-{% extends "layout.html" %} {% block title %} {{ _('ORC Settings')}} {% endblock
+{% extends "layout.html" %} 
+
+{% block title %} {{ _('ORC Settings')}} 
+{% endblock
 %} {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
@@ -51,7 +54,7 @@
             </div>
           </div>
 
-          <div class="wifi-card-set">
+          <div class="wifi-card-set bg-white">
             <div class="wifi-icon-set">
               <img
                 src="{{ url_for('static', filename='images/svg/12.svg') }}"

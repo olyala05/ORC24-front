@@ -5,7 +5,7 @@
   margin-top: 60px;
 }
 .settings-content .tab-btn-set {
-  padding: 16px;
+  padding: 20px;
   border-radius: 7px;
   color: #000;
   font-weight: 600;
@@ -15,7 +15,7 @@
 .orc-sidebar-set {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
   width: 155px;
 }
 
@@ -40,8 +40,7 @@
 }
 
 .network-box-set {
-  margin-right: 8px;
-  margin-left: 8px;
+  width: 270px;
 }
 .network-box-set .network-header-set {
   display: flex;
@@ -72,8 +71,7 @@
 }
 
 .content-area-set .wifi-list-set {
-  width: 170px;
-  max-height: 300px;
+  max-height: 310px;
   overflow-y: auto;
   transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
   background: #fff;
@@ -124,11 +122,20 @@
   gap: 15px;
 }
 
+.ssid-cover {
+  background: #0b1734;
+  color: white;
+  border: 1px solid #ef8018;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
 .wifi-card-set {
-  background: white;
   padding: 12px;
   border-radius: 10px;
-  width: 358px;
+  width: 310px;
 }
 .wifi-card-set .underline {
   border: 1px solid #ef8018;
@@ -138,7 +145,10 @@
   font-size: 16px;
   margin-bottom: 2px;
   margin-top: 0px;
-  color: #1c2747;
+  color: #ef8018;
+  display: flex;
+  gap: 14px;
+  align-items: center;
 }
 .wifi-card-set p {
   font-size: 16px;
@@ -220,8 +230,8 @@
   justify-content: space-between;
   padding: 8px;
   border-radius: 5px;
-  color: #1c2747;
-  font-weight: bold;
+  color: #fff;
+  font-size: 16px;
 }
 .wifi-card-set.connected .wifi-info-set .disconnect {
   background: #ef742a;
@@ -283,7 +293,6 @@
   align-items: center;
   padding: 0px;
   border-radius: 10px;
-  margin-left: 10px;
 }
 
 .orc-settings-card {
@@ -334,17 +343,17 @@
 }
 
 .orc-save-btn {
-  background: #ef742a;
+  background: #EF8018;
   color: white;
   border: none;
-  width: 30%;
-  padding: 19px;
+  width: 61%;
+  padding: 12px 3px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
   display: block;
-  margin: 34px 17px 12px 189px;
+  margin: 1px 5px 0px 124px;
 }
 
 .orc-save-btn:hover {
@@ -415,4 +424,11 @@
 }
 .gsm-settings-card h3 {
   text-align: center;
+}
+
+.wifi-orange-icon {
+  width: 22px;
+  background: #EF8018;
+  border-radius: 50%;
+  padding: 6px;
 }/*# sourceMappingURL=orc-setting.css.map */

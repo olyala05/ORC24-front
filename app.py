@@ -390,6 +390,8 @@ def get_modem_info():
         modem_info = {
             "name": modem.get("name", "Unknown"),
             "status": "Active" if modem.get("status") == 1 else "Inactive",
+            "network_ssid": modem.get("network_ssid", "-"),
+            "network_password": modem.get("network_password", "-"),
         }
         return ResponseHandler.success(
             message=_("Modem info retrieved successfully"), data=modem_info
