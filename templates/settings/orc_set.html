@@ -50,7 +50,7 @@
             </div>
           </div>
 
-          <div class="wifi-card-set bg-white">
+          <div class="wifi-card-set bg-white" id="wifi-password-form" style="display: none;">
             <div class="wifi-icon-set">
               <img
                 src="{{ url_for('static', filename='images/svg/12.svg') }}"
@@ -181,6 +181,10 @@
     const showPasswordCheckbox = document.getElementById("showPass");
     let selectedSSID = null;
 
+    const wifiPasswordForm = document.getElementById("wifi-password-form");
+    const cancelButton = document.querySelector(".cancel-set");
+
+
     function fetchWifiNetworks() {
       fetch("/wi-fi-list", { method: "POST" })
         .then((response) => response.json())
@@ -233,7 +237,16 @@
       selectedSSID = ssid;
       wifiSSIDElement.innerText = ssid;
       wifiPasswordInput.value = "";
+      wifiPasswordForm.style.display = "block";
     };
+
+    cancelButton.addEventListener("click", function () {
+      wifiPasswordForm.style.display = "none"; // Formu gizle
+      selectedSSID = null;
+      wifiSSIDElement.innerText = "{{ _('Not Connected') }}";
+      wifiPasswordInput.value = "";
+    });
+
 
     // Şifreyi göster/gizle
     showPasswordCheckbox.addEventListener("change", function () {
@@ -285,6 +298,7 @@
             });
 
             connectedWifiSpan.innerText = `SSID: ${selectedSSID}`;
+            wifiPasswordForm.style.display = "none"; 
             fetchWifiNetworks();
           } else {
             Swal.fire({
