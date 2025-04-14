@@ -39,13 +39,14 @@
 
           <!-- Connected Wi-Fi -->
           <div class="wifi-card-set connected">
-            <h4>{{ _('Connected')}}</h4>
-            <div class="underline"></div>
-            <div class="wifi-info-set">
-              <img
-                src="{{ url_for('static', filename='images/svg/12.svg') }}"
-                alt="No Wi-Fi"
+            <h4>  <img
+                src="{{ url_for('static', filename='images/svg/41.svg') }}"
+                alt="No Wi-Fi" class="wifi-orange-icon"
               />
+              {{ _('Connected')}}
+            </h4>
+            <div class="wifi-info-set">
+            
               <span id="connected-wifi">{{ _('Not Connected')}}</span>
               <!-- -->
               <button class="btn disconnect" id="disconnect-btn">
