@@ -363,7 +363,6 @@ def orc_status():
             network=None,
         )
 
-
 @app.route("/get_modem_info", methods=["GET"])
 def get_modem_info():
     selected_ip = session.get("selected_device_ip")
@@ -406,7 +405,6 @@ def get_modem_info():
             message=_("Unexpected error occurred"), code=500, details=str(e)
         )
 
-
 # network info
 @app.route("/wi-fi-list", methods=["POST"])
 def wi_fi_list():
@@ -445,7 +443,6 @@ def wi_fi_list():
             ),
             500,
         )
-
 
 @app.route("/connect_wifi", methods=["POST"])
 def connect_wifi():
@@ -490,7 +487,6 @@ def connect_wifi():
         return ResponseHandler.error(
             message="Unexpected error occurred", code=500, details=str(e)
         )
-
 
 @app.route("/disconnect_wifi", methods=["POST"])
 def disconnect_wifi():

@@ -38,7 +38,7 @@
         <div class="wifi-connection-set">
 
           <!-- Connected Wi-Fi -->
-          <div class="wifi-card-set connected">
+          <div class="wifi-card-set ssid-cover connected">
             <h4>  <img
                 src="{{ url_for('static', filename='images/svg/41.svg') }}"
                 alt="No Wi-Fi" class="wifi-orange-icon"
@@ -46,12 +46,7 @@
               {{ _('Connected')}}
             </h4>
             <div class="wifi-info-set">
-            
               <span id="connected-wifi">{{ _('Not Connected')}}</span>
-              <!-- -->
-              <button class="btn disconnect" id="disconnect-btn">
-                {{ _('Disconnect')}}
-              </button>
             </div>
           </div>
 
@@ -122,6 +117,7 @@
     <!-- ORC Set -->
     <div id="orc-set" class="orc-settings-container" style="display: none">
       <div class="orc-settings-card">
+
         <div class="orc-input-group">
           <label>{{ _('Modem Name')}}</label>
           <input type="text" placeholder="{{ _('Modem Name')}}" readonly />
@@ -136,340 +132,230 @@
         </div>
 
         <div class="orc-input-group">
-          <label>{{ _('Query Update Time (Hour - Minute)')}}</label>
-          <select>
-            <option value="">{{ _('Select')}}</option>
-            <option value="00:30">00:30</option>
-            <option value="01:00">01:00</option>
-            <option value="01:30">01:30</option>
-            <option value="02:00">02:00</option>
-          </select>
+          <label>{{ _('SSID')}}</label>
+          <input type="text" placeholder="{{ _('SSID')}}" readonly />
         </div>
+
+        <div class="orc-input-group">
+          <label>{{ _('Password')}}</label>
+          <input type="text" placeholder="{{ _('Password')}}" readonly />
+        </div>
+
         <button class="orc-save-btn">{{ _('Save')}}</button>
       </div>
     </div>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const tabButtons = document.querySelectorAll(".tab-btn-set");
-      const tabContents = document.querySelectorAll(".content-area-set > div");
-      tabButtons.forEach((button) => {
-        button.addEventListener("click", function () {
-          const targetId = this.getAttribute("data-target");
+ <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tabButtons = document.querySelectorAll(".tab-btn-set");
+    const tabContents = document.querySelectorAll(".content-area-set > div");
 
-          tabContents.forEach((content) => (content.style.display = "none"));
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const targetId = this.getAttribute("data-target");
 
-          tabButtons.forEach((btn) => btn.classList.remove("active"));
+        tabContents.forEach((content) => (content.style.display = "none"));
+        tabButtons.forEach((btn) => btn.classList.remove("active"));
 
-          this.classList.add("active");
+        this.classList.add("active");
 
-          const targetElement = document.getElementById(targetId);
-          if (targetElement) {
-            targetElement.style.display = "block";
-          }
-        });
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.style.display = "block";
+        }
       });
-
-      if (tabButtons.length > 0) {
-        tabButtons[0].click();
-      }
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const wifiListElement = document.getElementById("wifi-networks");
-      const wifiPasswordInput = document.getElementById("wifi-password");
-      const wifiSSIDElement = document
-        .getElementById("wifi-ssid")
-        .querySelector("span");
-      const connectedWifiSpan = document.getElementById("connected-wifi");
-      const connectButton = document.getElementById("connect-btn");
-      const disconnectButton = document.getElementById("disconnect-btn");
-      const showPasswordCheckbox = document.getElementById("showPass");
-      let selectedSSID = null;
+    if (tabButtons.length > 0) {
+      tabButtons[0].click();
+    }
+  });
 
-      function fetchWifiNetworks() {
-        fetch("/wi-fi-list", { method: "POST" })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.status !== "success") {
-              wifiListElement.innerHTML = `<p style='color: red;'>${data.message}</p>`;
-              return;
-            }
+  document.addEventListener("DOMContentLoaded", function () {
+    const wifiListElement = document.getElementById("wifi-networks");
+    const wifiPasswordInput = document.getElementById("wifi-password");
+    const wifiSSIDElement = document.getElementById("wifi-ssid").querySelector("span");
+    const connectedWifiSpan = document.getElementById("connected-wifi");
+    const connectButton = document.getElementById("connect-btn");
+    const showPasswordCheckbox = document.getElementById("showPass");
+    let selectedSSID = null;
 
-            let networks = data.data.wifi_networks || [];
-            const connectedSSID = data.data.connected_ssid || null;
-            const connectedPassword = data.data.wifi_password || "";
+    function fetchWifiNetworks() {
+      fetch("/wi-fi-list", { method: "POST" })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status !== "success") {
+            wifiListElement.innerHTML = `<p style='color: red;'>${data.message}</p>`;
+            return;
+          }
 
-            let wifiHTML = "";
+          let networks = data.data.wifi_networks || [];
+          const connectedSSID = data.data.connected_ssid || null;
+          const connectedPassword = data.data.wifi_password || "";
 
-            // Bağlı Wi-Fi'yi en üste taşı
-            if (connectedSSID) {
-              networks = networks.filter((ssid) => ssid !== connectedSSID);
-              networks.unshift(connectedSSID);
-            }
+          let wifiHTML = "";
 
-            networks.forEach((ssid) => {
-              const isConnected =
-                ssid === connectedSSID ? "wifi-connected" : "";
-              wifiHTML += `
-                          <li onclick="selectWifi('${ssid}')" class="${isConnected}">
-                              <img src="/static/images/svg/25.svg" alt="Wi-Fi"/>
-                              <span>${ssid}</span>
-                              <img src="/static/images/svg/26.svg" alt="Lock"/>
-                          </li>
-                      `;
-            });
+          // Bağlı Wi-Fi'yi en üste taşı
+          if (connectedSSID) {
+            networks = networks.filter((ssid) => ssid !== connectedSSID);
+            networks.unshift(connectedSSID);
+          }
 
-            wifiListElement.innerHTML = wifiHTML;
-
-            if (connectedSSID) {
-              selectedSSID = connectedSSID;
-              wifiSSIDElement.innerText = connectedSSID;
-              connectedWifiSpan.innerText = connectedSSID;
-              wifiPasswordInput.value = connectedPassword;
-            } else {
-              connectedWifiSpan.innerText = "{{ _('Not Connected')}}";
-            }
-          })
-          .catch((error) => {
-            console.error("{{ _('Wi-Fi networks loading error')}}:", error);
-            wifiListElement.innerHTML =
-              "<p style='color: red;'>{{ _('Wi-Fi information could not be retrieved')}}.</p>";
+          networks.forEach((ssid) => {
+            const isConnected = ssid === connectedSSID ? "wifi-connected" : "";
+            wifiHTML += `
+              <li onclick="selectWifi('${ssid}')" class="${isConnected}">
+                <img src="/static/images/svg/25.svg" alt="Wi-Fi"/>
+                <span>${ssid}</span>
+                <img src="/static/images/svg/26.svg" alt="Lock"/>
+              </li>`;
           });
-      }
 
-      window.selectWifi = function (ssid) {
-        selectedSSID = ssid;
-        wifiSSIDElement.innerText = ssid;
-        wifiPasswordInput.value = "";
-      };
+          wifiListElement.innerHTML = wifiHTML;
 
-      // Şifreyi göster/gizle
-      showPasswordCheckbox.addEventListener("change", function () {
-        wifiPasswordInput.type = this.checked ? "text" : "password";
-      });
-
-      // Wi-Fi ağına bağlan
-      connectButton.addEventListener("click", function () {
-        if (!selectedSSID) {
-          Swal.fire({
-            icon: "warning",
-            title: "{{ _('Wi-Fi not selected!')}}",
-            text: "{{ _('Please select a Wi-Fi network.')}}",
-            width: "280px",
-            customClass: {
-              popup: "small-swal-popup",
-            },
-          });
-          return;
-        }
-
-        const password = wifiPasswordInput.value;
-        if (!password) {
-          Swal.fire({
-            icon: "warning",
-            title: "{{ _('Password not entered!')}}",
-            text: "{{ _('Please enter the password.')}}",
-            width: "280px",
-            customClass: {
-              popup: "small-swal-popup",
-            },
-          });
-          return;
-        }
-
-        // Butonu loading durumuna geçir
-        connectButton.disabled = true;
-        connectButton.innerHTML = `<span class="spinner"></span> {{ _('Connecting...')}}`;
-
-        // Bağlantıyı başlat
-        fetch("/connect_wifi", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ssid: selectedSSID, password: password }),
+          if (connectedSSID) {
+            selectedSSID = connectedSSID;
+            wifiSSIDElement.innerText = connectedSSID;
+            connectedWifiSpan.innerText = `SSID: ${connectedSSID}`;
+            wifiPasswordInput.value = connectedPassword;
+          } else {
+            connectedWifiSpan.innerText = `{{ _('No Wi-Fi Connection') }}`;
+          }
         })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.status === "success") {
-              Swal.fire({
-                icon: "success",
-                title: "{{ _('Connection Successful!')}}",
-                text: `{{ _('Wi-Fi connection successfully established')}}: ${selectedSSID}`,
-                width: "280px",
-                customClass: {
-                  popup: "small-swal-popup",
-                },
-              });
+        .catch((error) => {
+          console.error("Wi-Fi networks loading error:", error);
+          wifiListElement.innerHTML = "<p style='color: red;'>Wi-Fi bilgisi alınamadı.</p>";
+        });
+    }
 
-              connectedWifiSpan.innerText = selectedSSID;
-              fetchWifiNetworks();
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "{{ _('Connection Failed!')}}",
-                text:
-                  data.message ||
-                  "{{ _('Unable to connect. Please try again.')}}",
-                width: "280px",
-                customClass: {
-                  popup: "small-swal-popup",
-                },
-              });
-            }
-          })
-          .catch((error) => {
-            console.error(
-              "{{ _('Error occurred during Wi-Fi connection')}}:",
-              error
-            );
-            Swal.fire({
-              icon: "error",
-              title: "{{ _('Connection Error!')}}",
-              text: "{{ _('An error occurred while establishing the Wi-Fi connection.')}}",
-              width: "280px",
-              customClass: {
-                popup: "small-swal-popup",
-              },
-            });
-          })
-          .finally(() => {
-            // Butonu eski haline getirir
-            connectButton.disabled = false;
-            connectButton.innerHTML = "{{ _('Connect')}}";
-          });
-      });
+    window.selectWifi = function (ssid) {
+      selectedSSID = ssid;
+      wifiSSIDElement.innerText = ssid;
+      wifiPasswordInput.value = "";
+    };
 
-      // Wi-Fi Disconnection
-      disconnectButton.addEventListener("click", function () {
-        if (connectedWifiSpan.innerText === "{{ _('Not Connected')}}") {
-          Swal.fire({
-            icon: "info",
-            title: "{{ _('No Active Connection!')}}",
-            text: "{{ _('You are not currently connected to any Wi-Fi network.')}}",
-            width: "280px",
-            customClass: {
-              popup: "small-swal-popup",
-            },
-          });
-          return;
-        }
+    // Şifreyi göster/gizle
+    showPasswordCheckbox.addEventListener("change", function () {
+      wifiPasswordInput.type = this.checked ? "text" : "password";
+    });
 
+    // Wi-Fi ağına bağlan
+    connectButton.addEventListener("click", function () {
+      if (!selectedSSID) {
         Swal.fire({
           icon: "warning",
-          title: "{{ _('Disconnect Wi-Fi?')}}",
-          text: "{{ _('Are you sure you want to disconnect from the Wi-Fi network?')}}",
+          title: "Wi-Fi seçilmedi!",
+          text: "Lütfen bir Wi-Fi ağı seçin.",
           width: "280px",
-          showCancelButton: true,
-          confirmButtonText: "{{ _('Yes, disconnect')}}",
-          cancelButtonText: "{{ _('Cancel')}}",
-          customClass: {
-            popup: "small-swal-popup",
-            confirmButton: "btn-confirm",
-            cancelButton: "btn-cancel",
-          },
-        }).then((result) => {
-          if (result.isConfirmed) {
-            disconnectButton.disabled = true;
-            disconnectButton.innerHTML = `<span class="spinner"></span> {{ _('Disconnecting...')}}`;
-
-            fetch("/disconnect_wifi", { method: "POST" })
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.status === "success") {
-                  Swal.fire({
-                    icon: "success",
-                    title: "{{ _('Wi-Fi Disconnected!')}}",
-                    text: "{{ _('You have successfully disconnected from the Wi-Fi network.')}}",
-                    width: "280px",
-                    customClass: {
-                      popup: "small-swal-popup",
-                    },
-                  });
-                  wifiListElement.innerHTML = "";
-                  wifiSSIDElement.innerText = "{{ _('Not Connected')}}";
-                  wifiPasswordInput.value = "";
-                  connectedWifiSpan.innerText = "{{ _('Not Connected')}}";
-                  fetchWifiNetworks();
-                } else {
-                  Swal.fire({
-                    icon: "error",
-                    title: "{{ _('Disconnection Failed!')}}",
-                    text:
-                      data.message ||
-                      "{{ _('An error occurred while disconnecting from Wi-Fi.')}}",
-                    width: "280px",
-                    customClass: {
-                      popup: "small-swal-popup",
-                    },
-                  });
-                }
-              })
-              .catch((error) => {
-                console.error("{{ _('Error while disconnecting')}}:", error);
-                Swal.fire({
-                  icon: "error",
-                  title: "{{ _('Disconnection Error!')}}",
-                  text: "{{ _('An unexpected error occurred while disconnecting.')}}",
-                  width: "280px",
-                  customClass: {
-                    popup: "small-swal-popup",
-                  },
-                });
-              })
-              .finally(() => {
-                disconnectButton.disabled = false;
-                disconnectButton.innerHTML = "{{ _('Disconnect')}}";
-              });
-          }
+          customClass: { popup: "small-swal-popup" },
         });
-      });
+        return;
+      }
 
-      fetchWifiNetworks();
+      const password = wifiPasswordInput.value;
+      if (!password) {
+        Swal.fire({
+          icon: "warning",
+          title: "Şifre girilmedi!",
+          text: "Lütfen şifreyi girin.",
+          width: "280px",
+          customClass: { popup: "small-swal-popup" },
+        });
+        return;
+      }
+
+      connectButton.disabled = true;
+      connectButton.innerHTML = `<span class="spinner"></span> Bağlanılıyor...`;
+
+      fetch("/connect_wifi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ssid: selectedSSID, password: password }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            Swal.fire({
+              icon: "success",
+              title: "Bağlantı Başarılı!",
+              text: `Wi-Fi bağlantısı kuruldu: ${selectedSSID}`,
+              width: "280px",
+              customClass: { popup: "small-swal-popup" },
+            });
+
+            connectedWifiSpan.innerText = `SSID: ${selectedSSID}`;
+            fetchWifiNetworks();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Bağlantı Hatası!",
+              text: data.message || "Bağlantı kurulamadı, tekrar deneyin.",
+              width: "280px",
+              customClass: { popup: "small-swal-popup" },
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Wi-Fi bağlantı hatası:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Hata!",
+            text: "Wi-Fi bağlantısı sırasında bir hata oluştu.",
+            width: "280px",
+            customClass: { popup: "small-swal-popup" },
+          });
+        })
+        .finally(() => {
+          connectButton.disabled = false;
+          connectButton.innerHTML = "Bağlan";
+        });
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const modemNameInput = document.querySelector(
-        "#orc-set .orc-input-group input"
-      );
-      const modemStatusSelect = document.querySelector(
-        "#orc-set .orc-input-group select"
-      );
+    fetchWifiNetworks();
+  });
 
-      function fetchModemInfo() {
-        fetch("/get_modem_info")
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.status === "success") {
-              const modem = data.data;
+  // Modem bilgisi çek
+  document.addEventListener("DOMContentLoaded", function () {
+    const modemNameInput = document.querySelector("#orc-set input[placeholder='{{ _('Modem Name')}}']");
+    const modemStatusSelect = document.querySelector("#orc-set select");
+    const ssidInput = document.querySelector("#orc-set input[placeholder='{{ _('SSID')}}']");
+    const passwordInput = document.querySelector("#orc-set input[placeholder='{{ _('Password')}}']");
 
-              modemNameInput.value =
-                modem.name && modem.name.trim() ? modem.name : "-";
+    function fetchModemInfo() {
+      fetch("/get_modem_info")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            const modem = data.data;
 
-              modemStatusSelect.value =
-                modem.status && modem.status.trim()
-                  ? modem.status.toLowerCase()
-                  : "-";
+            modemNameInput.value = modem.name?.trim() || "-";
+            modemStatusSelect.value = modem.status?.trim().toLowerCase() || "-";
+            ssidInput.value = modem.network_ssid?.trim() || "-";
+            passwordInput.value = modem.network_password?.trim() || "-";
 
-              console.log("{{ _('Modem Info')}}:", modem);
-            } else {
-              console.error(
-                "{{ _('Failed to load modem info')}}:",
-                data.message
-              );
-              modemNameInput.value = "-";
-              modemStatusSelect.value = "-";
-            }
-          })
-          .catch((error) => {
-            console.error("{{ _('Error while fetching modem info')}}:", error);
+            console.log("Modem Bilgisi:", modem);
+          } else {
+            console.error("Modem bilgisi yüklenemedi:", data.message);
             modemNameInput.value = "-";
             modemStatusSelect.value = "-";
-          });
-      }
-      fetchModemInfo();
-    });
-  </script>
+            ssidInput.value = "-";
+            passwordInput.value = "-";
+          }
+        })
+        .catch((error) => {
+          console.error("Modem bilgisi çekilirken hata:", error);
+          modemNameInput.value = "-";
+          modemStatusSelect.value = "-";
+          ssidInput.value = "-";
+          passwordInput.value = "-";
+        });
+    }
+
+    fetchModemInfo();
+  });
+
+</script>
 
   <style>
     .wifi-connected span {

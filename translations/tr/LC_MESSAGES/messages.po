@@ -542,6 +542,9 @@ msgstr "Bağlantı var"
 msgid "Not Connected"
 msgstr "Bağlantı yok"
 
+msgid "No Wi-Fi Connection"
+msgstr "Wi-Fi Bağlantısı Yok"
+
 msgid "Checking the network cables, modem and router"
 msgstr "Ağ kabloları, modem ve yönlendirici kontrol ediliyor"
 
