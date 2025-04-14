@@ -1,8 +1,5 @@
-{% extends "layout.html" %} 
-
-{% block title %} {{ _('Equipment Settings')}} {% endblock %}
-
-{% block content %}
+{% extends "layout.html" %} {% block title %} {{ _('Equipment Settings')}} {%
+endblock %} {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
 
@@ -96,7 +93,9 @@
       <button class="modbus-setting-btn-test">{{ _('Test')}}</button>
 
       <!-- Test Results -->
-      <p class="modbus-setting-success">{{ _('Modbus connection successful')}}</p>
+      <p class="modbus-setting-success">
+        {{ _('Modbus connection successful')}}
+      </p>
       <p class="modbus-setting-failed">{{ _('Modbus connection failed')}}</p>
     </div>
 
@@ -134,29 +133,63 @@
       <div class="equip-setting-card">
         <!-- Equipment Name -->
         <div class="equip-setting-group">
-          <label>{{ _('Equipment Name')}}</label>
+          <label>{{ _('Equipment Name') }}</label>
           <input type="text" id="equipment-name" />
         </div>
 
-        <!-- Equipment Status -->
+        <!-- Equipment Status (select) -->
         <div class="equip-setting-group">
-          <label>{{ _('Equipment Status')}}</label>
-          <input type="text" id="equipment-status" />
+          <label>{{ _('Equipment Status') }}</label>
+          <select id="equipment-status">
+            <option value="A">{{ _('Active') }}</option>
+            <option value="P">{{ _('Passive') }}</option>
+          </select>
         </div>
 
-        <!-- Equipment Config Status -->
+        <!-- Equipment Config Status (select) -->
         <div class="equip-setting-group">
-          <label>{{ _('Equipment Config Status')}}</label>
-          <input type="text" id="config-status" />
+          <label>{{ _('Equipment Config Status') }}</label>
+          <select id="config-status">
+            <option value="A">{{ _('Active') }}</option>
+            <option value="P">{{ _('Passive') }}</option>
+          </select>
         </div>
 
-        <!-- Communication Protocol -->
+        <!-- Communication Protocol (select) -->
         <div class="equip-setting-group">
-          <label>{{ _('Communication Protocol')}}</label>
-          <input type="text" id="communication-protocol" />
+          <label>{{ _('Communication Protocol') }}</label>
+          <select id="communication-protocol">
+            <option value="1">Modbus RTU</option> <!-- SERIAL -->
+            <option value="2">Modbus TCP</option> <!-- TCP -->
+            <option value="0">Unknown Model</option>
+          </select>
         </div>
 
-        <button class="equip-setting-save-btn">{{ _('Save')}}</button>
+        <!-- Installation Power -->
+        <div class="equip-setting-group">
+          <label>{{ _('Installation Power (W)') }}</label>
+          <input type="number" id="installation-power" />
+        </div>
+
+        <!-- Phase 1 Current -->
+        <div class="equip-setting-group">
+          <label>{{ _('Phase 1 Current (A)') }}</label>
+          <input type="text" id="phase1-current" />
+        </div>
+
+        <!-- Phase 2 Current -->
+        <div class="equip-setting-group">
+          <label>{{ _('Phase 2 Current (A)') }}</label>
+          <input type="text" id="phase2-current" />
+        </div>
+
+        <!-- Phase 3 Current -->
+        <div class="equip-setting-group">
+          <label>{{ _('Phase 3 Current (A)') }}</label>
+          <input type="text" id="phase3-current" />
+        </div>
+
+        <button class="equip-setting-save-btn">{{ _('Save') }}</button>
       </div>
     </div>
   </div>
@@ -198,7 +231,7 @@
 
     equipmentSettingsButton.addEventListener("click", function () {
       sections.forEach((section) => (section.style.display = "none"));
-      equipmentSetList.style.display = "block"; 
+      equipmentSetList.style.display = "block";
       fetchEquipments();
     });
 
@@ -261,14 +294,14 @@
 
     function fetchEquipmentDetails(equipmentId) {
       const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
-    
+
       if (!selectedDeviceIP || !equipmentId) {
         console.warn("Device IP or Equipment ID is missing.");
         return;
       }
-    
+
       console.log("Fetching equipment details for ID:", equipmentId);
-    
+
       fetch("/set_selected_equipment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -277,57 +310,69 @@
         .then((response) => response.json())
         .then((setResponse) => {
           console.log("Equipment ID saved:", equipmentId);
-    
+
           if (setResponse.success) {
             return new Promise((resolve) => setTimeout(resolve, 300));
           } else {
             throw new Error("Failed to set selected equipment");
           }
         })
-        .then(() => 
+        .then(() =>
           Promise.all([
-            fetch("/fetch_equipment_details", { method: "GET" }).then((res) => res.json()),
-            fetch("/get_modem_info").then((res) => res.json())
+            fetch("/fetch_equipment_details", { method: "GET" }).then((res) =>
+              res.json()
+            ),
+            fetch("/get_modem_info").then((res) => res.json()),
           ])
         )
         .then(([equipmentData, modemData]) => {
           console.log("Equipment Details Response:", equipmentData);
           console.log("Modem API Yanıtı:", modemData);
-    
+
           if (equipmentData.status === "success" && equipmentData.data) {
             const equipment = equipmentData.data;
-            const modem = modemData.status === "success" ? modemData.data : null;
-    
+            const modem =
+              modemData.status === "success" ? modemData.data : null;
+
             const updateInput = (id, value) => {
               const input = document.getElementById(id);
-              if (input) input.value = value || "";
+              if (!input) return;
+
+              if (input.tagName === "SELECT") {
+                input.value = value;
+              } else {
+                input.value =
+                  value !== null && value !== undefined ? value : "NULL";
+              }
             };
-    
+
             updateInput("equipment-name", equipment.model_name);
             updateInput("slave-id", equipment.modbus_address || "");
             updateInput("modem-serial", equipment.modem_serial_number || "");
             updateInput("equipment-serial", equipment.serial_number || "");
             updateInput("device-id", equipment.device_id || "");
-            updateInput(
-              "equipment-status",
-              equipment.status === "A" ? "{{ _('Active')}}" : "{{ _('Passive')}}"
-            );
-            updateInput(
-              "config-status",
-              equipment.configuration_data === "A" ? "{{ _('Active')}}" : "{{ _('Passive')}}"
-            );
+            updateInput("equipment-status", equipment.status);
+            updateInput("config-status", equipment.configuration_data);
             updateInput("equipment-brand", equipment.brand_name || "");
-    
             updateInput(
               "communication-protocol",
-              equipment.communication_protocol_code === 1
-                ? "SERIAL"
-                : equipment.communication_protocol_code === 2
-                ? "TCP"
-                : ""
+              equipment.communication_protocol_code !== null &&
+                equipment.communication_protocol_code !== undefined
+                ? equipment.communication_protocol_code.toString()
+                : "0"
             );
-    
-            updateInput("modem-name", modem && modem.name ? modem.name : "{{ _('Modem Not Found')}}");
+
+            updateInput("phase1-current", equipment.phase1_current || "NULL");
+            updateInput("phase2-current", equipment.phase2_current || "NULL");
+            updateInput("phase3-current", equipment.phase3_current || "NULL");
+            updateInput(
+              "installation-power",
+              equipment.installation_power || ""
+            );
+            updateInput(
+              "modem-name",
+              modem && modem.name ? modem.name : "{{ _('Modem Not Found')}}"
+            );
             equipmentSetList.style.display = "none";
             equipmentSettings.style.display = "block";
           } else {
@@ -353,7 +398,8 @@
 
       if (!selectedDeviceIP) {
         console.warn("{{ _('No device selected for Modbus test.')}}");
-        failureMessage.innerText = "{{ _('No device selected for Modbus test')}}.";
+        failureMessage.innerText =
+          "{{ _('No device selected for Modbus test')}}.";
         failureMessage.style.display = "block";
         return;
       }
@@ -386,7 +432,8 @@
             Array.isArray(data.data) &&
             data.data.length > 0
           ) {
-            successMessage.innerText = "{{ _('Modbus connection successful!')}}";
+            successMessage.innerText =
+              "{{ _('Modbus connection successful!')}}";
             successMessage.style.display = "block";
             failureMessage.style.display = "none";
             const device = data.data[0];
@@ -401,7 +448,8 @@
             if (device.bytesize && device.bytesize !== "{{ _('Unknown')}}")
               document.getElementById("byteSizeSelect").value = device.bytesize;
           } else {
-            failureMessage.innerText = "{{ _('Modbus test failed: No valid response')}}";
+            failureMessage.innerText =
+              "{{ _('Modbus test failed: No valid response')}}";
             failureMessage.style.display = "block";
             successMessage.style.display = "none";
           }

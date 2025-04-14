@@ -1306,6 +1306,15 @@ input:-webkit-autofill:focus {
   font-size: 16px;
 }
 
+.equip-setting-group select {
+  background: white;
+  border: none;
+  padding: 6px;
+  border-radius: 4px;
+  width: 50%;
+  font-size: 16px;
+}
+
 .equip-setting-select {
   position: relative;
   width: 50%;
@@ -2240,7 +2249,6 @@ body {
 
 .switch-button {
   color: #fff;
-  border: 1px solid #ccc;
   padding: 19px 113px;
   font-size: 20px;
   font-weight: 600;

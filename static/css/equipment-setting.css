@@ -148,6 +148,15 @@
   font-size: 16px;
 }
 
+.equip-setting-group select {
+  background: white;
+  border: none;
+  padding: 6px;
+  border-radius: 4px;
+  width: 50%;
+  font-size: 16px;
+}
+
 .equip-setting-select {
   position: relative;
   width: 50%;
