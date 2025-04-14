@@ -153,7 +153,7 @@ def arp_scan(ip_range):
     ip_list = []
     for element in answered_list:
         mac_address = element[1].hwsrc.lower()  # MAC adresini küçük harfe çevir
-        if mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c"):
+        if mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c")  or mac_address.startswith("d8"):
             ip_list.append({"ip": element[1].psrc, "mac": mac_address})
 
     return ip_list
@@ -166,7 +166,7 @@ def nmap_scan(ip_range):
     ip_list = []
     for host in nm.all_hosts():
         mac_address = nm[host]["addresses"].get("mac", "")
-        if mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c"):
+        if mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c") or mac_address.startswith("d8"):
             ip_list.append({"ip": host, "mac": mac_address})
 
     return ip_list

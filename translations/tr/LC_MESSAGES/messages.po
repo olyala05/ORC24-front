@@ -940,8 +940,8 @@ msgstr "Obis Ayarları"
 msgid "Modbus connection successful"
 msgstr "Modbus bağlantısı başarılı"
 
-msgid "Modbus connection failed"
-msgstr "Modbus bağlantısı başarısız"
+msgid "Modbus connection failed!"
+msgstr "Modbus bağlantısı başarısız!"
 
 msgid "Equipment Slave ID"
 msgstr "Ekipman Slave Kimliği"
