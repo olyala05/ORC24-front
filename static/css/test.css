@@ -17,12 +17,12 @@
   font-weight: 600;
   cursor: pointer;
   border-radius: 7px;
-  border: 1px solid #0B1734;
+  border: 1px solid #0b1734;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background-color: #0B1734;
+  background-color: #0b1734;
 }
 .switch-button:hover {
   background-color: #091531;
@@ -62,6 +62,7 @@
   display: flex;
   border-radius: 10px;
   width: 100%;
+  gap: 15px;
 }
 
 .btn-group-test {
@@ -84,20 +85,19 @@
   font-size: 16px;
   font-weight: bold;
   background: #f5f5f5;
-  padding: 16px;
+  padding: 15px;
   border-radius: 7px;
   border: none;
   cursor: pointer;
-  width: 210px;
+  width: 231px;
   text-align: left;
-  margin-top: 6px;
 }
 .network-box-test .network-header-test .wifi-icon-test {
   display: flex;
   gap: 10px;
 }
 .network-box-test .network-header-test .wifi-icon-test img {
-  width: 20px;
+  width: 30px;
 }
 .network-box-test .wifi-list-test {
   display: none;
@@ -227,7 +227,6 @@
 }
 
 .wifi-test-action {
-  display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 4px;
@@ -237,9 +236,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 3px;
+  padding: 2px 0;
+}
+
+.wifi-test-head {
+  display: flex;
+  align-items: center;
   margin-bottom: 6px;
   padding: 2px 0;
-  border-bottom: 1px solid #ef742a;
+  gap: 8px;
 }
 
 .wifi-test-input {
@@ -254,7 +260,7 @@
 }
 
 .wifi-test-btn {
-  background: #ef742a;
+  background: #ef8018;
   color: white;
   border: none;
   padding: 9px 45px;
@@ -262,6 +268,8 @@
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
+  width: 100%;
+  margin-bottom: 10px;
 }
 .wifi-test-btn:hover {
   background: #d65f1f;
@@ -277,11 +285,10 @@
 }
 
 .ethernet-container-test {
-  display: flex;
   gap: 15px;
   border-radius: 10px;
   width: 100%;
-  margin-top: 14px;
+  margin-top: 10px;
   justify-content: space-between;
 }
 
@@ -337,10 +344,11 @@
 .wifi-test-box {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 55%;
   padding: 3px 12px;
   border-radius: 10px;
-  margin-bottom: 20px;
+  border: 1px solid #ef8018;
+  background-color: #0b1734;
 }
 
 .ethernet-test-label {
@@ -355,7 +363,6 @@
 }
 
 .ethernet-test-action {
-  display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 9px;
@@ -365,9 +372,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   padding: 2px 0;
-  border-bottom: 1px solid #ef742a;
 }
 
 .ethernet-test-input {
@@ -382,7 +388,7 @@
 }
 
 .ethernet-test-btn {
-  background: #ef742a;
+  background: #ef8018;
   color: white;
   border: none;
   padding: 11px 50px;
@@ -390,6 +396,7 @@
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
+  width: 100%;
 }
 .ethernet-test-btn:hover {
   background: #d65f1f;
@@ -408,9 +415,11 @@
   padding: 19px;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 53%;
   padding: 15px;
   border-radius: 10px;
+  border: 1px solid #ef8018;
+  background-color: #0b1734;
 }
 
 .equipment-test-container {
@@ -845,4 +854,10 @@
   color: red;
   font-size: 14px;
   padding: 10px;
+}
+
+.orange-text {
+  color: #ef8018;
+  font-size: 14px;
+  font-weight: bold;
 }/*# sourceMappingURL=test.css.map */

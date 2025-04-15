@@ -537,7 +537,7 @@ msgid "SOFTWARE VERSION"
 msgstr "YAZILIM SÜRÜMÜ"
 
 msgid "Connected"
-msgstr "Bağlantı var"
+msgstr "Bağlı"
 
 msgid "Not Connected"
 msgstr "Bağlantı yok"
@@ -1209,6 +1209,9 @@ msgstr "Katıl"
 msgid "Network Name"
 msgstr "Ağ Adı"
 
+msgid "Wi-Fi Connection Test"
+msgstr "Wi-Fi Bağlantı Testi"
+
 msgid "Password"
 msgstr "Şifre"
 
@@ -1217,9 +1220,6 @@ msgstr "Bağlantı Durumu"
 
 msgid "No connection"
 msgstr "Bağlantı Yok"
-
-msgid "Connection Mac"
-msgstr "Bağlantı MAC Adresi"
 
 msgid "Test"
 msgstr "Test"
@@ -1240,7 +1240,7 @@ msgid "No connection"
 msgstr "Bağlantı Yok"
 
 msgid "Connection Mac"
-msgstr "Bağlantı MAC Adresi"
+msgstr "MAC Adresi"
 
 msgid "Test"
 msgstr "Test"

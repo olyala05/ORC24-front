@@ -26,13 +26,58 @@
     <!-- Wi-Fi Test -->
     <div id="wifi-test" class="tab-content-test">
       <div class="wifi-container-test">
+
+        <!-- Wi-Fi Bölümü -->
+        <div class="wifi-test-box">
+
+          <!-- ICON -->
+          <div class="wifi-test-head">
+          <img
+                src="{{ url_for('static', filename='images/svg/41.svg') }}"
+                alt="No Wi-Fi" class="wifi-orange-icon"
+              />
+            <label class="orange-text">{{ _('Wi-Fi Connection Test')}}</label>
+          </div>
+
+          <!-- Network Name -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">{{ _('Network Name')}}</label>
+            <span class="wifi-test-value" id="wifiNetworkName">-</span>
+          </div>
+
+          <!-- Password -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">{{ _('Password')}}</label>
+            <span class="wifi-test-value" id="wifiPasswordDisplay">-</span>
+          </div>
+
+          <!-- Connection Status -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">{{ _('Connection Status')}}</label>
+            <span class="wifi-test-value" id="wifiConnectionStatus"
+              >{{ _('No connection')}}</span
+            >
+          </div>
+
+          <!-- Connection Mac -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">{{ _('Connection Mac')}}</label>
+            <span class="wifi-test-value" id="wifiMacAddress">-</span>
+          </div>
+
+          <!-- Test Button ve WiFi Status -->
+          <div class="wifi-test-action">
+            <button class="wifi-test-btn">{{ _('Test')}}</button>
+          </div>
+        </div>
+
         <!-- Available Wi-Fi -->
         <div class="network-box-test">
           <button class="network-header-test" id="wifiToggleBtn">
             {{ _('Available Wi-Fi')}}
             <span class="wifi-icon-test">
               <img
-                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                src="{{ url_for('static', filename='images/svg/43.svg') }}"
                 alt="Wi-Fi Icon"
               />
             </span>
@@ -75,77 +120,23 @@
           </div>
         </div>
 
-        <!-- Wi-Fi Bölümü -->
-        <div class="wifi-test-box">
-          <!-- Network Name -->
-          <div class="wifi-test-row">
-            <label class="wifi-test-label">{{ _('Network Name')}}</label>
-            <span class="wifi-test-value" id="wifiNetworkName">-</span>
-          </div>
-
-          <!-- Password -->
-          <div class="wifi-test-row">
-            <label class="wifi-test-label">{{ _('Password')}}</label>
-            <span class="wifi-test-value" id="wifiPasswordDisplay">-</span>
-          </div>
-
-          <!-- Connection Status -->
-          <div class="wifi-test-row">
-            <label class="wifi-test-label">{{ _('Connection Status')}}</label>
-            <span class="wifi-test-value" id="wifiConnectionStatus"
-              >{{ _('No connection')}}</span
-            >
-          </div>
-
-          <!-- Connection Mac -->
-          <div class="wifi-test-row">
-            <label class="wifi-test-label">{{ _('Connection Mac')}}</label>
-            <span class="wifi-test-value" id="wifiMacAddress">-</span>
-          </div>
-
-          <!-- Test Button ve WiFi Status -->
-          <div class="wifi-test-action">
-            <button class="wifi-test-btn">{{ _('Test')}}</button>
-            <div style="display: flex; flex-direction: column; gap: 5px">
-              <span class="wifi-success" id="wifiSuccess" style="display: none">
-                <img
-                  src="{{ url_for('static', filename='images/svg/13.svg') }}"
-                  alt="No Wi-Fi"
-                  class="ethernet-icon"
-                />
-                {{ _('WiFi Connection Successful.')}}
-              </span>
-              <span class="wifi-failed" id="wifiFailed" style="display: none">
-                <img
-                  src="{{ url_for('static', filename='images/svg/14.svg') }}"
-                  alt="No Wi-Fi"
-                  class="ethernet-icon"
-                />
-                {{ _('WiFi Connection Failed.')}}
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
-
-      <!--Burada bir beyaz çizgi geçmeli -->
-      <div class="white-line-break"></div>
 
       <!-- Ethernet Bölümü -->
       <div id="ethernet-test">
         <div class="ethernet-container-test">
-          <!-- Ethernet Box -->
-          <div class="ethernet-box-test">
-            <img
-              src="{{ url_for('static', filename='images/svg/24.svg') }}"
-              alt="No Wi-Fi"
-              class="ethernet-icon"
-            />
-            <span class="ethernet-text">{{ _('Ethernet')}}</span>
-          </div>
 
           <!-- Ethernet Test Paneli -->
           <div class="ethernet-test-box">
+
+            <!-- ICON -->
+          <div class="wifi-test-head">
+          <img
+                src="{{ url_for('static', filename='images/svg/44.svg') }}"
+                alt="No Wi-Fi" class="wifi-orange-icon"
+              />
+            <label class="orange-text">{{ _('Wi-Fi Connection Test')}}</label>
+          </div>
             <!-- Connection Status -->
             <div class="ethernet-test-row">
               <label class="ethernet-test-label"
@@ -197,6 +188,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -238,7 +230,7 @@
                   style="display: none"
                 ></span>
               </button>
-              <span id="scan-status" style="display: none; color: green">
+              <span id="scan-status" style="display: none; color: #00C16A">
                 {{ _('Scanning in progress...')}}
               </span>
             </div>
@@ -633,13 +625,13 @@
                 ? password
                 : "{{ _('No Password')}}";
               connectionStatusSpan.textContent = "{{ _('Connected')}}";
-              connectionStatusSpan.style.color = "green";
+              connectionStatusSpan.style.color = "#00C16A";
               macAddressSpan.textContent = macAddress || "{{ _('Unknown')}}";
               wifiSuccess.style.display = "block";
               wifiFailed.style.display = "none";
             } else {
               connectionStatusSpan.textContent = "{{ _('No connection')}}";
-              connectionStatusSpan.style.color = "red";
+              connectionStatusSpan.style.color = "#EF4444";
               wifiSuccess.style.display = "none";
               wifiFailed.style.display = "block";
             }
@@ -647,13 +639,13 @@
             // Ethernet Bilgilerini Güncelle
             if (ethernetConnected) {
               ethernetStatusSpan.textContent = "{{ _('Connected')}}";
-              ethernetStatusSpan.style.color = "green";
+              ethernetStatusSpan.style.color = "#00C16A";
               ethernetMacSpan.textContent = ethernetMac || "{{ _('Unknown')}}";
               ethernetSuccess.style.display = "block";
               ethernetFailed.style.display = "none";
             } else {
               ethernetStatusSpan.textContent = "{{ _('No connection')}}";
-              ethernetStatusSpan.style.color = "red";
+              ethernetStatusSpan.style.color = "#EF4444";
               ethernetSuccess.style.display = "none";
               ethernetFailed.style.display = "block";
             }
@@ -750,7 +742,7 @@
             networkNameSpan.textContent = ssid;
             passwordSpan.textContent = password ? password : "No Password";
             connectionStatusSpan.textContent = `{{_('Connected')}}`;
-            connectionStatusSpan.style.color = "green";
+            connectionStatusSpan.style.color = "#00C16A";
 
             getNetworkDetails(true);
             closeWifiPopup();
@@ -761,7 +753,7 @@
               text: data.message || "{{ _('Failed to connect to Wi-Fi.')}}",
             });
             connectionStatusSpan.textContent = "No connection";
-            connectionStatusSpan.style.color = "red";
+            connectionStatusSpan.style.color = "#EF4444";
           }
         })
         .catch((error) => {
@@ -772,7 +764,7 @@
             text: "An error occurred while connecting to Wi-Fi.",
           });
           connectionStatusSpan.textContent = "No connection";
-          connectionStatusSpan.style.color = "red";
+          connectionStatusSpan.style.color = "#EF4444";
         })
         .finally(() => {
           joinButton.innerHTML = "Join";
@@ -918,10 +910,10 @@
       let text = td.innerText.trim();
 
       if (text === "A") {
-        td.style.color = "green";
+        td.style.color = "#00C16A";
         td.style.fontWeight = "bold";
       } else if (text === "P") {
-        td.style.color = "red";
+        td.style.color = "#ef4444";
         td.style.fontWeight = "bold";
       }
     });
@@ -982,7 +974,7 @@
       .catch((error) => {
         console.error("Error during scanning:", error);
         document.getElementById("scan-status").textContent = "Scanning failed!";
-        document.getElementById("scan-status").style.color = "red";
+        document.getElementById("scan-status").style.color = "#ef4444";
       })
       .finally(() => {
         document.getElementById("scan-spinner").style.display = "none";
@@ -1028,7 +1020,7 @@
       row.innerHTML = `
         <td>${item.model_name}</td>
         <td>${sidOrIP}</td>
-        <td class="status-static" style="color: red; font-weight: bold;">P / P</td>
+        <td class="status-static" style="color: #ef4444; font-weight: bold;">P / P</td>
         <td>-</td>
         <td>-</td>
         <td>-</td>
@@ -1047,7 +1039,7 @@
     if (!selectedDeviceIP) {
       console.warn("⚠ No device selected for fetching equipments.");
       document.getElementById("equipment-table-body").innerHTML =
-        "<tr><td colspan='6' style='color: red;'>⚠ No device selected.</td></tr>";
+        "<tr><td colspan='6' style='color: #ef4444;'>⚠ No device selected.</td></tr>";
       return;
     }
 
@@ -1069,13 +1061,13 @@
         } else {
           console.warn("No equipments found.");
           document.getElementById("equipment-table-body").innerHTML =
-            "<tr><td colspan='6' style='color: red;'>No equipments found</td></tr>";
+            "<tr><td colspan='6' style='color: #ef4444;'>No equipments found</td></tr>";
         }
       })
       .catch((error) => {
         console.error("Error fetching equipments:", error);
         document.getElementById("equipment-table-body").innerHTML =
-          "<tr><td colspan='6' style='color: red;'>⚠ Error fetching equipments</td></tr>";
+          "<tr><td colspan='6' style='color: #ef4444;'>⚠ Error fetching equipments</td></tr>";
       });
   }
 
@@ -1084,7 +1076,7 @@
 
     if (!equipments || equipments.length === 0) {
       tableBody.innerHTML =
-        "<tr><td colspan='6' style='color: red;'>No equipment found</td></tr>";
+        "<tr><td colspan='6' style='color: #ef4444;'>No equipment found</td></tr>";
       return;
     }
 
@@ -1094,12 +1086,12 @@
          <td>${equipment.model_name || "Unknown"}</td>
          <td>${equipment.modbus_address || "N/A"}</td>
          <td style="color: ${
-           equipment.status === "A" ? "green" : "red"
+           equipment.status === "A" ? "#00C16A" : "#ef4444"
          }; font-weight: bold;">
            ${equipment.status}
          </td>
          <td style="color: ${
-           equipment.configuration_data === "A" ? "green" : "red"
+           equipment.configuration_data === "A" ? "#00C16A" : "#ef4444"
          }; font-weight: bold;">
           ${
             equipment.configuration_data === "A"
@@ -1418,7 +1410,7 @@
 <style>
   .connected-wifi {
     font-weight: bold;
-    color: green;
+    color: #00C16A;
   }
 
   .popup-overlay {
@@ -1509,7 +1501,7 @@
   }
 
   .error {
-    color: red;
+    color: #ef4444;
     font-size: 14px;
   }
 
@@ -1559,7 +1551,7 @@
   }
 
   .status-static {
-    color: red !important;
+    color: #ef4444 !important;
     font-weight: bold;
   }
 
@@ -1593,11 +1585,11 @@
   }
 
   .status-green {
-    border-color: green;
+    border-color: #00C16A;
   }
 
   .status-red {
-    border-color: red;
+    border-color: #ef4444;
   }
 </style>
 
