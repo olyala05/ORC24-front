@@ -412,6 +412,9 @@ msgstr "Bağlantı sırasında bir hata oluştu."
 msgid "Ok"
 msgstr "Tamam"
 
+msgid "Scanning Equipments"
+msgstr "Ekipmanlar Taranıyor"
+
 msgid "Connecting to the device , please wait..."
 msgstr "Cihaza bağlanıyor, lütfen bekleyiniz..."
 

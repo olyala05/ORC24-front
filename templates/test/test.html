@@ -235,29 +235,51 @@
       </div>
     </div>
 
-      <div id="equipmentModal" class="popup-overlay" style="display: none;">
-        <div class="popup-content" style="width: 500px;">
-          <h3 style="color: #EF8018; margin-bottom: 10px;">  
-            <i class="fa-solid fa-circle-exclamation" style="color: orange; margin: 8px; font-size: 22px;"></i>
-            Yeni Ekipman Bulundu
-          </h3>
-          <table style="width: 100%; color: #fff; border-spacing: 0 10px; text-align: center;">
-            <thead>
-              <tr>
-                <th>Serial:</th>
-                <th>SID/IP:</th>
-                <th>Protokol:</th>
-              </tr>
-            </thead>
-            <tbody id="modalEquipmentBody"></tbody>
-          </table>
-          <div style="margin-top: 20px; text-align: center;">
-            <button onclick="closeEquipmentModal()" class="close-equipment-modal">
-              {{ _('Ok') }}
-            </button>
-          </div>
+    <!-- Modal -->
+    <div id="equipmentModal" class="popup-overlay" style="display: none">
+      <div class="popup-content" style="width: 500px">
+        <h3 style="color: #ef8018; margin-bottom: 10px;">
+          <i
+            class="fa-solid fa-circle-exclamation"
+            style="color: orange; margin: 8px; font-size: 22px"
+          ></i>
+          Yeni Ekipman Bulundu
+        </h3>
+
+        <!-- Spinner + Loading -->
+        <div id="equipment-loading" style="text-align: center; padding: 20px">
+          <div class="spinner" style="margin: 0 auto"></div>
+          <p style="margin-top: 10px">{{ _('Scanning in progress...') }}</p>
+        </div>
+
+        <!-- Tablo -->
+        <table
+          id="equipment-table"
+          style="
+            width: 100%;
+            color: #fff;
+            border-spacing: 0 10px;
+            text-align: center;
+            display: none;
+          "
+        >
+          <thead>
+            <tr>
+              <th>Serial:</th>
+              <th>SID/IP:</th>
+              <th>Protokol:</th>
+            </tr>
+          </thead>
+          <tbody id="modalEquipmentBody"></tbody>
+        </table>
+
+        <div id="equipment-ok-button" style="margin-top: 20px; text-align: center; display: none;">
+          <button onclick="closeEquipmentModal()" class="close-equipment-modal">
+            {{ _('Ok') }}
+          </button>
         </div>
       </div>
+    </div>
 
     <!-- Cloud Connection Test -->
     <div id="cloud-test" class="cloud-test-container tab-content-test">
@@ -924,12 +946,14 @@
   let previousEquipmentData = [];
 
   function startScanning() {
-    console.log("Scanning started...");
-    document.getElementById("scan-status").style.display = "inline";
-    document.getElementById("scan-status").textContent =
-      "Scanning in progress...";
-
+    // Spinner'ı göster
     document.getElementById("scan-spinner").style.display = "inline-block";
+
+    // Modal açılırken hiçbir şey kapanamasın
+    document.getElementById("equipmentModal").style.display = "flex";
+    document.getElementById("equipment-loading").style.display = "block";
+    document.getElementById("equipment-table").style.display = "none";
+    document.getElementById("equipment-ok-button").style.display = "none";
 
     fetch("/get_slave_data", {
       method: "GET",
@@ -937,95 +961,94 @@
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Backend'den Gelen Veri:", data);
-        const tableBody = document.getElementById("equipment-table-body");
-
         if (
           data.status === "success" &&
           Array.isArray(data.data) &&
           data.data.length > 0
         ) {
-          console.log("Yeni cihazlar bulundu!");
+          const newEquipments = data.data.filter(
+            (item) =>
+              !previousEquipmentData.some(
+                (prev) =>
+                  prev.slave_id === item.slave_id &&
+                  prev.model_name === item.model_name &&
+                  prev.ip === item.ip
+              )
+          );
 
-          // **Boş mesajını kaldır**
-          const emptyMessage = document.getElementById("empty-message-row");
-          if (emptyMessage) {
-            emptyMessage.remove();
-          }
-
-          addNewDataToTable(data.data);
+          previousEquipmentData = [...previousEquipmentData, ...newEquipments];
+          showEquipmentModal(newEquipments);
         } else {
-          console.warn("No new data found.");
-
-          const emptyRow = document.createElement("tr");
-          emptyRow.id = "empty-message-row";
-          const emptyCell = document.createElement("td");
-          emptyCell.setAttribute("colspan", "6");
-          emptyCell.classList.add("empty-message");
-          emptyCell.textContent = "Equipments is Empty";
-          emptyRow.appendChild(emptyCell);
-          tableBody.appendChild(emptyRow);
+          document.getElementById(
+            "equipment-loading"
+          ).innerHTML = `<p style="color: #ef4444;">Yeni ekipman bulunamadı.</p>`;
+          document.getElementById("equipment-ok-button").style.display = "block"; // Tarama sonucu boşsa da buton açılsın
         }
-
-        document.getElementById("scan-status").style.display = "none";
       })
       .catch((error) => {
         console.error("Error during scanning:", error);
-        document.getElementById("scan-status").textContent = "Scanning failed!";
-        document.getElementById("scan-status").style.color = "#ef4444";
+        document.getElementById(
+          "equipment-loading"
+        ).innerHTML = `<p style="color: #ef4444;">Tarama sırasında hata oluştu.</p>`;
+        document.getElementById("equipment-ok-button").style.display = "block"; // Hata varsa yine buton açılsın
       })
       .finally(() => {
         document.getElementById("scan-spinner").style.display = "none";
       });
   }
 
-    function addNewDataToTable(newData) {
-      console.log("Yeni cihazlar sadece popup'ta gösterilecek...");
-      
-      const newEquipments = newData.filter(
-        (item) =>
-          !previousEquipmentData.some(
-            (prev) =>
-              prev.slave_id === item.slave_id &&
-              prev.model_name === item.model_name &&
-              prev.ip === item.ip
-          )
-      );
+  function showEquipmentModal(equipments) {
+    const modalBody = document.getElementById("modalEquipmentBody");
+    modalBody.innerHTML = "";
 
-      if (newEquipments.length === 0) {
-        console.log("Yeni veri bulunamadı.");
-        return;
-      }
+    equipments.forEach((item) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.model_name || "-"}</td>
+        <td>${item.ip || "-"}</td>
+        <td>Modbus</td>
+      `;
+      modalBody.appendChild(row);
+    });
 
-      // ✅ Sadece modal'ı göster
-      showEquipmentModal(newEquipments);
-
-      // ✅ Yeni verileri sakla (bir daha tekrar göstermemek için)
-      previousEquipmentData = [...previousEquipmentData, ...newEquipments];
-    }
-
-    function showEquipmentModal(equipments) {
-      const modalBody = document.getElementById("modalEquipmentBody");
-      modalBody.innerHTML = "";
-
-      equipments.forEach(item => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${item.model_name || '-'}</td>
-          <td>${item.ip || '-'}</td>
-          <td>Modbus</td>
-        `;
-        modalBody.appendChild(row);
-      });
-
-      document.getElementById("equipmentModal").style.display = "flex";
-    }
-
+    // Spinner'ı gizle, tabloyu göster, butonu göster
+    document.getElementById("equipment-loading").style.display = "none";
+    document.getElementById("equipment-table").style.display = "table";
+    document.getElementById("equipment-ok-button").style.display = "block";
+  }
 
   function closeEquipmentModal() {
     document.getElementById("equipmentModal").style.display = "none";
   }
 
+  function addNewDataToTable(newData) {
+    console.log("Yeni cihazlar sadece popup'ta gösterilecek...");
+
+    const newEquipments = newData.filter(
+      (item) =>
+        !previousEquipmentData.some(
+          (prev) =>
+            prev.slave_id === item.slave_id &&
+            prev.model_name === item.model_name &&
+            prev.ip === item.ip
+        )
+    );
+
+    if (newEquipments.length === 0) {
+      console.log("Yeni veri bulunamadı.");
+      return;
+    }
+
+    // ✅ Sadece modal'ı göster
+    showEquipmentModal(newEquipments);
+
+    // ✅ Yeni verileri sakla (bir daha tekrar göstermemek için)
+    previousEquipmentData = [...previousEquipmentData, ...newEquipments];
+  }
+
+  function closeEquipmentModal() {
+    document.getElementById("equipmentModal").style.display = "none";
+  }
 
   function fetchEquipments() {
     console.log("fetchEquipments() çağrıldı!");
@@ -1399,7 +1422,6 @@
     // Bulut bağlantısını her 10 saniyede bir kontrol et
     setInterval(updateCloudStatus, 10000);
   });
-
 </script>
 
 <style>
@@ -1408,25 +1430,18 @@
     color: #00c16a;
   }
 
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(2px); 
-  background: rgba(255, 255, 255, 0.05);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-  .popup-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(2px);
+    background: rgba(255, 255, 255, 0.05);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
   }
 
   .popup-buttons {
@@ -1435,10 +1450,27 @@
     margin-top: 10px;
   }
 
+  .popup-content {
+    background: #0b1734;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ef8018;
+  }
+
+  .popup-content table {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .popup-content th {
+    text-align: center;
+  }
+
   .spinner {
     display: inline-block;
-    width: 13px;
-    height: 13px;
+    width: 30px;
+    height: 30px;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-top: 2px solid #fff;
     border-radius: 50%;
@@ -1587,38 +1619,6 @@
   .status-red {
     border-color: #ef4444;
   }
-
-  .popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.popup-content {
-  background: #0b1734;
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #EF8018;
-}
-
-.popup-content table {
-  margin: 0 auto;
-  text-align: center;
-}
-
-.popup-content th {
-  text-align: center;
-}
-
-
 </style>
 
 {% endblock %}
