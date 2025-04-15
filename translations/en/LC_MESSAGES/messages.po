@@ -612,8 +612,8 @@ msgstr "Unexpected error:"
 msgid "Frequency (Hz)"
 msgstr "Frequency (Hz)"
 
-msgid "Reactive Penalty"
-msgstr "Reactive Penalty"
+msgid "Penalty"
+msgstr "Penalty"
 
 msgid "Does not Exist"
 msgstr "Does not Exist"
