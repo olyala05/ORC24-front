@@ -235,51 +235,43 @@
       </div>
     </div>
 
-    <!-- Modal -->
-    <div id="equipmentModal" class="popup-overlay" style="display: none">
-      <div class="popup-content" style="width: 500px">
-        <h3 style="color: #ef8018; margin-bottom: 10px;">
-          <i
-            class="fa-solid fa-circle-exclamation"
-            style="color: orange; margin: 8px; font-size: 22px"
-          ></i>
-          Yeni Ekipman Bulundu
-        </h3>
+      <!-- Modal -->
+      <div id="equipmentModal" class="popup-overlay" style="display: none">
+        <div class="popup-content" style="width: 500px">
+          <!-- Bu başlığı tarama bitince göstereceğiz -->
+          <h3 id="equipment-found-title" style="color: #ef8018; margin-bottom: 10px; display: none;">
+            <i class="fa-solid fa-circle-exclamation" style="color: orange; margin: 8px; font-size: 22px"></i>
+            Yeni Ekipman Bulundu
+          </h3>
 
-        <!-- Spinner + Loading -->
-        <div id="equipment-loading" style="text-align: center; padding: 20px">
-          <div class="spinner" style="margin: 0 auto"></div>
-          <p style="margin-top: 10px">{{ _('Scanning in progress...') }}</p>
-        </div>
+          <!-- Spinner + Loading -->
+          <div id="equipment-loading" style="text-align: center; padding: 20px">
+            <p style="margin-top: 10px">{{ _('Scanning in progress...') }}</p>
+            <div class="spinner" style="margin: 0 auto"></div>
+          </div>
 
-        <!-- Tablo -->
-        <table
-          id="equipment-table"
-          style="
-            width: 100%;
-            color: #fff;
-            border-spacing: 0 10px;
-            text-align: center;
-            display: none;
-          "
-        >
-          <thead>
-            <tr>
-              <th>Serial:</th>
-              <th>SID/IP:</th>
-              <th>Protokol:</th>
-            </tr>
-          </thead>
-          <tbody id="modalEquipmentBody"></tbody>
-        </table>
+          <!-- Tablo -->
+          <table
+            id="equipment-table"
+            style="width: 100%; color: #fff; border-spacing: 0 10px; text-align: center; display: none;">
+            <thead>
+              <tr>
+                <th>Serial:</th>
+                <th>SID/IP:</th>
+                <th>Protokol:</th>
+              </tr>
+            </thead>
+            <tbody id="modalEquipmentBody"></tbody>
+          </table>
 
-        <div id="equipment-ok-button" style="margin-top: 20px; text-align: center; display: none;">
-          <button onclick="closeEquipmentModal()" class="close-equipment-modal">
-            {{ _('Ok') }}
-          </button>
+          <div id="equipment-ok-button" style="margin-top: 20px; text-align: center; display: none;">
+            <button onclick="closeEquipmentModal()" class="close-equipment-modal">
+              {{ _('Ok') }}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+
 
     <!-- Cloud Connection Test -->
     <div id="cloud-test" class="cloud-test-container tab-content-test">
@@ -949,9 +941,10 @@
     // Spinner'ı göster
     document.getElementById("scan-spinner").style.display = "inline-block";
 
-    // Modal açılırken hiçbir şey kapanamasın
+    // Modal açılırken: sadece yükleme göster, başlık gizli
     document.getElementById("equipmentModal").style.display = "flex";
     document.getElementById("equipment-loading").style.display = "block";
+    document.getElementById("equipment-found-title").style.display = "none"; // 👈 burası eklendi
     document.getElementById("equipment-table").style.display = "none";
     document.getElementById("equipment-ok-button").style.display = "none";
 
@@ -979,18 +972,14 @@
           previousEquipmentData = [...previousEquipmentData, ...newEquipments];
           showEquipmentModal(newEquipments);
         } else {
-          document.getElementById(
-            "equipment-loading"
-          ).innerHTML = `<p style="color: #ef4444;">Yeni ekipman bulunamadı.</p>`;
-          document.getElementById("equipment-ok-button").style.display = "block"; // Tarama sonucu boşsa da buton açılsın
+          document.getElementById("equipment-loading").innerHTML = `<p style="color: #ef4444;">Yeni ekipman bulunamadı.</p>`;
+          document.getElementById("equipment-ok-button").style.display = "block";
         }
       })
       .catch((error) => {
         console.error("Error during scanning:", error);
-        document.getElementById(
-          "equipment-loading"
-        ).innerHTML = `<p style="color: #ef4444;">Tarama sırasında hata oluştu.</p>`;
-        document.getElementById("equipment-ok-button").style.display = "block"; // Hata varsa yine buton açılsın
+        document.getElementById("equipment-loading").innerHTML = `<p style="color: #ef4444;">Tarama sırasında hata oluştu.</p>`;
+        document.getElementById("equipment-ok-button").style.display = "block";
       })
       .finally(() => {
         document.getElementById("scan-spinner").style.display = "none";
@@ -1011,8 +1000,9 @@
       modalBody.appendChild(row);
     });
 
-    // Spinner'ı gizle, tabloyu göster, butonu göster
+    // Tarama bittiğinde: yükleme gizlenir, başlık ve tablo gösterilir
     document.getElementById("equipment-loading").style.display = "none";
+    document.getElementById("equipment-found-title").style.display = "block"; // 👈 burası eklendi
     document.getElementById("equipment-table").style.display = "table";
     document.getElementById("equipment-ok-button").style.display = "block";
   }
@@ -1455,7 +1445,7 @@
     color: white;
     padding: 20px;
     border-radius: 10px;
-    border: 1px solid #ef8018;
+    border: 2px solid #ef8018;
   }
 
   .popup-content table {
