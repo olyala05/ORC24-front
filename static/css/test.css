@@ -861,4 +861,15 @@
   color: #ef8018;
   font-size: 14px;
   font-weight: bold;
+}
+
+.close-equipment-modal {
+  background-color: #EF8018;
+  color: white;
+  padding: 13px;
+  border: none;
+  border-radius: 5px;
+  width: 200px;
+  font-size: 16px;
+  font-weight: 600;
 }/*# sourceMappingURL=test.css.map */

@@ -235,6 +235,30 @@
       </div>
     </div>
 
+      <div id="equipmentModal" class="popup-overlay" style="display: none;">
+        <div class="popup-content" style="width: 500px;">
+          <h3 style="color: #EF8018; margin-bottom: 10px;">  
+            <i class="fa-solid fa-circle-exclamation" style="color: orange; margin: 8px; font-size: 22px;"></i>
+            Yeni Ekipman Bulundu
+          </h3>
+          <table style="width: 100%; color: #fff; border-spacing: 0 10px; text-align: center;">
+            <thead>
+              <tr>
+                <th>Serial:</th>
+                <th>SID/IP:</th>
+                <th>Protokol:</th>
+              </tr>
+            </thead>
+            <tbody id="modalEquipmentBody"></tbody>
+          </table>
+          <div style="margin-top: 20px; text-align: center;">
+            <button onclick="closeEquipmentModal()" class="close-equipment-modal">
+              {{ _('Ok') }}
+            </button>
+          </div>
+        </div>
+      </div>
+
     <!-- Cloud Connection Test -->
     <div id="cloud-test" class="cloud-test-container tab-content-test">
       <div class="cloud-test-card">
@@ -955,56 +979,53 @@
       });
   }
 
-  function addNewDataToTable(newData) {
-    console.log("Yeni cihazlar tabloya ekleniyor...");
-    const tableBody = document.getElementById("equipment-table-body");
+    function addNewDataToTable(newData) {
+      console.log("Yeni cihazlar sadece popup'ta gösterilecek...");
+      
+      const newEquipments = newData.filter(
+        (item) =>
+          !previousEquipmentData.some(
+            (prev) =>
+              prev.slave_id === item.slave_id &&
+              prev.model_name === item.model_name &&
+              prev.ip === item.ip
+          )
+      );
 
-    const newEquipments = newData.filter(
-      (item) =>
-        !previousEquipmentData.some(
-          (prev) =>
-            prev.slave_id === item.slave_id &&
-            prev.model_name === item.model_name &&
-            prev.ip === item.ip
-        )
-    );
+      if (newEquipments.length === 0) {
+        console.log("Yeni veri bulunamadı.");
+        return;
+      }
 
-    if (newEquipments.length === 0) {
-      console.log("Yeni veri bulunamadı.");
-      return;
+      // ✅ Sadece modal'ı göster
+      showEquipmentModal(newEquipments);
+
+      // ✅ Yeni verileri sakla (bir daha tekrar göstermemek için)
+      previousEquipmentData = [...previousEquipmentData, ...newEquipments];
     }
 
-    // **Yeni satırdan önce bir separator ekleyelim**
-    const separatorRow = document.createElement("tr");
-    separatorRow.innerHTML = `<td colspan="6" class="new-equipment-separator">New Equipment Scan Results</td>`;
-    tableBody.appendChild(separatorRow);
+    function showEquipmentModal(equipments) {
+      const modalBody = document.getElementById("modalEquipmentBody");
+      modalBody.innerHTML = "";
 
-    newEquipments.forEach((item) => {
-      const row = document.createElement("tr");
+      equipments.forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.model_name || '-'}</td>
+          <td>${item.ip || '-'}</td>
+          <td>Modbus</td>
+        `;
+        modalBody.appendChild(row);
+      });
 
-      let sidOrIP =
-        item.slave_id && item.ip
-          ? `Slave ID: ${item.slave_id} | IP: ${item.ip}`
-          : item.slave_id
-          ? `Slave ID: ${item.slave_id}`
-          : item.ip
-          ? `IP: ${item.ip}`
-          : "N/A";
+      document.getElementById("equipmentModal").style.display = "flex";
+    }
 
-      row.innerHTML = `
-        <td>${item.model_name}</td>
-        <td>${sidOrIP}</td>
-        <td class="status-static" style="color: #ef4444; font-weight: bold;">P / P</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-      `;
-      tableBody.appendChild(row);
-    });
 
-    // **Yeni eklenen verileri sakla**
-    previousEquipmentData = [...previousEquipmentData, ...newEquipments];
+  function closeEquipmentModal() {
+    document.getElementById("equipmentModal").style.display = "none";
   }
+
 
   function fetchEquipments() {
     console.log("fetchEquipments() çağrıldı!");
@@ -1378,7 +1399,7 @@
     // Bulut bağlantısını her 10 saniyede bir kontrol et
     setInterval(updateCloudStatus, 10000);
   });
-  
+
 </script>
 
 <style>
@@ -1497,11 +1518,6 @@
     border-radius: 3px;
     font-weight: 600;
   }
-
-  .equipment-scan-btn:hover {
-    background-color: #2980b9;
-  }
-
   .loader {
     width: 14px;
     height: 14px;
@@ -1569,6 +1585,38 @@
   .status-red {
     border-color: #ef4444;
   }
+
+  .popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-content {
+  background: #0b1734;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #EF8018;
+}
+
+.popup-content table {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.popup-content th {
+  text-align: center;
+}
+
+
 </style>
 
 {% endblock %}
