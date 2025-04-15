@@ -226,52 +226,56 @@
             id="scan-btn"
           >
             {{ _('Perform a scanning test') }}
-            <span id="scan-spinner" class="loader" style="display: none"></span>
+            
           </button>
           <span id="scan-status" style="display: none; color: #00c16a">
-            {{ _('Scanning in progress...') }}
+            {{ _('Scanning Equipments') }}
           </span>
         </div>
       </div>
     </div>
 
-      <!-- Modal -->
-      <div id="equipmentModal" class="popup-overlay" style="display: none">
-        <div class="popup-content" style="width: 500px">
-          <!-- Bu başlığı tarama bitince göstereceğiz -->
-          <h3 id="equipment-found-title" style="color: #ef8018; margin-bottom: 10px; display: none;">
-            <i class="fa-solid fa-circle-exclamation" style="color: orange; margin: 8px; font-size: 22px"></i>
-            Yeni Ekipman Bulundu
-          </h3>
+    <!-- Modal -->
+    <div id="equipmentModal" class="popup-overlay" style="display: none">
+      <div class="popup-content" style="width: 500px">
+        <!-- Tarama tamamlandığında sadece varsa gösterilecek -->
+        <h3 id="equipment-found-title" style="color: #ef8018; margin-bottom: 10px; display: none;">
+          <i class="fa-solid fa-circle-exclamation" style="color: orange; margin: 8px; font-size: 22px"></i>
+          {{ _('New Equipment Found') }}
+        </h3>
 
-          <!-- Spinner + Loading -->
-          <div id="equipment-loading" style="text-align: center; padding: 20px">
-            <p style="margin-top: 10px">{{ _('Scanning in progress...') }}</p>
-            <div class="spinner" style="margin: 0 auto"></div>
-          </div>
+        <!-- Tarama sonucu bulunamadı mesajı -->
+        <p id="equipment-not-found-message" style="color: #ef4444; text-align: center; display: none;">
+          Ekipman bulunamadı.
+        </p>
 
-          <!-- Tablo -->
-          <table
-            id="equipment-table"
-            style="width: 100%; color: #fff; border-spacing: 0 10px; text-align: center; display: none;">
-            <thead>
-              <tr>
-                <th>Serial:</th>
-                <th>SID/IP:</th>
-                <th>Protokol:</th>
-              </tr>
-            </thead>
-            <tbody id="modalEquipmentBody"></tbody>
-          </table>
+        <!-- Spinner + Loading -->
+        <div id="equipment-loading" style="text-align: center; padding: 20px">
+          <p style="margin-top: 10px">{{ _('Scanning Equipments') }}</p>
+          <div class="spinner" style="margin: 0 auto"></div>
+        </div>
 
-          <div id="equipment-ok-button" style="margin-top: 20px; text-align: center; display: none;">
-            <button onclick="closeEquipmentModal()" class="close-equipment-modal">
-              {{ _('Ok') }}
-            </button>
-          </div>
+        <!-- Tablo -->
+        <table
+          id="equipment-table"
+          style="width: 100%; color: #fff; border-spacing: 0 10px; text-align: center; display: none;">
+          <thead>
+            <tr>
+              <th>Serial:</th>
+              <th>SID/IP:</th>
+              <th>Protokol:</th>
+            </tr>
+          </thead>
+          <tbody id="modalEquipmentBody"></tbody>
+        </table>
+
+        <div id="equipment-ok-button" style="margin-top: 20px; text-align: center; display: none;">
+          <button onclick="closeEquipmentModal()" class="close-equipment-modal">
+            {{ _('Ok') }}
+          </button>
         </div>
       </div>
-
+    </div>
 
     <!-- Cloud Connection Test -->
     <div id="cloud-test" class="cloud-test-container tab-content-test">
@@ -937,104 +941,113 @@
 
   let previousEquipmentData = [];
 
-  function startScanning() {
-    // Spinner'ı göster
-    document.getElementById("scan-spinner").style.display = "inline-block";
+function startScanning() {
+  // Sadece modal gösterimi
+  document.getElementById("equipmentModal").style.display = "flex";
+  document.getElementById("equipment-loading").style.display = "block";
+  document.getElementById("equipment-found-title").style.display = "none";
+  document.getElementById("equipment-not-found-message").style.display = "none";
+  document.getElementById("equipment-table").style.display = "none";
+  document.getElementById("equipment-ok-button").style.display = "none";
 
-    // Modal açılırken: sadece yükleme göster, başlık gizli
-    document.getElementById("equipmentModal").style.display = "flex";
-    document.getElementById("equipment-loading").style.display = "block";
-    document.getElementById("equipment-found-title").style.display = "none"; // 👈 burası eklendi
-    document.getElementById("equipment-table").style.display = "none";
-    document.getElementById("equipment-ok-button").style.display = "none";
+  fetch("/get_slave_data", {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (
+        data.status === "success" &&
+        Array.isArray(data.data) &&
+        data.data.length > 0
+      ) {
+        const newEquipments = data.data.filter(
+          (item) =>
+            !previousEquipmentData.some(
+              (prev) =>
+                prev.slave_id === item.slave_id &&
+                prev.model_name === item.model_name &&
+                prev.ip === item.ip
+            )
+        );
 
-    fetch("/get_slave_data", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (
-          data.status === "success" &&
-          Array.isArray(data.data) &&
-          data.data.length > 0
-        ) {
-          const newEquipments = data.data.filter(
-            (item) =>
-              !previousEquipmentData.some(
-                (prev) =>
-                  prev.slave_id === item.slave_id &&
-                  prev.model_name === item.model_name &&
-                  prev.ip === item.ip
-              )
-          );
+        previousEquipmentData = [...previousEquipmentData, ...newEquipments];
 
-          previousEquipmentData = [...previousEquipmentData, ...newEquipments];
+        if (newEquipments.length > 0) {
           showEquipmentModal(newEquipments);
         } else {
-          document.getElementById("equipment-loading").innerHTML = `<p style="color: #ef4444;">Yeni ekipman bulunamadı.</p>`;
+          document.getElementById("equipment-loading").style.display = "none";
+          document.getElementById("equipment-not-found-message").style.display = "block";
           document.getElementById("equipment-ok-button").style.display = "block";
         }
-      })
-      .catch((error) => {
-        console.error("Error during scanning:", error);
-        document.getElementById("equipment-loading").innerHTML = `<p style="color: #ef4444;">Tarama sırasında hata oluştu.</p>`;
+      } else {
+        document.getElementById("equipment-loading").style.display = "none";
+        document.getElementById("equipment-not-found-message").style.display = "block";
         document.getElementById("equipment-ok-button").style.display = "block";
-      })
-      .finally(() => {
-        document.getElementById("scan-spinner").style.display = "none";
-      });
-  }
-
-  function showEquipmentModal(equipments) {
-    const modalBody = document.getElementById("modalEquipmentBody");
-    modalBody.innerHTML = "";
-
-    equipments.forEach((item) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${item.model_name || "-"}</td>
-        <td>${item.ip || "-"}</td>
-        <td>Modbus</td>
-      `;
-      modalBody.appendChild(row);
+      }
+    })
+    .catch((error) => {
+      console.error("Error during scanning:", error);
+      document.getElementById("equipment-loading").style.display = "none";
+      const msg = document.getElementById("equipment-not-found-message");
+      msg.textContent = "Tarama sırasında hata oluştu.";
+      msg.style.display = "block";
+      msg.style.color = "#ef4444";
+      document.getElementById("equipment-ok-button").style.display = "block";
     });
+}
 
-    // Tarama bittiğinde: yükleme gizlenir, başlık ve tablo gösterilir
-    document.getElementById("equipment-loading").style.display = "none";
-    document.getElementById("equipment-found-title").style.display = "block"; // 👈 burası eklendi
-    document.getElementById("equipment-table").style.display = "table";
-    document.getElementById("equipment-ok-button").style.display = "block";
+
+function showEquipmentModal(equipments) {
+  const modalBody = document.getElementById("modalEquipmentBody");
+  modalBody.innerHTML = "";
+
+  equipments.forEach((item) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${item.model_name || "-"}</td>
+      <td>${item.ip || "-"}</td>
+      <td>Modbus</td>
+    `;
+    modalBody.appendChild(row);
+  });
+
+  // Tarama tamamlandıktan sonra yükleme kapanır, tablo ve başlık gösterilir
+  document.getElementById("equipment-loading").style.display = "none";
+  document.getElementById("equipment-not-found-message").style.display = "none";
+  document.getElementById("equipment-found-title").style.display = "block";
+  document.getElementById("equipment-table").style.display = "table";
+  document.getElementById("equipment-ok-button").style.display = "block";
+}
+
+function closeEquipmentModal() {
+  document.getElementById("equipmentModal").style.display = "none";
+}
+
+function addNewDataToTable(newData) {
+  console.log("Yeni cihazlar sadece popup'ta gösterilecek...");
+
+  const newEquipments = newData.filter(
+    (item) =>
+      !previousEquipmentData.some(
+        (prev) =>
+          prev.slave_id === item.slave_id &&
+          prev.model_name === item.model_name &&
+          prev.ip === item.ip
+      )
+  );
+
+  if (newEquipments.length === 0) {
+    console.log("Yeni veri bulunamadı.");
+    return;
   }
 
-  function closeEquipmentModal() {
-    document.getElementById("equipmentModal").style.display = "none";
-  }
+  // ✅ Modal'da yeni cihazları göster
+  showEquipmentModal(newEquipments);
 
-  function addNewDataToTable(newData) {
-    console.log("Yeni cihazlar sadece popup'ta gösterilecek...");
-
-    const newEquipments = newData.filter(
-      (item) =>
-        !previousEquipmentData.some(
-          (prev) =>
-            prev.slave_id === item.slave_id &&
-            prev.model_name === item.model_name &&
-            prev.ip === item.ip
-        )
-    );
-
-    if (newEquipments.length === 0) {
-      console.log("Yeni veri bulunamadı.");
-      return;
-    }
-
-    // ✅ Sadece modal'ı göster
-    showEquipmentModal(newEquipments);
-
-    // ✅ Yeni verileri sakla (bir daha tekrar göstermemek için)
-    previousEquipmentData = [...previousEquipmentData, ...newEquipments];
-  }
+  // ✅ Yeni verileri belleğe ekle
+  previousEquipmentData = [...previousEquipmentData, ...newEquipments];
+}
 
   function closeEquipmentModal() {
     document.getElementById("equipmentModal").style.display = "none";

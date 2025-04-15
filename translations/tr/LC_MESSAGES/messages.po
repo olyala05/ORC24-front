@@ -1275,8 +1275,14 @@ msgstr "Ekipman Tarihi / Bağlantı Tarihi"
 msgid "Perform a scanning test"
 msgstr "Tarama testi yap"
 
-msgid "Scanning in progress..."
-msgstr "Tarama devam ediyor..."
+msgid "Scanning Equipments"
+msgstr "Ekipmanlar Taranıyor"
+
+msgid "New Equipment Found"
+msgstr "Yeni Ekipman Bulundu"
+
+msgid "No equipment found."
+msgstr "Ekipman bulunamadı."
 
 msgid "Update the equipment table with the equipment found during scanning"
 msgstr "Tarama sırasında bulunan ekipmanlarla ekipman tablosunu güncelle"
