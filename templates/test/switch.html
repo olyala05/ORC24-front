@@ -1,16 +1,20 @@
-{% extends "layout.html" %} 
-
-{% block title %}{{ _(' Switch to Test Mode')}} {% endblock %}
-{% block content %}
+{% extends "layout.html" %} {% block title %}{{ _(' Switch to Test Mode')}} {%
+endblock %} {% block content %}
 
 <!-- Header -->
 {% include 'partials/header.html' %}
 
 <div class="switch-container">
   <button class="switch-button" onclick="confirmSwitch()">
-    {{ _('Switch to Test Mode')}}
+    <span>{{ _('Switch to Test Mode') }}</span>
+    <img
+      src="{{ url_for('static', filename='images/svg/42.svg') }}"
+      alt="Arrow"
+      style="width: 40px; height: 40px"
+    />
   </button>
 </div>
+
 <script>
   function confirmSwitch() {
     Swal.fire({
@@ -67,22 +71,48 @@
     background-color: white !important;
     color: black !important;
     font-size: 18px !important;
-    padding: 10px 9px !important;
+    padding: 18px 9px !important;
     border-radius: 8px !important;
     border: 2px solid black !important;
+  }
+  
+  div:where(.swal2-container) div:where(.swal2-actions) {
+    gap: 15px;
   }
 
   div:where(.swal2-container) button:where(.swal2-styled):not([disabled]) {
     cursor: pointer;
-    width: 200px;
+    width: 220px;
   }
 
   .swal-button:hover {
     background-color: #f0f0f0 !important;
   }
+
+  div:where(.swal2-container) div:where(.swal2-html-container) {
+    line-height: 1.5;
+  }
+
   div:where(.swal2-icon).swal2-warning {
     border-color: #ef8018;
     color: #ef8018;
+  }
+
+  div:where(.swal2-icon) {
+    width: 4em;
+    height: 4em;
+    margin: 0.4em auto 0.6em;
+  }
+
+  div:where(.swal2-actions) button.swal2-confirm {
+    background-color: #fff !important;
+    color: #0b1734 !important;
+  }
+
+  div:where(.swal2-actions) button.swal2-cancel {
+    color: #0b1734 !important;
+    background-color: #fff !important;
+    font-weight: 600 !important;
   }
 </style>
 

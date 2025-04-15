@@ -17,9 +17,16 @@
   font-weight: 600;
   cursor: pointer;
   border-radius: 7px;
+  border: 1px solid #0B1734;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #0B1734;
 
   &:hover {
-    background-color: #0B1734;
+    background-color: #091531;
+    color: #fff;
   }
 }
 
