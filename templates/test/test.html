@@ -26,16 +26,15 @@
     <!-- Wi-Fi Test -->
     <div id="wifi-test" class="tab-content-test">
       <div class="wifi-container-test">
-
         <!-- Wi-Fi Bölümü -->
         <div class="wifi-test-box">
-
           <!-- ICON -->
           <div class="wifi-test-head">
-          <img
-                src="{{ url_for('static', filename='images/svg/41.svg') }}"
-                alt="No Wi-Fi" class="wifi-orange-icon"
-              />
+            <img
+              src="{{ url_for('static', filename='images/svg/41.svg') }}"
+              alt="No Wi-Fi"
+              class="wifi-orange-icon"
+            />
             <label class="orange-text">{{ _('Wi-Fi Connection Test')}}</label>
           </div>
 
@@ -54,7 +53,11 @@
           <!-- Connection Status -->
           <div class="wifi-test-row">
             <label class="wifi-test-label">{{ _('Connection Status')}}</label>
-            <span class="wifi-test-value" id="wifiConnectionStatus" style="color: #EF4444">{{ _('No connection')}}</span
+            <span
+              class="wifi-test-value"
+              id="wifiConnectionStatus"
+              style="color: #ef4444"
+              >{{ _('No connection')}}</span
             >
           </div>
 
@@ -72,21 +75,18 @@
 
         <!-- Available Wi-Fi -->
         <div class="network-box-test">
-          <button class="network-header-test" id="wifiToggleBtn">
-            {{ _('Available Wi-Fi')}}
-            <span class="wifi-icon-test">
+          <div class="wifi-list-test" id="wifiList" style="display: block">
+            <div class="wifi-category-test">
+              {{ _('Available Wi-Fi') }}
               <img
                 src="{{ url_for('static', filename='images/svg/43.svg') }}"
                 alt="Wi-Fi Icon"
               />
-            </span>
-          </button>
-
-          <div class="wifi-list-test" id="wifiList">
-            <div class="wifi-category-test">{{ _('Other Networks')}}</div>
-            <div id="dynamicWifiList">
-              <p>{{ _('Loading available networks...')}}</p>
             </div>
+            <ul id="dynamicWifiList">
+              <!-- Dinamik olarak li elemanları JS ile eklenecek -->
+              <li>{{ _('Loading available networks...') }}</li>
+            </ul>
           </div>
         </div>
 
@@ -118,30 +118,32 @@
             </div>
           </div>
         </div>
-
       </div>
 
       <!-- Ethernet Bölümü -->
       <div id="ethernet-test">
         <div class="ethernet-container-test">
-
           <!-- Ethernet Test Paneli -->
           <div class="ethernet-test-box">
-
             <!-- ICON -->
-          <div class="wifi-test-head">
-          <img
+            <div class="wifi-test-head">
+              <img
                 src="{{ url_for('static', filename='images/svg/44.svg') }}"
-                alt="No Wi-Fi" class="wifi-orange-icon"
+                alt="No Wi-Fi"
+                class="wifi-orange-icon"
               />
-            <label class="orange-text">{{ _('Wi-Fi Connection Test')}}</label>
-          </div>
+              <label class="orange-text">{{ _('Wi-Fi Connection Test')}}</label>
+            </div>
             <!-- Connection Status -->
             <div class="ethernet-test-row">
               <label class="ethernet-test-label"
                 >{{ _('Connection Status')}}</label
               >
-              <span id="ethernetConnectionStatus" class="ethernet-test-value" style="color: #EF4444">{{ _('No connection')}}</span
+              <span
+                id="ethernetConnectionStatus"
+                class="ethernet-test-value"
+                style="color: #ef4444"
+                >{{ _('No connection')}}</span
               >
             </div>
 
@@ -186,13 +188,13 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
 
     <!-- Equipment Test -->
     <div id="equipment-test" class="tab-content-test">
+      <!-- Equipment Container -->
       <div class="equipment-test-container">
         <div class="equipment-test-card">
           <!-- Tablonun Başlangıcı -->
@@ -212,31 +214,23 @@
             </tbody>
           </table>
           <!-- Tablonun Sonu -->
+        </div>
+      </div>
 
-          <!-- Butonlar ve Durum Bilgileri -->
-          <div class="equipment-actions">
-            <div class="equipment-scan-status">
-              <button
-                class="equipment-scan-btn"
-                onclick="startScanning()"
-                id="scan-btn"
-              >
-                {{ _('Perform a scanning test')}}
-                <span
-                  id="scan-spinner"
-                  class="loader"
-                  style="display: none"
-                ></span>
-              </button>
-              <span id="scan-status" style="display: none; color: #00C16A">
-                {{ _('Scanning in progress...')}}
-              </span>
-            </div>
-            <button class="equipment-update-btn" onclick="fetchEquipments()">
-              {{ _('Update the equipment table with the equipment found during
-              scanning')}}
-            </button>
-          </div>
+      <!-- Butonlar ve Durum Bilgileri (Dışarı Çekildi) -->
+      <div class="equipment-actions">
+        <div class="equipment-scan-status">
+          <button
+            class="equipment-scan-btn"
+            onclick="startScanning()"
+            id="scan-btn"
+          >
+            {{ _('Perform a scanning test') }}
+            <span id="scan-spinner" class="loader" style="display: none"></span>
+          </button>
+          <span id="scan-status" style="display: none; color: #00c16a">
+            {{ _('Scanning in progress...') }}
+          </span>
         </div>
       </div>
     </div>
@@ -540,7 +534,6 @@
 <script>
   // JavaScript for toggling the dropdown and Pop Up password
   document.addEventListener("DOMContentLoaded", function () {
-    const wifiToggleBtn = document.getElementById("wifiToggleBtn");
     const wifiList = document.getElementById("wifiList");
     const wifiPopup = document.getElementById("wifiPopup");
     const wifiName = document.getElementById("wifiName");
@@ -549,12 +542,6 @@
 
     // İlk başta popup'ı kesinlikle gizli yap
     wifiPopup.style.display = "none";
-
-    // Wi-Fi listesi aç/kapa
-    wifiToggleBtn.addEventListener("click", function () {
-      wifiList.style.display =
-        wifiList.style.display === "block" ? "none" : "block";
-    });
 
     // Wi-Fi listesinde her öğeye tıklanınca popup aç
     document.querySelectorAll(".wifi-item-test").forEach((item) => {
@@ -658,37 +645,32 @@
     }
 
     function updateWifiList(networks, connectedSSID) {
+      const wifiListContainer = document.getElementById("dynamicWifiList");
       wifiListContainer.innerHTML = "";
 
-      if (networks.length > 0) {
-        networks.sort((a, b) =>
-          a === connectedSSID ? -1 : b === connectedSSID ? 1 : 0
-        );
-
-        networks.forEach((wifi) => {
-          const wifiItem = document.createElement("div");
-          wifiItem.classList.add("wifi-item-test");
-          wifiItem.dataset.wifi = wifi;
-
-          if (wifi === connectedSSID) wifiItem.classList.add("connected-wifi");
-
-          wifiItem.innerHTML = `
-                    <div class="wifi-name-test">
-                        <span><img src="/static/images/svg/25.svg" alt="Wi-Fi"></span>
-                        ${wifi}
-                        <img src="/static/images/svg/26.svg" alt="Wi-Fi">
-                    </div>`;
-
-          wifiItem.addEventListener("click", function () {
-            openWifiPopup(wifi);
-          });
-
-          wifiListContainer.appendChild(wifiItem);
-        });
-      } else {
-        wifiListContainer.innerHTML =
-          "<p>{{ _('No available networks found')}}.</p>";
+      if (!networks || networks.length === 0) {
+        wifiListContainer.innerHTML = `<li>{{ _('No available networks found') }}</li>`;
+        return;
       }
+
+      networks.sort((a, b) =>
+        a === connectedSSID ? -1 : b === connectedSSID ? 1 : 0
+      );
+
+      networks.forEach((ssid) => {
+        const isConnected = ssid === connectedSSID ? "wifi-connected" : "";
+        const wifiItem = document.createElement("li");
+
+        wifiItem.classList.add(isConnected);
+        wifiItem.setAttribute("onclick", `selectWifi('${ssid}')`);
+        wifiItem.innerHTML = `
+            <img src="/static/images/svg/25.svg" alt="Wi-Fi"/>
+            <span>${ssid}</span>
+            <img src="/static/images/svg/26.svg" alt="Lock"/>
+          `;
+
+        wifiListContainer.appendChild(wifiItem);
+      });
     }
 
     getNetworkDetails(true);
@@ -769,12 +751,6 @@
           joinButton.disabled = false;
         });
     });
-
-    document
-      .getElementById("wifiToggleBtn")
-      .addEventListener("click", function () {
-        getNetworkDetails(true);
-      });
   });
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -1402,13 +1378,13 @@
     // Bulut bağlantısını her 10 saniyede bir kontrol et
     setInterval(updateCloudStatus, 10000);
   });
-
+  
 </script>
 
 <style>
   .connected-wifi {
     font-weight: bold;
-    color: #00C16A;
+    color: #00c16a;
   }
 
   .popup-overlay {
@@ -1508,14 +1484,18 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Buton içindeki elemanlar arasında boşluk bırak */
-    padding: 10px 20px;
+    gap: 10px;
+    padding: 13px;
     font-size: 16px;
     border: none;
-    background-color: #3498db;
+    background-color: #ef8018;
     color: white;
     cursor: pointer;
     transition: background 0.3s;
+    margin-top: 11px;
+    width: 300px;
+    border-radius: 3px;
+    font-weight: 600;
   }
 
   .equipment-scan-btn:hover {
@@ -1583,7 +1563,7 @@
   }
 
   .status-green {
-    border-color: #00C16A;
+    border-color: #00c16a;
   }
 
   .status-red {

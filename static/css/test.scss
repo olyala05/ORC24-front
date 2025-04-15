@@ -63,8 +63,8 @@
 .wifi-container-test {
   display: flex;
   border-radius: 10px;
-  width: 100%;
-  gap: 15px;
+  width: 98%;
+  gap: 10px;
 }
 
 .btn-group-test {
@@ -78,7 +78,7 @@
 .network-box-test {
   width: 250px;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  // box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   font-family: Arial, sans-serif;
 
   .network-header-test {
@@ -120,13 +120,15 @@
     overflow-y: auto;
 
     .wifi-category-test {
-      font-weight: bold;
+      font-weight: 600;
       color: #1c2747;
-      margin-bottom: 7px;
-      margin-top: 6px;
-      text-align: start;
+      padding: 8px;
+      text-align: center;
       border-bottom: 1px solid #ddd;
-      font-size: 16px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .wifi-item-test {
@@ -455,7 +457,7 @@
   padding: 19px;
   display: flex;
   flex-direction: column;
-  width: 53%;
+  width: 51%;
   padding: 15px;
   border-radius: 10px;
   border: 1px solid #ef8018;
@@ -469,17 +471,19 @@
   align-items: center;
   padding: 0px;
   border-radius: 10px;
+  flex-direction: column;
 }
 
 .equipment-test-card {
   background: #0b1734;
-  padding: 5px 5px;
+  padding: 4px 4px;
   border-radius: 10px;
-  margin-right: 5px;
-  min-height: 365px;
+  margin-right: 9px;
+  min-height: 310px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-top: 2px;
 
   .equipment-table {
     width: 100%;
@@ -541,8 +545,7 @@
     flex-direction: column;
     gap: 6px;
 
-    .equipment-scan-btn,
-    .equipment-update-btn {
+    .equipment-scan-btn{
       padding: 6px 28px;
       background-color: #ff7b00;
       color: #fff;

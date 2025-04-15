@@ -2298,8 +2298,8 @@ body {
 .wifi-container-test {
   display: flex;
   border-radius: 10px;
-  width: 100%;
-  gap: 15px;
+  width: 98%;
+  gap: 10px;
 }
 
 .btn-group-test {
@@ -2312,7 +2312,6 @@ body {
 .network-box-test {
   width: 250px;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   font-family: Arial, sans-serif;
 }
 .network-box-test .network-header-test {
@@ -2351,13 +2350,15 @@ body {
   overflow-y: auto;
 }
 .network-box-test .wifi-list-test .wifi-category-test {
-  font-weight: bold;
+  font-weight: 600;
   color: #1c2747;
-  margin-bottom: 7px;
-  margin-top: 6px;
-  text-align: start;
+  padding: 8px;
+  text-align: center;
   border-bottom: 1px solid #ddd;
-  font-size: 16px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .network-box-test .wifi-list-test .wifi-item-test {
   display: flex;
@@ -2652,7 +2653,7 @@ body {
   padding: 19px;
   display: flex;
   flex-direction: column;
-  width: 53%;
+  width: 51%;
   padding: 15px;
   border-radius: 10px;
   border: 1px solid #ef8018;
@@ -2665,17 +2666,19 @@ body {
   align-items: center;
   padding: 0px;
   border-radius: 10px;
+  flex-direction: column;
 }
 
 .equipment-test-card {
   background: #0b1734;
-  padding: 5px 5px;
+  padding: 4px 4px;
   border-radius: 10px;
-  margin-right: 5px;
-  min-height: 365px;
+  margin-right: 9px;
+  min-height: 310px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-top: 2px;
 }
 .equipment-test-card .equipment-table {
   width: 100%;
@@ -2725,8 +2728,7 @@ body {
   flex-direction: column;
   gap: 6px;
 }
-.equipment-test-card .equipment-actions .equipment-scan-btn,
-.equipment-test-card .equipment-actions .equipment-update-btn {
+.equipment-test-card .equipment-actions .equipment-scan-btn {
   padding: 6px 28px;
   background-color: #ff7b00;
   color: #fff;
@@ -2736,8 +2738,7 @@ body {
   font-size: 14px;
   font-weight: 500;
 }
-.equipment-test-card .equipment-actions .equipment-scan-btn:hover,
-.equipment-test-card .equipment-actions .equipment-update-btn:hover {
+.equipment-test-card .equipment-actions .equipment-scan-btn:hover {
   background-color: #e26f00;
 }
 .equipment-test-card .equipment-actions .equipment-scan-status {
