@@ -2409,7 +2409,7 @@ body {
 }
 .popup-content h3 {
   font-size: 16px;
-  color: #1c2747;
+  color: #fff;
   margin-bottom: 0px;
   margin-top: 0px;
 }
@@ -2424,7 +2424,7 @@ body {
   margin-right: 4px;
 }
 .popup-content .text-show-pass {
-  color: #1b2746;
+  color: #fff;
   display: flex;
   z-index: 25;
   margin-top: 10px;
