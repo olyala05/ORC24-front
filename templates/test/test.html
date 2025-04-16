@@ -59,12 +59,7 @@
             <button class="wifi-test-btn">{{ _('Test')}}</button>
             <div style="display: flex; flex-direction: column; gap: 5px">
               <span class="wifi-success" id="wifiSuccess" style="display: none">
-                <img
-                  src="{{ url_for('static', filename='images/svg/13.svg') }}"
-                  alt="No Wi-Fi"
-                  class="ethernet-icon"
-                />
-                {{ _('WiFi Connection Successful.')}}
+                
               </span>
               <span class="wifi-failed" id="wifiFailed" style="display: none">
                 <img
@@ -127,9 +122,6 @@
         </div>
       </div>
 
-      <!--Burada bir beyaz çizgi geçmeli -->
-      <div class="white-line-break"></div>
-
       <!-- Ethernet Bölümü -->
       <div id="ethernet-test">
         <div class="ethernet-container-test">
@@ -176,12 +168,6 @@
                   class="ethernet-failed"
                   style="display: none"
                 >
-                  <img
-                    src="{{ url_for('static', filename='images/svg/16.svg') }}"
-                    alt="Ethernet Disconnected"
-                    class="ethernet-icon"
-                  />
-                  {{ _('Ethernet Connection Failed.')}}
                 </span>
               </div>
             </div>
@@ -828,6 +814,7 @@
         getNetworkDetails(true);
       });
   });
+  
   document.addEventListener("DOMContentLoaded", function () {
     const tabButtons = document.querySelectorAll(".switch-btn-test");
     const tabContents = document.querySelectorAll(".tab-content-test");
