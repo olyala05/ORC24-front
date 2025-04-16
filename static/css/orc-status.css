@@ -137,7 +137,7 @@
   display: inline-block;
 }
 .connection-table table .status-dot.green {
-  background-color: #4caf50;
+  background-color: #33FF00;
 }
 .connection-table table .status-dot.red {
   background-color: #ff0f00;
@@ -203,14 +203,14 @@
 }
 .algorithm-section .algorithm-box .status-btn {
   background-color: #EF8018;
-  padding: 9px 17px;
-  margin: 0px 0px;
+  padding: 18px;
   font-size: 16px;
   border-radius: 6px;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   border: none;
-  color: white;
+  color: #fff;
+  width: 200px;
 }
 .algorithm-section .algorithm-box .status-btn:hover {
   background-color: #ff8c33;

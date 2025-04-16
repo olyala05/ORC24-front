@@ -1404,7 +1404,7 @@ input:-webkit-autofill:focus {
 }
 
 .green {
-  background-color: #4caf50;
+  background-color: #33FF00;
 }
 
 .red {
@@ -1708,7 +1708,7 @@ body {
   display: inline-block;
 }
 .log-table table .status-dot.green {
-  background-color: #4caf50;
+  background-color: #33FF00;
 }
 .log-table table .status-dot.red {
   background-color: #ff0000;
@@ -1723,7 +1723,7 @@ body {
 }
 
 .status-info {
-  background-color: green;
+  background-color: #33FF00;
 }
 
 .status-warning {
@@ -1731,7 +1731,7 @@ body {
 }
 
 .status-exception {
-  background-color: red;
+  background-color: #FF0F00;
 }
 
 /* Takvim Konteyneri */
@@ -1808,7 +1808,7 @@ body {
 }
 
 .status-info {
-  background-color: green;
+  background-color: #33FF00;
 }
 
 .status-warning {
@@ -1816,7 +1816,7 @@ body {
 }
 
 .status-exception {
-  background-color: red;
+  background-color: #FF0F00;
 }
 
 .ellipsis {
@@ -2203,7 +2203,7 @@ body {
   display: inline-block;
 }
 .connection-table table .status-dot.green {
-  background-color: #4caf50;
+  background-color: #33FF00;
 }
 .connection-table table .status-dot.red {
   background-color: #ff0f00;
@@ -2269,14 +2269,14 @@ body {
 }
 .algorithm-section .algorithm-box .status-btn {
   background-color: #EF8018;
-  padding: 9px 17px;
-  margin: 0px 0px;
+  padding: 18px;
   font-size: 16px;
   border-radius: 6px;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   border: none;
-  color: white;
+  color: #fff;
+  width: 200px;
 }
 .algorithm-section .algorithm-box .status-btn:hover {
   background-color: #ff8c33;
@@ -3789,7 +3789,7 @@ body {
   color: #ff4d4d;
 }
 .osos-settings-container .osos-settings-success {
-  color: #4caf50;
+  color: #33FF00;
 }
 
 .tab-btn-set:disabled {

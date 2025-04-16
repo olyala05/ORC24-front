@@ -310,6 +310,7 @@ msgid "{len_type} values are required, but {len_value} was given."
 msgid_plural "{len_type} values are required, but {len_value} were given."
 msgstr[0] ""
 
+############################################################################################################
 #: templates/login.html:20
 msgid "Dashboard"
 msgstr "Gösterge Paneli"
@@ -362,6 +363,7 @@ msgstr "NETWORK"
 
 msgid "POWER"
 msgstr "GÜÇ" 
+########################################################################################################################  
 
 #  ******** Modem Selection ********
 msgid "Home"
@@ -424,6 +426,7 @@ msgstr "Lütfen önce bir cihaz seçiniz!"
 msgid "The page has been refreshed, no device found, alarm reset!"
 msgstr "Sayfa yenilendi, cihaz yok, alarm sıfırlandı!"
 
+#################################################
 
 # *********** Header ***********
 msgid "Back"
@@ -502,6 +505,7 @@ msgstr "Seçilen cihaz için alarm verisi alınamadı:"
 msgid "The alarm data request has been canceled."
 msgstr "Alarm verisi isteği iptal edildi."
 
+######################################################
 
 msgid "SERIAL NO"
 msgstr "SERİ NO"
@@ -657,6 +661,8 @@ msgstr "Faktörü"
 msgid "Log"
 msgstr "Loglar"
 
+msgid "Logs"
+msgstr "Loglar"
 
 # equipments.html
 msgid "Equipment Details"
@@ -722,7 +728,6 @@ msgstr "Ekipman detayları yüklenirken hata oluştu:"
 msgid "Unknown"
 msgstr "Bilinmiyor"
 
-
 msgid "Modem Not Found"
 msgstr "Modem Bulunamadı"
 
@@ -753,7 +758,6 @@ msgstr "Modbus Bağlantısı"
 msgid "Equipment not found etc."
 msgstr "Ekipman bulunamadı vb."
 
-
 msgid "Modbus connection established"
 msgstr "Modbus bağlantısı kuruldu"
 
@@ -765,7 +769,7 @@ msgstr "Ekipman Ayarı"
 
 msgid "Modbus data could not be retrieved"
 msgstr "Modbus verisi alınamadı"
-
+##############################################
 
 # *********** Daily Data ********* 
 msgid "Daily Data"
@@ -819,6 +823,8 @@ msgstr "Saatlik Veriler"
 
 msgid "Daily Data"
 msgstr "Günlük Veriler"
+
+####################################################################
 
 #  ******** Live Data live_data.html *********
 msgid "Live Data is Empty"
@@ -926,6 +932,7 @@ msgstr "Sunucuya bağlanılamadı!"
 
 msgid "Alarms"
 msgstr "Alarmlar"
+######################################
 
 # *********** Equimpent Settings ********* 
 msgid "Equipment Settings"
@@ -1168,6 +1175,7 @@ msgstr "Hayır"
 msgid "Test Mode"
 msgstr "Test Modu"
 
+################################################################
 
 # *********** Test Details *********
 msgid "Test Details"
@@ -1355,6 +1363,8 @@ msgstr "Bağlantı Başarısız"
 
 msgid "Failed to connect to Wi-Fi."
 msgstr "Wi-Fi'ye bağlanılamadı."
+
+############################################################################
 
 msgid ""
 msgstr ""

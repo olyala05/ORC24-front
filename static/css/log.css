@@ -66,7 +66,7 @@ body {
   display: inline-block;
 }
 .log-table table .status-dot.green {
-  background-color: #4caf50;
+  background-color: #33FF00;
 }
 .log-table table .status-dot.red {
   background-color: #ff0000;
@@ -81,7 +81,7 @@ body {
 }
 
 .status-info {
-  background-color: green;
+  background-color: #33FF00;
 }
 
 .status-warning {
@@ -89,7 +89,7 @@ body {
 }
 
 .status-exception {
-  background-color: red;
+  background-color: #FF0F00;
 }
 
 /* Takvim Konteyneri */
@@ -166,7 +166,7 @@ body {
 }
 
 .status-info {
-  background-color: green;
+  background-color: #33FF00;
 }
 
 .status-warning {
@@ -174,7 +174,7 @@ body {
 }
 
 .status-exception {
-  background-color: red;
+  background-color: #FF0F00;
 }
 
 .ellipsis {

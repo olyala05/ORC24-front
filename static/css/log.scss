@@ -81,7 +81,7 @@ body {
       display: inline-block;
 
       &.green {
-        background-color: #4caf50;
+        background-color: #33FF00;
       }
 
       &.red {
@@ -100,7 +100,7 @@ body {
 }
 
 .status-info {
-  background-color: green;
+  background-color: #33FF00;
 }
 
 .status-warning {
@@ -108,7 +108,7 @@ body {
 }
 
 .status-exception {
-  background-color: red;
+  background-color: #FF0F00;
 }
 
 /* Takvim Konteyneri */
@@ -185,13 +185,13 @@ body {
 }
 
 .status-info {
-  background-color: green;
+  background-color: #33FF00;
 }
 .status-warning {
   background-color: orange;
 }
 .status-exception {
-  background-color: red;
+  background-color: #FF0F00;
 }
 
 .ellipsis {

@@ -318,6 +318,9 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: templates/login.html:20
+msgid "Dashboard"
+msgstr "Dashboard"
+
 msgid "Login"
 msgstr "Login"
 
@@ -330,49 +333,57 @@ msgstr "Password"
 msgid "Logout"
 msgstr "Logout"
 
-msgid "Menu"
-msgstr "Menu"
+msgid "Menu"    
+msgstr "Menu"   
 
-msgid "Report Date"
+msgid "Modems"    
+msgstr "Modems"   
+
+msgid "Report Date"    
 msgstr "Report Date"
 
-msgid "Energy Drawn From The Grid"
+msgid "Energy Drawn From The Grid"    
 msgstr "Energy Drawn From The Grid"
 
-msgid "Generated Energy"
+msgid "Generated Energy"    
 msgstr "Generated Energy"
 
 msgid "Consumed Energy"
 msgstr "Consumed Energy"
 
 # ******* Alarms ********
-msgid "REACTIVE POWER"
-msgstr "REACTIVE POWER"
+msgid "REACTIVE POWER"   
+msgstr "REACTIVE POWER" 
 
-msgid "HARMONIC"
-msgstr "HARMONIC"
+msgid "HARMONIC"   
+msgstr "HARMONIC"  
 
-msgid "ACTIVE"
-msgstr "ACTIVE"
+msgid "ACTIVE"   
+msgstr "ACTIVE" 
 
-msgid "VOLTAGE"
-msgstr "VOLTAGE"
+msgid "VOLTAGE"   
+msgstr "VOLTAGE" 
 
 msgid "NETWORK"
-msgstr "NETWORK"
+msgstr "NETWORK"  
 
 msgid "POWER"
 msgstr "POWER"
 
+
+###############################################################
 #  ******** Modem Selection ********
 msgid "Home"
 msgstr "Home"
 
 msgid "Modem Selection"
-msgstr "Modem Selection"
+msgstr "Modem Selection"   
 
 msgid "Select Modem or Device"
 msgstr "Select Modem or Device"
+
+msgid "Select Modem"
+msgstr "Select Modem"
 
 msgid "ORC Status"
 msgstr "ORC Status"
@@ -386,8 +397,8 @@ msgstr "Settings"
 msgid "Test"
 msgstr "Test"
 
-msgid "Date"
-msgstr "Date"
+msgid "Data"
+msgstr "Data"
 
 msgid "Loading devices"
 msgstr "Loading devices"
@@ -410,14 +421,18 @@ msgstr "An error occurred during the connection."
 msgid "Ok"
 msgstr "Ok"
 
+msgid "Scanning Equipments"
+msgstr "Scanning Equipments"
+
 msgid "Connecting to the device , please wait..."
-msgstr "Connecting to the device, please wait..."
+msgstr "Connecting to the device , please wait..."
 
 msgid "Please select a device first!"
 msgstr "Please select a device first!"
 
 msgid "The page has been refreshed, no device found, alarm reset!"
 msgstr "The page has been refreshed, no device found, alarm reset!"
+################################################################
 
 # *********** Header ***********
 msgid "Back"
@@ -456,6 +471,9 @@ msgstr "Backend Error"
 msgid "Error!"
 msgstr "Error!"
 
+msgid "Error:"
+msgstr "Error:"
+
 msgid "Equipment data could not be retrieved."
 msgstr "Equipment data could not be retrieved."
 
@@ -477,8 +495,8 @@ msgstr "Equipments are being scanned..."
 msgid "An error occurred while retrieving Modbus data:"
 msgstr "An error occurred while retrieving Modbus data:"
 
-msgid "Equipment data could not be retrieved. Please try again."
-msgstr "Equipment data could not be retrieved. Please try again."
+msgid "Eqıipment verisi alınamadı. Lütfen tekrar deneyin."
+msgstr "Eqıipment verisi alınamadı. Lütfen tekrar deneyin."
 
 msgid "Redirecting to the alarm page..."
 msgstr "Redirecting to the alarm page..."
@@ -492,6 +510,7 @@ msgstr "Alarm data could not be retrieved for the selected device:"
 msgid "The alarm data request has been canceled."
 msgstr "The alarm data request has been canceled."
 
+############################################################
 msgid "SERIAL NO"
 msgstr "SERIAL NO"
 
@@ -533,6 +552,9 @@ msgstr "Connected"
 
 msgid "Not Connected"
 msgstr "Not Connected"
+
+msgid "No Wi-Fi Connection"
+msgstr "No Wi-Fi Connection"
 
 msgid "Checking the network cables, modem and router"
 msgstr "Checking the network cables, modem and router"
@@ -612,11 +634,724 @@ msgstr "Unexpected error:"
 msgid "Frequency (Hz)"
 msgstr "Frequency (Hz)"
 
+msgid "Frequency"
+msgstr "Frequency"
+
+msgid "(Hz)"
+msgstr "(Hz)"
+
+msgid "Reactive Penalty"
+msgstr "Reactive Penalty"
+
+msgid "Reactive"
+msgstr "Reactive"
+
 msgid "Penalty"
 msgstr "Penalty"
 
-msgid "Does not Exist"
-msgstr "Does not Exist"
+msgid "Not Exist"
+msgstr "Not Exist"
 
 msgid "Power Factor"
 msgstr "Power Factor"
+
+msgid "Power"
+msgstr "Power"
+
+msgid "Factor"
+msgstr "Factor"
+
+msgid "Log"
+msgstr "Log"
+
+msgid "Logs"
+msgstr "Logs"
+
+# equipments.html
+msgid "Equipment Details"
+msgstr "Equipment Details"
+
+msgid "No equipment data found"
+msgstr "No equipment data found"
+
+msgid "Equipment Name"
+msgstr "Equipment Name"
+
+msgid "Slave ID"
+msgstr "Slave ID"
+
+msgid "Brand / Model"
+msgstr "Brand / Model"
+
+msgid "Modem Name"
+msgstr "Modem Name"
+
+msgid "Equipment Type"
+msgstr "Equipment Type"
+
+msgid "Analyzer"
+msgstr "Analyzer"
+
+msgid "Equipment Serial NO"
+msgstr "Equipment Serial NO"
+
+msgid "Activity Status"
+msgstr "Activity Status"
+
+msgid "Device ID"
+msgstr "Device ID"
+
+msgid "SID/IP"
+msgstr "SID/IP"
+
+msgid "Status / Configuration"
+msgstr "Status / Configuration"
+
+msgid "Connection Protocol"
+msgstr "Connection Protocol"
+
+msgid "GMT"
+msgstr "GMT"
+
+msgid "Daylight Saving Time"
+msgstr "Daylight Saving Time"
+
+msgid "Date Created"
+msgstr "Date Created"
+
+msgid "Last Connection Date"
+msgstr "Last Connection Date"
+
+msgid "Equipment information could not be retrieved"
+msgstr "Equipment information could not be retrieved"
+
+msgid "Error occurred while loading equipment details:"
+msgstr "Error occurred while loading equipment details:"
+
+msgid "Unknown"
+msgstr "Unknown"
+
+msgid "Modem Not Found"
+msgstr "Modem Not Found"
+
+msgid "Error occurred while retrieving modem information:"
+msgstr "Error occurred while retrieving modem information:"
+
+msgid "Modem data could not be retrieved:"
+msgstr "Modem data could not be retrieved:"
+
+msgid "Data Transfer Cycle"
+msgstr "Data Transfer Cycle"
+
+msgid "Modem Task Cycle"
+msgstr "Modem Task Cycle"
+
+msgid "Equipment Data Collecting"
+msgstr "Equipment Data Collecting"
+
+msgid "32000 register error etc."
+msgstr "32000 register error etc."
+
+msgid "Register Read"
+msgstr "Register Read"
+
+msgid "Modbus Connection"
+msgstr "Modbus Connection"
+
+msgid "Equipment not found etc."
+msgstr "Equipment not found etc."
+
+msgid "Modbus connection established"
+msgstr "Modbus connection established"
+
+msgid "Service Started"
+msgstr "Service Started"
+
+msgid "Equipment Setting"
+msgstr "Equipment Setting"
+
+msgid "Modbus data could not be retrieved"
+msgstr "Modbus data could not be retrieved"
+
+########################################################
+
+# *********** Daily Data *********
+msgid "Daily Data"
+msgstr "Daily Data"
+
+msgid "Number of Equipment"
+msgstr "Number of Equipment"
+
+msgid "Number of Data"
+msgstr "Number of Data"
+
+msgid "Time (Sec)"
+msgstr "Time (Sec)"
+
+msgid "Serial Number"
+msgstr "Serial Number"
+
+msgid "Status / Config."
+msgstr "Status / Config."
+
+msgid "No device selected."
+msgstr "No device selected."
+
+msgid "Equipments Response:"
+msgstr "Equipments Response:"
+
+msgid "No equipments found"
+msgstr "No equipments found"
+
+msgid "Error fetching equipments"
+msgstr "Error fetching equipments"
+
+msgid "Equipment ID updated in the backend:"
+msgstr "Equipment ID updated in the backend:"
+
+msgid "ID could not be updated in the backend!"
+msgstr "ID could not be updated in the backend!"
+
+msgid "Error while updating ID in the backend:"
+msgstr "Error while updating ID in the backend:"
+
+msgid "Selected Equipment ID saved:"
+msgstr "Selected Equipment ID saved:"
+
+# ******** Data data.html *********
+msgid "Live Data"
+msgstr "Live Data"
+
+msgid "Hourly Data"
+msgstr "Hourly Data"
+
+msgid "Daily Data"
+msgstr "Daily Data"
+
+############################################################################
+
+#  ******** Live Data live_data.html *********
+msgid "Live Data is Empty"
+msgstr "Live Data is Empty"
+
+msgid "No device selected for fetching equipments."
+msgstr "No device selected for fetching equipments."
+
+#  ******** Live Data live_data_details.html *********
+msgid "Live Data Details"
+msgstr "Live Data Details"
+
+msgid "Live Data ID"
+msgstr "Live Data ID"
+
+# *********** Daily Data Details ********* 
+msgid "Daily Data Details"
+msgstr "Daily Data Details"
+
+msgid "Serial Number"
+msgstr "Serial Number"
+
+msgid "Modem Serial No"
+msgstr "Modem Serial No"
+
+msgid "Status / Configuration"
+msgstr "Status / Configuration"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Log Description"
+msgstr "Log Description"
+
+msgid "Timestamp"
+msgstr "Timestamp"
+
+msgid "Number of Data"
+msgstr "Number of Data"
+
+msgid "Daily Data ID"
+msgstr "Daily Data ID"
+
+msgid "Device ID"
+msgstr "Device ID"
+
+msgid "Value List"
+msgstr "Value List"
+
+msgid "Data Value"
+msgstr "Data Value"
+
+msgid "Created Date"
+msgstr "Created Date"
+
+msgid "No equipment selected."
+msgstr "No equipment selected."
+
+msgid "No equipment details found."
+msgstr "No equipment details found."
+
+msgid "Error loading data."
+msgstr "Error loading data."
+
+msgid "Daily Data is Empty."
+msgstr "Daily Data is Empty."
+
+
+# ****** Alarms Page ******** # 
+msgid "Network Alarms"
+msgstr "Network Alarms"
+
+msgid "Electric Alarms"
+msgstr "Electric Alarms"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Equipments Serial"
+msgstr "Equipments Serial"
+
+msgid "Data Value"
+msgstr "Data Value"
+
+msgid "Start Date"
+msgstr "Start Date"
+
+msgid "End Date"
+msgstr "End Date"
+
+msgid "Loading..."
+msgstr "Loading..."
+
+msgid "The Electric Alarms Database is Empty"
+msgstr "The Electric Alarms Database is Empty"
+
+msgid "Data Retrieval Error:"
+msgstr "Data Retrieval Error:"
+
+msgid "Unable to connect to the server!"
+msgstr "Unable to connect to the server!"
+
+msgid "Alarms"
+msgstr "Alarms"
+
+#########################################
+
+# *********** Equipment Settings *********  
+msgid "Equipment Settings"
+msgstr "Equipment Settings"
+
+msgid "Modbus Settings"
+msgstr "Modbus Settings"
+
+msgid "TCP/IP Settings"
+msgstr "TCP/IP Settings"
+
+msgid "Obis Settings"
+msgstr "Obis Settings"
+
+msgid "Modbus connection successful"
+msgstr "Modbus connection successful"
+
+msgid "Modbus connection failed!"
+msgstr "Modbus connection failed!"
+
+msgid "Equipment Slave ID"
+msgstr "Equipment Slave ID"
+
+msgid "Equipment Serial No"
+msgstr "Equipment Serial No"
+
+msgid "Equipment Status"
+msgstr "Equipment Status"
+
+msgid "Equipment Config Status"
+msgstr "Equipment Config Status"
+
+msgid "Equipment Brand"
+msgstr "Equipment Brand"
+
+msgid "Communication Protocol"
+msgstr "Communication Protocol"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Equipment details not found"
+msgstr "Equipment details not found"
+
+msgid "Error fetching equipment details"
+msgstr "Error fetching equipment details"
+
+msgid "No device selected for Modbus test"
+msgstr "No device selected for Modbus test"
+
+msgid "Testing..."
+msgstr "Testing..."
+
+msgid "Modbus connection successful!"
+msgstr "Modbus connection successful!"
+
+msgid "Modbus test failed: No valid response"
+msgstr "Modbus test failed: No valid response"
+
+msgid "Error during Modbus test"
+msgstr "Error during Modbus test"
+
+
+# *********** ORC Settings ********* 
+msgid "ORC Settings"
+msgstr "ORC Settings"
+
+msgid "Wi-fi Settings"
+msgstr "Wi-fi Settings"
+
+msgid "LoRa Settings"
+msgstr "LoRa Settings"
+
+msgid "Ethernet Settings"
+msgstr "Ethernet Settings"
+
+msgid "GSM Settings"
+msgstr "GSM Settings"
+
+msgid "Available Wi-Fi"
+msgstr "Available Wi-Fi"
+
+msgid "Wi-Fi Password"
+msgstr "Wi-Fi Password"
+
+msgid "Wi-Fi SSID:"
+msgstr "Wi-Fi SSID:"
+
+msgid "Not Connected"
+msgstr "Not Connected"
+
+msgid "Password:"
+msgstr "Password:"
+
+msgid "Show Password"
+msgstr "Show Password"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Connect"
+msgstr "Connect"
+
+msgid "Connected"
+msgstr "Connected"
+
+msgid "Disconnect"
+msgstr "Disconnect"
+
+msgid "Modem Status"
+msgstr "Modem Status"
+
+msgid "Inactive"
+msgstr "Inactive"
+
+msgid "Query Update Time (Hour - Minute)"
+msgstr "Query Update Time (Hour - Minute)"
+
+msgid "Select"
+msgstr "Select"
+
+msgid "Wi-Fi networks loading error"
+msgstr "Wi-Fi networks loading error"
+
+msgid "Wi-Fi information could not be retrieved"
+msgstr "Wi-Fi information could not be retrieved"
+
+msgid "Wi-Fi not selected!"
+msgstr "Wi-Fi not selected!"
+
+msgid "Please select a Wi-Fi network."
+msgstr "Please select a Wi-Fi network."
+
+msgid "Password not entered!"
+msgstr "Password not entered!"
+
+msgid "Please enter the password."
+msgstr "Please enter the password."
+
+msgid "Connecting..."
+msgstr "Connecting..."
+
+msgid "Connection Successful!"
+msgstr "Connection Successful!"
+
+msgid "Wi-Fi connection successfully established"
+msgstr "Wi-Fi connection successfully established"
+
+msgid "Connection Failed!"
+msgstr "Connection Failed!"
+
+msgid "Unable to connect. Please try again."
+msgstr "Unable to connect. Please try again."
+
+msgid "Error occurred during Wi-Fi connection"
+msgstr "Error occurred during Wi-Fi connection"
+
+msgid "Connection Error!"
+msgstr "Connection Error!"
+
+msgid "An error occurred while establishing the Wi-Fi connection."
+msgstr "An error occurred while establishing the Wi-Fi connection."
+
+msgid "No Active Connection!"
+msgstr "No Active Connection!"
+
+msgid "You are not currently connected to any Wi-Fi network."
+msgstr "You are not currently connected to any Wi-Fi network."
+
+msgid "Disconnect Wi-Fi?"
+msgstr "Disconnect Wi-Fi?"
+
+msgid "Are you sure you want to disconnect from the Wi-Fi network?"
+msgstr "Are you sure you want to disconnect from the Wi-Fi network?"
+
+msgid "Yes, disconnect"
+msgstr "Yes, disconnect"
+
+msgid "Disconnecting..."
+msgstr "Disconnecting..."
+
+msgid "Wi-Fi Disconnected!"
+msgstr "Wi-Fi Disconnected!"
+
+msgid "You have successfully disconnected from the Wi-Fi network."
+msgstr "You have successfully disconnected from the Wi-Fi network."
+
+msgid "Disconnection Failed!"
+msgstr "Disconnection Failed!"
+
+msgid "An error occurred while disconnecting from Wi-Fi."
+msgstr "An error occurred while disconnecting from Wi-Fi."
+
+msgid "Error while disconnecting"
+msgstr "Error while disconnecting"
+
+msgid "Disconnection Error!"
+msgstr "Disconnection Error!"
+
+msgid "An unexpected error occurred while disconnecting."
+msgstr "An unexpected error occurred while disconnecting."
+
+msgid "Modem Info"
+msgstr "Modem Info"
+
+msgid "Failed to load modem info"
+msgstr "Failed to load modem info"
+
+msgid "Error while fetching modem info"
+msgstr "Error while fetching modem info"
+
+
+# *********** Test ********* 
+msgid "Switch to Test Mode"
+msgstr "Switch to Test Mode"
+
+msgid "If you switch to test mode, services will shut down."
+msgstr "If you switch to test mode, services will shut down."
+
+msgid "Do you want to switch to test mode?"
+msgstr "Do you want to switch to test mode?"
+
+msgid "Yes"
+msgstr "Yes"
+
+msgid "No"
+msgstr "No"
+
+msgid "Test Mode"
+msgstr "Test Mode"
+
+#############################################################
+
+# *********** Test Details *********
+msgid "Test Details"
+msgstr "Test Details"
+
+msgid "Wifi / Ethernet Connection Test"
+msgstr "Wifi / Ethernet Connection Test"
+
+msgid "Cloud Connection Test"
+msgstr "Cloud Connection Test"
+
+msgid "Read"
+msgstr "Read"
+
+msgid "Write"
+msgstr "Write"
+
+msgid "Available Wi-Fi"
+msgstr "Available Wi-Fi"
+
+msgid "Other Networks"
+msgstr "Other Networks"
+
+msgid "Loading available networks..."
+msgstr "Loading available networks..."
+
+msgid "Enter the Wi-Fi password for"
+msgstr "Enter the Wi-Fi password for"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Show Password"
+msgstr "Show Password"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Join"
+msgstr "Join"
+
+msgid "Network Name"
+msgstr "Network Name"
+
+msgid "Wi-Fi Connection Test"
+msgstr "Wi-Fi Connection Test"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Connection Status"
+msgstr "Connection Status"
+
+msgid "No connection"
+msgstr "No connection"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "WiFi Connection Successful."
+msgstr "WiFi Connection Successful."
+
+msgid "WiFi Connection Failed."
+msgstr "WiFi Connection Failed."
+
+msgid "Ethernet"
+msgstr "Ethernet"
+
+msgid "Connection Status"
+msgstr "Connection Status"
+
+msgid "No connection"
+msgstr "No connection"
+
+msgid "Connection Mac"
+msgstr "Connection Mac"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "Ethernet Connection Successful."
+msgstr "Ethernet Connection Successful."
+
+msgid "Ethernet Connection Failed."
+msgstr "Ethernet Connection Failed."
+
+msgid "Serial Number"
+msgstr "Serial Number"
+
+msgid "SID/IP"
+msgstr "SID/IP"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Configuration Connection"
+msgstr "Configuration Connection"
+
+msgid "Connection Protocol"
+msgstr "Connection Protocol"
+
+msgid "Equipment Date / Connection Date"
+msgstr "Equipment Date / Connection Date"
+
+msgid "Perform a scanning test"
+msgstr "Perform a scanning test"
+
+msgid "Scanning Equipments"
+msgstr "Scanning Equipments"
+
+msgid "New Equipment Found"
+msgstr "New Equipment Found"
+
+msgid "No equipment found."
+msgstr "No equipment found."
+
+msgid "Update the equipment table with the equipment found during scanning"
+msgstr "Update the equipment table with the equipment found during scanning"
+
+msgid "Connection"
+msgstr "Connection"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Checking..."
+msgstr "Checking..."
+
+msgid "Rabbit MQ"
+msgstr "Rabbit MQ"
+
+msgid "VPN Port"
+msgstr "VPN Port"
+
+msgid "*Does the ORC have connection with cloud and other devices or not?"
+msgstr "*Does the ORC have connection with cloud and other devices or not?"
+
+msgid "Perform a scanning test"
+msgstr "Perform a scanning test"
+
+msgid "Local Network Connection Scan Successful."
+msgstr "Local Network Connection Scan Successful."
+
+msgid "Local Network Connection Scan Failed."
+msgstr "Local Network Connection Scan Failed."
+
+msgid "Send Modbus Request"
+msgstr "Send Modbus Request"
+
+msgid "Terminal"
+msgstr "Terminal"
+
+msgid "Waiting for response..."
+msgstr "Waiting for response..."
+
+msgid "Send Write Request"
+msgstr "Send Write Request"
+
+msgid "Terminal"
+msgstr "Terminal"
+
+msgid "Waiting for response..."
+msgstr "Waiting for response..."
+
+msgid "No Password"
+msgstr "No Password"
+
+msgid "Error fetching network details"
+msgstr "Error fetching network details"
+
+msgid "No available networks found"
+msgstr "No available networks found"
+
+msgid "Connecting..."
+msgstr "Connecting..."
+
+msgid "Successfully connected to"
+msgstr "Successfully connected to"
+
+msgid "Connected!"
+msgstr "Connected!"
+
+msgid "Connection Failed"
+msgstr "Connection Failed"
+
+msgid "Failed to connect to Wi-Fi."
+msgstr "Failed to connect to Wi-Fi."
+
