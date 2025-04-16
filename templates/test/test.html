@@ -78,7 +78,7 @@
           </button>
 
           <div class="wifi-list-test" id="wifiList">
-            <div class="wifi-category-test">{{ _('Other Networks')}}</div>
+            <div class="wifi-category-test"></div>
             <div id="dynamicWifiList">
               <p>{{ _('Loading available networks...')}}</p>
             </div>
@@ -575,10 +575,12 @@
     // İlk başta popup'ı kesinlikle gizli yap
     wifiPopup.style.display = "none";
 
+    // ✅ Wi-Fi listesi sayfa yüklendiğinde direkt açık olsun
+    wifiList.style.display = "block";
+
     // Wi-Fi listesi aç/kapa
     wifiToggleBtn.addEventListener("click", function () {
-      wifiList.style.display =
-        wifiList.style.display === "block" ? "none" : "block";
+      getNetworkDetails(true);
     });
 
     // Wi-Fi listesinde her öğeye tıklanınca popup aç
@@ -795,9 +797,7 @@
         });
     });
 
-    document
-      .getElementById("wifiToggleBtn")
-      .addEventListener("click", function () {
+      document.getElementById("wifiToggleBtn").addEventListener("click", function () {
         getNetworkDetails(true);
       });
   });
