@@ -592,36 +592,208 @@
 </div>
 
 <script>
-  // JavaScript for toggling the dropdown and Pop Up password
   document.addEventListener("DOMContentLoaded", function () {
-    const wifiList = document.getElementById("wifiList");
     const wifiPopup = document.getElementById("wifiPopup");
     const wifiName = document.getElementById("wifiName");
     const passwordInput = document.getElementById("wifiPassword");
     const showPasswordCheckbox = document.getElementById("showPassword");
+    const joinButton = document.getElementById("joinWifiBtn");
 
-    // İlk başta popup'ı kesinlikle gizli yap
-    wifiPopup.style.display = "none";
+    const networkNameSpan = document.getElementById("wifiNetworkName");
+    const passwordSpan = document.getElementById("wifiPasswordDisplay");
+    const connectionStatusSpan = document.getElementById(
+      "wifiConnectionStatus"
+    );
+    const macAddressSpan = document.getElementById("wifiMacAddress");
+    const wifiSuccess = document.getElementById("wifiSuccess");
+    const wifiFailed = document.getElementById("wifiFailed");
 
-    // Wi-Fi listesinde her öğeye tıklanınca popup aç
+    const ethernetStatusSpan = document.getElementById(
+      "ethernetConnectionStatus"
+    );
+    const ethernetMacSpan = document.getElementById("ethernetMacAddress");
+    const ethernetSuccess = document.getElementById("ethernetSuccess");
+    const ethernetFailed = document.getElementById("ethernetFailed");
+
+    const wifiListContainer = document.getElementById("dynamicWifiList");
+    console.log("wifiListContainer:", wifiListContainer);
+
+
+    // Şifre göster/gizle
+    showPasswordCheckbox.addEventListener("change", () => {
+      passwordInput.type = showPasswordCheckbox.checked ? "text" : "password";
+    });
+
+    // Wi-Fi listesi tıklama olayı
     document.querySelectorAll(".wifi-item-test").forEach((item) => {
-      item.addEventListener("click", function () {
-        const networkName = item.getAttribute("data-wifi");
-        wifiName.textContent = networkName;
-        passwordInput.value = "";
-        wifiPopup.style.display = "flex";
+      item.addEventListener("click", () => {
+        const ssid = item.getAttribute("data-wifi");
+        openWifiPopup(ssid);
       });
     });
 
-    // Popup kapatma
+    // Popup aç
+    window.openWifiPopup = function (ssid) {
+      wifiName.textContent = ssid;
+      passwordInput.value = "";
+      wifiPopup.style.display = "flex";
+    };
+
+    // Popup kapat
     window.closeWifiPopup = function () {
       wifiPopup.style.display = "none";
     };
 
-    // Şifre göster/gizle
-    showPasswordCheckbox.addEventListener("change", function () {
-      passwordInput.type = this.checked ? "text" : "password";
+    // Wi-Fi listesi güncelle
+    function updateWifiList(networks, connectedSSID) {
+      wifiListContainer.innerHTML = "";
+
+      if (!networks || networks.length === 0) {
+        wifiListContainer.innerHTML = `<li>{{ _('No available networks found') }}</li>`;
+        return;
+      }
+
+      networks.sort((a, b) =>
+        a === connectedSSID ? -1 : b === connectedSSID ? 1 : 0
+      );
+
+      networks.forEach((ssid) => {
+        const isConnected = ssid === connectedSSID ? "wifi-connected" : "";
+        const wifiItem = document.createElement("li");
+
+        wifiItem.classList.add(isConnected);
+        wifiItem.setAttribute("onclick", `selectWifi('${ssid}')`);
+        wifiItem.innerHTML = `
+          <img src="/static/images/svg/25.svg" alt="Wi-Fi"/>
+          <span>${ssid}</span>
+          <img src="/static/images/svg/26.svg" alt="Lock"/>
+        `;
+
+        wifiListContainer.appendChild(wifiItem);
+      });
+    }
+
+    // Ağ bilgilerini getir
+    function getNetworkDetails(updateList = false) {
+      fetch("/wi-fi-list", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status !== "success" || !data.data) return;
+
+          const {
+            connected_ssid,
+            wifi_mac,
+            wifi_password,
+            ethernet_connected,
+            ethernet_mac,
+            wifi_networks,
+          } = data.data;
+
+          if (connected_ssid) {
+            networkNameSpan.textContent = connected_ssid;
+            passwordSpan.textContent = wifi_password || "{{ _('No Password')}}";
+            connectionStatusSpan.textContent = "{{ _('Connected')}}";
+            connectionStatusSpan.style.color = "#00C16A";
+            macAddressSpan.textContent = wifi_mac || "{{ _('Unknown')}}";
+            wifiSuccess.style.display = "block";
+            wifiFailed.style.display = "none";
+          } else {
+            connectionStatusSpan.textContent = "{{ _('No connection')}}";
+            connectionStatusSpan.style.color = "#EF4444";
+            wifiSuccess.style.display = "none";
+            wifiFailed.style.display = "block";
+          }
+
+          if (ethernet_connected) {
+            ethernetStatusSpan.textContent = "{{ _('Connected')}}";
+            ethernetStatusSpan.style.color = "#00C16A";
+            ethernetMacSpan.textContent = ethernet_mac || "{{ _('Unknown')}}";
+            ethernetSuccess.style.display = "block";
+            ethernetFailed.style.display = "none";
+          } else {
+            ethernetStatusSpan.textContent = "{{ _('No connection')}}";
+            ethernetStatusSpan.style.color = "#EF4444";
+            ethernetSuccess.style.display = "none";
+            ethernetFailed.style.display = "block";
+          }
+
+          if (updateList) updateWifiList(wifi_networks, connected_ssid);
+        })
+        .catch((error) =>
+          console.error("{{ _('Error fetching network details')}}:", error)
+        );
+    }
+
+    // Wi-Fi bağlantı başlat
+    joinButton.addEventListener("click", function () {
+      const ssid = wifiName.textContent.trim();
+      const password = passwordInput.value.trim();
+
+      if (!ssid) {
+        Swal.fire({
+          icon: "error",
+          title: "Wi-Fi Not Selected",
+          text: "Please select a Wi-Fi network first!",
+        });
+        return;
+      }
+
+      joinButton.innerHTML = `<span class="spinner"></span> {{ _('Connecting...')}}`;
+      joinButton.disabled = true;
+
+      fetch("/connect_wifi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ssid, password }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            Swal.fire({
+              icon: "success",
+              title: `{{_('Connected!')}}`,
+              text: `{{ _('Successfully connected to')}} ${ssid}.`,
+            });
+
+            networkNameSpan.textContent = ssid;
+            passwordSpan.textContent = password || "No Password";
+            connectionStatusSpan.textContent = `{{_('Connected')}}`;
+            connectionStatusSpan.style.color = "#00C16A";
+
+            getNetworkDetails(true);
+            closeWifiPopup();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "{{ _('Connection Failed')}}",
+              text: data.message || "{{ _('Failed to connect to Wi-Fi.')}}",
+            });
+            connectionStatusSpan.textContent = "{{ _('No connection')}}";
+            connectionStatusSpan.style.color = "#EF4444";
+          }
+        })
+        .catch((error) => {
+          console.error("Error connecting to Wi-Fi:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "An error occurred while connecting to Wi-Fi.",
+          });
+          connectionStatusSpan.textContent = "{{ _('No connection')}}";
+          connectionStatusSpan.style.color = "#EF4444";
+        })
+        .finally(() => {
+          joinButton.innerHTML = "Join";
+          joinButton.disabled = false;
+        });
     });
+
+    // Sayfa yüklendiğinde ağ bilgilerini al
+    getNetworkDetails(true);
   });
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -648,90 +820,6 @@
     const ethernetFailed = document.getElementById("ethernetFailed");
 
     const wifiListContainer = document.getElementById("dynamicWifiList");
-
-    function getNetworkDetails(updateList = false) {
-      fetch("/wi-fi-list", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === "success" && data.data) {
-            const connectedSSID = data.data.connected_ssid;
-            const macAddress = data.data.wifi_mac;
-            const password = data.data.wifi_password;
-            const ethernetConnected = data.data.ethernet_connected;
-            const ethernetMac = data.data.ethernet_mac;
-
-            if (connectedSSID) {
-              networkNameSpan.textContent = connectedSSID;
-              passwordSpan.textContent = password
-                ? password
-                : "{{ _('No Password')}}";
-              connectionStatusSpan.textContent = "{{ _('Connected')}}";
-              connectionStatusSpan.style.color = "#00C16A";
-              macAddressSpan.textContent = macAddress || "{{ _('Unknown')}}";
-              wifiSuccess.style.display = "block";
-              wifiFailed.style.display = "none";
-            } else {
-              connectionStatusSpan.textContent = "{{ _('No connection')}}";
-              connectionStatusSpan.style.color = "#EF4444";
-              wifiSuccess.style.display = "none";
-              wifiFailed.style.display = "block";
-            }
-
-            // Ethernet Bilgilerini Güncelle
-            if (ethernetConnected) {
-              ethernetStatusSpan.textContent = "{{ _('Connected')}}";
-              ethernetStatusSpan.style.color = "#00C16A";
-              ethernetMacSpan.textContent = ethernetMac || "{{ _('Unknown')}}";
-              ethernetSuccess.style.display = "block";
-              ethernetFailed.style.display = "none";
-            } else {
-              ethernetStatusSpan.textContent = "{{ _('No connection')}}";
-              ethernetStatusSpan.style.color = "#EF4444";
-              ethernetSuccess.style.display = "none";
-              ethernetFailed.style.display = "block";
-            }
-
-            if (updateList)
-              updateWifiList(data.data.wifi_networks, connectedSSID);
-          }
-        })
-        .catch((error) =>
-          console.error("{{ _('Error fetching network details')}}:", error)
-        );
-    }
-
-    function updateWifiList(networks, connectedSSID) {
-      const wifiListContainer = document.getElementById("dynamicWifiList");
-      wifiListContainer.innerHTML = "";
-
-      if (!networks || networks.length === 0) {
-        wifiListContainer.innerHTML = `<li>{{ _('No available networks found') }}</li>`;
-        return;
-      }
-
-      networks.sort((a, b) =>
-        a === connectedSSID ? -1 : b === connectedSSID ? 1 : 0
-      );
-
-      networks.forEach((ssid) => {
-        const isConnected = ssid === connectedSSID ? "wifi-connected" : "";
-        const wifiItem = document.createElement("li");
-
-        wifiItem.classList.add(isConnected);
-        wifiItem.setAttribute("onclick", `selectWifi('${ssid}')`);
-        wifiItem.innerHTML = `
-            <img src="/static/images/svg/25.svg" alt="Wi-Fi"/>
-            <span>${ssid}</span>
-            <img src="/static/images/svg/26.svg" alt="Lock"/>
-          `;
-
-        wifiListContainer.appendChild(wifiItem);
-      });
-    }
 
     getNetworkDetails(true);
 
@@ -825,24 +913,19 @@
         const targetId = this.getAttribute("data-target");
         console.log(targetId);
 
-        // Tüm içerikleri gizle
         tabContents.forEach((content) => (content.style.display = "none"));
-
-        console.log(tabContents);
-
-        // Tüm butonlardaki "active" sınıfını kaldır
         tabButtons.forEach((btn) => btn.classList.remove("active"));
-        console.log(tabButtons);
 
-        // Seçilen butona "active" sınıfı ekle
         this.classList.add("active");
 
-        // İlgili içeriği göster
         const targetElement = document.getElementById(targetId);
-        console.log(targetElement);
         if (targetElement) {
           targetElement.style.display = "block";
-          console.log(targetElement);
+
+          if (targetId === "wifi-test") {
+            console.log("📶 Wi-Fi sekmesine geçildi, liste getiriliyor...");
+            getNetworkDetails(true);
+          }
         }
       });
     });
@@ -927,11 +1010,7 @@
         })
         .catch((error) => console.error("Error fetching VPN status:", error));
     }
-
-    // 📌 **Cloud varsayılan olarak kırmızı olacak**
     setCloudConnectionStatus(false);
-
-    // 📌 **RabbitMQ ve VPN bağlantılarını kontrol et**
     updateRabbitMQStatus();
     updateVPNStatus();
   });
@@ -1028,10 +1107,10 @@
     equipments.forEach((item) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-      <td>${item.model_name || "-"}</td>
-      <td>${item.ip || "-"}</td>
-      <td>Modbus</td>
-    `;
+        <td>${item.model_name || "-"}</td>
+        <td>${item.ip || "-"}</td>
+        <td>Modbus</td>
+      `;
       modalBody.appendChild(row);
     });
 
@@ -1128,35 +1207,35 @@
     equipments.forEach((equipment) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-         <td>${equipment.model_name || "Unknown"}</td>
-         <td>${equipment.modbus_address || "N/A"}</td>
-         <td style="color: ${
-           equipment.status === "A" ? "#00C16A" : "#ef4444"
-         }; font-weight: bold;">
-           ${equipment.status}
-         </td>
-         <td style="color: ${
-           equipment.configuration_data === "A" ? "#00C16A" : "#ef4444"
-         }; font-weight: bold;">
-          ${
-            equipment.configuration_data === "A"
-              ? "Configured"
-              : equipment.configuration_data === "P"
-              ? "No Configure"
-              : "N/A"
-          }
+          <td>${equipment.model_name || "Unknown"}</td>
+          <td>${equipment.modbus_address || "N/A"}</td>
+          <td style="color: ${
+            equipment.status === "A" ? "#00C16A" : "#ef4444"
+          }; font-weight: bold;">
+            ${equipment.status}
           </td>
-         <td>
-          ${
-            equipment.communication_protocol_code === 1
-              ? "SERIAL"
-              : equipment.communication_protocol_code === 2
-              ? "TCP"
-              : "N/A"
-          }
-          </td>
-          <td>${formatDateTime(equipment.created_at)}</td>
-        `;
+          <td style="color: ${
+            equipment.configuration_data === "A" ? "#00C16A" : "#ef4444"
+          }; font-weight: bold;">
+            ${
+              equipment.configuration_data === "A"
+                ? "Configured"
+                : equipment.configuration_data === "P"
+                ? "No Configure"
+                : "N/A"
+            }
+            </td>
+          <td>
+            ${
+              equipment.communication_protocol_code === 1
+                ? "SERIAL"
+                : equipment.communication_protocol_code === 2
+                ? "TCP"
+                : "N/A"
+            }
+            </td>
+            <td>${formatDateTime(equipment.created_at)}</td>
+          `;
       tableBody.appendChild(row);
     });
   }
@@ -1673,7 +1752,6 @@
   .status-red {
     border-color: #ef4444;
   }
-
 </style>
 
 {% endblock %}
