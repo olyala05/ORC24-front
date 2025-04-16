@@ -106,4 +106,12 @@
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-gray {
   color: #8b949e;
+}
+
+body.lang-de .eq-detail-container {
+  font-size: 13px;
+}
+body.lang-de .eq-detail-item span,
+body.lang-de .eq-detail-log-item span {
+  font-size: 13px;
 }/*# sourceMappingURL=equipment-details.css.map */

@@ -1,4 +1,4 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %}  
 
 {% block title %} {{ _('Equipment Details') }} {% endblock %}
 
@@ -176,7 +176,7 @@
         .then((response) => response.json())
         .then((data) => {
           if (data.status !== "success") {
-            equipmentContainer.innerHTML = `<p style='color: red;'>${data.message}</p>`;
+            equipmentContainer.innerHTML = <p style='color: red;'>${data.message}</p>;
             return null;
           }
           return data.data; 
@@ -193,9 +193,9 @@
       ([equipment, modem]) => {
         if (!equipment) return;
 
-        document.querySelector(".eq-detail-status").innerText = `${
+        document.querySelector(".eq-detail-status").innerText = ${
           equipment.model_name || "{{ _('Unknown') }}"
-        }@${equipment.serial_number || "N/A"}`;
+        }@${equipment.serial_number || "N/A"};
 
         // Modem adı
         document.querySelector(
@@ -205,9 +205,9 @@
         // Marka / Model
         document.querySelector(
           ".eq-detail-item:nth-child(4) span:last-child"
-        ).innerText = `${equipment.brand_name || "N/A"} / ${
+        ).innerText = ${equipment.brand_name || "N/A"} / ${
           equipment.model_name || "N/A"
-        }`;
+        };
 
         // Slave ID
         document.querySelector(
@@ -276,6 +276,5 @@
     }
   });
 </script>
-
 
 {% endblock %}

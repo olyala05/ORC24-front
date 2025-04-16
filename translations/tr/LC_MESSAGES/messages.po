@@ -1372,14 +1372,14 @@ msgstr "Wi-Fi'ye bağlanılamadı."
 
 ############################################################################
 
-msgid ""
-msgstr ""
+msgid "Are you sure you want to log out?"
+msgstr "Çıkış yapmak istediğinize emin misiniz?"
 
-msgid ""
-msgstr ""
+msgid "Yes"
+msgstr "Evet"
 
-msgid ""
-msgstr ""
+msgid "No"
+msgstr "Hayır"
 
 msgid ""
 msgstr ""

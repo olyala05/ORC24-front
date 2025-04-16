@@ -1156,6 +1156,14 @@ input:-webkit-autofill:focus {
   color: #8b949e;
 }
 
+body.lang-de .eq-detail-container {
+  font-size: 13px;
+}
+body.lang-de .eq-detail-item span,
+body.lang-de .eq-detail-log-item span {
+  font-size: 13px;
+}
+
 .equ-set-container {
   display: flex;
   margin-top: 80px;
@@ -1164,6 +1172,7 @@ input:-webkit-autofill:focus {
   display: flex;
   flex-direction: column;
   gap: 7px;
+  width: 184px;
 }
 .equ-set-container .equ-set-sidebar .equ-set-btn {
   background: white;
@@ -3482,8 +3491,6 @@ body {
 .wifi-card-set .btn-group-set .btn-set.cancel-set {
   background: #e3e3e3;
   color: #6e6e6e;
-  padding: 14px 40px;
-  width: 100%;
 }
 .wifi-card-set .btn-group-set .btn-set.cancel-set:hover {
   background: #ef742a;
@@ -3492,8 +3499,6 @@ body {
 .wifi-card-set .btn-group-set .btn-set.connec-set {
   background: #ef742a;
   color: white;
-  padding: 14px 40px;
-  width: 100%;
 }
 .wifi-card-set .btn-group-set .btn-set.connec-set:hover {
   background: #e3e3e3;

@@ -208,8 +208,6 @@
 .wifi-card-set .btn-group-set .btn-set.cancel-set {
   background: #e3e3e3;
   color: #6e6e6e;
-  padding: 14px 40px;
-  width: 100%;
 }
 .wifi-card-set .btn-group-set .btn-set.cancel-set:hover {
   background: #ef742a;
@@ -218,8 +216,6 @@
 .wifi-card-set .btn-group-set .btn-set.connec-set {
   background: #ef742a;
   color: white;
-  padding: 14px 40px;
-  width: 100%;
 }
 .wifi-card-set .btn-group-set .btn-set.connec-set:hover {
   background: #e3e3e3;

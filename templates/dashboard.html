@@ -40,12 +40,12 @@ title%} {% block content %}
   </div>
 
   <div class="header-right-dashboard">
-    <div class="date-time" id="current-date-time">Loading...</div>
+    <div class="date-time" id="current-date-time">{{ _('Loading...') }}</div>
     <div class="report-line">
       <div class="line"></div>
     </div>
     <div class="report-date" id="report-date">
-      <span style="color: #6384d1">{{ _('Report Date') }}:</span> Loading...
+      <span style="color: #6384d1">{{ _('Report Date') }}:</span> {{ _('Loading...') }}
     </div>
   </div>
 </header>
@@ -217,8 +217,7 @@ title%} {% block content %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     function updateDateTime() {
-      const userLang = document.body.dataset.lang || "en"; // HTML'den alınan aktif dil
-
+      const userLang = document.body.dataset.lang || "en"; 
       const now = new Date();
       const monthShort = now
         .toLocaleString(userLang, { month: "long" })
@@ -258,13 +257,13 @@ title%} {% block content %}
           event.preventDefault();
 
           Swal.fire({
-            title: "Çıkış yapmak istediğinize emin misiniz?",
+            title: "{{ _('Are you sure you want to log out?') }}",
             icon: "warning",
             background: "#0B1734",
             iconColor: "#EF8018",
             showCancelButton: true,
-            confirmButtonText: "Evet", 
-            cancelButtonText: "Hayır", 
+            confirmButtonText: "{{ _('Yes') }}", 
+            cancelButtonText: "{{ _('No') }}", 
             reverseButtons: false, 
             customClass: {
               confirmButton: "swal-button-yes", 
@@ -624,6 +623,11 @@ title%} {% block content %}
     grid-row: 2;
     place-self: center center;
     margin-top: 64px;
+  }
+
+  div:where(.swal2-icon) {
+    width: 4em;
+    height: 4em;
   }
 </style>
 {% endblock content %}

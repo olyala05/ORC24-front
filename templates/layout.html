@@ -29,7 +29,7 @@
     <script src="{{ url_for('static', filename='daterangepicker/js/daterangepicker.js') }}"></script>
 
   </head>
-  <body data-lang="{{ get_locale() }}" class="{% if request.endpoint == 'dashboard' %}dashboard-body{% endif %}">
+  <body data-lang="{{ get_locale() }}" class="{% if request.endpoint == 'dashboard' %}dashboard-body{% endif %}  {% if get_locale() == 'de' %} lang-de{% endif %}">
 
     {% block content %}
     {% endblock %}
@@ -61,6 +61,9 @@
 
     {% block scripts %}{% endblock %}
 
+  </body>
+</html>
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const modemName = sessionStorage.getItem("selected_device_name");
@@ -71,6 +74,3 @@
     }
   });
 </script>
-
-  </body>
-</html>

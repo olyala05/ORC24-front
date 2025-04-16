@@ -1362,3 +1362,11 @@ msgstr "Connection Failed"
 msgid "Failed to connect to Wi-Fi."
 msgstr "Failed to connect to Wi-Fi."
 
+msgid "Are you sure you want to log out?"
+msgstr "Are you sure you want to log out?"
+
+msgid "Yes"
+msgstr "Yes"
+
+msgid "No"
+msgstr "No"

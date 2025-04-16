@@ -129,3 +129,15 @@
     }
   }
 }
+
+
+body.lang-de {
+  .eq-detail-container {
+    font-size: 13px;
+  }
+
+  .eq-detail-item span,
+  .eq-detail-log-item span {
+    font-size: 13px;
+  }
+}

@@ -1356,3 +1356,12 @@ msgstr "Verbindung fehlgeschlagen"
 
 msgid "Failed to connect to Wi-Fi."
 msgstr "Verbindung zum WLAN fehlgeschlagen."
+
+msgid "Are you sure you want to log out?"
+msgstr "Möchten Sie sich wirklich abmelden?"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nein"
