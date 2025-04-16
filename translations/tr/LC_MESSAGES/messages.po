@@ -1027,6 +1027,9 @@ msgstr "Bağlantı Yok"
 msgid "Password:"
 msgstr "Şifre:"
 
+msgid "Password"
+msgstr "Şifre"
+
 msgid "Show Password"
 msgstr "Şifreyi Göster"
 

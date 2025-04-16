@@ -1029,6 +1029,9 @@ msgstr "Not Connected"
 msgid "Password:"
 msgstr "Password:"
 
+msgid "Password"
+msgstr "Password"
+
 msgid "Show Password"
 msgstr "Show Password"
 

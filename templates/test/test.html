@@ -36,7 +36,7 @@
 
           <!-- Password -->
           <div class="wifi-test-row">
-            <label class="wifi-test-label">{{ _('Password')}}</label>
+            <label class="wifi-test-label">{{ _('Password:')}}</label>
             <span class="wifi-test-value" id="wifiPasswordDisplay">-</span>
           </div>
 
@@ -91,14 +91,14 @@
         <div id="wifiPopup" class="popup-overlay" style="display: none">
           <div class="popup-content">
             <h3>
-              <img
-                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+              <img class="img-class"
+                src="{{ url_for('static', filename='images/svg/45.svg') }}"
                 alt="Wi-Fi"
               />
               Wi-Fi SSID: <span id="wifiName"></span>
             </h3>
-            <label for="wifiPassword">{{ _('Password')}}</label>
-            <input type="password" id="wifiPassword" placeholder="Password" />
+            <label for="wifiPassword">{{ _('Password:')}}</label>
+            <input type="password" id="wifiPassword" placeholder="{{ _('Password') }}" />
             <div class="text-show-pass">
               <input type="checkbox" id="showPassword" />{{ _(' Show
               Password')}}
