@@ -26,67 +26,23 @@
     <!-- Wi-Fi Test -->
     <div id="wifi-test" class="tab-content-test">
       <div class="wifi-container-test">
-        <!-- Wi-Fi Bölümü -->
-        <div class="wifi-test-box">
-          <!-- ICON -->
-          <div class="wifi-test-head">
-            <img
-              src="{{ url_for('static', filename='images/svg/41.svg') }}"
-              alt="No Wi-Fi"
-              class="wifi-orange-icon"
-            />
-            <label class="orange-text">{{ _('Wi-Fi Connection Test')}}</label>
-          </div>
-
-          <!-- Network Name -->
-          <div class="wifi-test-row">
-            <label class="wifi-test-label">{{ _('Network Name')}}</label>
-            <span class="wifi-test-value" id="wifiNetworkName">-</span>
-          </div>
-
-          <!-- Password -->
-          <div class="wifi-test-row">
-            <label class="wifi-test-label">{{ _('Password')}}</label>
-            <span class="wifi-test-value" id="wifiPasswordDisplay">-</span>
-          </div>
-
-          <!-- Connection Status -->
-          <div class="wifi-test-row">
-            <label class="wifi-test-label">{{ _('Connection Status')}}</label>
-            <span
-              class="wifi-test-value"
-              id="wifiConnectionStatus"
-              style="color: #ef4444"
-              >{{ _('No connection')}}</span
-            >
-          </div>
-
-          <!-- Connection Mac -->
-          <div class="wifi-test-row">
-            <label class="wifi-test-label">{{ _('Connection Mac')}}</label>
-            <span class="wifi-test-value" id="wifiMacAddress">-</span>
-          </div>
-
-          <!-- Test Button ve WiFi Status -->
-          <div class="wifi-test-action">
-            <button class="wifi-test-btn">{{ _('Test')}}</button>
-          </div>
-        </div>
-
         <!-- Available Wi-Fi -->
         <div class="network-box-test">
-          <div class="wifi-list-test" id="wifiList" style="display: block">
-            <div class="wifi-category-test">
-              {{ _('Available Wi-Fi') }}
+          <button class="network-header-test" id="wifiToggleBtn">
+            {{ _('Available Wi-Fi')}}
+            <span class="wifi-icon-test">
               <img
-                src="{{ url_for('static', filename='images/svg/43.svg') }}"
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
                 alt="Wi-Fi Icon"
               />
+            </span>
+          </button>
+
+          <div class="wifi-list-test" id="wifiList">
+            <div class="wifi-category-test">{{ _('Other Networks')}}</div>
+            <div id="dynamicWifiList">
+              <p>{{ _('Loading available networks...')}}</p>
             </div>
-            <ul id="dynamicWifiList">
-              <!-- Dinamik olarak li elemanları JS ile eklenecek -->
-              <li>{{ _('Loading available networks...') }}</li>
-            </ul>
           </div>
         </div>
 
@@ -118,31 +74,84 @@
             </div>
           </div>
         </div>
+
+        <!-- Wi-Fi Bölümü -->
+        <div class="wifi-test-box">
+          <!-- Network Name -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">{{ _('Network Name')}}</label>
+            <span class="wifi-test-value" id="wifiNetworkName">-</span>
+          </div>
+
+          <!-- Password -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">{{ _('Password')}}</label>
+            <span class="wifi-test-value" id="wifiPasswordDisplay">-</span>
+          </div>
+
+          <!-- Connection Status -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">{{ _('Connection Status')}}</label>
+            <span class="wifi-test-value" id="wifiConnectionStatus"
+              >{{ _('No connection')}}</span
+            >
+          </div>
+
+          <!-- Connection Mac -->
+          <div class="wifi-test-row">
+            <label class="wifi-test-label">{{ _('Connection Mac')}}</label>
+            <span class="wifi-test-value" id="wifiMacAddress">-</span>
+          </div>
+
+          <!-- Test Button ve WiFi Status -->
+          <div class="wifi-test-action">
+            <button class="wifi-test-btn">{{ _('Test')}}</button>
+            <div style="display: flex; flex-direction: column; gap: 5px">
+              <span class="wifi-success" id="wifiSuccess" style="display: none">
+                <img
+                  src="{{ url_for('static', filename='images/svg/13.svg') }}"
+                  alt="No Wi-Fi"
+                  class="ethernet-icon"
+                />
+                {{ _('WiFi Connection Successful.')}}
+              </span>
+              <span class="wifi-failed" id="wifiFailed" style="display: none">
+                <img
+                  src="{{ url_for('static', filename='images/svg/14.svg') }}"
+                  alt="No Wi-Fi"
+                  class="ethernet-icon"
+                />
+                {{ _('WiFi Connection Failed.')}}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!--Burada bir beyaz çizgi geçmeli -->
+      <div class="white-line-break"></div>
 
       <!-- Ethernet Bölümü -->
       <div id="ethernet-test">
         <div class="ethernet-container-test">
+          <!-- Ethernet Box -->
+          <div class="ethernet-box-test">
+            <img
+              src="{{ url_for('static', filename='images/svg/24.svg') }}"
+              alt="No Wi-Fi"
+              class="ethernet-icon"
+            />
+            <span class="ethernet-text">{{ _('Ethernet')}}</span>
+          </div>
+
           <!-- Ethernet Test Paneli -->
           <div class="ethernet-test-box">
-            <!-- ICON -->
-            <div class="wifi-test-head">
-              <img
-                src="{{ url_for('static', filename='images/svg/44.svg') }}"
-                alt="No Wi-Fi"
-                class="wifi-orange-icon"
-              />
-              <label class="orange-text">{{ _('Wi-Fi Connection Test')}}</label>
-            </div>
             <!-- Connection Status -->
             <div class="ethernet-test-row">
               <label class="ethernet-test-label"
                 >{{ _('Connection Status')}}</label
               >
-              <span
-                id="ethernetConnectionStatus"
-                class="ethernet-test-value"
-                style="color: #ef4444"
+              <span id="ethernetConnectionStatus" class="ethernet-test-value"
                 >{{ _('No connection')}}</span
               >
             </div>
