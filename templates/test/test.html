@@ -59,9 +59,12 @@
             <button class="wifi-test-btn">{{ _('Test')}}</button>
             <div style="display: flex; flex-direction: column; gap: 5px">
               <span class="wifi-success" id="wifiSuccess" style="display: none">
-                
               </span>
-              <span class="wifi-failed" id="wifiFailed" style="display: none"></span>
+              <span
+                class="wifi-failed"
+                id="wifiFailed"
+                style="display: none"
+              ></span>
             </div>
           </div>
         </div>
@@ -649,13 +652,13 @@
                 ? password
                 : "{{ _('No Password')}}";
               connectionStatusSpan.textContent = "{{ _('Connected')}}";
-              connectionStatusSpan.style.color = "green";
+              connectionStatusSpan.style.color = "#00C16A";
               macAddressSpan.textContent = macAddress || "{{ _('Unknown')}}";
               wifiSuccess.style.display = "block";
               wifiFailed.style.display = "none";
             } else {
               connectionStatusSpan.textContent = "{{ _('No connection')}}";
-              connectionStatusSpan.style.color = "red";
+              connectionStatusSpan.style.color = "#EF4444";
               wifiSuccess.style.display = "none";
               wifiFailed.style.display = "block";
             }
@@ -663,13 +666,13 @@
             // Ethernet Bilgilerini Güncelle
             if (ethernetConnected) {
               ethernetStatusSpan.textContent = "{{ _('Connected')}}";
-              ethernetStatusSpan.style.color = "green";
+              ethernetStatusSpan.style.color = "#00C16A";
               ethernetMacSpan.textContent = ethernetMac || "{{ _('Unknown')}}";
               ethernetSuccess.style.display = "block";
               ethernetFailed.style.display = "none";
             } else {
               ethernetStatusSpan.textContent = "{{ _('No connection')}}";
-              ethernetStatusSpan.style.color = "red";
+              ethernetStatusSpan.style.color = "#EF4444";
               ethernetSuccess.style.display = "none";
               ethernetFailed.style.display = "block";
             }
@@ -766,7 +769,7 @@
             networkNameSpan.textContent = ssid;
             passwordSpan.textContent = password ? password : "No Password";
             connectionStatusSpan.textContent = `{{_('Connected')}}`;
-            connectionStatusSpan.style.color = "green";
+            connectionStatusSpan.style.color = "#00C16A";
 
             getNetworkDetails(true);
             closeWifiPopup();
@@ -777,7 +780,7 @@
               text: data.message || "{{ _('Failed to connect to Wi-Fi.')}}",
             });
             connectionStatusSpan.textContent = "No connection";
-            connectionStatusSpan.style.color = "red";
+            connectionStatusSpan.style.color = "#EF4444";
           }
         })
         .catch((error) => {
@@ -788,7 +791,7 @@
             text: "An error occurred while connecting to Wi-Fi.",
           });
           connectionStatusSpan.textContent = "No connection";
-          connectionStatusSpan.style.color = "red";
+          connectionStatusSpan.style.color = "#EF4444";
         })
         .finally(() => {
           joinButton.innerHTML = "Join";
@@ -796,7 +799,9 @@
         });
     });
 
-      document.getElementById("wifiToggleBtn").addEventListener("click", function () {
+    document
+      .getElementById("wifiToggleBtn")
+      .addEventListener("click", function () {
         getNetworkDetails(true);
       });
   });

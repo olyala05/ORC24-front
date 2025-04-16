@@ -276,11 +276,11 @@
 }
 
 .wifi-test-action .wifi-success {
-  color: green;
+  color: #00C16A;
   font-size: 14px;
 }
 .wifi-test-action .wifi-failed {
-  color: red;
+  color: #EF4444;
   font-size: 14px;
 }
 
@@ -407,11 +407,11 @@
 }
 
 .ethernet-test-action .ethernet-success {
-  color: green;
+  color: #00C16A;
   font-size: 14px;
 }
 .ethernet-test-action .ethernet-failed {
-  color: red;
+  color: #EF4444;
   font-size: 14px;
 }
 
@@ -534,11 +534,11 @@
 
 .equipment-table td:nth-child(3):contains("A / A"),
 .equipment-table td:nth-child(4):contains("OK") {
-  color: green !important;
+  color: #00C16A !important;
 }
 
 .equipment-table td:nth-child(4):contains("No") {
-  color: red !important;
+  color: #EF4444 !important;
 }
 
 .status-green {
@@ -634,11 +634,11 @@
 }
 
 .status-green {
-  background-color: green;
+  background-color: #00C16A;
 }
 
 .status-red {
-  background-color: red;
+  background-color: #EF4444;
 }
 
 .read-test-container {
