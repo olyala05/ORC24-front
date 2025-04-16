@@ -15,7 +15,6 @@
         <th>{{ _('Serial Number')}}</th>
         <th>{{ _('Modem Serial No')}}</th>
         <th>{{ _('Status / Configuration')}}</th>
-        <th>{{ _('Archive') }}</th>
         <th>{{ _('Number of Data')}}</th>
       </tr>
     </thead>
@@ -83,9 +82,6 @@ function updateDetailsTable(equipments) {
     row.innerHTML = `
         <td>${equipment.model_name}@${equipment.serial_number}</td>
         <td>${equipment.modem_serial_number || "N/A"}</td>
-        <td style="color: ${equipment.status === 'A' ? 'green' : 'red'}; font-weight: bold;">
-            ${equipment.status === "A" ? "A" : "P"}
-        </td>
         <td><div class="status-circle"></div></td>
         <td>${equipment.data_count || 0}</td>
     `;

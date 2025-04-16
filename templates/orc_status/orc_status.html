@@ -58,8 +58,8 @@
 
           <tr>
             {% if network.wifi_connected %}
-                <td><span class="status-dot green"></span></td>
-                <td><span class="status-dot green"></span></td>
+                <td><span class="status-dot #33FF00"></span></td>
+                <td><span class="status-dot #33FF00"></span></td>
                 <td>{{ _('WiFi Connection')}}</td>
                 <td>{{ network.last_connected_time }}</td> 
             {% else %}
@@ -88,8 +88,8 @@
 
           <tr>
             {% if network.ethernet_connected %}
-                <td><span class="status-dot green"></span></td>
-                <td><span class="status-dot green"></span></td>
+                <td><span class="status-dot #33FF00"></span></td>
+                <td><span class="status-dot #33FF00"></span></td>
                 <td>{{ _('Ethernet Connection')}}</td>
                 <td>{{ network.last_connected_time }}</td> 
             {% else %}
@@ -101,8 +101,8 @@
           </tr>
           <tr>
             {% if network.vpn_connected %}
-                <td><span class="status-dot green"></span></td>
-                <td><span class="status-dot green"></span></td>
+                <td><span class="status-dot #33FF00"></span></td>
+                <td><span class="status-dot #33FF00"></span></td>
                 <td>{{ _('VPN Connection')}}</td>
                 <td>{{ network.last_connected_time }}</td> 
             {% else %}

@@ -1462,7 +1462,7 @@ body {
 }
 
 .green {
-  background-color: #33FF00;
+  background-color: #46B649;
 }
 
 .red {
@@ -3770,7 +3770,7 @@ body {
   margin-top: 5px;
 }
 .osos-settings-container .osos-settings-card .osos-settings-success {
-  color: green;
+  color: #33FF00;
   font-size: 14px;
   text-align: center;
   margin-top: 5px;
