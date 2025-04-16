@@ -26,55 +26,6 @@
     <!-- Wi-Fi Test -->
     <div id="wifi-test" class="tab-content-test">
       <div class="wifi-container-test">
-        <!-- Available Wi-Fi -->
-        <div class="network-box-test">
-          <button class="network-header-test" id="wifiToggleBtn">
-            {{ _('Available Wi-Fi')}}
-            <span class="wifi-icon-test">
-              <img
-                src="{{ url_for('static', filename='images/svg/12.svg') }}"
-                alt="Wi-Fi Icon"
-              />
-            </span>
-          </button>
-
-          <div class="wifi-list-test" id="wifiList">
-            <div class="wifi-category-test">{{ _('Other Networks')}}</div>
-            <div id="dynamicWifiList">
-              <p>{{ _('Loading available networks...')}}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Wi-Fi Şifre Giriş Popup -->
-        <div id="wifiPopup" class="popup-overlay" style="display: none">
-          <div class="popup-content">
-            <h3>
-              <img
-                src="{{ url_for('static', filename='images/svg/12.svg') }}"
-                alt="Wi-Fi"
-              />
-              {{ _('Enter the Wi-Fi password for')}} '<span id="wifiName"></span
-              >'
-            </h3>
-            <label for="wifiPassword">{{ _('Password')}}</label>
-            <input type="password" id="wifiPassword" placeholder="Password" />
-            <div class="text-show-pass">
-              <input type="checkbox" id="showPassword" />{{ _(' Show
-              Password')}}
-            </div>
-            <div class="popup-buttons">
-              <button class="cancel-btn" onclick="closeWifiPopup()">
-                {{ _('Cancel')}}
-              </button>
-              <button id="joinWifiBtn" class="join-btn">
-                <span class="button-text">{{ _('Join')}}</span>
-                <span class="spinner" style="display: none"></span>
-              </button>
-            </div>
-          </div>
-        </div>
-
         <!-- Wi-Fi Bölümü -->
         <div class="wifi-test-box">
           <!-- Network Name -->
@@ -126,6 +77,54 @@
             </div>
           </div>
         </div>
+        <!-- Available Wi-Fi -->
+        <div class="network-box-test">
+          <button class="network-header-test" id="wifiToggleBtn">
+            {{ _('Available Wi-Fi')}}
+            <span class="wifi-icon-test">
+              <img
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                alt="Wi-Fi Icon"
+              />
+            </span>
+          </button>
+
+          <div class="wifi-list-test" id="wifiList">
+            <div class="wifi-category-test">{{ _('Other Networks')}}</div>
+            <div id="dynamicWifiList">
+              <p>{{ _('Loading available networks...')}}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wi-Fi Şifre Giriş Popup -->
+        <div id="wifiPopup" class="popup-overlay" style="display: none">
+          <div class="popup-content">
+            <h3>
+              <img
+                src="{{ url_for('static', filename='images/svg/12.svg') }}"
+                alt="Wi-Fi"
+              />
+              {{ _('Enter the Wi-Fi password for')}} '<span id="wifiName"></span
+              >'
+            </h3>
+            <label for="wifiPassword">{{ _('Password')}}</label>
+            <input type="password" id="wifiPassword" placeholder="Password" />
+            <div class="text-show-pass">
+              <input type="checkbox" id="showPassword" />{{ _(' Show
+              Password')}}
+            </div>
+            <div class="popup-buttons">
+              <button class="cancel-btn" onclick="closeWifiPopup()">
+                {{ _('Cancel')}}
+              </button>
+              <button id="joinWifiBtn" class="join-btn">
+                <span class="button-text">{{ _('Join')}}</span>
+                <span class="spinner" style="display: none"></span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!--Burada bir beyaz çizgi geçmeli -->
@@ -134,16 +133,6 @@
       <!-- Ethernet Bölümü -->
       <div id="ethernet-test">
         <div class="ethernet-container-test">
-          <!-- Ethernet Box -->
-          <div class="ethernet-box-test">
-            <img
-              src="{{ url_for('static', filename='images/svg/24.svg') }}"
-              alt="No Wi-Fi"
-              class="ethernet-icon"
-            />
-            <span class="ethernet-text">{{ _('Ethernet')}}</span>
-          </div>
-
           <!-- Ethernet Test Paneli -->
           <div class="ethernet-test-box">
             <!-- Connection Status -->
@@ -601,208 +590,43 @@
 </div>
 
 <script>
+  // JavaScript for toggling the dropdown and Pop Up password
   document.addEventListener("DOMContentLoaded", function () {
+    const wifiToggleBtn = document.getElementById("wifiToggleBtn");
+    const wifiList = document.getElementById("wifiList");
     const wifiPopup = document.getElementById("wifiPopup");
     const wifiName = document.getElementById("wifiName");
     const passwordInput = document.getElementById("wifiPassword");
     const showPasswordCheckbox = document.getElementById("showPassword");
-    const joinButton = document.getElementById("joinWifiBtn");
 
-    const networkNameSpan = document.getElementById("wifiNetworkName");
-    const passwordSpan = document.getElementById("wifiPasswordDisplay");
-    const connectionStatusSpan = document.getElementById(
-      "wifiConnectionStatus"
-    );
-    const macAddressSpan = document.getElementById("wifiMacAddress");
-    const wifiSuccess = document.getElementById("wifiSuccess");
-    const wifiFailed = document.getElementById("wifiFailed");
+    // İlk başta popup'ı kesinlikle gizli yap
+    wifiPopup.style.display = "none";
 
-    const ethernetStatusSpan = document.getElementById(
-      "ethernetConnectionStatus"
-    );
-    const ethernetMacSpan = document.getElementById("ethernetMacAddress");
-    const ethernetSuccess = document.getElementById("ethernetSuccess");
-    const ethernetFailed = document.getElementById("ethernetFailed");
-
-    const wifiListContainer = document.getElementById("dynamicWifiList");
-    console.log("wifiListContainer:", wifiListContainer);
-
-
-    // Şifre göster/gizle
-    showPasswordCheckbox.addEventListener("change", () => {
-      passwordInput.type = showPasswordCheckbox.checked ? "text" : "password";
+    // Wi-Fi listesi aç/kapa
+    wifiToggleBtn.addEventListener("click", function () {
+      wifiList.style.display =
+        wifiList.style.display === "block" ? "none" : "block";
     });
 
-    // Wi-Fi listesi tıklama olayı
+    // Wi-Fi listesinde her öğeye tıklanınca popup aç
     document.querySelectorAll(".wifi-item-test").forEach((item) => {
-      item.addEventListener("click", () => {
-        const ssid = item.getAttribute("data-wifi");
-        openWifiPopup(ssid);
+      item.addEventListener("click", function () {
+        const networkName = item.getAttribute("data-wifi");
+        wifiName.textContent = networkName;
+        passwordInput.value = "";
+        wifiPopup.style.display = "flex";
       });
     });
 
-    // Popup aç
-    window.openWifiPopup = function (ssid) {
-      wifiName.textContent = ssid;
-      passwordInput.value = "";
-      wifiPopup.style.display = "flex";
-    };
-
-    // Popup kapat
+    // Popup kapatma
     window.closeWifiPopup = function () {
       wifiPopup.style.display = "none";
     };
 
-    // Wi-Fi listesi güncelle
-    function updateWifiList(networks, connectedSSID) {
-      wifiListContainer.innerHTML = "";
-
-      if (!networks || networks.length === 0) {
-        wifiListContainer.innerHTML = `<li>{{ _('No available networks found') }}</li>`;
-        return;
-      }
-
-      networks.sort((a, b) =>
-        a === connectedSSID ? -1 : b === connectedSSID ? 1 : 0
-      );
-
-      networks.forEach((ssid) => {
-        const isConnected = ssid === connectedSSID ? "wifi-connected" : "";
-        const wifiItem = document.createElement("li");
-
-        wifiItem.classList.add(isConnected);
-        wifiItem.setAttribute("onclick", `selectWifi('${ssid}')`);
-        wifiItem.innerHTML = `
-          <img src="/static/images/svg/25.svg" alt="Wi-Fi"/>
-          <span>${ssid}</span>
-          <img src="/static/images/svg/26.svg" alt="Lock"/>
-        `;
-
-        wifiListContainer.appendChild(wifiItem);
-      });
-    }
-
-    // Ağ bilgilerini getir
-    function getNetworkDetails(updateList = false) {
-      fetch("/wi-fi-list", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status !== "success" || !data.data) return;
-
-          const {
-            connected_ssid,
-            wifi_mac,
-            wifi_password,
-            ethernet_connected,
-            ethernet_mac,
-            wifi_networks,
-          } = data.data;
-
-          if (connected_ssid) {
-            networkNameSpan.textContent = connected_ssid;
-            passwordSpan.textContent = wifi_password || "{{ _('No Password')}}";
-            connectionStatusSpan.textContent = "{{ _('Connected')}}";
-            connectionStatusSpan.style.color = "#00C16A";
-            macAddressSpan.textContent = wifi_mac || "{{ _('Unknown')}}";
-            wifiSuccess.style.display = "block";
-            wifiFailed.style.display = "none";
-          } else {
-            connectionStatusSpan.textContent = "{{ _('No connection')}}";
-            connectionStatusSpan.style.color = "#EF4444";
-            wifiSuccess.style.display = "none";
-            wifiFailed.style.display = "block";
-          }
-
-          if (ethernet_connected) {
-            ethernetStatusSpan.textContent = "{{ _('Connected')}}";
-            ethernetStatusSpan.style.color = "#00C16A";
-            ethernetMacSpan.textContent = ethernet_mac || "{{ _('Unknown')}}";
-            ethernetSuccess.style.display = "block";
-            ethernetFailed.style.display = "none";
-          } else {
-            ethernetStatusSpan.textContent = "{{ _('No connection')}}";
-            ethernetStatusSpan.style.color = "#EF4444";
-            ethernetSuccess.style.display = "none";
-            ethernetFailed.style.display = "block";
-          }
-
-          if (updateList) updateWifiList(wifi_networks, connected_ssid);
-        })
-        .catch((error) =>
-          console.error("{{ _('Error fetching network details')}}:", error)
-        );
-    }
-
-    // Wi-Fi bağlantı başlat
-    joinButton.addEventListener("click", function () {
-      const ssid = wifiName.textContent.trim();
-      const password = passwordInput.value.trim();
-
-      if (!ssid) {
-        Swal.fire({
-          icon: "error",
-          title: "Wi-Fi Not Selected",
-          text: "Please select a Wi-Fi network first!",
-        });
-        return;
-      }
-
-      joinButton.innerHTML = `<span class="spinner"></span> {{ _('Connecting...')}}`;
-      joinButton.disabled = true;
-
-      fetch("/connect_wifi", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ssid, password }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === "success") {
-            Swal.fire({
-              icon: "success",
-              title: `{{_('Connected!')}}`,
-              text: `{{ _('Successfully connected to')}} ${ssid}.`,
-            });
-
-            networkNameSpan.textContent = ssid;
-            passwordSpan.textContent = password || "No Password";
-            connectionStatusSpan.textContent = `{{_('Connected')}}`;
-            connectionStatusSpan.style.color = "#00C16A";
-
-            getNetworkDetails(true);
-            closeWifiPopup();
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "{{ _('Connection Failed')}}",
-              text: data.message || "{{ _('Failed to connect to Wi-Fi.')}}",
-            });
-            connectionStatusSpan.textContent = "{{ _('No connection')}}";
-            connectionStatusSpan.style.color = "#EF4444";
-          }
-        })
-        .catch((error) => {
-          console.error("Error connecting to Wi-Fi:", error);
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "An error occurred while connecting to Wi-Fi.",
-          });
-          connectionStatusSpan.textContent = "{{ _('No connection')}}";
-          connectionStatusSpan.style.color = "#EF4444";
-        })
-        .finally(() => {
-          joinButton.innerHTML = "Join";
-          joinButton.disabled = false;
-        });
+    // Şifre göster/gizle
+    showPasswordCheckbox.addEventListener("change", function () {
+      passwordInput.type = this.checked ? "text" : "password";
     });
-
-    // Sayfa yüklendiğinde ağ bilgilerini al
-    getNetworkDetails(true);
   });
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -829,6 +653,95 @@
     const ethernetFailed = document.getElementById("ethernetFailed");
 
     const wifiListContainer = document.getElementById("dynamicWifiList");
+
+    function getNetworkDetails(updateList = false) {
+      fetch("/wi-fi-list", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success" && data.data) {
+            const connectedSSID = data.data.connected_ssid;
+            const macAddress = data.data.wifi_mac;
+            const password = data.data.wifi_password;
+            const ethernetConnected = data.data.ethernet_connected;
+            const ethernetMac = data.data.ethernet_mac;
+
+            if (connectedSSID) {
+              networkNameSpan.textContent = connectedSSID;
+              passwordSpan.textContent = password
+                ? password
+                : "{{ _('No Password')}}";
+              connectionStatusSpan.textContent = "{{ _('Connected')}}";
+              connectionStatusSpan.style.color = "green";
+              macAddressSpan.textContent = macAddress || "{{ _('Unknown')}}";
+              wifiSuccess.style.display = "block";
+              wifiFailed.style.display = "none";
+            } else {
+              connectionStatusSpan.textContent = "{{ _('No connection')}}";
+              connectionStatusSpan.style.color = "red";
+              wifiSuccess.style.display = "none";
+              wifiFailed.style.display = "block";
+            }
+
+            // Ethernet Bilgilerini Güncelle
+            if (ethernetConnected) {
+              ethernetStatusSpan.textContent = "{{ _('Connected')}}";
+              ethernetStatusSpan.style.color = "green";
+              ethernetMacSpan.textContent = ethernetMac || "{{ _('Unknown')}}";
+              ethernetSuccess.style.display = "block";
+              ethernetFailed.style.display = "none";
+            } else {
+              ethernetStatusSpan.textContent = "{{ _('No connection')}}";
+              ethernetStatusSpan.style.color = "red";
+              ethernetSuccess.style.display = "none";
+              ethernetFailed.style.display = "block";
+            }
+
+            if (updateList)
+              updateWifiList(data.data.wifi_networks, connectedSSID);
+          }
+        })
+        .catch((error) =>
+          console.error("{{ _('Error fetching network details')}}:", error)
+        );
+    }
+
+    function updateWifiList(networks, connectedSSID) {
+      wifiListContainer.innerHTML = "";
+
+      if (networks.length > 0) {
+        networks.sort((a, b) =>
+          a === connectedSSID ? -1 : b === connectedSSID ? 1 : 0
+        );
+
+        networks.forEach((wifi) => {
+          const wifiItem = document.createElement("div");
+          wifiItem.classList.add("wifi-item-test");
+          wifiItem.dataset.wifi = wifi;
+
+          if (wifi === connectedSSID) wifiItem.classList.add("connected-wifi");
+
+          wifiItem.innerHTML = `
+                    <div class="wifi-name-test">
+                        <span><img src="/static/images/svg/25.svg" alt="Wi-Fi"></span>
+                        ${wifi}
+                        <img src="/static/images/svg/26.svg" alt="Wi-Fi">
+                    </div>`;
+
+          wifiItem.addEventListener("click", function () {
+            openWifiPopup(wifi);
+          });
+
+          wifiListContainer.appendChild(wifiItem);
+        });
+      } else {
+        wifiListContainer.innerHTML =
+          "<p>{{ _('No available networks found')}}.</p>";
+      }
+    }
 
     getNetworkDetails(true);
 
@@ -879,7 +792,7 @@
             networkNameSpan.textContent = ssid;
             passwordSpan.textContent = password ? password : "No Password";
             connectionStatusSpan.textContent = `{{_('Connected')}}`;
-            connectionStatusSpan.style.color = "#00C16A";
+            connectionStatusSpan.style.color = "green";
 
             getNetworkDetails(true);
             closeWifiPopup();
@@ -890,7 +803,7 @@
               text: data.message || "{{ _('Failed to connect to Wi-Fi.')}}",
             });
             connectionStatusSpan.textContent = "No connection";
-            connectionStatusSpan.style.color = "#EF4444";
+            connectionStatusSpan.style.color = "red";
           }
         })
         .catch((error) => {
@@ -901,15 +814,20 @@
             text: "An error occurred while connecting to Wi-Fi.",
           });
           connectionStatusSpan.textContent = "No connection";
-          connectionStatusSpan.style.color = "#EF4444";
+          connectionStatusSpan.style.color = "red";
         })
         .finally(() => {
           joinButton.innerHTML = "Join";
           joinButton.disabled = false;
         });
     });
-  });
 
+    document
+      .getElementById("wifiToggleBtn")
+      .addEventListener("click", function () {
+        getNetworkDetails(true);
+      });
+  });
   document.addEventListener("DOMContentLoaded", function () {
     const tabButtons = document.querySelectorAll(".switch-btn-test");
     const tabContents = document.querySelectorAll(".tab-content-test");
