@@ -62,9 +62,11 @@
 // Wi _ Fi Test
 .wifi-container-test {
   display: flex;
+  align-items: flex-start;
   border-radius: 10px;
   width: 98%;
   gap: 10px;
+  height: 190px;
 }
 
 .btn-group-test {
@@ -91,7 +93,7 @@
     border-radius: 7px;
     border: none;
     cursor: pointer;
-    width: 231px;
+    width: 242px;
     text-align: left;
 
     .wifi-icon-test {
@@ -117,6 +119,8 @@
     padding: 5px 4px;
     max-height: 116px;
     overflow-y: auto;
+    max-height: 250px; // ✅ Burayı arttır!
+    overflow-y: auto;
 
     .wifi-category-test {
       font-weight: 600;
@@ -137,6 +141,10 @@
       cursor: pointer;
       transition: background 0.3s;
       border-bottom: 1px solid #ddd;
+
+      &:last-child {
+        border-bottom: none;
+      }
 
       &:hover {
         background: #f0f0f0;
@@ -225,15 +233,6 @@
 .wifi-icon-test {
   display: flex;
   gap: 10px;
-}
-
-// Wi-Fi Test Paneli
-.wifi-test-box {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 15px;
-  border-radius: 10px;
 }
 
 // Etiketler
@@ -379,7 +378,11 @@
 .wifi-test-box {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  flex-direction: column;
   width: 55%;
+  height: 180px;
+  overflow: hidden;
   padding: 3px 12px;
   border-radius: 10px;
   border: 1px solid #ef8018;

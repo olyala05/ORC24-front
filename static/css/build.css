@@ -2297,9 +2297,11 @@ body {
 
 .wifi-container-test {
   display: flex;
+  align-items: flex-start;
   border-radius: 10px;
   width: 98%;
   gap: 10px;
+  height: 190px;
 }
 
 .btn-group-test {
@@ -2325,7 +2327,7 @@ body {
   border-radius: 7px;
   border: none;
   cursor: pointer;
-  width: 231px;
+  width: 242px;
   text-align: left;
 }
 .network-box-test .network-header-test .wifi-icon-test {
@@ -2348,6 +2350,8 @@ body {
   padding: 5px 4px;
   max-height: 116px;
   overflow-y: auto;
+  max-height: 250px;
+  overflow-y: auto;
 }
 .network-box-test .wifi-list-test .wifi-category-test {
   font-weight: 600;
@@ -2367,6 +2371,9 @@ body {
   cursor: pointer;
   transition: background 0.3s;
   border-bottom: 1px solid #ddd;
+}
+.network-box-test .wifi-list-test .wifi-item-test:last-child {
+  border-bottom: none;
 }
 .network-box-test .wifi-list-test .wifi-item-test:hover {
   background: #f0f0f0;
@@ -2443,14 +2450,6 @@ body {
 .wifi-icon-test {
   display: flex;
   gap: 10px;
-}
-
-.wifi-test-box {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 15px;
-  border-radius: 10px;
 }
 
 .wifi-test-label {
@@ -2582,7 +2581,11 @@ body {
 .wifi-test-box {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  flex-direction: column;
   width: 55%;
+  height: 180px;
+  overflow: hidden;
   padding: 3px 12px;
   border-radius: 10px;
   border: 1px solid #ef8018;
