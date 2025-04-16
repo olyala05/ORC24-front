@@ -2065,6 +2065,31 @@ body {
   text-align: center;
 }
 
+.dots::after {
+  content: "";
+  display: inline-block;
+  animation: dotsAnimation 1.2s steps(4, end) infinite;
+  width: 1em;
+  text-align: left;
+}
+
+@keyframes dotsAnimation {
+  0% {
+    content: "";
+  }
+  25% {
+    content: ".";
+  }
+  50% {
+    content: "..";
+  }
+  75% {
+    content: "...";
+  }
+  100% {
+    content: "";
+  }
+}
 .orc-content {
   margin-top: 76px;
   padding: 0px;

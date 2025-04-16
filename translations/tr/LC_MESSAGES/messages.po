@@ -921,6 +921,9 @@ msgstr "Bitiş Tarihi"
 msgid "Loading..."
 msgstr "Yükleniyor..."
 
+msgid "Loading"
+msgstr "Yükleniyor"
+
 msgid "The Electric Alarms Database is Empty"
 msgstr "Electric Alarms Veritabanı Boş"
 

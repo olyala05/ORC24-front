@@ -922,6 +922,9 @@ msgstr "End Date"
 msgid "Loading..."
 msgstr "Loading..."
 
+msgid "Loading"
+msgstr "Loading"
+
 msgid "The Electric Alarms Database is Empty"
 msgstr "The Electric Alarms Database is Empty"
 

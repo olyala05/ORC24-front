@@ -64,9 +64,9 @@ block content %}
 
         <select id="modem" class="modem-dropdown" onchange="connectDevice()">
           <option value="" disabled selected>
-            <span id="loadingText"
-              >{{ _('Loading') }}<span class="dots">...</span></span
-            >
+            <span id="loadingText">
+              {{ _('Loading...') }}<span class="dots"></span>
+            </span>
           </option>
         </select>
 
@@ -160,12 +160,21 @@ block content %}
     let arrowIcon = document.getElementById("arrow-icon");
 
     let defaultOption = dropdown.querySelector("option");
-    defaultOption.textContent = "Loading...";
+    defaultOption.textContent = "Loading";
+
+    let dotCount = 0;
+    let loadingInterval = setInterval(() => {
+      dotCount = (dotCount + 1) % 4;
+      defaultOption.textContent = "Loading" + ".".repeat(dotCount);
+    }, 400);
+
     modemIcon.src = "{{ url_for('static', filename='images/svg/40.svg') }}";
 
     fetch("/devices")
       .then((response) => response.json())
       .then((data) => {
+        clearInterval(loadingInterval);
+
         dropdown.innerHTML = "";
 
         let newDefaultOption = document.createElement("option");
@@ -209,6 +218,7 @@ block content %}
         toggleButtons(true);
       })
       .catch((error) => {
+        clearInterval(loadingInterval); // hata olsa bile animasyonu durdur
         console.error("{{ _('Error while retrieving devices:')}}", error);
         toggleButtons(false);
       });
@@ -898,7 +908,7 @@ block content %}
   }
 
   .swal2-toast.swal2-success {
-    border-color: #33FF00; 
+    border-color: #33ff00;
   }
 
   .swal2-toast.swal2-error {
@@ -906,7 +916,7 @@ block content %}
   }
 
   .swal2-toast.swal2-warning {
-    border-color: #ffc107; 
+    border-color: #ffc107;
   }
 
   /* Progress bar için renkler */
@@ -918,17 +928,19 @@ block content %}
 
   /* Success (Yeşil) Progress Bar */
   .swal2-timer-progress-bar-container.success-progress-bar {
-    background-color: #33FF00; 
+    background-color: #33ff00;
   }
 
   /* Error (Kırmızı) Progress Bar */
   .swal2-timer-progress-bar-container.error-progress-bar {
-    background-color: #f44336; 
+    background-color: #f44336;
   }
 
   /* Warning (Sarı) Progress Bar */
   .swal2-timer-progress-bar-container.warning-progress-bar {
-    background-color: #ffc107; 
+    background-color: #ffc107;
   }
+
+  
 </style>
 {% endblock %}
