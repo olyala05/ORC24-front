@@ -1165,8 +1165,8 @@ msgstr "Evet"
 msgid "No"
 msgstr "Hayır"
 
-msgid "Test Mode Page"
-msgstr "Test Modu Sayfası"
+msgid "Test Mode"
+msgstr "Test Modu"
 
 
 # *********** Test Details *********

@@ -19,7 +19,7 @@ body {
 .log-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; // ✅ sola hizalama
+  align-items: flex-start; 
   justify-content: flex-start;
   height: 61vh;
 }
@@ -114,12 +114,12 @@ body {
 /* Takvim Konteyneri */
 #calendar-container {
   display: flex;
-  justify-content: flex-start; // ✅ sola hizalama
+  justify-content: flex-start; 
   align-items: center;
   background-color: #0b1734;
   gap: 10px;
-  margin-left: 20px; // ✅ sola boşluk eklendi
-  margin-right: auto; // sağa yaslamayı engeller
+  margin-left: 20px; 
+  margin-right: auto; 
 }
 .calendar-input-wrapper {
   position: relative;
@@ -129,14 +129,14 @@ body {
 .calendar-input {
   background-color: #0e1734;
   color: #ffffff;
-  padding: 10px 36px 10px 16px;
-  font-size: 14px;
-  border: 1px solid #ffffff55;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3333333333);
   border-radius: 6px;
   cursor: default;
   width: auto;
   font-weight: bold;
-  min-width: 220px;
+  text-align: center;
 }
 
 .calendar-icon {

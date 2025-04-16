@@ -592,17 +592,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  justify-content: flex-start;
+  padding-top: 1rem;
 }
 
 .cloud-test-button {
   background-color: #ef742a;
   color: white;
-  padding: 13px 40px;
+  padding: 13px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
+  width: 300px;
 }
 .cloud-test-button:hover {
   background-color: #d97720;
@@ -742,7 +745,7 @@
   padding: 8px;
   border-radius: 5px;
   width: 97%;
-  height: 60px;
+  height: 50px;
   resize: none;
   color: #000;
 }

@@ -38,7 +38,7 @@
   flex: 1;
   padding: 3px;
   text-align: center;
-  color: #ff9800;
+  color: #fff;
   font-weight: bold;
   font-size: 14px;
 }
@@ -54,7 +54,7 @@
   flex: 1;
   padding: 0px;
   text-align: center;
-  color: #ccc;
+  color: #fff;
   font-size: 12px;
 }
 .live-data-container .status {
@@ -64,13 +64,13 @@
   border-radius: 50%;
 }
 .live-data-container .status.active {
-  background-color: green;
+  background-color: #33FF00;
 }
 .live-data-container .status.inactive {
   background-color: red;
 }
 .live-data-container .live-data-status .table-row > div[data-status="A / A"] {
-  color: green;
+  color: #33FF00;
 }
 .live-data-container .live-data-status .table-row > div[data-status="P / P"] {
   color: red;

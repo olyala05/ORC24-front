@@ -1462,7 +1462,7 @@ body {
 }
 
 .green {
-  background-color: #46B649;
+  background-color: #33FF00;
 }
 
 .red {
@@ -1753,14 +1753,14 @@ body {
 .calendar-input {
   background-color: #0e1734;
   color: #ffffff;
-  padding: 10px 36px 10px 16px;
-  font-size: 14px;
+  padding: 10px;
+  font-size: 16px;
   border: 1px solid rgba(255, 255, 255, 0.3333333333);
   border-radius: 6px;
   cursor: default;
   width: auto;
   font-weight: bold;
-  min-width: 220px;
+  text-align: center;
 }
 
 .calendar-icon {
@@ -2949,17 +2949,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  justify-content: flex-start;
+  padding-top: 1rem;
 }
 
 .cloud-test-button {
   background-color: #ef742a;
   color: white;
-  padding: 13px 40px;
+  padding: 13px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
+  width: 300px;
 }
 .cloud-test-button:hover {
   background-color: #d97720;
@@ -3099,7 +3102,7 @@ body {
   padding: 8px;
   border-radius: 5px;
   width: 97%;
-  height: 60px;
+  height: 50px;
   resize: none;
   color: #000;
 }
@@ -3866,7 +3869,7 @@ body {
   flex: 1;
   padding: 3px;
   text-align: center;
-  color: #ff9800;
+  color: #fff;
   font-weight: bold;
   font-size: 14px;
 }
@@ -3882,7 +3885,7 @@ body {
   flex: 1;
   padding: 0px;
   text-align: center;
-  color: #ccc;
+  color: #fff;
   font-size: 12px;
 }
 .live-data-container .status {
@@ -3892,13 +3895,13 @@ body {
   border-radius: 50%;
 }
 .live-data-container .status.active {
-  background-color: green;
+  background-color: #33FF00;
 }
 .live-data-container .status.inactive {
   background-color: red;
 }
 .live-data-container .live-data-status .table-row > div[data-status="A / A"] {
-  color: green;
+  color: #33FF00;
 }
 .live-data-container .live-data-status .table-row > div[data-status="P / P"] {
   color: red;
@@ -4086,7 +4089,7 @@ body {
   flex: 1;
   padding: 3px;
   text-align: center;
-  color: #ff9800;
+  color: #fff;
   font-weight: bold;
   font-size: 14px;
 }
@@ -4102,7 +4105,7 @@ body {
   flex: 1;
   padding: 0px;
   text-align: center;
-  color: #ccc;
+  color: #fff;
   font-size: 12px;
 }
 .hourly-data-container .table-row .passive-style {
@@ -4301,7 +4304,7 @@ body {
   flex: 1;
   padding: 3px;
   text-align: center;
-  color: #ff9800;
+  color: #fff;
   font-weight: bold;
   font-size: 14px;
 }
@@ -4317,7 +4320,7 @@ body {
   flex: 1;
   padding: 0px;
   text-align: center;
-  color: #ccc;
+  color: #fff;
   font-size: 12px;
 }
 .daily-data-container .table-row .passive-style {
