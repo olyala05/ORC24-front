@@ -61,14 +61,7 @@
               <span class="wifi-success" id="wifiSuccess" style="display: none">
                 
               </span>
-              <span class="wifi-failed" id="wifiFailed" style="display: none">
-                <img
-                  src="{{ url_for('static', filename='images/svg/14.svg') }}"
-                  alt="No Wi-Fi"
-                  class="ethernet-icon"
-                />
-                {{ _('WiFi Connection Failed.')}}
-              </span>
+              <span class="wifi-failed" id="wifiFailed" style="display: none"></span>
             </div>
           </div>
         </div>
@@ -156,12 +149,6 @@
                   class="ethernet-success"
                   style="display: none"
                 >
-                  <img
-                    src="{{ url_for('static', filename='images/svg/15.svg') }}"
-                    alt="Ethernet Connected"
-                    class="ethernet-icon"
-                  />
-                  {{ _('Ethernet Connection Successful.')}}
                 </span>
                 <span
                   id="ethernetFailed"
@@ -814,7 +801,7 @@
         getNetworkDetails(true);
       });
   });
-  
+
   document.addEventListener("DOMContentLoaded", function () {
     const tabButtons = document.querySelectorAll(".switch-btn-test");
     const tabContents = document.querySelectorAll(".tab-content-test");
