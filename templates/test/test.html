@@ -226,7 +226,6 @@
             id="scan-btn"
           >
             {{ _('Perform a scanning test') }}
-            
           </button>
           <span id="scan-status" style="display: none; color: #00c16a">
             {{ _('Scanning Equipments') }}
@@ -239,13 +238,22 @@
     <div id="equipmentModal" class="popup-overlay" style="display: none">
       <div class="popup-content" style="width: 500px">
         <!-- Tarama tamamlandığında sadece varsa gösterilecek -->
-        <h3 id="equipment-found-title" style="color: #ef8018; margin-bottom: 10px; display: none;">
-          <i class="fa-solid fa-circle-exclamation" style="color: orange; margin: 8px; font-size: 22px"></i>
+        <h3
+          id="equipment-found-title"
+          style="color: #ef8018; margin-bottom: 10px; display: none"
+        >
+          <i
+            class="fa-solid fa-circle-exclamation"
+            style="color: orange; margin: 8px; font-size: 22px"
+          ></i>
           {{ _('New Equipment Found') }}
         </h3>
 
         <!-- Tarama sonucu bulunamadı mesajı -->
-        <p id="equipment-not-found-message" style="color: #ef4444; text-align: center; display: none;">
+        <p
+          id="equipment-not-found-message"
+          style="color: #ef4444; text-align: center; display: none"
+        >
           Ekipman bulunamadı.
         </p>
 
@@ -258,7 +266,14 @@
         <!-- Tablo -->
         <table
           id="equipment-table"
-          style="width: 100%; color: #fff; border-spacing: 0 10px; text-align: center; display: none;">
+          style="
+            width: 100%;
+            color: #fff;
+            border-spacing: 0 10px;
+            text-align: center;
+            display: none;
+          "
+        >
           <thead>
             <tr>
               <th>Serial:</th>
@@ -269,7 +284,10 @@
           <tbody id="modalEquipmentBody"></tbody>
         </table>
 
-        <div id="equipment-ok-button" style="margin-top: 20px; text-align: center; display: none;">
+        <div
+          id="equipment-ok-button"
+          style="margin-top: 20px; text-align: center; display: none"
+        >
           <button onclick="closeEquipmentModal()" class="close-equipment-modal">
             {{ _('Ok') }}
           </button>
@@ -941,113 +959,119 @@
 
   let previousEquipmentData = [];
 
-function startScanning() {
-  // Sadece modal gösterimi
-  document.getElementById("equipmentModal").style.display = "flex";
-  document.getElementById("equipment-loading").style.display = "block";
-  document.getElementById("equipment-found-title").style.display = "none";
-  document.getElementById("equipment-not-found-message").style.display = "none";
-  document.getElementById("equipment-table").style.display = "none";
-  document.getElementById("equipment-ok-button").style.display = "none";
+  function startScanning() {
+    // Sadece modal gösterimi
+    document.getElementById("equipmentModal").style.display = "flex";
+    document.getElementById("equipment-loading").style.display = "block";
+    document.getElementById("equipment-found-title").style.display = "none";
+    document.getElementById("equipment-not-found-message").style.display =
+      "none";
+    document.getElementById("equipment-table").style.display = "none";
+    document.getElementById("equipment-ok-button").style.display = "none";
 
-  fetch("/get_slave_data", {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (
-        data.status === "success" &&
-        Array.isArray(data.data) &&
-        data.data.length > 0
-      ) {
-        const newEquipments = data.data.filter(
-          (item) =>
-            !previousEquipmentData.some(
-              (prev) =>
-                prev.slave_id === item.slave_id &&
-                prev.model_name === item.model_name &&
-                prev.ip === item.ip
-            )
-        );
+    fetch("/get_slave_data", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (
+          data.status === "success" &&
+          Array.isArray(data.data) &&
+          data.data.length > 0
+        ) {
+          const newEquipments = data.data.filter(
+            (item) =>
+              !previousEquipmentData.some(
+                (prev) =>
+                  prev.slave_id === item.slave_id &&
+                  prev.model_name === item.model_name &&
+                  prev.ip === item.ip
+              )
+          );
 
-        previousEquipmentData = [...previousEquipmentData, ...newEquipments];
+          previousEquipmentData = [...previousEquipmentData, ...newEquipments];
 
-        if (newEquipments.length > 0) {
-          showEquipmentModal(newEquipments);
+          if (newEquipments.length > 0) {
+            showEquipmentModal(newEquipments);
+          } else {
+            document.getElementById("equipment-loading").style.display = "none";
+            document.getElementById(
+              "equipment-not-found-message"
+            ).style.display = "block";
+            document.getElementById("equipment-ok-button").style.display =
+              "block";
+          }
         } else {
           document.getElementById("equipment-loading").style.display = "none";
-          document.getElementById("equipment-not-found-message").style.display = "block";
-          document.getElementById("equipment-ok-button").style.display = "block";
+          document.getElementById("equipment-not-found-message").style.display =
+            "block";
+          document.getElementById("equipment-ok-button").style.display =
+            "block";
         }
-      } else {
+      })
+      .catch((error) => {
+        console.error("Error during scanning:", error);
         document.getElementById("equipment-loading").style.display = "none";
-        document.getElementById("equipment-not-found-message").style.display = "block";
+        const msg = document.getElementById("equipment-not-found-message");
+        msg.textContent = "Tarama sırasında hata oluştu.";
+        msg.style.display = "block";
+        msg.style.color = "#ef4444";
         document.getElementById("equipment-ok-button").style.display = "block";
-      }
-    })
-    .catch((error) => {
-      console.error("Error during scanning:", error);
-      document.getElementById("equipment-loading").style.display = "none";
-      const msg = document.getElementById("equipment-not-found-message");
-      msg.textContent = "Tarama sırasında hata oluştu.";
-      msg.style.display = "block";
-      msg.style.color = "#ef4444";
-      document.getElementById("equipment-ok-button").style.display = "block";
-    });
-}
+      });
+  }
 
+  function showEquipmentModal(equipments) {
+    const modalBody = document.getElementById("modalEquipmentBody");
+    modalBody.innerHTML = "";
 
-function showEquipmentModal(equipments) {
-  const modalBody = document.getElementById("modalEquipmentBody");
-  modalBody.innerHTML = "";
-
-  equipments.forEach((item) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
+    equipments.forEach((item) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
       <td>${item.model_name || "-"}</td>
       <td>${item.ip || "-"}</td>
       <td>Modbus</td>
     `;
-    modalBody.appendChild(row);
-  });
+      modalBody.appendChild(row);
+    });
 
-  // Tarama tamamlandıktan sonra yükleme kapanır, tablo ve başlık gösterilir
-  document.getElementById("equipment-loading").style.display = "none";
-  document.getElementById("equipment-not-found-message").style.display = "none";
-  document.getElementById("equipment-found-title").style.display = "block";
-  document.getElementById("equipment-table").style.display = "table";
-  document.getElementById("equipment-ok-button").style.display = "block";
-}
-
-function closeEquipmentModal() {
-  document.getElementById("equipmentModal").style.display = "none";
-}
-
-function addNewDataToTable(newData) {
-  console.log("Yeni cihazlar sadece popup'ta gösterilecek...");
-
-  const newEquipments = newData.filter(
-    (item) =>
-      !previousEquipmentData.some(
-        (prev) =>
-          prev.slave_id === item.slave_id &&
-          prev.model_name === item.model_name &&
-          prev.ip === item.ip
-      )
-  );
-
-  if (newEquipments.length === 0) {
-    console.log("Yeni veri bulunamadı.");
-    return;
+    // Tarama tamamlandıktan sonra yükleme kapanır, tablo ve başlık gösterilir
+    document.getElementById("equipment-loading").style.display = "none";
+    document.getElementById("equipment-not-found-message").style.display =
+      "none";
+    document.getElementById("equipment-found-title").style.display = "block";
+    document.getElementById("equipment-table").style.display = "table";
+    document.getElementById("equipment-ok-button").style.display = "block";
   }
 
-  // ✅ Modal'da yeni cihazları göster
-  showEquipmentModal(newEquipments);
+  function closeEquipmentModal() {
+    document.getElementById("equipmentModal").style.display = "none";
+  }
 
-  // ✅ Yeni verileri belleğe ekle
-  previousEquipmentData = [...previousEquipmentData, ...newEquipments];
-}
+  function addNewDataToTable(newData) {
+    console.log("Yeni cihazlar sadece popup'ta gösterilecek...");
+
+    const newEquipments = newData.filter(
+      (item) =>
+        !previousEquipmentData.some(
+          (prev) =>
+            prev.slave_id === item.slave_id &&
+            prev.model_name === item.model_name &&
+            prev.ip === item.ip
+        )
+    );
+
+    if (newEquipments.length === 0) {
+      console.log("Yeni veri bulunamadı.");
+      return;
+    }
+
+    // ✅ Modal'da yeni cihazları göster
+    showEquipmentModal(newEquipments);
+
+    // ✅ Yeni verileri belleğe ekle
+    previousEquipmentData = [...previousEquipmentData, ...newEquipments];
+  }
 
   function closeEquipmentModal() {
     document.getElementById("equipmentModal").style.display = "none";
@@ -1596,8 +1620,35 @@ function addNewDataToTable(newData) {
 
   div:where(.swal2-container) div:where(.swal2-html-container) {
     padding: 0.5em 0.5em 0.1em;
+    font-weight: 600;
+  }
+  div:where(.swal2-actions) button.swal2-confirm {
+    background-color: #0b1734 !important;
+    color: white !important;
+    width: 200px;
+    padding: 15px;
+    font-size: 16px;
   }
 
+  div:where(.swal2-actions) button.swal2-cancel {
+    color: white !important;
+    background-color: #0b1734 !important;
+    width: 200px;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  div:where(.swal2-icon).swal2-info {
+    border-color: #ef742a;
+    color: #ef742a;
+    width: 60px;
+    height: 60px;
+  }
+  body.swal2-no-backdrop .swal2-container .swal2-modal {
+    width: 500px;
+    height: 250px;
+  }
   div:where(.swal2-container) div:where(.swal2-popup) {
     width: 27em;
     font-size: 0.9rem;
@@ -1622,6 +1673,7 @@ function addNewDataToTable(newData) {
   .status-red {
     border-color: #ef4444;
   }
+
 </style>
 
 {% endblock %}
