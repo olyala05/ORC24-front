@@ -251,38 +251,40 @@ title%} {% block content %}
     setInterval(updateDateTime, 60000);
   });
 
-  document.addEventListener("DOMContentLoaded", function () {
-    document
-      .getElementById("logout-button")
-      .addEventListener("click", function (event) {
-        event.preventDefault();
+    document.addEventListener("DOMContentLoaded", function () {
+      document
+        .getElementById("logout-button")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
 
-        // Trigger SweetAlert confirmation with custom styling
-        Swal.fire({
-          title: "Çıkış yapmak istediğinize emin misiniz?",
-          icon: "warning",
-          background: "#0B1734",
-          iconColor: "#EF8018",
-          showCancelButton: true,
-          confirmButtonText: "Evet", // Sağda
-          cancelButtonText: "Hayır", // Solda
-          reverseButtons: false, // Bu zaten varsayılan
-          customClass: {
-            confirmButton: "swal-button-yes", // Sağdaki buton
-            cancelButton: "swal-button-no", // Soldaki buton
-          },
-          buttonsStyling: false,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            document.getElementById("logout-form").submit();
-          }
+          Swal.fire({
+            title: "Çıkış yapmak istediğinize emin misiniz?",
+            icon: "warning",
+            background: "#0B1734",
+            iconColor: "#EF8018",
+            showCancelButton: true,
+            confirmButtonText: "Evet", 
+            cancelButtonText: "Hayır", 
+            reverseButtons: false, 
+            customClass: {
+              confirmButton: "swal-button-yes", 
+              cancelButton: "swal-button-no", 
+            },
+            buttonsStyling: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              document.getElementById("logout-form").submit();
+            }
+          });
         });
-      });
-  });
+    });
+
+    // Eğer dili almanca ise chartdaki fontsize ler 12px olsun
+    var currentLang = "{{ get_locale() }}";
+    var isGerman = currentLang === "de";
 
     // Echarts 1 Frekans (Hz)
     var chart = echarts.init(document.getElementById("frequencyGauge"));
-
     var option = {
       graphic: [
         {
@@ -312,7 +314,7 @@ title%} {% block content %}
             show: true,
             width: 12,
             itemStyle: {
-              color: "#33FF00",
+              color: "#0EB100",
             },
             animation: false,
           },
@@ -321,7 +323,7 @@ title%} {% block content %}
             lineStyle: {
               width: 12,
               color: [
-                [0.5, "#33FF00"],
+                [0.5, "#1C2747"],
                 [1, "#f57c00"],
               ],
             },
@@ -354,18 +356,18 @@ title%} {% block content %}
             },
             rich: {
               line1: {
-                fontSize: 16,
+                fontSize: isGerman ? 14 : 16,
                 fontWeight: "bold",
                 color: "#ffffff",
                 lineHeight: 22,
               },
               line2: {
-                fontSize: 16,
+                fontSize: isGerman ? 14 : 16,
                 color: "#ffffff",
                 lineHeight: 22,
               },
               line3: {
-                fontSize: 16,
+                fontSize: isGerman ? 14 : 14,
                 color: "#ffffff",
                 lineHeight: 22,
               },
@@ -381,15 +383,12 @@ title%} {% block content %}
         },
       ],
     };
-
     chart.setOption(option);
 
-      // Echarts 2 
+    // Echarts 2 
     var chart = echarts.init(document.getElementById("reactiveStatus"));
-
     var option = {
       graphic: [
-        // Dış çerçeve
         {
           type: "circle",
           left: "center",
@@ -404,7 +403,6 @@ title%} {% block content %}
           },
           z: 1,
         },
-        // İç yeşil dolgu
         {
           type: "circle",
           left: "center",
@@ -418,7 +416,6 @@ title%} {% block content %}
           },
           z: 2,
         },
-        // Tüm metin: Reactive\nPenalty\nDoes not Exist
         {
           type: "text",
           left: "center",
@@ -430,18 +427,18 @@ title%} {% block content %}
             textVerticalAlign: "middle",
             rich: {
               line1: {
-                fontSize: 16,
+                fontSize: isGerman ? 13 : 16,
                 fontWeight: "bold",
-                lineHeight: 22,
+                lineHeight: 20,
               },
               line2: {
-                fontSize: 16,
+                fontSize: isGerman ? 13 : 16,
                 fontWeight: "bold",
-                lineHeight: 22,
+                lineHeight: 20,
               },
               line3: {
-                fontSize: 14,
-                lineHeight: 22,
+                fontSize: isGerman ? 12 : 14,
+                lineHeight: 18,
               },
             },
           },
@@ -450,6 +447,7 @@ title%} {% block content %}
       ],
     };
     chart.setOption(option);
+
 
     // Echarts 3 Güç Faktörü
     var chart = echarts.init(document.getElementById("powerFactorGauge"));
@@ -518,21 +516,21 @@ title%} {% block content %}
             },
             rich: {
               line1: {
-                fontSize: 16,
+                fontSize: isGerman ? 13 : 16,
                 fontWeight: "bold",
                 color: "#fff",
-                lineHeight: 22,
+                lineHeight: 20,
               },
               line2: {
-                fontSize: 16,
+                fontSize: isGerman ? 13 : 16,
                 color: "#fff",
-                lineHeight: 22,
+                lineHeight: 20,
               },
               line3: {
-                fontSize: 16,
+                fontSize: isGerman ? 13 : 16,
                 fontWeight: "bold",
                 color: "#fff",
-                lineHeight: 22,
+                lineHeight: 20,
               },
             },
             offsetCenter: [0, "10%"],
@@ -546,6 +544,7 @@ title%} {% block content %}
         },
       ],
     };
+
     chart.setOption(option);
 
 </script>

@@ -317,8 +317,11 @@ msgid_plural "{len_type} values are required, but {len_value} were given."
 msgstr[0] ""
 msgstr[1] ""
 
-
+#############################################################################
 #: templates/login.html:20
+msgid "Dashboard"
+msgstr "Übersicht"
+
 msgid "Login"
 msgstr "Anmelden"
 
@@ -331,40 +334,45 @@ msgstr "Passwort"
 msgid "Logout"
 msgstr "Abmelden"
 
-msgid "Menu"
+msgid "Menu"    
 msgstr "Menü"
 
-msgid "Report Date"
+msgid "Modems"    
+msgstr "Modems"
+
+msgid "Report Date"    
 msgstr "Berichtsdatum"
 
-msgid "Energy Drawn From The Grid"
-msgstr "Energie aus dem Netz entnommen"
+msgid "Energy Drawn From The Grid"    
+msgstr "Aus dem Netz bezogene Energie"
 
-msgid "Generated Energy"
+msgid "Generated Energy"    
 msgstr "Erzeugte Energie"
 
 msgid "Consumed Energy"
 msgstr "Verbrauchte Energie"
 
 # ******* Alarms ********
-msgid "REACTIVE POWER"
-msgstr "REAKTIVE LEISTUNG"
+msgid "REACTIVE POWER"   
+msgstr "Blindleistung"
 
-msgid "HARMONIC"
-msgstr "HARMONISCH"
+msgid "HARMONIC"   
+msgstr "Oberschwingung"
 
-msgid "ACTIVE"
-msgstr "AKTIV"
+msgid "ACTIVE"   
+msgstr "Wirkleistung"
 
-msgid "VOLTAGE"
-msgstr "SPANNUNG"
+msgid "VOLTAGE"   
+msgstr "Spannung"
 
 msgid "NETWORK"
-msgstr "NETZWERK"
+msgstr "Netzwerk"
 
 msgid "POWER"
-msgstr "LEISTUNG"
+msgstr "Leistung"
 
+
+###############################################################
 #  ******** Modem Selection ********
 msgid "Home"
 msgstr "Startseite"
@@ -375,8 +383,11 @@ msgstr "Modemauswahl"
 msgid "Select Modem or Device"
 msgstr "Modem oder Gerät auswählen"
 
+msgid "Select Modem"
+msgstr "Modem auswählen"
+
 msgid "ORC Status"
-msgstr "ORC Status"
+msgstr "ORC-Status"
 
 msgid "Equipment"
 msgstr "Ausrüstung"
@@ -387,7 +398,7 @@ msgstr "Einstellungen"
 msgid "Test"
 msgstr "Test"
 
-msgid "Date"
+msgid "Data"
 msgstr "Daten"
 
 msgid "Loading devices"
@@ -400,25 +411,30 @@ msgid "Failed to connect to the device!"
 msgstr "Verbindung zum Gerät fehlgeschlagen!"
 
 msgid "Unable to proceed as the device could not be connected!"
-msgstr "Vorgang kann nicht fortgesetzt werden, da das Gerät nicht verbunden werden konnte!"
+msgstr "Fortfahren nicht möglich, da keine Verbindung zum Gerät hergestellt werden konnte!"
 
 msgid "Connection Error"
 msgstr "Verbindungsfehler"
 
 msgid "An error occurred during the connection."
-msgstr "Ein Fehler ist während der Verbindung aufgetreten."
+msgstr "Während der Verbindung ist ein Fehler aufgetreten."
 
 msgid "Ok"
-msgstr "Okay"
+msgstr "OK"
+
+msgid "Scanning Equipments"
+msgstr "Ausrüstungen werden gescannt"
 
 msgid "Connecting to the device , please wait..."
-msgstr "Verbinde mit dem Gerät, bitte warten..."
+msgstr "Verbindung zum Gerät wird hergestellt, bitte warten..."
 
 msgid "Please select a device first!"
 msgstr "Bitte wählen Sie zuerst ein Gerät aus!"
 
 msgid "The page has been refreshed, no device found, alarm reset!"
 msgstr "Die Seite wurde aktualisiert, kein Gerät gefunden, Alarm zurückgesetzt!"
+
+#############################################################################################
 
 # *********** Header ***********
 msgid "Back"
@@ -431,13 +447,13 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 msgid "OK"
-msgstr "Okay"
+msgstr "OK"
 
 msgid "Alarm data could not be retrieved"
 msgstr "Alarmdaten konnten nicht abgerufen werden"
 
 msgid "Redirecting to the alarm page..."
-msgstr "Wird zur Alarmseite weitergeleitet..."
+msgstr "Weiterleitung zur Alarmseite..."
 
 msgid "ORC Status is loading..."
 msgstr "ORC-Status wird geladen..."
@@ -446,7 +462,7 @@ msgid "Warning"
 msgstr "Warnung"
 
 msgid "Error while retrieving devices:"
-msgstr "Fehler beim Abrufen von Geräten:"
+msgstr "Fehler beim Abrufen der Geräte:"
 
 msgid "Equipments are loading..."
 msgstr "Ausrüstungen werden geladen..."
@@ -456,6 +472,9 @@ msgstr "Backend-Fehler"
 
 msgid "Error!"
 msgstr "Fehler!"
+
+msgid "Error:"
+msgstr "Fehler:"
 
 msgid "Equipment data could not be retrieved."
 msgstr "Ausrüstungsdaten konnten nicht abgerufen werden."
@@ -476,13 +495,13 @@ msgid "Equipments are being scanned..."
 msgstr "Ausrüstungen werden gescannt..."
 
 msgid "An error occurred while retrieving Modbus data:"
-msgstr "Fehler beim Abrufen von Modbus-Daten:"
+msgstr "Beim Abrufen der Modbus-Daten ist ein Fehler aufgetreten:"
 
-msgid "Equipment data could not be retrieved. Please try again."
+msgid "Eqıipment verisi alınamadı. Lütfen tekrar deneyin."
 msgstr "Ausrüstungsdaten konnten nicht abgerufen werden. Bitte versuchen Sie es erneut."
 
 msgid "Redirecting to the alarm page..."
-msgstr "Wird zur Alarmseite weitergeleitet..."
+msgstr "Weiterleitung zur Alarmseite..."
 
 msgid "Device information could not be retrieved. Please try again."
 msgstr "Geräteinformationen konnten nicht abgerufen werden. Bitte versuchen Sie es erneut."
@@ -491,10 +510,12 @@ msgid "Alarm data could not be retrieved for the selected device:"
 msgstr "Alarmdaten konnten für das ausgewählte Gerät nicht abgerufen werden:"
 
 msgid "The alarm data request has been canceled."
-msgstr "Die Anfrage für Alarmdaten wurde abgebrochen."
+msgstr "Die Anfrage nach Alarmdaten wurde abgebrochen."
+
+#############################################################################################
 
 msgid "SERIAL NO"
-msgstr "SERIAL NO"
+msgstr "SERIENNUMMER"
 
 msgid "MODEM NAME"
 msgstr "MODEMNAME"
@@ -509,10 +530,10 @@ msgid "DATE OF INSTALLATION"
 msgstr "INSTALLATIONSDATUM"
 
 msgid "DATA READING INTERVAL"
-msgstr "DATENLESINTERVALL"
+msgstr "DATENAUSLESEINTERVALL"
 
 msgid "NETWORK TYPE"
-msgstr "NETZWERKTYPE"
+msgstr "NETZWERKTYP"
 
 msgid "CONNECTION PROTOCOL"
 msgstr "VERBINDUNGSPROTOKOLL"
@@ -535,17 +556,20 @@ msgstr "Verbunden"
 msgid "Not Connected"
 msgstr "Nicht verbunden"
 
+msgid "No Wi-Fi Connection"
+msgstr "Keine WLAN-Verbindung"
+
 msgid "Checking the network cables, modem and router"
-msgstr "Überprüfung der Netzwerkkabel, Modem und Router"
+msgstr "Netzkabel, Modem und Router werden überprüft"
 
 msgid "Reconnecting to Wi-Fi"
-msgstr "Wiederverbinden mit Wi-Fi"
+msgstr "WLAN-Verbindung wird wiederhergestellt"
 
 msgid "No Internet"
 msgstr "Kein Internet"
 
 msgid "Retry"
-msgstr "Erneut versuchen"
+msgstr "Wiederholen"
 
 msgid "Archive"
 msgstr "Archiv"
@@ -560,13 +584,13 @@ msgid "Last Connection Date"
 msgstr "Letztes Verbindungsdatum"
 
 msgid "Lora Disconnection"
-msgstr "Lora-Verbindung getrennt"
+msgstr "LoRa-Verbindung getrennt"
 
 msgid "WiFi Connection"
-msgstr "Wi-Fi Verbindung"
+msgstr "WLAN-Verbindung"
 
 msgid "WiFi Disconnected"
-msgstr "Wi-Fi getrennt"
+msgstr "WLAN-Verbindung getrennt"
 
 msgid "Cloud Connection"
 msgstr "Cloud-Verbindung"
@@ -578,19 +602,19 @@ msgid "Ethernet Connection"
 msgstr "Ethernet-Verbindung"
 
 msgid "Ethernet Disconnected"
-msgstr "Ethernet getrennt"
+msgstr "Ethernet-Verbindung getrennt"
 
 msgid "VPN Connection"
 msgstr "VPN-Verbindung"
 
 msgid "VPN Disconnected"
-msgstr "VPN getrennt"
+msgstr "VPN-Verbindung getrennt"
 
 msgid "Algorithm Processes"
 msgstr "Algorithmusprozesse"
 
 msgid "ORC Process Procedures"
-msgstr "ORC-Prozessverfahren"
+msgstr "ORC-Prozessabläufe"
 
 msgid "Normal / Error (Red)"
 msgstr "Normal / Fehler (Rot)"
@@ -599,10 +623,10 @@ msgid "Please select a device first!"
 msgstr "Bitte wählen Sie zuerst ein Gerät aus!"
 
 msgid "Modem info retrieved successfully"
-msgstr "Modem-Informationen erfolgreich abgerufen"
+msgstr "Modeminformationen erfolgreich abgerufen"
 
 msgid "Failed to fetch modem data"
-msgstr "Modem-Daten konnten nicht abgerufen werden"
+msgstr "Modemdaten konnten nicht abgerufen werden"
 
 msgid "Unexpected error occurred"
 msgstr "Unerwarteter Fehler aufgetreten"
@@ -613,11 +637,722 @@ msgstr "Unerwarteter Fehler:"
 msgid "Frequency (Hz)"
 msgstr "Frequenz (Hz)"
 
-msgid "Reactive Penalty"
-msgstr "Reaktive Strafe"
+msgid "Frequency"
+msgstr "Frequenz"
 
-msgid "Does not Exist"
-msgstr "Existiert nicht"
+msgid "(Hz)"
+msgstr "(Hz)"
+
+msgid "Reactive Penalty"
+msgstr "Blindleistungsstrafe"
+
+msgid "Reactive"
+msgstr "Blindleistung"
+
+msgid "Penalty"
+msgstr "Strafe"
+
+msgid "Not Exist"
+msgstr "Nicht vorhanden"
 
 msgid "Power Factor"
 msgstr "Leistungsfaktor"
+
+msgid "Power"
+msgstr "Leistung"
+
+msgid "Factor"
+msgstr "Faktor"
+
+msgid "Log"
+msgstr "Protokoll"
+
+msgid "Logs"
+msgstr "Protokolle"
+
+# equipments.html
+msgid "Equipment Details"
+msgstr "Gerätedetails"
+
+msgid "No equipment data found"
+msgstr "Keine Gerätedaten gefunden"
+
+msgid "Equipment Name"
+msgstr "Gerätename"
+
+msgid "Slave ID"
+msgstr "Slave-ID"
+
+msgid "Brand / Model"
+msgstr "Marke / Modell"
+
+msgid "Modem Name"
+msgstr "Modemname"
+
+msgid "Equipment Type"
+msgstr "Gerätetyp"
+
+msgid "Analyzer"
+msgstr "Analysator"
+
+msgid "Equipment Serial NO"
+msgstr "Geräteseriennummer"
+
+msgid "Activity Status"
+msgstr "Aktivitätsstatus"
+
+msgid "Device ID"
+msgstr "Geräte-ID"
+
+msgid "SID/IP"
+msgstr "SID/IP"
+
+msgid "Status / Configuration"
+msgstr "Status / Konfiguration"
+
+msgid "Connection Protocol"
+msgstr "Verbindungsprotokoll"
+
+msgid "GMT"
+msgstr "GMT"
+
+msgid "Daylight Saving Time"
+msgstr "Sommerzeit"
+
+msgid "Date Created"
+msgstr "Erstellungsdatum"
+
+msgid "Last Connection Date"
+msgstr "Letztes Verbindungsdatum"
+
+msgid "Equipment information could not be retrieved"
+msgstr "Geräteinformationen konnten nicht abgerufen werden"
+
+msgid "Error occurred while loading equipment details:"
+msgstr "Fehler beim Laden der Gerätedetails:"
+
+msgid "Unknown"
+msgstr "Unbekannt"
+
+msgid "Modem Not Found"
+msgstr "Modem nicht gefunden"
+
+msgid "Error occurred while retrieving modem information:"
+msgstr "Fehler beim Abrufen der Modeminformationen:"
+
+msgid "Modem data could not be retrieved:"
+msgstr "Modemdaten konnten nicht abgerufen werden:"
+
+msgid "Data Transfer Cycle"
+msgstr "Datenübertragungszyklus"
+
+msgid "Modem Task Cycle"
+msgstr "Modemaufgabenzyklus"
+
+msgid "Equipment Data Collecting"
+msgstr "Gerätedaten werden gesammelt"
+
+msgid "32000 register error etc."
+msgstr "32000 Registerfehler usw."
+
+msgid "Register Read"
+msgstr "Register auslesen"
+
+msgid "Modbus Connection"
+msgstr "Modbus-Verbindung"
+
+msgid "Equipment not found etc."
+msgstr "Gerät nicht gefunden usw."
+
+msgid "Modbus connection established"
+msgstr "Modbus-Verbindung hergestellt"
+
+msgid "Service Started"
+msgstr "Dienst gestartet"
+
+msgid "Equipment Setting"
+msgstr "Geräteeinstellung"
+
+msgid "Modbus data could not be retrieved"
+msgstr "Modbus-Daten konnten nicht abgerufen werden"
+
+#############################################################################################
+
+# *********** Daily Data *********
+msgid "Daily Data"
+msgstr "Tagesdaten"
+
+msgid "Number of Equipment"
+msgstr "Anzahl der Geräte"
+
+msgid "Number of Data"
+msgstr "Anzahl der Daten"
+
+msgid "Time (Sec)"
+msgstr "Zeit (Sek.)"
+
+msgid "Serial Number"
+msgstr "Seriennummer"
+
+msgid "Status / Config."
+msgstr "Status / Konfig."
+
+msgid "No device selected."
+msgstr "Kein Gerät ausgewählt."
+
+msgid "Equipments Response:"
+msgstr "Geräterückmeldung:"
+
+msgid "No equipments found"
+msgstr "Keine Geräte gefunden"
+
+msgid "Error fetching equipments"
+msgstr "Fehler beim Abrufen der Geräte"
+
+msgid "Equipment ID updated in the backend:"
+msgstr "Geräte-ID im Backend aktualisiert:"
+
+msgid "ID could not be updated in the backend!"
+msgstr "ID konnte im Backend nicht aktualisiert werden!"
+
+msgid "Error while updating ID in the backend:"
+msgstr "Fehler beim Aktualisieren der ID im Backend:"
+
+msgid "Selected Equipment ID saved:"
+msgstr "Ausgewählte Geräte-ID gespeichert:"
+
+# ******** Data data.html *********
+msgid "Live Data"
+msgstr "Live-Daten"
+
+msgid "Hourly Data"
+msgstr "Stündliche Daten"
+
+msgid "Daily Data"
+msgstr "Tagesdaten"
+
+# ******** Live Data live_data.html *********
+msgid "Live Data is Empty"
+msgstr "Live-Daten sind leer"
+
+msgid "No device selected for fetching equipments."
+msgstr "Kein Gerät zum Abrufen von Geräten ausgewählt."
+
+# ******** Live Data live_data_details.html *********
+msgid "Live Data Details"
+msgstr "Live-Daten-Details"
+
+msgid "Live Data ID"
+msgstr "Live-Daten-ID"
+
+# *********** Daily Data Details *********
+msgid "Daily Data Details"
+msgstr "Tagesdaten-Details"
+
+msgid "Serial Number"
+msgstr "Seriennummer"
+
+msgid "Modem Serial No"
+msgstr "Modem-Seriennummer"
+
+msgid "Status / Configuration"
+msgstr "Status / Konfiguration"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Log Description"
+msgstr "Protokollbeschreibung"
+
+msgid "Timestamp"
+msgstr "Zeitstempel"
+
+msgid "Number of Data"
+msgstr "Anzahl der Daten"
+
+msgid "Daily Data ID"
+msgstr "Tagesdaten-ID"
+
+msgid "Device ID"
+msgstr "Geräte-ID"
+
+msgid "Value List"
+msgstr "Werteliste"
+
+msgid "Data Value"
+msgstr "Datenwert"
+
+msgid "Created Date"
+msgstr "Erstellungsdatum"
+
+msgid "No equipment selected."
+msgstr "Kein Gerät ausgewählt."
+
+msgid "No equipment details found."
+msgstr "Keine Gerätedetails gefunden."
+
+msgid "Error loading data."
+msgstr "Fehler beim Laden der Daten."
+
+msgid "Daily Data is Empty."
+msgstr "Tagesdaten sind leer."
+
+# ****** Alarms Page ******** #
+msgid "Network Alarms"
+msgstr "Netzwerkalarme"
+
+msgid "Electric Alarms"
+msgstr "Elektrische Alarme"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Equipments Serial"
+msgstr "Geräteseriennummer"
+
+msgid "Data Value"
+msgstr "Datenwert"
+
+msgid "Start Date"
+msgstr "Startdatum"
+
+msgid "End Date"
+msgstr "Enddatum"
+
+msgid "Loading..."
+msgstr "Wird geladen..."
+
+msgid "Loading"
+msgstr "Ladevorgang"
+
+msgid "The Electric Alarms Database is Empty"
+msgstr "Die Datenbank für elektrische Alarme ist leer"
+
+msgid "Data Retrieval Error:"
+msgstr "Fehler beim Abrufen der Daten:"
+
+msgid "Unable to connect to the server!"
+msgstr "Verbindung zum Server nicht möglich!"
+
+msgid "Alarms"
+msgstr "Alarme"
+
+# *********** Equipment Settings *********
+msgid "Equipment Settings"
+msgstr "Geräteeinstellungen"
+
+msgid "Modbus Settings"
+msgstr "Modbus-Einstellungen"
+
+msgid "TCP/IP Settings"
+msgstr "TCP/IP-Einstellungen"
+
+msgid "Obis Settings"
+msgstr "Obis-Einstellungen"
+
+msgid "Modbus connection successful"
+msgstr "Modbus-Verbindung erfolgreich"
+
+msgid "Modbus connection failed!"
+msgstr "Modbus-Verbindung fehlgeschlagen!"
+
+msgid "Equipment Slave ID"
+msgstr "Slave-ID des Geräts"
+
+msgid "Equipment Serial No"
+msgstr "Geräteseriennummer"
+
+msgid "Equipment Status"
+msgstr "Gerätestatus"
+
+msgid "Equipment Config Status"
+msgstr "Konfigurationsstatus des Geräts"
+
+msgid "Equipment Brand"
+msgstr "Gerätemarke"
+
+msgid "Communication Protocol"
+msgstr "Kommunikationsprotokoll"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Equipment details not found"
+msgstr "Gerätedetails nicht gefunden"
+
+msgid "Error fetching equipment details"
+msgstr "Fehler beim Abrufen der Gerätedetails"
+
+msgid "No device selected for Modbus test"
+msgstr "Kein Gerät für Modbus-Test ausgewählt"
+
+msgid "Testing..."
+msgstr "Test läuft..."
+
+msgid "Modbus connection successful!"
+msgstr "Modbus-Verbindung erfolgreich!"
+
+msgid "Modbus test failed: No valid response"
+msgstr "Modbus-Test fehlgeschlagen: Keine gültige Antwort"
+
+msgid "Error during Modbus test"
+msgstr "Fehler beim Modbus-Test"
+
+# *********** ORC Settings *********
+msgid "ORC Settings"
+msgstr "ORC-Einstellungen"
+
+msgid "Wi-fi Settings"
+msgstr "WLAN-Einstellungen"
+
+msgid "LoRa Settings"
+msgstr "LoRa-Einstellungen"
+
+msgid "Ethernet Settings"
+msgstr "Ethernet-Einstellungen"
+
+msgid "GSM Settings"
+msgstr "GSM-Einstellungen"
+
+msgid "Available Wi-Fi"
+msgstr "Verfügbare WLAN-Netze"
+
+msgid "Wi-Fi Password"
+msgstr "WLAN-Passwort"
+
+msgid "Wi-Fi SSID:"
+msgstr "WLAN-SSID:"
+
+msgid "Not Connected"
+msgstr "Nicht verbunden"
+
+msgid "Password:"
+msgstr "Passwort:"
+
+msgid "Password"
+msgstr "Passwort"
+
+msgid "Show Password"
+msgstr "Passwort anzeigen"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Connect"
+msgstr "Verbinden"
+
+msgid "Connected"
+msgstr "Verbunden"
+
+msgid "Disconnect"
+msgstr "Trennen"
+
+msgid "Modem Status"
+msgstr "Modemstatus"
+
+msgid "Inactive"
+msgstr "Inaktiv"
+
+msgid "Query Update Time (Hour - Minute)"
+msgstr "Abfrageintervall (Stunde - Minute)"
+
+msgid "Select"
+msgstr "Auswählen"
+
+msgid "Wi-Fi networks loading error"
+msgstr "Fehler beim Laden der WLAN-Netzwerke"
+
+msgid "Wi-Fi information could not be retrieved"
+msgstr "WLAN-Informationen konnten nicht abgerufen werden"
+
+msgid "Wi-Fi not selected!"
+msgstr "WLAN nicht ausgewählt!"
+
+msgid "Please select a Wi-Fi network."
+msgstr "Bitte wählen Sie ein WLAN-Netzwerk aus."
+
+msgid "Password not entered!"
+msgstr "Passwort nicht eingegeben!"
+
+msgid "Please enter the password."
+msgstr "Bitte geben Sie das Passwort ein."
+
+msgid "Connecting..."
+msgstr "Verbindung wird hergestellt..."
+
+msgid "Connection Successful!"
+msgstr "Verbindung erfolgreich!"
+
+msgid "Wi-Fi connection successfully established"
+msgstr "WLAN-Verbindung erfolgreich hergestellt"
+
+msgid "Connection Failed!"
+msgstr "Verbindung fehlgeschlagen!"
+
+msgid "Unable to connect. Please try again."
+msgstr "Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut."
+
+msgid "Error occurred during Wi-Fi connection"
+msgstr "Fehler bei der WLAN-Verbindung"
+
+msgid "Connection Error!"
+msgstr "Verbindungsfehler!"
+
+msgid "An error occurred while establishing the Wi-Fi connection."
+msgstr "Beim Herstellen der WLAN-Verbindung ist ein Fehler aufgetreten."
+
+msgid "No Active Connection!"
+msgstr "Keine aktive Verbindung!"
+
+msgid "You are not currently connected to any Wi-Fi network."
+msgstr "Sie sind derzeit mit keinem WLAN-Netzwerk verbunden."
+
+msgid "Disconnect Wi-Fi?"
+msgstr "WLAN-Verbindung trennen?"
+
+msgid "Are you sure you want to disconnect from the Wi-Fi network?"
+msgstr "Möchten Sie die Verbindung zum WLAN-Netzwerk wirklich trennen?"
+
+msgid "Yes, disconnect"
+msgstr "Ja, trennen"
+
+msgid "Disconnecting..."
+msgstr "Verbindung wird getrennt..."
+
+msgid "Wi-Fi Disconnected!"
+msgstr "WLAN-Verbindung getrennt!"
+
+msgid "You have successfully disconnected from the Wi-Fi network."
+msgstr "Sie haben die WLAN-Verbindung erfolgreich getrennt."
+
+msgid "Disconnection Failed!"
+msgstr "Trennung fehlgeschlagen!"
+
+msgid "An error occurred while disconnecting from Wi-Fi."
+msgstr "Beim Trennen der WLAN-Verbindung ist ein Fehler aufgetreten."
+
+msgid "Error while disconnecting"
+msgstr "Fehler beim Trennen"
+
+msgid "Disconnection Error!"
+msgstr "Fehler beim Trennen!"
+
+msgid "An unexpected error occurred while disconnecting."
+msgstr "Beim Trennen der Verbindung ist ein unerwarteter Fehler aufgetreten."
+
+msgid "Modem Info"
+msgstr "Modeminformationen"
+
+msgid "Failed to load modem info"
+msgstr "Modeminformationen konnten nicht geladen werden"
+
+msgid "Error while fetching modem info"
+msgstr "Fehler beim Abrufen der Modeminformationen"
+
+# *********** Test *********
+msgid "Switch to Test Mode"
+msgstr "In den Testmodus wechseln"
+
+msgid "If you switch to test mode, services will shut down."
+msgstr "Wenn Sie in den Testmodus wechseln, werden die Dienste deaktiviert."
+
+msgid "Do you want to switch to test mode?"
+msgstr "Möchten Sie in den Testmodus wechseln?"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "Test Mode"
+msgstr "Testmodus"
+
+#############################################################################################
+
+# *********** Test Details *********
+msgid "Test Details"
+msgstr "Testdetails"
+
+msgid "Wifi / Ethernet Connection Test"
+msgstr "WLAN- / Ethernet-Verbindungstest"
+
+msgid "Cloud Connection Test"
+msgstr "Cloud-Verbindungstest"
+
+msgid "Read"
+msgstr "Lesen"
+
+msgid "Write"
+msgstr "Schreiben"
+
+msgid "Available Wi-Fi"
+msgstr "Verfügbare WLANs"
+
+msgid "Other Networks"
+msgstr "Andere Netzwerke"
+
+msgid "Loading available networks..."
+msgstr "Verfügbare Netzwerke werden geladen..."
+
+msgid "Enter the Wi-Fi password for"
+msgstr "WLAN-Passwort eingeben für"
+
+msgid "Password"
+msgstr "Passwort"
+
+msgid "Show Password"
+msgstr "Passwort anzeigen"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Join"
+msgstr "Beitreten"
+
+msgid "Network Name"
+msgstr "Netzwerkname"
+
+msgid "Wi-Fi Connection Test"
+msgstr "WLAN-Verbindungstest"
+
+msgid "Password"
+msgstr "Passwort"
+
+msgid "Connection Status"
+msgstr "Verbindungsstatus"
+
+msgid "No connection"
+msgstr "Keine Verbindung"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "WiFi Connection Successful."
+msgstr "WLAN-Verbindung erfolgreich."
+
+msgid "WiFi Connection Failed."
+msgstr "WLAN-Verbindung fehlgeschlagen."
+
+msgid "Ethernet"
+msgstr "Ethernet"
+
+msgid "Connection Status"
+msgstr "Verbindungsstatus"
+
+msgid "No connection"
+msgstr "Keine Verbindung"
+
+msgid "Connection Mac"
+msgstr "MAC-Adresse der Verbindung"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "Ethernet Connection Successful."
+msgstr "Ethernet-Verbindung erfolgreich."
+
+msgid "Ethernet Connection Failed."
+msgstr "Ethernet-Verbindung fehlgeschlagen."
+
+msgid "Serial Number"
+msgstr "Seriennummer"
+
+msgid "SID/IP"
+msgstr "SID/IP"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Configuration Connection"
+msgstr "Konfigurationsverbindung"
+
+msgid "Connection Protocol"
+msgstr "Verbindungsprotokoll"
+
+msgid "Equipment Date / Connection Date"
+msgstr "Gerätedatum / Verbindungsdatum"
+
+msgid "Perform a scanning test"
+msgstr "Einen Scan-Test durchführen"
+
+msgid "Scanning Equipments"
+msgstr "Geräte werden gescannt"
+
+msgid "New Equipment Found"
+msgstr "Neues Gerät gefunden"
+
+msgid "No equipment found."
+msgstr "Kein Gerät gefunden."
+
+msgid "Update the equipment table with the equipment found during scanning"
+msgstr "Gerätetabelle mit den während des Scans gefundenen Geräten aktualisieren"
+
+msgid "Connection"
+msgstr "Verbindung"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Checking..."
+msgstr "Wird überprüft..."
+
+msgid "Rabbit MQ"
+msgstr "Rabbit MQ"
+
+msgid "VPN Port"
+msgstr "VPN-Port"
+
+msgid "*Does the ORC have connection with cloud and other devices or not?"
+msgstr "*Hat das ORC eine Verbindung zur Cloud und anderen Geräten?"
+
+msgid "Perform a scanning test"
+msgstr "Einen Scan-Test durchführen"
+
+msgid "Local Network Connection Scan Successful."
+msgstr "Scan der lokalen Netzwerkverbindung erfolgreich."
+
+msgid "Local Network Connection Scan Failed."
+msgstr "Scan der lokalen Netzwerkverbindung fehlgeschlagen."
+
+msgid "Send Modbus Request"
+msgstr "Modbus-Anfrage senden"
+
+msgid "Terminal"
+msgstr "Terminal"
+
+msgid "Waiting for response..."
+msgstr "Warte auf Antwort..."
+
+msgid "Send Write Request"
+msgstr "Schreibanfrage senden"
+
+msgid "Terminal"
+msgstr "Terminal"
+
+msgid "Waiting for response..."
+msgstr "Warte auf Antwort..."
+
+msgid "No Password"
+msgstr "Kein Passwort"
+
+msgid "Error fetching network details"
+msgstr "Fehler beim Abrufen der Netzwerkinformationen"
+
+msgid "No available networks found"
+msgstr "Keine verfügbaren Netzwerke gefunden"
+
+msgid "Connecting..."
+msgstr "Verbindung wird hergestellt..."
+
+msgid "Successfully connected to"
+msgstr "Erfolgreich verbunden mit"
+
+msgid "Connected!"
+msgstr "Verbunden!"
+
+msgid "Connection Failed"
+msgstr "Verbindung fehlgeschlagen"
+
+msgid "Failed to connect to Wi-Fi."
+msgstr "Verbindung zum WLAN fehlgeschlagen."
