@@ -164,3 +164,112 @@ body {
   border-color: #ff6f00; 
   outline: none; 
 }
+.log-table-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.log-table-content th,
+.log-table-content td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  vertical-align: top;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.status-info {
+  background-color: green;
+}
+.status-warning {
+  background-color: orange;
+}
+.status-exception {
+  background-color: red;
+}
+
+.ellipsis {
+  max-width: 300px;
+  --webkit-line-clamp: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.log-full {
+  display: none;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.toggle-link {
+  color: #fe5f00;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.toggle-link:hover {
+  text-decoration: underline;
+}
+
+.date-range-box {
+  background-color: #1f2235;
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: "Arial", sans-serif;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.daterangepicker {
+  width: 50% !important;
+}
+.custom-picker {
+  background-color: rgb(3, 22, 43);
+  color: white;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 220px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Ok işaretini sağa yerleştiriyoruz */
+  background-size: 12px;
+  text-align: left; /* Ay ve yıl yazısını sola alıyoruz */
+}
+
+.custom-picker::placeholder {
+  color: white;
+  opacity: 0.7;
+}
+
+.daterangepicker,
+.daterangepicker .calendar-table,
+.daterangepicker .drp-calendar {
+  background-color: rgb(255, 255, 255) !important;
+  color: black !important;
+}
+
+.daterangepicker td.available:hover,
+.daterangepicker .drp-buttons .btn {
+  background-color: rgb(4, 29, 56) !important;
+  color: white !important;
+}
+
+.daterangepicker:after,
+.daterangepicker:before {
+  display: none !important;
+}

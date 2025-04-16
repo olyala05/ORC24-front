@@ -1,117 +1,140 @@
-{% extends "layout.html" %} 
-
-{% block title %} ORC Status - Error Log {% endblock%} 
-
-{% block extra_css %}
+{% extends "layout.html" %} {% block title %} ORC Status - Error Log {%
+endblock%} {% block extra_css %}
 
 <!-- CSS logs -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
 
-{% endblock %} 
-
-{% block content %}
+{% endblock %} {% block content %}
 
 <!-- Header -->
 {% include 'partials/header.html' %}
 
 <div class="log-container">
   <!--  Calendar -->
-    <div id="calendar-container"></div>
-    <div class="calendar-input-wrapper">
-      <input    
-      type="date"
-      id="log-date-picker"
-      onchange="fetchLogsByDate()"
-      class="calendar-input" 
-    /> 
-    
-  <div class="log-table">
-    <div class="log-table-content">
-      <!-- Message for navigating back in time İsterler ise aç -->
-      <div
-        id="info-message"
-        style="
-          display: none;
-          color: green;
-          text-align: center;
-          font-size: 14px;
-          margin-top: 5px;
-        "
-      >
-      </div>
+  <div class="calendar-input-wrapper">
+    <input type="text" id="log-date-picker" class="calendar-input" />
 
-      <!-- No Logs message -->
-      <div
-        id="no-logs-message"
-        style="
-          display: none;
-          color: red;
-          text-align: center;
-          font-size: 14px;
-          margin-top: 10px;
-        "
-      >
-        No logs found for today. Please select another date from the calendar.
-      </div>
+    <div class="log-table">
+      <div class="log-table-content">
+        <!-- Message for navigating back in time İsterler ise aç -->
+        <div
+          id="info-message"
+          style="
+            display: none;
+            color: green;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 5px;
+          "
+        ></div>
 
-      <table>
-        <thead id="log-table-head" style="display: none">
-          <tr>
-            <th>{{ _('Status')}}</th>
-            <th>{{ _('Log Description')}}</th>
-            <th>{{ _('Timestamp')}}</th>
-          </tr>
-        </thead>
-        <tbody id="log-table-body">
-          <tr
-            id="loading-message"
-            style="display: none; text-align: center; font-size: 14px"
-          >
-            <td colspan="3">Loading logs...</td>
-          </tr>
-        </tbody>
-      </table>
+        <!-- No Logs message -->
+        <div
+          id="no-logs-message"
+          style="
+            display: none;
+            color: red;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+          "
+        >
+          No logs found for today. Please select another date from the calendar.
+        </div>
+
+        <table>
+          <thead id="log-table-head" style="display: none">
+            <tr>
+              <th>{{ _('Status')}}</th>
+              <th>{{ _('Log Description')}}</th>
+              <th>{{ _('Timestamp')}}</th>
+            </tr>
+          </thead>
+          <tbody id="log-table-body">
+            <tr
+              id="loading-message"
+              style="display: none; text-align: center; font-size: 14px"
+            >
+              <td colspan="3">Loading logs...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
-
-<!-- JS -->
-<script src="{{ url_for('static', filename='calendar/js/flatpickr.min.js') }}"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const calendarInput = document.getElementById("log-date-picker");
-  const calendarToggle = document.getElementById("calendar-toggle");
-
-  const fp = flatpickr(calendarInput, {
-    dateFormat: "Y-m-d",
-    defaultDate: new Date(),
-    clickOpens: false, // input'a tıklayınca açılmasın
-    onOpen: () => calendarToggle.classList.add("open"),
-    onClose: () => calendarToggle.classList.remove("open"),
-    onChange: function (selectedDates, dateStr, instance) {
-      calendarInput.value = dateStr;
-      fetchLogsByDate();
-    },
-  });
-
-  calendarToggle.addEventListener("click", function () {
-    fp.open(); // sadece oka tıklanınca aç
-  });
-});
-</script>
 
 <script>
   let currentPage = 1;
   let isLoading = false;
   let hasMoreLogs = true;
 
-  document.addEventListener("DOMContentLoaded", function () {
-    fetchLogs();
-  });
+  $("#log-date-picker").daterangepicker(
+    {
+      singleDatePicker: true,
+      showDropdowns: false,
+      showWeekNumbers: true,
+      showISOWeekNumbers: true,
+      timePicker: false,
+      autoApply: true,
+      maxSpan: { days: 7 },
+      ranges: {
+        Today: [moment(), moment()],
+        Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        "Last Week": [
+          moment().subtract(1, "week").startOf("isoWeek"),
+          moment().subtract(1, "week").endOf("isoWeek"),
+        ],
+        "Last Month": [
+          moment().subtract(1, "month").startOf("month"),
+          moment().subtract(1, "month").endOf("month"),
+        ],
+        "Last Quarter": [
+          moment().subtract(1, "quarter").startOf("quarter"),
+          moment().subtract(1, "quarter").endOf("quarter"),
+        ],
+      },
+      locale: {
+        format: "DD MMM YYYY", // Tarih formatı
+        monthNames: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
+        separator: " - ",
+        fromLabel: "From",
+        toLabel: "To",
+        weekLabel: "W",
+        firstDay: 1,
+      },
+      alwaysShowCalendars: true,
+      startDate: moment().startOf("isoWeek").format("DD MMM YYYY"),
+      endDate: moment().endOf("isoWeek").format("DD MMM YYYY"),
+      opens: "center",
+      buttonClasses: "btn btn-sm",
+      applyButtonClasses: "btn btn-primary",
+    },
+    function (start, end, label) {
+      const selectedDate = start.format("YYYY-MM-DD"); // Seçilen tarihi al
+      console.log("Seçilen tarih: ", selectedDate);
+
+      fetchLogsByDate(selectedDate); // Seçilen tarihe göre logları al
+    }
+  );
 
   document.addEventListener("DOMContentLoaded", function () {
     fetchLogs();
+
+    setLogDateInput();
 
     const container = document.querySelector(".log-table-content");
     if (container) {
@@ -129,6 +152,46 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("log-table-content bulunamadı!");
     }
   });
+
+  function setLogDateInput() {
+    fetch("/get_logs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1,
+        day: new Date().getDate(),
+        page: 1,
+        per_page: 1,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success" && data.data.length > 0) {
+          const lastLogDate = new Date(data.data[0].created_at);
+          const formattedDate = formatDateInput(lastLogDate);
+
+          // Takvimi son log tarihine göre güncelle
+          document.getElementById("log-date-picker").value = formattedDate;
+
+          // Seçilen tarih ile logları getir
+          fetchLogsByDate(formattedDate);
+        }
+      })
+      .catch((error) => console.error("Error fetching last log date:", error));
+  }
+
+  function formatDateInput(date) {
+    return `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+  }
+
+  function formatDateInput(date) {
+    return `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+  }
 
   function formatDateTime(dateTimeStr) {
     const date = new Date(dateTimeStr);
@@ -208,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     logs.forEach((log, index) => {
       const row = document.createElement("tr");
-      const logId = `log-${Date.now()}-${Math.random()}`; // Benzersiz ID
+      const logId = `log-${Date.now()}-${Math.random()}`;
 
       const fullText = log.tag + " - " + (log.data || "N/A");
       const fullTextEscaped = fullText.replace(/[&<>"']/g, function (match) {
@@ -226,18 +289,18 @@ document.addEventListener("DOMContentLoaded", function () {
       const needsToggle = fullText.length > 100;
 
       row.innerHTML = `
-        <td><span class="status-dot ${statusClass}"></span></td>
-        <td>
-          <span class="ellipsis" id="${logId}-short">${fullTextEscaped}</span>
-          <span class="log-full" id="${logId}-full">${fullTextEscaped}</span>
-          ${
-            needsToggle
-              ? `<a href="#" class="toggle-link" data-log-id="${logId}">Read More</a>`
-              : ""
-          }
-        </td>
-        <td style="white-space: nowrap;">${formatDateTime(log.created_at)}</td>
-      `;
+      <td><span class="status-dot ${statusClass}"></span></td>
+      <td>
+        <span class="ellipsis" id="${logId}-short">${fullTextEscaped}</span>
+        <span class="log-full" id="${logId}-full">${fullTextEscaped}</span>
+        ${
+          needsToggle
+            ? `<a href="#" class="toggle-link" data-log-id="${logId}">Read More</a>`
+            : ""
+        }
+      </td>
+      <td style="white-space: nowrap;">${formatDateTime(log.created_at)}</td>
+    `;
 
       tableBody.appendChild(row);
     });
@@ -281,22 +344,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function fetchLogsByDate() {
-    let selectedDate = document.getElementById("log-date-picker").value;
-    if (!selectedDate) {
-      console.error("[ERROR] No date selected.");
-      return;
-    }
-
-    let [year, month, day] = selectedDate.split("-").map(Number);
-    console.log(
-      `[DEBUG] Fetching logs for selected date: ${year}-${month}-${day}`
-    );
-
+  function fetchLogsByDate(selectedDate) {
     fetch("/get_logs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ year, month, day }),
+      body: JSON.stringify({
+        year: selectedDate.split("-")[0],
+        month: selectedDate.split("-")[1],
+        day: selectedDate.split("-")[2],
+        page: 1,
+        per_page: 20,
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -326,91 +384,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateDateRangeDisplay(logs) {
     if (!logs || logs.length === 0) return;
-  
+
     // Tarihleri al ve sırala
-    const dates = logs.map(log => new Date(log.created_at)).sort((a, b) => a - b);
+    const dates = logs
+      .map((log) => new Date(log.created_at))
+      .sort((a, b) => a - b);
     const start = dates[0];
     const end = dates[dates.length - 1];
-  
+
     const format = (date) =>
-      date.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: '2-digit',
-      }).replace(/ /g, ' '); // "28 Dec 22"
-  
+      date
+        .toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "2-digit",
+        })
+        .replace(/ /g, " "); // "28 Dec 22"
+
     const rangeText = `${format(start)} – ${format(end)}`;
     document.getElementById("date-range-display").innerText = rangeText;
   }
 </script>
 
-<style>
-  .log-table-content table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .log-table-content th,
-  .log-table-content td {
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
-    vertical-align: top;
-  }
-
-  .status-dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-right: 8px;
-  }
-
-  .status-info {
-    background-color: green;
-  }
-  .status-warning {
-    background-color: orange;
-  }
-  .status-exception {
-    background-color: red;
-  }
-
-  .ellipsis {
-    max-width: 300px;
-    --webkit-line-clamp: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: inline-block;
-    vertical-align: top;
-  }
-
-  .log-full {
-    display: none;
-    white-space: normal;
-    word-break: break-word;
-  }
-
-  .toggle-link {
-    color: #fe5f00;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  .toggle-link:hover {
-    text-decoration: underline;
-  }
-
-  .date-range-box {
-    background-color: #1f2235;
-    color: #ffffff;
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-size: 14px;
-    font-family: 'Arial', sans-serif;
-    display: inline-block;
-    margin-bottom: 10px;
-  }
-  
-</style>
 {% endblock %}
