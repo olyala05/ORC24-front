@@ -17,11 +17,41 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+// setTimeout(function () {
+//     if (window.location.pathname === "/" || window.location.pathname === "/index.html") {
+//         window.location.href = loginURL;
+//     }
+// }, 5000);
+
 setTimeout(function () {
-    if (window.location.pathname === "/" || window.location.pathname === "/index.html") {
-        window.location.href = loginURL;
+    const currentPath = window.location.pathname;
+    if (currentPath === "/" || currentPath === "/index" || currentPath === "/index.html") {
+      const email = "demo@piermttp.com";   
+      const password = "Pier123+";
+
+      fetch("/auto-login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            window.location.href = "/dashboard";
+          } else {
+            console.error("Giriş başarısız:", data.message);
+          }
+        })
+        .catch((err) => {
+          console.error("API çağrısı hatası:", err);
+        });
     }
-}, 5000);
+  }, 5000);
 
 // Simple Keyboard
 document.addEventListener("DOMContentLoaded", function () {

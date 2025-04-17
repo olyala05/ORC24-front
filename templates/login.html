@@ -1,5 +1,8 @@
-{% extends 'layout.html' %} {% block title %} ORC 24 - Login - Pier MTTP {%
-endblock %} {% block content %}
+{% extends 'layout.html' %} 
+
+{% block title %} ORC 24 - Login - Pier MTTP {% endblock %} 
+
+{% block content %}
 <!-- Virtual Keyboard -->
 <div id="keyboard-container" class="simple-keyboard"></div>
 
@@ -30,7 +33,8 @@ endblock %} {% block content %}
               alt="User"
               width="20"
               height="20"
-          /></span>
+            />
+          </span>
           <input
             type="text"
             name="email"
@@ -80,81 +84,8 @@ endblock %} {% block content %}
             />
           </button>
 
-          <!-- Dil Seçici -->
-          <div class="language-switcher fixed-top-right" id="languageSwitcher">
-            <button type="button" class="language-toggle" id="languageToggle">
-              <img
-                src="{{ url_for('static', filename='images/svg/globe.svg') }}"
-                width="24"
-                height="24"
-                alt="Globe Icon"
-              />
-              <span class="selected-lang-txt" id="selectedLangLabel">
-                {{ g.lang.upper() }}
-              </span>
-            </button>
 
-            <div class="language-dropdown" id="languageDropdown">
-              <div class="dropdown-arrow"></div>
 
-              <!-- Türkçe -->
-              <button
-                type="button"
-                class="lang-btn {% if g.get('lang') == 'tr' %}selected{% endif %}"
-                data-lang="tr"
-                onclick="setLanguage('tr')"
-              >
-                <div class="lang-content">
-                  <img
-                    src="{{ url_for('static', filename='images/flags/tr.png') }}"
-                    width="20"
-                  />
-                  <span>TR</span>
-                </div>
-
-                <div class="radio-indicator-cover">
-                <span class="radio-indicator"></span>
-
-                </div>
-              </button>
-
-              <!-- English -->
-              <button
-                type="button"
-                class="lang-btn {% if g.get('lang') == 'en' %}selected{% endif %}"
-                data-lang="en"
-                onclick="setLanguage('en')"
-              >
-                <div class="lang-content">
-                  <img
-                    src="{{ url_for('static', filename='images/flags/uk.png') }}"
-                    width="20"
-                  />
-                  <span>EN</span>
-                </div>
-                <div class="radio-indicator-cover">
-                <span class="radio-indicator"></span>
-              </button>
-
-              <!-- Deutsch -->
-              <button
-                type="button"
-                class="lang-btn {% if g.get('lang') == 'de' %}selected{% endif %}"
-                data-lang="de"
-                onclick="setLanguage('de')"
-              >
-                <div class="lang-content">
-                  <img
-                    src="{{ url_for('static', filename='images/flags/de.png') }}"
-                    width="20"
-                  />
-                  <span>DE</span>
-                </div>
-                <div class="radio-indicator-cover">
-                <span class="radio-indicator"></span>
-              </button>
-            </div>
-          </div>
         </div>
       </form>
     </div>
@@ -162,78 +93,7 @@ endblock %} {% block content %}
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Sayfa yüklendiğinde aktif dilin gösterilmesini sağla
-    const lang = "{{ g.get('lang', 'EN') }}"; // Flask'tan alınan aktif dil
-    const selectedLangLabel = document.getElementById("selectedLangLabel");
 
-    // Globe üzerindeki dil kodunu güncelle
-    if (selectedLangLabel) {
-      selectedLangLabel.innerText = lang.toUpperCase(); // Globe üzerindeki dil kodunu güncelle
-      console.log(
-        "Globe üzerindeki dil kodu (sayfa yüklendi):",
-        lang.toUpperCase()
-      ); // Log ekledik
-    }
-
-    // Dil seçeneği değiştirildiğinde çalışan fonksiyon
-    function setLanguage(lang) {
-      console.log("Dil değiştiriliyor:", lang); // Dil değişikliği yapılmadan önce log
-
-      // Tüm dil butonlarından selected sınıfını kaldır
-      document
-        .querySelectorAll(".lang-btn")
-        .forEach((btn) => btn.classList.remove("selected"));
-
-      // Seçilen dil butonuna selected sınıfını ekle
-      const selectedBtn = document.querySelector(
-        `.lang-btn[data-lang="${lang}"]`
-      );
-      if (selectedBtn) {
-        selectedBtn.classList.add("selected");
-      }
-
-      // Globe yanındaki TR / EN / DE yazısını güncelle
-      if (selectedLangLabel) {
-        selectedLangLabel.innerText = lang.toUpperCase(); // Globe üzerindeki dil kodunu değiştir
-      }
-
-      // Backend dil güncellemesi yap
-      fetch("{{ url_for('set_language') }}", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: "lang=" + lang,
-      }).then(() => {
-        console.log("Backend'e gönderilen dil:", lang); // Dil backend'e gönderildiğini logla
-        window.location.reload(); // Yeni dilin yüklendiği halini göster
-      });
-    }
-
-    // Dil butonlarına tıklandığında setLanguage fonksiyonunu çalıştır
-    document.querySelectorAll(".lang-btn").forEach((button) => {
-      button.addEventListener("click", function () {
-        const lang = button.getAttribute("data-lang");
-        setLanguage(lang); // Seçilen dil ile setLanguage fonksiyonunu çağır
-      });
-    });
-
-    // Dil seçici butonunun tıklama olayı
-    const toggle = document.getElementById("languageToggle");
-    const switcher = document.getElementById("languageSwitcher");
-
-    toggle.addEventListener("click", function (event) {
-      event.stopPropagation();
-      switcher.classList.toggle("active");
-    });
-
-    document.addEventListener("click", function (e) {
-      if (!switcher.contains(e.target)) {
-        switcher.classList.remove("active");
-      }
-    });
-  });
 </script>
 
 {% endblock %}

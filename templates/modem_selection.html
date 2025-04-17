@@ -3,6 +3,17 @@ block content %}
 
 <div class="header">
   <div class="header-left">
+   <form action="{{ url_for('logout') }}" method="POST" id="logout-form">
+      <button type="button" class="header-button-logout" id="logout-button">
+        <img
+          src="{{ url_for('static', filename='images/svg/37.svg') }}"
+          alt="Logout"
+          width="40"
+          height="40"
+          style="padding: 0px 0px; border-radius: 5px"
+        />
+      </button>
+    </form>
     <!-- Home Butonu -->
     <button class="header-button" onclick="goToDashboard()">
       {{ _('Home')}}
@@ -128,6 +139,34 @@ block content %}
 <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
 
 <script>
+  document.addEventListener("DOMContentLoaded", function () {
+      document
+        .getElementById("logout-button")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+
+          Swal.fire({
+            title: "{{ _('Are you sure you want to log out?') }}",
+            icon: "warning",
+            background: "#0B1734",
+            iconColor: "#EF8018",
+            showCancelButton: true,
+            confirmButtonText: "{{ _('Yes') }}", 
+            cancelButtonText: "{{ _('No') }}", 
+            reverseButtons: false, 
+            customClass: {
+              confirmButton: "swal-button-yes", 
+              cancelButton: "swal-button-no", 
+            },
+            buttonsStyling: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              document.getElementById("logout-form").submit();
+            }
+          });
+        });
+    });
+
   // Sayfa yüklendiğinde cihazları getir
   document.addEventListener("DOMContentLoaded", fetchDevices);
 
@@ -942,5 +981,88 @@ block content %}
   }
 
   
+</style>
+
+<style>
+  .swal-button-yes {
+    background-color: #fff;
+    color: #0b1734;
+    border-radius: 5px;
+    padding: 17px 19px;
+    font-size: 16px;
+    border: none;
+  }
+
+  .swal-button-no {
+    background-color: #fff;
+    color: #0b1734;
+    border-radius: 5px;
+    padding: 17px 19px;
+    font-size: 16px;
+    border: 2px solid #0b1734;
+  }
+
+  .swal2-popup {
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Ensuring buttons are properly spaced and displayed */
+  .swal2-actions {
+    display: flex;
+    justify-content: space-between; /* Space the buttons properly */
+    width: 100%; /* Ensure full width for button spacing */
+  }
+
+  .swal2-confirm {
+    width: 48%;
+    margin-right: 4%;
+  }
+
+  .swal2-cancel {
+    width: 48%;
+  }
+
+  div:where(.swal2-container) h2:where(.swal2-title) {
+    position: relative;
+    max-width: 100%;
+    padding: 1em 1em 1em;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .swal2-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 94%;
+  }
+
+  body.swal2-shown {
+    padding-right: 0 !important;
+    overflow: hidden !important;
+  }
+  .header,
+  .fixed-element {
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+  div:where(.swal2-container).swal2-backdrop-show,
+  div:where(.swal2-container).swal2-noanimation {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  div:where(.swal2-container).swal2-center > .swal2-popup {
+    grid-column: 2;
+    grid-row: 2;
+    place-self: center center;
+    margin-top: 64px;
+  }
+
+  div:where(.swal2-icon) {
+    width: 4em;
+    height: 4em;
+  }
 </style>
 {% endblock %}

@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/* Genel Stil */
 /* Header */
 .header {
   position: fixed;
@@ -488,4 +489,203 @@
 
 .gauge-circle.power-factor {
   background: radial-gradient(circle at center, #1c2747 60%, transparent 61%), conic-gradient(#ff7f32 40% 80%, #1c2747 80%);
+}
+
+/* Dil Seçici */
+.language-switcher {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ef8018 !important;
+  padding: 10px !important;
+  border-radius: 6px !important;
+}
+.language-switcher .language-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.language-switcher .selected-lang-txt {
+  font-size: 16px;
+  margin: 2px 0px 0px 0px;
+}
+.language-switcher .language-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 47px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 8px solid #fff;
+}
+.language-switcher .language-dropdown {
+  position: absolute;
+  top: 143%;
+  transform: translateX(8%);
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  min-width: 94px;
+  z-index: 1000;
+}
+.language-switcher .language-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px;
+  background: none;
+  border: none;
+  color: #0e1734;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+}
+.language-switcher .language-dropdown button:hover {
+  background: rgba(255, 127, 50, 0.3);
+  border-radius: 5px;
+}
+.language-switcher:hover .language-dropdown {
+  display: flex;
+}
+
+.language-switcher {
+  position: relative;
+  display: inline-block;
+  background: #ef8018 !important;
+  padding: 10px !important;
+  border-radius: 6px !important;
+}
+.language-switcher .language-toggle {
+  border-radius: 50%;
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background: #EF8018;
+  padding: 10px;
+  border-radius: 6px;
+}
+.language-switcher .language-toggle:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+.language-switcher .language-toggle img {
+  width: 24px;
+  height: 24px;
+}
+.language-switcher .language-dropdown {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+.language-switcher .language-dropdown button {
+  background: #f1f1f1;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.3s;
+  border: 2px solid white;
+  border-radius: 88px;
+}
+.language-switcher .language-dropdown button img {
+  width: 20px;
+  height: 14px;
+}
+.language-switcher .language-dropdown button input[type=radio] {
+  accent-color: #ff7f32;
+  margin: 0;
+}
+.language-switcher .language-dropdown button:hover {
+  background: rgba(255, 127, 50, 0.1);
+  border-radius: 6px;
+}
+.language-switcher:hover .language-dropdown {
+  display: flex;
+}
+
+.language-switcher:hover .language-dropdown,
+.language-switcher.active .language-dropdown {
+  display: flex;
+}
+
+.lang-btn.selected .radio-indicator {
+  background-color: #ff7f32;
+  border-color: #ff7f32;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid silver;
+  border-radius: 12px;
+  padding: 8px 12px;
+  background: white;
+  margin-bottom: 8px;
+  transition: background 0.3s ease;
+}
+
+.lang-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0e1734;
+  font-weight: 600;
+}
+
+.lang-btn:hover {
+  background-color: rgba(255, 127, 50, 0.08);
+}
+
+.radio-indicator-cover {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid silver;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.radio-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: 0.3s;
+}
+
+.lang-btn.selected .radio-indicator {
+  background-color: #ff7f32;
 }/*# sourceMappingURL=dashboard.css.map */

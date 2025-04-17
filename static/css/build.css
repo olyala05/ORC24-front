@@ -196,73 +196,6 @@ input:-webkit-autofill:focus {
   box-shadow: 0 6px 12px rgba(255, 127, 50, 0.5);
 }
 
-/* Dil Seçici */
-.language-switcher {
-  position: relative;
-  display: flex; /* Butonun yanında düzgün hizalanmasını sağlar */
-  align-items: center;
-}
-.language-switcher .language-toggle {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 30px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.language-switcher .selected-lang-txt {
-  font-size: 16px;
-  margin: 2px 0px 0px 0px;
-}
-.language-switcher .language-dropdown::before {
-  content: "";
-  position: absolute;
-  top: -8px;
-  right: 47px;
-  width: 0;
-  height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-bottom: 8px solid #fff;
-}
-.language-switcher .language-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  transform: translateX(8%);
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  padding: 10px;
-  display: none;
-  flex-direction: column;
-  min-width: 106px;
-  z-index: 1000;
-}
-.language-switcher .language-dropdown button {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 7px;
-  background: none;
-  border: none;
-  color: #0e1734;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
-  width: 100%;
-}
-.language-switcher .language-dropdown button:hover {
-  background: rgba(255, 127, 50, 0.3);
-  border-radius: 5px;
-}
-.language-switcher:hover .language-dropdown {
-  display: flex;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   body::after {
@@ -287,13 +220,6 @@ input:-webkit-autofill:focus {
     font-size: 12px;
   }
 }
-.language-switcher.fixed-top-right {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 999;
-}
-
 .language-switcher {
   position: relative;
   display: inline-block;
@@ -1044,6 +970,73 @@ input:-webkit-autofill:focus {
 
 .gauge-circle.power-factor {
   background: radial-gradient(circle at center, #1c2747 60%, transparent 61%), conic-gradient(#ff7f32 40% 80%, #1c2747 80%);
+}
+
+/* Dil Seçici */
+.language-switcher {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.language-switcher .language-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.language-switcher .selected-lang-txt {
+  font-size: 16px;
+  margin: 2px 0px 0px 0px;
+}
+.language-switcher .language-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 47px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 8px solid #fff;
+}
+.language-switcher .language-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  transform: translateX(8%);
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  min-width: 106px;
+  z-index: 1000;
+}
+.language-switcher .language-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px;
+  background: none;
+  border: none;
+  color: #0e1734;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+}
+.language-switcher .language-dropdown button:hover {
+  background: rgba(255, 127, 50, 0.3);
+  border-radius: 5px;
+}
+.language-switcher:hover .language-dropdown {
+  display: flex;
 }
 
 .eq-detail-container {

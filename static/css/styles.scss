@@ -200,11 +200,43 @@ input:-webkit-autofill:focus {
   }
 }
 
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  body::after {
+    height: 30vh;
+    width: 60vw;
+  }
+  .login-box {
+    width: 250px;
+  }
+  .logo {
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-box {
+    width: 220px;
+  }
+  .logo {
+    height: 40px;
+  }
+  .login-btn {
+    font-size: 12px;
+  }
+}
+
+
 /* Dil Seçici */
 .language-switcher {
   position: relative;
-  display: flex; /* Butonun yanında düzgün hizalanmasını sağlar */
+  display: flex;
   align-items: center;
+  background: #ef8018 !important;
+  padding: 10px !important;
+  border-radius: 6px !important;
 
   .language-toggle {
     background: none;
@@ -235,8 +267,7 @@ input:-webkit-autofill:focus {
 
   .language-dropdown {
     position: absolute;
-    top: 100%;
-    right: 0;
+    top: 143%;
     transform: translateX(8%);
     background: #fff;
     border-radius: 8px;
@@ -244,7 +275,7 @@ input:-webkit-autofill:focus {
     padding: 10px;
     display: none;
     flex-direction: column;
-    min-width: 106px;
+    min-width: 94px;
     z-index: 1000;
 
     button {
@@ -273,42 +304,12 @@ input:-webkit-autofill:focus {
   }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  body::after {
-    height: 30vh;
-    width: 60vw;
-  }
-  .login-box {
-    width: 250px;
-  }
-  .logo {
-    height: 50px;
-  }
-}
-
-@media (max-width: 480px) {
-  .login-box {
-    width: 220px;
-  }
-  .logo {
-    height: 40px;
-  }
-  .login-btn {
-    font-size: 12px;
-  }
-}
-
-.language-switcher.fixed-top-right {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 999;
-}
-
 .language-switcher {
   position: relative;
   display: inline-block;
+  background: #ef8018 !important;
+  padding: 10px !important;
+  border-radius: 6px !important;
 
   .language-toggle {
     border-radius: 50%;
@@ -319,6 +320,9 @@ input:-webkit-autofill:focus {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    background: #EF8018;
+    padding: 10px;
+    border-radius: 6px;
 
     &:hover {
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -385,7 +389,6 @@ input:-webkit-autofill:focus {
   display: flex;
 }
 
-/* Aktif dilin butonunu turuncu yapmak için */
 .lang-btn.selected .radio-indicator {
   background-color: #ff7f32;
   border-color: #ff7f32;
@@ -419,11 +422,11 @@ input:-webkit-autofill:focus {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 2px solid silver; /* dış çizgi rengi */
+  border: 2px solid silver;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white; /* arka plan */
+  background-color: white;
   box-sizing: border-box;
   transition: 0.3s;
 }
@@ -432,10 +435,10 @@ input:-webkit-autofill:focus {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: transparent; /* varsayılan boş */
+  background-color: transparent;
   transition: 0.3s;
 }
 
 .lang-btn.selected .radio-indicator {
-  background-color: #ff7f32; /* iç turuncu renk */
+  background-color: #ff7f32;
 }

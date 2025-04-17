@@ -1,34 +1,101 @@
-{% extends "layout.html" %} {% block title %} ORC 24 Dashboard {% endblock
-title%} {% block content %}
+{% extends "layout.html" %} 
+
+{% block title %} ORC 24 Dashboard {% endblock title%} 
+
+{% block content %}
 <!-- Echarts -->
 <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
 <header class="header">
   <div class="header-left">
-    <form action="{{ url_for('logout') }}" method="POST" id="logout-form">
-      <button type="button" class="header-button-logout" id="logout-button">
+    <!-- Menu butonunu modem-selection sayfasına yönlendirme -->
+    <form action="{{ url_for('login') }}" method="GET">
+      <button type="submit" class="header-button" style="gap: 0">
+      <span style="padding: 14px 13px">{{ _('Login') }}</span>
         <img
-          src="{{ url_for('static', filename='images/svg/37.svg') }}"
+          src="{{ url_for('static', filename='images/svg/36.svg') }}"
           alt="Logout"
-          width="40"
-          height="40"
-          style="padding: 0px 0px; border-radius: 5px"
+          width="30"
+          height="30"
+          style="padding: 7px 9px; background: #0b1734; border-radius: 5px"
         />
       </button>
     </form>
 
-    <!-- Menu butonunu modem-selection sayfasına yönlendirme -->
-    <form action="{{ url_for('modem_selection') }}" method="GET">
-      <button type="submit" class="header-button" style="gap: 0">
-        <img
-          src="{{ url_for('static', filename='images/svg/39.svg') }}"
-          alt="Logout"
-          width="30"
-          height="30"
-          style="padding: 0px 0px; border-radius: 5px"
-        />
-        <span style="padding: 14px 13px">{{ _('Modems') }}</span>
-      </button>
-    </form>
+              <!-- Dil Seçici -->
+          <div class="language-switcher fixed-top-right" id="languageSwitcher">
+            <button type="button" class="language-toggle" id="languageToggle">
+              <img
+                src="{{ url_for('static', filename='images/svg/globe.svg') }}"
+                width="24"
+                height="24"
+                alt="Globe Icon"
+              />
+              <span class="selected-lang-txt" id="selectedLangLabel">
+                {{ g.lang.upper() }}
+              </span>
+            </button>
+
+            <div class="language-dropdown" id="languageDropdown">
+              <div class="dropdown-arrow"></div>
+
+              <!-- Türkçe -->
+              <button
+                type="button"
+                class="lang-btn {% if g.get('lang') == 'tr' %}selected{% endif %}"
+                data-lang="tr"
+                onclick="setLanguage('tr')"
+              >
+                <div class="lang-content">
+                  <img
+                    src="{{ url_for('static', filename='images/flags/tr.png') }}"
+                    width="20"
+                  />
+                  <span>TR</span>
+                </div>
+
+                <div class="radio-indicator-cover">
+                <span class="radio-indicator"></span>
+
+                </div>
+              </button>
+
+              <!-- English -->
+              <button
+                type="button"
+                class="lang-btn {% if g.get('lang') == 'en' %}selected{% endif %}"
+                data-lang="en"
+                onclick="setLanguage('en')"
+              >
+                <div class="lang-content">
+                  <img
+                    src="{{ url_for('static', filename='images/flags/uk.png') }}"
+                    width="20"
+                  />
+                  <span>EN</span>
+                </div>
+                <div class="radio-indicator-cover">
+                <span class="radio-indicator"></span>
+              </button>
+
+              <!-- Deutsch -->
+              <button
+                type="button"
+                class="lang-btn {% if g.get('lang') == 'de' %}selected{% endif %}"
+                data-lang="de"
+                onclick="setLanguage('de')"
+              >
+                <div class="lang-content">
+                  <img
+                    src="{{ url_for('static', filename='images/flags/de.png') }}"
+                    width="20"
+                  />
+                  <span>DE</span>
+                </div>
+                <div class="radio-indicator-cover">
+                <span class="radio-indicator"></span>
+              </button>
+            </div>
+          </div>
   </div>
 
   <div class="header-logo">
@@ -38,7 +105,7 @@ title%} {% block content %}
       class="logo"
     />
   </div>
-
+  
   <div class="header-right-dashboard">
     <div class="date-time" id="current-date-time">{{ _('Loading...') }}</div>
     <div class="report-line">
@@ -215,6 +282,80 @@ title%} {% block content %}
 </section>
 
 <script>
+  // Dil değiştirildiğinde çağrılacak fonksiyon
+    document.addEventListener("DOMContentLoaded", function () {
+    // Sayfa yüklendiğinde aktif dilin gösterilmesini sağla
+    const lang = "{{ g.get('lang', 'EN') }}"; // Flask'tan alınan aktif dil
+    const selectedLangLabel = document.getElementById("selectedLangLabel");
+
+    // Globe üzerindeki dil kodunu güncelle
+    if (selectedLangLabel) {
+      selectedLangLabel.innerText = lang.toUpperCase(); // Globe üzerindeki dil kodunu güncelle
+      console.log(
+        "Globe üzerindeki dil kodu (sayfa yüklendi):",
+        lang.toUpperCase()
+      ); // Log ekledik
+    }
+
+    // Dil seçeneği değiştirildiğinde çalışan fonksiyon
+    function setLanguage(lang) {
+      console.log("Dil değiştiriliyor:", lang); // Dil değişikliği yapılmadan önce log
+
+      // Tüm dil butonlarından selected sınıfını kaldır
+      document
+        .querySelectorAll(".lang-btn")
+        .forEach((btn) => btn.classList.remove("selected"));
+
+      // Seçilen dil butonuna selected sınıfını ekle
+      const selectedBtn = document.querySelector(
+        `.lang-btn[data-lang="${lang}"]`
+      );
+      if (selectedBtn) {
+        selectedBtn.classList.add("selected");
+      }
+
+      // Globe yanındaki TR / EN / DE yazısını güncelle
+      if (selectedLangLabel) {
+        selectedLangLabel.innerText = lang.toUpperCase(); // Globe üzerindeki dil kodunu değiştir
+      }
+
+      // Backend dil güncellemesi yap
+      fetch("{{ url_for('set_language') }}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "lang=" + lang,
+      }).then(() => {
+        console.log("Backend'e gönderilen dil:", lang); // Dil backend'e gönderildiğini logla
+        window.location.reload(); // Yeni dilin yüklendiği halini göster
+      });
+    }
+
+    // Dil butonlarına tıklandığında setLanguage fonksiyonunu çalıştır
+    document.querySelectorAll(".lang-btn").forEach((button) => {
+      button.addEventListener("click", function () {
+        const lang = button.getAttribute("data-lang");
+        setLanguage(lang); // Seçilen dil ile setLanguage fonksiyonunu çağır
+      });
+    });
+
+    // Dil seçici butonunun tıklama olayı
+    const toggle = document.getElementById("languageToggle");
+    const switcher = document.getElementById("languageSwitcher");
+
+    toggle.addEventListener("click", function (event) {
+      event.stopPropagation();
+      switcher.classList.toggle("active");
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!switcher.contains(e.target)) {
+        switcher.classList.remove("active");
+      }
+    });
+  });
+  
   document.addEventListener("DOMContentLoaded", function () {
     function updateDateTime() {
       const userLang = document.body.dataset.lang || "en"; 
@@ -250,33 +391,7 @@ title%} {% block content %}
     setInterval(updateDateTime, 60000);
   });
 
-    document.addEventListener("DOMContentLoaded", function () {
-      document
-        .getElementById("logout-button")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-
-          Swal.fire({
-            title: "{{ _('Are you sure you want to log out?') }}",
-            icon: "warning",
-            background: "#0B1734",
-            iconColor: "#EF8018",
-            showCancelButton: true,
-            confirmButtonText: "{{ _('Yes') }}", 
-            cancelButtonText: "{{ _('No') }}", 
-            reverseButtons: false, 
-            customClass: {
-              confirmButton: "swal-button-yes", 
-              cancelButton: "swal-button-no", 
-            },
-            buttonsStyling: false,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              document.getElementById("logout-form").submit();
-            }
-          });
-        });
-    });
+    
 
     // Eğer dili almanca ise chartdaki fontsize ler 12px olsun
     var currentLang = "{{ get_locale() }}";
@@ -548,86 +663,5 @@ title%} {% block content %}
 
 </script>
 
-<style>
-  .swal-button-yes {
-    background-color: #fff;
-    color: #0b1734;
-    border-radius: 5px;
-    padding: 17px 19px;
-    font-size: 16px;
-    border: none;
-  }
 
-  .swal-button-no {
-    background-color: #fff;
-    color: #0b1734;
-    border-radius: 5px;
-    padding: 17px 19px;
-    font-size: 16px;
-    border: 2px solid #0b1734;
-  }
-
-  .swal2-popup {
-    border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Ensuring buttons are properly spaced and displayed */
-  .swal2-actions {
-    display: flex;
-    justify-content: space-between; /* Space the buttons properly */
-    width: 100%; /* Ensure full width for button spacing */
-  }
-
-  .swal2-confirm {
-    width: 48%;
-    margin-right: 4%;
-  }
-
-  .swal2-cancel {
-    width: 48%;
-  }
-
-  div:where(.swal2-container) h2:where(.swal2-title) {
-    position: relative;
-    max-width: 100%;
-    padding: 1em 1em 1em;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 500;
-  }
-
-  .swal2-actions {
-    display: flex;
-    justify-content: space-between;
-    width: 94%;
-  }
-
-  body.swal2-shown {
-    padding-right: 0 !important;
-    overflow: hidden !important;
-  }
-  .header,
-  .fixed-element {
-    transform: none !important;
-    will-change: auto !important;
-  }
-
-  div:where(.swal2-container).swal2-backdrop-show,
-  div:where(.swal2-container).swal2-noanimation {
-    background: rgba(0, 0, 0, 0.4);
-  }
-
-  div:where(.swal2-container).swal2-center > .swal2-popup {
-    grid-column: 2;
-    grid-row: 2;
-    place-self: center center;
-    margin-top: 64px;
-  }
-
-  div:where(.swal2-icon) {
-    width: 4em;
-    height: 4em;
-  }
-</style>
 {% endblock content %}

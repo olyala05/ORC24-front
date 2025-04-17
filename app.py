@@ -87,6 +87,30 @@ def inject_locale():
 def index():
     return render_template("index.html")
 
+@app.route("/auto-login", methods=["POST"])
+def auto_login():
+    try:
+        data = request.get_json()
+        email = data.get("email")
+        password = data.get("password")
+
+        response = requests.get(
+            f"{LARAVEL_API_URL}/login",
+            params={"client_email": email, "client_password": password},
+            headers={"Accept": "application/json"},
+            verify=False,
+        )
+
+        if response.status_code == 200:
+            api_response = response.json()
+            session["access_token"] = api_response.get("access_token")
+            return jsonify({"success": True})
+        else:
+            return jsonify({"success": False, "message": "API login failed"}), 401
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
+
+
 # Giriş Sayfası
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -106,13 +130,14 @@ def login():
                 api_response = response.json()
                 session["access_token"] = api_response.get("access_token")
                 session["login_success"] = True
-                return redirect(url_for("dashboard")) 
+                return redirect(url_for("modem_selection"))  
             except Exception as e:
                 flash("Sunucudan geçersiz yanıt alındı!", "danger")
                 return redirect(url_for("login"))
 
         flash("Hatalı e-posta veya şifre!", "danger")
         return redirect(url_for("login"))
+
     login_success = session.pop("login_success", None)
     return render_template("login.html", login_success=login_success)
 
