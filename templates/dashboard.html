@@ -7,19 +7,34 @@
 <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
 <header class="header">
   <div class="header-left">
-    <!-- Menu butonunu modem-selection sayfasına yönlendirme -->
-    <form action="{{ url_for('login') }}" method="GET">
-      <button type="submit" class="header-button" style="gap: 0">
-      <span style="padding: 14px 13px">{{ _('Login') }}</span>
-        <img
-          src="{{ url_for('static', filename='images/svg/36.svg') }}"
-          alt="Logout"
-          width="30"
-          height="30"
-          style="padding: 7px 9px; background: #0b1734; border-radius: 5px"
-        />
-      </button>
-    </form>
+        <!-- Menu butonunu modem-selection sayfasına yönlendirme  <form action="{{ url_for('login') }}" method="GET">
+          <button type="submit" class="header-button" style="gap: 0">
+          <span style="padding: 14px 13px">{{ _('Login') }}</span>
+            <img
+              src="{{ url_for('static', filename='images/svg/36.svg') }}"
+              alt="Logout"
+              width="30"
+              height="30"
+              style="padding: 7px 9px; background: #0b1734; border-radius: 5px"
+            />
+          </button>
+        </form>-->
+
+        <!-- Login yerine yönlendirme kontrolü -->
+<form action="{{ url_for('check_login_redirect') }}" method="GET">
+  <button type="submit" class="header-button" style="gap: 0">
+    <span style="padding: 14px 13px">{{ _('Login') }}</span>
+    <img
+      src="{{ url_for('static', filename='images/svg/36.svg') }}"
+      alt="Logout"
+      width="30"
+      height="30"
+      style="padding: 7px 9px; background: #0b1734; border-radius: 5px"
+    />
+  </button>
+</form>
+
+       
 
               <!-- Dil Seçici -->
           <div class="language-switcher fixed-top-right" id="languageSwitcher" class="lang-back" style= "background-color: #EF8018; padding: 10px; border-radius: 5px;">

@@ -18,7 +18,7 @@ import ipaddress
 import scapy.all as scapy
 import nmap
 import socket
-from datetime import datetime
+from datetime import datetime, timedelta
 import logging
 import pymodbus.client.tcp 
 import os
@@ -63,20 +63,19 @@ def before_request_func():
 # Dil seçimi için Babel'le ilgili fonksiyon
 @babel.localeselector
 def get_locale():
-    # session'dan dil bilgisi alınır
-    lang = session.get('lang', 'tr')  # Varsayılan dil 'tr' olacak
-    logging.debug(f"GET LOCALE: Aktif Dil: {lang}")  # Log ekledik
+    lang = session.get('lang', 'tr')  
+    logging.debug(f"GET LOCALE: Aktif Dil: {lang}")  
     return lang
 
 @app.route('/set_language', methods=['POST'])
 def set_language():
     lang = request.form.get("lang")
     if lang in ['tr', 'en', 'de']:
-        session['lang'] = lang  # Seçilen dil session'a kaydedilir
-        logging.debug(f"SET LANGUAGE: Seçilen dil: {lang}")  # Log ekledik
+        session['lang'] = lang  
+        logging.debug(f"SET LANGUAGE: Seçilen dil: {lang}")
     else:
-        logging.debug(f"SET LANGUAGE: Geçersiz dil seçimi: {lang}")  # Geçersiz dil hatası
-    return redirect(request.referrer or url_for("index"))  # Sayfayı yeniden yönlendir
+        logging.debug(f"SET LANGUAGE: Geçersiz dil seçimi: {lang}")  
+    return redirect(request.referrer or url_for("index"))  
 
 @app.context_processor
 def inject_locale():
@@ -112,6 +111,36 @@ def auto_login():
 
 
 # Giriş Sayfası
+# @app.route("/login", methods=["GET", "POST"])
+# def login():
+#     if request.method == "POST":
+#         email = request.form.get("email")
+#         password = request.form.get("password")
+
+#         response = requests.get(
+#             f"{LARAVEL_API_URL}/login",
+#             params={"client_email": email, "client_password": password},
+#             headers={"Accept": "application/json"},
+#             verify=False,
+#         )
+
+#         if response.status_code == 200:
+#             try:
+#                 api_response = response.json()
+#                 session["access_token"] = api_response.get("access_token")
+#                 session["login_success"] = True
+#                 return redirect(url_for("modem_selection"))  
+#             except Exception as e:
+#                 flash("Sunucudan geçersiz yanıt alındı!", "danger")
+#                 return redirect(url_for("login"))
+
+#         flash("Hatalı e-posta veya şifre!", "danger")
+#         return redirect(url_for("login"))
+
+#     login_success = session.pop("login_success", None)
+#     return render_template("login.html", login_success=login_success)
+
+# Giriş Sayfası
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -130,7 +159,8 @@ def login():
                 api_response = response.json()
                 session["access_token"] = api_response.get("access_token")
                 session["login_success"] = True
-                return redirect(url_for("modem_selection"))  
+                session["login_time"] = datetime.utcnow().isoformat()  #  login zamanını kaydeer
+                return redirect(url_for("modem_selection"))
             except Exception as e:
                 flash("Sunucudan geçersiz yanıt alındı!", "danger")
                 return redirect(url_for("login"))
@@ -140,6 +170,38 @@ def login():
 
     login_success = session.pop("login_success", None)
     return render_template("login.html", login_success=login_success)
+
+# Login Butonuna Basıldığında Yönlendirme Kontrolü için endpoint 
+@app.route("/check-login-redirect")
+def check_login_redirect():
+    login_time_str = session.get("login_time")
+
+    if login_time_str:
+        login_time = datetime.fromisoformat(login_time_str)
+        now = datetime.utcnow()
+        time_diff = now - login_time
+
+        if time_diff < timedelta(hours=2):
+            return redirect(url_for("modem_selection")) 
+        else:
+            session.clear()  
+    return redirect(url_for("login"))  
+
+# @app.route("/check-login-redirect")
+# def check_login_redirect():
+#     login_time_str = session.get("login_time")
+
+#     if login_time_str:
+#         login_time = datetime.fromisoformat(login_time_str)
+#         now = datetime.utcnow()
+#         time_diff = now - login_time
+
+#         if time_diff < timedelta(minutes=5):  # 5 dakika sınırı
+#             return redirect(url_for("modem_selection"))
+#         else:
+#             session.clear()
+#     return redirect(url_for("login"))
+
 
 @app.route("/dashboard")
 def dashboard():
