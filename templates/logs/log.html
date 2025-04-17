@@ -48,8 +48,8 @@ endblock%} {% block extra_css %}
             font-size: 14px;
             margin-top: 10px;
           "
-        >
-          No logs found for today. Please select another date from the calendar.
+          >
+          Seçilen tarihe ait log bulunamadı.
         </div>
 
         <table>
@@ -76,373 +76,248 @@ endblock%} {% block extra_css %}
 
 <script>
   let currentPage = 1;
-  let isLoading = false;
-  let hasMoreLogs = true;
+let isLoading = false;
+let hasMoreLogs = true;
+let isCalendarOpen = false;
 
-  $("#log-date-picker").daterangepicker(
-    {
-      singleDatePicker: true,
-      showDropdowns: false,
-      showWeekNumbers: true,
-      showISOWeekNumbers: true,
-      timePicker: false,
-      autoApply: true,
-      maxSpan: { days: 7 },
-      ranges: {
-        Today: [moment(), moment()],
-        Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-        "Last Week": [
-          moment().subtract(1, "week").startOf("isoWeek"),
-          moment().subtract(1, "week").endOf("isoWeek"),
-        ],
-        "Last Month": [
-          moment().subtract(1, "month").startOf("month"),
-          moment().subtract(1, "month").endOf("month"),
-        ],
-        "Last Quarter": [
-          moment().subtract(1, "quarter").startOf("quarter"),
-          moment().subtract(1, "quarter").endOf("quarter"),
-        ],
-      },
-      locale: {
-        format: "DD MMM YYYY", // Tarih formatı
-        monthNames: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ],
-        separator: " - ",
-        fromLabel: "From",
-        toLabel: "To",
-        weekLabel: "W",
-        firstDay: 1,
-      },
-      alwaysShowCalendars: true,
-      startDate: moment().startOf("isoWeek").format("DD MMM YYYY"),
-      endDate: moment().endOf("isoWeek").format("DD MMM YYYY"),
-      opens: "center",
-      buttonClasses: "btn btn-sm",
-      applyButtonClasses: "btn btn-primary",
-    },
-    function (start, end, label) {
-      const selectedDate = start.format("YYYY-MM-DD"); // Seçilen tarihi al
-      console.log("Seçilen tarih: ", selectedDate);
+const datePicker = $("#log-date-picker");
+const calendarIcon = document.getElementById("calendar-arrow-icon");
+const logTableBody = document.getElementById("log-table-body");
+const logTableHead = document.getElementById("log-table-head");
+const loadingMessage = document.getElementById("loading-message");
+const noLogsMessage = document.getElementById("no-logs-message");
 
-      fetchLogsByDate(selectedDate); // Seçilen tarihe göre logları al
-    }
-  );
+// Takvim kısa yolları
+const predefinedRanges = {
+  Today: [moment(), moment()],
+  Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+  "Last Week": [
+    moment().subtract(1, "week").startOf("isoWeek"),
+    moment().subtract(1, "week").endOf("isoWeek")
+  ],
+  "Last Month": [
+    moment().subtract(1, "month").startOf("month"),
+    moment().subtract(1, "month").endOf("month")
+  ],
+  "Last Quarter": [
+    moment().subtract(1, "quarter").startOf("quarter"),
+    moment().subtract(1, "quarter").endOf("quarter")
+  ],
+};
 
-  let isCalendarOpen = false;
+// Daterangepicker başlat
+datePicker.daterangepicker({
+  singleDatePicker: true,
+  showDropdowns: false,
+  showWeekNumbers: true,
+  showISOWeekNumbers: true,
+  timePicker: false,
+  autoApply: true,
+  maxSpan: { days: 7 },
+  alwaysShowCalendars: true,
+  startDate: moment().startOf("isoWeek").format("DD MMM YYYY"),
+  endDate: moment().endOf("isoWeek").format("DD MMM YYYY"),
+  opens: "center",
+  buttonClasses: "btn btn-sm",
+  applyButtonClasses: "btn btn-primary",
+  ranges: predefinedRanges,
+  locale: {
+    format: "DD MMM YYYY",
+    separator: " - ",
+    fromLabel: "From",
+    toLabel: "To",
+    weekLabel: "W",
+    firstDay: 1,
+    monthNames: [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ]
+  }
+}, (start) => {
+  const selectedDate = start.format("YYYY-MM-DD");
+  fetchLogsByDate(selectedDate); // Seçilen tarihe göre logları getir
+});
 
-  $("#log-date-picker").on("click", function (e) {
-    e.stopPropagation(); // başka yere tıklamayı engellemez
-    if (isCalendarOpen) {
-      picker.hide();
-    } else {
-      picker.show();
-    }
-    isCalendarOpen = !isCalendarOpen;
-  });
+datePicker.on("click", function (e) {
+  e.stopPropagation();
+  isCalendarOpen ? picker.hide() : picker.show();
+  isCalendarOpen = !isCalendarOpen;
+});
 
-  $(document).on("click", function (e) {
-    if (isCalendarOpen && !$(e.target).closest(".daterangepicker").length) {
-      picker.hide();
-      isCalendarOpen = false;
-    }
-  });
-
-  $("#log-date-picker").on("show.daterangepicker", function () {
-    document.getElementById("calendar-arrow-icon").src =
-      "{{ url_for('static', filename='images/svg/up-arrow.svg') }}";
-    isCalendarOpen = true;
-  });
-
-  $("#log-date-picker").on("hide.daterangepicker", function () {
-    document.getElementById("calendar-arrow-icon").src =
-      "{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
+$(document).on("click", function (e) {
+  if (isCalendarOpen && !$(e.target).closest(".daterangepicker").length) {
+    picker.hide();
     isCalendarOpen = false;
-  });
+  }
+});
 
-  document.addEventListener("DOMContentLoaded", function () {
-    fetchLogs();
+datePicker.on("show.daterangepicker", () => calendarIcon.src = "{{ url_for('static', filename='images/svg/up-arrow.svg') }}");
+datePicker.on("hide.daterangepicker", () => calendarIcon.src = "{{ url_for('static', filename='images/svg/down-arrow.svg') }}");
 
-    setLogDateInput();
-
-    const container = document.querySelector(".log-table-content");
-    if (container) {
-      container.addEventListener("scroll", function () {
-        const scrollTop = container.scrollTop;
-        const scrollHeight = container.scrollHeight;
-        const containerHeight = container.clientHeight;
-
-        if (scrollTop + containerHeight >= scrollHeight - 100) {
-          console.log("SCROLL TETİKLENDİ (log-table-content)!");
-          fetchLogs();
-        }
-      });
-    } else {
-      console.error("log-table-content bulunamadı!");
+document.addEventListener("DOMContentLoaded", () => {
+  fetchLogs();
+  setLogDateInput();
+  const container = document.querySelector(".log-table-content");
+  container?.addEventListener("scroll", () => {
+    if (container.scrollTop + container.clientHeight >= container.scrollHeight - 100) {
+      fetchLogs();
     }
   });
+});
 
-  function setLogDateInput() {
-    fetch("/get_logs", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        year: new Date().getFullYear(),
-        month: new Date().getMonth() + 1,
-        day: new Date().getDate(),
-        page: 1,
-        per_page: 1,
-      }),
+function setLogDateInput() {
+  fetch("/get_logs", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      day: new Date().getDate(),
+      page: 1,
+      per_page: 1,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status === "success" && data.data.length) {
+        const formattedDate = formatDateInput(new Date(data.data[0].created_at));
+        datePicker.val(formattedDate);
+        fetchLogsByDate(formattedDate);
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === "success" && data.data.length > 0) {
-          const lastLogDate = new Date(data.data[0].created_at);
-          const formattedDate = formatDateInput(lastLogDate);
+    .catch(console.error);
+}
 
-          document.getElementById("log-date-picker").value = formattedDate;
+function fetchLogs() {
+  if (isLoading || !hasMoreLogs) return;
+  isLoading = true;
+  loadingMessage.style.display = "table-row";
 
-          fetchLogsByDate(formattedDate);
-        }
-      })
-      .catch((error) => console.error("Error fetching last log date:", error));
-  }
+  fetch("/get_logs", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      day: new Date().getDate(),
+      page: currentPage,
+      per_page: 20,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      loadingMessage.style.display = "none";
+      isLoading = false;
 
-  function formatDateInput(date) {
-    return `${date.getFullYear()}-${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-  }
-
-  function formatDateInput(date) {
-    return `${date.getFullYear()}-${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-  }
-
-  function formatDateTime(dateTimeStr) {
-    const date = new Date(dateTimeStr);
-    if (isNaN(date)) return dateTimeStr;
-    return `${date.getFullYear()}-${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")} ${date
-      .getHours()
-      .toString()
-      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
-      .getSeconds()
-      .toString()
-      .padStart(2, "0")}`;
-  }
-
-  function fetchLogs() {
-    if (isLoading || !hasMoreLogs) return;
-    isLoading = true;
-
-    document.getElementById("loading-message").style.display = "table-row";
-
-    fetch("/get_logs", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        year: new Date().getFullYear(),
-        month: new Date().getMonth() + 1,
-        day: new Date().getDate(),
-        page: currentPage,
-        per_page: 20,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        document.getElementById("loading-message").style.display = "none";
-        isLoading = false;
-
-        if (data.status === "success") {
-          let logs = data.data;
-          if (typeof logs === "string") {
-            try {
-              logs = JSON.parse(logs);
-            } catch (error) {
-              console.error("Error parsing logs JSON:", error);
-              logs = [];
-            }
-          }
-
-          if (Array.isArray(logs) && logs.length > 0) {
-            updateTable(logs, true);
-          }
-
-          currentPage += 1;
+      if (data.status === "success") {
+        let logs = typeof data.data === "string" ? JSON.parse(data.data) : data.data;
+        if (Array.isArray(logs) && logs.length) {
+          updateTable(logs, true);
+          currentPage++;
           hasMoreLogs = data.has_more;
         }
-        console.log(`Fetching page ${currentPage}, hasMore: ${hasMoreLogs}`);
-      })
-      .catch((error) => {
-        isLoading = false;
-        console.error("Error fetching logs:", error);
-        document.getElementById("loading-message").style.display = "none";
-      });
-  }
+      }
+    })
+    .catch((err) => {
+      isLoading = false;
+      loadingMessage.style.display = "none";
+      console.error("Fetch logs error:", err);
+    });
+}
 
-  function updateTable(logs, append = false) {
-    const tableBody = document.querySelector("#log-table-body");
-    const tableHead = document.querySelector("#log-table-head");
+function fetchLogsByDate(date) {
+  const [year, month, day] = date.split("-");
 
-    if (!append) tableBody.innerHTML = "";
+  fetch("/get_logs", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ year, month, day, page: 1, per_page: 20 }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      loadingMessage.style.display = "none";
+      document.getElementById("info-message").style.display = "none";
 
-    if (logs.length === 0 && !append) {
-      tableHead.style.display = "none";
-      return;
-    }
+      let logs = Array.isArray(data.data) ? data.data : JSON.parse(data.data || "[]");
 
-    tableHead.style.display = "table-header-group";
+      if (logs.length) {
+        updateTable(logs);
+        logTableHead.style.display = "table-header-group";
+        noLogsMessage.style.display = "none";
+      } else {
+        logTableBody.innerHTML = "";
+        logTableHead.style.display = "none";
+        noLogsMessage.style.display = "block";
+      }
+    })
+    .catch((err) => {
+      console.error("Fetch by date error:", err);
+      loadingMessage.style.display = "none";
+      noLogsMessage.style.display = "block";
+    });
+}
 
-    logs.forEach((log, index) => {
-      const row = document.createElement("tr");
-      const logId = `log-${Date.now()}-${Math.random()}`;
+function updateTable(logs, append = false) {
+  if (!append) logTableBody.innerHTML = "";
+  logTableHead.style.display = "table-header-group";
 
-      const fullText = log.tag + " - " + (log.data || "N/A");
-      const fullTextEscaped = fullText.replace(/[&<>"']/g, function (match) {
-        const chars = {
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#39;",
-        };
-        return chars[match];
-      });
+  logs.forEach((log) => {
+    const row = document.createElement("tr");
+    const logId = `log-${Date.now()}-${Math.random()}`;
+    const text = (log.tag + " - " + (log.data || "N/A")).replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
 
-      const statusClass = getStatusClass(log.type);
-      const needsToggle = fullText.length > 100;
+    const statusClass = getStatusClass(log.type);
+    const needsToggle = text.length > 100;
 
-      row.innerHTML = `
+    row.innerHTML = `
       <td><span class="status-dot ${statusClass}"></span></td>
       <td>
-        <span class="ellipsis" id="${logId}-short">${fullTextEscaped}</span>
-        <span class="log-full" id="${logId}-full">${fullTextEscaped}</span>
-        ${
-          needsToggle
-            ? `<a href="#" class="toggle-link" data-log-id="${logId}">Read More</a>`
-            : ""
-        }
+        <span class="ellipsis" id="${logId}-short">${text}</span>
+        <span class="log-full" id="${logId}-full" style="display:none">${text}</span>
+        ${needsToggle ? `<a href="#" class="toggle-link" data-log-id="${logId}">Read More</a>` : ""}
       </td>
-      <td style="white-space: nowrap;">${formatDateTime(log.created_at)}</td>
-    `;
+      <td style="white-space: nowrap;">${formatDateTime(log.created_at)}</td>`;
+    logTableBody.appendChild(row);
+  });
+}
 
-      tableBody.appendChild(row);
-    });
+logTableBody.addEventListener("click", function (e) {
+  if (e.target.classList.contains("toggle-link")) {
+    e.preventDefault();
+    const logId = e.target.dataset.logId;
+    toggleLog(logId, e.target);
   }
+});
 
-  document
-    .querySelector("#log-table-body")
-    .addEventListener("click", function (event) {
-      if (event.target.classList.contains("toggle-link")) {
-        event.preventDefault();
-        const logId = event.target.getAttribute("data-log-id");
-        toggleLog(logId, event.target);
-      }
-    });
+function toggleLog(id, link) {
+  const shortEl = document.getElementById(`${id}-short`);
+  const fullEl = document.getElementById(`${id}-full`);
+  const isHidden = shortEl.style.display === "none";
+  shortEl.style.display = isHidden ? "inline-block" : "none";
+  fullEl.style.display = isHidden ? "none" : "inline";
+  link.textContent = isHidden ? "Read More" : "Read Less";
+}
 
-  function toggleLog(logId, linkElement) {
-    const shortText = document.getElementById(`${logId}-short`);
-    const fullText = document.getElementById(`${logId}-full`);
+function formatDateTime(str) {
+  const date = new Date(str);
+  return isNaN(date) ? str :
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+}
 
-    if (shortText.style.display === "none") {
-      shortText.style.display = "inline-block";
-      fullText.style.display = "none";
-      linkElement.textContent = "Read More";
-    } else {
-      shortText.style.display = "none";
-      fullText.style.display = "inline";
-      linkElement.textContent = "Read Less";
-    }
-  }
+function getStatusClass(type) {
+  return {
+    1: "status-info",
+    2: "status-warning",
+    3: "status-exception"
+  }[type] || "status-info";
+}
 
-  function getStatusClass(type) {
-    switch (type) {
-      case 1:
-        return "status-info";
-      case 2:
-        return "status-warning";
-      case 3:
-        return "status-exception";
-      default:
-        return "status-info";
-    }
-  }
+function formatDateInput(date) {
+  return moment(date).format("YYYY-MM-DD");
+}
 
-  function fetchLogsByDate(selectedDate) {
-    fetch("/get_logs", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        year: selectedDate.split("-")[0],
-        month: selectedDate.split("-")[1],
-        day: selectedDate.split("-")[2],
-        page: 1,
-        per_page: 20,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        document.getElementById("loading-message").style.display = "none";
-        document.getElementById("info-message").style.display = "none";
-
-        if (data.status === "success" && data.data) {
-          let logs =
-            typeof data.data === "string" ? JSON.parse(data.data) : data.data;
-          if (Array.isArray(logs) && logs.length > 0) {
-            document.getElementById("info-message").style.display = "block";
-            updateTable(logs);
-            document.getElementById("no-logs-message").style.display = "none";
-          } else {
-            document.getElementById("no-logs-message").style.display = "block";
-          }
-        } else {
-          document.getElementById("no-logs-message").style.display = "block";
-        }
-      })
-      .catch((error) => {
-        console.error("[ERROR] Fetch error:", error);
-        document.getElementById("loading-message").style.display = "none";
-        document.getElementById("no-logs-message").style.display = "block";
-      });
-  }
-
-  function updateDateRangeDisplay(logs) {
-    if (!logs || logs.length === 0) return;
-
-    // Tarihleri al ve sırala
-    const dates = logs
-      .map((log) => new Date(log.created_at))
-      .sort((a, b) => a - b);
-    const start = dates[0];
-    const end = dates[dates.length - 1];
-
-    const format = (date) =>
-      date
-        .toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "short",
-          year: "2-digit",
-        })
-        .replace(/ /g, " "); 
-
-    const rangeText = `${format(start)} – ${format(end)}`;
-    document.getElementById("date-range-display").innerText = rangeText;
-  }
 </script>
 
 <style>
