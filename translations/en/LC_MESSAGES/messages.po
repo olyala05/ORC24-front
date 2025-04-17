@@ -1370,3 +1370,9 @@ msgstr "Yes"
 
 msgid "No"
 msgstr "No"
+
+msgid "ORC Status - Logs"
+msgstr "ORC Status - Logs"
+
+msgid "No logs found for the selected date."
+msgstr "No logs found for the selected date."

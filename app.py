@@ -1261,7 +1261,7 @@ def get_slave_data():
 # Logs
 @app.route("/log", endpoint="log")
 def log():
-    return render_template("logs/log.html", page_title=_("Log"))
+    return render_template("logs/log.html", page_title=_("Logs"))
 
 # @app.route("/get_logs", methods=["POST"])
 # def get_logs():

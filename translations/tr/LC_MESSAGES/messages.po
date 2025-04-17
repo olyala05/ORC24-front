@@ -1381,23 +1381,15 @@ msgstr "Evet"
 msgid "No"
 msgstr "Hayır"
 
-msgid ""
-msgstr ""
+msgid "ORC Status - Logs"
+msgstr "ORC Durumu - Loglar"
 
-msgid ""
-msgstr ""
+msgid "No logs found for the selected date."
+msgstr "Seçilen tarihe ait log bulunamadı."
 
-msgid ""
-msgstr ""
 
-msgid ""
-msgstr ""
 
-msgid ""
-msgstr ""
 
-msgid ""
-msgstr ""
 
 msgid ""
 msgstr ""
