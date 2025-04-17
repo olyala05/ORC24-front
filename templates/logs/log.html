@@ -12,7 +12,17 @@ endblock%} {% block extra_css %}
 <div class="log-container">
   <!--  Calendar -->
   <div class="calendar-input-wrapper">
-    <input type="text" id="log-date-picker" class="calendar-input" />
+    <!--<input type="text" id="log-date-picker" class="calendar-input" readonly/> -->
+    <div class="calendar-wrapper">
+      <input type="text" id="log-date-picker" class="calendar-input" readonly />
+      <span class="calendar-icon">
+        <img
+          id="calendar-arrow-icon"
+          src="{{ url_for('static', filename='images/svg/down-arrow.svg') }}"
+          alt="arrow"
+        />
+      </span>
+    </div>
 
     <div class="log-table">
       <div class="log-table-content">
@@ -21,7 +31,7 @@ endblock%} {% block extra_css %}
           id="info-message"
           style="
             display: none;
-            color: #33FF00;
+            color: #33ff00;
             text-align: center;
             font-size: 14px;
             margin-top: 5px;
@@ -33,7 +43,7 @@ endblock%} {% block extra_css %}
           id="no-logs-message"
           style="
             display: none;
-            color: #FF0F00;
+            color: #ff0f00;
             text-align: center;
             font-size: 14px;
             margin-top: 10px;
@@ -131,6 +141,37 @@ endblock%} {% block extra_css %}
     }
   );
 
+  let isCalendarOpen = false;
+
+  $("#log-date-picker").on("click", function (e) {
+    e.stopPropagation(); // başka yere tıklamayı engellemez
+    if (isCalendarOpen) {
+      picker.hide();
+    } else {
+      picker.show();
+    }
+    isCalendarOpen = !isCalendarOpen;
+  });
+
+  $(document).on("click", function (e) {
+    if (isCalendarOpen && !$(e.target).closest(".daterangepicker").length) {
+      picker.hide();
+      isCalendarOpen = false;
+    }
+  });
+
+  $("#log-date-picker").on("show.daterangepicker", function () {
+    document.getElementById("calendar-arrow-icon").src =
+      "{{ url_for('static', filename='images/svg/up-arrow.svg') }}";
+    isCalendarOpen = true;
+  });
+
+  $("#log-date-picker").on("hide.daterangepicker", function () {
+    document.getElementById("calendar-arrow-icon").src =
+      "{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
+    isCalendarOpen = false;
+  });
+
   document.addEventListener("DOMContentLoaded", function () {
     fetchLogs();
 
@@ -171,10 +212,8 @@ endblock%} {% block extra_css %}
           const lastLogDate = new Date(data.data[0].created_at);
           const formattedDate = formatDateInput(lastLogDate);
 
-          // Takvimi son log tarihine göre güncelle
           document.getElementById("log-date-picker").value = formattedDate;
 
-          // Seçilen tarih ile logları getir
           fetchLogsByDate(formattedDate);
         }
       })
@@ -399,11 +438,42 @@ endblock%} {% block extra_css %}
           month: "short",
           year: "2-digit",
         })
-        .replace(/ /g, " "); // "28 Dec 22"
+        .replace(/ /g, " "); 
 
     const rangeText = `${format(start)} – ${format(end)}`;
     document.getElementById("date-range-display").innerText = rangeText;
   }
 </script>
 
+<style>
+  .calendar-wrapper {
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .calendar-input {
+    padding-right: 25px;
+    height: 36px;
+    border: none;
+    border-radius: 6px;
+    background-color: #0b1734;
+    color: #fff;
+    font-size: 14px;
+    padding: 0 10px;
+  }
+
+  .calendar-icon {
+    position: absolute;
+    right: 23px;
+    top: 58%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .calendar-icon img {
+    width: 15px;
+    height: 15px;
+  }
+</style>
 {% endblock %}
