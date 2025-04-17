@@ -212,8 +212,9 @@ endblock%} {% block extra_css %}
 
   // Aktif dili Flask'tan al
   const activeLang = "{{ get_locale() }}";
+  moment.locale(activeLang); 
   const selectedLocale = calendarLocales[activeLang] || calendarLocales["en"];
-  selectedLocale.customRangeLabel = ""; // "Custom Range" yazısı kalkar
+  selectedLocale.customRangeLabel = ""; 
 
   const predefinedRanges =
     predefinedRangesByLang[activeLang] || predefinedRangesByLang["en"];
