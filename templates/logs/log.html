@@ -1,8 +1,5 @@
-{% extends "layout.html" %} 
-
-{% block title %} {{ _('ORC Status - Logs') }} {% endblock%} 
-
-{% block extra_css %}
+{% extends "layout.html" %} {% block title %} {{ _('ORC Status - Logs') }} {%
+endblock%} {% block extra_css %}
 
 <!-- CSS logs -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}" />
@@ -51,7 +48,7 @@
             font-size: 14px;
             margin-top: 10px;
           "
-          >
+        >
           {{ _('No logs found for the selected date.') }}
         </div>
 
@@ -90,41 +87,31 @@
   const loadingMessage = document.getElementById("loading-message");
   const noLogsMessage = document.getElementById("no-logs-message");
 
-  // Takvim kısa yolları
-  const predefinedRanges = {
-    Today: [moment(), moment()],
-    Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-    "Last Week": [
-      moment().subtract(1, "week").startOf("isoWeek"),
-      moment().subtract(1, "week").endOf("isoWeek")
-    ],
-    "Last Month": [
-      moment().subtract(1, "month").startOf("month"),
-      moment().subtract(1, "month").endOf("month")
-    ],
-    "Last Quarter": [
-      moment().subtract(1, "quarter").startOf("quarter"),
-      moment().subtract(1, "quarter").endOf("quarter")
-    ],
-  };
-
-  // Daterangepicker başlat
-  datePicker.daterangepicker({
-    singleDatePicker: true,
-    showDropdowns: false,
-    showWeekNumbers: true,
-    showISOWeekNumbers: true,
-    timePicker: false,
-    autoApply: true,
-    maxSpan: { days: 7 },
-    alwaysShowCalendars: true,
-    startDate: moment().startOf("isoWeek").format("DD MMM YYYY"),
-    endDate: moment().endOf("isoWeek").format("DD MMM YYYY"),
-    opens: "center",
-    buttonClasses: "btn btn-sm",
-    applyButtonClasses: "btn btn-primary",
-    ranges: predefinedRanges,
-    locale: {
+  const calendarLocales = {
+    tr: {
+      format: "DD MMM YYYY",
+      separator: " - ",
+      fromLabel: "Başlangıç",
+      toLabel: "Bitiş",
+      weekLabel: "H",
+      firstDay: 1,
+      monthNames: [
+        "Oca",
+        "Şub",
+        "Mar",
+        "Nis",
+        "May",
+        "Haz",
+        "Tem",
+        "Ağu",
+        "Eyl",
+        "Eki",
+        "Kas",
+        "Ara",
+      ],
+      daysOfWeek: ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"],
+    },
+    en: {
       format: "DD MMM YYYY",
       separator: " - ",
       fromLabel: "From",
@@ -132,14 +119,132 @@
       weekLabel: "W",
       firstDay: 1,
       monthNames: [
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-      ]
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+    },
+    de: {
+      format: "DD MMM YYYY",
+      separator: " - ",
+      fromLabel: "Von",
+      toLabel: "Bis",
+      weekLabel: "W",
+      firstDay: 1,
+      monthNames: [
+        "Jan",
+        "Feb",
+        "Mär",
+        "Apr",
+        "Mai",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Okt",
+        "Nov",
+        "Dez",
+      ],
+      daysOfWeek: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+    },
+  };
+
+  const predefinedRangesByLang = {
+    tr: {
+      Bugün: [moment(), moment()],
+      Dün: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+      "Geçen Hafta": [
+        moment().subtract(1, "week").startOf("isoWeek"),
+        moment().subtract(1, "week").endOf("isoWeek"),
+      ],
+      "Geçen Ay": [
+        moment().subtract(1, "month").startOf("month"),
+        moment().subtract(1, "month").endOf("month"),
+      ],
+      "Son Üç Ay": [
+        moment().subtract(1, "quarter").startOf("quarter"),
+        moment().subtract(1, "quarter").endOf("quarter"),
+      ],
+    },
+    en: {
+      Today: [moment(), moment()],
+      Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+      "Last Week": [
+        moment().subtract(1, "week").startOf("isoWeek"),
+        moment().subtract(1, "week").endOf("isoWeek"),
+      ],
+      "Last Month": [
+        moment().subtract(1, "month").startOf("month"),
+        moment().subtract(1, "month").endOf("month"),
+      ],
+      "Last Quarter": [
+        moment().subtract(1, "quarter").startOf("quarter"),
+        moment().subtract(1, "quarter").endOf("quarter"),
+      ],
+    },
+    de: {
+      Heute: [moment(), moment()],
+      Gestern: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+      "Letzte Woche": [
+        moment().subtract(1, "week").startOf("isoWeek"),
+        moment().subtract(1, "week").endOf("isoWeek"),
+      ],
+      "Letzter Monat": [
+        moment().subtract(1, "month").startOf("month"),
+        moment().subtract(1, "month").endOf("month"),
+      ],
+      "Letztes Quartal": [
+        moment().subtract(1, "quarter").startOf("quarter"),
+        moment().subtract(1, "quarter").endOf("quarter"),
+      ],
+    },
+  };
+
+  // Aktif dili Flask'tan al
+  const activeLang = "{{ get_locale() }}";
+  const selectedLocale = calendarLocales[activeLang] || calendarLocales["en"];
+  selectedLocale.customRangeLabel = ""; // "Custom Range" yazısı kalkar
+
+  const predefinedRanges =
+    predefinedRangesByLang[activeLang] || predefinedRangesByLang["en"];
+
+  // Daterangepicker başlat
+  datePicker.daterangepicker(
+    {
+      singleDatePicker: true,
+      showDropdowns: false,
+      showWeekNumbers: true,
+      showISOWeekNumbers: true,
+      timePicker: false,
+      autoApply: true,
+      maxSpan: { days: 7 },
+      alwaysShowCalendars: true,
+      startDate: moment(),
+      endDate: moment(),
+      opens: "center",
+      buttonClasses: "btn btn-sm",
+      applyButtonClasses: "btn btn-primary",
+      ranges: predefinedRanges,
+      locale: selectedLocale,
+    },
+    (start) => {
+      const selectedDate = start.format("YYYY-MM-DD");
+      fetchLogsByDate(selectedDate);
     }
-  }, (start) => {
-    const selectedDate = start.format("YYYY-MM-DD");
-    fetchLogsByDate(selectedDate); // Seçilen tarihe göre logları getir
-  });
+  );
+
+  // Takvim bileşenine erişim
+  const picker = datePicker.data("daterangepicker");
 
   datePicker.on("click", function (e) {
     e.stopPropagation();
@@ -154,15 +259,25 @@
     }
   });
 
-  datePicker.on("show.daterangepicker", () => calendarIcon.src = "{{ url_for('static', filename='images/svg/up-arrow.svg') }}");
-  datePicker.on("hide.daterangepicker", () => calendarIcon.src = "{{ url_for('static', filename='images/svg/down-arrow.svg') }}");
+  datePicker.on("show.daterangepicker", () => {
+    calendarIcon.src =
+      "{{ url_for('static', filename='images/svg/up-arrow.svg') }}";
+  });
+
+  datePicker.on("hide.daterangepicker", () => {
+    calendarIcon.src =
+      "{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
+  });
 
   document.addEventListener("DOMContentLoaded", () => {
     fetchLogs();
     setLogDateInput();
     const container = document.querySelector(".log-table-content");
     container?.addEventListener("scroll", () => {
-      if (container.scrollTop + container.clientHeight >= container.scrollHeight - 100) {
+      if (
+        container.scrollTop + container.clientHeight >=
+        container.scrollHeight - 100
+      ) {
         fetchLogs();
       }
     });
@@ -183,7 +298,9 @@
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success" && data.data.length) {
-          const formattedDate = formatDateInput(new Date(data.data[0].created_at));
+          const formattedDate = formatDateInput(
+            new Date(data.data[0].created_at)
+          );
           datePicker.val(formattedDate);
           fetchLogsByDate(formattedDate);
         }
@@ -213,7 +330,8 @@
         isLoading = false;
 
         if (data.status === "success") {
-          let logs = typeof data.data === "string" ? JSON.parse(data.data) : data.data;
+          let logs =
+            typeof data.data === "string" ? JSON.parse(data.data) : data.data;
           if (Array.isArray(logs) && logs.length) {
             updateTable(logs, true);
             currentPage++;
@@ -241,7 +359,9 @@
         loadingMessage.style.display = "none";
         document.getElementById("info-message").style.display = "none";
 
-        let logs = Array.isArray(data.data) ? data.data : JSON.parse(data.data || "[]");
+        let logs = Array.isArray(data.data)
+          ? data.data
+          : JSON.parse(data.data || "[]");
 
         if (logs.length) {
           updateTable(logs);
@@ -267,9 +387,17 @@
     logs.forEach((log) => {
       const row = document.createElement("tr");
       const logId = `log-${Date.now()}-${Math.random()}`;
-      const text = (log.tag + " - " + (log.data || "N/A")).replace(/[&<>"']/g, (c) => ({
-        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-      }[c]));
+      const text = (log.tag + " - " + (log.data || "N/A")).replace(
+        /[&<>"']/g,
+        (c) =>
+          ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[c])
+      );
 
       const statusClass = getStatusClass(log.type);
       const needsToggle = text.length > 100;
@@ -279,9 +407,15 @@
         <td>
           <span class="ellipsis" id="${logId}-short">${text}</span>
           <span class="log-full" id="${logId}-full" style="display:none">${text}</span>
-          ${needsToggle ? `<a href="#" class="toggle-link" data-log-id="${logId}">Read More</a>` : ""}
+          ${
+            needsToggle
+              ? `<a href="#" class="toggle-link" data-log-id="${logId}">Read More</a>`
+              : ""
+          }
         </td>
-        <td style="white-space: nowrap;">${formatDateTime(log.created_at)}</td>`;
+        <td style="white-space: nowrap;">${formatDateTime(
+          log.created_at
+        )}</td>`;
       logTableBody.appendChild(row);
     });
   }
@@ -305,16 +439,27 @@
 
   function formatDateTime(str) {
     const date = new Date(str);
-    return isNaN(date) ? str :
-      `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+    return isNaN(date)
+      ? str
+      : `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+          2,
+          "0"
+        )}-${String(date.getDate()).padStart(2, "0")} ${String(
+          date.getHours()
+        ).padStart(2, "0")}:${String(date.getMinutes()).padStart(
+          2,
+          "0"
+        )}:${String(date.getSeconds()).padStart(2, "0")}`;
   }
 
   function getStatusClass(type) {
-    return {
-      1: "status-info",
-      2: "status-warning",
-      3: "status-exception"
-    }[type] || "status-info";
+    return (
+      {
+        1: "status-info",
+        2: "status-warning",
+        3: "status-exception",
+      }[type] || "status-info"
+    );
   }
 </script>
 
@@ -348,5 +493,14 @@
     width: 15px;
     height: 15px;
   }
+  .daterangepicker .ranges li.active {
+    background-color: #ef8018;
+    color: #fff;
+  }
+  .daterangepicker td.active, .daterangepicker td.active:hover {
+    background-color: #EF8018;
+    border-color: transparent;
+    color: #fff;
+}
 </style>
 {% endblock %}
