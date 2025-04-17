@@ -1,8 +1,9 @@
 {% extends "layout.html" %} 
 
-{% block title %} ORC Status {% endblock %} 
+{% block title %} {{ _('ORC Status') }} {% endblock %} 
 
 {% block content %}
+
 <div class="orc-status-container">
   <!-- Header -->
   {% include 'partials/header.html' %}
@@ -192,9 +193,10 @@
                 protocolText = "SERIAL";
             } else if (equipment.communication_protocol_code === 2) {
                 protocolText = "TCP";
+            } else if (equipment.communication_protocol_code === 0) {
+                protocolText = "UNKNOWN";
             }
 
-            // HTML içindeki CONNECTION PROTOCOL değerini güncelle
             document.getElementById("connection-protocol").innerText = protocolText;
         } else {
             document.getElementById("connection-protocol").innerText = "-";
@@ -204,7 +206,8 @@
         console.error("API isteği hatası:", error);
         document.getElementById("connection-protocol").innerText = "Error fetching data";
     });
-  });
+});
+
 
   // RabbitMQ Status Checking
   document.addEventListener("DOMContentLoaded", function () {
