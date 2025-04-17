@@ -496,9 +496,6 @@
   position: relative;
   display: flex;
   align-items: center;
-  background: #ef8018 !important;
-  padding: 10px !important;
-  border-radius: 6px !important;
 }
 .language-switcher .language-toggle {
   background: none;
@@ -552,10 +549,6 @@
   transition: 0.3s;
   width: 100%;
 }
-.language-switcher .language-dropdown button:hover {
-  background: rgba(255, 127, 50, 0.3);
-  border-radius: 5px;
-}
 .language-switcher:hover .language-dropdown {
   display: flex;
 }
@@ -563,9 +556,6 @@
 .language-switcher {
   position: relative;
   display: inline-block;
-  background: #ef8018 !important;
-  padding: 10px !important;
-  border-radius: 6px !important;
 }
 .language-switcher .language-toggle {
   border-radius: 50%;
@@ -576,29 +566,10 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  background: #EF8018;
-  padding: 10px;
-  border-radius: 6px;
-}
-.language-switcher .language-toggle:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transform: scale(1.05);
 }
 .language-switcher .language-toggle img {
   width: 24px;
   height: 24px;
-}
-.language-switcher .language-dropdown {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 120%;
-  right: 0;
-  background: white;
-  border-radius: 8px;
-  padding: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 999;
 }
 .language-switcher .language-dropdown button {
   background: #f1f1f1;
@@ -622,10 +593,6 @@
 .language-switcher .language-dropdown button input[type=radio] {
   accent-color: #ff7f32;
   margin: 0;
-}
-.language-switcher .language-dropdown button:hover {
-  background: rgba(255, 127, 50, 0.1);
-  border-radius: 6px;
 }
 .language-switcher:hover .language-dropdown {
   display: flex;
@@ -688,4 +655,10 @@
 
 .lang-btn.selected .radio-indicator {
   background-color: #ff7f32;
+}
+
+.lang-back {
+  background-color: #EF8018;
+  padding: 15px;
+  border-radius: 3px;
 }/*# sourceMappingURL=dashboard.css.map */

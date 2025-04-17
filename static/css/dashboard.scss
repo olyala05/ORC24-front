@@ -532,9 +532,6 @@ $text-color: #ffffff;
   position: relative;
   display: flex;
   align-items: center;
-  background: #ef8018 !important;
-  padding: 10px !important;
-  border-radius: 6px !important;
 
   .language-toggle {
     background: none;
@@ -589,11 +586,6 @@ $text-color: #ffffff;
       cursor: pointer;
       transition: 0.3s;
       width: 100%;
-
-      &:hover {
-        background: rgba(255, 127, 50, 0.3);
-        border-radius: 5px;
-      }
     }
   }
 
@@ -605,9 +597,7 @@ $text-color: #ffffff;
 .language-switcher {
   position: relative;
   display: inline-block;
-  background: #ef8018 !important;
-  padding: 10px !important;
-  border-radius: 6px !important;
+
 
   .language-toggle {
     border-radius: 50%;
@@ -618,14 +608,6 @@ $text-color: #ffffff;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    background: #EF8018;
-    padding: 10px;
-    border-radius: 6px;
-
-    &:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      transform: scale(1.05);
-    }
 
     img {
       width: 24px;
@@ -634,16 +616,6 @@ $text-color: #ffffff;
   }
 
   .language-dropdown {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 120%;
-    right: 0;
-    background: white;
-    border-radius: 8px;
-    padding: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    z-index: 999;
 
     button {
       background: #f1f1f1;
@@ -670,10 +642,6 @@ $text-color: #ffffff;
         margin: 0;
       }
 
-      &:hover {
-        background: rgba(255, 127, 50, 0.1);
-        border-radius: 6px;
-      }
     }
   }
 
@@ -739,4 +707,9 @@ $text-color: #ffffff;
 
 .lang-btn.selected .radio-indicator {
   background-color: #ff7f32;
+}
+.lang-back{
+  background-color: #EF8018;
+  padding: 15px;
+  border-radius: 3px;
 }

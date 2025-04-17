@@ -22,12 +22,12 @@
     </form>
 
               <!-- Dil Seçici -->
-          <div class="language-switcher fixed-top-right" id="languageSwitcher">
-            <button type="button" class="language-toggle" id="languageToggle">
+          <div class="language-switcher fixed-top-right" id="languageSwitcher" class="lang-back" style= "background-color: #EF8018; padding: 10px; border-radius: 5px;">
+            <button type="button" class="language-toggle" id="languageToggle" style="color: #0B1734;font-weight: 600;">
               <img
-                src="{{ url_for('static', filename='images/svg/globe.svg') }}"
-                width="24"
-                height="24"
+                src="{{ url_for('static', filename='images/svg/globe-black.svg') }}"
+                width="30"
+                height="30"
                 alt="Globe Icon"
               />
               <span class="selected-lang-txt" id="selectedLangLabel">
@@ -35,7 +35,7 @@
               </span>
             </button>
 
-            <div class="language-dropdown" id="languageDropdown">
+            <div class="language-dropdown" id="languageDropdown" style="min-width: 90px; top: 119%;">
               <div class="dropdown-arrow"></div>
 
               <!-- Türkçe -->
@@ -284,29 +284,16 @@
 <script>
   // Dil değiştirildiğinde çağrılacak fonksiyon
     document.addEventListener("DOMContentLoaded", function () {
-    // Sayfa yüklendiğinde aktif dilin gösterilmesini sağla
-    const lang = "{{ g.get('lang', 'EN') }}"; // Flask'tan alınan aktif dil
+    const lang = "{{ g.get('lang', 'EN') }}";
     const selectedLangLabel = document.getElementById("selectedLangLabel");
-
-    // Globe üzerindeki dil kodunu güncelle
     if (selectedLangLabel) {
-      selectedLangLabel.innerText = lang.toUpperCase(); // Globe üzerindeki dil kodunu güncelle
-      console.log(
-        "Globe üzerindeki dil kodu (sayfa yüklendi):",
-        lang.toUpperCase()
-      ); // Log ekledik
+      selectedLangLabel.innerText = lang.toUpperCase();
     }
-
-    // Dil seçeneği değiştirildiğinde çalışan fonksiyon
     function setLanguage(lang) {
-      console.log("Dil değiştiriliyor:", lang); // Dil değişikliği yapılmadan önce log
-
-      // Tüm dil butonlarından selected sınıfını kaldır
       document
         .querySelectorAll(".lang-btn")
         .forEach((btn) => btn.classList.remove("selected"));
 
-      // Seçilen dil butonuna selected sınıfını ekle
       const selectedBtn = document.querySelector(
         `.lang-btn[data-lang="${lang}"]`
       );
@@ -314,12 +301,10 @@
         selectedBtn.classList.add("selected");
       }
 
-      // Globe yanındaki TR / EN / DE yazısını güncelle
       if (selectedLangLabel) {
-        selectedLangLabel.innerText = lang.toUpperCase(); // Globe üzerindeki dil kodunu değiştir
+        selectedLangLabel.innerText = lang.toUpperCase();
       }
 
-      // Backend dil güncellemesi yap
       fetch("{{ url_for('set_language') }}", {
         method: "POST",
         headers: {
@@ -327,8 +312,8 @@
         },
         body: "lang=" + lang,
       }).then(() => {
-        console.log("Backend'e gönderilen dil:", lang); // Dil backend'e gönderildiğini logla
-        window.location.reload(); // Yeni dilin yüklendiği halini göster
+        console.log("Backend'e gönderilen dil:", lang); 
+        window.location.reload();
       });
     }
 
@@ -336,7 +321,7 @@
     document.querySelectorAll(".lang-btn").forEach((button) => {
       button.addEventListener("click", function () {
         const lang = button.getAttribute("data-lang");
-        setLanguage(lang); // Seçilen dil ile setLanguage fonksiyonunu çağır
+        setLanguage(lang); 
       });
     });
 
@@ -356,42 +341,40 @@
     });
   });
   
-  document.addEventListener("DOMContentLoaded", function () {
-    function updateDateTime() {
-      const userLang = document.body.dataset.lang || "en"; 
-      const now = new Date();
-      const monthShort = now
-        .toLocaleString(userLang, { month: "long" })
-        .substring(0, 5);
-      const formattedDateTime = `${monthShort} ${now.getDate()}, ${now.getFullYear()}, ${now.getHours()}:${now
-        .getMinutes()
-        .toString()
-        .padStart(2, "0")}`;
-      document.getElementById("current-date-time").innerText =
-        formattedDateTime;
+    document.addEventListener("DOMContentLoaded", function () {
+      function updateDateTime() {
+        const userLang = document.body.dataset.lang || "en"; 
+        const now = new Date();
+        const monthShort = now
+          .toLocaleString(userLang, { month: "long" })
+          .substring(0, 5);
+        const formattedDateTime = `${monthShort} ${now.getDate()}, ${now.getFullYear()}, ${now.getHours()}:${now
+          .getMinutes()
+          .toString()
+          .padStart(2, "0")}`;
+        document.getElementById("current-date-time").innerText =
+          formattedDateTime;
 
-      const lastMonth = new Date();
-      lastMonth.setDate(lastMonth.getDate() - 30);
+        const lastMonth = new Date();
+        lastMonth.setDate(lastMonth.getDate() - 30);
 
-      const reportStartMonth = lastMonth
-        .toLocaleString(userLang, { month: "long" })
-        .substring(0, 5);
-      const reportEndMonth = now
-        .toLocaleString(userLang, { month: "long" })
-        .substring(0, 5);
+        const reportStartMonth = lastMonth
+          .toLocaleString(userLang, { month: "long" })
+          .substring(0, 5);
+        const reportEndMonth = now
+          .toLocaleString(userLang, { month: "long" })
+          .substring(0, 5);
 
-      const reportStart = `${reportStartMonth} ${lastMonth.getDate()}`;
-      const reportEnd = `${reportEndMonth} ${now.getDate()}`;
+        const reportStart = `${reportStartMonth} ${lastMonth.getDate()}`;
+        const reportEnd = `${reportEndMonth} ${now.getDate()}`;
 
-      const reportDateEl = document.getElementById("report-date");
-      reportDateEl.innerHTML = `<span style="color: #6384D1;">{{ _('Report Date') }}:</span> <span style="color: #fff;">${reportStart} - ${reportEnd}</span>`;
-    }
+        const reportDateEl = document.getElementById("report-date");
+        reportDateEl.innerHTML = `<span style="color: #6384D1;">{{ _('Report Date') }}:</span> <span style="color: #fff;">${reportStart} - ${reportEnd}</span>`;
+      }
 
-    updateDateTime();
-    setInterval(updateDateTime, 60000);
-  });
-
-    
+      updateDateTime();
+      setInterval(updateDateTime, 60000);
+    });
 
     // Eğer dili almanca ise chartdaki fontsize ler 12px olsun
     var currentLang = "{{ get_locale() }}";
@@ -660,7 +643,6 @@
     };
 
     chart.setOption(option);
-
 </script>
 
 
