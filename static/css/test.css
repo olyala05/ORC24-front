@@ -278,11 +278,11 @@
 }
 
 .wifi-test-action .wifi-success {
-  color: #00C16A;
+  color: #00c16a;
   font-size: 14px;
 }
 .wifi-test-action .wifi-failed {
-  color: #EF4444;
+  color: #ef4444;
   font-size: 14px;
 }
 
@@ -409,11 +409,11 @@
 }
 
 .ethernet-test-action .ethernet-success {
-  color: #00C16A;
+  color: #00c16a;
   font-size: 14px;
 }
 .ethernet-test-action .ethernet-failed {
-  color: #EF4444;
+  color: #ef4444;
   font-size: 14px;
 }
 
@@ -422,7 +422,7 @@
   display: flex;
   flex-direction: column;
   width: 51%;
-  padding: 15px;
+  padding: 10px;
   border-radius: 10px;
   border: 1px solid #ef8018;
   background-color: #0b1734;
@@ -536,11 +536,11 @@
 
 .equipment-table td:nth-child(3):contains("A / A"),
 .equipment-table td:nth-child(4):contains("OK") {
-  color: #00C16A !important;
+  color: #00c16a !important;
 }
 
 .equipment-table td:nth-child(4):contains("No") {
-  color: #EF4444 !important;
+  color: #ef4444 !important;
 }
 
 .status-green {
@@ -639,11 +639,11 @@
 }
 
 .status-green {
-  background-color: #00C16A;
+  background-color: #00c16a;
 }
 
 .status-red {
-  background-color: #EF4444;
+  background-color: #ef4444;
 }
 
 .read-test-container {
@@ -872,7 +872,7 @@
 }
 
 .close-equipment-modal {
-  background-color: #EF8018;
+  background-color: #ef8018;
   color: white;
   padding: 13px;
   border: none;
@@ -885,8 +885,50 @@
 .img-class {
   width: 25px;
   height: 25px;
-  background: #EF8018;
+  background: #ef8018;
   border-radius: 50%;
   margin-right: 10px;
   padding: 5px;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.orange-font {
+  color: #ef8018;
+}
+
+.wifi-test-icon {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 3px;
+  padding: 2px 0;
+}
+
+.wifi-img-cover {
+  width: 20px;
+  height: 20px;
+  background: #ef8018;
+  border-radius: 50%;
+  margin-right: 10px;
+  padding: 5px;
+  align-items: center;
+}
+
+.lan-img-cover {
+  width: 25px;
+  height: 25px;
+  background: #ef8018;
+  border-radius: 50%;
+  margin-right: 10px;
+  padding: 5px;
+  align-items: center;
+}
+
+.loading-wifi-text {
+  font-size: 14px;
+  text-align: center;
+  font-weight: 600;
 }/*# sourceMappingURL=test.css.map */

@@ -28,6 +28,17 @@
       <div class="wifi-container-test">
         <!-- Wi-Fi Bölümü -->
         <div class="wifi-test-box">
+
+         <!-- Wi Fi icon -->
+          <div class="wifi-test-icon">
+            <div class="wifi-img-cover">
+              <img
+                src="{{ url_for('static', filename='images/svg/45.svg') }}"
+                alt="Wi-Fi Icon"
+              />
+              </div>
+            <label class="wifi-test-label orange-font">{{ _('Wi-Fi Connection Test')}}</label>
+          </div>
           <!-- Network Name -->
           <div class="wifi-test-row">
             <label class="wifi-test-label">{{ _('Network Name')}}</label>
@@ -82,7 +93,7 @@
 
           <div class="wifi-list-test" id="wifiList">
             <div id="dynamicWifiList">
-              <p>{{ _('Loading available networks...')}}</p>
+              <p class="dots loading-wifi-text">{{ _('Loading available networks')}}</p>
             </div>
           </div>
         </div>
@@ -122,6 +133,17 @@
         <div class="ethernet-container-test">
           <!-- Ethernet Test Paneli -->
           <div class="ethernet-test-box">
+          <!--Ethernet icon -->
+          <div class="wifi-test-icon">
+            <div class="lan-img-cover">
+              <img
+                src="{{ url_for('static', filename='images/svg/44.svg') }}"
+                alt="Wi-Fi Icon"
+              />
+              </div>
+            <label class="wifi-test-label orange-font">{{ _('Ethernet Connection Test')}}</label>
+          </div>
+
             <!-- Connection Status -->
             <div class="ethernet-test-row">
               <label class="ethernet-test-label"

@@ -1371,3 +1371,6 @@ msgstr "ORC-Status - Logs"
 
 msgid "No logs found for the selected date."
 msgstr "Für das ausgewählte Datum wurden keine Logs gefunden."
+
+msgid "Ethernet Connection Test"
+msgstr "Ethernet-Verbindungstest"

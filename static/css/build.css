@@ -220,9 +220,81 @@ input:-webkit-autofill:focus {
     font-size: 12px;
   }
 }
+/* Dil Seçici */
+.language-switcher {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ef8018 !important;
+  padding: 10px !important;
+  border-radius: 6px !important;
+}
+.language-switcher .language-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.language-switcher .selected-lang-txt {
+  font-size: 16px;
+  margin: 2px 0px 0px 0px;
+}
+.language-switcher .language-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 47px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 8px solid #fff;
+}
+.language-switcher .language-dropdown {
+  position: absolute;
+  top: 143%;
+  transform: translateX(8%);
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  min-width: 94px;
+  z-index: 1000;
+}
+.language-switcher .language-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px;
+  background: none;
+  border: none;
+  color: #0e1734;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+}
+.language-switcher .language-dropdown button:hover {
+  background: rgba(255, 127, 50, 0.3);
+  border-radius: 5px;
+}
+.language-switcher:hover .language-dropdown {
+  display: flex;
+}
+
 .language-switcher {
   position: relative;
   display: inline-block;
+  background: #ef8018 !important;
+  padding: 10px !important;
+  border-radius: 6px !important;
 }
 .language-switcher .language-toggle {
   border-radius: 50%;
@@ -233,6 +305,9 @@ input:-webkit-autofill:focus {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  background: #EF8018;
+  padding: 10px;
+  border-radius: 6px;
 }
 .language-switcher .language-toggle:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -290,7 +365,6 @@ input:-webkit-autofill:focus {
   display: flex;
 }
 
-/* Aktif dilin butonunu turuncu yapmak için */
 .lang-btn.selected .radio-indicator {
   background-color: #ff7f32;
   border-color: #ff7f32;
@@ -324,11 +398,11 @@ input:-webkit-autofill:focus {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 2px solid silver; /* dış çizgi rengi */
+  border: 2px solid silver;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white; /* arka plan */
+  background-color: white;
   box-sizing: border-box;
   transition: 0.3s;
 }
@@ -337,12 +411,12 @@ input:-webkit-autofill:focus {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: transparent; /* varsayılan boş */
+  background-color: transparent;
   transition: 0.3s;
 }
 
 .lang-btn.selected .radio-indicator {
-  background-color: #ff7f32; /* iç turuncu renk */
+  background-color: #ff7f32;
 }
 
 .main-alarm-container {
@@ -1005,8 +1079,7 @@ input:-webkit-autofill:focus {
 }
 .language-switcher .language-dropdown {
   position: absolute;
-  top: 100%;
-  right: 0;
+  top: 143%;
   transform: translateX(8%);
   background: #fff;
   border-radius: 8px;
@@ -1014,7 +1087,7 @@ input:-webkit-autofill:focus {
   padding: 10px;
   display: none;
   flex-direction: column;
-  min-width: 106px;
+  min-width: 94px;
   z-index: 1000;
 }
 .language-switcher .language-dropdown button {
@@ -1031,12 +1104,122 @@ input:-webkit-autofill:focus {
   transition: 0.3s;
   width: 100%;
 }
-.language-switcher .language-dropdown button:hover {
-  background: rgba(255, 127, 50, 0.3);
-  border-radius: 5px;
+.language-switcher:hover .language-dropdown {
+  display: flex;
+}
+
+.language-switcher {
+  position: relative;
+  display: inline-block;
+}
+.language-switcher .language-toggle {
+  border-radius: 50%;
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.language-switcher .language-toggle img {
+  width: 24px;
+  height: 24px;
+}
+.language-switcher .language-dropdown button {
+  background: #f1f1f1;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.3s;
+  border: 2px solid white;
+  border-radius: 88px;
+}
+.language-switcher .language-dropdown button img {
+  width: 20px;
+  height: 14px;
+}
+.language-switcher .language-dropdown button input[type=radio] {
+  accent-color: #ff7f32;
+  margin: 0;
 }
 .language-switcher:hover .language-dropdown {
   display: flex;
+}
+
+.language-switcher:hover .language-dropdown,
+.language-switcher.active .language-dropdown {
+  display: flex;
+}
+
+.lang-btn.selected .radio-indicator {
+  background-color: #ff7f32;
+  border-color: #ff7f32;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid silver;
+  border-radius: 12px;
+  padding: 8px 12px;
+  background: white;
+  margin-bottom: 8px;
+  transition: background 0.3s ease;
+}
+
+.lang-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0e1734;
+  font-weight: 600;
+}
+
+.lang-btn:hover {
+  background-color: none !important;
+}
+
+.radio-indicator-cover {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid silver;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.lang-btn {
+  transition: none !important;
+}
+
+.radio-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: 0.3s;
+}
+
+.lang-btn.selected .radio-indicator {
+  background-color: #ff7f32;
+}
+
+.lang-back {
+  background-color: #EF8018;
+  padding: 15px;
+  border-radius: 3px;
 }
 
 .eq-detail-container {
@@ -1530,9 +1713,8 @@ body {
 .header .report-line {
   display: flex;
   align-items: center;
-  width: 110%;
+  width: 100%;
   margin: 3px 0;
-  width: 280px;
 }
 .header .report-line .line-header {
   flex-grow: 2;
@@ -2662,11 +2844,11 @@ body {
 }
 
 .wifi-test-action .wifi-success {
-  color: #00C16A;
+  color: #00c16a;
   font-size: 14px;
 }
 .wifi-test-action .wifi-failed {
-  color: #EF4444;
+  color: #ef4444;
   font-size: 14px;
 }
 
@@ -2793,11 +2975,11 @@ body {
 }
 
 .ethernet-test-action .ethernet-success {
-  color: #00C16A;
+  color: #00c16a;
   font-size: 14px;
 }
 .ethernet-test-action .ethernet-failed {
-  color: #EF4444;
+  color: #ef4444;
   font-size: 14px;
 }
 
@@ -2806,7 +2988,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 51%;
-  padding: 15px;
+  padding: 10px;
   border-radius: 10px;
   border: 1px solid #ef8018;
   background-color: #0b1734;
@@ -2920,11 +3102,11 @@ body {
 
 .equipment-table td:nth-child(3):contains("A / A"),
 .equipment-table td:nth-child(4):contains("OK") {
-  color: #00C16A !important;
+  color: #00c16a !important;
 }
 
 .equipment-table td:nth-child(4):contains("No") {
-  color: #EF4444 !important;
+  color: #ef4444 !important;
 }
 
 .status-green {
@@ -3023,11 +3205,11 @@ body {
 }
 
 .status-green {
-  background-color: #00C16A;
+  background-color: #00c16a;
 }
 
 .status-red {
-  background-color: #EF4444;
+  background-color: #ef4444;
 }
 
 .read-test-container {
@@ -3256,7 +3438,7 @@ body {
 }
 
 .close-equipment-modal {
-  background-color: #EF8018;
+  background-color: #ef8018;
   color: white;
   padding: 13px;
   border: none;
@@ -3269,10 +3451,52 @@ body {
 .img-class {
   width: 25px;
   height: 25px;
-  background: #EF8018;
+  background: #ef8018;
   border-radius: 50%;
   margin-right: 10px;
   padding: 5px;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.orange-font {
+  color: #ef8018;
+}
+
+.wifi-test-icon {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 3px;
+  padding: 2px 0;
+}
+
+.wifi-img-cover {
+  width: 20px;
+  height: 20px;
+  background: #ef8018;
+  border-radius: 50%;
+  margin-right: 10px;
+  padding: 5px;
+  align-items: center;
+}
+
+.lan-img-cover {
+  width: 25px;
+  height: 25px;
+  background: #ef8018;
+  border-radius: 50%;
+  margin-right: 10px;
+  padding: 5px;
+  align-items: center;
+}
+
+.loading-wifi-text {
+  font-size: 14px;
+  text-align: center;
+  font-weight: 600;
 }
 
 .settings-content {

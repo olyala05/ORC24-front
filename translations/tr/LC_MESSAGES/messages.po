@@ -1229,6 +1229,9 @@ msgstr "Ağ Adı"
 msgid "Wi-Fi Connection Test"
 msgstr "Wi-Fi Bağlantı Testi"
 
+msgid "Ethernet Connection Test"
+msgstr "Ethernet Bağlantı Testi"
+
 msgid "Password"
 msgstr "Şifre"
 

@@ -24,7 +24,6 @@ import pymodbus.client.tcp
 import os
 from flask_babel import Babel, gettext as _
 
-
 app = Flask(__name__)
 CORS(app)
 app.secret_key = "supersecretkey"
@@ -37,11 +36,7 @@ logger = logging.getLogger(__name__)
 LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
 
 # Ağ Arayüzü IP Aralığı (Değiştirebilirsin)
-# IP_RANGE = "192.168.1.0/24"
-
 IP_RANGE = "172.27.10.0/24"
-
-# IP_RANGES = ["172.27.10.0/24", "192.168.1.0/24"]
 
 # MySQL veritabanı bağlantı bilgileri
 DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database": "iot"}
@@ -109,37 +104,6 @@ def auto_login():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
-
-# Giriş Sayfası
-# @app.route("/login", methods=["GET", "POST"])
-# def login():
-#     if request.method == "POST":
-#         email = request.form.get("email")
-#         password = request.form.get("password")
-
-#         response = requests.get(
-#             f"{LARAVEL_API_URL}/login",
-#             params={"client_email": email, "client_password": password},
-#             headers={"Accept": "application/json"},
-#             verify=False,
-#         )
-
-#         if response.status_code == 200:
-#             try:
-#                 api_response = response.json()
-#                 session["access_token"] = api_response.get("access_token")
-#                 session["login_success"] = True
-#                 return redirect(url_for("modem_selection"))  
-#             except Exception as e:
-#                 flash("Sunucudan geçersiz yanıt alındı!", "danger")
-#                 return redirect(url_for("login"))
-
-#         flash("Hatalı e-posta veya şifre!", "danger")
-#         return redirect(url_for("login"))
-
-#     login_success = session.pop("login_success", None)
-#     return render_template("login.html", login_success=login_success)
-
 # Giriş Sayfası
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -186,22 +150,6 @@ def check_login_redirect():
         else:
             session.clear()  
     return redirect(url_for("login"))  
-
-# @app.route("/check-login-redirect")
-# def check_login_redirect():
-#     login_time_str = session.get("login_time")
-
-#     if login_time_str:
-#         login_time = datetime.fromisoformat(login_time_str)
-#         now = datetime.utcnow()
-#         time_diff = now - login_time
-
-#         if time_diff < timedelta(minutes=5):  # 5 dakika sınırı
-#             return redirect(url_for("modem_selection"))
-#         else:
-#             session.clear()
-#     return redirect(url_for("login"))
-
 
 @app.route("/dashboard")
 def dashboard():
@@ -258,7 +206,7 @@ def nmap_scan(ip_range):
 
     return ip_list
 
-# ?? VPN ile cihaz ip lerini getiren kod
+# !! VPN ile cihaz ip lerini getiren kod
 # def get_mac_from_device(ip): 
 #     """Cihaza HTTP isteği atarak MAC adresini almaya çalışır"""
 #     try:
@@ -284,7 +232,7 @@ def nmap_scan(ip_range):
 #         if mac_address and (mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c")):
 #             valid_devices.append({"ip": host, "mac": mac_address})
 #     return valid_devices
-# ?? VPN ile cihaz ip lerini getiren kod
+# !! VPN ile cihaz ip lerini getiren kod
 
 # def get_connected_devices():
 #     """Önce ARP taraması, başarısız olursa Nmap taraması ile cihazları bulur"""
@@ -373,7 +321,6 @@ def connect_device():
 
     except requests.exceptions.RequestException as e:
         return jsonify(success=False, error=f"Bağlantı hatası: {str(e)}")
-
 
 # ORC Status
 @app.route("/orc-status", methods=["GET", "POST"], endpoint="orc_status")
@@ -980,7 +927,6 @@ def test():
 def equipment_details():
     return render_template("equipments/equipment_details.html", page_title=_("Equipments Details"))
 
-# !! Settings Start
 @app.route("/settings", endpoint="settings")
 def settings():
     return render_template("settings/setting.html", page_title=_("Settings"))
@@ -998,9 +944,8 @@ def osos_setting():
 @app.route("/equipment-settings", endpoint="equipment_settings")
 def equipment_setting():
     return render_template("settings/equipment_set.html", page_title=_("Equipment Settings"))
-# !! Settings End
 
-# !! Test Start
+
 @app.route("/send_command", methods=["POST"])
 def send_command():
     selected_ip = session.get("selected_device_ip")
@@ -1025,9 +970,7 @@ def send_command():
         return ResponseHandler.error(
             message="Failed to send command to ORC24", code=500, details=str(e)
         )
-# !! Test End
 
-# !! Data Start
 @app.route("/data", endpoint="data")
 def data():
     return render_template("datas/data.html", page_title=_("Data"))
@@ -1120,7 +1063,7 @@ def fetch_hourly_data_paginated():
     """
     Sayfalama ile canlı veri döndüren endpoint.
     """
-    selected_ip = session.get("selected_device_ip")  # Seçili cihazın IP adresi
+    selected_ip = session.get("selected_device_ip") 
     data = request.json
     page = int(data.get("page", 1))
     per_page = int(data.get("per_page", 20))
@@ -1205,9 +1148,8 @@ def fetch_daily_data_paginated():
 def daily_data_detail():
     return render_template(
         "datas/daily_data_detail.html", page_title=_("Daily Data Detail"))
-# !! Data End
 
-# !! Alarm Start
+
 @app.route("/alarm", endpoint="alarm")
 def alarm():
     return render_template("alarms/alarm.html", page_title=_("Alarm"))
@@ -1277,12 +1219,10 @@ def get_electric_alarm_data():
         logging.error(f"Alarm verileri alınamadı: {e}")
         return jsonify({"status": "error", "message": f"Alarm verileri alınamadı: {e}"}), 500
 
-
 @app.route("/logout", methods=["POST"])
 def logout():
     session.clear()
     return redirect(url_for("login"))
-
 
 @app.route("/get_slave_data", methods=["GET"])
 def get_slave_data():
@@ -1324,47 +1264,6 @@ def get_slave_data():
 @app.route("/log", endpoint="log")
 def log():
     return render_template("logs/log.html", page_title=_("Logs"))
-
-# @app.route("/get_logs", methods=["POST"])
-# def get_logs():
-#     selected_ip = session.get("selected_device_ip")
-#     if not selected_ip:
-#         logging.error("Selected device IP not found.")
-#         return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
-    
-#     try:
-#         data = request.get_json()
-#         logging.debug(f"[DEBUG] Received request body: {data}")
-
-#         if not data:
-#             logging.error("No data received in the request.")
-#             return jsonify({"error": "No data received"}), 400
-
-#         year = data.get("year")
-#         month = data.get("month")
-#         day = data.get("day")
-#         hour = data.get("hour", None)
-
-#         logging.info(f"Fetching logs with params: Year: {year}, Month: {month}, Day: {day}, Hour: {hour}")
-
-#         url_alarm = f"http://{selected_ip}:8085/get_all_logs"
-#         params = {"year": year, "month": month, "day": day, "hour": hour}
-
-#         logging.debug(f"[DEBUG] Sending request to: {url_alarm} with params {params}")
-
-#         response_alarm = requests.get(url_alarm, params=params, timeout=5)
-#         logging.debug(f"[DEBUG] Received response: {response_alarm.status_code}")
-
-#         response_alarm.raise_for_status()
-#         logs = response_alarm.json().get("data", [])
-
-#         logging.info(f"Fetched {len(logs)} logs successfully: {logs}")
-
-#         return jsonify({"status": "success", "data": logs})
-
-#     except requests.exceptions.RequestException as e:
-#         logging.error(f"[ERROR] Error fetching logs: {e}")
-#         return jsonify({"status": "error", "message": f"LOGS verileri alınamadı: {e}"}), 500
 
 @app.route("/get_logs", methods=["POST"])
 def get_logs():

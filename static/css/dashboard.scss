@@ -1,7 +1,4 @@
-/* Genel Stil */
-$primary-color: #ff7f32;
-$bg-color: #1c2747;
-$text-color: #ffffff;
+
 /* Header */
 .header {
   position: fixed;
@@ -616,7 +613,6 @@ $text-color: #ffffff;
   }
 
   .language-dropdown {
-
     button {
       background: #f1f1f1;
       border: none;
@@ -638,7 +634,7 @@ $text-color: #ffffff;
       }
 
       input[type="radio"] {
-        accent-color: $primary-color;
+        accent-color: #ff7f32;
         margin: 0;
       }
 
@@ -680,10 +676,11 @@ $text-color: #ffffff;
   font-weight: 600;
 }
 
-.lang-btn:hover {
-  background-color: rgba(255, 127, 50, 0.08);
-}
 
+
+.lang-btn:hover {
+  background-color: none !important; 
+}
 .radio-indicator-cover {
   width: 18px;
   height: 18px;
@@ -696,7 +693,9 @@ $text-color: #ffffff;
   box-sizing: border-box;
   transition: 0.3s;
 }
-
+.lang-btn {
+  transition: none !important; 
+}
 .radio-indicator {
   width: 10px;
   height: 10px;
