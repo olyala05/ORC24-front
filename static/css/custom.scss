@@ -1,0 +1,73 @@
+.toast-warning {
+  background-color: #ffffff !important;
+  color: #0b1734 !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+
+  // Eğer toastr FontAwesome kullanıyorsa
+  .toast-icon {
+    color: #000 !important; // Sarı
+  }
+}
+
+.toast-warning::before {
+  color: #000 !important; /* ← İKON RENK SİYAH */
+}
+
+.toast-warning .toast-progress {
+  background-color: #EAB308 !important;
+  height: 4px !important; /* istersen kalınlığını ayarla */
+  opacity: 1 !important;
+}
+
+.toast {
+  box-shadow: none !important;
+}
+
+.toast-icon {
+  color: #000 !important; // Sarı
+}
+
+.toast-title .custom-warning-icon {
+  vertical-align: middle;
+}
+#toast-container > div {
+  width: 100% !important;
+  padding: 14px 40px !important;
+  margin: 0 !important;
+  opacity: 1 !important;
+}
+
+
+.toast-error {
+  background-color: #ffffff !important;
+  color: #0b1734 !important;
+  font-weight: 600 !important;
+
+  .toast-icon {
+    color: #EF4444 !important;
+  }
+
+  .toast-progress {
+    background-color: #EF4444 !important;
+    height: 4px !important;
+    opacity: 1 !important;
+  }
+}
+
+.toast-success {
+  background-color: #ffffff !important;
+  color: #0b1734 !important;
+  font-weight: 600 !important;
+
+  .toast-icon {
+    color: #00C16A !important;
+  }
+
+  .toast-progress {
+    background-color: #00C16A !important;
+    height: 4px !important;
+    opacity: 1 !important;
+  }
+}
+

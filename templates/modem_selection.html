@@ -29,18 +29,20 @@ block content %}
     <!-- Alarm icon Şimdilik Alarm yorum satırında  -->
 
     <!--     
-    <div class="alarm-icon-container">
-      <button class="alarm-button" onclick="goToAlarm()" title="Alarm">
-        <img
-          src="{{ url_for('static', filename='images/svg/32.svg') }}"
-          alt="Alarm"
-          width="32"
-          height="32"
-        />
-      </button>
-      <span id="alarm-count" class="alarm-badge" display="none">0</span>
-    </div> 
+
     -->
+          <div class="alarm-icon-container">
+        <button class="alarm-button" onclick="goToAlarm()" title="Alarm">
+          <img
+            src="{{ url_for('static', filename='images/svg/32.svg') }}"
+            alt="Alarm"
+            width="32"
+            height="32"
+          />
+        </button>
+        <span id="alarm-count" class="alarm-badge" display="none">0</span>
+      </div> 
+
   </div>
 
   <div class="header-logo">
@@ -493,7 +495,7 @@ block content %}
     let dropdown = document.getElementById("modem");
     let selectedDeviceIP = dropdown ? dropdown.value : null;
     if (!selectedDeviceIP) {
-      showWarningAlert("{{ _('Please select a device first!') }}");
+      showSuccessAlert("{{ _('Please select a device first!') }}");
       return;
     }
     showLoading("{{ _('Redirecting to the alarm page...') }}");
@@ -690,7 +692,15 @@ block content %}
   });
 </script>
 
+<script>
+  const alarmIconUrl = "{{ url_for('static', filename='images/svg/48.svg') }}";
+  const errorAlarmIconUrl = "{{ url_for('static', filename='images/svg/47.svg') }}";
+  const successAlarmIconUrl = "{{ url_for('static', filename='images/svg/46.svg') }}";
+</script>
+
+
 <style>
+
   /* === Select2 Stilleri === */
   .select2-container--default .select2-selection--single {
     border: 1px solid #aaa;
@@ -878,57 +888,6 @@ block content %}
     border: 2px solid #0b1734;
   }
 
-  .swal2-toast {
-    font-size: 16px;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: auto;
-    min-width: 300px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-  }
-
-  .toast-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-  }
-
-  .toast-message {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    color: white;
-    font-size: 16px;
-    border-radius: 5px;
-    z-index: 1000;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-  }
-
-  .toast-message.success {
-    background-color: #28a745;
-  }
-
-  .toast-message.error {
-    background-color: #dc3545;
-  }
-
-  .fade-out {
-    opacity: 0;
-  }
-
-  .toast-popup-show {
-    animation: toast-in 0.5s ease-out forwards;
-  }
-
-  .toast-popup-hide {
-    animation: toast-out 0.5s ease-out forwards;
-  }
 
   @keyframes toast-in {
     0% {
@@ -952,25 +911,7 @@ block content %}
     }
   }
 
-  /* Progress bar colors */
-  .swal2-timer-progress-bar-container {
-    height: 5px;
-    border-radius: 5px;
-    width: 100%;
-  }
-
-  .success-progress-bar {
-    background-color: #33ff00;
-  }
-
-  .error-progress-bar {
-    background-color: #f44336;
-  }
-
-  .warning-progress-bar {
-    background-color: #ffc107;
-  }
-
+  
   /* Background for overlay */
   div:where(.swal2-container).swal2-backdrop-show,
   div:where(.swal2-container).swal2-noanimation {

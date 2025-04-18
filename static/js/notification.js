@@ -1,69 +1,107 @@
 
 // Hata mesajlarını gösteren fonksiyon
 function showErrorAlert(title, text = "") {
-    toastr.options = {
-        "closeButton": false,
-        "debug": true,
-        "newestOnTop": false,
-        "progressBar": true,
-        "positionClass": "toast-bottom-right",
-        "preventDuplicates": true,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "3000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
+  toastr.options = {
+    closeButton: false,
+    debug: false,
+    newestOnTop: false,
+    progressBar: true,
+    positionClass: "toast-bottom-right",
+    preventDuplicates: true,
+    showDuration: "300",
+    hideDuration: "1000",
+    timeOut: "3000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+    escapeHtml: false,
+  };
 
-    toastr["error"](text, title);
+  const customHTML = `
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span>
+        <img src="${errorAlarmIconUrl}" alt="Error" width="32" height="32" />
+      </span>
+      <div>
+        <div style="font-weight: bold; color: #0B1734;">${title}</div>
+        <div style="color: #0B1734;">${text}</div>
+      </div>
+    </div>
+  `;
+
+  toastr.error(customHTML);
 }
 
 // Başarı mesajlarını gösteren fonksiyon
 function showSuccessAlert(title, text = "") {
-    toastr.options = {
-        "closeButton": false,
-        "debug": true,
-        "newestOnTop": false,
-        "progressBar": true,
-        "positionClass": "toast-bottom-right",
-        "preventDuplicates": true,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "3000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
+  toastr.options = {
+    closeButton: false,
+    debug: false,
+    newestOnTop: false,
+    progressBar: true,
+    positionClass: "toast-bottom-right",
+    preventDuplicates: true,
+    showDuration: "300",
+    hideDuration: "1000",
+    timeOut: "3000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+    escapeHtml: false,
+  };
 
-    toastr["success"](text, title);
+  const customHTML = `
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span>
+        <img src="${successAlarmIconUrl}" alt="Success" width="32" height="32" />
+      </span>
+      <div>
+        <div style="font-weight: bold; color: #0B1734;">${title}</div>
+        <div style="color: #0B1734;">${text}</div>
+      </div>
+    </div>
+  `;
+
+  toastr.success(customHTML);
 }
 
 // Uyarı mesajlarını gösteren fonksiyon
 function showWarningAlert(title, text = "") {
+  toastr.options = {
+    closeButton: false,
+    debug: false,
+    newestOnTop: false,
+    progressBar: true,
+    positionClass: "toast-bottom-right",
+    preventDuplicates: true,
+    showDuration: "300",
+    hideDuration: "1000",
+    timeOut: "3000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+    escapeHtml: false,
+  };
 
-    toastr.options = {
-        "closeButton": false,
-        "debug": true,
-        "newestOnTop": false,
-        "progressBar": true,
-        "positionClass": "toast-bottom-right",
-        "preventDuplicates": true,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "3000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
+  const customHTML = `
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span>
+        <img src="${alarmIconUrl}" alt="Alarm" width="32" height="32" />
+      </span>
+      <div>
+        <div style="font-weight: bold; color: #0B1734;">${title}</div>
+        <div style="color: #0B1734;">${text}</div>
+      </div>
+    </div>
+  `;
 
-    toastr["warning"](text, title);
+  toastr.warning(customHTML);
 }
 
 // Yükleme ekranını gösteren yardımcı fonksiyon
