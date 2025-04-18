@@ -242,17 +242,18 @@ block content %}
           dropdownParent: $(".modem-dropdown-wrapper"), // Gerekirse
         });
 
-        // AÇILDIĞINDA yukarı ok
+        // AÇILDIĞINDA: koyu mavi yap
         $(dropdown).on("select2:open", function () {
-          arrowIcon.src =
-            "{{ url_for('static', filename='images/svg/up-arrow.svg') }}";
+          arrowIcon.src = "{{ url_for('static', filename='images/svg/up-arrow.svg') }}";
+          $(".modem-dropdown-wrapper").addClass("open");
         });
 
-        // KAPANDIĞINDA aşağı ok
+        // KAPANDIĞINDA: tekrar beyaz yap
         $(dropdown).on("select2:close", function () {
-          arrowIcon.src =
-            "{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
+          arrowIcon.src = "{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
+          $(".modem-dropdown-wrapper").removeClass("open");
         });
+
 
         toggleButtons(true);
       })
@@ -980,11 +981,56 @@ block content %}
     background-color: #ffc107;
   }
 
-  
-</style>
+  /* Normal görünüm (kapalıyken) */
+.modem-dropdown-wrapper {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
 
-<style>
-  .swal-button-yes {
+/* Açıldığında: koyu mavi arka plan + beyaz yazı */
+.modem-dropdown-wrapper.open {
+  background-color: #1c2747;
+}
+
+.modem-dropdown-wrapper.open .select2-selection__rendered {
+  color: white !important;
+}
+
+/* Kapalıyken yazı rengi koyu mavi */
+.select2-selection__rendered {
+  color: #1c2747 !important;
+}
+.modem-dropdown-wrapper {
+  transition: background-color 0.3s ease;
+}
+/* Varsayılan görünüm (kapalıyken): koyu mavi */
+.select2-container--default .select2-selection--single {
+  background-color: #1c2747;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+/* 🎯 KAPALIYKEN: beyaz zemin, koyu mavi yazı */
+.select2-container--default .select2-selection--single {
+  background-color: white;
+  color: #1c2747;
+  transition: background-color 0.3s ease;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #1c2747;
+  font-weight: 700;
+}
+
+/* 🎯 AÇIKKEN: koyu mavi zemin, beyaz yazı */
+.modem-dropdown-wrapper.open .select2-container--default .select2-selection--single {
+  background-color: #1c2747;
+}
+
+.modem-dropdown-wrapper.open .select2-selection__rendered {
+  color: white !important;
+}
+.swal-button-yes {
     background-color: #fff;
     color: #0b1734;
     border-radius: 5px;
@@ -1065,4 +1111,5 @@ block content %}
     height: 4em;
   }
 </style>
+
 {% endblock %}
