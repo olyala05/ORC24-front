@@ -233,7 +233,8 @@ block content %}
           dropdown.appendChild(option);
         });
 
-        modemIcon.src = "{{ url_for('static', filename='images/svg/38.svg') }}";
+        // YÜKLEME BİTTİ → Seçim yapılmadan önce 40.svg göster
+        modemIcon.src = "{{ url_for('static', filename='images/svg/40.svg') }}";
 
         // Select2'yi başlat
         $(dropdown).select2({
@@ -244,15 +245,15 @@ block content %}
 
         // AÇILDIĞINDA: koyu mavi yap
         $(dropdown).on("select2:open", function () {
-          arrowIcon.src =
-            "{{ url_for('static', filename='images/svg/up-arrow.svg') }}";
+          arrowIcon.src ="{{ url_for('static', filename='images/svg/up-arrow.svg') }}";
+          modemIcon.src = "{{ url_for('static', filename='images/svg/38.svg') }}";
           $(".modem-dropdown-wrapper").addClass("open");
         });
 
         // KAPANDIĞINDA: tekrar beyaz yap
         $(dropdown).on("select2:close", function () {
-          arrowIcon.src =
-            "{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
+          arrowIcon.src ="{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
+          modemIcon.src = "{{ url_for('static', filename='images/svg/40.svg') }}";
           $(".modem-dropdown-wrapper").removeClass("open");
         });
 
