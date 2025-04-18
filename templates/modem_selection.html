@@ -3,7 +3,7 @@ block content %}
 
 <div class="header">
   <div class="header-left">
-   <form action="{{ url_for('logout') }}" method="POST" id="logout-form">
+    <form action="{{ url_for('logout') }}" method="POST" id="logout-form">
       <button type="button" class="header-button-logout" id="logout-button">
         <img
           src="{{ url_for('static', filename='images/svg/37.svg') }}"
@@ -140,32 +140,32 @@ block content %}
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-      document
-        .getElementById("logout-button")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
+    document
+      .getElementById("logout-button")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
 
-          Swal.fire({
-            title: "{{ _('Are you sure you want to log out?') }}",
-            icon: "warning",
-            background: "#0B1734",
-            iconColor: "#EF8018",
-            showCancelButton: true,
-            confirmButtonText: "{{ _('Yes') }}", 
-            cancelButtonText: "{{ _('No') }}", 
-            reverseButtons: false, 
-            customClass: {
-              confirmButton: "swal-button-yes", 
-              cancelButton: "swal-button-no", 
-            },
-            buttonsStyling: false,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              document.getElementById("logout-form").submit();
-            }
-          });
+        Swal.fire({
+          title: "{{ _('Are you sure you want to log out?') }}",
+          icon: "warning",
+          background: "#0B1734",
+          iconColor: "#EF8018",
+          showCancelButton: true,
+          confirmButtonText: "{{ _('Yes') }}",
+          cancelButtonText: "{{ _('No') }}",
+          reverseButtons: false,
+          customClass: {
+            confirmButton: "swal-button-yes",
+            cancelButton: "swal-button-no",
+          },
+          buttonsStyling: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            document.getElementById("logout-form").submit();
+          }
         });
-    });
+      });
+  });
 
   // Sayfa yüklendiğinde cihazları getir
   document.addEventListener("DOMContentLoaded", fetchDevices);
@@ -244,16 +244,17 @@ block content %}
 
         // AÇILDIĞINDA: koyu mavi yap
         $(dropdown).on("select2:open", function () {
-          arrowIcon.src = "{{ url_for('static', filename='images/svg/up-arrow.svg') }}";
+          arrowIcon.src =
+            "{{ url_for('static', filename='images/svg/up-arrow.svg') }}";
           $(".modem-dropdown-wrapper").addClass("open");
         });
 
         // KAPANDIĞINDA: tekrar beyaz yap
         $(dropdown).on("select2:close", function () {
-          arrowIcon.src = "{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
+          arrowIcon.src =
+            "{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
           $(".modem-dropdown-wrapper").removeClass("open");
         });
-
 
         toggleButtons(true);
       })
@@ -685,344 +686,28 @@ block content %}
 </script>
 
 <style>
-  div:where(.swal2-container) div:where(.swal2-popup) {
-    width: 28em;
-  }
-
-  div:where(.swal2-container) h2:where(.swal2-title) {
-    padding: 0.1em 0;
-  }
-
-  div:where(.swal2-icon) {
-    width: 4em;
-    height: 4em;
-    margin: 0.8em auto 0.6em;
-  }
-  div:where(.swal2-container) div:where(.swal2-actions) {
-    margin: 0.25em auto 0;
-  }
-
-  div:where(.swal2-container) div:where(.swal2-html-container) {
-    padding: 0.25em 1.4em 0.2em;
-  }
-
-  div:where(.swal2-icon).swal2-error [class^="swal2-x-mark-line"] {
-    display: block;
-    position: absolute;
-    top: 2em;
-    width: 1.9375em;
-    height: 0.3125em;
-    border-radius: 0.125em;
-    background-color: #f27474;
-  }
-
-  .toast-message {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    color: white;
-    font-size: 16px;
-    border-radius: 5px;
-    z-index: 1000;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-  }
-
-  .toast-message.success {
-    background-color: #28a745;
-  }
-
-  .toast-message.error {
-    background-color: #dc3545;
-  }
-
-  .fade-out {
-    opacity: 0;
-  }
-  .modem-dropdown-wrapper {
-    position: relative;
-    display: inline-block;
-  }
-
-  .arrow-icon {
-    position: absolute;
-    right: 16px;
-    top: 54%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    width: 28px;
-    height: 28px;
-  }
-
-  /* select2 kendi ok icon nu kapattım */
-  .select2-container--default.select2-container--open
-    .select2-selection--single
-    .select2-selection__arrow
-    b {
-    display: none !important;
-  }
-  .select2-container--default
-    .select2-selection--single
-    .select2-selection__arrow
-    b {
-    display: none !important;
-  }
-  /* select2 kendi ok icon nu kapattım */
-
-  .modem-dropdown-icon {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    width: 28px;
-    height: 28px;
-    border-radius: 5px;
-    padding: 5px;
-    pointer-events: none;
-    z-index: 1;
-  }
-  /* Cihazlar için listede görünüm */
-  .modem-dropdown-wrapper {
-    position: relative;
-  }
-
-  .modem-dropdown option {
-    padding: 10px;
-    font-size: 14px;
-    line-height: 1.5;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .select2-container--default .select2-selection--single {
-    background-color: #1c2747;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-    height: 51px;
-    text-align: start;
-    padding-left: 47px;
-    padding-top: 12px;
-  }
-  .select2-container--default
-    .select2-selection--single
-    .select2-selection__rendered {
-    color: #fff;
-    line-height: 28px;
-    font-weight: 700;
-    font-size: 18px;
-  }
-  .select2-container--default
-    .select2-selection--single
-    .select2-selection__arrow
-    b {
-    border-color: #fff rgba(0, 0, 0, 0) #fff rgba(0, 0, 0, 0);
-    border-style: solid;
-    border-width: 10px 8px 0 8px;
-    height: 0;
-    left: -7%;
-    margin-left: -4px;
-    margin-top: -2px;
-    position: absolute;
-    top: 86%;
-    width: 0;
-  }
-  .select2-container--default.select2-container--open
-    .select2-selection--single
-    .select2-selection__arrow
-    b {
-    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #fff rgba(0, 0, 0, 0);
-    border-width: 0 8px 10px 8px;
-  }
-
-  .select2-search__field {
-    display: none !important;
-  }
-
-  .select2-container--default .select2-selection--single {
-    padding-right: 0;
-  }
-  .modem-dropdown {
-    -webkit-appearance: none; /* Safari/Chrome */
-    -moz-appearance: none; /* Firefox */
-    appearance: none; /* Diğer tarayıcılar */
-    background: none; /* Ok yerine arka plan düzleşir */
-    padding-right: 10px; /* Ok yoksa sağ boşluk ayarı */
-    border: 1px solid #ccc; /* İsteğe bağlı stil */
-  }
-
-  .select2-container--default
-    .select2-results__option--highlighted.select2-results__option--selectable {
-    background-color: #e2e2e2 !important;
-    color: #1b2746;
-  }
-
-  .select2-results__option--selectable {
-    cursor: pointer;
-    color: .select2-container--default
-      .select2-results__option--highlighted.select2-results__option--selectable;
-    color: #1b2746;
-  }
-  .select2-custom-option {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .modem-name {
-    font-weight: 500;
-    color: #1b2746;
-    font-size: 18px;
-    margin-bottom: 2px;
-  }
-
-  .info-row {
-    display: flex;
-    gap: 8px;
-    font-size: 16px;
-    margin-top: 2px;
-  }
-
-  .mac-address {
-    color: #ec7427;
-  }
-
-  .ip-address {
-    color: #6384d1;
-  }
-
-  /* Toast Container */
-  .toast-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-  }
-
-  .swal2-toast {
-    font-size: 16px;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: auto;
-    min-width: 300px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-  }
-
-  .toast-popup-show {
-    animation: toast-in 0.5s ease-out forwards;
-  }
-
-  .toast-popup-hide {
-    animation: toast-out 0.5s ease-out forwards;
-  }
-
-  /* Çizgi için animasyon */
-  @keyframes toast-in {
-    0% {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes toast-out {
-    0% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-  }
-
-  /* Uyarı tipi için arka plan renkleri ve çizgi rengi */
-  .swal2-toast[aria-live="assertive"] {
-    border: 3px solid;
-    border-color: transparent;
-  }
-
-  .swal2-toast.swal2-success {
-    border-color: #33ff00;
-  }
-
-  .swal2-toast.swal2-error {
-    border-color: #f44336;
-  }
-
-  .swal2-toast.swal2-warning {
-    border-color: #ffc107;
-  }
-
-  /* Progress bar için renkler */
-  .swal2-timer-progress-bar-container {
-    height: 5px;
-    border-radius: 5px;
-    width: 100%;
-  }
-
-  /* Success (Yeşil) Progress Bar */
-  .swal2-timer-progress-bar-container.success-progress-bar {
-    background-color: #33ff00;
-  }
-
-  /* Error (Kırmızı) Progress Bar */
-  .swal2-timer-progress-bar-container.error-progress-bar {
-    background-color: #f44336;
-  }
-
-  /* Warning (Sarı) Progress Bar */
-  .swal2-timer-progress-bar-container.warning-progress-bar {
-    background-color: #ffc107;
-  }
-
-  /* Normal görünüm (kapalıyken) */
-.modem-dropdown-wrapper {
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-/* Açıldığında: koyu mavi arka plan + beyaz yazı */
-.modem-dropdown-wrapper.open {
-  background-color: #1c2747;
-}
-
-.modem-dropdown-wrapper.open .select2-selection__rendered {
-  color: white !important;
-}
-
-/* Kapalıyken yazı rengi koyu mavi */
-.select2-selection__rendered {
-  color: #1c2747 !important;
-}
-.modem-dropdown-wrapper {
-  transition: background-color 0.3s ease;
-}
-/* Varsayılan görünüm (kapalıyken): koyu mavi */
+ /* === Select2 Stilleri === */
 .select2-container--default .select2-selection--single {
-  background-color: #1c2747;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-/* 🎯 KAPALIYKEN: beyaz zemin, koyu mavi yazı */
-.select2-container--default .select2-selection--single {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  height: 51px;
+  text-align: start;
+  padding-left: 47px;
+  padding-top: 12px;
   background-color: white;
   color: #1c2747;
   transition: background-color 0.3s ease;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-  color: #1c2747;
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
   font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: #1c2747;
 }
 
-/* 🎯 AÇIKKEN: koyu mavi zemin, beyaz yazı */
 .modem-dropdown-wrapper.open .select2-container--default .select2-selection--single {
   background-color: #1c2747;
 }
@@ -1030,86 +715,272 @@ block content %}
 .modem-dropdown-wrapper.open .select2-selection__rendered {
   color: white !important;
 }
-.swal-button-yes {
-    background-color: #fff;
-    color: #0b1734;
-    border-radius: 5px;
-    padding: 17px 19px;
-    font-size: 16px;
-    border: none;
-  }
 
-  .swal-button-no {
-    background-color: #fff;
-    color: #0b1734;
-    border-radius: 5px;
-    padding: 17px 19px;
-    font-size: 16px;
-    border: 2px solid #0b1734;
-  }
+/* Select2 ok işaretini gizle */
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  display: none !important;
+}
 
-  .swal2-popup {
-    border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
-  }
+/* Select2 seçenek hover */
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+  background-color: #e2e2e2 !important;
+  color: #1b2746;
+}
 
-  /* Ensuring buttons are properly spaced and displayed */
-  .swal2-actions {
-    display: flex;
-    justify-content: space-between; /* Space the buttons properly */
-    width: 100%; /* Ensure full width for button spacing */
-  }
+.select2-results__option--selectable {
+  cursor: pointer;
+  color: #1b2746;
+}
 
-  .swal2-confirm {
-    width: 48%;
-    margin-right: 4%;
-  }
+.select2-search__field {
+  display: none !important;
+}
 
-  .swal2-cancel {
-    width: 48%;
-  }
+/* === Dropdown & Ok === */
+.modem-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
 
-  div:where(.swal2-container) h2:where(.swal2-title) {
-    position: relative;
-    max-width: 100%;
-    padding: 1em 1em 1em;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 500;
-  }
+.modem-dropdown-wrapper.open {
+  background-color: #1c2747;
+}
 
-  .swal2-actions {
-    display: flex;
-    justify-content: space-between;
-    width: 94%;
-  }
+.arrow-icon {
+  position: absolute;
+  right: 16px;
+  top: 54%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 28px;
+  height: 28px;
+}
 
-  body.swal2-shown {
-    padding-right: 0 !important;
-    overflow: hidden !important;
-  }
-  .header,
-  .fixed-element {
-    transform: none !important;
-    will-change: auto !important;
-  }
+.modem-dropdown-icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  padding: 5px;
+  pointer-events: none;
+  z-index: 1;
+}
 
-  div:where(.swal2-container).swal2-backdrop-show,
-  div:where(.swal2-container).swal2-noanimation {
-    background: rgba(0, 0, 0, 0.4);
-  }
+.modem-dropdown option {
+  padding: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+}
 
-  div:where(.swal2-container).swal2-center > .swal2-popup {
-    grid-column: 2;
-    grid-row: 2;
-    place-self: center center;
-    margin-top: 64px;
-  }
+.modem-dropdown {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  padding-right: 10px;
+  border: 1px solid #ccc;
+}
 
-  div:where(.swal2-icon) {
-    width: 4em;
-    height: 4em;
+/* === Select2 özel görünüm (modem adı, IP, MAC) === */
+.select2-custom-option {
+  display: flex;
+  flex-direction: column;
+}
+
+.modem-name {
+  font-weight: 500;
+  color: #1b2746;
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+
+.info-row {
+  display: flex;
+  gap: 8px;
+  font-size: 16px;
+  margin-top: 2px;
+}
+
+.mac-address {
+  color: #ec7427;
+}
+
+.ip-address {
+  color: #6384d1;
+}
+
+/* === SweetAlert2 (swal) ve Toast === */
+.swal2-popup {
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+div:where(.swal2-container) div:where(.swal2-popup) {
+  width: 28em;
+}
+
+div:where(.swal2-container) h2:where(.swal2-title) {
+  padding: 0.1em 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+div:where(.swal2-icon) {
+  width: 4em;
+  height: 4em;
+  margin: 0.8em auto 0.6em;
+}
+
+div:where(.swal2-container) div:where(.swal2-actions) {
+  margin: 0.25em auto 0;
+  display: flex;
+  justify-content: space-between;
+  width: 94%;
+}
+
+.swal2-confirm, .swal2-cancel {
+  width: 48%;
+}
+
+.swal-button-yes, .swal-button-no {
+  background-color: #fff;
+  color: #0b1734;
+  border-radius: 5px;
+  padding: 17px 19px;
+  font-size: 16px;
+  border: none;
+}
+
+.swal-button-no {
+  border: 2px solid #0b1734;
+}
+
+.swal2-toast {
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: auto;
+  min-width: 300px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.toast-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.toast-message {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.toast-message.success {
+  background-color: #28a745;
+}
+
+.toast-message.error {
+  background-color: #dc3545;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.toast-popup-show {
+  animation: toast-in 0.5s ease-out forwards;
+}
+
+.toast-popup-hide {
+  animation: toast-out 0.5s ease-out forwards;
+}
+
+@keyframes toast-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
   }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toast-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* Progress bar colors */
+.swal2-timer-progress-bar-container {
+  height: 5px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.success-progress-bar {
+  background-color: #33ff00;
+}
+
+.error-progress-bar {
+  background-color: #f44336;
+}
+
+.warning-progress-bar {
+  background-color: #ffc107;
+}
+
+/* Background for overlay */
+div:where(.swal2-container).swal2-backdrop-show,
+div:where(.swal2-container).swal2-noanimation {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+div:where(.swal2-container).swal2-center > .swal2-popup {
+  grid-column: 2;
+  grid-row: 2;
+  place-self: center center;
+  margin-top: 64px;
+}
+
+body.swal2-shown {
+  padding-right: 0 !important;
+  overflow: hidden !important;
+}
+
+.header,
+.fixed-element {
+  transform: none !important;
+  will-change: auto !important;
+}
 </style>
 
 {% endblock %}
