@@ -27,6 +27,7 @@
     border-radius: 8px;
     cursor: pointer;
     gap: 22px;
+    border: 0;
 
     &:hover {
       background-color: lighten(#ff6f00, 10%);

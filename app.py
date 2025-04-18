@@ -1187,7 +1187,6 @@ def get_network_alarm_data():
         logging.error(f"Alarm verileri alınamadı: {e}")
         return jsonify({"status": "error", "message": f"Alarm verileri alınamadı: {e}"}), 500
 
-
 @app.route("/electric-alarm-detail", endpoint="electric_alarm_detail")
 def electric_alarm_detail():
     return render_template(

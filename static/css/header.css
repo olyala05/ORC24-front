@@ -26,6 +26,7 @@
   border-radius: 8px;
   cursor: pointer;
   gap: 22px;
+  border: 0;
 }
 .header .header-button-logout:hover {
   background-color: #ff8c33;

@@ -293,7 +293,7 @@ input:-webkit-autofill:focus {
   position: relative;
   display: inline-block;
   background: #ef8018 !important;
-  padding: 10px !important;
+  padding: 12px !important;
   border-radius: 6px !important;
 }
 .language-switcher .language-toggle {
@@ -1681,6 +1681,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   gap: 22px;
+  border: 0;
 }
 .header .header-button-logout:hover {
   background-color: #ff8c33;
