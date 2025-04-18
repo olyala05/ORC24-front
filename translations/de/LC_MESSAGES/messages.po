@@ -577,6 +577,9 @@ msgstr "Archiv"
 msgid "End"
 msgstr "Ende"
 
+msgid "Now"
+msgstr "Jetzt"
+
 msgid "Modem Name"
 msgstr "Modemname"
 

@@ -570,6 +570,9 @@ msgstr "Arşiv"
 msgid "End"
 msgstr "Son"
 
+msgid "Now"
+msgstr "Şimdi"
+
 msgid "Modem Name"
 msgstr "Modem Adı"
 
