@@ -1,12 +1,10 @@
-{% extends "layout.html" %}  
-
-{% block title %} {{ _('Equipment Details') }} {% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/equipment.scss') }}" />
-{% endblock %} 
-
-{% block content %}
+{% extends "layout.html" %} {% block title %} {{ _('Equipment Details') }} {%
+endblock %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/equipment.scss') }}"
+/>
+{% endblock %} {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
 
@@ -18,33 +16,38 @@
         <span>{{ _('Equipment Name')}}</span>
         <span class="eq-detail-status">-</span>
       </div>
-      <div class="eq-detail-item"><span>{{ _('Slave ID') }}</span> <span>-</span></div>
-      <div class="eq-detail-item"><span>{{ _('Modem Name') }}</span> <span>-</span></div>
       <div class="eq-detail-item">
-        <span>{{ _('Brand / Model')}}</span> <span>Entes / 46s</span>
+        <span>{{ _('Slave ID') }}</span> <span>-</span>
       </div>
       <div class="eq-detail-item">
-        <span>{{ _('Equipment Type')}}</span> <span>{{ _('Analyzer')}}</span>
+        <span>{{ _('Modem Name') }}</span> <span>-</span>
       </div>
       <div class="eq-detail-item">
-        <span>{{ _('Equipment Serial NO')}}</span> <span>asj-234</span>
+        <span>{{ _('Brand / Model')}}</span> <span>-</span>
       </div>
       <div class="eq-detail-item">
-        <span>{{ _('Activity Status')}}</span> <span>5</span>
+        <span>{{ _('Equipment Type')}}</span>
+        <span>-</span>
+      </div>
+      <div class="eq-detail-item">
+        <span>{{ _('Equipment Serial NO')}}</span> <span>-</span>
       </div>
       <div class="eq-detail-item">
         <span>{{ _('Device ID')}}</span> <span>{{ _('Active')}}</span>
       </div>
-      <div class="eq-detail-item"><span>{{ _('SID/IP')}}</span> <span>-</span></div>
+      <div class="eq-detail-item">
+        <span>{{ _('SID/IP')}}</span> <span>-</span>
+      </div>
       <div class="eq-detail-item">
         <span>{{ _('Status / Configuration')}}</span>
-        <span class="eq-detail-green">-</span>
+        <span>-</span>
       </div>
-
       <div class="eq-detail-item">
         <span>{{ _('Connection Protocol') }}</span> <span>-</span>
       </div>
-      <div class="eq-detail-item"><span>{{ _('GMT')}}</span> <span>+3</span></div>
+      <div class="eq-detail-item">
+        <span>{{ _('GMT')}}</span> <span>+3</span>
+      </div>
       <div class="eq-detail-item">
         <span>{{ _('Daylight Saving Time') }}</span>
         <span class="eq-detail-dot eq-active"></span>
@@ -160,13 +163,19 @@
         .then((response) => response.json())
         .then((data) => {
           if (data.status !== "success" || !data.data) {
-            console.error("{{ _('Modem data could not be retrieved:') }}", data.message);
+            console.error(
+              "{{ _('Modem data could not be retrieved:') }}",
+              data.message
+            );
             return null;
           }
-          return data.data; 
+          return data.data;
         })
         .catch((error) => {
-          console.error("{{ _('Error occurred while retrieving modem information:')}}", error);
+          console.error(
+            "{{ _('Error occurred while retrieving modem information:')}}",
+            error
+          );
           return null;
         });
     }
@@ -176,65 +185,117 @@
         .then((response) => response.json())
         .then((data) => {
           if (data.status !== "success") {
-            equipmentContainer.innerHTML = <p style='color: red;'>${data.message}</p>;
+            equipmentContainer.innerHTML = `<p>${data.message}</p>`;
             return null;
           }
-          return data.data; 
+          return data.data;
         })
         .catch((error) => {
-          console.error("{{ _('Error occurred while loading equipment details:')}}", error);
-          equipmentContainer.innerHTML =
-            "<p style='color: red;'>{{ _('Equipment information could not be retrieved') }}</p>";
+          console.error(
+            "{{ _('Error occurred while loading equipment details:')}}",
+            error
+          );
+          equipmentContainer.innerHTML = `<p>{{ _('Equipment information could not be retrieved') }}</p>`;
           return null;
         });
     }
+
+    const equipmentTypeMap = {
+      1: "ANALYZER",
+      2: "CURRENT_TRANSFORMER",
+      3: "INVERTER",
+      4: "METER",
+      5: "TEMPERATURE",
+      6: "PRESSURE",
+      7: "VIBRATION",
+      8: "LIQUID_LEVEL",
+      9: "RAIN",
+      10: "WIND",
+      11: "PLC",
+      12: "SCADA",
+      13: "BATTERY_LEVEL",
+      14: "RADIATION",
+      15: "CLOUDINESS",
+      16: "AIR_TEMPERATURE",
+      17: "FUEL_STATUS",
+      18: "HUMIDITY",
+      19: "MAGNETIC",
+      20: "LIGHT",
+      21: "SOUND",
+      22: "CO2",
+      23: "O2",
+      24: "H2O",
+      25: "LIQUID",
+      26: "UPS"
+    };
 
     Promise.all([fetchEquipmentDetails(), fetchModems()]).then(
       ([equipment, modem]) => {
         if (!equipment) return;
 
-        document.querySelector(".eq-detail-status").innerText = ${
+        // 1. Equipment Name
+        document.querySelector(".eq-detail-status").innerText = `${
           equipment.model_name || "{{ _('Unknown') }}"
-        }@${equipment.serial_number || "N/A"};
+        }@${equipment.serial_number || "N/A"}`;
 
-        // Modem adı
-        document.querySelector(
-          ".eq-detail-item:nth-child(3) span:last-child"
-        ).innerText = modem && modem.name ? modem.name : "{{ _('Modem Not Found')}}";
-
-        // Marka / Model
-        document.querySelector(
-          ".eq-detail-item:nth-child(4) span:last-child"
-        ).innerText = ${equipment.brand_name || "N/A"} / ${
-          equipment.model_name || "N/A"
-        };
-
-        // Slave ID
+        // 2. Slave ID
         document.querySelector(
           ".eq-detail-item:nth-child(2) span:last-child"
         ).innerText = equipment.modbus_address || "N/A";
 
-        // Ekipman Tipi
+        // 3. Modem adı
+        document.querySelector(
+          ".eq-detail-item:nth-child(3) span:last-child"
+        ).innerText =
+          modem && modem.name ? modem.name : "{{ _('Modem Not Found')}}";
+
+        // 4. Marka / Model
+        document.querySelector(
+          ".eq-detail-item:nth-child(4) span:last-child"
+        ).innerText = `${equipment.brand_name || "N/A"} / ${
+          equipment.model_name || "N/A"
+        }`;
+
+        // 5. Ekipman Tipi
+        const typeCode = equipment.equipment_type;
+        const typeName = equipmentTypeMap[typeCode] || "UNKNOWN";
         document.querySelector(
           ".eq-detail-item:nth-child(5) span:last-child"
-        ).innerText = equipment.equipment_type || "{{ _('Analyzer')}}";
+        ).innerText = typeName;
 
-        // Seri No
+        // 6. Seri No
         document.querySelector(
           ".eq-detail-item:nth-child(6) span:last-child"
         ).innerText = equipment.serial_number || "N/A";
 
-        // Device ID
+        // 7. Device ID (önceden 8'di)
         document.querySelector(
-          ".eq-detail-item:nth-child(8) span:last-child"
+          ".eq-detail-item:nth-child(7) span:last-child"
         ).innerText = equipment.device_id || "N/A";
 
-        // SID/IP
+        // 8. SID/IP (önceden 9'du)
         document.querySelector(
-          ".eq-detail-item:nth-child(9) span:last-child"
+          ".eq-detail-item:nth-child(8) span:last-child"
         ).innerText = equipment.modbus_address || "N/A";
 
-        // Protokol
+        // 9. Status / Configuration (önceden 10'du)
+        const configSpan = document.querySelector(
+          ".eq-detail-item:nth-child(9) span:last-child"
+        );
+        const configValue = equipment.configuration_data || "-";
+
+        if (configValue === "A") {
+          configSpan.innerText = "A";
+          configSpan.style.color = "#28a745"; // yeşil
+        } else if (configValue === "P") {
+          configSpan.innerText = "P";
+          configSpan.style.color = "#dc3545"; // kırmızı
+        } else {
+          configSpan.innerText = configValue;
+          configSpan.style.color = "#6c757d"; // gri
+        }
+
+        // 10. Protokol (önceden 11'di)
         let protocolText = "N/A";
         if (equipment.communication_protocol_code == 1) {
           protocolText = "SERIAL";
@@ -242,17 +303,17 @@
           protocolText = "TCP";
         }
         document.querySelector(
-          ".eq-detail-item:nth-child(11) span:last-child"
+          ".eq-detail-item:nth-child(10) span:last-child"
         ).innerText = protocolText;
 
-        // Oluşturulma tarihi
+        // 13. Oluşturulma tarihi (önceden 14’tü)
         document.querySelector(
-          ".eq-detail-item:nth-child(14) span:last-child"
+          ".eq-detail-item:nth-child(13) span:last-child"
         ).innerText = formatDate(equipment.created_at);
 
-        // Son bağlantı tarihi
+        // 14. Son bağlantı tarihi (önceden 15’ti)
         document.querySelector(
-          ".eq-detail-item:nth-child(15) span:last-child"
+          ".eq-detail-item:nth-child(14) span:last-child"
         ).innerText = formatDate(equipment.updated_at);
       }
     );
@@ -274,6 +335,7 @@
         String(date.getSeconds()).padStart(2, "0")
       );
     }
+
   });
 </script>
 

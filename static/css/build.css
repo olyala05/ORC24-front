@@ -1823,6 +1823,7 @@ div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line] {
   border-radius: 8px;
   cursor: pointer;
   gap: 22px;
+  border: 0;
 }
 
 body {
