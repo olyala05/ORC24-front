@@ -18,7 +18,7 @@ endblock%} {% block extra_css %}
       <span class="calendar-icon">
         <img
           id="calendar-arrow-icon"
-          src="{{ url_for('static', filename='images/svg/down-arrow.svg') }}"
+          src="{{ url_for('static', filename='images/svg/down-arrow-white.svg') }}"
           alt="arrow"
         />
       </span>
@@ -267,7 +267,7 @@ endblock%} {% block extra_css %}
 
   datePicker.on("hide.daterangepicker", () => {
     calendarIcon.src =
-      "{{ url_for('static', filename='images/svg/down-arrow.svg') }}";
+      "{{ url_for('static', filename='images/svg/down-arrow-white.svg') }}";
   });
 
   document.addEventListener("DOMContentLoaded", () => {
