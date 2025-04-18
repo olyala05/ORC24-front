@@ -309,10 +309,6 @@ input:-webkit-autofill:focus {
   padding: 10px;
   border-radius: 6px;
 }
-.language-switcher .language-toggle:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transform: scale(1.05);
-}
 .language-switcher .language-toggle img {
   width: 24px;
   height: 24px;
@@ -1153,9 +1149,12 @@ input:-webkit-autofill:focus {
   display: flex;
 }
 
-.language-switcher:hover .language-dropdown,
-.language-switcher.active .language-dropdown {
+.language-switcher:hover .language-dropdown {
   display: flex;
+}
+
+.language-switcher.active .language-dropdown {
+  display: block;
 }
 
 .lang-btn.selected .radio-indicator {

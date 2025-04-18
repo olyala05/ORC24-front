@@ -597,9 +597,12 @@
   display: flex;
 }
 
-.language-switcher:hover .language-dropdown,
-.language-switcher.active .language-dropdown {
+.language-switcher:hover .language-dropdown {
   display: flex;
+}
+
+.language-switcher.active .language-dropdown {
+  display: block;
 }
 
 .lang-btn.selected .radio-indicator {

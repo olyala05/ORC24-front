@@ -1377,3 +1377,9 @@ msgstr "Für das ausgewählte Datum wurden keine Logs gefunden."
 
 msgid "Ethernet Connection Test"
 msgstr "Ethernet-Verbindungstest"
+
+msgid "No Wi-Fi Connection!"
+msgstr "Keine WLAN-Verbindung!"
+
+msgid "Please check your modem and connections."
+msgstr "Bitte überprüfen Sie Ihren Router und Ihre Verbindungen."

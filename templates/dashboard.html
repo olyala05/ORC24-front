@@ -8,20 +8,23 @@
 <header class="header">
   <div class="header-left">
         <!-- Login yerine yönlendirme kontrolü -->
-        <form action="{{ url_for('check_login_redirect') }}" method="GET">
-          <button type="submit" class="header-button" style="gap: 0">
-            <span style="padding: 14px 13px">{{ _('Login') }}</span>
-            <img
-              src="{{ url_for('static', filename='images/svg/36.svg') }}"
-              alt="Logout"
-              width="30"
-              height="30"
-              style="padding: 7px 9px; background: #0b1734; border-radius: 5px"
-            />
-          </button>
-        </form>
-          <!-- Dil Seçici -->
-          <div class="language-switcher" id="languageSwitcher" class="lang-back" style= "background-color: #EF8018; padding: 10px; border-radius: 5px;">
+    <form action="{{ url_for('check_login_redirect') }}" method="GET">
+      <button type="submit" class="header-button" style="gap: 0">
+        <span style="padding: 14px 13px">{{ _('Login') }}</span>
+        <img
+          src="{{ url_for('static', filename='images/svg/36.svg') }}"
+          alt="Logout"
+          width="30"
+          height="30"
+          style="padding: 7px 9px; background: #0b1734; border-radius: 5px"
+        />
+      </button>
+    </form>
+
+       
+
+              <!-- Dil Seçici -->
+          <div class="language-switcher fixed-top-right" id="languageSwitcher" class="lang-back" style= "background-color: #EF8018; padding: 10px; border-radius: 5px;">
             <button type="button" class="language-toggle" id="languageToggle" style="color: #0B1734;font-weight: 600;">
               <img
                 src="{{ url_for('static', filename='images/svg/globe-black.svg') }}"
@@ -34,7 +37,7 @@
               </span>
             </button>
 
-            <div class="language-dropdown" id="languageDropdown" style="min-width: 90px; top: 119%;">
+            <div class="language-dropdown" id="languageDropdown" style="min-width: 90px; top: 119%; display: none;">
               <div class="dropdown-arrow"></div>
 
               <!-- Türkçe -->
@@ -281,13 +284,14 @@
 </section>
 
 <script>
-    // Dil değiştirildiğinde çağrılacak fonksiyon
-    document.addEventListener("DOMContentLoaded", function () {
+  // Dil değiştirildiğinde çağrılacak fonksiyon
+  document.addEventListener("DOMContentLoaded", function () {
     const lang = "{{ g.get('lang', 'EN') }}";
     const selectedLangLabel = document.getElementById("selectedLangLabel");
     if (selectedLangLabel) {
       selectedLangLabel.innerText = lang.toUpperCase();
     }
+
     function setLanguage(lang) {
       document
         .querySelectorAll(".lang-btn")
@@ -304,6 +308,9 @@
         selectedLangLabel.innerText = lang.toUpperCase();
       }
 
+      // Dropdown kapansın
+      document.getElementById("languageDropdown").style.display = "none";
+
       fetch("{{ url_for('set_language') }}", {
         method: "POST",
         headers: {
@@ -311,35 +318,39 @@
         },
         body: "lang=" + lang,
       }).then(() => {
-        console.log("Backend'e gönderilen dil:", lang); 
+        console.log("Backend'e gönderilen dil:", lang);
         window.location.reload();
       });
     }
 
-    // Dil butonlarına tıklandığında setLanguage fonksiyonunu çalıştır
     document.querySelectorAll(".lang-btn").forEach((button) => {
       button.addEventListener("click", function () {
         const lang = button.getAttribute("data-lang");
-        setLanguage(lang); 
+        setLanguage(lang);
       });
     });
 
-    // Dil seçici butonunun tıklama olayı
     const toggle = document.getElementById("languageToggle");
-    const switcher = document.getElementById("languageSwitcher");
+    const dropdown = document.getElementById("languageDropdown");
 
     toggle.addEventListener("click", function (event) {
       event.stopPropagation();
-      switcher.classList.toggle("active");
+
+      if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+      } else {
+        dropdown.style.display = "block";
+      }
     });
 
     document.addEventListener("click", function (e) {
-      if (!switcher.contains(e.target)) {
-        switcher.classList.remove("active");
+      if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = "none";
       }
     });
-  
   });
+
+  
     document.addEventListener("DOMContentLoaded", function () {
       function updateDateTime() {
         const userLang = document.body.dataset.lang || "en"; 

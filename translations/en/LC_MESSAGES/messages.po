@@ -1382,3 +1382,9 @@ msgstr "No logs found for the selected date."
 
 msgid "Ethernet Connection Test"
 msgstr "Ethernet Connection Test"
+
+msgid "No Wi-Fi Connection!"
+msgstr "No Wi-Fi Connection!"
+
+msgid "Please check your modem and connections."
+msgstr "Please check your modem and connections."

@@ -69,7 +69,7 @@
                 <td>{{ _('WiFi Disconnected')}}</td>
                 <td>{{ network.last_connected_time }}</td> 
             {% endif %}
-        </tr>
+          </tr>
         
           <tr data-status="cloud">
             <td><span class="status-dot red"></span></td>
@@ -149,9 +149,9 @@
         } else {
           Swal.fire({
             icon: "error",
-            title: "Wi-Fi Bağlantısı Yok!",
-            text: "Lütfen modeminizi ve bağlantılarınızı kontrol edin.",
-            confirmButtonText: "Tamam"
+            title: "{{ _('No Wi-Fi Connection!') }}",
+            text: "{{ _('Please check your modem and connections.') }}",
+            confirmButtonText: "{{ _('OK') }}"
           });
         }
       })
@@ -206,8 +206,7 @@
         console.error("API isteği hatası:", error);
         document.getElementById("connection-protocol").innerText = "Error fetching data";
     });
-});
-
+  });
 
   // RabbitMQ Status Checking
   document.addEventListener("DOMContentLoaded", function () {

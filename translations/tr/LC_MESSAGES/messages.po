@@ -1393,28 +1393,12 @@ msgstr "ORC Durumu - Loglar"
 msgid "No logs found for the selected date."
 msgstr "Seçilen tarihe ait log bulunamadı."
 
+msgid "No Wi-Fi Connection!"
+msgstr "Wi-Fi Bağlantısı Yok!"
 
 
-
-
-msgid ""
-msgstr ""
-
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
+msgid "Please check your modem and connections."
+msgstr "Lütfen modeminizi ve bağlantılarınızı kontrol edin. "
 
 msgid ""
 msgstr ""

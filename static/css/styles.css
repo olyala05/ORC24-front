@@ -307,10 +307,6 @@ input:-webkit-autofill:focus {
   padding: 10px;
   border-radius: 6px;
 }
-.language-switcher .language-toggle:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transform: scale(1.05);
-}
 .language-switcher .language-toggle img {
   width: 24px;
   height: 24px;
