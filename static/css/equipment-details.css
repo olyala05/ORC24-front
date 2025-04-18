@@ -114,4 +114,34 @@ body.lang-de .eq-detail-container {
 body.lang-de .eq-detail-item span,
 body.lang-de .eq-detail-log-item span {
   font-size: 13px;
+}
+
+.eq-detail-status {
+  display: inline-block;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  color: #ffda29;
+}
+
+.eq-detail-tooltip {
+  position: absolute;
+  background-color: #fff;
+  color: #1c2747;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  max-width: 300px;
+  word-wrap: break-word;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  display: none;
+  max-width: 300px;
+  text-align: center;
+}
+
+.eq-detail-tooltip.active {
+  display: block;
 }/*# sourceMappingURL=equipment-details.css.map */

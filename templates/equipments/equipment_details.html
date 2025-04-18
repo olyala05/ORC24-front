@@ -14,7 +14,7 @@ endblock %} {% block extra_css %}
     <div class="eq-detail-info">
       <div class="eq-detail-item">
         <span>{{ _('Equipment Name')}}</span>
-        <span class="eq-detail-status">-</span>
+        <span class="eq-detail-status" title="equipment name">-</span>
       </div>
       <div class="eq-detail-item">
         <span>{{ _('Slave ID') }}</span> <span>-</span>
@@ -234,9 +234,10 @@ endblock %} {% block extra_css %}
         if (!equipment) return;
 
         // 1. Equipment Name
-        document.querySelector(".eq-detail-status").innerText = `${
-          equipment.model_name || "{{ _('Unknown') }}"
-        }@${equipment.serial_number || "N/A"}`;
+        const eqName = `${equipment.model_name || "UNKNOWN"}@${equipment.serial_number || "N/A"}`;
+        const eqSpan = document.querySelector(".eq-detail-status");
+        eqSpan.innerText = eqName;
+        eqSpan.title = eqName;
 
         // 2. Slave ID
         document.querySelector(
@@ -337,6 +338,47 @@ endblock %} {% block extra_css %}
     }
 
   });
+  
+    // Tooltip kutusu oluştur (sayfa yüklendikten sonra bir kez)
+    const tooltip = document.createElement("div");
+    tooltip.classList.add("eq-detail-tooltip");
+    document.body.appendChild(tooltip);
+
+    // Equipment Name'e tıklanınca göster
+    const eqStatus = document.querySelector(".eq-detail-status");
+    eqStatus.addEventListener("click", function (e) {
+      const fullText = eqStatus.innerText;
+
+      // Eğer tooltip zaten görünüyorsa: gizle ve çık
+      if (tooltip.classList.contains("active")) {
+        tooltip.classList.remove("active");
+        return;
+      }
+
+      // Devam: gösterilecek metin
+      tooltip.innerText = fullText;
+
+      const rect = eqStatus.getBoundingClientRect();
+      const tooltipWidth = 300;
+      const offsetY = 10;
+
+      tooltip.style.width = `${tooltipWidth}px`;
+      tooltip.style.top = `${rect.top + window.scrollY - offsetY - 40}px`;
+      tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2 - tooltipWidth / 2}px`;
+
+      tooltip.classList.add("active");
+
+      // Dışarı tıklanınca gizle
+      const hideTooltip = (event) => {
+        if (!tooltip.contains(event.target) && event.target !== eqStatus) {
+          tooltip.classList.remove("active");
+          document.removeEventListener("click", hideTooltip);
+        }
+      };
+      document.addEventListener("click", hideTooltip);
+    });
+
 </script>
 
 {% endblock %}
+<!-- #ffda29 -->

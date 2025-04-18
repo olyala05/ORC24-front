@@ -141,3 +141,33 @@ body.lang-de {
     font-size: 13px;
   }
 }
+.eq-detail-status {
+  display: inline-block;
+  max-width: 140px;  // Yazının genişliğini sınırlar
+  white-space: nowrap; // Yazının alt satıra kaymasını engeller
+  overflow: hidden;    // Taşan kısmı gizler
+  text-overflow: ellipsis;  // Uzun yazılarda ... gösterir
+  vertical-align: middle;
+  color: #ffda29;
+}
+
+
+.eq-detail-tooltip {
+  position: absolute;
+  background-color: #fff;
+  color: #1c2747;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  max-width: 300px;
+  word-wrap: break-word;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  display: none;
+  max-width: 300px;
+  text-align: center;
+}
+
+.eq-detail-tooltip.active {
+  display: block;
+}
