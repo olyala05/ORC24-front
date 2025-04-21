@@ -182,7 +182,7 @@ def login():
                 api_response = response.json()
                 session["access_token"] = api_response.get("access_token")
                 session["login_success"] = True
-                session["login_time"] = datetime.utcnow().isoformat()  #  login zamanını kaydeer
+                session["login_time"] = datetime.utcnow().isoformat()  
                 return redirect(url_for("modem_selection"))
             except Exception as e:
                 flash("Sunucudan geçersiz yanıt alındı!", "danger")
