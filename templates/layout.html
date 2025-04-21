@@ -29,6 +29,7 @@
     <script src="{{ url_for('static', filename='daterangepicker/js/daterangepicker.js') }}"></script>
     <script src="{{ url_for('static', filename='daterangepicker/js/moment-locale.tr.min.js') }}"></script>
     <script src="{{ url_for('static', filename='daterangepicker/js/moment-locale.de.min.js') }}"></script>
+
   </head>
   <body data-lang="{{ get_locale() }}" class="{% if request.endpoint == 'dashboard' %}dashboard-body{% endif %}  {% if get_locale() == 'de' %} lang-de{% endif %}">
 
