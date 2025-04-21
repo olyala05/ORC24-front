@@ -23,6 +23,11 @@ import logging
 import pymodbus.client.tcp 
 import os
 from flask_babel import Babel, gettext as _
+import time
+import shutil
+import string
+import win32file 
+import win32api
 
 app = Flask(__name__)
 CORS(app)
@@ -34,13 +39,14 @@ logger = logging.getLogger(__name__)
 
 # Laravel API'nin URL'si
 LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
+LARAVEL_API_URL_V2 = "https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/dashboard"
+# Aranacak dosya adı
+USER_INFO_FILENAME = "user_info.json"
+TOKEN_FILE_PATH = "stored_token.txt"
 
 # Ağ Arayüzü IP Aralığı (Değiştirebilirsin)
 # IP_RANGE = "172.27.10.0/24"
-
-
 IP_RANGE = "192.168.4.0/24"
-
 
 # MySQL veritabanı bağlantı bilgileri
 DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database": "iot"}
@@ -85,27 +91,85 @@ def inject_locale():
 def index():
     return render_template("index.html")
 
-@app.route("/auto-login", methods=["POST"])
+def find_usb_and_read_token_windows():
+    from string import ascii_uppercase
+
+    drives_str = win32api.GetLogicalDriveStrings()
+    drives = drives_str.split('\x00')[:-1]
+
+    for drive in drives:
+        drive_type = win32file.GetDriveType(drive)
+        if drive_type == win32file.DRIVE_REMOVABLE:
+            potential_file = os.path.join(drive, USER_INFO_FILENAME)
+            print(f"Kontrol ediliyor: {potential_file}")
+            if os.path.isfile(potential_file):
+                print(f"USB bulundu: {potential_file}")
+                return extract_token_from_file(potential_file)
+    
+    print("Hiçbir USB aygıtında user_info.json bulunamadı.")
+    return None
+
+def extract_token_from_file(filepath):
+    try:
+        with open(filepath, "r", encoding="utf-8") as file:
+            data = json.load(file)
+            token = data.get("auth", {}).get("token")
+            if token:
+                with open(TOKEN_FILE_PATH, "w") as f:
+                    f.write(token)
+                print("Token başarıyla yazıldı.")
+                return token, None
+    except Exception as e:
+        print(f"Dosya okunamadı: {e}")
+    return None, None
+
+@app.route("/auto-login", methods=["GET", "POST"])
 def auto_login():
     try:
-        data = request.get_json()
-        email = data.get("email")
-        password = data.get("password")
+        print("Auto-login başladı")
+        token = None
+
+        if os.path.exists(TOKEN_FILE_PATH):
+            print("stored_token.txt bulundu")
+            with open(TOKEN_FILE_PATH, "r") as f:
+                token = f.read().strip()
+        else:
+            print("Token dosyası yok, USB'den aranmaya başlanıyor")
+            token_data = find_usb_and_read_token_windows()
+            if token_data:
+                token, _ = token_data  
+
+        if not token:
+            print("Token bulunamadı")
+            return jsonify({"success": False, "message": "Access token bulunamadı"}), 403
+
+        print("Token bulundu:", token)
 
         response = requests.get(
-            f"{LARAVEL_API_URL}/login",
-            params={"client_email": email, "client_password": password},
-            headers={"Accept": "application/json"},
-            verify=False,
+            LARAVEL_API_URL_V2,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            verify=False
         )
 
+        print("API yanıt kodu:", response.status_code)
+
         if response.status_code == 200:
-            api_response = response.json()
-            session["access_token"] = api_response.get("access_token")
-            return jsonify({"success": True})
+            return jsonify({"success": True, "data": response.json()})
         else:
-            return jsonify({"success": False, "message": "API login failed"}), 401
+            return jsonify({
+                "success": False,
+                "message": "Dashboard verisi alınamadı",
+                "status_code": response.status_code,
+                "raw": response.text
+            }), response.status_code
+
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({"success": False, "message": str(e)}), 500
 
 # Giriş Sayfası
@@ -158,7 +222,6 @@ def check_login_redirect():
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html", page_title=_("Dashboard"))
-
 
 # Alarm Status API'sinden veri çek
 @app.route("/alarm_status", methods=["GET"])
@@ -1314,6 +1377,29 @@ def get_logs():
     except requests.exceptions.RequestException as e:
         logging.error(f"[ERROR] Error fetching logs: {e}")
         return jsonify({"status": "error", "message": f"LOGS verileri alınamadı: {e}"}), 500
+
+@app.route("/get_archive_log_status", methods=["GET"])
+def get_archive_log_status():
+    selected_ip = session.get("selected_device_ip")
+    logging.info("[FLASK A] Archive log status istek alındı.")
+
+    if not selected_ip:
+        logging.error("[FLASK A] IP adresi bulunamadı (session boş olabilir).")
+        return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
+
+    try:
+        logging.info(f"[FLASK A] {selected_ip} adresine archive log isteği gönderiliyor.")
+        url = f"http://{selected_ip}:8085/get_archive_status"
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+
+        archive_status = response.json()
+        logging.info("[FLASK A] Archive log verisi başarıyla alındı.")
+        return jsonify(archive_status)
+
+    except requests.exceptions.RequestException as e:
+        logging.error(f"[FLASK A] Archive log alınamadı: {e}")
+        return jsonify({"status": "error", "message": f"Archive verisi alınamadı: {e}"}), 500
 
 class ResponseHandler:
     @staticmethod

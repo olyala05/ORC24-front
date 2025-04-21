@@ -10,6 +10,7 @@
 
   <!-- ORC Status İçeriği -->
   <div class="orc-content">
+
     <div class="device-info">
       <ul>
         <li><span class="highlight">{{ _('S/N') }}</span> <span>{{ modem.serial_no if modem.serial_no else '-' }}</span></li>
@@ -49,6 +50,7 @@
             <th>{{ _('Last Connection Date')}}</th>
           </tr>
         </thead>
+
         <tbody>
           <tr>
             <td><span class="status-dot red"></span></td>
@@ -78,7 +80,6 @@
             <td class="last-connection">{{ _('Checking...')}}</td> 
           </tr>
       
-
           <tr data-status="rabbitmq">
             <td><span class="status-dot red"></span></td>
             <td><span class="status-dot red"></span></td>
@@ -86,20 +87,6 @@
             <td class="last-connection">{{ _('Checking...')}}</td>
           </tr>
         
-
-          <tr>
-            {% if network.ethernet_connected %}
-                <td><span class="status-dot #33FF00"></span></td>
-                <td><span class="status-dot #33FF00"></span></td>
-                <td>{{ _('Ethernet Connection')}}</td>
-                <td>{{ network.last_connected_time }}</td> 
-            {% else %}
-                <td><span class="status-dot red"></span></td>
-                <td><span class="status-dot red"></span></td>
-                <td>{{ _('Ethernet Disconnected')}}</td>
-                <td>{{ network.last_connected_time }}</td> 
-            {% endif %}
-          </tr>
           <tr>
             {% if network.vpn_connected %}
                 <td><span class="status-dot #33FF00"></span></td>
@@ -112,9 +99,9 @@
                 <td>{{ _('VPN Disconnected')}}</td>
                 <td>{{ network.last_connected_time }}</td> 
             {% endif %}
-        </tr>
-        
+          </tr>
         </tbody>
+
       </table>
 
       <div class="algorithm-section">
@@ -130,6 +117,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
 <script>
@@ -326,11 +314,102 @@
   // Sayfa yüklendiğinde otomatik olarak modem model bilgisini çek
   window.onload = fetchBrandModel;
 
+  document.addEventListener("DOMContentLoaded", function () {
+  fetch("/get_archive_log_status")
+    .then(response => response.json())
+    .then(data => {
+      console.log("[LOG] Archive log status fetch başladı.");
+
+      if (data.status !== "success" || !data.data) {
+        console.warn("[LOG] Geçersiz yanıt yapısı");
+        return;
+      }
+
+      const archiveData = data.data;
+
+      const tagMapping = {
+        "WiFi Connection": "İnternet Var Mı?",
+        "VPN Connection": "VPN IP Adresi",
+        "Cloud Connection": "Modem bilgisi buluta gönderildi mi?",
+        "Rabbit MQ": "rabbit mqya basılan veri"
+      };
+
+      const typeToColorClass = {
+        1: "green",
+        2: "orange",
+        3: "red"
+      };
+
+      Object.entries(tagMapping).forEach(([uiLabel, archiveTag]) => {
+        const rows = Array.from(document.querySelectorAll("tbody tr"));
+        const row = rows.find(tr => tr.innerText.includes(uiLabel));
+
+        if (!row || !archiveData[archiveTag]) {
+          console.warn(`[LOG] ${uiLabel} satırı veya verisi bulunamadı.`);
+          return;
+        }
+
+        const rowSpans = row.querySelectorAll(".status-dot");
+        const archiveType = archiveData[archiveTag].archive_log_type;
+        const nowType = archiveData[archiveTag].last_log_type;
+        const lastLogDate = archiveData[archiveTag].last_log_date;
+
+        // Log: hangi tipler geldi
+        console.log(`[LOG] ${uiLabel} archive_log_type: ${archiveType}, last_log_type: ${nowType}, date: ${lastLogDate}`);
+
+        // Archive Sütunu (ilk status-dot)
+        if (typeToColorClass[archiveType]) {
+          rowSpans[0].classList.remove("red", "green", "orange");
+          rowSpans[0].classList.add(typeToColorClass[archiveType]);
+        }
+
+        // Now Sütunu (ikinci status-dot)
+        if (typeToColorClass[nowType]) {
+          rowSpans[1].classList.remove("red", "green", "orange");
+          rowSpans[1].classList.add(typeToColorClass[nowType]);
+        }
+
+        // Last Connection Date güncelle
+        const lastDateCell = row.querySelector(".last-connection");
+        if (lastDateCell && lastLogDate) {
+          const dt = new Date(lastLogDate);
+          lastDateCell.textContent = dt.toLocaleString("tr-TR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+          });
+        }
+      });
+
+      console.log("[LOG] Archive log durumu başarıyla işlendi.");
+    })
+    .catch(error => {
+      console.error("[LOG] Archive log durumu alınamadı:", error);
+    });
+  });
+
 </script>
 
 <style>
   .highlight {
     color: #88ACFF;
+  }
+   .status-dot {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 50%;
+  }
+
+  .status-dot.red {
+    background-color: red;
+  }
+
+  .status-dot.green {
+    background-color: #33FF00;
   }
 </style>
 {% endblock %}
