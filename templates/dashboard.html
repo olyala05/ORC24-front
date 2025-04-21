@@ -20,10 +20,7 @@
         />
       </button>
     </form>
-
-       
-
-              <!-- Dil Seçici -->
+          <!-- Dil Seçici -->
           <div class="language-switcher fixed-top-right" id="languageSwitcher" class="lang-back" style= "background-color: #EF8018; padding: 10px; border-radius: 5px;">
             <button type="button" class="language-toggle" id="languageToggle" style="color: #0B1734;font-weight: 600;">
               <img
@@ -121,135 +118,129 @@
 
 <!-- Ana Tablo -->
 <section class="dashboard">
-<div class="energy-table">
-  <!-- Başlık -->
+  <div class="energy-table">
   <div class="energy-header">
     <div>{{ _('Energy Drawn From The Grid') }}</div>
-    <div>{{ _('Generated Energy') }}</div>
+    <div style="margin-right: 79px">{{ _('Generated Energy') }}</div>
     <div>{{ _('Consumed Energy') }}</div>
   </div>
 
-  <!-- 1. Satır: kWh -->
+  <!-- Row 1: kWh -->
   <div class="energy-row">
     <div>
       <img src="{{ url_for('static', filename='images/svg/08.svg') }}" alt="Energy" />
-      {{ from_grid.kwh }} kWh
+      {{ "{:,.2f}".format(from_grid.kwh).replace(",", "X").replace(".", ",").replace("X", ".") }} kWh
     </div>
     <div>
       <img src="{{ url_for('static', filename='images/svg/08.svg') }}" alt="Energy" />
-      {{ total_generated.kwh }} kWh
+      {{ "{:,.2f}".format(total_generated.kwh).replace(",", "X").replace(".", ",").replace("X", ".") }} kWh
     </div>
     <div>
       <img src="{{ url_for('static', filename='images/svg/08.svg') }}" alt="Energy" />
-      {{ total_consumed.kwh }} kWh
+      {{ "{:,.2f}".format(total_consumed.kwh).replace(",", "X").replace(".", ",").replace("X", ".") }} kWh
     </div>
   </div>
 
-  <!-- 2. Satır: TEP -->
+  <!-- Row 2: TEP -->
   <div class="energy-row">
     <div>
       <img src="{{ url_for('static', filename='images/svg/09.svg') }}" alt="TEP" />
-      {{ from_grid.tep }} TEP
+      {{ "{:,.2f}".format(from_grid.tep).replace(",", "X").replace(".", ",").replace("X", ".") }} TEP
     </div>
     <div>
       <img src="{{ url_for('static', filename='images/svg/09.svg') }}" alt="TEP" />
-      {{ total_generated.tep }} TEP
+      {{ "{:,.2f}".format(total_generated.tep).replace(",", "X").replace(".", ",").replace("X", ".") }} TEP
     </div>
     <div>
       <img src="{{ url_for('static', filename='images/svg/09.svg') }}" alt="TEP" />
-      {{ total_consumed.tep }} TEP
+      {{ "{:,.2f}".format(total_consumed.tep).replace(",", "X").replace(".", ",").replace("X", ".") }} TEP
     </div>
   </div>
 
-  <!-- 3. Satır: CO2 Ton -->
+  <!-- Row 3: Carbon (Ton) -->
   <div class="energy-row">
     <div>
       <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="CO2" />
-      {{ from_grid.carbonTon }} Ton
+      {{ "{:,.2f}".format(from_grid.carbonTon).replace(",", "X").replace(".", ",").replace("X", ".") }} Ton
     </div>
     <div>
       <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="CO2" />
-      {{ total_generated.carbonTon }} Ton
+      {{ "{:,.2f}".format(total_generated.carbonTon).replace(",", "X").replace(".", ",").replace("X", ".") }} Ton
     </div>
     <div>
       <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="CO2" />
-      {{ total_consumed.carbonTon }} Ton
+      {{ "{:,.2f}".format(total_consumed.carbonTon).replace(",", "X").replace(".", ",").replace("X", ".") }} Ton
     </div>
   </div>
 </div>
 
 
-
   <div class="device-status">
     <div class="dashboard-container">
-      <!-- Voltaj ve Akım Kutuları -->
-      <div class="voltage-section">
-        <div class="voltage-table">
-          <div class="voltage-box">
-            <span class="icon">
-              <img
-                src="{{ url_for('static', filename='images/svg/33.svg') }}"
-                alt="Voltage"
-              />
-            </span>
-            <span class="value">220 V</span>
-            <span class="phase">V1-N</span>
-          </div>
-          <div class="voltage-box">
-            <span class="icon">
-              <img
-                src="{{ url_for('static', filename='images/svg/33.svg') }}"
-                alt="Voltage"
-              />
-            </span>
-            <span class="value">220 V</span>
-            <span class="phase">V2-N</span>
-          </div>
-          <div class="voltage-box">
-            <span class="icon">
-              <img
-                src="{{ url_for('static', filename='images/svg/33.svg') }}"
-                alt="Voltage"
-              />
-            </span>
-            <span class="value">220 V</span>
-            <span class="phase">V3-N</span>
-          </div>
+    <!-- Voltaj ve Akım Kutuları -->
+    <div class="voltage-section">
+      <!-- Voltajlar -->
+      <div class="voltage-table">
+        <div class="voltage-box">
+          <span class="icon">
+            <img src="{{ url_for('static', filename='images/svg/33.svg') }}" alt="Voltage" />
+          </span>
+          <span class="value">
+            {{ "{:,.2f}".format(voltages.l1n).replace(",", "X").replace(".", ",").replace("X", ".") }} V
+          </span>
+          <span class="phase">V1-N</span>
         </div>
-
-        <div class="voltage-table">
-          <div class="voltage-box">
-            <span class="icon">
-              <img
-                src="{{ url_for('static', filename='images/svg/34.svg') }}"
-                alt="Current"
-              />
-            </span>
-            <span class="value">300 A</span>
-            <span class="phase">I1-N</span>
-          </div>
-          <div class="voltage-box">
-            <span class="icon">
-              <img
-                src="{{ url_for('static', filename='images/svg/34.svg') }}"
-                alt="Current"
-              />
-            </span>
-            <span class="value">250 A</span>
-            <span class="phase">I2-N</span>
-          </div>
-          <div class="voltage-box">
-            <span class="icon">
-              <img
-                src="{{ url_for('static', filename='images/svg/34.svg') }}"
-                alt="Current"
-              />
-            </span>
-            <span class="value">220 A</span>
-            <span class="phase">I3-N</span>
-          </div>
+        <div class="voltage-box">
+          <span class="icon">
+            <img src="{{ url_for('static', filename='images/svg/33.svg') }}" alt="Voltage" />
+          </span>
+          <span class="value">
+            {{ "{:,.2f}".format(voltages.l2n).replace(",", "X").replace(".", ",").replace("X", ".") }} V
+          </span>
+          <span class="phase">V2-N</span>
+        </div>
+        <div class="voltage-box">
+          <span class="icon">
+            <img src="{{ url_for('static', filename='images/svg/33.svg') }}" alt="Voltage" />
+          </span>
+          <span class="value">
+            {{ "{:,.2f}".format(voltages.l3n).replace(",", "X").replace(".", ",").replace("X", ".") }} V
+          </span>
+          <span class="phase">V3-N</span>
         </div>
       </div>
+
+      <!-- Akımlar -->
+      <div class="voltage-table">
+        <div class="voltage-box">
+          <span class="icon">
+            <img src="{{ url_for('static', filename='images/svg/34.svg') }}" alt="Current" />
+          </span>
+          <span class="value">
+            {{ "{:,.2f}".format(currents.l1n).replace(",", "X").replace(".", ",").replace("X", ".") }} A
+          </span>
+          <span class="phase">I1-N</span>
+        </div>
+        <div class="voltage-box">
+          <span class="icon">
+            <img src="{{ url_for('static', filename='images/svg/34.svg') }}" alt="Current" />
+          </span>
+          <span class="value">
+            {{ "{:,.2f}".format(currents.l2n).replace(",", "X").replace(".", ",").replace("X", ".") }} A
+          </span>
+          <span class="phase">I2-N</span>
+        </div>
+        <div class="voltage-box">
+          <span class="icon">
+            <img src="{{ url_for('static', filename='images/svg/34.svg') }}" alt="Current" />
+          </span>
+          <span class="value">
+            {{ "{:,.2f}".format(currents.l3n).replace(",", "X").replace(".", ",").replace("X", ".") }} A
+          </span>
+          <span class="phase">I3-N</span>
+        </div>
+      </div>
+    </div>
 
       <!-- ECHARTS -->
         <div id="frequencyGauge" style="width: 130px; height: 130px;"></div>
@@ -264,73 +255,77 @@
 </section>
 
 <script>
-  // Dil değiştirildiğinde çağrılacak fonksiyon
-  document.addEventListener("DOMContentLoaded", function () {
-    const lang = "{{ g.get('lang', 'EN') }}";
-    const selectedLangLabel = document.getElementById("selectedLangLabel");
-    if (selectedLangLabel) {
-      selectedLangLabel.innerText = lang.toUpperCase();
-    }
 
-    function setLanguage(lang) {
-      document
-        .querySelectorAll(".lang-btn")
-        .forEach((btn) => btn.classList.remove("selected"));
+    const frequencyValue = {{ "%.2f"|format(frequency) }};
+    const powerFactorValue = {{ "%.2f"|format(power_factor) }};
+    const penaltyExists = {{ 'true' if penalty_status else 'false' }};
 
-      const selectedBtn = document.querySelector(
-        `.lang-btn[data-lang="${lang}"]`
-      );
-      if (selectedBtn) {
-        selectedBtn.classList.add("selected");
-      }
-
+    // Dil değiştirildiğinde çağrılacak fonksiyon
+    document.addEventListener("DOMContentLoaded", function () {
+      const lang = "{{ g.get('lang', 'EN') }}";
+      const selectedLangLabel = document.getElementById("selectedLangLabel");
       if (selectedLangLabel) {
         selectedLangLabel.innerText = lang.toUpperCase();
       }
 
-      // Dropdown kapansın
-      document.getElementById("languageDropdown").style.display = "none";
+      function setLanguage(lang) {
+        document
+          .querySelectorAll(".lang-btn")
+          .forEach((btn) => btn.classList.remove("selected"));
 
-      fetch("{{ url_for('set_language') }}", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: "lang=" + lang,
-      }).then(() => {
-        console.log("Backend'e gönderilen dil:", lang);
-        window.location.reload();
-      });
-    }
+        const selectedBtn = document.querySelector(
+          `.lang-btn[data-lang="${lang}"]`
+        );
+        if (selectedBtn) {
+          selectedBtn.classList.add("selected");
+        }
 
-    document.querySelectorAll(".lang-btn").forEach((button) => {
-      button.addEventListener("click", function () {
-        const lang = button.getAttribute("data-lang");
-        setLanguage(lang);
-      });
-    });
+        if (selectedLangLabel) {
+          selectedLangLabel.innerText = lang.toUpperCase();
+        }
 
-    const toggle = document.getElementById("languageToggle");
-    const dropdown = document.getElementById("languageDropdown");
+        // Dropdown kapansın
+        document.getElementById("languageDropdown").style.display = "none";
 
-    toggle.addEventListener("click", function (event) {
-      event.stopPropagation();
-
-      if (dropdown.style.display === "block") {
-        dropdown.style.display = "none";
-      } else {
-        dropdown.style.display = "block";
+        fetch("{{ url_for('set_language') }}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: "lang=" + lang,
+        }).then(() => {
+          console.log("Backend'e gönderilen dil:", lang);
+          window.location.reload();
+        });
       }
+
+      document.querySelectorAll(".lang-btn").forEach((button) => {
+        button.addEventListener("click", function () {
+          const lang = button.getAttribute("data-lang");
+          setLanguage(lang);
+        });
+      });
+
+      const toggle = document.getElementById("languageToggle");
+      const dropdown = document.getElementById("languageDropdown");
+
+      toggle.addEventListener("click", function (event) {
+        event.stopPropagation();
+
+        if (dropdown.style.display === "block") {
+          dropdown.style.display = "none";
+        } else {
+          dropdown.style.display = "block";
+        }
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.style.display = "none";
+        }
+      });
     });
 
-    document.addEventListener("click", function (e) {
-      if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
-        dropdown.style.display = "none";
-      }
-    });
-  });
-
-  
     document.addEventListener("DOMContentLoaded", function () {
       function updateDateTime() {
         const userLang = document.body.dataset.lang || "en"; 
@@ -370,17 +365,22 @@
     var currentLang = "{{ get_locale() }}";
     var isGerman = currentLang === "de";
 
+    function getFrequencyColor(value) {
+      if (value < 45) return "#ff0000";
+      if (value > 55) return "#f57c00";
+      return "#0EB100";
+    }
+
     // Echarts 1 Frekans (Hz)
-    var chart = echarts.init(document.getElementById("frequencyGauge"));
-    var option = {
+    const frequencyChart = echarts.init(document.getElementById("frequencyGauge"));
+
+    frequencyChart.setOption({
       graphic: [
         {
           type: "circle",
           left: "center",
           top: "center",
-          shape: {
-            r: 60,
-          },
+          shape: { r: 60 },
           style: {
             fill: "#0B1734",
             stroke: "#0D1A36",
@@ -395,51 +395,30 @@
           startAngle: 180,
           endAngle: 0,
           radius: "88%",
-          center: ["50%", "52%"],
-
+          data: [{ value: frequencyValue }],
           progress: {
             show: true,
             width: 12,
             itemStyle: {
-              color: "#0EB100",
+              color: getFrequencyColor(frequencyValue),
             },
             animation: false,
           },
-
           axisLine: {
             lineStyle: {
               width: 12,
-              color: [
-                [0.5, "#1C2747"],
-                [1, "#f57c00"],
-              ],
+              color: [[1, "#1C2747"]],
             },
           },
-
-          pointer: {
-            show: false,
-          },
-
-          axisTick: {
-            show: false,
-          },
-
-          splitLine: {
-            show: false,
-          },
-
-          axisLabel: {
-            show: false,
-          },
-
-          title: {
-            show: false,
-          },
-
+          pointer: { show: false },
+          axisTick: { show: false },
+          splitLine: { show: false },
+          axisLabel: { show: false },
+          title: { show: false },
           detail: {
             valueAnimation: true,
-            formatter: function (value) {
-              return `{line1|${value.toFixed(2)}}\n{line2|{{ _('Frequency') }}}\n{line3|(Hz)}`;
+            formatter: function (val) {
+              return `{line1|${val.toFixed(2)}}\n{line2|{{ _('Frequency') }}}\n{line3|(Hz)}`;
             },
             rich: {
               line1: {
@@ -461,31 +440,29 @@
             },
             offsetCenter: [0, "20%"],
           },
-
-          data: [
-            {
-              value: 50.04,
-            },
-          ],
         },
       ],
-    };
-    chart.setOption(option);
+    });
 
     // Echarts 2 
-    var chart = echarts.init(document.getElementById("reactiveStatus"));
-    var option = {
+    const reactiveChart = echarts.init(document.getElementById("reactiveStatus"));
+
+    const reactiveColor = penaltyExists ? "red" : "green";
+    const reactiveStroke = penaltyExists ? "#ff0000" : "#00a000";
+    const reactiveText = penaltyExists
+      ? `{line1|{{ _('Reactive') }}}\n{line2|{{ _('Penalty') }}}\n{line3|{{ _('Exist') }}}`
+      : `{line1|{{ _('Reactive') }}}\n{line2|{{ _('Penalty') }}}\n{line3|{{ _('Not Exist') }}}`;
+
+    reactiveChart.setOption({
       graphic: [
         {
           type: "circle",
           left: "center",
           top: "center",
-          shape: {
-            r: 58,
-          },
+          shape: { r: 58 },
           style: {
             fill: "transparent",
-            stroke: "#00a000",
+            stroke: reactiveStroke,
             lineWidth: 4,
           },
           z: 1,
@@ -494,11 +471,9 @@
           type: "circle",
           left: "center",
           top: "center",
-          shape: {
-            r: 52,
-          },
+          shape: { r: 52 },
           style: {
-            fill: "green",
+            fill: reactiveColor,
             stroke: "none",
           },
           z: 2,
@@ -508,48 +483,32 @@
           left: "center",
           top: "center",
           style: {
-            text: `{line1|{{ _('Reactive') }}}\n{line2|{{ _('Penalty') }}}\n{line3|{{ _('Not Exist') }}}`,
+            text: reactiveText,
             fill: "#fff",
             textAlign: "center",
             textVerticalAlign: "middle",
             rich: {
-              line1: {
-                fontSize: isGerman ? 13 : 16,
-                fontWeight: "bold",
-                lineHeight: 20,
-              },
-              line2: {
-                fontSize: isGerman ? 13 : 16,
-                fontWeight: "bold",
-                lineHeight: 20,
-              },
-              line3: {
-                fontSize: isGerman ? 12 : 14,
-                lineHeight: 18,
-              },
+              line1: { fontSize: isGerman ? 13 : 16, fontWeight: "bold", lineHeight: 20 },
+              line2: { fontSize: isGerman ? 13 : 16, fontWeight: "bold", lineHeight: 20 },
+              line3: { fontSize: isGerman ? 12 : 14, lineHeight: 18 },
             },
           },
           z: 3,
         },
       ],
-    };
-    chart.setOption(option);
-
+    });
 
     // Echarts 3 Güç Faktörü
-    var chart = echarts.init(document.getElementById("powerFactorGauge"));
-    var option = {
+    const pfChart = echarts.init(document.getElementById("powerFactorGauge"));
+
+    pfChart.setOption({
       graphic: [
         {
           type: "circle",
           left: "center",
           top: "center",
-          shape: {
-            r: 60,
-          },
-          style: {
-            fill: "#0B1734",
-          },
+          shape: { r: 60 },
+          style: { fill: "#0B1734" },
           z: 0,
         }
       ],
@@ -560,42 +519,19 @@
           center: ["50%", "50%"],
           startAngle: 225,
           endAngle: -45,
-
           progress: {
             show: true,
             width: 12,
-            itemStyle: {
-              color: "#f57c00",
-            },
+            itemStyle: { color: "#f57c00" },
           },
-
           axisLine: {
-            lineStyle: {
-              width: 12,
-              color: [[1, "#2b2f4b"]],
-            },
+            lineStyle: { width: 12, color: [[1, "#2b2f4b"]] },
           },
-
-          pointer: {
-            show: false,
-          },
-
-          axisTick: {
-            show: false,
-          },
-
-          splitLine: {
-            show: false,
-          },
-
-          axisLabel: {
-            show: false,
-          },
-
-          title: {
-            show: false,
-          },
-
+          pointer: { show: false },
+          axisTick: { show: false },
+          splitLine: { show: false },
+          axisLabel: { show: false },
+          title: { show: false },
           detail: {
             valueAnimation: true,
             formatter: function (value) {
@@ -622,18 +558,9 @@
             },
             offsetCenter: [0, "10%"],
           },
-
-          data: [
-            {
-              value: 87.45,
-            },
-          ],
+          data: [{ value: powerFactorValue }],
         },
       ],
-    };
-
-    chart.setOption(option);
+    });
 </script>
-
-
 {% endblock content %}

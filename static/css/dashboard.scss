@@ -1,4 +1,3 @@
-
 /* Header */
 .header {
   position: fixed;
@@ -361,8 +360,8 @@
     display: flex;
     align-items: end;
     margin-left: 0px;
-    margin-right: 42px;
-    margin-bottom: 18px;
+    margin-right: 23px;
+    margin-top: 26px;
 
     img {
       width: 16px;
@@ -636,7 +635,6 @@
         accent-color: #ff7f32;
         margin: 0;
       }
-
     }
   }
 
@@ -679,7 +677,7 @@
 }
 
 .lang-btn:hover {
-  background-color: none !important; 
+  background-color: none !important;
 }
 .radio-indicator-cover {
   width: 18px;
@@ -694,7 +692,7 @@
   transition: 0.3s;
 }
 .lang-btn {
-  transition: none !important; 
+  transition: none !important;
 }
 .radio-indicator {
   width: 10px;
@@ -707,8 +705,8 @@
 .lang-btn.selected .radio-indicator {
   background-color: #ff7f32;
 }
-.lang-back{
-  background-color: #EF8018;
+.lang-back {
+  background-color: #ef8018;
   padding: 15px;
   border-radius: 3px;
 }

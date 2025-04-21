@@ -338,8 +338,8 @@
   display: flex;
   align-items: end;
   margin-left: 0px;
-  margin-right: 42px;
-  margin-bottom: 18px;
+  margin-right: 23px;
+  margin-top: 26px;
 }
 .voltage-box .icon img {
   width: 16px;
@@ -664,7 +664,7 @@
 }
 
 .lang-back {
-  background-color: #EF8018;
+  background-color: #ef8018;
   padding: 15px;
   border-radius: 3px;
 }/*# sourceMappingURL=dashboard.css.map */
