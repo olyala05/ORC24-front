@@ -52,7 +52,11 @@
       <div class="line-header"></div>
     </div>
     <div class="report-date">
-         {{ page_title }} - <span id="modemNameInHeader" style="font-weight: bold; color: #3B5FFF"></span>
+      {{ page_title }} -
+      <span
+        id="modemNameInHeader"
+        style="font-weight: bold; color: #3b5fff"
+      ></span>
     </div>
   </div>
 </div>
@@ -198,13 +202,12 @@
     }
   });
 
-    // Dashboard Sayfasına Yönlendirir
-    function goToDashboard() {
-      window.location.href = "/dashboard";
-    }
+  // Dashboard Sayfasına Yönlendirir
+  function goToDashboard() {
+    window.location.href = "/dashboard";
+  }
 
-
-    document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function () {
     const modemName = sessionStorage.getItem("selected_device_name");
     const headerSpan = document.getElementById("modemNameInHeader");
 
@@ -213,9 +216,6 @@
     }
   });
 </script>
-
-
-
 
 <style>
   .swal-custom-bg {

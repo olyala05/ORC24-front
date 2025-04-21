@@ -36,7 +36,11 @@ logger = logging.getLogger(__name__)
 LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
 
 # Ağ Arayüzü IP Aralığı (Değiştirebilirsin)
-IP_RANGE = "172.27.10.0/24"
+# IP_RANGE = "172.27.10.0/24"
+
+
+IP_RANGE = "192.168.4.0/24"
+
 
 # MySQL veritabanı bağlantı bilgileri
 DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database": "iot"}

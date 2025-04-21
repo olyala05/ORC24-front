@@ -212,9 +212,9 @@ endblock%} {% block extra_css %}
 
   // Aktif dili Flask'tan al
   const activeLang = "{{ get_locale() }}";
-  moment.locale(activeLang); 
+  moment.locale(activeLang);
   const selectedLocale = calendarLocales[activeLang] || calendarLocales["en"];
-  selectedLocale.customRangeLabel = ""; 
+  selectedLocale.customRangeLabel = "";
 
   const predefinedRanges =
     predefinedRangesByLang[activeLang] || predefinedRangesByLang["en"];
@@ -309,46 +309,64 @@ endblock%} {% block extra_css %}
       .catch(console.error);
   }
 
-  function fetchLogs() {
-    if (isLoading || !hasMoreLogs) return;
-    isLoading = true;
-    loadingMessage.style.display = "table-row";
+function fetchLogs() {
+  if (isLoading || !hasMoreLogs) return;
+  isLoading = true;
+  loadingMessage.style.display = "table-row";
 
-    fetch("/get_logs", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        year: new Date().getFullYear(),
-        month: new Date().getMonth() + 1,
-        day: new Date().getDate(),
-        page: currentPage,
-        per_page: 20,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        loadingMessage.style.display = "none";
-        isLoading = false;
+  fetch("/get_logs", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      day: new Date().getDate(),
+      page: currentPage,
+      per_page: 20,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      loadingMessage.style.display = "none";
+      isLoading = false;
 
-        if (data.status === "success") {
-          let logs =
-            typeof data.data === "string" ? JSON.parse(data.data) : data.data;
-          if (Array.isArray(logs) && logs.length) {
-            updateTable(logs, true);
-            currentPage++;
-            hasMoreLogs = data.has_more;
-          }
+      if (data.status === "success") {
+        let logs =
+          typeof data.data === "string" ? JSON.parse(data.data) : data.data;
+
+        if (Array.isArray(logs) && logs.length) {
+          updateTable(logs, true);
+          currentPage++;
+          hasMoreLogs = data.has_more;
+          logTableHead.style.display = "table-header-group";
+          noLogsMessage.style.display = "none";
+        } else {
+          logTableBody.innerHTML = "";
+          logTableHead.style.display = "none";
+          noLogsMessage.style.display = "block";
         }
-      })
-      .catch((err) => {
-        isLoading = false;
-        loadingMessage.style.display = "none";
-        console.error("Fetch logs error:", err);
-      });
-  }
+      } else {
+        logTableBody.innerHTML = "";
+        logTableHead.style.display = "none";
+        noLogsMessage.style.display = "block";
+      }
+    })
+    .catch((err) => {
+      isLoading = false;
+      loadingMessage.style.display = "none";
+      console.error("Fetch logs error:", err);
+      logTableBody.innerHTML = "";
+      logTableHead.style.display = "none";
+      noLogsMessage.style.display = "block";
+    });
+}
+
 
   function fetchLogsByDate(date) {
     const [year, month, day] = date.split("-");
+
+    // ⬇️ Loading başlasın
+    showLoading("{{ _('Loading logs, please wait...') }}");
 
     fetch("/get_logs", {
       method: "POST",
@@ -378,6 +396,10 @@ endblock%} {% block extra_css %}
         console.error("Fetch by date error:", err);
         loadingMessage.style.display = "none";
         noLogsMessage.style.display = "block";
+      })
+      .finally(() => {
+        // ⬇️ Loading bittiğinde gizle
+        hideLoading();
       });
   }
 
@@ -498,10 +520,11 @@ endblock%} {% block extra_css %}
     background-color: #ef8018;
     color: #fff;
   }
-  .daterangepicker td.active, .daterangepicker td.active:hover {
-    background-color: #EF8018;
+  .daterangepicker td.active,
+  .daterangepicker td.active:hover {
+    background-color: #ef8018;
     border-color: transparent;
     color: #fff;
-}
+  }
 </style>
 {% endblock %}
