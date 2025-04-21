@@ -255,7 +255,6 @@
 </section>
 
 <script>
-
     const frequencyValue = {{ "%.2f"|format(frequency) }};
     const powerFactorValue = {{ "%.2f"|format(power_factor) }};
     const penaltyExists = {{ 'true' if penalty_status else 'false' }};
@@ -450,7 +449,7 @@
     const reactiveColor = penaltyExists ? "red" : "green";
     const reactiveStroke = penaltyExists ? "#ff0000" : "#00a000";
     const reactiveText = penaltyExists
-      ? `{line1|{{ _('Reactive') }}}\n{line2|{{ _('Penalty') }}}\n{line3|{{ _('Exist') }}}`
+      ? `{line1|{{ _('Reactive') }}}\n{line2|{{ _('Penalty') }}}`
       : `{line1|{{ _('Reactive') }}}\n{line2|{{ _('Penalty') }}}\n{line3|{{ _('Not Exist') }}}`;
 
     reactiveChart.setOption({
