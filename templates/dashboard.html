@@ -121,84 +121,64 @@
 
 <!-- Ana Tablo -->
 <section class="dashboard">
-  <div class="energy-table">
-    <div class="energy-header">
-      <div>{{ _('Energy Drawn From The Grid') }}</div>
-      <div style="margin-right: 79px">{{ _('Generated Energy') }}</div>
-      <div>{{ _('Consumed Energy') }}</div>
-    </div>
-    <div class="energy-row">
-      <div>
-        <img
-          src="{{ url_for('static', filename='images/svg/08.svg') }}"
-          alt="Energy"
-        />
-        80.158,68 kWh
-      </div>
-      <div>
-        <img
-          src="{{ url_for('static', filename='images/svg/08.svg') }}"
-          alt="Energy"
-        />
-        80.158,68 kWh
-      </div>
-      <div>
-        <img
-          src="{{ url_for('static', filename='images/svg/08.svg') }}"
-          alt="Energy"
-        />
-        80.158,68 kWh
-      </div>
-    </div>
+<div class="energy-table">
+  <!-- Başlık -->
+  <div class="energy-header">
+    <div>{{ _('Energy Drawn From The Grid') }}</div>
+    <div>{{ _('Generated Energy') }}</div>
+    <div>{{ _('Consumed Energy') }}</div>
+  </div>
 
-    <div class="energy-row">
-      <div>
-        <img
-          src="{{ url_for('static', filename='images/svg/09.svg') }}"
-          alt="Industry"
-        />
-        80.158,68 TEP
-      </div>
-      <div>
-        <img
-          src="{{ url_for('static', filename='images/svg/09.svg') }}"
-          alt="Industry"
-        />
-        80.158,68 TEP
-      </div>
-      <div>
-        <img
-          src="{{ url_for('static', filename='images/svg/09.svg') }}"
-          alt="Industry"
-        />
-        80.158,68 TEP
-      </div>
+  <!-- 1. Satır: kWh -->
+  <div class="energy-row">
+    <div>
+      <img src="{{ url_for('static', filename='images/svg/08.svg') }}" alt="Energy" />
+      {{ from_grid.kwh }} kWh
     </div>
-
-    <div class="energy-row">
-      <div>
-        <img
-          src="{{ url_for('static', filename='images/svg/10.svg') }}"
-          alt="Cloud"
-        />
-        80.158,68 Ton
-      </div>
-      <div>
-        <img
-          src="{{ url_for('static', filename='images/svg/10.svg') }}"
-          alt="Cloud"
-        />
-        80.158,68 Ton
-      </div>
-      <div>
-        <img
-          src="{{ url_for('static', filename='images/svg/10.svg') }}"
-          alt="Cloud"
-        />
-        80.158,68 Ton
-      </div>
+    <div>
+      <img src="{{ url_for('static', filename='images/svg/08.svg') }}" alt="Energy" />
+      {{ total_generated.kwh }} kWh
+    </div>
+    <div>
+      <img src="{{ url_for('static', filename='images/svg/08.svg') }}" alt="Energy" />
+      {{ total_consumed.kwh }} kWh
     </div>
   </div>
+
+  <!-- 2. Satır: TEP -->
+  <div class="energy-row">
+    <div>
+      <img src="{{ url_for('static', filename='images/svg/09.svg') }}" alt="TEP" />
+      {{ from_grid.tep }} TEP
+    </div>
+    <div>
+      <img src="{{ url_for('static', filename='images/svg/09.svg') }}" alt="TEP" />
+      {{ total_generated.tep }} TEP
+    </div>
+    <div>
+      <img src="{{ url_for('static', filename='images/svg/09.svg') }}" alt="TEP" />
+      {{ total_consumed.tep }} TEP
+    </div>
+  </div>
+
+  <!-- 3. Satır: CO2 Ton -->
+  <div class="energy-row">
+    <div>
+      <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="CO2" />
+      {{ from_grid.carbonTon }} Ton
+    </div>
+    <div>
+      <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="CO2" />
+      {{ total_generated.carbonTon }} Ton
+    </div>
+    <div>
+      <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="CO2" />
+      {{ total_consumed.carbonTon }} Ton
+    </div>
+  </div>
+</div>
+
+
 
   <div class="device-status">
     <div class="dashboard-container">

@@ -123,54 +123,45 @@ def extract_token_from_file(filepath):
         print(f"Dosya okunamadı: {e}")
     return None, None
 
-@app.route("/auto-login", methods=["GET", "POST"])
+def get_dashboard_data():
+    token = None
+
+    if os.path.exists(TOKEN_FILE_PATH):
+        with open(TOKEN_FILE_PATH, "r") as f:
+            token = f.read().strip()
+    else:
+        token_data = find_usb_and_read_token_windows()
+        if token_data:
+            token, _ = token_data  
+
+    if not token:
+        return None, "Token bulunamadı"
+
+    response = requests.get(
+        LARAVEL_API_URL_V2,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        verify=False
+    )
+
+    if response.status_code == 200:
+        return response.json(), None
+    else:
+        return None, f"API hatası: {response.status_code}"
+
+@app.route("/auto-login", methods=["POST"])
 def auto_login():
-    try:
-        print("Auto-login başladı")
-        token = None
+    print("Auto-login başladı")
+    data, error = get_dashboard_data()
 
-        if os.path.exists(TOKEN_FILE_PATH):
-            print("stored_token.txt bulundu")
-            with open(TOKEN_FILE_PATH, "r") as f:
-                token = f.read().strip()
-        else:
-            print("Token dosyası yok, USB'den aranmaya başlanıyor")
-            token_data = find_usb_and_read_token_windows()
-            if token_data:
-                token, _ = token_data  
+    if error:
+        return jsonify({"success": False, "message": error}), 403
 
-        if not token:
-            print("Token bulunamadı")
-            return jsonify({"success": False, "message": "Access token bulunamadı"}), 403
-
-        print("Token bulundu:", token)
-
-        response = requests.get(
-            LARAVEL_API_URL_V2,
-            headers={
-                "Authorization": f"Bearer {token}",
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            verify=False
-        )
-
-        print("API yanıt kodu:", response.status_code)
-
-        if response.status_code == 200:
-            return jsonify({"success": True, "data": response.json()})
-        else:
-            return jsonify({
-                "success": False,
-                "message": "Dashboard verisi alınamadı",
-                "status_code": response.status_code,
-                "raw": response.text
-            }), response.status_code
-
-    except Exception as e:
-        import traceback
-        traceback.print_exc()
-        return jsonify({"success": False, "message": str(e)}), 500
+    print("🔹 API'den gelen veriler:", json.dumps(data, indent=2))
+    return jsonify({"success": True, "data": data})
 
 # Giriş Sayfası
 @app.route("/login", methods=["GET", "POST"])
@@ -221,7 +212,18 @@ def check_login_redirect():
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html", page_title=_("Dashboard"))
+    data, error = get_dashboard_data()
+
+    if error:
+        return render_template("dashboard.html", error=error)
+
+    return render_template(
+        "dashboard.html",
+        from_grid=data.get("consumed_from_network", {}),
+        total_generated=data.get("total_produced", {}),
+        total_consumed=data.get("total_consumed", {})
+    )
+ 
 
 # Alarm Status API'sinden veri çek
 @app.route("/alarm_status", methods=["GET"])
