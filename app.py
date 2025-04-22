@@ -10,22 +10,15 @@ from flask import (
     g,
     flash,
 )
-from flask_jwt_extended import JWTManager, create_access_token
+from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flask_scss import Scss
-import json
 import ipaddress
 import scapy.all as scapy
 import nmap
-import socket
 from datetime import datetime, timedelta
 import logging
-import pymodbus.client.tcp 
-
 from flask_babel import Babel, gettext as _
-import time
-import shutil
-import string
 
 from blueprints.auth_routes import auth_bp
 from blueprints.dashboard import dash_bp    
@@ -1057,7 +1050,6 @@ def fetch_daily_data_paginated():
 def daily_data_detail():
     return render_template(
         "datas/daily_data_detail.html", page_title=_("Daily Data Detail"))
-
 
 @app.route("/alarm", endpoint="alarm")
 def alarm():
