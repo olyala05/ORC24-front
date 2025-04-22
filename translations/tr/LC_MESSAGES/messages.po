@@ -1400,14 +1400,12 @@ msgstr "Wi-Fi Bağlantısı Yok!"
 msgid "Please check your modem and connections."
 msgstr "Lütfen modeminizi ve bağlantılarınızı kontrol edin. "
 
-msgid ""
-msgstr ""
+msgid "Please enter the password."
+msgstr "Lütfen şifreyi girin."
 
-msgid ""
-msgstr ""
 
-msgid ""
-msgstr ""
+
+
 
 msgid ""
 msgstr ""

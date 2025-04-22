@@ -1383,3 +1383,6 @@ msgstr "Keine WLAN-Verbindung!"
 
 msgid "Please check your modem and connections."
 msgstr "Bitte überprüfen Sie Ihren Router und Ihre Verbindungen."
+
+msgid "Please enter the password."
+msgstr "Bitte geben Sie das Passwort ein."

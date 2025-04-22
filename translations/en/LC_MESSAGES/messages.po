@@ -1388,3 +1388,6 @@ msgstr "No Wi-Fi Connection!"
 
 msgid "Please check your modem and connections."
 msgstr "Please check your modem and connections."
+
+msgid "Please enter the password."
+msgstr "Please enter the password."
