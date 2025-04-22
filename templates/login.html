@@ -25,7 +25,7 @@
       <div class="alert alert-{{ category }}">{{ message }}</div>
       {% endfor %} {% endif %} {% endwith %}
 
-      <form method="POST" action="{{ url_for('login') }}">
+      <form method="POST" action="{{ url_for('auth.login') }}">
         <div class="input-group">
           <span class="icon icon-left"
             ><img

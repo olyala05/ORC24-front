@@ -21,45 +21,35 @@ import socket
 from datetime import datetime, timedelta
 import logging
 import pymodbus.client.tcp 
-import os
+
 from flask_babel import Babel, gettext as _
 import time
 import shutil
 import string
-import win32file 
-import win32api
+
+from blueprints.auth_routes import auth_bp
+from blueprints.dashboard import dash_bp    
 
 app = Flask(__name__)
-CORS(app)
+logger = logging.getLogger(__name__)
 app.secret_key = "supersecretkey"
 app.config["JWT_SECRET_KEY"] = "jwt_secret_key"
-jwt = JWTManager(app)
-
-logger = logging.getLogger(__name__)
-
-# Laravel API'nin URL'si
-LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
-LARAVEL_API_URL_V2 = "https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/dashboard"
-# Aranacak dosya adı
-USER_INFO_FILENAME = "user_info.json"
-TOKEN_FILE_PATH = "stored_token.txt"
-
-# Ağ Arayüzü IP Aralığı (Değiştirebilirsin)
-# IP_RANGE = "172.27.10.0/24"
-IP_RANGE = "192.168.4.0/24"
-
-# MySQL veritabanı bağlantı bilgileri
-DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database": "iot"}
-
-# Flask-SCSS'i başlat
-Scss(app, static_dir="static", asset_dir="assets")
-
-last_connection_time = None
-
 app.config['BABEL_DEFAULT_LOCALE'] = 'tr'
 app.config['BABEL_SUPPORTED_LOCALES'] = ['tr', 'en', 'de']
 
+CORS(app)
+jwt = JWTManager(app)
+Scss(app, static_dir="static", asset_dir="assets")
 babel = Babel(app)
+
+LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
+IP_RANGE = "192.168.4.0/24"
+DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database": "iot"}
+last_connection_time = None
+
+# Blueprintleri kayıt et
+app.register_blueprint(auth_bp)
+app.register_blueprint(dash_bp)
 
 @app.before_request
 def before_request_func():
@@ -91,150 +81,6 @@ def inject_locale():
 def index():
     return render_template("index.html")
 
-def find_usb_and_read_token_windows():
-    from string import ascii_uppercase
-
-    drives_str = win32api.GetLogicalDriveStrings()
-    drives = drives_str.split('\x00')[:-1]
-
-    for drive in drives:
-        drive_type = win32file.GetDriveType(drive)
-        if drive_type == win32file.DRIVE_REMOVABLE:
-            potential_file = os.path.join(drive, USER_INFO_FILENAME)
-            print(f"Kontrol ediliyor: {potential_file}")
-            if os.path.isfile(potential_file):
-                print(f"USB bulundu: {potential_file}")
-                return extract_token_from_file(potential_file)
-    
-    print("Hiçbir USB aygıtında user_info.json bulunamadı.")
-    return None
-
-def extract_token_from_file(filepath):
-    try:
-        with open(filepath, "r", encoding="utf-8") as file:
-            data = json.load(file)
-            token = data.get("auth", {}).get("token")
-            if token:
-                with open(TOKEN_FILE_PATH, "w") as f:
-                    f.write(token)
-                print("Token başarıyla yazıldı.")
-                return token, None
-    except Exception as e:
-        print(f"Dosya okunamadı: {e}")
-    return None, None
-
-def get_dashboard_data():
-    token = None
-
-    if os.path.exists(TOKEN_FILE_PATH):
-        with open(TOKEN_FILE_PATH, "r") as f:
-            token = f.read().strip()
-    else:
-        token_data = find_usb_and_read_token_windows()
-        if token_data:
-            token, _ = token_data  
-
-    if not token:
-        return None, "Token bulunamadı"
-
-    response = requests.get(
-        LARAVEL_API_URL_V2,
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        verify=False
-    )
-
-    if response.status_code == 200:
-        return response.json(), None
-    else:
-        return None, f"API hatası: {response.status_code}"
-
-@app.route("/auto-login", methods=["POST"])
-def auto_login():
-    print("Auto-login başladı")
-    data, error = get_dashboard_data()
-
-    if error:
-        return jsonify({"success": False, "message": error}), 403
-
-    print("🔹 API'den gelen veriler:", json.dumps(data, indent=2))
-    return jsonify({"success": True, "data": data})
-
-# Giriş Sayfası
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
-
-        response = requests.get(
-            f"{LARAVEL_API_URL}/login",
-            params={"client_email": email, "client_password": password},
-            headers={"Accept": "application/json"},
-            verify=False,
-        )
-
-        if response.status_code == 200:
-            try:
-                api_response = response.json()
-                session["access_token"] = api_response.get("access_token")
-                session["login_success"] = True
-                session["login_time"] = datetime.utcnow().isoformat()  
-                return redirect(url_for("modem_selection"))
-            except Exception as e:
-                flash("Sunucudan geçersiz yanıt alındı!", "danger")
-                return redirect(url_for("login"))
-
-        flash("Hatalı e-posta veya şifre!", "danger")
-        return redirect(url_for("login"))
-
-    login_success = session.pop("login_success", None)
-    return render_template("login.html", login_success=login_success)
-
-# Login Butonuna Basıldığında Yönlendirme Kontrolü için endpoint 
-@app.route("/check-login-redirect")
-def check_login_redirect():
-    login_time_str = session.get("login_time")
-
-    if login_time_str:
-        login_time = datetime.fromisoformat(login_time_str)
-        now = datetime.utcnow()
-        time_diff = now - login_time
-
-        if time_diff < timedelta(hours=2):
-            return redirect(url_for("modem_selection")) 
-        else:
-            session.clear()  
-    return redirect(url_for("login"))  
-
-@app.route("/dashboard")
-def dashboard():
-    data, error = get_dashboard_data()
-
-    if error:
-        return render_template("dashboard.html", error=error)
-
-    # Ceza durumu kontrolü (inductive veya capacitive biri bile True ise ceza var)
-    penalty_status = (
-        data.get("capacitive", {}).get("isUnderPenalty", False)
-        or data.get("inductive", {}).get("isUnderPenalty", False)
-    )
-
-    return render_template(
-        "dashboard.html",
-        from_grid=data.get("consumed_from_network", {}),
-        total_generated=data.get("total_produced", {}),
-        total_consumed=data.get("total_consumed", {}),
-        voltages=data.get("voltages", {}),
-        currents=data.get("current", {}),
-        frequency=data.get("frequency", 0),
-        power_factor=data.get("power_factor", 0),
-        penalty_status=penalty_status
-    )
-
 # Alarm Status API'sinden veri çek
 @app.route("/alarm_status", methods=["GET"])
 def alarm_status():
@@ -255,7 +101,6 @@ def alarm_status():
         return jsonify(response.json())
     else:
         return jsonify({"error": "Alarm status verisi alınamadı"}), response.status_code
-
 
 def arp_scan(ip_range):
     """Belirtilen IP aralığında ARP taraması yaparak 02, 12 veya 2C ile başlayan MAC adreslerini bulur"""
@@ -351,13 +196,11 @@ def get_connected_devices():
 
     return devices
 
-
 # Bağlı Cihazları Listeleme API'si
 @app.route("/devices", methods=["GET"])
 def list_devices():
     devices = get_connected_devices()
     return jsonify(devices)
-
 
 # IP Adresinin Geçerli Olduğunu Kontrol Et
 def is_valid_ip(ip):
@@ -367,12 +210,10 @@ def is_valid_ip(ip):
     except ValueError:
         return False
 
-
 @app.route("/get_selected_device", methods=["GET"])
 def get_selected_device():
     ip_address = session.get("selected_device_ip", None)
     return jsonify({"ip_address": ip_address})
-
 
 # Cihaza Bağlanma
 @app.route("/connect_device", methods=["POST"])
@@ -724,7 +565,6 @@ def vpn_status():
             message="Failed to fetch VPN status", code=500, details=str(e)
         )
 
-
 @app.route("/fetch_equipment_details", methods=["GET"])
 def fetch_equipment_details():
     selected_ip = session.get("selected_device_ip")
@@ -803,7 +643,6 @@ def modbus_request():
         logger.error(f"Modbus isteği hatası: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
 
-
 # Read Modbus
 @app.route("/validate_modbus", methods=["POST"])
 def validate_modbus():
@@ -834,7 +673,6 @@ def validate_modbus():
         return ResponseHandler.error(
             message="Failed to send command to ORC24", code=500, details=str(e)
         )
-
 
 @app.route("/modbus_test", methods=["POST", "GET"])
 def modbus_test():
@@ -879,7 +717,6 @@ def modbus_test():
             message="Unexpected error occurred", code=500, details=str(e)
         )
 
-
 @app.route("/disconnect_request", methods=["POST"])
 def disconnect_request():
     selected_ip = session.get("selected_device_ip")  
@@ -900,7 +737,6 @@ def disconnect_request():
     except requests.exceptions.RequestException as e:
         logger.error(f"Wi-Fi kapatma hatası: {e}")
         return jsonify({"error": f"Wi-Fi bağlantısı kapatılamadı: {str(e)}"}), 500
-
 
 @app.route("/equipments-with-models", methods=["POST"])
 def equipments_with_models():
@@ -969,7 +805,6 @@ def get_all_equipments():
         print(f"RequestException: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
 
-
 @app.route("/equipment", endpoint="equipment")
 def equipment():
     return render_template("equipments/equipments.html", page_title=_("Equipments"))
@@ -992,7 +827,6 @@ def modem_selection():
 def switch():
     return render_template("test/switch.html", page_title=_("Test Mode"))
 
-
 @app.route("/test", endpoint="test")
 def test():
     return render_template("test/test.html", page_title=_("Test"))
@@ -1000,7 +834,6 @@ def test():
 @app.route("/test-ui", endpoint="test-ui")
 def test():
     return render_template("test_ui.html", page_title=_("Test UI"))
-
 
 @app.route("/equipment-details", endpoint="equipment_details")
 def equipment_details():
@@ -1010,11 +843,9 @@ def equipment_details():
 def settings():
     return render_template("settings/setting.html", page_title=_("Settings"))
 
-
 @app.route("/orc-settings", endpoint="orc_settings")
 def orc_setting():
     return render_template("settings/orc_set.html", page_title=_("Orc Settings"))
-
 
 @app.route("/osos-settings", endpoint="osos_settings")
 def osos_setting():
@@ -1023,7 +854,6 @@ def osos_setting():
 @app.route("/equipment-settings", endpoint="equipment_settings")
 def equipment_setting():
     return render_template("settings/equipment_set.html", page_title=_("Equipment Settings"))
-
 
 @app.route("/send_command", methods=["POST"])
 def send_command():
@@ -1296,11 +1126,6 @@ def get_electric_alarm_data():
     except requests.exceptions.RequestException as e:
         logging.error(f"Alarm verileri alınamadı: {e}")
         return jsonify({"status": "error", "message": f"Alarm verileri alınamadı: {e}"}), 500
-
-@app.route("/logout", methods=["POST"])
-def logout():
-    session.clear()
-    return redirect(url_for("login"))
 
 @app.route("/get_slave_data", methods=["GET"])
 def get_slave_data():

@@ -1,9 +1,12 @@
-{% extends "layout.html" %} {% block title %} Modem Selection {% endblock %} {%
-block content %}
+{% extends "layout.html" %} 
+
+{% block title %} Modem Selection {% endblock %} 
+
+{% block content %}
 
 <div class="header">
   <div class="header-left">
-    <form action="{{ url_for('logout') }}" method="POST" id="logout-form">
+    <form action="{{ url_for('auth.logout') }}" method="POST" id="logout-form">
       <button type="button" class="header-button-logout" id="logout-button">
         <img
           src="{{ url_for('static', filename='images/svg/37.svg') }}"

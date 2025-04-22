@@ -67,10 +67,10 @@ def login():
                 return redirect(url_for("dashboard"))  # 🎯 Dashboard sayfasına yönlendir
             except Exception as e:
                 flash("Sunucudan geçersiz yanıt alındı!", "danger")
-                return redirect(url_for("login"))
+                return redirect(url_for("auth.login"))
 
         flash("Hatalı e-posta veya şifre!", "danger")
-        return redirect(url_for("login"))
+        return redirect(url_for("auth.login"))
     login_success = session.pop("login_success", None)
     return render_template("login.html", login_success=login_success)
 
@@ -387,10 +387,10 @@ def daily_data_detail():
     return render_template("datas/daily_data_detail.html")
 # !! Data End
 
-@app.route("/logout", methods=["POST"])
-def logout():
-    session.clear() 
-    return redirect(url_for("login")) 
+# @app.route("/logout", methods=["POST"])
+# def logout():
+#     session.clear() 
+#     return redirect(url_for("auth.login")) 
 
 class ResponseHandler:
     @staticmethod
