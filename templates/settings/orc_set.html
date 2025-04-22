@@ -1,7 +1,4 @@
-{% extends "layout.html" %} 
-
-{% block title %} {{ _('ORC Settings')}} 
-{% endblock
+{% extends "layout.html" %} {% block title %} {{ _('ORC Settings')}} {% endblock
 %} {% block content %}
 <!-- Header -->
 {% include 'partials/header.html' %}
@@ -36,12 +33,13 @@
       <div class="wifi-container-set">
         <!-- Wi-Fi Password Form -->
         <div class="wifi-connection-set">
-
           <!-- Connected Wi-Fi -->
           <div class="wifi-card-set ssid-cover connected">
-            <h4>  <img
+            <h4>
+              <img
                 src="{{ url_for('static', filename='images/svg/41.svg') }}"
-                alt="No Wi-Fi" class="wifi-orange-icon"
+                alt="No Wi-Fi"
+                class="wifi-orange-icon"
               />
               {{ _('Connected')}}
             </h4>
@@ -50,13 +48,19 @@
             </div>
           </div>
 
-          <div class="wifi-card-set bg-white" id="wifi-password-form" style="display: none;">
+          <div
+            class="wifi-card-set bg-white"
+            id="wifi-password-form"
+            style="display: none"
+          >
             <div class="wifi-icon-set">
               <img
                 src="{{ url_for('static', filename='images/svg/12.svg') }}"
                 alt="No Wi-Fi"
               />
-              <p id="wifi-ssid">{{ _('Wi-Fi SSID:')}} <span>{{ _('Not Connected')}}</span></p>
+              <p id="wifi-ssid">
+                {{ _('Wi-Fi SSID:')}} <span>{{ _('Not Connected')}}</span>
+              </p>
             </div>
             <div class="password-intput-set">
               <label>{{ _('Password:')}}</label>
@@ -75,7 +79,6 @@
               </button>
             </div>
           </div>
-
         </div>
         <!-- Available Wi-Fi -->
         <div class="network-box-set">
@@ -86,6 +89,7 @@
             <div class="available-wifi-underline"></div>
             <ul id="wifi-networks">
               <!-- Buraya dinamik Wi-Fi listesi gelecek -->
+              <li class="wifi-loading"><span>Yükleniyor...</span></li>
             </ul>
           </div>
         </div>
@@ -117,7 +121,6 @@
     <!-- ORC Set -->
     <div id="orc-set" class="orc-settings-container" style="display: none">
       <div class="orc-settings-card">
-
         <div class="orc-input-group">
           <label>{{ _('Modem Name')}}</label>
           <input type="text" placeholder="{{ _('Modem Name')}}" readonly />
@@ -145,8 +148,8 @@
       </div>
     </div>
   </div>
-
- <script>
+</div>
+<script>
   document.addEventListener("DOMContentLoaded", function () {
     const tabButtons = document.querySelectorAll(".tab-btn-set");
     const tabContents = document.querySelectorAll(".content-area-set > div");
@@ -175,7 +178,9 @@
   document.addEventListener("DOMContentLoaded", function () {
     const wifiListElement = document.getElementById("wifi-networks");
     const wifiPasswordInput = document.getElementById("wifi-password");
-    const wifiSSIDElement = document.getElementById("wifi-ssid").querySelector("span");
+    const wifiSSIDElement = document
+      .getElementById("wifi-ssid")
+      .querySelector("span");
     const connectedWifiSpan = document.getElementById("connected-wifi");
     const connectButton = document.getElementById("connect-btn");
     const showPasswordCheckbox = document.getElementById("showPass");
@@ -184,54 +189,61 @@
     const wifiPasswordForm = document.getElementById("wifi-password-form");
     const cancelButton = document.querySelector(".cancel-set");
 
-
     function fetchWifiNetworks() {
-      fetch("/wi-fi-list", { method: "POST" })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status !== "success") {
-            wifiListElement.innerHTML = `<p style='color: red;'>${data.message}</p>`;
-            return;
-          }
+        // 📌 Loading ekranını göster
+        showLoading("Wi-Fi ağları yükleniyor...");
 
-          let networks = data.data.wifi_networks || [];
-          const connectedSSID = data.data.connected_ssid || null;
-          const connectedPassword = data.data.wifi_password || "";
+        fetch("/wi-fi-list", { method: "POST" })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.status !== "success") {
+                    wifiListElement.innerHTML = `<p style='color: red;'>${data.message}</p>`;
+                    return;
+                }
 
-          let wifiHTML = "";
+                let networks = data.data.wifi_networks || [];
+                const connectedSSID = data.data.connected_ssid || null;
+                const connectedPassword = data.data.wifi_password || "";
 
-          // Bağlı Wi-Fi'yi en üste taşı
-          if (connectedSSID) {
-            networks = networks.filter((ssid) => ssid !== connectedSSID);
-            networks.unshift(connectedSSID);
-          }
+                let wifiHTML = "";
 
-          networks.forEach((ssid) => {
-            const isConnected = ssid === connectedSSID ? "wifi-connected" : "";
-            wifiHTML += `
-              <li onclick="selectWifi('${ssid}')" class="${isConnected}">
-                <img src="/static/images/svg/25.svg" alt="Wi-Fi"/>
-                <span>${ssid}</span>
-                <img src="/static/images/svg/26.svg" alt="Lock"/>
-              </li>`;
-          });
+                if (connectedSSID) {
+                    networks = networks.filter((ssid) => ssid !== connectedSSID);
+                    networks.unshift(connectedSSID);
+                }
 
-          wifiListElement.innerHTML = wifiHTML;
+                networks.forEach((ssid) => {
+                    const isConnected = ssid === connectedSSID ? "wifi-connected" : "";
+                    wifiHTML += `
+                        <li onclick="selectWifi('${ssid}')" class="${isConnected}">
+                            <img src="/static/images/svg/25.svg" alt="Wi-Fi"/>
+                            <span>${ssid}</span>
+                            <img src="/static/images/svg/26.svg" alt="Lock"/>
+                        </li>`;
+                });
 
-          if (connectedSSID) {
-            selectedSSID = connectedSSID;
-            wifiSSIDElement.innerText = connectedSSID;
-            connectedWifiSpan.innerText = `SSID: ${connectedSSID}`;
-            wifiPasswordInput.value = connectedPassword;
-          } else {
-            connectedWifiSpan.innerText = `{{ _('No Wi-Fi Connection') }}`;
-          }
-        })
-        .catch((error) => {
-          console.error("Wi-Fi networks loading error:", error);
-          wifiListElement.innerHTML = "<p style='color: red;'>Wi-Fi bilgisi alınamadı.</p>";
-        });
+                wifiListElement.innerHTML = wifiHTML;
+
+                if (connectedSSID) {
+                    selectedSSID = connectedSSID;
+                    wifiSSIDElement.innerText = connectedSSID;
+                    connectedWifiSpan.innerText = `SSID: ${connectedSSID}`;
+                    wifiPasswordInput.value = connectedPassword;
+                } else {
+                    connectedWifiSpan.innerText = `{{ _('No Wi-Fi Connection') }}`;
+                }
+            })
+            .catch((error) => {
+                console.error("Wi-Fi networks loading error:", error);
+                wifiListElement.innerHTML = "<p style='color: red;'>Wi-Fi bilgisi alınamadı.</p>";
+                showErrorAlert("Hata!", "Wi-Fi bilgisi alınırken sorun oluştu.");
+            })
+            .finally(() => {
+                // 📌 Loading ekranını kapat
+                hideLoading();
+            });
     }
+
 
     window.selectWifi = function (ssid) {
       selectedSSID = ssid;
@@ -247,7 +259,6 @@
       wifiPasswordInput.value = "";
     });
 
-
     // Şifreyi göster/gizle
     showPasswordCheckbox.addEventListener("change", function () {
       wifiPasswordInput.type = this.checked ? "text" : "password";
@@ -260,7 +271,6 @@
           icon: "warning",
           title: "Wi-Fi seçilmedi!",
           text: "Lütfen bir Wi-Fi ağı seçin.",
-          width: "280px",
           customClass: { popup: "small-swal-popup" },
         });
         return;
@@ -272,7 +282,6 @@
           icon: "warning",
           title: "Şifre girilmedi!",
           text: "Lütfen şifreyi girin.",
-          width: "280px",
           customClass: { popup: "small-swal-popup" },
         });
         return;
@@ -298,7 +307,7 @@
             });
 
             connectedWifiSpan.innerText = `SSID: ${selectedSSID}`;
-            wifiPasswordForm.style.display = "none"; 
+            wifiPasswordForm.style.display = "none";
             fetchWifiNetworks();
           } else {
             Swal.fire({
@@ -331,10 +340,16 @@
 
   // Modem bilgisi çek
   document.addEventListener("DOMContentLoaded", function () {
-    const modemNameInput = document.querySelector("#orc-set input[placeholder='{{ _('Modem Name')}}']");
+    const modemNameInput = document.querySelector(
+      "#orc-set input[placeholder='{{ _('Modem Name')}}']"
+    );
     const modemStatusSelect = document.querySelector("#orc-set select");
-    const ssidInput = document.querySelector("#orc-set input[placeholder='{{ _('SSID')}}']");
-    const passwordInput = document.querySelector("#orc-set input[placeholder='{{ _('Password')}}']");
+    const ssidInput = document.querySelector(
+      "#orc-set input[placeholder='{{ _('SSID')}}']"
+    );
+    const passwordInput = document.querySelector(
+      "#orc-set input[placeholder='{{ _('Password')}}']"
+    );
 
     function fetchModemInfo() {
       fetch("/get_modem_info")
@@ -368,59 +383,75 @@
 
     fetchModemInfo();
   });
-
 </script>
 
-  <style>
-    .wifi-connected span {
-      color: green;
-      font-weight: bold;
-    }
+<style>
+  .wifi-connected span {
+    color: green;
+    font-weight: bold;
+  }
 
-    .spinner {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-top: 2px solid #fff;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin-right: 5px;
-      vertical-align: middle;
-    }
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
 
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
     }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 
-    .small-swal-popup {
-      font-size: 14px !important;
-      padding: 10px !important;
-      max-width: 280px !important;
-    }
+  .small-swal-popup {
+    font-size: 14px !important;
+    padding: 13px !important;
+    max-width: 370px !important;
+  }
 
-    .swal2-title {
-      font-size: 14px !important;
-    }
+  .swal2-title {
+    font-size: 18px !important;
+    color: #0b1734 !important;
+  }
 
-    .swal2-content {
-      font-size: 14px !important;
-    }
+  .swal2-content {
+    font-size: 14px !important;
+  }
+  div:where(.swal2-actions) button.swal2-confirm {
+    background-color: #ef742a !important;
+    color: white !important;
+    width: 150px !important;
+  }
 
-    .btn-confirm {
-      background-color: #ef742a !important; /* Red button */
-      color: white !important;
-    }
+  .btn-cancel {
+    background-color: #6c757d !important; /* Grey button */
+    color: white !important;
+  }
 
-    .btn-cancel {
-      background-color: #6c757d !important; /* Grey button */
-      color: white !important;
-    }
-  </style>
-  {% endblock %}
-</div>
+  div:where(.swal2-icon) .swal2-icon-content {
+    display: flex !important;
+    align-items: center !important;
+    font-size: 3em !important;
+  }
+
+  div:where(.swal2-icon) {
+    width: 3.5em !important;
+    height: 3.5em !important;
+    margin: 0.6em auto 0.6em !important;
+  }
+  div:where(.swal2-container) div:where(.swal2-html-container) {
+    color: #0b1734 !important;
+    font-weight: 600 !important;
+  }
+  
+</style>
+{% endblock %}

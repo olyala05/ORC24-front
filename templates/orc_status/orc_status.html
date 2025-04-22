@@ -1,8 +1,5 @@
-{% extends "layout.html" %} 
-
-{% block title %} {{ _('ORC Status') }} {% endblock %} 
-
-{% block content %}
+{% extends "layout.html" %} {% block title %} {{ _('ORC Status') }} {% endblock
+%} {% block content %}
 
 <div class="orc-status-container">
   <!-- Header -->
@@ -10,33 +7,51 @@
 
   <!-- ORC Status İçeriği -->
   <div class="orc-content">
-
     <div class="device-info">
       <ul>
-        <li><span class="highlight">{{ _('S/N') }}</span> <span>{{ modem.serial_no if modem.serial_no else '-' }}</span></li>
-        <li><span class="highlight">{{ _('MODEM NAME') }}</span> <span>{{ modem.name if modem.name else '-' }}</span></li>
-        <li><span class="highlight">{{ _('MODEM BRAND / MODEL') }}</span> <span id="brand-model">-</span></li>
-        
+        <li>
+          <span class="highlight">{{ _('S/N') }}</span>
+          <span>{{ modem.serial_no if modem.serial_no else '-' }}</span>
+        </li>
+        <li>
+          <span class="highlight">{{ _('MODEM NAME') }}</span>
+          <span>{{ modem.name if modem.name else '-' }}</span>
+        </li>
+        <li>
+          <span class="highlight">{{ _('MODEM BRAND / MODEL') }}</span>
+          <span id="brand-model">-</span>
+        </li>
+
         <li>
           <span class="highlight"> {{ _('MODEM STATUS')}}</span>
-         
+
           <span
-            >{% if modem.status == "A" %} {{ _('Active')}} {% else %} {{ _('Passive')}} {% endif %}</span>
+            >{% if modem.status == "A" %} {{ _('Active')}} {% else %} {{
+            _('Passive')}} {% endif %}</span
+          >
         </li>
-        <li><span class="highlight">{{ _('DATE OF INSTALLATION')}} </span><span>{{modem.created_at if modem.created_at else '-'}}</span></li>
+        <li>
+          <span class="highlight">{{ _('DATE OF INSTALLATION')}} </span
+          ><span>{{modem.created_at if modem.created_at else '-'}}</span>
+        </li>
         <!-- <li><span class="highlight">{{ _('DATA READING INTERVAL')}}</span> <span>1380 Seconds</span></li> -->
-        
-        <li><span class="highlight">{{ _('NETWORK TYPE')}} </span>
+
+        <li>
+          <span class="highlight">{{ _('NETWORK TYPE')}} </span>
           <span>
-              {% if network and network.network_type_list %}
-                  {{ network.network_type_list | join(" / ") }}
-              {% else %}
-                  {{ _('Disconnected')}}
-              {% endif %}
+            {% if network and network.network_type_list %} {{
+            network.network_type_list | join(" / ") }} {% else %} {{
+            _('Disconnected')}} {% endif %}
           </span>
-        </li>      
-        <li><span class="highlight">{{ _('CONNECTION PROTOCOL') }}</span> <span id="connection-protocol">-</span></li>
-        <li><span class="highlight">{{ _('SOFTWARE VERSION')}}</span> <span>V 1.02</span></li>
+        </li>
+        <li>
+          <span class="highlight">{{ _('CONNECTION PROTOCOL') }}</span>
+          <span id="connection-protocol">-</span>
+        </li>
+        <li>
+          <span class="highlight">{{ _('SOFTWARE VERSION')}}</span>
+          <span>V 1.02</span>
+        </li>
       </ul>
     </div>
 
@@ -65,7 +80,7 @@
             <td>{{ _('WiFi Connection')}}</td>
             <td>2024-04-03 13:54:31</td>
           </tr>
-        
+
           <tr>
             <td><span class="status-dot red"></span></td>
             <td><span class="status-dot red"></span></td>
@@ -80,100 +95,103 @@
             <td>2024-04-03 13:54:31</td>
           </tr>
 
-           <tr>
+          <tr>
             <td><span class="status-dot red"></span></td>
             <td><span class="status-dot red"></span></td>
             <td>{{ _('VPN Connection')}}</td>
             <td>2024-04-03 13:54:31</td>
           </tr>
         </tbody>
-
       </table>
 
       <div class="algorithm-section">
-          <h3 style="text-align: start; margin-left: 17px;">{{ _('Algorithm Processes')}}</h3>
-          <div class="separator"></div>
-          <!-- Turuncu çizgi -->
+        <h3 style="text-align: start; margin-left: 17px">
+          {{ _('Algorithm Processes')}}
+        </h3>
+        <div class="separator"></div>
+        <!-- Turuncu çizgi -->
         <div class="algorithm-box">
-            <div class="algorithm-left">
-              <i class="fa fa-refresh" aria-hidden="true"></i>  <span>{{ _('ORC Process Procedures')}}</span>        
-            </div>
-            <!-- !! burada eğer hata var ise kırmızız yap buttonu  !!-->
-            <button class="status-btn" onclick="redirectToLog()">{{ _('Logs')}}</button>
+          <div class="algorithm-left">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+            <span>{{ _('ORC Process Procedures')}}</span>
+          </div>
+          <!-- !! burada eğer hata var ise kırmızız yap buttonu  !!-->
+          <button class="status-btn" onclick="redirectToLog()">
+            {{ _('Logs')}}
+          </button>
         </div>
       </div>
     </div>
-
   </div>
 
-<script>
+  <script>
+    function redirectToLog() {
+      window.location.href = "{{ url_for('log')}}";
+    }
 
-  function redirectToLog() {
-    window.location.href = "{{ url_for('log')}}"
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    fetch("/equipments-with-models", {
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch("/equipments-with-models", {
         method: "POST",
-        headers: { "Content-Type": "application/json" }
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Gelen JSON:", data);  
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Gelen JSON:", data);
 
-        if (data.data && data.data.length > 0) { 
+          if (data.data && data.data.length > 0) {
             let protocolText = "-";
-            let equipment = data.data[0];  
+            let equipment = data.data[0];
 
             if (equipment.communication_protocol_code === 1) {
-                protocolText = "SERIAL";
+              protocolText = "SERIAL";
             } else if (equipment.communication_protocol_code === 2) {
-                protocolText = "TCP";
+              protocolText = "TCP";
             } else if (equipment.communication_protocol_code === 0) {
-                protocolText = "UNKNOWN";
+              protocolText = "UNKNOWN";
             }
 
-            document.getElementById("connection-protocol").innerText = protocolText;
-        } else {
+            document.getElementById("connection-protocol").innerText =
+              protocolText;
+          } else {
             document.getElementById("connection-protocol").innerText = "-";
-        }
-    })
-    .catch(error => {
-        console.error("API isteği hatası:", error);
-        document.getElementById("connection-protocol").innerText = "Error fetching data";
+          }
+        })
+        .catch((error) => {
+          console.error("API isteği hatası:", error);
+          document.getElementById("connection-protocol").innerText =
+            "Error fetching data";
+        });
     });
-  });
 
-  async function fetchBrandModel() {
-    try {
+    async function fetchBrandModel() {
+      try {
         const response = await fetch("/get-all-equipments", { method: "POST" });
 
         if (!response.ok) {
-            throw new Error("Server hatası: " + response.status);
+          throw new Error("Server hatası: " + response.status);
         }
 
         const data = await response.json();
         if (data.status === "error") {
-            throw new Error("API Hatası: " + data.message);
+          throw new Error("API Hatası: " + data.message);
         }
 
         const equipments = data.data;
         if (!equipments.length) {
-            throw new Error("Ekipman bilgisi bulunamadı.");
+          throw new Error("Ekipman bilgisi bulunamadı.");
         }
 
-        const brandModel = equipments[0].equipment_model_name || "-"; 
+        const brandModel = equipments[0].equipment_model_name || "-";
         document.getElementById("brand-model").textContent = brandModel;
-
-    } catch (error) {
+      } catch (error) {
         console.error("Hata:", error);
         document.getElementById("brand-model").textContent = "Veri alınamadı";
+      }
     }
-  }
-  // Sayfa yüklendiğinde otomatik olarak modem model bilgisini çek
-  window.onload = fetchBrandModel;
+    // Sayfa yüklendiğinde otomatik olarak modem model bilgisini çek
+    window.onload = fetchBrandModel;
 
-  function showTableLoading(message) {
+    function showTableLoading(message) {
       const container = document.getElementById("connection-table");
 
       // Zaten eklenmiş mi kontrol et
@@ -191,193 +209,183 @@
 
       container.style.position = "relative";
       container.appendChild(loadingDiv);
-  }
+    }
 
     function hideTableLoading() {
-        const loadingDiv = document.getElementById("table-loading-overlay");
-        if (loadingDiv) loadingDiv.remove();
+      const loadingDiv = document.getElementById("table-loading-overlay");
+      if (loadingDiv) loadingDiv.remove();
     }
 
+    document.addEventListener("DOMContentLoaded", function () {
+        // 📌 Sadece tabloya özel loading göster
+        showTableLoading("Veriler getiriliyor...");
 
- document.addEventListener("DOMContentLoaded", function () {
-    // 📌 Sadece tabloya özel loading göster
-    showTableLoading("Veriler getiriliyor...");
+        fetch("/get_archive_log_status")
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("[LOG] Archive log status fetch başladı.");
 
-    fetch("/get_archive_log_status")
-      .then(response => response.json())
-      .then(data => {
-        console.log("[LOG] Archive log status fetch başladı.");
+                if (data.status !== "success" || !data.data) {
+                    console.warn("[LOG] Geçersiz yanıt yapısı");
+                    hideTableLoading();
+                    return;
+                }
 
-        if (data.status !== "success" || !data.data) {
-          console.warn("[LOG] Geçersiz yanıt yapısı");
-          hideTableLoading();
-          return;
-        }
+                const archiveData = data.data;
 
-        const archiveData = data.data;
+                const tagMapping = {
+                    "WiFi Connection": "İnternet Var Mı?",
+                    "Cloud Connection": "Modem bilgisi buluta gönderildi mi?",
+                    "VPN Connection": "VPN IP Adresi",
+                    "Rabbit MQ": "rabbit mqya basılan veri",
+                };
 
-        const tagMapping = {
-          "WiFi Connection": "İnternet Var Mı?",
-          "Cloud Connection": "Modem bilgisi buluta gönderildi mi?",
-          "VPN Connection": "VPN IP Adresi",
-          "Rabbit MQ": "rabbit mqya basılan veri"
-        };
+                const typeToColorClass = {
+                    1: "green",
+                    2: "orange",
+                    3: "red",
+                };
 
-        const typeToColorClass = {
-          1: "green",
-          2: "orange",
-          3: "red"
-        };
+                const rows = Array.from(document.querySelectorAll("tbody tr"));
+                console.log("[LOG] Tablodaki Satırlar:");
+                rows.forEach((r, index) => {
+                    console.log(`Row ${index + 1}:`, r.innerText.trim());
+                });
 
-        const rows = Array.from(document.querySelectorAll("tbody tr"));
-        console.log("[LOG] Tablodaki Satırlar:");
-        rows.forEach((r, index) => {
-          console.log(`Row ${index + 1}:`, r.innerText.trim());
-        });
+                Object.entries(tagMapping).forEach(([uiLabel, archiveTag]) => {
+                    console.log(`\n[LOG] İşleniyor: ${uiLabel} -> ${archiveTag}`);
 
-        Object.entries(tagMapping).forEach(([uiLabel, archiveTag]) => {
-          console.log(`\n[LOG] İşleniyor: ${uiLabel} -> ${archiveTag}`);
+                    const row = rows.find((tr) => tr.innerText.includes(uiLabel));
 
-          const row = rows.find(tr => tr.innerText.includes(uiLabel));
+                    if (!row) {
+                        console.warn(`[LOG] ${uiLabel} için satır bulunamadı.`);
+                        return;
+                    }
 
-          if (!row) {
-            console.warn(`[LOG] ${uiLabel} için satır bulunamadı.`);
-            return;
-          }
+                    if (!archiveData[archiveTag]) {
+                        console.warn(`[LOG] ${archiveTag} için veri bulunamadı.`);
+                        return;
+                    }
 
-          if (!archiveData[archiveTag]) {
-            console.warn(`[LOG] ${archiveTag} için veri bulunamadı.`);
-            return;
-          }
+                    console.log(`[LOG] Bulunan Satır: ${row.innerText.trim()}`);
 
-          console.log(`[LOG] Bulunan Satır: ${row.innerText.trim()}`);
+                    const archiveInfo = archiveData[archiveTag];
+                    console.log(`[LOG] Archive Info (${archiveTag}):`, archiveInfo);
 
-          const archiveInfo = archiveData[archiveTag];
-          console.log(`[LOG] Archive Info (${archiveTag}):`, archiveInfo);
+                    const rowSpans = row.querySelectorAll(".status-dot");
+                    const allCells = row.querySelectorAll("td");
 
-          const rowSpans = row.querySelectorAll(".status-dot");
-          const allCells = row.querySelectorAll("td");
+                    const archiveType = archiveInfo.archive_log_type;
+                    const nowType = archiveInfo.last_log_type;
+                    const archiveDate = archiveInfo.archive_log_date;
+                    const lastLogDate = archiveInfo.last_log_date;
 
-          const archiveType = archiveInfo.archive_log_type;
-          const nowType = archiveInfo.last_log_type;
-          const archiveDate = archiveInfo.archive_log_date;
-          const lastLogDate = archiveInfo.last_log_date;
+                    // 1️⃣ Archive Sütunu Tooltip + Renk (Sadece Tarih)
+                    if (typeToColorClass[archiveType]) {
+                        rowSpans[0].classList.remove("red", "green", "orange");
+                        rowSpans[0].classList.add(typeToColorClass[archiveType]);
 
-          // 1️⃣ Archive Sütunu Tooltip + Renk
-          if (typeToColorClass[archiveType]) {
-            rowSpans[0].classList.remove("red", "green", "orange");
-            rowSpans[0].classList.add(typeToColorClass[archiveType]);
+                        const dtArchive = new Date(archiveDate);
+                        rowSpans[0].title = dtArchive.toLocaleString("tr-TR");
+                    }
 
-            const dtArchive = new Date(archiveDate);
-            let tooltipText = `Archive Date: ${dtArchive.toLocaleString("tr-TR")}`;
+                    // 2️⃣ Now Sütunu Tooltip + Renk (Sadece Tarih)
+                    if (typeToColorClass[nowType]) {
+                        rowSpans[1].classList.remove("red", "green", "orange");
+                        rowSpans[1].classList.add(typeToColorClass[nowType]);
 
-            if (archiveInfo.archive_log_data) {
-              tooltipText += `\nData: ${formatData(archiveInfo.archive_log_data)}`;
+                        const dtNow = new Date(lastLogDate);
+                        rowSpans[1].title = dtNow.toLocaleString("tr-TR");
+                    }
+
+                    // 3️⃣ Last Connection Date Hücresini Güncelle
+                    if (allCells[3] && lastLogDate) {
+                        const dtNow = new Date(lastLogDate);
+                        allCells[3].textContent = dtNow.toLocaleString("tr-TR");
+                    }
+                });
+
+                console.log("[LOG] Archive log durumu başarıyla işlendi.");
+                hideTableLoading();
+            })
+            .catch((error) => {
+                console.error("[LOG] Archive log durumu alınamadı:", error);
+                hideTableLoading();
+            });
+
+        // Bu fonksiyon şimdilik kullanılmıyor ama kalsın
+        function formatData(data) {
+            if (typeof data === "object") {
+                if (data.description) {
+                    return data.description;
+                }
+                return JSON.stringify(data);
             }
-
-            rowSpans[0].title = tooltipText;
-          }
-
-          // 2️⃣ Now Sütunu Tooltip + Renk
-          if (typeToColorClass[nowType]) {
-            rowSpans[1].classList.remove("red", "green", "orange");
-            rowSpans[1].classList.add(typeToColorClass[nowType]);
-
-            const dtNow = new Date(lastLogDate);
-            let tooltipText = `Now Date: ${dtNow.toLocaleString("tr-TR")}`;
-
-            if (archiveInfo.last_log_data) {
-              tooltipText += `\nData: ${formatData(archiveInfo.last_log_data)}`;
-            }
-            rowSpans[1].title = tooltipText;
-          }
-
-          // 3️⃣ Last Connection Date Hücresini Güncelle
-          if (allCells[3] && lastLogDate) {
-            const dtNow = new Date(lastLogDate);
-            allCells[3].textContent = dtNow.toLocaleString("tr-TR");
-          }
-        });
-
-        console.log("[LOG] Archive log durumu başarıyla işlendi.");
-        hideTableLoading();   // ✅ Burada sadece loading kapanıyor
-      })
-      .catch(error => {
-        console.error("[LOG] Archive log durumu alınamadı:", error);
-        hideTableLoading();   // ❌ Uyarı mesajı yok, sadece loading kapanıyor
-      });
-
-    function formatData(data) {
-      if (typeof data === "object") {
-        if (data.description) {
-          return data.description;
+            return data;
         }
-        return JSON.stringify(data);
+    });
+
+  </script>
+
+  <style>
+    .highlight {
+      color: #88acff;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      border-radius: 50%;
+    }
+
+    .status-dot.red {
+      background-color: red;
+    }
+
+    .status-dot.green {
+      background-color: #33ff00;
+    }
+
+    .status-dot.orange {
+      background-color: #ef8018;
+    }
+
+    .table-loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      backdrop-filter: blur(1px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .loading-box {
+      text-align: center;
+    }
+
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #ef8018;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 10px auto;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
       }
-      return data;
+      100% {
+        transform: rotate(360deg);
+      }
     }
-});
-
-
-</script>
-
-<style>
-  .highlight {
-    color: #88ACFF;
-  }
-   .status-dot {
-    width: 10px;
-    height: 10px;
-    display: inline-block;
-    border-radius: 50%;
-  }
-
-  .status-dot.red {
-    background-color: red;
-  }
-
-  .status-dot.green {
-    background-color: #33FF00;
-  }
-
-  .status-dot.orange {
-    background-color: #EF8018;
-  }
-
-.table-loading-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;   
-    backdrop-filter: blur(1px); 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-}
-
-.loading-box {
-    text-align: center;
-}
-
-.loader {
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #EF8018;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    margin: 10px auto;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-
-</style>
-{% endblock %}
-
+  </style>
+  {% endblock %}
+</div>
