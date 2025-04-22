@@ -40,7 +40,7 @@
       </ul>
     </div>
 
-    <div class="connection-table">
+    <div class="connection-table" id="connection-table">
       <table>
         <thead>
           <tr>
@@ -173,7 +173,36 @@
   // Sayfa yüklendiğinde otomatik olarak modem model bilgisini çek
   window.onload = fetchBrandModel;
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function showTableLoading(message) {
+      const container = document.getElementById("connection-table");
+
+      // Zaten eklenmiş mi kontrol et
+      if (document.getElementById("table-loading-overlay")) return;
+
+      const loadingDiv = document.createElement("div");
+      loadingDiv.id = "table-loading-overlay";
+      loadingDiv.className = "table-loading-overlay";
+      loadingDiv.innerHTML = `
+          <div class="loading-box">
+            <p>${message}</p>
+            <div class="loader"></div>
+          </div>
+      `;
+
+      container.style.position = "relative";
+      container.appendChild(loadingDiv);
+  }
+
+    function hideTableLoading() {
+        const loadingDiv = document.getElementById("table-loading-overlay");
+        if (loadingDiv) loadingDiv.remove();
+    }
+
+
+ document.addEventListener("DOMContentLoaded", function () {
+    // 📌 Sadece tabloya özel loading göster
+    showTableLoading("Veriler getiriliyor...");
+
     fetch("/get_archive_log_status")
       .then(response => response.json())
       .then(data => {
@@ -181,6 +210,7 @@
 
         if (data.status !== "success" || !data.data) {
           console.warn("[LOG] Geçersiz yanıt yapısı");
+          hideTableLoading();
           return;
         }
 
@@ -262,7 +292,7 @@
             rowSpans[1].title = tooltipText;
           }
 
-          // 3️⃣ Last Connection Date Hücresini Güncelle (4. hücre)
+          // 3️⃣ Last Connection Date Hücresini Güncelle
           if (allCells[3] && lastLogDate) {
             const dtNow = new Date(lastLogDate);
             allCells[3].textContent = dtNow.toLocaleString("tr-TR");
@@ -270,9 +300,11 @@
         });
 
         console.log("[LOG] Archive log durumu başarıyla işlendi.");
+        hideTableLoading();   // ✅ Burada sadece loading kapanıyor
       })
       .catch(error => {
         console.error("[LOG] Archive log durumu alınamadı:", error);
+        hideTableLoading();   // ❌ Uyarı mesajı yok, sadece loading kapanıyor
       });
 
     function formatData(data) {
@@ -284,7 +316,8 @@
       }
       return data;
     }
-  });
+});
+
 
 </script>
 
@@ -310,6 +343,41 @@
   .status-dot.orange {
     background-color: #EF8018;
   }
+
+.table-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;   
+    backdrop-filter: blur(1px); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.loading-box {
+    text-align: center;
+}
+
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #EF8018;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 10px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
 </style>
 {% endblock %}
 
