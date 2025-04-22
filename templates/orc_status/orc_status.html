@@ -60,60 +60,46 @@
           </tr>
 
           <tr>
-            {% if network.wifi_connected %}
-                <td><span class="status-dot #33FF00"></span></td>
-                <td><span class="status-dot #33FF00"></span></td>
-                <td>{{ _('WiFi Connection')}}</td>
-                <td>{{ network.last_connected_time }}</td> 
-            {% else %}
-                <td><span class="status-dot red"></span></td>
-                <td><span class="status-dot red"></span></td>
-                <td>{{ _('WiFi Disconnected')}}</td>
-                <td>{{ network.last_connected_time }}</td> 
-            {% endif %}
-          </tr>
-        
-          <tr data-status="cloud">
             <td><span class="status-dot red"></span></td>
             <td><span class="status-dot red"></span></td>
-            <td>{{ _('Cloud Connection')}}</td>
-            <td class="last-connection">{{ _('Checking...')}}</td> 
-          </tr>
-      
-          <tr data-status="rabbitmq">
-            <td><span class="status-dot red"></span></td>
-            <td><span class="status-dot red"></span></td>
-            <td>{{ _('Rabbit MQ')}}</td>
-            <td class="last-connection">{{ _('Checking...')}}</td>
+            <td>{{ _('WiFi Connection')}}</td>
+            <td>2024-04-03 13:54:31</td>
           </tr>
         
           <tr>
-            {% if network.vpn_connected %}
-                <td><span class="status-dot #33FF00"></span></td>
-                <td><span class="status-dot #33FF00"></span></td>
-                <td>{{ _('VPN Connection')}}</td>
-                <td>{{ network.last_connected_time }}</td> 
-            {% else %}
-                <td><span class="status-dot red"></span></td>
-                <td><span class="status-dot red"></span></td>
-                <td>{{ _('VPN Disconnected')}}</td>
-                <td>{{ network.last_connected_time }}</td> 
-            {% endif %}
+            <td><span class="status-dot red"></span></td>
+            <td><span class="status-dot red"></span></td>
+            <td>{{ _('Cloud Connection')}}</td>
+            <td>2024-04-03 13:54:31</td>
+          </tr>
+
+          <tr>
+            <td><span class="status-dot red"></span></td>
+            <td><span class="status-dot red"></span></td>
+            <td>{{ _('Rabbit MQ')}}</td>
+            <td>2024-04-03 13:54:31</td>
+          </tr>
+
+           <tr>
+            <td><span class="status-dot red"></span></td>
+            <td><span class="status-dot red"></span></td>
+            <td>{{ _('VPN Connection')}}</td>
+            <td>2024-04-03 13:54:31</td>
           </tr>
         </tbody>
 
       </table>
 
       <div class="algorithm-section">
-        <h3 style="text-align: start; margin-left: 17px;">{{ _('Algorithm Processes')}}</h3>
-        <div class="separator"></div>
-        <!-- Turuncu çizgi -->
+          <h3 style="text-align: start; margin-left: 17px;">{{ _('Algorithm Processes')}}</h3>
+          <div class="separator"></div>
+          <!-- Turuncu çizgi -->
         <div class="algorithm-box">
-          <div class="algorithm-left">
-            <i class="fa fa-refresh" aria-hidden="true"></i>  <span>{{ _('ORC Process Procedures')}}</span>        
-          </div>
-          <!-- !! burada eğer hata var ise kırmızız yap buttonu  !!-->
-          <button class="status-btn" onclick="redirectToLog()">{{ _('Logs')}}</button>
+            <div class="algorithm-left">
+              <i class="fa fa-refresh" aria-hidden="true"></i>  <span>{{ _('ORC Process Procedures')}}</span>        
+            </div>
+            <!-- !! burada eğer hata var ise kırmızız yap buttonu  !!-->
+            <button class="status-btn" onclick="redirectToLog()">{{ _('Logs')}}</button>
         </div>
       </div>
     </div>
@@ -125,44 +111,6 @@
   function redirectToLog() {
     window.location.href = "{{ url_for('log')}}"
   }
-
-  function retryConnection() {
-    fetch("/check_network")
-      .then(response => response.json())
-      .then(result => {
-        console.log("Network Data:", result.data);
-        const network = result.data;
-        if (network && network.connected_ssid && network.connected_ssid !== "Not Connected") {
-          location.reload();
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "{{ _('No Wi-Fi Connection!') }}",
-            text: "{{ _('Please check your modem and connections.') }}",
-            confirmButtonText: "{{ _('OK') }}"
-          });
-        }
-      })
-      .catch(error => {
-        console.error("Bağlantı kontrolü sırasında hata oluştu:", error);
-      });
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const disconnectBtn = document.querySelector(".disconnect-btn");
-    disconnectBtn.addEventListener("click", function () {
-        fetch("/disconnect_request", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            alert("Wi-Fi bağlantısı kapatıldı!");
-        })
-        .catch(error => console.error("Error:", error));
-    });
-  });
 
   document.addEventListener("DOMContentLoaded", function () {
     fetch("/equipments-with-models", {
@@ -196,94 +144,6 @@
     });
   });
 
-  // RabbitMQ Status Checking
-  document.addEventListener("DOMContentLoaded", function () {
-    function updateRabbitMQStatus() {
-      fetch("/rabbitmq-status", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({})
-      })
-      .then(response => response.json())
-      .then(data => {
-        const rabbitmqStatusRow = document.querySelector("tr[data-status='rabbitmq']");
-        const statusCells = rabbitmqStatusRow.querySelectorAll(".status-dot");
-        const lastConnectionCell = rabbitmqStatusRow.querySelector(".last-connection");
-
-        if (data.status === "success" && data.data.rabbitmq_connected) {
-          statusCells.forEach(cell => {
-            cell.classList.remove("red");
-            cell.classList.add("green");
-          });
-        } else {
-          statusCells.forEach(cell => {
-            cell.classList.remove("green");
-            cell.classList.add("red");
-          });
-        }
-
-        // Last Connection Date'yi güncelle
-        if (data.data.last_connection_time) {
-          lastConnectionCell.textContent = data.data.last_connection_time;
-        } else {
-          lastConnectionCell.textContent = "No connection yet";
-        }
-      })
-      .catch(error => {
-        console.error("Error fetching RabbitMQ status:", error);
-      });
-    }
-
-    // Sayfa yüklendiğinde RabbitMQ bağlantısını kontrol et
-    updateRabbitMQStatus();
-
-    // RabbitMQ bağlantısını her 10 saniyede bir kontrol et
-    setInterval(updateRabbitMQStatus, 10000);
-  });
-
-  // Cloud Status Checking  
-  document.addEventListener("DOMContentLoaded", function () {
-    function updateCloudStatus() {
-      fetch("/cloud-status", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({})
-      })
-      .then(response => response.json())
-      .then(data => {
-        const cloudStatusRow = document.querySelector("tr[data-status='cloud']");
-        const statusCells = cloudStatusRow.querySelectorAll(".status-dot");
-        const lastConnectionCell = cloudStatusRow.querySelector(".last-connection");
-
-        if (data.status === "success" && data.data.cloud_connected) {
-          statusCells.forEach(cell => {
-            cell.classList.remove("red");
-            cell.classList.add("green");
-          });
-        } else {
-          statusCells.forEach(cell => {
-            cell.classList.remove("green");
-            cell.classList.add("red");
-          });
-        }
-
-        // Son bağlantı tarihini güncelle
-        lastConnectionCell.textContent = data.data.last_connection_time
-          ? data.data.last_connection_time
-          : "No connection yet";
-      })
-      .catch(error => {
-        console.error("Error fetching Cloud status:", error);
-      });
-    }
-
-    // Sayfa yüklendiğinde kontrol et
-    updateCloudStatus();
-
-    // Bulut bağlantısını her 10 saniyede bir kontrol et
-    setInterval(updateCloudStatus, 10000);
-  });
-
   async function fetchBrandModel() {
     try {
         const response = await fetch("/get-all-equipments", { method: "POST" });
@@ -310,85 +170,120 @@
         document.getElementById("brand-model").textContent = "Veri alınamadı";
     }
   }
-
   // Sayfa yüklendiğinde otomatik olarak modem model bilgisini çek
   window.onload = fetchBrandModel;
 
   document.addEventListener("DOMContentLoaded", function () {
-  fetch("/get_archive_log_status")
-    .then(response => response.json())
-    .then(data => {
-      console.log("[LOG] Archive log status fetch başladı.");
+    fetch("/get_archive_log_status")
+      .then(response => response.json())
+      .then(data => {
+        console.log("[LOG] Archive log status fetch başladı.");
 
-      if (data.status !== "success" || !data.data) {
-        console.warn("[LOG] Geçersiz yanıt yapısı");
-        return;
-      }
-
-      const archiveData = data.data;
-
-      const tagMapping = {
-        "WiFi Connection": "İnternet Var Mı?",
-        "VPN Connection": "VPN IP Adresi",
-        "Cloud Connection": "Modem bilgisi buluta gönderildi mi?",
-        "Rabbit MQ": "rabbit mqya basılan veri"
-      };
-
-      const typeToColorClass = {
-        1: "green",
-        2: "orange",
-        3: "red"
-      };
-
-      Object.entries(tagMapping).forEach(([uiLabel, archiveTag]) => {
-        const rows = Array.from(document.querySelectorAll("tbody tr"));
-        const row = rows.find(tr => tr.innerText.includes(uiLabel));
-
-        if (!row || !archiveData[archiveTag]) {
-          console.warn(`[LOG] ${uiLabel} satırı veya verisi bulunamadı.`);
+        if (data.status !== "success" || !data.data) {
+          console.warn("[LOG] Geçersiz yanıt yapısı");
           return;
         }
 
-        const rowSpans = row.querySelectorAll(".status-dot");
-        const archiveType = archiveData[archiveTag].archive_log_type;
-        const nowType = archiveData[archiveTag].last_log_type;
-        const lastLogDate = archiveData[archiveTag].last_log_date;
+        const archiveData = data.data;
 
-        // Log: hangi tipler geldi
-        console.log(`[LOG] ${uiLabel} archive_log_type: ${archiveType}, last_log_type: ${nowType}, date: ${lastLogDate}`);
+        const tagMapping = {
+          "WiFi Connection": "İnternet Var Mı?",
+          "Cloud Connection": "Modem bilgisi buluta gönderildi mi?",
+          "VPN Connection": "VPN IP Adresi",
+          "Rabbit MQ": "rabbit mqya basılan veri"
+        };
 
-        // Archive Sütunu (ilk status-dot)
-        if (typeToColorClass[archiveType]) {
-          rowSpans[0].classList.remove("red", "green", "orange");
-          rowSpans[0].classList.add(typeToColorClass[archiveType]);
-        }
+        const typeToColorClass = {
+          1: "green",
+          2: "orange",
+          3: "red"
+        };
 
-        // Now Sütunu (ikinci status-dot)
-        if (typeToColorClass[nowType]) {
-          rowSpans[1].classList.remove("red", "green", "orange");
-          rowSpans[1].classList.add(typeToColorClass[nowType]);
-        }
+        const rows = Array.from(document.querySelectorAll("tbody tr"));
+        console.log("[LOG] Tablodaki Satırlar:");
+        rows.forEach((r, index) => {
+          console.log(`Row ${index + 1}:`, r.innerText.trim());
+        });
 
-        // Last Connection Date güncelle
-        const lastDateCell = row.querySelector(".last-connection");
-        if (lastDateCell && lastLogDate) {
-          const dt = new Date(lastLogDate);
-          lastDateCell.textContent = dt.toLocaleString("tr-TR", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit"
-          });
-        }
+        Object.entries(tagMapping).forEach(([uiLabel, archiveTag]) => {
+          console.log(`\n[LOG] İşleniyor: ${uiLabel} -> ${archiveTag}`);
+
+          const row = rows.find(tr => tr.innerText.includes(uiLabel));
+
+          if (!row) {
+            console.warn(`[LOG] ${uiLabel} için satır bulunamadı.`);
+            return;
+          }
+
+          if (!archiveData[archiveTag]) {
+            console.warn(`[LOG] ${archiveTag} için veri bulunamadı.`);
+            return;
+          }
+
+          console.log(`[LOG] Bulunan Satır: ${row.innerText.trim()}`);
+
+          const archiveInfo = archiveData[archiveTag];
+          console.log(`[LOG] Archive Info (${archiveTag}):`, archiveInfo);
+
+          const rowSpans = row.querySelectorAll(".status-dot");
+          const allCells = row.querySelectorAll("td");
+
+          const archiveType = archiveInfo.archive_log_type;
+          const nowType = archiveInfo.last_log_type;
+          const archiveDate = archiveInfo.archive_log_date;
+          const lastLogDate = archiveInfo.last_log_date;
+
+          // 1️⃣ Archive Sütunu Tooltip + Renk
+          if (typeToColorClass[archiveType]) {
+            rowSpans[0].classList.remove("red", "green", "orange");
+            rowSpans[0].classList.add(typeToColorClass[archiveType]);
+
+            const dtArchive = new Date(archiveDate);
+            let tooltipText = `Archive Date: ${dtArchive.toLocaleString("tr-TR")}`;
+
+            if (archiveInfo.archive_log_data) {
+              tooltipText += `\nData: ${formatData(archiveInfo.archive_log_data)}`;
+            }
+
+            rowSpans[0].title = tooltipText;
+          }
+
+          // 2️⃣ Now Sütunu Tooltip + Renk
+          if (typeToColorClass[nowType]) {
+            rowSpans[1].classList.remove("red", "green", "orange");
+            rowSpans[1].classList.add(typeToColorClass[nowType]);
+
+            const dtNow = new Date(lastLogDate);
+            let tooltipText = `Now Date: ${dtNow.toLocaleString("tr-TR")}`;
+
+            if (archiveInfo.last_log_data) {
+              tooltipText += `\nData: ${formatData(archiveInfo.last_log_data)}`;
+            }
+            rowSpans[1].title = tooltipText;
+          }
+
+          // 3️⃣ Last Connection Date Hücresini Güncelle (4. hücre)
+          if (allCells[3] && lastLogDate) {
+            const dtNow = new Date(lastLogDate);
+            allCells[3].textContent = dtNow.toLocaleString("tr-TR");
+          }
+        });
+
+        console.log("[LOG] Archive log durumu başarıyla işlendi.");
+      })
+      .catch(error => {
+        console.error("[LOG] Archive log durumu alınamadı:", error);
       });
 
-      console.log("[LOG] Archive log durumu başarıyla işlendi.");
-    })
-    .catch(error => {
-      console.error("[LOG] Archive log durumu alınamadı:", error);
-    });
+    function formatData(data) {
+      if (typeof data === "object") {
+        if (data.description) {
+          return data.description;
+        }
+        return JSON.stringify(data);
+      }
+      return data;
+    }
   });
 
 </script>
@@ -410,6 +305,10 @@
 
   .status-dot.green {
     background-color: #33FF00;
+  }
+
+  .status-dot.orange {
+    background-color: #EF8018;
   }
 </style>
 {% endblock %}

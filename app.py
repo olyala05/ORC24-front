@@ -1045,7 +1045,6 @@ def fetch_daily_data_paginated():
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
 
-
 @app.route("/daily-data-detail", endpoint="daily-data-detail")
 def daily_data_detail():
     return render_template(
@@ -1209,26 +1208,52 @@ def get_logs():
 
 @app.route("/get_archive_log_status", methods=["GET"])
 def get_archive_log_status():
+    logging.info("[FLASK A] Archive log status isteği alındı.")
+    print("[DEBUG] ➡️  Archive log status isteği alındı.")
+
     selected_ip = session.get("selected_device_ip")
-    logging.info("[FLASK A] Archive log status istek alındı.")
+    print(f"[DEBUG] Seçilen IP: {selected_ip}")
 
     if not selected_ip:
         logging.error("[FLASK A] IP adresi bulunamadı (session boş olabilir).")
+        print("[DEBUG] ❌ IP adresi bulunamadı! Session kontrol et.")
         return jsonify({"error": "Cihazın seri numarası bulunamadı."}), 400
 
     try:
-        logging.info(f"[FLASK A] {selected_ip} adresine archive log isteği gönderiliyor.")
         url = f"http://{selected_ip}:8085/get_archive_status"
+        logging.info(f"[FLASK A] {selected_ip} adresine archive log isteği gönderiliyor.")
+        print(f"[DEBUG] ➡️  İstek URL'si: {url}")
+
         response = requests.get(url, timeout=5)
+        print(f"[DEBUG] 🌐 İstek atıldı, status code: {response.status_code}")
+
         response.raise_for_status()
 
         archive_status = response.json()
+        print(f"[DEBUG] ✅ JSON veri alındı. Anahtarlar: {list(archive_status.keys())}")
+
         logging.info("[FLASK A] Archive log verisi başarıyla alındı.")
         return jsonify(archive_status)
 
-    except requests.exceptions.RequestException as e:
-        logging.error(f"[FLASK A] Archive log alınamadı: {e}")
-        return jsonify({"status": "error", "message": f"Archive verisi alınamadı: {e}"}), 500
+    except requests.exceptions.Timeout:
+        logging.error("[FLASK A] İstek zaman aşımına uğradı!")
+        print("[DEBUG] ❌ Timeout hatası!")
+        return jsonify({"status": "error", "message": "İstek zaman aşımına uğradı!"}), 504
+
+    except requests.exceptions.ConnectionError:
+        logging.error("[FLASK A] Bağlantı hatası oluştu!")
+        print("[DEBUG] ❌ ConnectionError!")
+        return jsonify({"status": "error", "message": "Cihaza bağlanılamadı!"}), 503
+
+    except requests.exceptions.HTTPError as http_err:
+        logging.error(f"[FLASK A] HTTP hatası: {http_err}")
+        print(f"[DEBUG] ❌ HTTPError: {http_err}")
+        return jsonify({"status": "error", "message": f"HTTP hatası: {http_err}"}), response.status_code
+
+    except Exception as e:
+        logging.error(f"[FLASK A] Genel hata: {e}")
+        print(f"[DEBUG] ❌ Genel Exception: {e}")
+        return jsonify({"status": "error", "message": f"Beklenmeyen hata: {e}"}), 500
 
 class ResponseHandler:
     @staticmethod
