@@ -19,12 +19,8 @@
 
   <!-- Login Form Wrapper -->
   <div class="login-wrapper">
-    <div class="login-box">
-      {% with messages = get_flashed_messages(with_categories=true) %} {% if
-      messages %} {% for category, message in messages %}
-      <div class="alert alert-{{ category }}">{{ message }}</div>
-      {% endfor %} {% endif %} {% endwith %}
-
+    <div class="login-box" style="color: red;">
+      
       <form method="POST" action="{{ url_for('auth.login') }}">
         <div class="input-group">
           <span class="icon icon-left"
@@ -71,6 +67,12 @@
             <i class="fa-solid fa-eye"></i
           ></span>
         </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %} 
+        {% if messages %} {% for category, message in messages %}
+          <!-- !! Hata Mesaj  uyarısı -->
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %}
 
         <div class="login-actions">
           <button type="submit" class="login-btn">

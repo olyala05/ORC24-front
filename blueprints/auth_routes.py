@@ -32,12 +32,12 @@ def login():
     print("🟢 [Login Fonksiyonu Çalıştı]")
 
     if request.method == "POST":
-        print("📩 [POST İsteği Alındı]")
+        print("[POST İsteği Alındı]")
 
         email = request.form.get("email").strip()
         password = request.form.get("password").strip()
 
-        # 🔑 TOKEN'I ALIYORUZ
+        # TOKEN'I ALIYORUZ
         if os.path.exists(TOKEN_FILE_PATH):
             with open(TOKEN_FILE_PATH, "r") as f:
                 token = f.read().strip()
@@ -49,10 +49,10 @@ def login():
                 flash("Token bulunamadı!", "danger")
                 return redirect(url_for("auth.login"))
 
-        print(f"🔐 [Kullanılan Token]: {token}")
+        print(f"[Kullanılan Token]: {token}")
 
         # API'ye istek atılıyor
-        print("🌐 [API İsteği Gönderiliyor]")
+        print("[API İsteği Gönderiliyor]")
         response = requests.post(
             LARAVEL_API_URL,
             data=json.dumps({"username": email, "password": password}),
@@ -64,17 +64,14 @@ def login():
             },
             verify=False,
         )
-
-        print(f"🔹 API Status Code: {response.status_code}")
-        print("🔹 API Response JSON:")
         try:
             pprint(response.json())
         except Exception as e:
-            print(f"❌ JSON parse hatası: {e}")
+            print(f"JSON parse hatası: {e}")
             print(response.text)
 
         if response.status_code == 200:
-            print("✅ [Login Başarılı]")
+            print("[Login Başarılı]")
 
             session["client_name"] = response.json().get("client", {}).get("name")
             session["client_role"] = response.json().get("client", {}).get("role")
@@ -82,14 +79,14 @@ def login():
             session["login_success"] = True
             session["login_time"] = datetime.utcnow().isoformat()
 
-            print("➡️ [Modem Seçim Sayfasına Yönlendiriliyor]")
+            print("[Modem Seçim Sayfasına Yönlendiriliyor]")
             return redirect(url_for("modem_selection"))
 
-        print("❌ [Login Başarısız] Hatalı e-posta, şifre veya token!")
-        flash("Hatalı e-posta, şifre veya yetkilendirme hatası!", "danger")
+        print("[Login Başarısız] Hatalı e-posta, şifre veya token!")
+        flash("Hatalı e-posta veya şifre", "danger")
         return redirect(url_for("auth.login"))
 
-    print("🟡 [GET İsteği - Login Sayfası Açılıyor]")
+    print("[GET İsteği - Login Sayfası Açılıyor]")
     login_success = session.pop("login_success", None)
     return render_template("login.html", login_success=login_success)
 
