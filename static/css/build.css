@@ -588,7 +588,6 @@ input:-webkit-autofill:focus {
   gap: 8px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  box-shadow: 0 2px 5px rgba(255, 127, 50, 0.5);
 }
 .header-button:hover {
   background: #fe5f00;

@@ -1386,3 +1386,9 @@ msgstr "Bitte überprüfen Sie Ihren Router und Ihre Verbindungen."
 
 msgid "Please enter the password."
 msgstr "Bitte geben Sie das Passwort ein."
+
+msgid "Read More"
+msgstr "Mehr Anzeigen"
+
+msgid "Read Less"
+msgstr "Weniger Anzeigen"

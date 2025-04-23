@@ -1391,3 +1391,9 @@ msgstr "Please check your modem and connections."
 
 msgid "Please enter the password."
 msgstr "Please enter the password."
+
+msgid "Read More"
+msgstr "Read More"
+
+msgid "Read Less"
+msgstr "Read Less"

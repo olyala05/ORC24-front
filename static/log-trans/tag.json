@@ -1,0 +1,337 @@
+{
+  "IOT uygulaması başladı": {
+    "tr": "IOT uygulaması başladı",
+    "en": "IOT application started",
+    "de": "IOT-Anwendung gestartet"
+  },
+  "Bütün görevler başlatıldı mı?": {
+    "tr": "Bütün görevler başlatıldı mı?",
+    "en": "Have all tasks been started?",
+    "de": "Wurden alle Aufgaben gestartet?"
+  },
+  "Modem kurulum görevi başladı": {
+    "tr": "Modem kurulum görevi başladı",
+    "en": "Modem setup task started",
+    "de": "Modem-Einrichtungsaufgabe gestartet"
+  },
+  "Ekipman tarama görevi başladı": {
+    "tr": "Ekipman tarama görevi başladı",
+    "en": "Equipment scanning task started",
+    "de": "Gerätescan-Aufgabe gestartet"
+  },
+  "Ekipman tarama görevi bayrakları!": {
+    "tr": "Ekipman tarama görevi bayrakları!",
+    "en": "Equipment scanning task flags!",
+    "de": "Gerätescan-Aufgaben-Flags!"
+  },
+  "Ekipmanlardan veri toplama görevi başladı": {
+    "tr": "Ekipmanlardan veri toplama görevi başladı",
+    "en": "Data collection task from equipment started",
+    "de": "Datenaufnahme von Geräten gestartet"
+  },
+  "Ekipmanlardan veri toplama görevi sonuçları": {
+    "tr": "Ekipmanlardan veri toplama görevi sonuçları",
+    "en": "Data collection task results from equipment",
+    "de": "Ergebnisse der Datenerfassung von Geräten"
+  },
+  "Modem öz bilgileri alındı mı?": {
+    "tr": "Modem öz bilgileri alındı mı?",
+    "en": "Were the modem details retrieved?",
+    "de": "Wurden die Modemdetails abgerufen?"
+  },
+  "Modem bilgisi buluta gönderildi mi?": {
+    "tr": "Modem bilgisi buluta gönderildi mi?",
+    "en": "Was the modem information sent to the cloud?",
+    "de": "Wurden die Modeminformationen in die Cloud gesendet?"
+  },
+  "Modem aktif mi?": {
+    "tr": "Modem aktif mi?",
+    "en": "Is the modem active?",
+    "de": "Ist das Modem aktiv?"
+  },
+  "Modem Setup Taskı Kırılması!": {
+    "tr": "Modem Setup Taskı Kırılması!",
+    "en": "Modem setup task failure!",
+    "de": "Modem-Setup-Aufgabe fehlgeschlagen!"
+  },
+  "Veritabanı var mı?": {
+    "tr": "Veritabanı var mı?",
+    "en": "Is there a database?",
+    "de": "Gibt es eine Datenbank?"
+  },
+  "Konfigurasyon alındı mı?": {
+    "tr": "Konfigurasyon alındı mı?",
+    "en": "Was the configuration received?",
+    "de": "Wurde die Konfiguration empfangen?"
+  },
+  "Konfigurasyon dosyası veritabanına kayıt edildi mi?": {
+    "tr": "Konfigurasyon dosyası veritabanına kayıt edildi mi?",
+    "en": "Was the configuration file saved to the database?",
+    "de": "Wurde die Konfigurationsdatei in die Datenbank gespeichert?"
+  },
+  "USB var mı?": {
+    "tr": "USB var mı?",
+    "en": "Is there a USB?",
+    "de": "Gibt es einen USB?"
+  },
+  "Bulunan konfigurasyon dosyaları": {
+    "tr": "Bulunan konfigurasyon dosyaları",
+    "en": "Found configuration files",
+    "de": "Gefundene Konfigurationsdateien"
+  },
+  "Konfigurasyon dosyası doğru formatta mı?": {
+    "tr": "Konfigurasyon dosyası doğru formatta mı?",
+    "en": "Is the configuration file in the correct format?",
+    "de": "Ist die Konfigurationsdatei im richtigen Format?"
+  },
+  "Konfigurasyon dosyası okundu mu?": {
+    "tr": "Konfigurasyon dosyası okundu mu?",
+    "en": "Was the configuration file read?",
+    "de": "Wurde die Konfigurationsdatei gelesen?"
+  },
+  "modem tablosu boş mu?": {
+    "tr": "modem tablosu boş mu?",
+    "en": "Is the modem table empty?",
+    "de": "Ist die Modemtabelle leer?"
+  },
+  "Modem bilgileri": {
+    "tr": "Modem bilgileri",
+    "en": "Modem information",
+    "de": "Modeminformationen"
+  },
+  "Arayüzlerin bağlantı ve internet kaliteleri": {
+    "tr": "Arayüzlerin bağlantı ve internet kaliteleri",
+    "en": "Interface connection and internet quality",
+    "de": "Verbindungs- und Internetqualität der Schnittstellen"
+  },
+  "rabbit mqya basılan veri": {
+    "tr": "RabbitMQ'ya basılan veri",
+    "en": "Data pushed to RabbitMQ",
+    "de": "Daten an RabbitMQ gesendet"
+  },
+  "Modbus Serial üzerinden başarılı tarama yapıldı mı?": {
+    "tr": "Modbus Serial üzerinden başarılı tarama yapıldı mı?",
+    "en": "Was the scan via Modbus Serial successful?",
+    "de": "War der Scan über Modbus Serial erfolgreich?"
+  },
+  "Modbus TCP üzerinden başarılı tarama yapıldı mı?": {
+    "tr": "Modbus TCP üzerinden başarılı tarama yapıldı mı?",
+    "en": "Was the scan via Modbus TCP successful?",
+    "de": "War der Scan über Modbus TCP erfolgreich?"
+  },
+  "Aktif ekipmanlar konfigure edildi mi?": {
+    "tr": "Aktif ekipmanlar konfigure edildi mi?",
+    "en": "Were active devices configured?",
+    "de": "Wurden aktive Geräte konfiguriert?"
+  },
+  "Ekipmanların bilgileri buluta gönderildi mi?": {
+    "tr": "Ekipmanların bilgileri buluta gönderildi mi?",
+    "en": "Were the equipment details sent to the cloud?",
+    "de": "Wurden die Gerätedaten in die Cloud gesendet?"
+  },
+  "Tespit edilmiş ekipmanlar": {
+    "tr": "Tespit edilmiş ekipmanlar",
+    "en": "Detected equipment",
+    "de": "Erkannte Geräte"
+  },
+  "Tespit edilen ekipmanlar veritabanına yazıldı mı?": {
+    "tr": "Tespit edilen ekipmanlar veritabanına yazıldı mı?",
+    "en": "Were the detected devices saved to the database?",
+    "de": "Wurden die erkannten Geräte in die Datenbank gespeichert?"
+  },
+  "Elektriksel Hesaplamalar": {
+    "tr": "Elektriksel Hesaplamalar",
+    "en": "Electrical Calculations",
+    "de": "Elektrische Berechnungen"
+  },
+  "Aktif ekipmanlar": {
+    "tr": "Aktif ekipmanlar",
+    "en": "Active equipment",
+    "de": "Aktive Geräte"
+  },
+  "Registerların dönüşümden sonraki hali": {
+    "tr": "Registerların dönüşümden sonraki hali",
+    "en": "State of registers after conversion",
+    "de": "Zustand der Register nach der Umwandlung"
+  },
+  "Live data kayıt edildi mi?": {
+    "tr": "Live data kayıt edildi mi?",
+    "en": "Was live data recorded?",
+    "de": "Wurden Live-Daten aufgezeichnet?"
+  },
+  "Live Data buluta gönderildi mi?": {
+    "tr": "Live Data buluta gönderildi mi?",
+    "en": "Was live data sent to the cloud?",
+    "de": "Wurden Live-Daten in die Cloud gesendet?"
+  },
+  "Data alarmlar buluta gönderildi mi?": {
+    "tr": "Data alarmlar buluta gönderildi mi?",
+    "en": "Were data alarms sent to the cloud?",
+    "de": "Wurden Datenalarme in die Cloud gesendet?"
+  },
+  "Silinmesi gereken hourly data silindi mi?": {
+    "tr": "Silinmesi gereken hourly data silindi mi?",
+    "en": "Was the hourly data that needed deletion removed?",
+    "de": "Wurden die zu löschenden Stundendaten entfernt?"
+  },
+  "Alarmlar kontrol edildi mi?": {
+    "tr": "Alarmlar kontrol edildi mi?",
+    "en": "Were alarms checked?",
+    "de": "Wurden die Alarme überprüft?"
+  },
+  "Bulunan alarmlar kayıt edildi mi?": {
+    "tr": "Bulunan alarmlar kayıt edildi mi?",
+    "en": "Were detected alarms recorded?",
+    "de": "Wurden die gefundenen Alarme aufgezeichnet?"
+  },
+  "Özelleştirilmiş value list alarmlar buluttan alındı mı?": {
+    "tr": "Özelleştirilmiş value list alarmlar buluttan alındı mı?",
+    "en": "Were customized value list alarms retrieved from the cloud?",
+    "de": "Wurden benutzerdefinierte Wertelisten-Alarme aus der Cloud abgerufen?"
+  },
+  "Modbus Serial Connection Create Error!": {
+    "tr": "Modbus Serial Bağlantı Oluşturma Hatası!",
+    "en": "Modbus Serial Connection Create Error!",
+    "de": "Modbus-Serial-Verbindungsfehler beim Erstellen!"
+  },
+  "Modbus Serial Connection Close Error!": {
+    "tr": "Modbus Serial Bağlantı Kapatma Hatası!",
+    "en": "Modbus Serial Connection Close Error!",
+    "de": "Modbus-Serial-Verbindungsfehler beim Schließen!"
+  },
+  "Modbus TCP Connection Create Error!": {
+    "tr": "Modbus TCP Bağlantı Oluşturma Hatası!",
+    "en": "Modbus TCP Connection Create Error!",
+    "de": "Modbus-TCP-Verbindungsfehler beim Erstellen!"
+  },
+  "Modbus TCP Connection Close Error!": {
+    "tr": "Modbus TCP Bağlantı Kapatma Hatası!",
+    "en": "Modbus TCP Connection Close Error!",
+    "de": "Modbus-TCP-Verbindungsfehler beim Schließen!"
+  },
+  "Alarms clientlar güncellendi mi?": {
+    "tr": "Alarms clientlar güncellendi mi?",
+    "en": "Were alarm clients updated?",
+    "de": "Wurden die Alarm-Clients aktualisiert?"
+  },
+  "internet var mı?": {
+    "tr": "internet var mı?",
+    "en": "Is there internet connection?",
+    "de": "Gibt es eine Internetverbindung?"
+  },
+  "cpu sıcaklık değeri alınabildi mi?": {
+    "tr": "cpu sıcaklık değeri alınabildi mi?",
+    "en": "Was the CPU temperature value retrieved?",
+    "de": "Wurde der CPU-Temperaturwert abgerufen?"
+  },
+  "cpu kullanım yüzdesi alınabildi mi?": {
+    "tr": "cpu kullanım yüzdesi alınabildi mi?",
+    "en": "Was the CPU usage percentage retrieved?",
+    "de": "Wurde die CPU-Auslastung abgerufen?"
+  },
+  "bellek kullanım yüzdesi alınabildi mi?": {
+    "tr": "bellek kullanım yüzdesi alınabildi mi?",
+    "en": "Was the memory usage percentage retrieved?",
+    "de": "Wurde die Speicherauslastung abgerufen?"
+  },
+  "yüksek cpu kullanım yüzdesi": {
+    "tr": "yüksek cpu kullanım yüzdesi",
+    "en": "High CPU usage percentage",
+    "de": "Hohe CPU-Auslastung"
+  },
+  "yüksek bellek kullanım yüzdesi": {
+    "tr": "yüksek bellek kullanım yüzdesi",
+    "en": "High memory usage percentage",
+    "de": "Hohe Speicherauslastung"
+  },
+  "yüksek cpu sıcaklığı": {
+    "tr": "yüksek cpu sıcaklığı",
+    "en": "High CPU temperature",
+    "de": "Hohe CPU-Temperatur"
+  },
+  "disk kullanım yüzdesi alınabildi mi?": {
+    "tr": "disk kullanım yüzdesi alınabildi mi?",
+    "en": "Was the disk usage percentage retrieved?",
+    "de": "Wurde die Festplattenauslastung abgerufen?"
+  },
+  "yüksek disk kullanım yüzdesi": {
+    "tr": "yüksek disk kullanım yüzdesi",
+    "en": "High disk usage percentage",
+    "de": "Hohe Festplattenauslastung"
+  },
+  "Modem Buluta Gönderildi Mi?": {
+    "tr": "Modem Buluta Gönderildi Mi?",
+    "en": "Was the modem sent to the cloud?",
+    "de": "Wurde das Modem in die Cloud gesendet?"
+  },
+  "Rabbit MQya Basılan Veri": {
+    "tr": "Rabbit MQya Basılan Veri",
+    "en": "Data published to RabbitMQ",
+    "de": "An RabbitMQ gesendete Daten"
+  },
+  "İnternet Var Mı?": {
+    "tr": "İnternet Var Mı?",
+    "en": "Is there internet?",
+    "de": "Gibt es eine Internetverbindung?"
+  },
+  "Bellek Kullanımı": {
+    "tr": "Bellek Kullanımı",
+    "en": "Memory usage",
+    "de": "Speichernutzung"
+  },
+  "Disk Kullanımı": {
+    "tr": "Disk Kullanımı",
+    "en": "Disk usage",
+    "de": "Festplattennutzung"
+  },
+  "Toplam Bellek Boyutu": {
+    "tr": "Toplam Bellek Boyutu",
+    "en": "Total memory size",
+    "de": "Gesamtspeichergröße"
+  },
+  "Toplam Disk Boyutu": {
+    "tr": "Toplam Disk Boyutu",
+    "en": "Total disk size",
+    "de": "Gesamtfestplattengröße"
+  },
+  "CPU Kullanımı": {
+    "tr": "CPU Kullanımı",
+    "en": "CPU usage",
+    "de": "CPU-Auslastung"
+  },
+  "CPU Sıcaklığı": {
+    "tr": "CPU Sıcaklığı",
+    "en": "CPU temperature",
+    "de": "CPU-Temperatur"
+  },
+  "Public IP Adresi": {
+    "tr": "Public IP Adresi",
+    "en": "Public IP address",
+    "de": "Öffentliche IP-Adresse"
+  },
+  "VPN IP Adresi": {
+    "tr": "VPN IP Adresi",
+    "en": "VPN IP address",
+    "de": "VPN-IP-Adresse"
+  },
+  "Local IP Adresi": {
+    "tr": "Local IP Adresi",
+    "en": "Local IP address",
+    "de": "Lokale IP-Adresse"
+  },
+  "MAC Adresi": {
+    "tr": "MAC Adresi",
+    "en": "MAC address",
+    "de": "MAC-Adresse"
+  },
+  "Aktif sayaçlar": {
+    "tr": "Aktif sayaçlar",
+    "en": "Active meters",
+    "de": "Aktive Zähler"
+  },
+  "alınamadı!": {
+    "tr": "Alınamadı!",
+    "en": "Could not be retrieved!",
+    "de": "Konnte nicht abgerufen werden!"
+  }
+}

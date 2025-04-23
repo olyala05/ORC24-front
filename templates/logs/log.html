@@ -403,23 +403,28 @@ endblock%} {% block extra_css %}
   }
 
   // Statik Dil Çevirme
-  const logTranslations = {
-    "Bütün görevler başlatıldı mı?": {
-      tr: "Bütün görevler başlatıldı mı?",
-      en: "Have all tasks been started?",
-      de: "Wurden alle Aufgaben gestartet?",
-    },
-    "Modem aktif mi": {
-      tr: "Cihaz bağlantısı kesildi",
-      en: "Device disconnected",
-      de: "Verbindung zum Gerät unterbrochen",
-    },
-    "Enerji değeri okundu": {
-      tr: "Enerji değeri okundu",
-      en: "Energy value read",
-      de: "Energiewert gelesen",
-    },
-  };
+  let tagTranslations = {};
+  let dataTranslations = {};
+
+  // TAG Çevirilerini Yükle
+  fetch("static/log-trans/tag.json")
+    .then((res) => res.json())
+    .then((data) => {
+      tagTranslations = data;
+    })
+    .catch((err) => {
+      console.error("Tag translation file could not be loaded:", err);
+    });
+
+  // DATA Çevirilerini Yükle
+  fetch("static/log-trans/data.json")
+    .then((res) => res.json())
+    .then((data) => {
+      dataTranslations = data;
+    })
+    .catch((err) => {
+      console.error("Data translation file could not be loaded:", err);
+    });
 
   function updateTable(logs, append = false) {
     if (!append) logTableBody.innerHTML = "";
@@ -429,11 +434,15 @@ endblock%} {% block extra_css %}
       const row = document.createElement("tr");
       const logId = `log-${Date.now()}-${Math.random()}`;
 
+      // TAG çevirisi
       const rawTag = log.tag;
-      const translatedTag =
-        logTranslations[rawTag]?.[activeLang] || rawTag;
+      const translatedTag = tagTranslations[rawTag]?.[activeLang] || rawTag;
 
-      const text = (translatedTag + " - " + (log.data || "N/A")).replace(
+      // DATA çevirisi
+      const rawData = log.data || "N/A";
+      const translatedData = dataTranslations[rawData]?.[activeLang] || rawData;
+
+      const text = (translatedTag + " - " + translatedData).replace(
         /[&<>"']/g,
         (c) =>
           ({
@@ -449,22 +458,28 @@ endblock%} {% block extra_css %}
       const needsToggle = text.length > 100;
 
       row.innerHTML = `
-        <td><span class="status-dot ${statusClass}"></span></td>
-        <td>
-          <span class="ellipsis" id="${logId}-short">${text}</span>
-          <span class="log-full" id="${logId}-full" style="display:none">${text}</span>
-          ${
-            needsToggle
-              ? `<a href="#" class="toggle-link" data-log-id="${logId}">Read More</a>`
-              : ""
-          }
-        </td>
-        <td style="white-space: nowrap;">${formatDateTime(
-          log.created_at
-        )}</td>`;
+                <td><span class="status-dot ${statusClass}"></span></td>
+                <td>
+                  <span class="ellipsis" id="${logId}-short">${text}</span>
+                  <span class="log-full" id="${logId}-full" style="display:none">${text}</span>
+                  ${
+                    needsToggle
+                      ? `<a href="#" class="toggle-link" data-log-id="${logId}">{{ _('Read More') }}</a>`
+                      : ""
+                  }
+                </td>
+                <td style="white-space: nowrap;">${formatDateTime(
+                  log.created_at
+                )}</td>
+            `;
       logTableBody.appendChild(row);
     });
   }
+
+  const toggleTranslations = {
+    more: "{{ _('Read More') }}",
+    less: "{{ _('Read Less') }}",
+  };
 
   logTableBody.addEventListener("click", function (e) {
     if (e.target.classList.contains("toggle-link")) {
@@ -475,12 +490,14 @@ endblock%} {% block extra_css %}
   });
 
   function toggleLog(id, link) {
-    const shortEl = document.getElementById(`${id}-short`);
-    const fullEl = document.getElementById(`${id}-full`);
-    const isHidden = shortEl.style.display === "none";
-    shortEl.style.display = isHidden ? "inline-block" : "none";
-    fullEl.style.display = isHidden ? "none" : "inline";
-    link.textContent = isHidden ? "Read More" : "Read Less";
+      const shortEl = document.getElementById(`${id}-short`);
+      const fullEl = document.getElementById(`${id}-full`);
+      const isHidden = shortEl.style.display === "none";
+
+      shortEl.style.display = isHidden ? "inline-block" : "none";
+      fullEl.style.display = isHidden ? "none" : "inline";
+
+      link.textContent = isHidden ? toggleTranslations.more : toggleTranslations.less;
   }
 
   function formatDateTime(str) {

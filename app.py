@@ -36,7 +36,7 @@ Scss(app, static_dir="static", asset_dir="assets")
 babel = Babel(app)
 
 LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
-IP_RANGE = "192.168.4.0/24"
+IP_RANGE = "192.168.1.0/24"
 DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database": "iot"}
 last_connection_time = None
 
@@ -110,18 +110,43 @@ def arp_scan(ip_range):
 
     return ip_list
 
-def nmap_scan(ip_range):
-    """Belirtilen IP aralığında Nmap taraması yaparak 02 veya 12  veya 2c ile başlayan MAC adreslerini bulur"""
-    nm = nmap.PortScanner()
-    # res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
-    res = nm.scan(hosts=ip_range, arguments="-sn")
-    ip_list = []
-    for host in nm.all_hosts():
-        mac_address = nm[host]["addresses"].get("mac", "")
-        if mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c") or mac_address.startswith("d8"):
-            ip_list.append({"ip": host, "mac": mac_address})
+# def nmap_scan(ip_range):
+#     """Belirtilen IP aralığında Nmap taraması yaparak 02 veya 12  veya 2c ile başlayan MAC adreslerini bulur"""
+#     nm = nmap.PortScanner()
+#     # res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
+#     res = nm.scan(hosts=ip_range, arguments="-sn")
+#     ip_list = []
+#     for host in nm.all_hosts():
+#         mac_address = nm[host]["addresses"].get("mac", "")
+#         if mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c") or mac_address.startswith("d8"):
+#             ip_list.append({"ip": host, "mac": mac_address})
 
-    return ip_list
+#     return ip_list
+
+def nmap_scan(ip_range):
+    nm = nmap.PortScanner()
+
+    # -sn: Ping taraması, -n: DNS çözümleme kapalı, --disable-arp-ping: bazen işe yarar
+    print(f"Taranıyor: {ip_range} ...")
+    nm.scan(hosts=ip_range, arguments="-sn -n")
+
+    mac_prefixes = ("2c", "d8")  
+    found_hosts = []
+
+    for host in nm.all_hosts():
+        addresses = nm[host].get("addresses", {})
+        mac_address = addresses.get("mac", "").lower()
+
+        if not mac_address:
+            print(f"[!] {host} için MAC adresi alınamadı")
+            continue
+
+        if mac_address.startswith(mac_prefixes):
+            found_hosts.append({"ip": host, "mac": mac_address})
+            print(f"[+] Bulundu: {host} -> {mac_address}")
+
+    return found_hosts
+
 
 # !! VPN ile cihaz ip lerini getiren kod
 # def get_mac_from_device(ip): 

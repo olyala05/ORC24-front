@@ -1403,22 +1403,12 @@ msgstr "Lütfen modeminizi ve bağlantılarınızı kontrol edin. "
 msgid "Please enter the password."
 msgstr "Lütfen şifreyi girin."
 
+#: templates/log.html
+msgid "Read More"
+msgstr "Daha Fazla"
 
-
-
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
+msgid "Read Less"
+msgstr "Daha Az"
 
 msgid ""
 msgstr ""

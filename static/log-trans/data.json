@@ -1,0 +1,12 @@
+{
+  "alınamadı!": {
+    "tr": "Alınamadı!",
+    "en": "Could not be retrieved!",
+    "de": "Konnte nicht abgerufen werden!"
+  },
+  "aktif sayaçlar bulunmamaktadır!": {
+    "tr": "Aktif sayaçlar bulunmamaktadır!",
+    "en": "No active meters found!",
+    "de": "Keine aktiven Zähler gefunden!"
+  }
+}
