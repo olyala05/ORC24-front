@@ -130,9 +130,8 @@ endblock %} {% block content %}
       id="equipment-settings"
       class="equip-setting-form"
       style="display: none"
-      >
+    >
       <div class="equip-setting-card">
-      
         <!-- Equipment Name -->
         <div class="equip-setting-group">
           <label>{{ _('Equipment Name') }}</label>
@@ -143,8 +142,8 @@ endblock %} {% block content %}
         <div class="equip-setting-group">
           <label>{{ _('Equipment Status') }}</label>
           <select id="equipment-status">
-            <option value="A">{{ _('Active') }}</option>
-            <option value="P">{{ _('Passive') }}</option>
+            <option value="1">{{ _('Active') }}</option>
+            <option value="0">{{ _('Passive') }}</option>
           </select>
         </div>
         <!-- Installation Power -->
@@ -274,119 +273,112 @@ endblock %} {% block content %}
       fetchEquipmentDetails(equipmentId);
     });
 
+    let currentEquipmentUUID = "";
+
     function fetchEquipmentDetails(equipmentId) {
       const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
 
-      if (!selectedDeviceIP || !equipmentId) {
-        console.warn("Device IP or Equipment ID is missing.");
-        return;
-      }
-
-      console.log("Fetching equipment details for ID:", equipmentId);
-
-      fetch("/set_selected_equipment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ equipment_id: equipmentId }),
-      })
+      fetch(`http://${selectedDeviceIP}:8085/get_equipments`)
         .then((response) => response.json())
-        .then((setResponse) => {
-          console.log("Equipment ID saved:", equipmentId);
+        .then((data) => {
+          const equipments = data.data || [];
+          const equipment = equipments.find((eq) => eq.id == equipmentId);
 
-          if (setResponse.success) {
-            return new Promise((resolve) => setTimeout(resolve, 300));
-          } else {
-            throw new Error("Failed to set selected equipment");
+          if (!equipment || !equipment.uuid) {
+            throw new Error("UUID bulunamadı!");
           }
+
+          currentEquipmentUUID = equipment.uuid; // UUID'yi kaydet
+
+          return fetch(`/get_equipment_from_cloud/${currentEquipmentUUID}`);
         })
-        .then(() =>
-          Promise.all([
-            fetch("/fetch_equipment_details", { method: "GET" }).then((res) =>
-              res.json()
-            ),
-            fetch("/get_modem_info").then((res) => res.json()),
-          ])
-        )
-        .then(([equipmentData, modemData]) => {
-          console.log("Equipment Details Response:", equipmentData);
-          console.log("Modem API Yanıtı:", modemData);
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success" && data.data) {
+            const equipment = data.data;
 
-          if (equipmentData.status === "success" && equipmentData.data) {
-            const equipment = equipmentData.data;
-            const modem =
-              modemData.status === "success" ? modemData.data : null;
+            document.getElementById("equipment-name").value = equipment.name;
+            if (equipment.status === 1 || equipment.status === 0) {
+              document.getElementById("equipment-status").value =
+                equipment.status.toString();
+            } else {
+              console.warn("Bilinmeyen status değeri:", equipment.status);
+            }
+            document.getElementById("installation-power").value =
+              equipment.installation_power;
+            document.getElementById("phase1-current").value =
+              equipment.phase_1_current;
+            document.getElementById("phase2-current").value =
+              equipment.phase_2_current;
+            document.getElementById("phase3-current").value =
+              equipment.phase_3_current;
 
-            const updateInput = (id, value) => {
-              const input = document.getElementById(id);
-              if (!input) return;
-
-              if (input.tagName === "SELECT") {
-                input.value = value;
-              } else {
-                input.value =
-                  value !== null && value !== undefined ? value : "NULL";
-              }
-            };
-
-            updateInput("equipment-name", equipment.model_name);
-            updateInput("slave-id", equipment.modbus_address || "");
-            updateInput("modem-serial", equipment.modem_serial_number || "");
-            updateInput("equipment-serial", equipment.serial_number || "");
-            updateInput("device-id", equipment.device_id || "");
-            updateInput("equipment-status", equipment.status);
-            updateInput("config-status", equipment.configuration_data);
-            updateInput("equipment-brand", equipment.brand_name || "");
-            updateInput("phase1-current", equipment.phase1_current);
-            updateInput("phase2-current", equipment.phase2_current);
-            updateInput("phase3-current", equipment.phase3_current);
-            updateInput("installation-power", equipment.installation_power);
-            updateInput(
-              "modem-name",
-              modem && modem.name ? modem.name : "{{ _('Modem Not Found')}}"
-            );
-            equipmentSetList.style.display = "none";
-            equipmentSettings.style.display = "block";
-          } else {
-            console.warn("{{ _('Equipment details not found')}}.");
+            document.getElementById("equipment-set-list").style.display =
+              "none";
+            document.getElementById("equipment-settings").style.display =
+              "block";
           }
         })
         .catch((error) => {
-          console.error("{{ _('Error fetching equipment details')}}:", error);
+          console.error("Hata:", error);
         });
     }
 
-    document.querySelector(".equip-setting-save-btn").addEventListener("click", function () {
-      const equipmentData = {
-        name: document.getElementById("equipment-name").value.trim(),
-        status: document.getElementById("equipment-status").value === "A" ? 1 : 2,
-        installation_power: parseInt(document.getElementById("installation-power").value),
-        phase_1_current: parseFloat(document.getElementById("phase1-current").value),
-        phase_2_current: parseFloat(document.getElementById("phase2-current").value),
-        phase_3_current: parseFloat(document.getElementById("phase3-current").value)
+    // Save Butonu
+    document
+      .querySelector(".equip-setting-save-btn")
+      .addEventListener("click", function () {
+        const equipmentData = {
+          name: document.getElementById("equipment-name").value.trim(),
+          status: parseInt(document.getElementById("equipment-status").value),
+          installation_power: parseInt(
+            document.getElementById("installation-power").value
+          ),
+          phase_1_current: parseFloat(
+            document.getElementById("phase1-current").value
+          ),
+          phase_2_current: parseFloat(
+            document.getElementById("phase2-current").value
+          ),
+          phase_3_current: parseFloat(
+            document.getElementById("phase3-current").value
+          ),
         };
 
-        showLoading("Equipment bilgileri güncelleniyor...");
+        if (!currentEquipmentUUID) {
+          showErrorAlert("Hata!", "UUID bulunamadı!");
+          return;
+        }
 
-          fetch("/update_equipment_info", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(equipmentData)
-          })
-          .then(response => response.json())
-          .then(data => {
-              hideLoading();
-              if (data.status === "success") {
-                  showSuccessAlert("Başarılı!", "Equipment başarıyla güncellendi!");
-              } else {
-                  showErrorAlert("Hata!", data.message);
-              }
-          })
-          .catch(error => {
-              hideLoading();
-              showErrorAlert("Bağlantı Hatası!", error.message);
-        });
+        showLoading("Bulutta güncelleniyor...");
+
+        fetch(`/update_equipment_cloud/${currentEquipmentUUID}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(equipmentData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            hideLoading();
+            if (data.status === "success") {
+              showSuccessAlert("Başarılı!", "Equipment bulutta güncellendi!");
+
+              // 🌟 Buluttan cihazına senkronizasyon isteği
+              fetch(`/sync_equipment_local/${currentEquipmentUUID}`)
+                .then((syncRes) => syncRes.json())
+                .then((syncData) => {
+                  if (syncData.status === "success") {
+                    console.log("✅ Cihaza başarıyla senkronize edildi!");
+                  } else {
+                    console.error("❌ Sync hatası:", syncData.message);
+                  }
+                });
+            } else {
+              showErrorAlert("Hata!", data.message);
+            }
+          });
       });
-      });
+  });
 
   document.addEventListener("DOMContentLoaded", function () {
     const testButton = document.querySelector(".modbus-setting-btn-test");

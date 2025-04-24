@@ -10,6 +10,7 @@ from flask import (
     g,
     flash,
 )
+import mysql.connector
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flask_scss import Scss
@@ -431,48 +432,37 @@ def update_modem_info():
 
     return ResponseHandler.success(message="Modem updated locally and on cloud")
 
-@app.route("/update_equipment_info", methods=["POST"])
-def update_equipment_info():
-    data = request.get_json()
-
-    selected_ip = session.get("selected_device_ip")
-    selected_equipment_id = session.get("selected_equipment_id")
-
-    if not selected_ip or not selected_equipment_id:
-        return ResponseHandler.error(message="Device IP or Equipment ID missing", code=400)
-
-    # 1️⃣ UUID'yi cihazdan çekiyoruz
-    try:
-        response = requests.get(f"http://{selected_ip}:8085/get_equipments", timeout=5)
-        response.raise_for_status()
-        equipments = response.json().get("data", [])
-
-        equipment = next((eq for eq in equipments if eq["id"] == int(selected_equipment_id)), None)
-        if not equipment:
-            return ResponseHandler.error(message="Equipment not found", code=404)
-
-        equipment_uuid = equipment.get("uuid")
-        if not equipment_uuid:
-            return ResponseHandler.error(message="UUID not found", code=404)
-    except Exception as e:
-        return ResponseHandler.error(message="Failed to get equipment info", code=500, details=str(e))
-
-    # 2️⃣ Yerel Güncelleme (Cihaz içi)
-    try:
-        local_update_url = f"http://{selected_ip}:8085/update_equipment"
-        local_response = requests.post(local_update_url, json=data, timeout=5)
-        local_response.raise_for_status()
-    except Exception as e:
-        return ResponseHandler.error(message="Local update failed", code=500, details=str(e))
-
-    # 3️⃣ Bulut Güncelleme
+@app.route("/get_equipment_from_cloud/<string:uuid>", methods=["GET"])
+def get_equipment_from_cloud(uuid):
     token = session.get("access_token")
     if not token:
-        return ResponseHandler.error(message="Token missing", code=401)
+        return jsonify({"status": "error", "message": "Token missing"}), 401
 
-    cloud_url = f"https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/equipments/{equipment_uuid}"
+    cloud_url = f"https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/equipments/{uuid}"
+
     try:
-        cloud_response = requests.put(
+        response = requests.get(
+            cloud_url,
+            headers={"Authorization": f"Bearer {token}"},
+            verify=False
+        )
+        response.raise_for_status()
+        return jsonify({"status": "success", "data": response.json()})
+    except Exception as e:
+        return jsonify({"status": "error", "message": "Failed to fetch data", "details": str(e)}), 500
+
+@app.route("/update_equipment_cloud/<string:uuid>", methods=["PUT"])
+def update_equipment_cloud(uuid):
+    token = session.get("access_token")
+    if not token:
+        return jsonify({"status": "error", "message": "Token missing"}), 401
+
+    data = request.get_json()
+
+    cloud_url = f"https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/equipments/{uuid}"
+
+    try:
+        response = requests.put(
             cloud_url,
             headers={
                 "Authorization": f"Bearer {token}",
@@ -482,11 +472,50 @@ def update_equipment_info():
             json=data,
             verify=False
         )
-        cloud_response.raise_for_status()
+        response.raise_for_status()
+        return jsonify({"status": "success", "message": "Equipment updated on cloud"})
     except Exception as e:
-        return ResponseHandler.error(message="Cloud update failed", code=500, details=str(e))
+        return jsonify({"status": "error", "message": "Cloud update failed", "details": str(e)}), 500
 
-    return ResponseHandler.success(message="Equipment updated locally and on cloud")
+@app.route("/sync_equipment_local/<string:uuid>", methods=["GET"])
+def sync_equipment_local(uuid):
+    token = session.get("access_token")
+    selected_ip = session.get("selected_device_ip")
+    selected_equipment_id = session.get("selected_equipment_id")
+
+    if not token or not selected_ip or not selected_equipment_id:
+        return jsonify({"status": "error", "message": "Token, IP veya Equipment ID eksik"}), 400
+
+    # 1️⃣ Buluttan veriyi çek
+    cloud_url = f"https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/equipments/{uuid}"
+    try:
+        response = requests.get(
+            cloud_url,
+            headers={"Authorization": f"Bearer {token}"},
+            verify=False
+        )
+        response.raise_for_status()
+        cloud_data = response.json()
+    except Exception as e:
+        return jsonify({"status": "error", "message": "Bulut verisi alınamadı", "details": str(e)}), 500
+
+    # 2️⃣ Cihaza POST ile gönder
+    try:
+        device_sync_url = f"http://{selected_ip}:8085/sync_equipment_from_cloud"
+        payload = {
+            "equipment_id": selected_equipment_id,
+            "installation_power": cloud_data.get("installation_power"),
+            "phase_1_current": cloud_data.get("phase_1_current"),
+            "phase_2_current": cloud_data.get("phase_2_current"),
+            "phase_3_current": cloud_data.get("phase_3_current"),
+        }
+
+        device_response = requests.post(device_sync_url, json=payload, timeout=5)
+        device_response.raise_for_status()
+    except Exception as e:
+        return jsonify({"status": "error", "message": "Cihaza sync başarısız", "details": str(e)}), 500
+
+    return jsonify({"status": "success", "message": "Bulut verisi cihaza senkronize edildi"})
 
 
 # network info
