@@ -59,7 +59,7 @@
     <script src="{{ url_for('static', filename='toastr/js/toastr.min.js') }}"></script>
 
     <!-- Diğer JS dosyalarının altına ekle -->
-    <script src="{{ url_for('static', filename='js/notification.js') }}"></scrip
+    <script src="{{ url_for('static', filename='js/notification.js') }}"></script>
 
     {% block scripts %}{% endblock %}
 
@@ -76,3 +76,10 @@
     }
   });
 </script>
+
+<script>
+  const alarmIconUrl = "{{ url_for('static', filename='images/svg/48.svg') }}";
+  const errorAlarmIconUrl = "{{ url_for('static', filename='images/svg/47.svg') }}";
+  const successAlarmIconUrl = "{{ url_for('static', filename='images/svg/46.svg') }}";
+</script>
+

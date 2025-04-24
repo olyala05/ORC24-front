@@ -1392,3 +1392,6 @@ msgstr "Mehr Anzeigen"
 
 msgid "Read Less"
 msgstr "Weniger Anzeigen"
+
+msgid "Modem info not loaded!"
+msgstr " Modeminfo nicht geladen!"

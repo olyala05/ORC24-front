@@ -1,4 +1,3 @@
-
 // Hata mesajlarını gösteren fonksiyon
 function showErrorAlert(title, text = "") {
   toastr.options = {

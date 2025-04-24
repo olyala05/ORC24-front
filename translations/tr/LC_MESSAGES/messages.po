@@ -1410,14 +1410,8 @@ msgstr "Daha Fazla"
 msgid "Read Less"
 msgstr "Daha Az"
 
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
+msgid "Modem info not loaded!"
+msgstr "Modem bilgisi yüklenemedi!"
 
 msgid ""
 msgstr ""

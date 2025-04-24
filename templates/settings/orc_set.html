@@ -152,7 +152,6 @@
         <button class="orc-save-btn" id="saveButton">{{ _('Save')}}</button>
       </div>
     </div>
-
   </div>
 </div>
 <script>
@@ -344,69 +343,88 @@
     fetchWifiNetworks();
   });
 
-  // Modem bilgisi çek
-document.addEventListener("DOMContentLoaded", function () {
-    const modemNameInput = document.querySelector("#orc-set input[placeholder='{{ _('Modem Name')}}']");
+  // Modem bilgisi çek ve edit etme işlemleri
+  document.addEventListener("DOMContentLoaded", function () {
+    const modemNameInput = document.querySelector(
+      "#orc-set input[placeholder='{{ _('Modem Name')}}']"
+    );
     const networkTypeSelect = document.getElementById("networkTypeSelect");
-    const ssidInput = document.querySelector("#orc-set input[placeholder='{{ _('SSID')}}']");
-    const passwordInput = document.querySelector("#orc-set input[placeholder='{{ _('Password')}}']");
-    const gsmNumberInput = document.querySelector("#orc-set input[placeholder='{{ _('GSM Number')}}']");
+    const ssidInput = document.querySelector(
+      "#orc-set input[placeholder='{{ _('SSID')}}']"
+    );
+    const passwordInput = document.querySelector(
+      "#orc-set input[placeholder='{{ _('Password')}}']"
+    );
+    const gsmNumberInput = document.querySelector(
+      "#orc-set input[placeholder='{{ _('GSM Number')}}']"
+    );
 
     function fetchModemInfo() {
-        fetch("/get_modem_info")
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success") {
-                    const modem = data.data;
+      fetch("/get_modem_info")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            const modem = data.data;
 
-                    modemNameInput.value = modem.name?.trim() || "";
-                    networkTypeSelect.value = modem.network_type_id || "1";
-                    ssidInput.value = modem.network_ssid?.trim() || "";
-                    passwordInput.value = modem.network_password?.trim() || "";
-                    gsmNumberInput.value = modem.gsm_number?.trim() || "";
+            modemNameInput.value = modem.name?.trim() || "";
+            networkTypeSelect.value = modem.network_type_id || "1";
+            ssidInput.value = modem.network_ssid?.trim() || "";
+            passwordInput.value = modem.network_password?.trim() || "";
+            gsmNumberInput.value = modem.gsm_number?.trim() || "";
 
-                    console.log("Modem Bilgisi:", modem);
-                } else {
-                    showErrorAlert("Modem bilgisi yüklenemedi!", data.message);
-                }
-            })
-            .catch(error => {
-                showErrorAlert("Modem bilgisi çekilirken hata!", error.message);
-            });
+            console.log("Modem Bilgisi:", modem);
+          } else {
+            showErrorAlert("{{ _('Modem info not loaded!') }}", data.message);
+          }
+        })
+        .catch((error) => {
+          showErrorAlert("Modem bilgisi çekilirken hata!", error.message);
+        });
     }
 
-    document.getElementById("saveButton").addEventListener("click", function () {
+    document
+      .getElementById("saveButton")
+      .addEventListener("click", function () {
         const modemData = {
-            name: modemNameInput.value,
-            network_type_id: parseInt(networkTypeSelect.value),
-            wifi_ssid: ssidInput.value,
-            wifi_password: passwordInput.value,
-            gsm_number: gsmNumberInput.value
+          name: modemNameInput.value,
+          network_type_id: parseInt(networkTypeSelect.value),
+          wifi_ssid: ssidInput.value,
+          wifi_password: passwordInput.value,
+          gsm_number: gsmNumberInput.value,
         };
 
+        // Boş Alan Kontrolü
+        if (!modemData.name || !modemData.wifi_ssid || !modemData.wifi_password || !modemData.gsm_number) {
+            showWarningAlert("Eksik Bilgi!", "Lütfen tüm alanları doldurun. Boş bırakılan alanlar mevcut.");
+            return; 
+        }
+
+        showLoading("Modem bilgileri güncelleniyor...");
+
         fetch("/update_modem_info", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(modemData)
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(modemData),
         })
-        .then(response => response.json())
-        .then(data => {
+          .then((response) => response.json())
+          .then((data) => {
+            hideLoading();
             if (data.status === "success") {
-                showSuccessAlert("Başarılı!", "Modem başarıyla güncellendi!");
+              showSuccessAlert("Başarılı!", "Modem başarıyla güncellendi!");
             } else {
-                showErrorAlert("Hata!", data.message);
+              showErrorAlert("Hata!", data.message);
             }
-        })
-        .catch(error => {
+          })
+          .catch((error) => {
+            hideLoading();
             showErrorAlert("Bağlantı Hatası!", error.message);
-        });
-    });
+          });
+      });
 
     fetchModemInfo();
-});
-
+  });
 </script>
 
 <style>

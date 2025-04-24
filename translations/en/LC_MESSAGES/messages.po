@@ -1397,3 +1397,6 @@ msgstr "Read More"
 
 msgid "Read Less"
 msgstr "Read Less"
+
+msgid "Modem info not loaded!"
+msgstr "Modem info not loaded!"
