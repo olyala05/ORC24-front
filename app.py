@@ -431,6 +431,64 @@ def update_modem_info():
 
     return ResponseHandler.success(message="Modem updated locally and on cloud")
 
+@app.route("/update_equipment_info", methods=["POST"])
+def update_equipment_info():
+    data = request.get_json()
+
+    selected_ip = session.get("selected_device_ip")
+    selected_equipment_id = session.get("selected_equipment_id")
+
+    if not selected_ip or not selected_equipment_id:
+        return ResponseHandler.error(message="Device IP or Equipment ID missing", code=400)
+
+    # 1️⃣ UUID'yi cihazdan çekiyoruz
+    try:
+        response = requests.get(f"http://{selected_ip}:8085/get_equipments", timeout=5)
+        response.raise_for_status()
+        equipments = response.json().get("data", [])
+
+        equipment = next((eq for eq in equipments if eq["id"] == int(selected_equipment_id)), None)
+        if not equipment:
+            return ResponseHandler.error(message="Equipment not found", code=404)
+
+        equipment_uuid = equipment.get("uuid")
+        if not equipment_uuid:
+            return ResponseHandler.error(message="UUID not found", code=404)
+    except Exception as e:
+        return ResponseHandler.error(message="Failed to get equipment info", code=500, details=str(e))
+
+    # 2️⃣ Yerel Güncelleme (Cihaz içi)
+    try:
+        local_update_url = f"http://{selected_ip}:8085/update_equipment"
+        local_response = requests.post(local_update_url, json=data, timeout=5)
+        local_response.raise_for_status()
+    except Exception as e:
+        return ResponseHandler.error(message="Local update failed", code=500, details=str(e))
+
+    # 3️⃣ Bulut Güncelleme
+    token = session.get("access_token")
+    if not token:
+        return ResponseHandler.error(message="Token missing", code=401)
+
+    cloud_url = f"https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/equipments/{equipment_uuid}"
+    try:
+        cloud_response = requests.put(
+            cloud_url,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            json=data,
+            verify=False
+        )
+        cloud_response.raise_for_status()
+    except Exception as e:
+        return ResponseHandler.error(message="Cloud update failed", code=500, details=str(e))
+
+    return ResponseHandler.success(message="Equipment updated locally and on cloud")
+
+
 # network info
 @app.route("/wi-fi-list", methods=["POST"])
 def wi_fi_list():

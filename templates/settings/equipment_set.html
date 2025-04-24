@@ -130,7 +130,7 @@ endblock %} {% block content %}
       id="equipment-settings"
       class="equip-setting-form"
       style="display: none"
-    >
+      >
       <div class="equip-setting-card">
       
         <!-- Equipment Name -->
@@ -147,28 +147,6 @@ endblock %} {% block content %}
             <option value="P">{{ _('Passive') }}</option>
           </select>
         </div>
-
-        <!-- Equipment Config Status (select) -->
-
-        <!--         <div class="equip-setting-group">
-          <label>{{ _('Equipment Config Status') }}</label>
-          <select id="config-status">
-            <option value="A">{{ _('Active') }}</option>
-            <option value="P">{{ _('Passive') }}</option>
-          </select>
-        </div>-->
-
-
-        <!-- Communication Protocol (select) -->
-        <div class="equip-setting-group">
-          <label>{{ _('Communication Protocol') }}</label>
-          <select id="communication-protocol">
-            <option value="1">Modbus RTU</option> <!-- SERIAL -->
-            <option value="2">Modbus TCP</option> <!-- TCP -->
-            <option value="0">Unknown Model</option>
-          </select>
-        </div>
-
         <!-- Installation Power -->
         <div class="equip-setting-group">
           <label>{{ _('Installation Power (W)') }}</label>
@@ -358,21 +336,10 @@ endblock %} {% block content %}
             updateInput("equipment-status", equipment.status);
             updateInput("config-status", equipment.configuration_data);
             updateInput("equipment-brand", equipment.brand_name || "");
-            updateInput(
-              "communication-protocol",
-              equipment.communication_protocol_code !== null &&
-                equipment.communication_protocol_code !== undefined
-                ? equipment.communication_protocol_code.toString()
-                : "0"
-            );
-
-            updateInput("phase1-current", equipment.phase1_current || "NULL");
-            updateInput("phase2-current", equipment.phase2_current || "NULL");
-            updateInput("phase3-current", equipment.phase3_current || "NULL");
-            updateInput(
-              "installation-power",
-              equipment.installation_power || ""
-            );
+            updateInput("phase1-current", equipment.phase1_current);
+            updateInput("phase2-current", equipment.phase2_current);
+            updateInput("phase3-current", equipment.phase3_current);
+            updateInput("installation-power", equipment.installation_power);
             updateInput(
               "modem-name",
               modem && modem.name ? modem.name : "{{ _('Modem Not Found')}}"
@@ -387,7 +354,39 @@ endblock %} {% block content %}
           console.error("{{ _('Error fetching equipment details')}}:", error);
         });
     }
-  });
+
+    document.querySelector(".equip-setting-save-btn").addEventListener("click", function () {
+      const equipmentData = {
+        name: document.getElementById("equipment-name").value.trim(),
+        status: document.getElementById("equipment-status").value === "A" ? 1 : 2,
+        installation_power: parseInt(document.getElementById("installation-power").value),
+        phase_1_current: parseFloat(document.getElementById("phase1-current").value),
+        phase_2_current: parseFloat(document.getElementById("phase2-current").value),
+        phase_3_current: parseFloat(document.getElementById("phase3-current").value)
+        };
+
+        showLoading("Equipment bilgileri güncelleniyor...");
+
+          fetch("/update_equipment_info", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(equipmentData)
+          })
+          .then(response => response.json())
+          .then(data => {
+              hideLoading();
+              if (data.status === "success") {
+                  showSuccessAlert("Başarılı!", "Equipment başarıyla güncellendi!");
+              } else {
+                  showErrorAlert("Hata!", data.message);
+              }
+          })
+          .catch(error => {
+              hideLoading();
+              showErrorAlert("Bağlantı Hatası!", error.message);
+        });
+      });
+      });
 
   document.addEventListener("DOMContentLoaded", function () {
     const testButton = document.querySelector(".modbus-setting-btn-test");
