@@ -36,7 +36,7 @@ Scss(app, static_dir="static", asset_dir="assets")
 babel = Babel(app)
 
 LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
-IP_RANGE = "192.168.1.0/24"
+IP_RANGE = "192.168.4.0/24"
 DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database": "iot"}
 last_connection_time = None
 
@@ -363,6 +363,7 @@ def get_modem_info():
             "status": "Active" if modem.get("status") == 1 else "Inactive",
             "network_ssid": modem.get("network_ssid", "-"),
             "network_password": modem.get("network_password", "-"),
+            "gsm_number": modem.get("gsm_number", "")
         }
         return ResponseHandler.success(
             message=_("Modem info retrieved successfully"), data=modem_info
@@ -376,6 +377,59 @@ def get_modem_info():
         return ResponseHandler.error(
             message=_("Unexpected error occurred"), code=500, details=str(e)
         )
+
+@app.route("/update_modem_info", methods=["POST"])
+def update_modem_info():
+    data = request.get_json()
+
+    selected_ip = session.get("selected_device_ip")
+    if not selected_ip:
+        return ResponseHandler.error(message="Selected device IP missing", code=400)
+
+    # 1️⃣ UUID'yi ve diğer bilgileri cihazdan çek (/get_modems)
+    try:
+        response = requests.get(f"http://{selected_ip}:8085/get_modems", timeout=5)
+        response.raise_for_status()
+        modems = response.json().get("data", [])
+        if not modems:
+            return ResponseHandler.error(message="No modem data found", code=404)
+
+        modem_uuid = modems[0].get("uuid")
+        if not modem_uuid:
+            return ResponseHandler.error(message="UUID not found", code=404)
+    except Exception as e:
+        return ResponseHandler.error(message="Failed to get modem info", code=500, details=str(e))
+
+    # 2️⃣ Yerel Güncelleme
+    try:
+        local_update_url = f"http://{selected_ip}:8085/update_modem"
+        local_response = requests.post(local_update_url, json=data, timeout=5)
+        local_response.raise_for_status()
+    except Exception as e:
+        return ResponseHandler.error(message="Local update failed", code=500, details=str(e))
+
+    # 3️⃣ Bulut Güncellemesi
+    token = session.get("access_token")
+    if not token:
+        return ResponseHandler.error(message="Token missing", code=401)
+
+    cloud_url = f"https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/modems/{modem_uuid}"
+    try:
+        cloud_response = requests.put(
+            cloud_url,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            json=data,
+            verify=False
+        )
+        cloud_response.raise_for_status()
+    except Exception as e:
+        return ResponseHandler.error(message="Cloud update failed", code=500, details=str(e))
+
+    return ResponseHandler.success(message="Modem updated locally and on cloud")
 
 # network info
 @app.route("/wi-fi-list", methods=["POST"])

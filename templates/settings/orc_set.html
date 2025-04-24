@@ -123,30 +123,36 @@
       <div class="orc-settings-card">
         <div class="orc-input-group">
           <label>{{ _('Modem Name')}}</label>
-          <input type="text" placeholder="{{ _('Modem Name')}}" readonly />
+          <input type="text" placeholder="{{ _('Modem Name')}}" />
         </div>
 
         <div class="orc-input-group">
-          <label>{{ _('Modem Status')}}</label>
-          <select>
-            <option value="active">{{ _('Active')}}</option>
-            <option value="inactive">{{ _('Inactive')}}</option>
+          <label>{{ _('Connection Type')}}</label>
+          <select id="networkTypeSelect">
+            <option value="1">{{ _('Wi-Fi')}}</option>
+            <option value="2">{{ _('GSM')}}</option>
           </select>
         </div>
 
         <div class="orc-input-group">
           <label>{{ _('SSID')}}</label>
-          <input type="text" placeholder="{{ _('SSID')}}" readonly />
+          <input type="text" placeholder="{{ _('SSID')}}" />
         </div>
 
         <div class="orc-input-group">
           <label>{{ _('Password')}}</label>
-          <input type="text" placeholder="{{ _('Password')}}" readonly />
+          <input type="text" placeholder="{{ _('Password')}}" />
         </div>
 
-        <button class="orc-save-btn">{{ _('Save')}}</button>
+        <div class="orc-input-group">
+          <label>{{ _('GSM Number')}}</label>
+          <input type="text" placeholder="{{ _('GSM Number')}}" />
+        </div>
+
+        <button class="orc-save-btn" id="saveButton">{{ _('Save')}}</button>
       </div>
     </div>
+
   </div>
 </div>
 <script>
@@ -189,61 +195,61 @@
     const wifiPasswordForm = document.getElementById("wifi-password-form");
     const cancelButton = document.querySelector(".cancel-set");
 
-  function fetchWifiNetworks() {
+    function fetchWifiNetworks() {
       // 📌 Loading ekranını göster
       showLoading("Wi-Fi ağları yükleniyor...");
 
       fetch("/wi-fi-list", { method: "POST" })
-          .then((response) => response.json())
-          .then((data) => {
-              if (data.status !== "success") {
-                  wifiListElement.innerHTML = `<p style='color: red;'>${data.message}</p>`;
-                  return;
-              }
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status !== "success") {
+            wifiListElement.innerHTML = `<p style='color: red;'>${data.message}</p>`;
+            return;
+          }
 
-              let networks = data.data.wifi_networks || [];
-              const connectedSSID = data.data.connected_ssid || null;
-              const connectedPassword = data.data.wifi_password || "";
+          let networks = data.data.wifi_networks || [];
+          const connectedSSID = data.data.connected_ssid || null;
+          const connectedPassword = data.data.wifi_password || "";
 
-              let wifiHTML = "";
+          let wifiHTML = "";
 
-              if (connectedSSID) {
-                  networks = networks.filter((ssid) => ssid !== connectedSSID);
-                  networks.unshift(connectedSSID);
-              }
+          if (connectedSSID) {
+            networks = networks.filter((ssid) => ssid !== connectedSSID);
+            networks.unshift(connectedSSID);
+          }
 
-              networks.forEach((ssid) => {
-                  const isConnected = ssid === connectedSSID ? "wifi-connected" : "";
-                  wifiHTML += `
+          networks.forEach((ssid) => {
+            const isConnected = ssid === connectedSSID ? "wifi-connected" : "";
+            wifiHTML += `
                       <li onclick="selectWifi('${ssid}')" class="${isConnected}">
                           <img src="/static/images/svg/25.svg" alt="Wi-Fi"/>
                           <span>${ssid}</span>
                           <img src="/static/images/svg/26.svg" alt="Lock"/>
                       </li>`;
-              });
-
-              wifiListElement.innerHTML = wifiHTML;
-
-              if (connectedSSID) {
-                  selectedSSID = connectedSSID;
-                  wifiSSIDElement.innerText = connectedSSID;
-                  connectedWifiSpan.innerText = `SSID: ${connectedSSID}`;
-                  wifiPasswordInput.value = connectedPassword;
-              } else {
-                  connectedWifiSpan.innerText = `{{ _('No Wi-Fi Connection') }}`;
-              }
-          })
-          .catch((error) => {
-              console.error("Wi-Fi networks loading error:", error);
-              wifiListElement.innerHTML = "<p style='color: red;'>Wi-Fi bilgisi alınamadı.</p>";
-              showErrorAlert("Hata!", "Wi-Fi bilgisi alınırken sorun oluştu.");
-          })
-          .finally(() => {
-              // 📌 Loading ekranını kapat
-              hideLoading();
           });
-  }
 
+          wifiListElement.innerHTML = wifiHTML;
+
+          if (connectedSSID) {
+            selectedSSID = connectedSSID;
+            wifiSSIDElement.innerText = connectedSSID;
+            connectedWifiSpan.innerText = `SSID: ${connectedSSID}`;
+            wifiPasswordInput.value = connectedPassword;
+          } else {
+            connectedWifiSpan.innerText = `{{ _('No Wi-Fi Connection') }}`;
+          }
+        })
+        .catch((error) => {
+          console.error("Wi-Fi networks loading error:", error);
+          wifiListElement.innerHTML =
+            "<p style='color: red;'>Wi-Fi bilgisi alınamadı.</p>";
+          showErrorAlert("Hata!", "Wi-Fi bilgisi alınırken sorun oluştu.");
+        })
+        .finally(() => {
+          // 📌 Loading ekranını kapat
+          hideLoading();
+        });
+    }
 
     window.selectWifi = function (ssid) {
       selectedSSID = ssid;
@@ -340,48 +346,66 @@
 
   // Modem bilgisi çek
   document.addEventListener("DOMContentLoaded", function () {
-    const modemNameInput = document.querySelector(
-      "#orc-set input[placeholder='{{ _('Modem Name')}}']"
-    );
-    const modemStatusSelect = document.querySelector("#orc-set select");
-    const ssidInput = document.querySelector(
-      "#orc-set input[placeholder='{{ _('SSID')}}']"
-    );
-    const passwordInput = document.querySelector(
-      "#orc-set input[placeholder='{{ _('Password')}}']"
-    );
+      const modemNameInput = document.querySelector("#orc-set input[placeholder='{{ _('Modem Name')}}']");
+      const networkTypeSelect = document.getElementById("networkTypeSelect");
+      const ssidInput = document.querySelector("#orc-set input[placeholder='{{ _('SSID')}}']");
+      const passwordInput = document.querySelector("#orc-set input[placeholder='{{ _('Password')}}']");
+      const gsmNumberInput = document.querySelector("#orc-set input[placeholder='{{ _('GSM Number')}}']");
 
-    function fetchModemInfo() {
-      fetch("/get_modem_info")
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === "success") {
-            const modem = data.data;
+      function fetchModemInfo() {
+          fetch("/get_modem_info")
+              .then(response => response.json())
+              .then(data => {
+                  if (data.status === "success") {
+                      const modem = data.data;
 
-            modemNameInput.value = modem.name?.trim() || "-";
-            modemStatusSelect.value = modem.status?.trim().toLowerCase() || "-";
-            ssidInput.value = modem.network_ssid?.trim() || "-";
-            passwordInput.value = modem.network_password?.trim() || "-";
+                      modemNameInput.value = modem.name?.trim() || "";
+                      networkTypeSelect.value = modem.network_type_id || "1";
+                      ssidInput.value = modem.network_ssid?.trim() || "";
+                      passwordInput.value = modem.network_password?.trim() || "";
+                      gsmNumberInput.value = modem.gsm_number?.trim() || "";
 
-            console.log("Modem Bilgisi:", modem);
-          } else {
-            console.error("Modem bilgisi yüklenemedi:", data.message);
-            modemNameInput.value = "-";
-            modemStatusSelect.value = "-";
-            ssidInput.value = "-";
-            passwordInput.value = "-";
-          }
-        })
-        .catch((error) => {
-          console.error("Modem bilgisi çekilirken hata:", error);
-          modemNameInput.value = "-";
-          modemStatusSelect.value = "-";
-          ssidInput.value = "-";
-          passwordInput.value = "-";
-        });
-    }
+                      console.log("Modem Bilgisi:", modem);
+                  } else {
+                      console.error("Modem bilgisi yüklenemedi:", data.message);
+                  }
+              })
+              .catch(error => {
+                  console.error("Modem bilgisi çekilirken hata:", error);
+              });
+      }
 
-    fetchModemInfo();
+      // Save butonuna basıldığında:
+      document.getElementById("saveButton").addEventListener("click", function () {
+          const modemData = {
+              name: modemNameInput.value,
+              network_type_id: parseInt(networkTypeSelect.value),
+              wifi_ssid: ssidInput.value,
+              wifi_password: passwordInput.value,
+              gsm_number: gsmNumberInput.value
+          };
+
+          fetch("/update_modem_info", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(modemData)
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.status === "success") {
+                  alert("Modem başarıyla güncellendi!");
+              } else {
+                  alert("Hata: " + data.message);
+              }
+          })
+          .catch(error => {
+              console.error("Güncelleme hatası:", error);
+          });
+      });
+
+      fetchModemInfo();
   });
 </script>
 
@@ -452,6 +476,5 @@
     color: #0b1734 !important;
     font-weight: 600 !important;
   }
-  
 </style>
 {% endblock %}
