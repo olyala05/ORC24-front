@@ -127,10 +127,10 @@
   justify-content: space-between;
   align-items: center;
   background: #c4c4c4;
-  padding: 4px 6px;
+  padding: 5px 6px;
   border-radius: 7px;
-  margin-bottom: 8px;
-  width: 526px;
+  margin-bottom: 6px;
+  width: 521px;
   text-align: center;
 }
 
@@ -142,20 +142,26 @@
 
 .equip-setting-group input {
   background: white;
-  border: none;
-  padding: 6px;
-  border-radius: 4px;
-  width: 48%;
+  padding: 8px;
+  border-radius: 7px;
+  width: 47%;
   font-size: 16px;
+  color: #8C8C8C;
+  text-align: center;
+  font-weight: 600;
+  border: 1px solid #B1B1B1;
 }
 
 .equip-setting-group select {
   background: white;
-  border: none;
-  padding: 6px;
-  border-radius: 4px;
-  width: 50%;
   font-size: 16px;
+  padding: 8px;
+  border-radius: 7px;
+  width: 50%;
+  color: #8C8C8C;
+  text-align: center;
+  font-weight: 600;
+  border: 1px solid #B1B1B1;
 }
 
 .equip-setting-select {
@@ -186,19 +192,17 @@
 }
 
 .equip-setting-save-btn {
-  background: #ef742a;
+  background: #ef8018;
   color: white;
   border: none;
-  width: 25%;
-  padding: 14px;
+  width: 30%;
+  padding: 11px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
-}
-.equip-setting-save-btn:hover {
-  background: #d65f1f;
+  margin-top: 4px;
 }
 
 .equ-set-content {
@@ -247,7 +251,7 @@
 }
 
 .green {
-  background-color: #33FF00;
+  background-color: #33ff00;
 }
 
 .red {
