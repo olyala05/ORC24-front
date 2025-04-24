@@ -3825,7 +3825,7 @@ body {
   background: #161b3d;
   padding: 13px;
   border-radius: 10px;
-  width: 570px;
+  width: 590px;
   align-items: center;
 }
 
@@ -3834,9 +3834,9 @@ body {
   justify-content: space-between;
   align-items: center;
   background: #c4c4c4;
-  padding: 6px;
+  padding: 2px 6px;
   border-radius: 7px;
-  margin-bottom: 13px;
+  margin-bottom: 10px;
 }
 
 .orc-input-group label {
@@ -3848,13 +3848,18 @@ body {
 
 .orc-input-group input,
 .orc-input-group select {
-  background: white;
+  background: #ffffff;
   border: none;
-  padding: 15px;
-  border-radius: 3px;
-  width: 50%;
+  padding: 11px;
+  margin: 3px;
+  border-radius: 5px;
+  width: 40%;
   box-sizing: border-box;
   font-size: 15px;
+  color: #6E6E6E;
+  font-weight: 600;
+  border: 1px solid #B1B1B1;
+  text-align: center;
 }
 
 .orc-input-group select {
