@@ -272,29 +272,21 @@
     // Wi-Fi ağına bağlan
     connectButton.addEventListener("click", function () {
       if (!selectedSSID) {
-        Swal.fire({
-          icon: "warning",
-          title: "Wi-Fi seçilmedi!",
-          text: "Lütfen bir Wi-Fi ağı seçin.",
-          customClass: { popup: "small-swal-popup" },
-        });
+        showWarningAlert("Wi-Fi Seçilmedi!", "Lütfen bir Wi-Fi ağı seçin.");
         return;
       }
 
       const password = wifiPasswordInput.value;
       if (!password) {
-        Swal.fire({
-          icon: "warning",
-          title: "Şifre girilmedi!",
-          text: "Lütfen şifreyi girin.",
-          customClass: { popup: "small-swal-popup" },
-        });
+        showWarningAlert("Lütfen önce şifreyi girin.");
         return;
       }
 
       connectButton.disabled = true;
-      connectButton.innerHTML = `<span class="spinner"></span> Bağlanılıyor...`;
+      // connectButton.innerHTML = `<span class="spinner"></span> Bağlanılıyor...`;
 
+      showLoading("Wi-Fi ağına bağlanılıyor...");
+      
       fetch("/connect_wifi", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -302,37 +294,29 @@
       })
         .then((response) => response.json())
         .then((data) => {
+          hideLoading();
           if (data.status === "success") {
-            Swal.fire({
-              icon: "success",
-              title: "Bağlantı Başarılı!",
-              text: `Wi-Fi bağlantısı kuruldu: ${selectedSSID}`,
-              width: "280px",
-              customClass: { popup: "small-swal-popup" },
-            });
-
+            showSuccessAlert(
+              "Bağlantı Başarılı!",
+              `Wi-Fi bağlantısı kuruldu: ${selectedSSID}`
+            );
             connectedWifiSpan.innerText = `SSID: ${selectedSSID}`;
             wifiPasswordForm.style.display = "none";
             fetchWifiNetworks();
           } else {
-            Swal.fire({
-              icon: "error",
-              title: "Bağlantı Hatası!",
-              text: data.message || "Bağlantı kurulamadı, tekrar deneyin.",
-              width: "280px",
-              customClass: { popup: "small-swal-popup" },
-            });
+            showErrorAlert(
+              "Bağlantı Hatası!",
+              data.message || "Bağlantı kurulamadı, tekrar deneyin."
+            );
           }
         })
         .catch((error) => {
+          hideLoading();
           console.error("Wi-Fi bağlantı hatası:", error);
-          Swal.fire({
-            icon: "error",
-            title: "Hata!",
-            text: "Wi-Fi bağlantısı sırasında bir hata oluştu.",
-            width: "280px",
-            customClass: { popup: "small-swal-popup" },
-          });
+          showErrorAlert(
+            "Hata!",
+            "Wi-Fi bağlantısı sırasında bir hata oluştu."
+          );
         })
         .finally(() => {
           connectButton.disabled = false;
@@ -394,9 +378,17 @@
         };
 
         // Boş Alan Kontrolü
-        if (!modemData.name || !modemData.wifi_ssid || !modemData.wifi_password || !modemData.gsm_number) {
-            showWarningAlert("Eksik Bilgi!", "Lütfen tüm alanları doldurun. Boş bırakılan alanlar mevcut.");
-            return; 
+        if (
+          !modemData.name ||
+          !modemData.wifi_ssid ||
+          !modemData.wifi_password ||
+          !modemData.gsm_number
+        ) {
+          showWarningAlert(
+            "Eksik Bilgi!",
+            "Lütfen tüm alanları doldurun. Boş bırakılan alanlar mevcut."
+          );
+          return;
         }
 
         showLoading("Modem bilgileri güncelleniyor...");
