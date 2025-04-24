@@ -266,36 +266,42 @@
       if (selectedLangLabel) {
         selectedLangLabel.innerText = lang.toUpperCase();
       }
-
+      
       function setLanguage(lang) {
-        document
-          .querySelectorAll(".lang-btn")
-          .forEach((btn) => btn.classList.remove("selected"));
+          document
+            .querySelectorAll(".lang-btn")
+            .forEach((btn) => btn.classList.remove("selected"));
 
-        const selectedBtn = document.querySelector(
-          `.lang-btn[data-lang="${lang}"]`
-        );
-        if (selectedBtn) {
-          selectedBtn.classList.add("selected");
-        }
+          const selectedBtn = document.querySelector(`.lang-btn[data-lang="${lang}"]`);
+          if (selectedBtn) {
+            selectedBtn.classList.add("selected");
+          }
 
-        if (selectedLangLabel) {
-          selectedLangLabel.innerText = lang.toUpperCase();
-        }
+          const selectedLangLabel = document.getElementById("selectedLangLabel");
+          if (selectedLangLabel) {
+            selectedLangLabel.innerText = lang.toUpperCase();
+          }
 
-        // Dropdown kapansın
-        document.getElementById("languageDropdown").style.display = "none";
+          // Dropdown kapansın
+          document.getElementById("languageDropdown").style.display = "none";
 
-        fetch("{{ url_for('set_language') }}", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: "lang=" + lang,
-        }).then(() => {
-          console.log("Backend'e gönderilen dil:", lang);
-          window.location.reload();
-        });
+          // 📌 Loading Göster
+          showLoading("Dil değiştiriliyor...");
+
+          fetch("{{ url_for('set_language') }}", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: "lang=" + lang,
+          }).then(() => {
+            console.log("Backend'e gönderilen dil:", lang);
+            // Loading kapanmadan önce sayfa yenilenecek, zaten yenilenince hideLoading otomatik olur
+            window.location.reload();
+          }).catch((error) => {
+            hideLoading();
+            showErrorAlert("Hata!", "Dil değiştirilemedi. Lütfen tekrar deneyin.");
+          });
       }
 
       document.querySelectorAll(".lang-btn").forEach((button) => {
@@ -372,7 +378,6 @@
 
     // Echarts 1 Frekans (Hz)
     const frequencyChart = echarts.init(document.getElementById("frequencyGauge"));
-
     frequencyChart.setOption({
       graphic: [
         {
@@ -445,7 +450,6 @@
 
     // Echarts 2 
     const reactiveChart = echarts.init(document.getElementById("reactiveStatus"));
-
     const reactiveColor = penaltyExists ? "red" : "green";
     const reactiveStroke = penaltyExists ? "#ff0000" : "#00a000";
     const reactiveText = penaltyExists
