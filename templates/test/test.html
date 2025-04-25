@@ -659,58 +659,64 @@
     const wifiListContainer = document.getElementById("dynamicWifiList");
 
     function getNetworkDetails(updateList = false) {
-      fetch("/wi-fi-list", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
-      })
+        showLoading("{{ _('Loading page...')}}");  
+
+        fetch("/wi-fi-list", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({}),
+        })
         .then((response) => response.json())
         .then((data) => {
-          if (data.status === "success" && data.data) {
-            const connectedSSID = data.data.connected_ssid;
-            const macAddress = data.data.wifi_mac;
-            const password = data.data.wifi_password;
-            const ethernetConnected = data.data.ethernet_connected;
-            const ethernetMac = data.data.ethernet_mac;
+            if (data.status === "success" && data.data) {
+                const connectedSSID = data.data.connected_ssid;
+                const macAddress = data.data.wifi_mac;
+                const password = data.data.wifi_password;
+                const ethernetConnected = data.data.ethernet_connected;
+                const ethernetMac = data.data.ethernet_mac;
 
-            if (connectedSSID) {
-              networkNameSpan.textContent = connectedSSID;
-              passwordSpan.textContent = password
-                ? password
-                : "{{ _('No Password')}}";
-              connectionStatusSpan.textContent = "{{ _('Connected')}}";
-              connectionStatusSpan.style.color = "#00C16A";
-              macAddressSpan.textContent = macAddress || "{{ _('Unknown')}}";
-              wifiSuccess.style.display = "block";
-              wifiFailed.style.display = "none";
+                if (connectedSSID) {
+                    networkNameSpan.textContent = connectedSSID;
+                    passwordSpan.textContent = password ? password : "{{ _('No Password')}}";
+                    connectionStatusSpan.textContent = "{{ _('Connected')}}";
+                    connectionStatusSpan.style.color = "#00C16A";
+                    macAddressSpan.textContent = macAddress || "{{ _('Unknown')}}";
+                    wifiSuccess.style.display = "block";
+                    wifiFailed.style.display = "none";
+                } else {
+                    connectionStatusSpan.textContent = "{{ _('No connection')}}";
+                    connectionStatusSpan.style.color = "#EF4444";
+                    wifiSuccess.style.display = "none";
+                    wifiFailed.style.display = "block";
+                }
+
+                // Ethernet Bilgilerini Güncelle
+                if (ethernetConnected) {
+                    ethernetStatusSpan.textContent = "{{ _('Connected')}}";
+                    ethernetStatusSpan.style.color = "#00C16A";
+                    ethernetMacSpan.textContent = ethernetMac || "{{ _('Unknown')}}";
+                    ethernetSuccess.style.display = "block";
+                    ethernetFailed.style.display = "none";
+                } else {
+                    ethernetStatusSpan.textContent = "{{ _('No connection')}}";
+                    ethernetStatusSpan.style.color = "#EF4444";
+                    ethernetSuccess.style.display = "none";
+                    ethernetFailed.style.display = "block";
+                }
+
+                if (updateList)
+                    updateWifiList(data.data.wifi_networks, connectedSSID);
             } else {
-              connectionStatusSpan.textContent = "{{ _('No connection')}}";
-              connectionStatusSpan.style.color = "#EF4444";
-              wifiSuccess.style.display = "none";
-              wifiFailed.style.display = "block";
+                showErrorAlert("{{ _('Failed to Load')}}", "{{ _('Could not retrieve network details')}}");
             }
-
-            // Ethernet Bilgilerini Güncelle
-            if (ethernetConnected) {
-              ethernetStatusSpan.textContent = "{{ _('Connected')}}";
-              ethernetStatusSpan.style.color = "#00C16A";
-              ethernetMacSpan.textContent = ethernetMac || "{{ _('Unknown')}}";
-              ethernetSuccess.style.display = "block";
-              ethernetFailed.style.display = "none";
-            } else {
-              ethernetStatusSpan.textContent = "{{ _('No connection')}}";
-              ethernetStatusSpan.style.color = "#EF4444";
-              ethernetSuccess.style.display = "none";
-              ethernetFailed.style.display = "block";
-            }
-
-            if (updateList)
-              updateWifiList(data.data.wifi_networks, connectedSSID);
-          }
         })
-        .catch((error) =>
-          console.error("{{ _('Error fetching network details')}}:", error)
-        );
+        .catch((error) => {
+            console.error("{{ _('Error fetching network details')}}:", error);
+            showErrorAlert("{{ _('Error')}}", "{{ _('An error occurred while loading Wi-Fi networks')}}");
+        })
+        .finally(() => {
+            hideLoading();  // Yükleme ekranını kaldır
+        });
     }
 
     function updateWifiList(networks, connectedSSID) {

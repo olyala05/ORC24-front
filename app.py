@@ -517,7 +517,6 @@ def sync_equipment_local(uuid):
 
     return jsonify({"status": "success", "message": "Bulut verisi cihaza senkronize edildi"})
 
-
 # network info
 @app.route("/wi-fi-list", methods=["POST"])
 def wi_fi_list():
