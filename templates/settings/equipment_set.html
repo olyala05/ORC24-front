@@ -25,17 +25,23 @@ endblock %} {% block content %}
     <!-- Modbus Settings -->
     <div id="modbus-settings" class="modbus-setting-form">
       <div class="modbus-setting-row">
-        <div class="modbus-setting-group">
+      <!--         <div class="modbus-setting-group">
           <label>Port</label>
           <select id="portSelect">
-            <option value="/dev/ttyACM0">/dev/ttyACM0</option>
-            <option value="/dev/ttyUSB0" selected>/dev/ttyUSB0</option>
-            <!-- Default -->
+            <option value="/dev/ttyACM0" selected>/dev/ttyACM0</option>
+            <option value="/dev/ttyACM0">/dev/ttyAMA0</option>
+            <option value="/dev/ttyUSB0">/dev/ttyUSB0</option>
             <option value="/dev/ttyUSB1">/dev/ttyUSB1</option>
             <option value="/dev/ttyS0">/dev/ttyS0</option>
             <option value="/dev/ttyS1">/dev/ttyS1</option>
           </select>
+        </div> -->
+
+        <div class="modbus-setting-group">
+            <label>Slave ID</label>
+            <input type="number" id="slave-id-input" placeholder="Enter Slave ID" />
         </div>
+
         <div class="modbus-setting-group">
           <label>Baud Rate</label>
           <select id="baudRateSelect">
@@ -94,10 +100,8 @@ endblock %} {% block content %}
       <button class="modbus-setting-btn-test">{{ _('Test')}}</button>
 
       <!-- Test Results -->
-      <p class="modbus-setting-success">
-        {{ _('Modbus connection successful')}}
-      </p>
-      <p class="modbus-setting-failed">{{ _('Modbus connection failed')}}</p>
+      <!-- <p class="modbus-setting-success">{{ _('Modbus connection successful')}}</p> -->
+      <!-- <p class="modbus-setting-failed">{{ _('Modbus connection failed')}}</p> -->
     </div>
 
     <!-- TCP/IP Settings -->
@@ -380,87 +384,45 @@ endblock %} {% block content %}
       });
   });
 
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const testButton = document.querySelector(".modbus-setting-btn-test");
-    const successMessage = document.querySelector(".modbus-setting-success");
-    const failureMessage = document.querySelector(".modbus-setting-failed");
-
-    successMessage.style.display = "none";
-    failureMessage.style.display = "none";
 
     testButton.addEventListener("click", function () {
-      const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+        const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+        const slaveId = document.getElementById("slave-id-input").value;
 
-      if (!selectedDeviceIP) {
-        console.warn("{{ _('No device selected for Modbus test.')}}");
-        failureMessage.innerText =
-          "{{ _('No device selected for Modbus test')}}.";
-        failureMessage.style.display = "block";
-        return;
-      }
+        if (!selectedDeviceIP || !slaveId) {
+            showErrorAlert("Modbus Test", "Please provide both Device IP and Slave ID.");
+            return;
+        }
 
-      const selectedModbusParams = {
-        port: document.getElementById("portSelect").value,
-        baudrate: document.getElementById("baudRateSelect").value,
-        parity: document.getElementById("paritySelect").value,
-        stopbits: document.getElementById("stopBitsSelect").value,
-        bytesize: document.getElementById("byteSizeSelect").value,
-        timeout: document.getElementById("timeoutSelect").value,
-      };
+        showLoading("Testing Modbus connection...");
 
-      console.log("Selected Modbus Parameters:", selectedModbusParams);
-      testButton.disabled = true;
-      testButton.innerHTML = `<span class="spinner"></span> {{ _('Testing...')}}`;
-      fetch("/modbus_test", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ip_address: selectedDeviceIP,
-          modbus_params: selectedModbusParams,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Response from Backend:", data);
-          if (
-            data.status === "success" &&
-            Array.isArray(data.data) &&
-            data.data.length > 0
-          ) {
-            successMessage.innerText =
-              "{{ _('Modbus connection successful!')}}";
-            successMessage.style.display = "block";
-            failureMessage.style.display = "none";
-            const device = data.data[0];
-            if (device.port)
-              document.getElementById("portSelect").value = device.port;
-            if (device.baudrate && device.baudrate !== "{{ _('Unknown')}}")
-              document.getElementById("baudRateSelect").value = device.baudrate;
-            if (device.parity && device.parity !== "{{ _('Unknown')}}")
-              document.getElementById("paritySelect").value = device.parity;
-            if (device.stopbits && device.stopbits !== "{{ _('Unknown')}}")
-              document.getElementById("stopBitsSelect").value = device.stopbits;
-            if (device.bytesize && device.bytesize !== "{{ _('Unknown')}}")
-              document.getElementById("byteSizeSelect").value = device.bytesize;
-          } else {
-            failureMessage.innerText =
-              "{{ _('Modbus test failed: No valid response')}}";
-            failureMessage.style.display = "block";
-            successMessage.style.display = "none";
-          }
+        fetch("/modbus_test", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                ip_address: selectedDeviceIP,
+                slave_id: slaveId
+            }),
         })
-        .catch((error) => {
-          console.error("{{ _('Error during Modbus test')}}:", error);
-          failureMessage.innerText =
-            "{{ _('Error during Modbus test')}}: " + error.message;
-          failureMessage.style.display = "block";
-          successMessage.style.display = "none";
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                const deviceInfo = data.data[0];
+                showSuccessAlert("Modbus Test", `Slave ID ${slaveId} is connected on port ${deviceInfo.port}`);
+            } else {
+                showErrorAlert("Modbus Test Failed", data.details || "No valid response.");
+            }
+        })
+        .catch(error => {
+            showErrorAlert("Modbus Test Error", error.message);
         })
         .finally(() => {
-          testButton.disabled = false;
-          testButton.innerHTML = "Test";
+            hideLoading();
         });
     });
-  });
+});
+
 </script>
 {% endblock %}

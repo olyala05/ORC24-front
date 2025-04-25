@@ -832,31 +832,82 @@ def validate_modbus():
             message="Failed to send command to ORC24", code=500, details=str(e)
         )
 
-@app.route("/modbus_test", methods=["POST", "GET"])
-def modbus_test():
-    """Check if the selected device has a valid Modbus connection."""
-    selected_ip = session.get("selected_device_ip")
+# @app.route("/modbus_test", methods=["POST", "GET"])
+# def modbus_test():
+#     """Check if the selected device has a valid Modbus connection."""
+#     selected_ip = session.get("selected_device_ip")
+#     print(f"[INFO] Selected IP from session: {selected_ip}")
 
-    if not selected_ip:
+#     if not selected_ip:
+#         print("[ERROR] Device IP is missing in session.")
+#         return ResponseHandler.error(
+#             message="Device IP missing",
+#             code=400,
+#             details="Selected device IP is required",
+#         )
+
+#     try:
+#         url = f"http://{selected_ip}:8085/modbus_test"
+#         print(f"[INFO] Sending request to: {url}")
+#         response = requests.get(url)
+#         response.raise_for_status()
+
+#         result = response.json()
+#         print(f"[INFO] Response received: {result}")
+
+#         if result.get("status") == "success":
+#             print("[SUCCESS] Modbus test passed.")
+#             return ResponseHandler.success(
+#                 message="Modbus test successful", data=result.get("data", [])
+#             )
+
+#         print("[ERROR] Modbus test failed with message:", result.get("message"))
+#         return ResponseHandler.error(
+#             message="Modbus test failed",
+#             code=400,
+#             details=result.get("message", "No valid Modbus response"),
+#         )
+
+#     except requests.RequestException as e:
+#         print(f"[EXCEPTION] Connection error: {str(e)}")
+#         return ResponseHandler.error(
+#             message="Device connection error",
+#             code=500,
+#             details=f"Failed to connect to {selected_ip}: {str(e)}",
+#         )
+
+#     except Exception as e:
+#         print(f"[EXCEPTION] Unexpected error: {str(e)}")
+#         return ResponseHandler.error(
+#             message="Unexpected error occurred", code=500, details=str(e)
+#         )
+
+@app.route("/modbus_test", methods=["POST"])
+def modbus_test_proxy():
+    selected_ip = session.get("selected_device_ip")
+    data = request.get_json()
+    slave_id = data.get("slave_id")
+
+    if not selected_ip or not slave_id:
         return ResponseHandler.error(
-            message="Device IP missing",
+            message="Device IP or Slave ID missing",
             code=400,
-            details="Selected device IP is required",
+            details="Both Device IP and Slave ID are required",
         )
 
     try:
         url = f"http://{selected_ip}:8085/modbus_test"
-        response = requests.get(url)
+        response = requests.post(url, json={"slave_id": slave_id})
         response.raise_for_status()
 
-        result = response.json()  # JSON verisini bir değişkene al
+        result = response.json()
 
         if result.get("status") == "success":
             return ResponseHandler.success(
-                message="Modbus test successful", data=result.get("data", [])
+                message=f"Slave ID {slave_id} connected on port {result['data'][0]['port']}",
+                data=result.get("data", [])
             )
 
-        # Eğer `status` "success" değilse, hata mesajını API'den al ve kullanıcıya döndür
         return ResponseHandler.error(
             message="Modbus test failed",
             code=400,
@@ -870,10 +921,6 @@ def modbus_test():
             details=f"Failed to connect to {selected_ip}: {str(e)}",
         )
 
-    except Exception as e:
-        return ResponseHandler.error(
-            message="Unexpected error occurred", code=500, details=str(e)
-        )
 
 @app.route("/disconnect_request", methods=["POST"])
 def disconnect_request():
