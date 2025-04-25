@@ -65,90 +65,88 @@ endblock %} {% block extra_css %}
   <div class="eq-detail-log">
     <div class="eq-detail-log-header">
       <span>{{ _('Archive') }}</span>
-      <span>{{ _('End')}}</span>
+      <span>{{ _('Now')}}</span>
     </div>
     <ul class="eq-detail-log-list">
       <li class="eq-detail-log-item">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Service Started')}}</span>
+          <span>{{ _('Aktif ekipmanlar konfigüre edildi mi?') }}</span>
         </span>
-        <span>2024-04-03 13:54:31</span>
+        <span>-</span>
       </li>
 
       <li class="eq-detail-log-item">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Modbus connection established')}}</span>
+          <span>{{ _('Veri toplama sonuçları') }}</span>
         </span>
-        <span>2024-04-03 13:55:00</span>
-      </li>
-      <li class="eq-detail-log-item">
-        <span class="eq-detail-log-status">
-          <span class="eq-detail-dot eq-active"></span>
-          <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('32000 register error etc.')}}</span>
-        </span>
-        <span>2024-04-03 13:55:00</span>
-      </li>
-      <li class="eq-detail-log-item">
-        <span class="eq-detail-log-status">
-          <span class="eq-detail-dot eq-active"></span>
-          <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Equipment not found etc.')}}</span>
-        </span>
-        <span>2024-04-03 13:55:00</span>
+        <span>-</span>
       </li>
 
       <li class="eq-detail-log-item">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Modbus Connection')}}</span>
+          <span>{{ _('Tespit edilenler veritabanına yazıldı mı?') }}</span>
         </span>
-        <span>2024-04-03 13:55:00</span>
+        <span>-</span>
       </li>
+
       <li class="eq-detail-log-item">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Register Read')}}</span>
+          <span>{{ _('Aktif ekipmanlar') }}</span>
         </span>
-        <span>2024-04-03 13:55:00</span>
+        <span>-</span>
       </li>
+
       <li class="eq-detail-log-item">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('32000 register error etc.')}}</span>
+          <span>{{ _('Tespit edilen ekipmanlar') }}</span>
         </span>
-        <span>2024-04-03 13:55:00</span>
+        <span>-</span>
       </li>
+
+      <li class="eq-detail-log-item">
+        <span class="eq-detail-log-status">
+          <span class="eq-detail-dot eq-active"></span>
+          <span class="eq-detail-dot eq-active"></span>
+          <span>{{ _('Ekipman tarama başladı mı?') }}</span>
+        </span>
+        <span>-</span>
+      </li>
+
       <li class="eq-detail-log-item">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-passive"></span>
           <span class="eq-detail-dot eq-passive"></span>
-          <span>{{ _('Equipment Data Collecting')}} </span>
+          <span>{{ _('Ekipman Tarama bayrakları') }}</span>
         </span>
-        <span>2024-04-03 13:55:00</span>
+        <span>-</span>
       </li>
+
       <li class="eq-detail-log-item">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Modem Task Cycle')}}</span>
+          <span>{{ _('Ekipman veri toplama sonuçları') }}</span>
         </span>
-        <span>2024-04-03 13:55:00</span>
+        <span>-</span>
       </li>
+
       <li class="eq-detail-log-item">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-passive"></span>
-          <span>{{ _('Data Transfer Cycle')}}</span>
+          <span>{{ _('Modbus Serial tarama başarılı mı?') }}</span>
         </span>
-        <span>2024-04-03 13:55:00</span>
+        <span>-</span>
       </li>
     </ul>
   </div>
@@ -226,7 +224,7 @@ endblock %} {% block extra_css %}
       23: "O2",
       24: "H2O",
       25: "LIQUID",
-      26: "UPS"
+      26: "UPS",
     };
 
     Promise.all([fetchEquipmentDetails(), fetchModems()]).then(
@@ -234,7 +232,9 @@ endblock %} {% block extra_css %}
         if (!equipment) return;
 
         // 1. Equipment Name
-        const eqName = `${equipment.model_name || "UNKNOWN"}@${equipment.serial_number || "N/A"}`;
+        const eqName = `${equipment.model_name || "UNKNOWN"}@${
+          equipment.serial_number || "N/A"
+        }`;
         const eqSpan = document.querySelector(".eq-detail-status");
         eqSpan.innerText = eqName;
         eqSpan.title = eqName;
@@ -336,48 +336,134 @@ endblock %} {% block extra_css %}
         String(date.getSeconds()).padStart(2, "0")
       );
     }
-
   });
-  
-    // Tooltip kutusu oluştur (sayfa yüklendikten sonra bir kez)
-    const tooltip = document.createElement("div");
-    tooltip.classList.add("eq-detail-tooltip");
-    document.body.appendChild(tooltip);
 
-    // Equipment Name'e tıklanınca göster
-    const eqStatus = document.querySelector(".eq-detail-status");
-    eqStatus.addEventListener("click", function (e) {
-      const fullText = eqStatus.innerText;
+  document.addEventListener("DOMContentLoaded", function () {
+      fetch("/get_archive_log_status")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status !== "success" || !data.data) {
+            console.warn("[LOG] Geçersiz yanıt yapısı");
+            return;
+          }
 
-      // Eğer tooltip zaten görünüyorsa: gizle ve çık
-      if (tooltip.classList.contains("active")) {
+          const archiveData = data.data;
+
+          const tagMapping = {
+            "Aktif ekipmanlar konfigüre edildi mi?": "Aktif ekipmanlar konfigure edildi mi?",
+            "Veri toplama sonuçları": "Ekipmanlardan veri toplama görevi sonuçları",
+            "Tespit edilenler veritabanına yazıldı mı?": "Tespit edilen ekipmanlar veritabanına yazıldı mı?",
+            "Aktif ekipmanlar": "Aktif ekipmanlar",
+            "Tespit edilen ekipmanlar": "Tespit edilmiş ekipmanlar",
+            "Ekipman tarama başladı mı?": "Ekipman tarama görevi başladı",
+            "Ekipman Tarama bayrakları": "Ekipman tarama görevi bayrakları!",
+            "Ekipman veri toplama sonuçları": "Ekipmanlardan veri toplama görevi sonuçları",
+            "Modbus Serial tarama başarılı mı?": "Modbus Serial üzerinden başarılı tarama yapıldı mı?"
+          };
+
+          const typeToColorClass = {
+            1: "eq-active",
+            2: "eq-warning",
+            3: "eq-passive",
+          };
+
+          const items = document.querySelectorAll(".eq-detail-log-item");
+
+          Object.entries(tagMapping).forEach(([staticText, archiveKeyText]) => {
+            const item = Array.from(items).find(li =>
+              li.innerText.toLowerCase().includes(staticText.toLowerCase())
+            );
+
+            if (!item) {
+              console.warn(`[LOG] '${staticText}' için <li> bulunamadı.`);
+              return;
+            }
+
+            const archiveKey = Object.keys(archiveData).find(key =>
+              key.toLowerCase() === archiveKeyText.toLowerCase()
+            );
+
+            if (!archiveKey) {
+              console.warn(`[LOG] '${archiveKeyText}' verisi bulunamadı.`);
+              return;
+            }
+
+            const archiveInfo = archiveData[archiveKey];
+            const dots = item.querySelectorAll(".eq-detail-dot");
+            const spans = item.querySelectorAll("span");
+
+            const archiveType = archiveInfo.archive_log_type;
+            const nowType = archiveInfo.last_log_type;
+            const lastLogDate = archiveInfo.last_log_date;
+
+            // 🎨 Renk Güncelle
+            if (typeToColorClass[archiveType]) {
+              dots[0].classList.remove("eq-active", "eq-warning", "eq-passive");
+              dots[0].classList.add(typeToColorClass[archiveType]);
+            }
+
+            if (typeToColorClass[nowType]) {
+              dots[1].classList.remove("eq-active", "eq-warning", "eq-passive");
+              dots[1].classList.add(typeToColorClass[nowType]);
+            }
+
+            // 📅 Sadece EN SAĞDAKİ <span>-</span>'e tarihi yaz
+            if (lastLogDate) {
+              const dt = new Date(lastLogDate);
+              const formattedDate = dt.toLocaleDateString("tr-TR") + " " + dt.toLocaleTimeString("tr-TR");
+
+              // En sağdaki span => item.querySelectorAll("span") içindeki SONUNCUSU
+              spans[spans.length - 1].textContent = formattedDate;
+            }
+          });
+
+          console.log("[LOG] Detay log paneli başarıyla güncellendi.");
+        })
+        .catch((error) => {
+          console.error("[LOG] Detay log verisi alınamadı:", error);
+        });
+  });
+
+  // Tooltip kutusu oluştur (sayfa yüklendikten sonra bir kez)
+  const tooltip = document.createElement("div");
+  tooltip.classList.add("eq-detail-tooltip");
+  document.body.appendChild(tooltip);
+
+  // Equipment Name'e tıklanınca göster
+  const eqStatus = document.querySelector(".eq-detail-status");
+  eqStatus.addEventListener("click", function (e) {
+    const fullText = eqStatus.innerText;
+
+    // Eğer tooltip zaten görünüyorsa: gizle ve çık
+    if (tooltip.classList.contains("active")) {
+      tooltip.classList.remove("active");
+      return;
+    }
+
+    // Devam: gösterilecek metin
+    tooltip.innerText = fullText;
+
+    const rect = eqStatus.getBoundingClientRect();
+    const tooltipWidth = 300;
+    const offsetY = 10;
+
+    tooltip.style.width = `${tooltipWidth}px`;
+    tooltip.style.top = `${rect.top + window.scrollY - offsetY - 40}px`;
+    tooltip.style.left = `${
+      rect.left + window.scrollX + rect.width / 2 - tooltipWidth / 2
+    }px`;
+
+    tooltip.classList.add("active");
+
+    // Dışarı tıklanınca gizle
+    const hideTooltip = (event) => {
+      if (!tooltip.contains(event.target) && event.target !== eqStatus) {
         tooltip.classList.remove("active");
-        return;
+        document.removeEventListener("click", hideTooltip);
       }
-
-      // Devam: gösterilecek metin
-      tooltip.innerText = fullText;
-
-      const rect = eqStatus.getBoundingClientRect();
-      const tooltipWidth = 300;
-      const offsetY = 10;
-
-      tooltip.style.width = `${tooltipWidth}px`;
-      tooltip.style.top = `${rect.top + window.scrollY - offsetY - 40}px`;
-      tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2 - tooltipWidth / 2}px`;
-
-      tooltip.classList.add("active");
-
-      // Dışarı tıklanınca gizle
-      const hideTooltip = (event) => {
-        if (!tooltip.contains(event.target) && event.target !== eqStatus) {
-          tooltip.classList.remove("active");
-          document.removeEventListener("click", hideTooltip);
-        }
-      };
-      document.addEventListener("click", hideTooltip);
-    });
-
+    };
+    document.addEventListener("click", hideTooltip);
+  });
 </script>
 
 {% endblock %}

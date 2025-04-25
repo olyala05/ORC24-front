@@ -1425,15 +1425,8 @@ msgstr "Güncelleniyor..."
 msgid "UUID not found!"
 msgstr "UUID bulunamadı!"
 
-
-
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
+msgid "Data collection results"
+msgstr "Ekipmanlardan veri sonuçları"
 
 msgid ""
 msgstr ""

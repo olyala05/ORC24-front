@@ -98,6 +98,9 @@
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-passive {
   background-color: #FF0F00;
 }
+.eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-warning {
+  background-color: #FF0F00;
+}
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-green {
   color: #3fb950;
 }

@@ -1412,3 +1412,6 @@ msgstr "Güncelleniyor..."
 
 msgid "UUID not found!"
 msgstr "UUID not found!"
+
+msgid "Data collection results"
+msgstr "Data collection results"
