@@ -1337,7 +1337,6 @@ def get_slave_data():
     if not selected_ip:
         print("🚨 HATA: Seçili cihazın IP'si yok!")
         return ResponseHandler.error(message="Device IP missing", code=400)
-
     try:
         url = f"http://{selected_ip}:8085/scan_all"
         print(f"🔍 {selected_ip} adresine istek gönderiliyor: {url}")
