@@ -1413,29 +1413,20 @@ msgstr "Daha Az"
 msgid "Modem info not loaded!"
 msgstr "Modem bilgisi yüklenemedi!"
 
-msgid ""
-msgstr ""
+msgid "Updating on cloud..."
+msgstr "Bulutta güncelleniyor..."
 
-msgid ""
-msgstr ""
+msgid "Equipment updated!"
+msgstr "Equipment güncellendi!"
 
-msgid ""
-msgstr ""
+msgid "Updating..."
+msgstr "Güncelleniyor..."
 
-msgid ""
-msgstr ""
+msgid "UUID not found!"
+msgstr "UUID bulunamadı!"
 
-msgid ""
-msgstr ""
 
-msgid ""
-msgstr ""
 
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
 
 msgid ""
 msgstr ""

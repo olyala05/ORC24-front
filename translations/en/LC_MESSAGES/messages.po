@@ -1400,3 +1400,15 @@ msgstr "Read Less"
 
 msgid "Modem info not loaded!"
 msgstr "Modem info not loaded!"
+
+msgid "Updating on cloud..."
+msgstr "Updating on cloud..."
+
+msgid "Equipment updated!"
+msgstr "Equipment updated!"
+
+msgid "Updating..."
+msgstr "Güncelleniyor..."
+
+msgid "UUID not found!"
+msgstr "UUID not found!"

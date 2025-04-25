@@ -1395,3 +1395,15 @@ msgstr "Weniger Anzeigen"
 
 msgid "Modem info not loaded!"
 msgstr " Modeminfo nicht geladen!"
+
+msgid "Updating on cloud..."
+msgstr "Wird in der Cloud aktualisiert..."
+
+msgid "Equipment updated!"
+msgstr "Ausrüstung aktualisiert!"
+
+msgid "Updating..."
+msgstr "Wird aktualisiert..."
+
+msgid "UUID not found!"
+msgstr "UUID nicht gefunden!"

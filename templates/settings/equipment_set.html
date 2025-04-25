@@ -285,10 +285,10 @@ endblock %} {% block content %}
           const equipment = equipments.find((eq) => eq.id == equipmentId);
 
           if (!equipment || !equipment.uuid) {
-            throw new Error("UUID bulunamadı!");
+            throw new Error("{{ _('UUID not found!') }}");
           }
 
-          currentEquipmentUUID = equipment.uuid; // UUID'yi kaydet
+          currentEquipmentUUID = equipment.uuid; 
 
           return fetch(`/get_equipment_from_cloud/${currentEquipmentUUID}`);
         })
@@ -346,11 +346,11 @@ endblock %} {% block content %}
         };
 
         if (!currentEquipmentUUID) {
-          showErrorAlert("Hata!", "UUID bulunamadı!");
+          showErrorAlert("{{ _('UUID not found!') }}");
           return;
         }
 
-        showLoading("Bulutta güncelleniyor...");
+        showLoading("{{ _('Updating...') }}");
 
         fetch(`/update_equipment_cloud/${currentEquipmentUUID}`, {
           method: "PUT",
@@ -361,7 +361,7 @@ endblock %} {% block content %}
           .then((data) => {
             hideLoading();
             if (data.status === "success") {
-              showSuccessAlert("Başarılı!", "Equipment bulutta güncellendi!");
+              showSuccessAlert("{{ _('Equipment updated!') }}");
 
               // 🌟 Buluttan cihazına senkronizasyon isteği
               fetch(`/sync_equipment_local/${currentEquipmentUUID}`)
@@ -374,7 +374,7 @@ endblock %} {% block content %}
                   }
                 });
             } else {
-              showErrorAlert("Hata!", data.message);
+              showErrorAlert("{{ _('Error!') }}", data.message);
             }
           });
       });
