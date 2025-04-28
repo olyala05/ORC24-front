@@ -626,7 +626,7 @@
 }
 
 .cloud-test-failed {
-  color: red;
+  color: #CD2727;
   margin: 0;
   font-size: 14px;
 }
@@ -639,11 +639,11 @@
 }
 
 .status-green {
-  background-color: #00c16a;
+  background-color: #33FF00;
 }
 
 .status-red {
-  background-color: #ef4444;
+  background-color: #CD2727;
 }
 
 .read-test-container {

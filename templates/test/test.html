@@ -368,7 +368,9 @@
           <div class="read-test-group">
             <label for="port">Port</label>
             <select id="port">
-              <option value="/dev/ttyUSB0" selected>/dev/ttyUSB0</option>
+              <option value="/dev/ttyACM0" selected>/dev/ttyACM0</option>
+              <option value="/dev/ttyAMA0">/dev/ttyAMA0</option>
+              <option value="/dev/ttyUSB0">/dev/ttyUSB0</option>
               <option value="/dev/ttyUSB1">/dev/ttyUSB1</option>
               <option value="/dev/ttyS0">/dev/ttyS0</option>
               <option value="/dev/ttyS1">/dev/ttyS1</option>
@@ -486,7 +488,9 @@
           <div class="write-test-group">
             <label for="port">Port</label>
             <select id="port">
-              <option value="/dev/ttyUSB0" selected>/dev/ttyUSB0</option>
+              <option value="/dev/ttyACM0" selected>/dev/ttyACM0</option>
+              <option value="/dev/ttyAMA0">/dev/ttyAMA0</option>
+              <option value="/dev/ttyUSB0">/dev/ttyUSB0</option>
               <option value="/dev/ttyUSB1">/dev/ttyUSB1</option>
               <option value="/dev/ttyS0">/dev/ttyS0</option>
               <option value="/dev/ttyS1">/dev/ttyS1</option>
@@ -542,7 +546,7 @@
           <!-- 📌 INPUT olarak değiştirildi -->
           <div class="write-test-group">
             <label for="register">Register</label>
-            <input type="number" id="register" value="1" min="0" step="1" />
+            <input type="number" id="write-register" value="1" min="0" step="1" />
           </div>
 
           <!-- Data -->
@@ -1230,7 +1234,7 @@
     }
 
     // Kullanıcıdan inputları al
-    const registerValue = parseInt(document.getElementById("register").value);
+    const registerValue = parseInt(document.getElementById("register").nodeValue);
     const countValue = parseInt(document.getElementById("count").value);
     const slaveIdValue = parseInt(document.getElementById("slave-id").value);
 
@@ -1306,99 +1310,89 @@
 
   // Write Modbus
   function sendWriteModbusRequest() {
-    const terminal = document.getElementById("write-terminal");
-    const statusMessage = document.getElementById("write-status-message");
-    terminal.value = "🔍 Sending Write Modbus request... Please wait.";
-    statusMessage.textContent = "";
-    statusMessage.className = "status-message";
+      const terminal = document.getElementById("write-terminal");
+      const statusMessage = document.getElementById("write-status-message");
+      terminal.value = "🔍 Sending Write Modbus request... Please wait.";
+      statusMessage.textContent = "";
+      statusMessage.className = "status-message";
 
-    const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
-    if (!selectedDeviceIP) {
-      terminal.value = "No device selected.";
-      statusMessage.textContent = "Local Network Connection Scan Failed.";
-      statusMessage.classList.add("error");
-      return;
-    }
+      const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+      if (!selectedDeviceIP) {
+        terminal.value = "No device selected.";
+        statusMessage.textContent = "Local Network Connection Scan Failed.";
+        statusMessage.classList.add("error");
+        return;
+      }
 
-    // Kullanıcıdan inputları al
-    const registerValue = parseInt(document.getElementById("register").value);
-    const countValue = parseInt(document.getElementById("count").value);
-    const slaveIdValue = parseInt(document.getElementById("slave-id").value);
+      const registerValue = parseInt(document.getElementById("write-register").value);
+      const slaveIdValue = parseInt(document.getElementById("slave-id").value);
 
-    // 🛠 Hatalı girişleri önlemek için kontroller
-    if (isNaN(registerValue) || registerValue < 0) {
-      alert("Register address must be a valid number and >= 0");
-      return;
-    }
-    if (isNaN(countValue) || countValue <= 0) {
-      alert("Count must be a valid number and greater than 0");
-      return;
-    }
-    if (isNaN(slaveIdValue) || slaveIdValue <= 0) {
-      alert("Slave ID must be a valid number and greater than 0");
-      return;
-    }
+      if (isNaN(registerValue) || registerValue < 0) {
+        alert("Register address must be a valid number and >= 0");
+        return;
+      }
+      if (isNaN(slaveIdValue) || slaveIdValue <= 0) {
+        alert("Slave ID must be a valid number and greater than 0");
+        return;
+      }
 
-    const dataTypeValue = document.getElementById("write-data-type").value;
-    const writeValue = document.getElementById("write-data").value;
+      const dataTypeValue = document.getElementById("write-data-type").value;
+      const writeValue = document.getElementById("write-data").value;
 
-    const modbusParams = {
-      port: document.getElementById("port").value,
-      baudrate: parseInt(document.getElementById("baud-rate").value),
-      parity: document.getElementById("parity").value,
-      stopbits: parseInt(document.getElementById("stop-bit").value),
-      bytesize: parseInt(document.getElementById("bytesize").value),
-      timeout: parseFloat(document.getElementById("timeout").value),
-      address: registerValue,
-      count: countValue,
-      slave_id: slaveIdValue,
-      method: "rtu",
-      data_type: dataTypeValue, // 📌 EKLENDİ
-      data: writeValue, // 📌 Yazılacak veri
-      byte_order:
-        document.getElementById("write-byte-order").value === "big" ? 1 : 0,
-      word_order:
-        document.getElementById("write-word-order").value === "big" ? 1 : 0,
-    };
+      const modbusParams = {
+        port: document.getElementById("port").value,
+        baudrate: parseInt(document.getElementById("baud-rate").value),
+        parity: document.getElementById("parity").value,
+        stopbits: parseInt(document.getElementById("stop-bit").value),
+        bytesize: parseInt(document.getElementById("bytesize").value),
+        timeout: parseFloat(document.getElementById("timeout").value),
+        address: registerValue,
+        slave_id: slaveIdValue,
+        method: "rtu",
+        data_type: dataTypeValue,
+        data: writeValue,
+        byte_order:
+          document.getElementById("write-byte-order").value === "big" ? 1 : 0,
+        word_order:
+          document.getElementById("write-word-order").value === "big" ? 1 : 0,
+      };
 
-    console.log(
-      "Sending JSON:",
-      JSON.stringify({ modbus_params: modbusParams })
-    );
+      console.log("Sending JSON:", JSON.stringify({ modbus_params: modbusParams }));
 
-    fetch("/validate_modbus", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ modbus_params: modbusParams }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Received Response:", data);
+      fetch("/validate_modbus", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ modbus_params: modbusParams }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Received Response:", data);
 
-        const innerData = data.data;
-        const resultValue = innerData?.data;
+          const innerData = data.data;
+          const resultValue = innerData?.data;
 
-        if (
-          data.status === "success" &&
-          innerData.status === "success" &&
-          resultValue !== undefined
-        ) {
-          terminal.value = `📥 Response: ${resultValue}`;
-          statusMessage.textContent = "Modbus request successful.";
-          statusMessage.classList.add("success");
-        } else {
-          terminal.value = `❌ Error: ${innerData?.message || data.message}`;
+          if (
+            data.status === "success" &&
+            innerData.status === "success" &&
+            resultValue !== undefined
+          ) {
+            terminal.value = `📥 Response: ${resultValue}`;
+            statusMessage.textContent = "Modbus request successful.";
+            statusMessage.classList.add("success");
+          } else {
+            terminal.value = `❌ Error: ${innerData?.message || data.message}`;
+            statusMessage.textContent = "Modbus request failed.";
+            statusMessage.classList.add("error");
+          }
+        })
+        .catch((error) => {
+          console.error("Request Failed:", error);
+          terminal.value = `Request failed:\n${error}`;
           statusMessage.textContent = "Modbus request failed.";
           statusMessage.classList.add("error");
-        }
-      })
-      .catch((error) => {
-        console.error("Request Failed:", error);
-        terminal.value = `Request failed:\n${error}`;
-        statusMessage.textContent = "Modbus request failed.";
-        statusMessage.classList.add("error");
-      });
+        });
   }
+
 
   // Sayfa yüklendiğinde select'leri doldur
   document.addEventListener("DOMContentLoaded", () => {
@@ -1466,19 +1460,19 @@
           const cloudStatusRow = document.querySelector("tr[data-status='A']");
           const statusCells =
             cloudStatusRow.querySelectorAll(".cloud-test-status");
-          const lastConnectionCell = cloudStatusRow.children[3]; // 4. sütundaki tarih güncellenecek
+          const lastConnectionCell = cloudStatusRow.children[3];
 
           statusCells.forEach((cell) => {
-            cell.innerHTML = `<span class="status-indicator"></span>`; // Önce temizle
+            cell.innerHTML = `<span class="status-indicator"></span>`; 
 
             const indicator = cell.querySelector(".status-indicator");
 
             if (data.status === "success" && data.data.cloud_connected) {
-              indicator.classList.add("status-green"); // Yeşil yap
+              indicator.classList.add("status-green"); 
               lastConnectionCell.textContent =
                 data.data.last_connection_time || "No connection yet";
             } else {
-              indicator.classList.add("status-red"); // Kırmızı yap
+              indicator.classList.add("status-red"); 
               lastConnectionCell.textContent = "No connection yet";
             }
           });
@@ -1712,11 +1706,11 @@
   }
 
   .status-green {
-    border-color: #00c16a;
+    border-color: #33FF00;
   }
 
   .status-red {
-    border-color: #ef4444;
+    border-color: #CD2727;
   }
 </style>
 
