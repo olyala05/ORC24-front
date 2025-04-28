@@ -392,7 +392,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const slaveId = document.getElementById("slave-id-input").value;
 
         if (!selectedDeviceIP || !slaveId) {
-            showErrorAlert("Modbus Test", "Please provide both Device IP and Slave ID.");
+            showErrorAlert("Please provide both Device IP and Slave ID.");
             return;
         }
 
@@ -410,13 +410,13 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             if (data.status === "success") {
                 const deviceInfo = data.data[0];
-                showSuccessAlert("Modbus Test", `Slave ID ${slaveId} is connected on port ${deviceInfo.port}`);
+                showSuccessAlert(`Slave ID ${slaveId} {{ _('is connected on port') }} ${deviceInfo.port}`);
             } else {
-                showErrorAlert("Modbus Test Failed", data.details || "No valid response.");
+                showErrorAlert("{{ _('Modbus Test Failed') }}", data.details || "No valid response.");
             }
         })
         .catch(error => {
-            showErrorAlert("Modbus Test Error", error.message);
+            showErrorAlert("{{ _('Modbus Test Error') }}");
         })
         .finally(() => {
             hideLoading();

@@ -1461,3 +1461,12 @@ msgstr "Wi-Fi information could not be retrieved."
 
 msgid "An issue occurred while retrieving Wi-Fi information."
 msgstr "An issue occurred while retrieving Wi-Fi information."
+
+msgid "Modbus Test Error"
+msgstr "Modbus Test Error"
+
+msgid "Modbus Test Failed"
+msgstr "Modbus Test Failed"
+
+msgid "is connected on port"
+msgstr "is connected on port"

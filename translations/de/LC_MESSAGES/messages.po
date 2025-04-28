@@ -1454,3 +1454,12 @@ msgstr "WLAN-Informationen konnten nicht abgerufen werden."
 
 msgid "An issue occurred while retrieving Wi-Fi information."
 msgstr "Bei der Abfrage der WLAN-Informationen ist ein Problem aufgetreten."
+
+msgid "Modbus Test Error"
+msgstr "Modbus-Testfehler"
+
+msgid "Modbus Test Failed"
+msgstr "Modbus-Test fehlgeschlagen"
+
+msgid "is connected on port"
+msgstr "ist am Port verbunden"

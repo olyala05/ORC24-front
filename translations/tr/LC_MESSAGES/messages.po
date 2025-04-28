@@ -1500,6 +1500,14 @@ msgstr "Wi-Fi bilgisi alınamadı."
 msgid "An issue occurred while retrieving Wi-Fi information."
 msgstr "Wi-Fi bilgisi alınırken sorun oluştu."
 
+msgid "Modbus Test Error"
+msgstr "Modbus Test Hatası"
+
+msgid "Modbus Test Failed"
+msgstr "Modbus Testi Başarısız"
+
+msgid "is connected on port"
+msgstr "port üzerinden bağlı"
 
 msgid ""
 msgstr ""
