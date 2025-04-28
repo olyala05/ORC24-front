@@ -823,23 +823,15 @@
             getNetworkDetails(true);
             closeWifiPopup();
           } else {
-            Swal.fire({
-              icon: "error",
-              title: "{{ _('Connection Failed')}}",
-              text: data.message || "{{ _('Failed to connect to Wi-Fi.')}}",
-            });
-            connectionStatusSpan.textContent = "No connection";
+            showErrorAlert("{{ _('Connection Failed')}}", data.message || "{{ _('Failed to connect to Wi-Fi.')}}");
+            connectionStatusSpan.textContent = "{{ _('No connection')}}";
             connectionStatusSpan.style.color = "#EF4444";
           }
         })
         .catch((error) => {
           console.error("Error connecting to Wi-Fi:", error);
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "An error occurred while connecting to Wi-Fi.",
-          });
-          connectionStatusSpan.textContent = "No connection";
+          showErrorAlert("{{ _('Error')}}", "{{ _('An error occurred while connecting to Wi-Fi.')}}");
+          connectionStatusSpan.textContent = "{{ _('No connection')}}";
           connectionStatusSpan.style.color = "#EF4444";
         })
         .finally(() => {
