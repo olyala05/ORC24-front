@@ -138,6 +138,10 @@
   align-items: center;
   gap: 7px;
 }
+.energy-table .energy-value {
+  display: inline-block;
+  text-align: right;
+}
 .energy-table .energy-row img {
   width: 20px;
   height: 20px;

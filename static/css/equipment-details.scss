@@ -5,6 +5,7 @@
   padding: 0px;
   font-family: Arial, sans-serif;
   width: 98%;
+  height: 80%;
   margin-top: 80px;
 
   .eq-detail-panel {
@@ -82,6 +83,7 @@
       max-height: 400px;
       overflow-y: auto;
       margin: 0;
+      max-height: 340px;
 
       li:last-child {
         border-bottom: none;
@@ -98,6 +100,13 @@
           display: flex;
           align-items: center;
           gap: 50px;
+          flex-wrap: nowrap;
+          width: 280px;
+        }
+        .eq-detail-log-status span:last-child {
+          flex: 1;
+          white-space: normal;    
+          word-break: break-word;  
         }
 
         .eq-detail-dot {
@@ -175,3 +184,9 @@ body.lang-de {
 .eq-detail-tooltip.active {
   display: block;
 }
+
+
+.text-right {
+  text-align: right;
+  width: 162px;
+} 

@@ -129,15 +129,21 @@
   <div class="energy-row">
     <div>
       <img src="{{ url_for('static', filename='images/svg/08.svg') }}" alt="Energy" />
-      {{ "{:,.2f}".format(from_grid.kwh).replace(",", "X").replace(".", ",").replace("X", ".") }} kWh
+      <span class="energy-value">
+        {{ "{:,.2f}".format(from_grid.kwh).replace(",", "X").replace(".", ",").replace("X", ".") }}
+      </span> kWh
     </div>
     <div>
       <img src="{{ url_for('static', filename='images/svg/08.svg') }}" alt="Energy" />
-      {{ "{:,.2f}".format(total_generated.kwh).replace(",", "X").replace(".", ",").replace("X", ".") }} kWh
+      <span class="energy-value">
+      {{ "{:,.2f}".format(total_generated.kwh).replace(",", "X").replace(".", ",").replace("X", ".") }} 
+      </span> kWh
     </div>
     <div>
       <img src="{{ url_for('static', filename='images/svg/08.svg') }}" alt="Energy" />
-      {{ "{:,.2f}".format(total_consumed.kwh).replace(",", "X").replace(".", ",").replace("X", ".") }} kWh
+      <span class="energy-value">
+      {{ "{:,.2f}".format(total_consumed.kwh).replace(",", "X").replace(".", ",").replace("X", ".") }} 
+      </span> kWh
     </div>
   </div>
 
@@ -145,15 +151,21 @@
   <div class="energy-row">
     <div>
       <img src="{{ url_for('static', filename='images/svg/09.svg') }}" alt="TEP" />
-      {{ "{:,.2f}".format(from_grid.tep).replace(",", "X").replace(".", ",").replace("X", ".") }} TEP
+      <span class="energy-value">
+      {{ "{:,.2f}".format(from_grid.tep).replace(",", "X").replace(".", ",").replace("X", ".") }} 
+      </span> TEP
     </div>
     <div>
       <img src="{{ url_for('static', filename='images/svg/09.svg') }}" alt="TEP" />
-      {{ "{:,.2f}".format(total_generated.tep).replace(",", "X").replace(".", ",").replace("X", ".") }} TEP
+      <span class="energy-value">
+      {{ "{:,.2f}".format(total_generated.tep).replace(",", "X").replace(".", ",").replace("X", ".") }} 
+      </span> TEP
     </div>
     <div>
       <img src="{{ url_for('static', filename='images/svg/09.svg') }}" alt="TEP" />
-      {{ "{:,.2f}".format(total_consumed.tep).replace(",", "X").replace(".", ",").replace("X", ".") }} TEP
+      <span class="energy-value">
+      {{ "{:,.2f}".format(total_consumed.tep).replace(",", "X").replace(".", ",").replace("X", ".") }} 
+      </span> TEP
     </div>
   </div>
 
@@ -161,15 +173,21 @@
   <div class="energy-row">
     <div>
       <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="CO2" />
-      {{ "{:,.2f}".format(from_grid.carbonTon).replace(",", "X").replace(".", ",").replace("X", ".") }} Ton
+      <span class="energy-value">
+      {{ "{:,.2f}".format(from_grid.carbonTon).replace(",", "X").replace(".", ",").replace("X", ".") }} 
+      </span> Ton
     </div>
     <div>
       <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="CO2" />
-      {{ "{:,.2f}".format(total_generated.carbonTon).replace(",", "X").replace(".", ",").replace("X", ".") }} Ton
+      <span class="energy-value">
+      {{ "{:,.2f}".format(total_generated.carbonTon).replace(",", "X").replace(".", ",").replace("X", ".") }} 
+      </span> Ton
     </div>
     <div>
       <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="CO2" />
-      {{ "{:,.2f}".format(total_consumed.carbonTon).replace(",", "X").replace(".", ",").replace("X", ".") }} Ton
+      <span class="energy-value">
+      {{ "{:,.2f}".format(total_consumed.carbonTon).replace(",", "X").replace(".", ",").replace("X", ".") }} 
+      </span> Ton
     </div>
   </div>
 </div>

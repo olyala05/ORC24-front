@@ -196,7 +196,7 @@
 
     function fetchWifiNetworks() {
       // 📌 Loading ekranını göster
-      showLoading("Wi-Fi ağları yükleniyor...");
+      showLoading("{{ _('Wi-Fi networks are loading...') }}");
 
       fetch("/wi-fi-list", { method: "POST" })
         .then((response) => response.json())
@@ -238,14 +238,11 @@
             connectedWifiSpan.innerText = `{{ _('No Wi-Fi Connection') }}`;
           }
         })
-        .catch((error) => {
-          console.error("Wi-Fi networks loading error:", error);
-          wifiListElement.innerHTML =
-            "<p style='color: red;'>Wi-Fi bilgisi alınamadı.</p>";
-          showErrorAlert("Hata!", "Wi-Fi bilgisi alınırken sorun oluştu.");
+        .catch((error) => {wifiListElement.innerHTML =
+            "<p style='color: red;'>{{ _('Wi-Fi information could not be retrieved.') }}</p>";
+          showErrorAlert("{{ _('An issue occurred while retrieving Wi-Fi information.') }}");
         })
         .finally(() => {
-          // 📌 Loading ekranını kapat
           hideLoading();
         });
     }
@@ -278,14 +275,14 @@
 
       const password = wifiPasswordInput.value;
       if (!password) {
-        showWarningAlert("Lütfen önce şifreyi girin.");
+        showWarningAlert("{{ _('Please enter the password first.') }}");
         return;
       }
 
       connectButton.disabled = true;
       // connectButton.innerHTML = `<span class="spinner"></span> Bağlanılıyor...`;
 
-      showLoading("Wi-Fi ağına bağlanılıyor...");
+      showLoading("{{ _('Connecting to the Wi-Fi network...') }}");
       
       fetch("/connect_wifi", {
         method: "POST",
@@ -297,30 +294,23 @@
           hideLoading();
           if (data.status === "success") {
             showSuccessAlert(
-              "Bağlantı Başarılı!",
-              `Wi-Fi bağlantısı kuruldu: ${selectedSSID}`
+              `{{ _('Wi-Fi connection successful:') }} ${selectedSSID}`
             );
             connectedWifiSpan.innerText = `SSID: ${selectedSSID}`;
             wifiPasswordForm.style.display = "none";
             fetchWifiNetworks();
           } else {
-            showErrorAlert(
-              "Bağlantı Hatası!",
-              data.message || "Bağlantı kurulamadı, tekrar deneyin."
-            );
+            showErrorAlert("{{ _('Connection failed, please try again.') }}");
           }
         })
         .catch((error) => {
           hideLoading();
-          console.error("Wi-Fi bağlantı hatası:", error);
-          showErrorAlert(
-            "Hata!",
-            "Wi-Fi bağlantısı sırasında bir hata oluştu."
-          );
+          console.error("{{ _('Wi-Fi connection error!') }}");
+          showErrorAlert("{{ _('An error occurred during the Wi-Fi connection.') }}");
         })
         .finally(() => {
           connectButton.disabled = false;
-          connectButton.innerHTML = "Bağlan";
+          connectButton.innerHTML = "{{ _('Connect') }}";
         });
     });
 
@@ -355,14 +345,12 @@
             ssidInput.value = modem.network_ssid?.trim() || "";
             passwordInput.value = modem.network_password?.trim() || "";
             gsmNumberInput.value = modem.gsm_number?.trim() || "";
-
-            console.log("Modem Bilgisi:", modem);
           } else {
             showErrorAlert("{{ _('Modem info not loaded!') }}", data.message);
           }
         })
         .catch((error) => {
-          showErrorAlert("Modem bilgisi çekilirken hata!", error.message);
+          showErrorAlert("{{ _('Error while fetching modem information!') }}", error.message);
         });
     }
 
@@ -384,14 +372,11 @@
           !modemData.wifi_password ||
           !modemData.gsm_number
         ) {
-          showWarningAlert(
-            "Eksik Bilgi!",
-            "Lütfen tüm alanları doldurun. Boş bırakılan alanlar mevcut."
-          );
+          showWarningAlert("{{ _('Please fill out all fields. Some fields are left empty.') }}");
           return;
         }
 
-        showLoading("Modem bilgileri güncelleniyor...");
+        showLoading("{{ _('Modem information is being updated...') }}");
 
         fetch("/update_modem_info", {
           method: "POST",
@@ -404,14 +389,14 @@
           .then((data) => {
             hideLoading();
             if (data.status === "success") {
-              showSuccessAlert("Başarılı!", "Modem başarıyla güncellendi!");
+              showSuccessAlert("{{ _('Modem updated successfully!') }}");
             } else {
-              showErrorAlert("Hata!", data.message);
+              showErrorAlert("{{ _('Error!') }}");
             }
           })
           .catch((error) => {
             hideLoading();
-            showErrorAlert("Bağlantı Hatası!", error.message);
+            showErrorAlert("{{ _('You entered the wrong password!') }}");
           });
       });
 

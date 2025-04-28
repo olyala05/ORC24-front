@@ -68,85 +68,87 @@ endblock %} {% block extra_css %}
       <span>{{ _('Now')}}</span>
     </div>
     <ul class="eq-detail-log-list">
-      <li class="eq-detail-log-item">
+      <li class="eq-detail-log-item" data-tag="Were active devices configured?">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Aktif ekipmanlar konfigüre edildi mi?') }}</span>
+          <span>{{ _('Were active devices configured?') }}</span>
         </span>
-        <span>-</span>
+        <span class="text-right">-</span>
       </li>
 
-      <li class="eq-detail-log-item">
+      <li
+        class="eq-detail-log-item"
+        data-tag="Results of data collection task from devices"
+      >
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Veri toplama sonuçları') }}</span>
+          <span>{{ _('Results of data collection task from devices') }}</span>
         </span>
-        <span>-</span>
+        <span class="text-right">-</span>
       </li>
 
-      <li class="eq-detail-log-item">
+      <li
+        class="eq-detail-log-item"
+        data-tag="Were the detected items written to the database?"
+      >
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Tespit edilenler veritabanına yazıldı mı?') }}</span>
+          <span
+            >{{ _('Were the detected items written to the database?') }}</span
+          >
         </span>
-        <span>-</span>
+        <span class="text-right">-</span>
       </li>
 
-      <li class="eq-detail-log-item">
+      <li class="eq-detail-log-item" data-tag="Active devices">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Aktif ekipmanlar') }}</span>
+          <span>{{ _('Active devices') }}</span>
         </span>
-        <span>-</span>
+        <span class="text-right">-</span>
       </li>
 
-      <li class="eq-detail-log-item">
+      <li class="eq-detail-log-item" data-tag="Detected devices">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Tespit edilen ekipmanlar') }}</span>
+          <span>{{ _('Detected devices') }}</span>
         </span>
-        <span>-</span>
+        <span class="text-right">-</span>
       </li>
 
-      <li class="eq-detail-log-item">
+      <li class="eq-detail-log-item" data-tag="Did device scanning start?">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Ekipman tarama başladı mı?') }}</span>
+          <span>{{ _('Did device scanning start?') }}</span>
         </span>
-        <span>-</span>
+        <span class="text-right">-</span>
       </li>
 
-      <li class="eq-detail-log-item">
+      <li class="eq-detail-log-item" data-tag="Device scanning flags">
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-passive"></span>
           <span class="eq-detail-dot eq-passive"></span>
-          <span>{{ _('Ekipman Tarama bayrakları') }}</span>
+          <span>{{ _('Device scanning flags') }}</span>
         </span>
-        <span>-</span>
+        <span class="text-right">-</span>
       </li>
 
-      <li class="eq-detail-log-item">
-        <span class="eq-detail-log-status">
-          <span class="eq-detail-dot eq-active"></span>
-          <span class="eq-detail-dot eq-active"></span>
-          <span>{{ _('Ekipman veri toplama sonuçları') }}</span>
-        </span>
-        <span>-</span>
-      </li>
-
-      <li class="eq-detail-log-item">
+      <li
+        class="eq-detail-log-item"
+        data-tag="Was Modbus Serial scan successful?"
+      >
         <span class="eq-detail-log-status">
           <span class="eq-detail-dot eq-active"></span>
           <span class="eq-detail-dot eq-passive"></span>
-          <span>{{ _('Modbus Serial tarama başarılı mı?') }}</span>
+          <span>{{ _('Was Modbus Serial scan successful?') }}</span>
         </span>
-        <span>-</span>
+        <span class="text-right">-</span>
       </li>
     </ul>
   </div>
@@ -339,89 +341,86 @@ endblock %} {% block extra_css %}
   });
 
   document.addEventListener("DOMContentLoaded", function () {
-      fetch("/get_archive_log_status")
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status !== "success" || !data.data) {
-            console.warn("[LOG] Geçersiz yanıt yapısı");
+    fetch("/get_archive_log_status")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status !== "success" || !data.data) {
+          console.warn("[LOG] Geçersiz yanıt yapısı");
+          return;
+        }
+
+        const archiveData = data.data;
+
+        const tagMapping = {
+          "Were active devices configured?":
+            "Aktif ekipmanlar konfigure edildi mi?",
+          "Results of data collection task from devices":
+            "Ekipmanlardan veri toplama görevi sonuçları",
+          "Were the detected items written to the database?":
+            "Tespit edilen ekipmanlar veritabanına yazıldı mı?",
+          "Active devices": "Aktif ekipmanlar",
+          "Detected devices": "Tespit edilmiş ekipmanlar",
+          "Did device scanning start?": "Ekipman tarama görevi başladı",
+          "Device scanning flags": "Ekipman tarama görevi bayrakları!",
+          "Was Modbus Serial scan successful?":
+            "Modbus Serial üzerinden başarılı tarama yapıldı mı?",
+        };
+
+        const typeToColorClass = {
+          1: "eq-active",
+          2: "eq-warning",
+          3: "eq-passive",
+        };
+
+        const items = document.querySelectorAll(".eq-detail-log-item");
+        Object.entries(tagMapping).forEach(([staticText, archiveKeyText]) => {
+          const item = document.querySelector(
+            `.eq-detail-log-item[data-tag="${staticText}"]`
+          );
+
+          if (!item) {
+            console.warn(`[LOG] '${staticText}' için <li> bulunamadı.`);
             return;
           }
 
-          const archiveData = data.data;
+          const archiveKey = Object.keys(archiveData).find(
+            (key) => key.toLowerCase() === archiveKeyText.toLowerCase()
+          );
 
-          const tagMapping = {
-            "Aktif ekipmanlar konfigüre edildi mi?": "Aktif ekipmanlar konfigure edildi mi?",
-            "Veri toplama sonuçları": "Ekipmanlardan veri toplama görevi sonuçları",
-            "Tespit edilenler veritabanına yazıldı mı?": "Tespit edilen ekipmanlar veritabanına yazıldı mı?",
-            "Aktif ekipmanlar": "Aktif ekipmanlar",
-            "Tespit edilen ekipmanlar": "Tespit edilmiş ekipmanlar",
-            "Ekipman tarama başladı mı?": "Ekipman tarama görevi başladı",
-            "Ekipman Tarama bayrakları": "Ekipman tarama görevi bayrakları!",
-            "Ekipman veri toplama sonuçları": "Ekipmanlardan veri toplama görevi sonuçları",
-            "Modbus Serial tarama başarılı mı?": "Modbus Serial üzerinden başarılı tarama yapıldı mı?"
-          };
+          if (!archiveKey) {
+            console.warn(`[LOG] '${archiveKeyText}' verisi bulunamadı.`);
+            return;
+          }
 
-          const typeToColorClass = {
-            1: "eq-active",
-            2: "eq-warning",
-            3: "eq-passive",
-          };
+          const archiveInfo = archiveData[archiveKey];
+          const dots = item.querySelectorAll(".eq-detail-dot");
+          const spans = item.querySelectorAll("span");
 
-          const items = document.querySelectorAll(".eq-detail-log-item");
+          const archiveType = archiveInfo.archive_log_type;
+          const nowType = archiveInfo.last_log_type;
+          const lastLogDate = archiveInfo.last_log_date;
 
-          Object.entries(tagMapping).forEach(([staticText, archiveKeyText]) => {
-            const item = Array.from(items).find(li =>
-              li.innerText.toLowerCase().includes(staticText.toLowerCase())
-            );
+          if (typeToColorClass[archiveType]) {
+            dots[0].classList.remove("eq-active", "eq-warning", "eq-passive");
+            dots[0].classList.add(typeToColorClass[archiveType]);
+          }
 
-            if (!item) {
-              console.warn(`[LOG] '${staticText}' için <li> bulunamadı.`);
-              return;
-            }
+          if (typeToColorClass[nowType]) {
+            dots[1].classList.remove("eq-active", "eq-warning", "eq-passive");
+            dots[1].classList.add(typeToColorClass[nowType]);
+          }
 
-            const archiveKey = Object.keys(archiveData).find(key =>
-              key.toLowerCase() === archiveKeyText.toLowerCase()
-            );
-
-            if (!archiveKey) {
-              console.warn(`[LOG] '${archiveKeyText}' verisi bulunamadı.`);
-              return;
-            }
-
-            const archiveInfo = archiveData[archiveKey];
-            const dots = item.querySelectorAll(".eq-detail-dot");
-            const spans = item.querySelectorAll("span");
-
-            const archiveType = archiveInfo.archive_log_type;
-            const nowType = archiveInfo.last_log_type;
-            const lastLogDate = archiveInfo.last_log_date;
-
-            // 🎨 Renk Güncelle
-            if (typeToColorClass[archiveType]) {
-              dots[0].classList.remove("eq-active", "eq-warning", "eq-passive");
-              dots[0].classList.add(typeToColorClass[archiveType]);
-            }
-
-            if (typeToColorClass[nowType]) {
-              dots[1].classList.remove("eq-active", "eq-warning", "eq-passive");
-              dots[1].classList.add(typeToColorClass[nowType]);
-            }
-
-            // 📅 Sadece EN SAĞDAKİ <span>-</span>'e tarihi yaz
-            if (lastLogDate) {
-              const dt = new Date(lastLogDate);
-              const formattedDate = dt.toLocaleDateString("tr-TR") + " " + dt.toLocaleTimeString("tr-TR");
-
-              // En sağdaki span => item.querySelectorAll("span") içindeki SONUNCUSU
-              spans[spans.length - 1].textContent = formattedDate;
-            }
-          });
-
-          console.log("[LOG] Detay log paneli başarıyla güncellendi.");
-        })
-        .catch((error) => {
-          console.error("[LOG] Detay log verisi alınamadı:", error);
+          if (lastLogDate) {
+            const formattedDate = formatDateCustom(lastLogDate);
+            spans[spans.length - 1].textContent = formattedDate;
+          }
         });
+
+        console.log("[LOG] Detay log paneli başarıyla güncellendi.");
+      })
+      .catch((error) => {
+        console.error("[LOG] Detay log verisi alınamadı:", error);
+      });
   });
 
   // Tooltip kutusu oluştur (sayfa yüklendikten sonra bir kez)

@@ -1413,3 +1413,44 @@ msgstr "Datenerfassungsergebnisse"
 
 msgid "Changing language..."
 msgstr "Sprache wird geändert..."
+
+msgid "Please enter the password first."
+msgstr "Bitte geben Sie zuerst das Passwort ein."
+
+
+msgid "Connecting to the Wi-Fi network..."
+msgstr "Verbindung zum WLAN-Netzwerk wird hergestellt..."
+
+msgid "Error while fetching modem information!"
+msgstr "Fehler beim Abrufen der Modeminformationen!"
+
+msgid "Please fill out all fields. Some fields are left empty."
+msgstr "Bitte füllen Sie alle Felder aus. Einige Felder wurden leer gelassen."
+
+msgid "Modem updated successfully!"
+msgstr "Modem wurde erfolgreich aktualisiert!"
+
+
+msgid "You entered the wrong password!"
+msgstr "Sie haben das Passwort falsch eingegeben!"
+
+msgid "Wi-Fi connection successful:"
+msgstr "WLAN-Verbindung erfolgreich:"
+
+msgid "Connection failed, please try again."
+msgstr "Verbindung fehlgeschlagen, bitte versuchen Sie es erneut."
+
+msgid "Wi-Fi connection error!"
+msgstr "WLAN-Verbindungsfehler!"
+
+msgid "An error occurred during the Wi-Fi connection."
+msgstr "Es ist ein Fehler bei der WLAN-Verbindung aufgetreten."
+
+msgid "Modem information is being updated..."
+msgstr "Modeminformationen werden aktualisiert..."
+
+msgid "Wi-Fi information could not be retrieved."
+msgstr "WLAN-Informationen konnten nicht abgerufen werden."
+
+msgid "An issue occurred while retrieving Wi-Fi information."
+msgstr "Bei der Abfrage der WLAN-Informationen ist ein Problem aufgetreten."

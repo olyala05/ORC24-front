@@ -143,7 +143,10 @@
     align-items: center;
     gap: 7px;
   }
-
+  .energy-value {
+    display: inline-block;
+    text-align: right;
+  }
   .energy-row img {
     width: 20px;
     height: 20px;

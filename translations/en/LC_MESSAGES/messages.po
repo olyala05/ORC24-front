@@ -1418,3 +1418,46 @@ msgstr "Data collection results"
 
 msgid "Changing language..."
 msgstr "Changing language..."
+
+msgid "Please enter the password first."
+msgstr "Please enter the password first."
+
+msgid "Wi-Fi networks are loading..."
+msgstr "Wi-Fi networks are loading..."
+
+msgid "Connecting to the Wi-Fi network..."
+msgstr "Connecting to the Wi-Fi network..."
+
+msgid "Error while fetching modem information!"
+msgstr "Error while fetching modem information!"
+
+msgid "Please fill out all fields. Some fields are left empty."
+msgstr "Please fill out all fields. Some fields are left empty."
+
+msgid "Modem updated successfully!"
+msgstr "Modem updated successfully!"
+
+msgid "You entered the wrong password!"
+msgstr "You entered the wrong password!"
+
+msgid "Wi-Fi connection successful:"
+msgstr "Wi-Fi connection successful:"
+
+msgid "Connection failed, please try again."
+msgstr "Connection failed, please try again."
+
+msgid "Wi-Fi connection error!"
+msgstr "Wi-Fi connection error!"
+
+
+msgid "An error occurred during the Wi-Fi connection."
+msgstr "An error occurred during the Wi-Fi connection."
+
+msgid "Modem information is being updated..."
+msgstr "Modem information is being updated..."
+
+msgid "Wi-Fi information could not be retrieved."
+msgstr "Wi-Fi information could not be retrieved."
+
+msgid "An issue occurred while retrieving Wi-Fi information."
+msgstr "An issue occurred while retrieving Wi-Fi information."

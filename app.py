@@ -1033,10 +1033,6 @@ def equipment_setting():
 def modem_selection():
     return render_template("modem_selection.html", page_title=_("Modem Selection"))
 
-# @app.route("/switch", endpoint="switch")
-# def switch():
-#     return render_template("test/switch.html", page_title=_("Test Mode"))
-
 @app.route("/switch", endpoint="switch")
 @role_required('manager')
 def switch():

@@ -690,6 +690,10 @@ input:-webkit-autofill:focus {
   align-items: center;
   gap: 7px;
 }
+.energy-table .energy-value {
+  display: inline-block;
+  text-align: right;
+}
 .energy-table .energy-row img {
   width: 20px;
   height: 20px;
@@ -1227,6 +1231,7 @@ input:-webkit-autofill:focus {
   padding: 0px;
   font-family: Arial, sans-serif;
   width: 98%;
+  height: 80%;
   margin-top: 80px;
 }
 .eq-detail-container .eq-detail-panel {
@@ -1293,6 +1298,7 @@ input:-webkit-autofill:focus {
   max-height: 400px;
   overflow-y: auto;
   margin: 0;
+  max-height: 340px;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list li:last-child {
   border-bottom: none;
@@ -1308,6 +1314,13 @@ input:-webkit-autofill:focus {
   display: flex;
   align-items: center;
   gap: 50px;
+  flex-wrap: nowrap;
+  width: 280px;
+}
+.eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-status span:last-child {
+  flex: 1;
+  white-space: normal;
+  word-break: break-word;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-dot {
   width: 12px;
@@ -1369,6 +1382,11 @@ body.lang-de .eq-detail-log-item span {
 
 .eq-detail-tooltip.active {
   display: block;
+}
+
+.text-right {
+  text-align: right;
+  width: 162px;
 }
 
 .equ-set-container {
