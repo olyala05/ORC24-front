@@ -22,14 +22,16 @@ import logging
 from flask_babel import Babel, gettext as _
 
 from blueprints.auth_routes import auth_bp
-from blueprints.dashboard import dash_bp    
+from blueprints.dashboard import dash_bp 
+from utils.context_processors import inject_globals 
+from utils.decorators import role_required  
 
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
 app.secret_key = "supersecretkey"
 app.config["JWT_SECRET_KEY"] = "jwt_secret_key"
 app.config['BABEL_DEFAULT_LOCALE'] = 'tr'
-app.config['BABEL_SUPPORTED_LOCALES'] = ['tr', 'en', 'de']
+app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'tr', 'de']
 
 CORS(app)
 jwt = JWTManager(app)
@@ -45,21 +47,24 @@ last_connection_time = None
 app.register_blueprint(auth_bp)
 app.register_blueprint(dash_bp)
 
+# Context Processor - Global Değişkenler
+app.context_processor(inject_globals)
+
 @app.before_request
 def before_request_func():
-    g.lang = session.get('lang', 'tr') 
+    g.lang = session.get('lang', 'en') 
 
 # Dil seçimi için Babel'le ilgili fonksiyon
 @babel.localeselector
 def get_locale():
-    lang = session.get('lang', 'tr')  
+    lang = session.get('lang', 'en')  
     logging.debug(f"GET LOCALE: Aktif Dil: {lang}")  
     return lang
 
 @app.route('/set_language', methods=['POST'])
 def set_language():
     lang = request.form.get("lang")
-    if lang in ['tr', 'en', 'de']:
+    if lang in ['en', 'tr', 'de']:
         session['lang'] = lang  
         logging.debug(f"SET LANGUAGE: Seçilen dil: {lang}")
     else:
@@ -1028,9 +1033,14 @@ def equipment_setting():
 def modem_selection():
     return render_template("modem_selection.html", page_title=_("Modem Selection"))
 
+# @app.route("/switch", endpoint="switch")
+# def switch():
+#     return render_template("test/switch.html", page_title=_("Test Mode"))
+
 @app.route("/switch", endpoint="switch")
+@role_required('manager')
 def switch():
-    return render_template("test/switch.html", page_title=_("Test Mode"))
+    return render_template("test/switch.html", page_title=_("Test Mode") )
 
 @app.route("/test", endpoint="test")
 def test():

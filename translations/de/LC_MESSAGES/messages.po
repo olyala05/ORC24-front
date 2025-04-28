@@ -1410,3 +1410,6 @@ msgstr "UUID nicht gefunden!"
 
 msgid "Data collection results"
 msgstr "Datenerfassungsergebnisse"
+
+msgid "Changing language..."
+msgstr "Sprache wird geändert..."

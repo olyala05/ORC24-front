@@ -118,9 +118,10 @@
     </div>
 
     <div class="bottom-buttons">
-      <button id="testBtn" class="btn" onclick="SwitchtTest()" disabled>
-        {{ _('Test') }}
+      <button id="testBtn" class="btn" onclick="SwitchtTest()"{% if user_role == 'technical' %} disabled  {% endif %}>
+          {{ _('Test') }}
       </button>
+
       <button id="dataBtn" class="btn" onclick="goToData()" disabled>
         {{ _('Data') }}
       </button>
@@ -400,18 +401,26 @@
 
   // Test Sayfasına Yönlendirir
   function SwitchtTest() {
-    let dropdown = document.getElementById("modem");
-    let selectedDeviceIP = dropdown ? dropdown.value : null;
+    const userRole = document.body.dataset.userRole;
+    const dropdown = document.getElementById("modem");
+    const selectedDeviceIP = dropdown ? dropdown.value : null;
 
+    // 2️⃣ Cihaz Seçimi Kontrolü
     if (!selectedDeviceIP) {
-      showWarningAlert("{{ _('Please select a device first!') }}");
-      return;
+        showWarningAlert("{{ _('Please select a device first!') }}");
+        return;
     }
 
-    showLoading("{{ _('Test is loading...') }}");
+    // 1️⃣ Role Kontrolü
+    if (userRole === 'technical') {
+        showErrorAlert("Bu sayfaya erişim izniniz bulunmamaktadır.");
+        return;
+    }
 
+    // 3️⃣ Yönlendirme
+    showLoading("{{ _('Test is loading...') }}");
     setTimeout(() => {
-      window.location.href = "/switch";
+        window.location.href = "/switch";
     }, 100);
   }
 

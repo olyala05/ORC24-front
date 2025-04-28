@@ -9,7 +9,7 @@ function showErrorAlert(title, text = "") {
     preventDuplicates: true,
     showDuration: "300",
     hideDuration: "1000",
-    timeOut: "3000",
+    timeOut: "5000",
     extendedTimeOut: "1000",
     showEasing: "swing",
     hideEasing: "linear",
@@ -44,7 +44,7 @@ function showSuccessAlert(title, text = "") {
     preventDuplicates: true,
     showDuration: "300",
     hideDuration: "1000",
-    timeOut: "3000",
+    timeOut: "5000",
     extendedTimeOut: "1000",
     showEasing: "swing",
     hideEasing: "linear",
@@ -79,7 +79,7 @@ function showWarningAlert(title, text = "") {
     preventDuplicates: true,
     showDuration: "300",
     hideDuration: "1000",
-    timeOut: "3000",
+    timeOut: "5000",
     extendedTimeOut: "1000",
     showEasing: "swing",
     hideEasing: "linear",
@@ -120,4 +120,16 @@ function showLoading(message) {
 function hideLoading() {
     let loader = document.getElementById("loading-overlay");
     if (loader) loader.remove();
+}
+
+
+function handleRoleBasedNavigation(targetUrl) {
+  const userRole = document.body.dataset.userRole;
+
+  if (userRole === 'technical') {
+      showErrorAlert("Bu sayfaya erişim izniniz bulunmamaktadır.");
+      return;
+  }
+
+  window.location.href = targetUrl;
 }

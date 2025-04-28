@@ -261,74 +261,72 @@
 
     // Dil değiştirildiğinde çağrılacak fonksiyon
     document.addEventListener("DOMContentLoaded", function () {
-      const lang = "{{ g.get('lang', 'EN') }}";
-      const selectedLangLabel = document.getElementById("selectedLangLabel");
-      if (selectedLangLabel) {
-        selectedLangLabel.innerText = lang.toUpperCase();
-      }
-      
-      function setLanguage(lang) {
-          document
-            .querySelectorAll(".lang-btn")
-            .forEach((btn) => btn.classList.remove("selected"));
-
-          const selectedBtn = document.querySelector(`.lang-btn[data-lang="${lang}"]`);
-          if (selectedBtn) {
-            selectedBtn.classList.add("selected");
-          }
-
-          const selectedLangLabel = document.getElementById("selectedLangLabel");
-          if (selectedLangLabel) {
+        const lang = "{{ g.get('lang', 'EN') }}";
+        const selectedLangLabel = document.getElementById("selectedLangLabel");
+        if (selectedLangLabel) {
             selectedLangLabel.innerText = lang.toUpperCase();
-          }
+        }
 
-          // Dropdown kapansın
-          document.getElementById("languageDropdown").style.display = "none";
+        function setLanguage(lang) {
+            // Tüm butonlardan seçimi kaldır
+            document.querySelectorAll(".lang-btn").forEach((btn) => btn.classList.remove("selected"));
 
-          // 📌 Loading Göster
-          showLoading("Dil değiştiriliyor...");
+            // Seçilen butonu işaretle
+            const selectedBtn = document.querySelector(`.lang-btn[data-lang="${lang}"]`);
+            if (selectedBtn) {
+                selectedBtn.classList.add("selected");
+            }
 
-          fetch("{{ url_for('set_language') }}", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: "lang=" + lang,
-          }).then(() => {
-            console.log("Backend'e gönderilen dil:", lang);
-            // Loading kapanmadan önce sayfa yenilenecek, zaten yenilenince hideLoading otomatik olur
-            window.location.reload();
-          }).catch((error) => {
-            hideLoading();
-            showErrorAlert("Hata!", "Dil değiştirilemedi. Lütfen tekrar deneyin.");
-          });
-      }
+            // Seçilen dili etiketle göster
+            const selectedLangLabel = document.getElementById("selectedLangLabel");
+            if (selectedLangLabel) {
+                selectedLangLabel.innerText = lang.toUpperCase();
+            }
 
-      document.querySelectorAll(".lang-btn").forEach((button) => {
-        button.addEventListener("click", function () {
-          const lang = button.getAttribute("data-lang");
-          setLanguage(lang);
+            // Dropdown kapansın
+            document.getElementById("languageDropdown").style.display = "none";
+
+            // 📌 Loading Göster
+            showLoading("{{ _('Changing language...') }}");
+
+            // Form oluşturarak POST isteği gönder
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = "{{ url_for('set_language') }}";
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'lang';
+            input.value = lang;
+
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        // Dil butonlarına tıklama eventi
+        document.querySelectorAll(".lang-btn").forEach((button) => {
+            button.addEventListener("click", function () {
+                const lang = button.getAttribute("data-lang");
+                setLanguage(lang);
+            });
         });
-      });
 
-      const toggle = document.getElementById("languageToggle");
-      const dropdown = document.getElementById("languageDropdown");
+        // Dropdown toggle işlemi
+        const toggle = document.getElementById("languageToggle");
+        const dropdown = document.getElementById("languageDropdown");
 
-      toggle.addEventListener("click", function (event) {
-        event.stopPropagation();
+        toggle.addEventListener("click", function (event) {
+            event.stopPropagation();
+            dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+        });
 
-        if (dropdown.style.display === "block") {
-          dropdown.style.display = "none";
-        } else {
-          dropdown.style.display = "block";
-        }
-      });
-
-      document.addEventListener("click", function (e) {
-        if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
-          dropdown.style.display = "none";
-        }
-      });
+        // Sayfa dışına tıklanınca dropdown kapansın
+        document.addEventListener("click", function (e) {
+            if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = "none";
+            }
+        });
     });
 
     document.addEventListener("DOMContentLoaded", function () {

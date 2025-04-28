@@ -1428,14 +1428,8 @@ msgstr "UUID bulunamadı!"
 msgid "Data collection results"
 msgstr "Ekipmanlardan veri sonuçları"
 
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
+msgid "Changing language..."
+msgstr "Dil değiştiriliyor..."
 
 msgid ""
 msgstr ""

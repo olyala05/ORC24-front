@@ -1415,3 +1415,6 @@ msgstr "UUID not found!"
 
 msgid "Data collection results"
 msgstr "Data collection results"
+
+msgid "Changing language..."
+msgstr "Changing language..."
