@@ -178,7 +178,7 @@ body {
 }
 
 .ellipsis {
-  max-width: 300px;
+  max-width: 100%;
   --webkit-line-clamp: 1;
   white-space: nowrap;
   overflow: hidden;
