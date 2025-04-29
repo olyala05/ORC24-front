@@ -1463,3 +1463,42 @@ msgstr "Modbus-Test fehlgeschlagen"
 
 msgid "is connected on port"
 msgstr "ist am Port verbunden"
+
+msgid "Sending Write Modbus request... Please wait."
+msgstr "Schreibe Modbus-Anforderung wird gesendet... Bitte warten."
+
+msgid "Please select a Wi-Fi network."
+msgstr "Bitte wählen Sie ein Wi-Fi-Netzwerk."
+
+msgid "No connection yet"
+msgstr "Noch keine Verbindung"
+
+msgid "You do not have access to this page."
+msgstr "Sie haben keinen Zugriff auf diese Seite."
+
+msgid "Daily Data is Empty"
+msgstr "Tägliche Daten sind leer"
+
+msgid "No equipment details found."
+msgstr "Keine Ausrüstungsdetails gefunden."
+
+msgid "Error loading data."
+msgstr "Fehler beim Laden der Daten."
+
+msgid "Hourly Data is Empty"
+msgstr "Stündliche Daten sind leer"
+
+msgid "Error loading data."
+msgstr "Fehler beim Laden der Daten."
+
+msgid "Hourly Data is Empty"
+msgstr "Stündliche Daten sind leer"
+
+msgid "No device selected."
+msgstr "Kein Gerät ausgewählt."
+
+msgid "Error fetching equipments"
+msgstr "Fehler beim Abrufen der Ausrüstungen"
+
+msgid "Loading logs..."
+msgstr "Logs werden geladen..."

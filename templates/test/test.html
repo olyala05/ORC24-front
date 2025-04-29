@@ -873,7 +873,6 @@
           targetElement.style.display = "block";
 
           if (targetId === "wifi-test") {
-            console.log("📶 Wi-Fi sekmesine geçildi, liste getiriliyor...");
             getNetworkDetails(true);
           }
         }
@@ -1312,14 +1311,14 @@
   function sendWriteModbusRequest() {
       const terminal = document.getElementById("write-terminal");
       const statusMessage = document.getElementById("write-status-message");
-      terminal.value = "🔍 Sending Write Modbus request... Please wait.";
+      terminal.value = "{{ _('Sending Write Modbus request... Please wait.') }}";
       statusMessage.textContent = "";
       statusMessage.className = "status-message";
 
       const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
       if (!selectedDeviceIP) {
-        terminal.value = "No device selected.";
-        statusMessage.textContent = "Local Network Connection Scan Failed.";
+        terminal.value = "{{ _('No device selected.') }}";
+        statusMessage.textContent = "{{ _('Local Network Connection Scan Failed.') }}";
         statusMessage.classList.add("error");
         return;
       }
@@ -1470,10 +1469,10 @@
             if (data.status === "success" && data.data.cloud_connected) {
               indicator.classList.add("status-green"); 
               lastConnectionCell.textContent =
-                data.data.last_connection_time || "No connection yet";
+                data.data.last_connection_time || "{{ _('No connection yet') }}";
             } else {
               indicator.classList.add("status-red"); 
-              lastConnectionCell.textContent = "No connection yet";
+              lastConnectionCell.textContent = "{{ _('No connection yet') }}";
             }
           });
         })

@@ -68,7 +68,7 @@
     if (!dailyData || dailyData.length === 0) {
       const emptyMessage = document.createElement("div");
       emptyMessage.className = "empty-message";
-      emptyMessage.innerText = "Daily Data is Empty";
+      emptyMessage.innerText = "{{ _('Daily Data is Empty') }}";
       container.appendChild(emptyMessage);
       return;
     }

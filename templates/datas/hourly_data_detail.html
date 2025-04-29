@@ -64,12 +64,12 @@
           updateDetailsTable([data.data]);
         } else {
           document.getElementById("equipment-details").innerHTML =
-            "<tr><td colspan='5' class='empty-message'>No equipment details found.</td></tr>";
+            "<tr><td colspan='5' class='empty-message'>{{ _('No equipment details found.') }}</td></tr>";
         }
       })
       .catch(() => {
         document.getElementById("equipment-details").innerHTML =
-          "<tr><td colspan='5' class='empty-message'>Error loading data.</td></tr>";
+          "<tr><td colspan='5' class='empty-message'>{{ _('Error loading data.') }}</td></tr>";
       });
   }
 
@@ -116,12 +116,12 @@
           updateHourlyDataTable(data.data.data);
         } else if (page === 1) {
           document.getElementById("hourly-data-body").innerHTML =
-            "<tr><td colspan='5' class='empty-message'>Hourly Data is Empty</td></tr>";
+            "<tr><td colspan='5' class='empty-message'>{{ _('Hourly Data is Empty') }}</td></tr>";
         }
       })
       .catch(() => {
         document.getElementById("hourly-data-body").innerHTML =
-          "<tr><td colspan='5' class='empty-message'>Error loading data.</td></tr>";
+          "<tr><td colspan='5' class='empty-message'>{{ _('Error loading data.') }}</td></tr>";
       })
       .finally(() => {
         isFetching = false;

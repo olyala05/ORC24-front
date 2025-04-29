@@ -1509,11 +1509,44 @@ msgstr "Modbus Testi Başarısız"
 msgid "is connected on port"
 msgstr "port üzerinden bağlı"
 
-msgid ""
-msgstr ""
+msgid "Sending Write Modbus request... Please wait."
+msgstr "Yazma Modbus isteği gönderiliyor... Lütfen bekleyin."
 
-msgid ""
-msgstr ""
+msgid "Please select a Wi-Fi network."
+msgstr "Lütfen bir Wi-Fi ağını seçin."
 
-msgid ""
-msgstr ""
+msgid "No connection yet"
+msgstr "Henüz bağlantı yok"
+
+msgid "You do not have access to this page."
+msgstr "Bu sayfaya erişim izniniz bulunmamaktadır."
+
+msgid "Daily Data is Empty"
+msgstr "Günlük Veri Boş"
+
+msgid "No equipment details found."
+msgstr "Ekipman detayları bulunamadı."
+
+msgid "Error loading data."
+msgstr "Veri yüklenirken hata oluştu."
+
+msgid "Hourly Data is Empty"
+msgstr "Saatlik Veri Boş"
+
+msgid "Error loading data."
+msgstr "Veri yüklenirken hata oluştu."
+
+msgid "Hourly Data is Empty"
+msgstr "Saatlik Veri Boş"
+
+msgid "No device selected."
+msgstr "Hiçbir cihaz seçilmedi."
+
+msgid "Error fetching equipments"
+msgstr "Ekipmanlar alınırken hata oluştu."
+
+msgid "Loading logs..."
+msgstr "Loglar yükleniyor..."
+
+
+

@@ -8,10 +8,10 @@
   <!-- Hourly Data Table Bölümü -->
   <div class="hourly-data-table">
     <div class="table-header">
-      <div>Created Date</div>
-      <div>Number of Equipment</div>
-      <div>Number of Data</div>
-      <div>Time (Sec)</div>
+      <div>{{ _('Created Date') }}</div>
+      <div>{{ _('Number of Equipment') }}</div>
+      <div>{{ _('Number of Data') }}</div>
+      <div>{{ _('Time (Sec)') }}</div>
     </div>
     <div id="hourly-data-container"></div>
   </div>
@@ -19,11 +19,11 @@
   <!-- Hourly Data Status Bölümü -->
   <div class="hourly-data-status">
     <div class="table-header">
-      <div>Serial Number</div>
-      <div>Status / Config.</div>
-      <div>Equipment Type</div>
+      <div>{{ _('Serial Number') }}</div>
+      <div>{{ _('Status / Config.') }}</div>
+      <div>{{ _('Equipment Type') }}</div>
       <div>{{ _('Archive') }}</div>
-      <div>Number of Data</div>
+      <div>{{ _('Number of Data') }}</div>
     </div>
     <div id="equipment-table">
       <!-- Dinamik veriler buraya eklenecek -->
@@ -65,7 +65,7 @@
     if (!hourlyData || hourlyData.length === 0) {
       const emptyMessage = document.createElement("div");
       emptyMessage.className = "empty-message";
-      emptyMessage.innerText = "Hourly Data is Empty";
+      emptyMessage.innerText = "{{ _('Hourly Data is Empty') }}";
       container.appendChild(emptyMessage);
       return;
     }
@@ -104,7 +104,7 @@
     if (!selectedDeviceIP) {
       console.warn("No device selected for fetching equipments.");
       document.getElementById("equipment-table").innerHTML =
-        "<p style='color: red;'>No device selected.</p>";
+        "<p style='color: red;'>{{ _('No device selected.') }}</p>";
       return;
     }
 
@@ -122,13 +122,13 @@
         } else {
           console.warn("No equipments found.");
           document.getElementById("equipment-table").innerHTML =
-            "<p style='color: red;'>No equipments found</p>";
+            "<p style='color: red;'>{{ _('No equipments found') }}</p>";
         }
       })
       .catch((error) => {
         console.error("Error fetching equipments:", error);
         document.getElementById("equipment-table").innerHTML =
-          "<p style='color: red;'>Error fetching equipments</p>";
+          "<p style='color: red;'>{{ _('Error fetching equipments') }}</p>";
       });
   }
 
@@ -137,7 +137,7 @@
     table.innerHTML = ""; // Önceki verileri temizle
 
     if (equipments.length === 0) {
-      table.innerHTML = "<p style='color: red;'>No equipments found</p>";
+      table.innerHTML = "<p style='color: red;'>{{ _('No equipments found') }}</p>";
       return;
     }
 
@@ -163,7 +163,6 @@
       // Cihaza tıklanınca ID'yi sessionStorage ve backend'e gönder
       row.addEventListener("click", function () {
         sessionStorage.setItem("selected_equipment_id", device.id);
-        console.log("Seçilen Equipment ID Kaydedildi:", device.id);
 
         // Backend'e POST isteği ile ID'yi gönder
         fetch("/set_selected_equipment", {
@@ -174,7 +173,6 @@
           .then((response) => response.json())
           .then((setResponse) => {
             if (setResponse.success) {
-              console.log("Backend'de Equipment ID Güncellendi:", device.id);
               window.location.href = "/hourly-data-detail";
             } else {
               throw new Error("Backend'de ID güncellenemedi!");

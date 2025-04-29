@@ -269,7 +269,7 @@
     // Wi-Fi ağına bağlan
     connectButton.addEventListener("click", function () {
       if (!selectedSSID) {
-        showWarningAlert("Wi-Fi Seçilmedi!", "Lütfen bir Wi-Fi ağı seçin.");
+        showWarningAlert("{{ _('Please select a Wi-Fi network.') }}");
         return;
       }
 

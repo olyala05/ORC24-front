@@ -1470,3 +1470,42 @@ msgstr "Modbus Test Failed"
 
 msgid "is connected on port"
 msgstr "is connected on port"
+
+msgid "Sending Write Modbus request... Please wait."
+msgstr "Sending Write Modbus request... Please wait."
+
+msgid "Please select a Wi-Fi network."
+msgstr "Please select a Wi-Fi network."
+
+msgid "No connection yet"
+msgstr "No connection yet"
+
+msgid "You do not have access to this page."
+msgstr "You do not have access to this page."
+
+msgid "Daily Data is Empty"
+msgstr "Daily Data is Empty"
+
+msgid "No equipment details found."
+msgstr "No equipment details found."
+
+msgid "Error loading data."
+msgstr "Error loading data."
+
+msgid "Hourly Data is Empty"
+msgstr "Hourly Data is Empty"
+
+msgid "Error loading data."
+msgstr "Error loading data."
+
+msgid "Hourly Data is Empty"
+msgstr "Hourly Data is Empty"
+
+msgid "No device selected."
+msgstr "No device selected."
+
+msgid "Error fetching equipments"
+msgstr "Error fetching equipments"
+
+msgid "Loading logs..."
+msgstr "Loading logs..."
