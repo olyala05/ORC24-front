@@ -1,404 +1,394 @@
 {% extends "layout.html" %} {% block title %} {{ _('ORC Status') }} {% endblock
-%} {% block content %}
-
-<div class="orc-status-container">
-  <!-- Header -->
-  {% include 'partials/header.html' %}
-
-  <!-- ORC Status İçeriği -->
-  <div class="orc-content">
-    <div class="device-info">
-      <ul>
-        <li>
-          <span class="highlight">{{ _('S/N') }}</span>
-          <span>{{ modem.serial_no if modem.serial_no else '-' }}</span>
-        </li>
-        <li>
-          <span class="highlight">{{ _('MODEM NAME') }}</span>
-          <span>{{ modem.name if modem.name else '-' }}</span>
-        </li>
-        <li>
-          <span class="highlight">{{ _('MODEM BRAND / MODEL') }}</span>
-          <span id="brand-model">-</span>
-        </li>
-
-        <li>
-          <span class="highlight"> {{ _('MODEM STATUS')}}</span>
-
-          <span
-            >{% if modem.status == "A" %} {{ _('Active')}} {% else %} {{
-            _('Passive')}} {% endif %}</span
-          >
-        </li>
-        <li>
-          <span class="highlight">{{ _('DATE OF INSTALLATION')}} </span
-          ><span>{{modem.created_at if modem.created_at else '-'}}</span>
-        </li>
-        <li>
-          <span class="highlight">{{ _('NETWORK TYPE')}} </span>
-          <span>
-            {% if network and network.network_type_list %} {{
-            network.network_type_list | join(" / ") }} {% else %} {{
-            _('Disconnected')}} {% endif %}
-          </span>
-        </li>
-        <li>
-          <span class="highlight">{{ _('CONNECTION PROTOCOL') }}</span>
-          <span id="connection-protocol">-</span>
-        </li>
-        <li>
-          <span class="highlight">{{ _('SOFTWARE VERSION')}}</span>
-          <span>V 1.02</span>
-        </li>
-      </ul>
-    </div>
-
-    <div class="connection-table" id="connection-table">
-      <table>
-        <thead>
-          <tr>
-            <th>{{ _('Archive')}}</th>
-            <th>{{ _('Now')}}</th>
-            <th>{{ _('Modem Name')}}</th>
-            <th>{{ _('Last Connection Date')}}</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td><span class="status-dot red"></span></td>
-            <td><span class="status-dot red"></span></td>
-            <td>{{ _('Lora Disconnection')}}</td>
-            <td id="lora-date">-</td>  
-          </tr>
-
-          <tr>
-            <td><span class="status-dot red"></span></td>
-            <td><span class="status-dot red"></span></td>
-            <td>{{ _('WiFi Connection')}}</td>
-            <td>-</td>
-          </tr>
-
-          <tr>
-            <td><span class="status-dot red"></span></td>
-            <td><span class="status-dot red"></span></td>
-            <td>{{ _('Cloud Connection')}}</td>
-            <td>-</td>
-          </tr>
-
-          <tr>
-            <td><span class="status-dot red"></span></td>
-            <td><span class="status-dot red"></span></td>
-            <td>{{ _('Rabbit MQ')}}</td>
-            <td>-</td>
-          </tr>
-
-          <tr>
-            <td><span class="status-dot red"></span></td>
-            <td><span class="status-dot red"></span></td>
-            <td>{{ _('VPN Connection')}}</td>
-            <td>-</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="algorithm-section">
-        <h3 style="text-align: start; margin-left: 17px">
-          {{ _('Algorithm Processes')}}
-        </h3>
-        <div class="separator"></div>
-        <!-- Turuncu çizgi -->
-        <div class="algorithm-box">
-          <div class="algorithm-left">
-            <i class="fa fa-refresh" aria-hidden="true"></i>
-            <span>{{ _('ORC Process Procedures')}}</span>
+  %} {% block content %}
+  
+  <div class="orc-status-container">
+    <!-- Header -->
+    {% include 'partials/header.html' %}
+  
+    <!-- ORC Status İçeriği -->
+    <div class="orc-content">
+      <div class="device-info">
+        <ul>
+          <li>
+            <span class="highlight">{{ _('S/N') }}</span>
+            <span>{{ modem.serial_no if modem.serial_no else '-' }}</span>
+          </li>
+          <li>
+            <span class="highlight">{{ _('MODEM NAME') }}</span>
+            <span>{{ modem.name if modem.name else '-' }}</span>
+          </li>
+          <li>
+            <span class="highlight">{{ _('MODEM BRAND / MODEL') }}</span>
+            <span id="brand-model">-</span>
+          </li>
+  
+          <li>
+            <span class="highlight"> {{ _('MODEM STATUS')}}</span>
+  
+            <span
+              >{% if modem.status == "A" %} {{ _('Active')}} {% else %} {{
+              _('Passive')}} {% endif %}</span
+            >
+          </li>
+          <li>
+            <span class="highlight">{{ _('DATE OF INSTALLATION')}} </span
+            ><span>{{modem.created_at if modem.created_at else '-'}}</span>
+          </li>
+          <li>
+            <span class="highlight">{{ _('NETWORK TYPE')}} </span>
+            <span>
+              {% if network and network.network_type_list %} {{
+              network.network_type_list | join(" / ") }} {% else %} {{
+              _('Disconnected')}} {% endif %}
+            </span>
+          </li>
+          <li>
+            <span class="highlight">{{ _('CONNECTION TYPE') }}</span>
+            <span id="connection-protocol">-</span>
+          </li>
+          <li>
+            <span class="highlight">{{ _('SOFTWARE VERSION')}}</span>
+            <span>V 1.02</span>
+          </li>
+        </ul>
+      </div>
+  
+      <div class="connection-table" id="connection-table">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ _('Archive')}}</th>
+              <th>{{ _('Now')}}</th>
+              <th>{{ _('Modem Name')}}</th>
+              <th>{{ _('Last Connection Date')}}</th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <tr>
+              <td><span class="status-dot red"></span></td>
+              <td><span class="status-dot red"></span></td>
+              <td>{{ _('Lora Disconnection')}}</td>
+              <td id="lora-date">-</td>  
+            </tr>
+  
+            <tr data-tag="wifi_connection">
+              <td><span class="status-dot red"></span></td>
+              <td><span class="status-dot red"></span></td>
+              <td>{{ _('WiFi Connection')}}</td>
+              <td>-</td>
+            </tr>
+  
+            <tr data-tag="cloud_connection">
+              <td><span class="status-dot red"></span></td>
+              <td><span class="status-dot red"></span></td>
+              <td>{{ _('Cloud Connection')}}</td>
+              <td>-</td>
+            </tr>
+  
+            <tr data-tag="rabbitmq">
+              <td><span class="status-dot red"></span></td>
+              <td><span class="status-dot red"></span></td>
+              <td>{{ _('Rabbit MQ')}}</td>
+              <td>-</td>
+            </tr>
+  
+            <tr data-tag="vpn_connection">
+              <td><span class="status-dot red"></span></td>
+              <td><span class="status-dot red"></span></td>
+              <td>{{ _('VPN Connection')}}</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <div class="algorithm-section">
+          <h3 style="text-align: start; margin-left: 17px">
+            {{ _('Algorithm Processes')}}
+          </h3>
+          <div class="separator"></div>
+          <!-- Turuncu çizgi -->
+          <div class="algorithm-box">
+            <div class="algorithm-left">
+              <i class="fa fa-refresh" aria-hidden="true"></i>
+              <span>{{ _('ORC Process Procedures')}}</span>
+            </div>
+            <!-- !! burada eğer hata var ise kırmızız yap buttonu  !!-->
+            <button class="status-btn" onclick="redirectToLog()">
+              {{ _('Logs')}}
+            </button>
           </div>
-          <!-- !! burada eğer hata var ise kırmızız yap buttonu  !!-->
-          <button class="status-btn" onclick="redirectToLog()">
-            {{ _('Logs')}}
-          </button>
         </div>
       </div>
     </div>
   </div>
-</div>
-<script>
-  function redirectToLog() {
-    window.location.href = "{{ url_for('log')}}";
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    fetch("/equipments-with-models", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Gelen JSON:", data);
-
-        if (data.data && data.data.length > 0) {
-          let protocolText = "-";
-          let equipment = data.data[0];
-
-          if (equipment.communication_protocol_code === 1) {
-            protocolText = "SERIAL";
-          } else if (equipment.communication_protocol_code === 2) {
-            protocolText = "TCP";
-          } else if (equipment.communication_protocol_code === 0) {
-            protocolText = "UNKNOWN";
-          }
-
-          document.getElementById("connection-protocol").innerText =
-            protocolText;
-        } else {
-          document.getElementById("connection-protocol").innerText = "-";
-        }
-      })
-      .catch((error) => {
-        console.error("API isteği hatası:", error);
-        document.getElementById("connection-protocol").innerText =
-          "Error fetching data";
-      });
-  });
-
-  async function fetchBrandModel() {
-    try {
-      const response = await fetch("/get-all-equipments", { method: "POST" });
-
-      if (!response.ok) {
-        throw new Error("Server hatası: " + response.status);
-      }
-
-      const data = await response.json();
-      if (data.status === "error") {
-        throw new Error("API Hatası: " + data.message);
-      }
-
-      const equipments = data.data;
-      if (!equipments.length) {
-        throw new Error("Ekipman bilgisi bulunamadı.");
-      }
-
-      const brandModel = equipments[0].equipment_model_name || "-";
-      document.getElementById("brand-model").textContent = brandModel;
-    } catch (error) {
-      console.error("Hata:", error);
-      document.getElementById("brand-model").textContent = "Veri alınamadı";
+  <script>
+    function redirectToLog() {
+      window.location.href = "{{ url_for('log')}}";
     }
-  }
-  // Sayfa yüklendiğinde otomatik olarak modem model bilgisini çek
-  window.onload = fetchBrandModel;
-
-  function showTableLoading(message) {
-    const container = document.getElementById("connection-table");
-
-    // Zaten eklenmiş mi kontrol et
-    if (document.getElementById("table-loading-overlay")) return;
-
-    const loadingDiv = document.createElement("div");
-    loadingDiv.id = "table-loading-overlay";
-    loadingDiv.className = "table-loading-overlay";
-    loadingDiv.innerHTML = `
-          <div class="loading-box">
-            <p>${message}</p>
-            <div class="loader"></div>
-          </div>
-      `;
-
-    container.style.position = "relative";
-    container.appendChild(loadingDiv);
-  }
-
-  function hideTableLoading() {
-    const loadingDiv = document.getElementById("table-loading-overlay");
-    if (loadingDiv) loadingDiv.remove();
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-      // 📌 Sadece tabloya özel loading göster
-      showTableLoading("Veriler getiriliyor...");
-
-      fetch("/get_archive_log_status")
+  
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch("/equipments-with-models", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      })
         .then((response) => response.json())
         .then((data) => {
-          console.log("[LOG] Archive log status fetch başladı.");
-
-          if (data.status !== "success" || !data.data) {
-            console.warn("[LOG] Geçersiz yanıt yapısı");
-            hideTableLoading();
-            return;
-          }
-
-          const archiveData = data.data;
-
-          const tagMapping = {
-            "WiFi Connection": "İnternet Var Mı?",
-            "Cloud Connection": "modem bilgisi buluta gönderildi mi?",
-            "VPN Connection": "VPN IP Adresi",
-            "Rabbit MQ": "Rabbit MQya Basılan",
-          };
-
-          const typeToColorClass = {
-            1: "green",
-            2: "orange",
-            3: "red",
-          };
-
-          const rows = Array.from(document.querySelectorAll("tbody tr"));
-          console.log("[LOG] Tablodaki Satırlar:");
-          rows.forEach((r, index) => {
-            console.log(`Row ${index + 1}:`, r.innerText.trim());
-          });
-
-          Object.entries(tagMapping).forEach(([uiLabel, archiveTag]) => {
-          console.log(`\n[LOG] İşleniyor: ${uiLabel} -> ${archiveTag}`);
-
-          const row = rows.find((tr) => tr.innerText.toLowerCase().includes(uiLabel.toLowerCase()));
-
-          if (!row) {
-              console.warn(`[LOG] ${uiLabel} için satır bulunamadı.`);
-              return;
-          }
-
-          // 🎯 Küçük harfe çevirerek kontrol et
-          const archiveKey = Object.keys(archiveData).find(key => key.toLowerCase() === archiveTag.toLowerCase());
-
-          if (!archiveKey) {
-              console.warn(`[LOG] ${archiveTag} için veri bulunamadı.`);
-              return;
-          }
-
-          const archiveInfo = archiveData[archiveKey];
-          console.log(`[LOG] Archive Info (${archiveKey}):`, archiveInfo);
-
-            const rowSpans = row.querySelectorAll(".status-dot");
-            const allCells = row.querySelectorAll("td");
-
-            const archiveType = archiveInfo.archive_log_type;
-            const nowType = archiveInfo.last_log_type;
-            const archiveDate = archiveInfo.archive_log_date;
-            const lastLogDate = archiveInfo.last_log_date;
-
-            // 1️⃣ Archive Sütunu Tooltip + Renk
-            if (typeToColorClass[archiveType]) {
-              rowSpans[0].classList.remove("red", "green", "orange");
-              rowSpans[0].classList.add(typeToColorClass[archiveType]);
-
-              const dtArchive = new Date(archiveDate);
-              rowSpans[0].title = dtArchive.toLocaleString("tr-TR");
+          console.log("Gelen JSON:", data);
+  
+          if (data.data && data.data.length > 0) {
+            let protocolText = "-";
+            let equipment = data.data[0];
+  
+            if (equipment.communication_protocol_code === 1) {
+              protocolText = "SERIAL";
+            } else if (equipment.communication_protocol_code === 2) {
+              protocolText = "TCP";
+            } else if (equipment.communication_protocol_code === 0) {
+              protocolText = "UNKNOWN";
             }
-
-            // 2️⃣ Now Sütunu Tooltip + Renk
-            if (typeToColorClass[nowType]) {
-              rowSpans[1].classList.remove("red", "green", "orange");
-              rowSpans[1].classList.add(typeToColorClass[nowType]);
-
-              const dtNow = new Date(lastLogDate);
-              rowSpans[1].title = dtNow.toLocaleString("tr-TR");
-            }
-
-            // 3️⃣ Last Connection Date Hücresini Güncelle
-            if (allCells[3] && lastLogDate) {
-              const dtNow = new Date(lastLogDate);
-              allCells[3].textContent = dtNow.toLocaleString("tr-TR");
-            }
-          });
-
-          console.log("[LOG] Archive log durumu başarıyla işlendi.");
-          hideTableLoading();
+  
+            document.getElementById("connection-protocol").innerText =
+              protocolText;
+          } else {
+            document.getElementById("connection-protocol").innerText = "-";
+          }
         })
         .catch((error) => {
-          console.error("[LOG] Archive log durumu alınamadı:", error);
-          hideTableLoading();
+          console.error("API isteği hatası:", error);
+          document.getElementById("connection-protocol").innerText =
+            "Error fetching data";
         });
-
-      // Şimdilik kullanılmayan yardımcı fonksiyon
-      function formatData(data) {
-        if (typeof data === "object") {
-          if (data.description) {
-            return data.description;
-          }
-          return JSON.stringify(data);
+    });
+  
+    async function fetchBrandModel() {
+      try {
+        const response = await fetch("/get-all-equipments", { method: "POST" });
+  
+        if (!response.ok) {
+          throw new Error("Server hatası: " + response.status);
         }
-        return data;
+  
+        const data = await response.json();
+        if (data.status === "error") {
+          throw new Error("API Hatası: " + data.message);
+        }
+  
+        const equipments = data.data;
+        if (!equipments.length) {
+          throw new Error("Ekipman bilgisi bulunamadı.");
+        }
+  
+        const brandModel = equipments[0].equipment_model_name || "-";
+        document.getElementById("brand-model").textContent = brandModel;
+      } catch (error) {
+        console.error("Hata:", error);
+        document.getElementById("brand-model").textContent = "Veri alınamadı";
       }
-  });
-
-  document.addEventListener("DOMContentLoaded", function() {
-    const now = new Date();
-
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0');  
-    const year = now.getFullYear();
-
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-
-    const formattedDate = `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
-
-    document.getElementById("lora-date").innerText = formattedDate;
-  });
-</script>
-
-<style>
-  .highlight {
-    color: #88acff;
-  }
-  .status-dot {
-    width: 10px;
-    height: 10px;
-    display: inline-block;
-    border-radius: 50%;
-  }
-
-  .status-dot.red {
-    background-color: red;
-  }
-
-  .status-dot.green {
-    background-color: #33ff00;
-  }
-
-  .status-dot.orange {
-    background-color: #FF0F00;
-  }
-
-  .table-loading-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    backdrop-filter: blur(1px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-  }
-
-  .loading-box {
-    text-align: center;
-  }
-
-  .loader {
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #ef8018;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    margin: 10px auto;
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
     }
-    100% {
-      transform: rotate(360deg);
+    // Sayfa yüklendiğinde otomatik olarak modem model bilgisini çek
+    window.onload = fetchBrandModel;
+  
+    function showTableLoading(message) {
+      const container = document.getElementById("connection-table");
+  
+      // Zaten eklenmiş mi kontrol et
+      if (document.getElementById("table-loading-overlay")) return;
+  
+      const loadingDiv = document.createElement("div");
+      loadingDiv.id = "table-loading-overlay";
+      loadingDiv.className = "table-loading-overlay";
+      loadingDiv.innerHTML = `
+            <div class="loading-box">
+              <p>${message}</p>
+              <div class="loader"></div>
+            </div>
+        `;
+  
+      container.style.position = "relative";
+      container.appendChild(loadingDiv);
     }
-  }
-</style>
-{% endblock %}
+  
+    function hideTableLoading() {
+      const loadingDiv = document.getElementById("table-loading-overlay");
+      if (loadingDiv) loadingDiv.remove();
+    }
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    // 📌 Sadece tabloya özel loading göster
+    showTableLoading("Veriler getiriliyor...");
+  
+    fetch("/get_archive_log_status")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("[LOG] Archive log status fetch başladı.");
+  
+        if (data.status !== "success" || !data.data) {
+          console.warn("[LOG] Geçersiz yanıt yapısı");
+          hideTableLoading();
+          return;
+        }
+  
+        const archiveData = data.data;
+  
+        const tagMapping = {
+          wifi_connection: "İnternet Var Mı?",
+          cloud_connection: "modem bilgisi buluta gönderildi mi?",
+          vpn_connection: "VPN IP Adresi",
+          rabbitmq: "Rabbit MQya Basılan veri",
+        };
+  
+        const typeToColorClass = {
+          1: "green",
+          2: "orange",
+          3: "red",
+        };
+  
+        const rows = Array.from(document.querySelectorAll("tbody tr"));
+        console.log("[LOG] Tablodaki Satırlar:");
+        rows.forEach((r, index) => {
+          console.log(`Row ${index + 1}:`, r.innerText.trim());
+        });
+  
+        Object.entries(tagMapping).forEach(([dataTag, archiveKeyLabel]) => {
+          const row = rows.find((tr) => tr.dataset.tag === dataTag);
+  
+          if (!row) {
+            console.warn(`[LOG] ${dataTag} için satır bulunamadı.`);
+            return;
+          }
+  
+          const archiveKey = Object.keys(archiveData).find(
+            (key) => key.toLowerCase() === archiveKeyLabel.toLowerCase()
+          );
+  
+          if (!archiveKey) {
+            console.warn(`[LOG] ${archiveKeyLabel} için veri bulunamadı.`);
+            return;
+          }
+  
+          const archiveInfo = archiveData[archiveKey];
+          console.log(`[LOG] Archive Info (${archiveKey}):`, archiveInfo);
+  
+          const rowSpans = row.querySelectorAll(".status-dot");
+          const allCells = row.querySelectorAll("td");
+  
+          const archiveType = archiveInfo.archive_log_type;
+          const nowType = archiveInfo.last_log_type;
+          const archiveDate = archiveInfo.archive_log_date;
+          const lastLogDate = archiveInfo.last_log_date;
+  
+          // 1️⃣ Archive Sütunu Tooltip + Renk
+          if (typeToColorClass[archiveType]) {
+            rowSpans[0].classList.remove("red", "green", "orange");
+            rowSpans[0].classList.add(typeToColorClass[archiveType]);
+  
+            const dtArchive = new Date(archiveDate);
+            rowSpans[0].title = dtArchive.toLocaleString("tr-TR");
+          }
+  
+          // 2️⃣ Now Sütunu Tooltip + Renk
+          if (typeToColorClass[nowType]) {
+            rowSpans[1].classList.remove("red", "green", "orange");
+            rowSpans[1].classList.add(typeToColorClass[nowType]);
+  
+            const dtNow = new Date(lastLogDate);
+            rowSpans[1].title = dtNow.toLocaleString("tr-TR");
+          }
+  
+          // 3️⃣ Last Connection Date Hücresini Güncelle
+          if (allCells[3] && lastLogDate) {
+            const dtNow = new Date(lastLogDate);
+            allCells[3].textContent = dtNow.toLocaleString("tr-TR");
+          }
+        });
+  
+        console.log("[LOG] Archive log durumu başarıyla işlendi.");
+        hideTableLoading();
+      })
+      .catch((error) => {
+        console.error("[LOG] Archive log durumu alınamadı:", error);
+        hideTableLoading();
+      });
+  });
+  
+  
+    document.addEventListener("DOMContentLoaded", function() {
+      const now = new Date();
+  
+      const day = String(now.getDate()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, '0');  
+      const year = now.getFullYear();
+  
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+  
+      const formattedDate = `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
+  
+      document.getElementById("lora-date").innerText = formattedDate;
+    });
+  </script>
+  
+  <style>
+    .highlight {
+      color: #88acff;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      border-radius: 50%;
+    }
+  
+    .status-dot.red {
+      background-color: red;
+    }
+  
+    .status-dot.green {
+      background-color: #33ff00;
+    }
+  
+    .status-dot.orange {
+      background-color: #FF0F00;
+    }
+  
+    .table-loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      backdrop-filter: blur(1px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+  
+    .loading-box {
+      text-align: center;
+    }
+  
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #ef8018;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 10px auto;
+    }
+  
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  {% endblock %}
+  

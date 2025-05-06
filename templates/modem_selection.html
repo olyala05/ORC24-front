@@ -174,7 +174,19 @@
   });
 
   // Sayfa yüklendiğinde cihazları getir
-  document.addEventListener("DOMContentLoaded", fetchDevices);
+  // document.addEventListener("DOMContentLoaded", fetchDevices);
+  document.addEventListener("DOMContentLoaded", function () {
+  const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+
+  if (selectedDeviceIP) {
+    restoreDeviceSelection(selectedDeviceIP);
+    toggleButtons(true);  // Butonları aktif et
+  } else {
+    fetchDevices();
+  }
+
+  setButtonsDisabled(!selectedDeviceIP);
+});
 
   // Dashboard Sayfasına Yönlendirir
   function goToDashboard() {
@@ -346,43 +358,63 @@
     });
   }
 
-  // Equipment With Model
-  function goToEquipment() {
-    let dropdown = document.getElementById("modem");
-    let selectedDeviceIP = dropdown ? dropdown.value : null;
-    if (!selectedDeviceIP) {
-      showWarningAlert("{{ _('Please select a device first!') }}");
-      return;
-    }
-    showLoading("{{ _('Equipments are loading...') }}");
-    fetch("/equipments-with-models", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ip_address: selectedDeviceIP }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data || data.error) {
-          showErrorAlert(
-            "{{ _('Error!') }}",
-            data.error || "{{ _('Equipment data could not be retrieved.')}}"
-          );
-          return;
-        }
+// Equipment With Model
+function goToEquipment() {
+  let dropdown = document.getElementById("modem");
+  let selectedDeviceIP = dropdown ? dropdown.value : null;
 
-        sessionStorage.setItem("equipment_data", JSON.stringify(data.data));
-        window.location.href = "/equipment";
-      })
-      .catch((error) => {
+  console.log("🔍 Modem dropdown kontrol edildi.");
+  if (!selectedDeviceIP) {
+    console.warn("⚠ Hiçbir cihaz seçilmedi!");
+    showWarningAlert("{{ _('Please select a device first!') }}");
+    return;
+  }
+
+  console.log("✅ Seçilen cihaz IP adresi:", selectedDeviceIP);
+  showLoading("{{ _('Equipments are loading...') }}");
+
+  const requestBody = JSON.stringify({ ip_address: selectedDeviceIP });
+  console.log("📤 Gönderilen istek verisi:", requestBody);
+
+  fetch("/equipments-with-models", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: requestBody,
+  })
+    .then((response) => {
+      console.log("📥 Sunucudan yanıt alındı. Status:", response.status);
+      return response.json();
+    })
+    .then((data) => {
+      console.log("✅ JSON verisi çözüldü:", data);
+
+      if (!data || data.error) {
+        console.error("❌ Ekipman verisi alınamadı!", data.error || "Bilinmeyen hata");
         showErrorAlert(
           "{{ _('Error!') }}",
-          "{{ _('Equipment data could not be retrieved. Please try again.')}}"
+          data.error || "{{ _('Equipment data could not be retrieved.') }}"
         );
-      })
-      .finally(() => {
-        hideLoading();
-      });
-  }
+        return;
+      }
+
+      console.log("📦 Veriler sessionStorage'a kaydediliyor...");
+      sessionStorage.setItem("equipment_data", JSON.stringify(data.data));
+
+      console.log("➡️ Ekipman sayfasına yönlendiriliyor...");
+      window.location.href = "/equipment";
+    })
+    .catch((error) => {
+      console.error("❗ Fetch isteğinde hata oluştu:", error);
+      showErrorAlert(
+        "{{ _('Error!') }}",
+        "{{ _('Equipment data could not be retrieved. Please try again.') }}"
+      );
+    })
+    .finally(() => {
+      console.log("🔚 İşlem tamamlandı, yükleme gizleniyor.");
+      hideLoading();
+    });
+}
 
   // Setting
   function goToSetting() {
@@ -701,10 +733,23 @@
   document.addEventListener("DOMContentLoaded", () => {
     setButtonsDisabled(true);
   });
+
+function restoreDeviceSelection(ip) {
+  const dropdown = document.getElementById("modem");
+  if (!dropdown) return;
+
+  const options = dropdown.options;
+  for (let i = 0; i < options.length; i++) {
+    if (options[i].value === ip) {
+      dropdown.selectedIndex = i;
+      $(dropdown).trigger("change");  
+      break;
+    }
+  }
+}
 </script>
 
 <style>
-
   /* === Select2 Stilleri === */
   .select2-container--default .select2-selection--single {
     border: 1px solid #aaa;

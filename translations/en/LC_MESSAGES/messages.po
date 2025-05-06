@@ -536,6 +536,9 @@ msgstr "NETWORK TYPE"
 msgid "CONNECTION PROTOCOL"
 msgstr "CONNECTION PROTOCOL"
 
+msgid "CONNECTION TYPE"
+msgstr "CONNECTION TYPE"
+
 msgid "Active"
 msgstr "Active"
 

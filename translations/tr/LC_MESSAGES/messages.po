@@ -531,6 +531,9 @@ msgstr "NETWORK TİPİ"
 msgid "CONNECTION PROTOCOL"
 msgstr "BAĞLANTI PROTOKOLÜ"
 
+msgid "CONNECTION TYPE"
+msgstr "BAĞLANTI TÜRÜ"
+
 msgid "Active"
 msgstr "Aktif"
 
@@ -709,6 +712,8 @@ msgstr "Durum / Yapılandırma"
 
 msgid "Connection Protocol"
 msgstr "Bağlantı Protokolü"
+
+
 
 msgid "GMT"
 msgstr "GMT"
