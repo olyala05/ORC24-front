@@ -280,26 +280,35 @@ endblock %} {% block extra_css %}
         const configValue = equipment.configuration_data || "-";
         if (configValue === "A") {
           configSpan.innerText = "A";
-          configSpan.style.color = "#28a745"; // yeşil
+          configSpan.style.color = "#28a745"; 
         } else if (configValue === "P") {
           configSpan.innerText = "P";
-          configSpan.style.color = "#dc3545"; // kırmızı
+          configSpan.style.color = "#dc3545"; 
         } else {
           configSpan.innerText = configValue;
-          configSpan.style.color = "#6c757d"; // gri
+          configSpan.style.color = "#6c757d"; 
         }
-    
+
         // 9. Protokol
         let protocolText = "N/A";
-        if (equipment.communication_protocol_code == 1) {
-          protocolText = "SERIAL";
-        } else if (equipment.communication_protocol_code == 2) {
-          protocolText = "TCP";
+        switch (equipment.communication_protocol_code) {
+          case 1:
+            protocolText = "MODBUS TCP/IP";
+            break;
+          case 2:
+            protocolText = "MODBUS RTU";
+            break;
+          case 3:
+            protocolText = "OBIS";
+            break;
+          case 4:
+            protocolText = "RS232";
+            break;
         }
         document.querySelector(
           ".eq-detail-item:nth-child(9) span:last-child"
         ).innerText = protocolText;
-    
+
         // 12. Oluşturulma tarihi
         document.querySelector(
           ".eq-detail-item:nth-child(12) span:last-child"
