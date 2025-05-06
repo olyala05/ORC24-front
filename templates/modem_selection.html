@@ -376,7 +376,7 @@ function goToEquipment() {
   const requestBody = JSON.stringify({ ip_address: selectedDeviceIP });
   console.log("📤 Gönderilen istek verisi:", requestBody);
 
-  fetch("/equipments-with-models", {
+  fetch("/equipments-all", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: requestBody,
@@ -386,21 +386,20 @@ function goToEquipment() {
       return response.json();
     })
     .then((data) => {
-      console.log("✅ JSON verisi çözüldü:", data);
+      console.log("JSON verisi çözüldü:", data);
 
       if (!data || data.error) {
-        console.error("❌ Ekipman verisi alınamadı!", data.error || "Bilinmeyen hata");
+        console.error("Ekipman verisi alınamadı!", data.error || "Bilinmeyen hata");
         showErrorAlert(
           "{{ _('Error!') }}",
           data.error || "{{ _('Equipment data could not be retrieved.') }}"
         );
         return;
       }
-
-      console.log("📦 Veriler sessionStorage'a kaydediliyor...");
+      console.log("Veriler sessionStorage'a kaydediliyor...");
       sessionStorage.setItem("equipment_data", JSON.stringify(data.data));
 
-      console.log("➡️ Ekipman sayfasına yönlendiriliyor...");
+      console.log("Ekipman sayfasına yönlendiriliyor...");
       window.location.href = "/equipment";
     })
     .catch((error) => {

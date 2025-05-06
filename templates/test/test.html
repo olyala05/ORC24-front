@@ -1233,21 +1233,21 @@
     }
 
     // Kullanıcıdan inputları al
-    const registerValue = parseInt(document.getElementById("register").nodeValue);
+    const registerValue = parseInt(document.getElementById("register").value);
     const countValue = parseInt(document.getElementById("count").value);
     const slaveIdValue = parseInt(document.getElementById("slave-id").value);
 
     // 🛠 Hatalı girişleri önlemek için kontroller
     if (isNaN(registerValue) || registerValue < 0) {
-      alert("Register address must be a valid number and >= 0");
+      showWarningAlert("Register address must be a valid number and >= 0");
       return;
     }
     if (isNaN(countValue) || countValue <= 0) {
-      alert("Count must be a valid number and greater than 0");
+      showWarningAlert("Count must be a valid number and greater than 0");
       return;
     }
     if (isNaN(slaveIdValue) || slaveIdValue <= 0) {
-      alert("Slave ID must be a valid number and greater than 0");
+      showWarningAlert("Slave ID must be a valid number and greater than 0");
       return;
     }
     const dataTypeValue = document.getElementById("read-data-type").value;
@@ -1290,11 +1290,11 @@
           innerData.status === "success" &&
           resultValue !== undefined
         ) {
-          terminal.value = `📥 Response: ${resultValue}`;
+          terminal.value = `Response: ${resultValue}`;
           statusMessage.textContent = "Modbus request successful.";
           statusMessage.classList.add("success");
         } else {
-          terminal.value = `❌ Error: ${innerData?.message || data.message}`;
+          terminal.value = `Error: ${innerData?.message || data.message}`;
           statusMessage.textContent = "Modbus request failed.";
           statusMessage.classList.add("error");
         }

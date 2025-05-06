@@ -941,7 +941,6 @@ def modbus_test_proxy():
             details=f"Failed to connect to {selected_ip}: {str(e)}",
         )
 
-
 @app.route("/disconnect_request", methods=["POST"])
 def disconnect_request():
     selected_ip = session.get("selected_device_ip")  
@@ -996,6 +995,37 @@ def equipments_with_models():
     except requests.exceptions.RequestException as e:
         print(f"RequestException: {e}")
         return jsonify({"error": f"Modbus bağlantı hatası: {str(e)}"}), 500
+
+@app.route("/equipments-all", methods=["POST"])
+def equipments_all():
+    selected_ip = session.get("selected_device_ip")
+
+    if not selected_ip:
+        return jsonify({"error": "IP adresi belirtilmedi"}), 400
+    try:
+        url = f"http://{selected_ip}:8085/get_all_equipments"
+        print(f"Diğer Flask'a istek gönderiliyor: {url}")
+
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        equipment_data = response.json()
+
+        if equipment_data.get("status") == "error":
+            print("Backend hata döndürdü:", equipment_data.get("message"))
+            return jsonify({"error": equipment_data.get("message")}), 500
+
+        print(f"{len(equipment_data['data'])} kayıt alındı.")
+        return jsonify(equipment_data)
+
+    except requests.exceptions.Timeout:
+        print("⏱ Zaman aşımı!")
+        return jsonify({"error": "Timeout: Ekipman verisi alınamadı."}), 500
+    except requests.exceptions.ConnectionError:
+        print("🔌 Bağlantı hatası!")
+        return jsonify({"error": "Flask instance'a bağlanılamadı."}), 500
+    except Exception as e:
+        print(f"Genel hata: {e}")
+        return jsonify({"error": f"Beklenmedik hata: {str(e)}"}), 500
 
 @app.route("/get-all-equipments", methods=["POST"])
 def get_all_equipments():

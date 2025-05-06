@@ -17,9 +17,6 @@ endblock %} {% block extra_css %}
         <span class="eq-detail-status" title="equipment name">-</span>
       </div>
       <div class="eq-detail-item">
-        <span>{{ _('Slave ID') }}</span> <span>-</span>
-      </div>
-      <div class="eq-detail-item">
         <span>{{ _('Modem Name') }}</span> <span>-</span>
       </div>
       <div class="eq-detail-item">
@@ -232,7 +229,7 @@ endblock %} {% block extra_css %}
     Promise.all([fetchEquipmentDetails(), fetchModems()]).then(
       ([equipment, modem]) => {
         if (!equipment) return;
-
+    
         // 1. Equipment Name
         const eqName = `${equipment.model_name || "UNKNOWN"}@${
           equipment.serial_number || "N/A"
@@ -240,53 +237,47 @@ endblock %} {% block extra_css %}
         const eqSpan = document.querySelector(".eq-detail-status");
         eqSpan.innerText = eqName;
         eqSpan.title = eqName;
-
-        // 2. Slave ID
+    
+        // 2. Modem adı
         document.querySelector(
           ".eq-detail-item:nth-child(2) span:last-child"
-        ).innerText = equipment.modbus_address || "N/A";
-
-        // 3. Modem adı
-        document.querySelector(
-          ".eq-detail-item:nth-child(3) span:last-child"
         ).innerText =
           modem && modem.name ? modem.name : "{{ _('Modem Not Found')}}";
-
-        // 4. Marka / Model
+    
+        // 3. Marka / Model
         document.querySelector(
-          ".eq-detail-item:nth-child(4) span:last-child"
+          ".eq-detail-item:nth-child(3) span:last-child"
         ).innerText = `${equipment.brand_name || "N/A"} / ${
           equipment.model_name || "N/A"
         }`;
-
-        // 5. Ekipman Tipi
+    
+        // 4. Ekipman Tipi
         const typeCode = equipment.equipment_type;
         const typeName = equipmentTypeMap[typeCode] || "UNKNOWN";
         document.querySelector(
-          ".eq-detail-item:nth-child(5) span:last-child"
+          ".eq-detail-item:nth-child(4) span:last-child"
         ).innerText = typeName;
-
-        // 6. Seri No
+    
+        // 5. Seri No
+        document.querySelector(
+          ".eq-detail-item:nth-child(5) span:last-child"
+        ).innerText = equipment.serial_number || "N/A";
+    
+        // 6. Device ID
         document.querySelector(
           ".eq-detail-item:nth-child(6) span:last-child"
-        ).innerText = equipment.serial_number || "N/A";
-
-        // 7. Device ID (önceden 8'di)
+        ).innerText = equipment.device_id || "N/A";
+    
+        // 7. SID/IP
         document.querySelector(
           ".eq-detail-item:nth-child(7) span:last-child"
-        ).innerText = equipment.device_id || "N/A";
-
-        // 8. SID/IP (önceden 9'du)
-        document.querySelector(
-          ".eq-detail-item:nth-child(8) span:last-child"
         ).innerText = equipment.modbus_address || "N/A";
-
-        // 9. Status / Configuration (önceden 10'du)
+    
+        // 8. Status / Configuration
         const configSpan = document.querySelector(
-          ".eq-detail-item:nth-child(9) span:last-child"
+          ".eq-detail-item:nth-child(8) span:last-child"
         );
         const configValue = equipment.configuration_data || "-";
-
         if (configValue === "A") {
           configSpan.innerText = "A";
           configSpan.style.color = "#28a745"; // yeşil
@@ -297,8 +288,8 @@ endblock %} {% block extra_css %}
           configSpan.innerText = configValue;
           configSpan.style.color = "#6c757d"; // gri
         }
-
-        // 10. Protokol (önceden 11'di)
+    
+        // 9. Protokol
         let protocolText = "N/A";
         if (equipment.communication_protocol_code == 1) {
           protocolText = "SERIAL";
@@ -306,21 +297,21 @@ endblock %} {% block extra_css %}
           protocolText = "TCP";
         }
         document.querySelector(
-          ".eq-detail-item:nth-child(10) span:last-child"
+          ".eq-detail-item:nth-child(9) span:last-child"
         ).innerText = protocolText;
-
-        // 13. Oluşturulma tarihi (önceden 14’tü)
+    
+        // 12. Oluşturulma tarihi
+        document.querySelector(
+          ".eq-detail-item:nth-child(12) span:last-child"
+        ).innerText = formatDate(equipment.created_at);
+    
+        // 13. Son bağlantı tarihi
         document.querySelector(
           ".eq-detail-item:nth-child(13) span:last-child"
-        ).innerText = formatDate(equipment.created_at);
-
-        // 14. Son bağlantı tarihi (önceden 15’ti)
-        document.querySelector(
-          ".eq-detail-item:nth-child(14) span:last-child"
         ).innerText = formatDate(equipment.updated_at);
       }
     );
-
+    
     function formatDate(dateString) {
       if (!dateString) return "N/A";
       let date = new Date(dateString);
