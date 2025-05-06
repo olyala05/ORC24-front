@@ -351,35 +351,50 @@ def get_modem_info():
             code=400,
             details="Selected device IP is required",
         )
+
     try:
-        # Fetch modem data from the device
+        # 📡 Seçili IP'deki cihazdan modem bilgisi alınır
         url_modem = f"http://{selected_ip}:8085/get_modems"
+        print(f"[INFO] Modem bilgisi isteniyor: {url_modem}")
         response = requests.get(url_modem, timeout=5)
         response.raise_for_status()
+
+        # 🌐 Gelen yanıt kontrol edilir
         modems = response.json().get("data", [])
 
         if not modems:
+            print("[WARN] Modem listesi boş!")
             return ResponseHandler.error(
                 message="No modem data found", code=404, details="Modem list is empty"
             )
-        modem = modems[0]
 
+        modem = modems[0]
+        print(f"[INFO] İlk modem verisi alındı: {modem}")
+
+        # 🎯 Gerekli tüm alanlar JSON nesnesine eklenir
         modem_info = {
             "name": modem.get("name", "Unknown"),
             "status": "Active" if modem.get("status") == 1 else "Inactive",
             "network_ssid": modem.get("network_ssid", "-"),
             "network_password": modem.get("network_password", "-"),
-            "gsm_number": modem.get("gsm_number", "")
+            "gsm_number": modem.get("gsm_number", ""),
+            "brand_id": modem.get("brand_id"),
+            "modem_model_id": modem.get("modem_model_id"),
+            "local_ip_address": modem.get("local_ip_address"),
         }
+
+        print(f"[SUCCESS] Modem info JSON oluşturuldu: {modem_info}")
         return ResponseHandler.success(
             message=_("Modem info retrieved successfully"), data=modem_info
         )
 
     except requests.RequestException as e:
+        print(f"[ERROR] İstek hatası: {e}")
         return ResponseHandler.error(
             message=_("Failed to fetch modem data"), code=500, details=str(e)
         )
     except Exception as e:
+        print(f"[ERROR] Genel hata: {e}")
         return ResponseHandler.error(
             message=_("Unexpected error occurred"), code=500, details=str(e)
         )

@@ -160,32 +160,40 @@
             "Error fetching data";
         });
     });
-  
+
     async function fetchBrandModel() {
       try {
-        const response = await fetch("/get-all-equipments", { method: "POST" });
-  
-        if (!response.ok) {
-          throw new Error("Server hatası: " + response.status);
-        }
-  
-        const data = await response.json();
-        if (data.status === "error") {
-          throw new Error("API Hatası: " + data.message);
-        }
-  
-        const equipments = data.data;
-        if (!equipments.length) {
-          throw new Error("Ekipman bilgisi bulunamadı.");
-        }
-  
-        const brandModel = equipments[0].equipment_model_name || "-";
-        document.getElementById("brand-model").textContent = brandModel;
+        const response = await fetch("/get_modem_info");
+        if (!response.ok) throw new Error("Server hatası: " + response.status);
+    
+        const result = await response.json();
+        const modem = result.data;
+    
+        console.log("[LOG] Gelen modem bilgisi:", modem);
+    
+        const BRAND_MAP = {
+          1: "ORC_23",
+          2: "ORC_24",
+          3: "ORC_44"
+        };
+    
+        const MODEL_MAP = {
+          1: "RASPBERRY_PI",
+          2: "ORANGE_PI",
+          3: "ReComputerR1000",
+          4: "ReComputerR1100"
+        };
+    
+        const brand = BRAND_MAP[modem.brand_id] || "Bilinmeyen Marka";
+        const model = MODEL_MAP[modem.modem_model_id] || "Bilinmeyen Model";
+    
+        document.getElementById("brand-model").textContent = `${brand} / ${model}`;
       } catch (error) {
-        console.error("Hata:", error);
+        console.error("Modem Brand/Model hatası:", error);
         document.getElementById("brand-model").textContent = "Veri alınamadı";
       }
     }
+    
     // Sayfa yüklendiğinde otomatik olarak modem model bilgisini çek
     window.onload = fetchBrandModel;
   
@@ -311,7 +319,6 @@
         hideTableLoading();
       });
   });
-  
   
     document.addEventListener("DOMContentLoaded", function() {
       const now = new Date();
