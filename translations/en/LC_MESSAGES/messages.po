@@ -1512,3 +1512,7 @@ msgstr "Error fetching equipments"
 
 msgid "Loading logs..."
 msgstr "Loading logs..."
+
+msgid "Loading Page..."
+msgstr "Loading Page..."
+

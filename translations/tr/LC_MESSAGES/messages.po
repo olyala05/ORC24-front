@@ -1554,4 +1554,6 @@ msgid "Loading logs..."
 msgstr "Loglar yükleniyor..."
 
 
+msgid "Loading Page..."
+msgstr "Sayfa Yükleniyor..."
 
