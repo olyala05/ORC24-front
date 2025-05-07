@@ -137,14 +137,18 @@
           console.log("Gelen JSON:", data);
   
           if (data.data && data.data.length > 0) {
-            let protocolText = "-";
+            let protocolText = "";
             let equipment = data.data[0];
   
             if (equipment.communication_protocol_code === 1) {
-              protocolText = "SERIAL";
+              protocolText = "MODBUS TCP/IP";
             } else if (equipment.communication_protocol_code === 2) {
-              protocolText = "TCP";
-            } else if (equipment.communication_protocol_code === 0) {
+              protocolText = "MODBUS RTU";
+            } else if (equipment.communication_protocol_code === 3) {
+              protocolText = "OBIS";
+            } else if (equipment.communication_protocol_code === 4) {
+              protocolText = "RS232";
+            } else {
               protocolText = "UNKNOWN";
             }
   

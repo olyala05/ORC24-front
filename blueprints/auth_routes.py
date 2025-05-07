@@ -11,7 +11,7 @@ from flask import (
 import requests
 from datetime import datetime, timedelta
 import json
-from utils.token_handler import get_dashboard_data, find_usb_and_read_token_windows
+from utils.token_handler import get_dashboard_data, find_usb_and_read_token
 from pprint import pprint
 import os
 
@@ -31,6 +31,10 @@ from utils.token_handler import get_dashboard_data, TOKEN_FILE_PATH
 def login():
     print("🟢 [Login Fonksiyonu Çalıştı]")
 
+    # 📌 İlk girişte oturumda dil yoksa varsayılan olarak İngilizce ata
+    if 'lang' not in session:
+        session['lang'] = 'en'
+
     if request.method == "POST":
         print("[POST İsteği Alındı]")
 
@@ -42,7 +46,7 @@ def login():
             with open(TOKEN_FILE_PATH, "r") as f:
                 token = f.read().strip()
         else:
-            token_data = find_usb_and_read_token_windows()
+            token_data = find_usb_and_read_token()  
             if token_data:
                 token, _ = token_data
             else:
@@ -65,6 +69,7 @@ def login():
             verify=False,
         )
         try:
+            from pprint import pprint
             pprint(response.json())
         except Exception as e:
             print(f"JSON parse hatası: {e}")
@@ -123,4 +128,4 @@ def auto_login():
 @auth_bp.route("/logout", methods=["POST"])
 def logout():
     session.clear()
-    return redirect(url_for("auth.login"))
+    return redirect(url_for("dashboard.dashboard"))

@@ -4,7 +4,7 @@ USER_INFO_FILENAME = "user_info.json"
 TOKEN_FILE_PATH = "stored_token.txt"
 LARAVEL_API_URL_V2 = "https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/dashboard"
 
-def find_usb_and_read_token_windows():
+def find_usb_and_read_token():
     drives = win32api.GetLogicalDriveStrings().split('\x00')[:-1]
     for drive in drives:
         if win32file.GetDriveType(drive) == win32file.DRIVE_REMOVABLE:
@@ -32,7 +32,7 @@ def get_dashboard_data():
         with open(TOKEN_FILE_PATH, "r") as f:
             token = f.read().strip()
     else:
-        token_data = find_usb_and_read_token_windows()
+        token_data = find_usb_and_read_token()
         if token_data:
             token, _ = token_data
     if not token:

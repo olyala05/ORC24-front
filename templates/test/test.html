@@ -546,7 +546,14 @@
           <!-- 📌 INPUT olarak değiştirildi -->
           <div class="write-test-group">
             <label for="register">Register</label>
-            <input type="number" id="write-register" placeholder="8192" value="1" min="0" step="1" />
+            <input
+              type="number"
+              id="write-register"
+              placeholder="8192"
+              value="1"
+              min="0"
+              step="1"
+            />
           </div>
 
           <!-- Data -->
@@ -557,7 +564,17 @@
 
           <div class="write-test-group">
             <label for="slave-id">Slave ID</label>
-            <input type="number" id="slave-id" value="3" min="1" step="1" />
+            <input
+              type="number"
+              id="slave-id"
+              name="slave_id_fake"
+              value="3"
+              min="1"
+              step="1"
+              readonly
+              onfocus="this.removeAttribute('readonly');"
+              autocomplete="new-password"
+            />
           </div>
 
           <!-- Data Type -->
@@ -827,14 +844,20 @@
             getNetworkDetails(true);
             closeWifiPopup();
           } else {
-            showErrorAlert("{{ _('Connection Failed')}}", data.message || "{{ _('Failed to connect to Wi-Fi.')}}");
+            showErrorAlert(
+              "{{ _('Connection Failed')}}",
+              data.message || "{{ _('Failed to connect to Wi-Fi.')}}"
+            );
             connectionStatusSpan.textContent = "{{ _('No connection')}}";
             connectionStatusSpan.style.color = "#EF4444";
           }
         })
         .catch((error) => {
           console.error("Error connecting to Wi-Fi:", error);
-          showErrorAlert("{{ _('Error')}}", "{{ _('An error occurred while connecting to Wi-Fi.')}}");
+          showErrorAlert(
+            "{{ _('Error')}}",
+            "{{ _('An error occurred while connecting to Wi-Fi.')}}"
+          );
           connectionStatusSpan.textContent = "{{ _('No connection')}}";
           connectionStatusSpan.style.color = "#EF4444";
         })
@@ -964,7 +987,10 @@
     updateVPNStatus();
   });
 
-  document.querySelectorAll(".equipment-table tbody tr td:nth-child(3), .equipment-table tbody tr td:nth-child(4)")
+  document
+    .querySelectorAll(
+      ".equipment-table tbody tr td:nth-child(3), .equipment-table tbody tr td:nth-child(4)"
+    )
     .forEach((td) => {
       let text = td.innerText.trim();
 
@@ -977,7 +1003,7 @@
       }
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function () {
     console.log("Page Loaded, Fetching Equipments...");
     fetchEquipments();
   });
@@ -985,7 +1011,7 @@
   let previousEquipmentData = [];
 
   function startScanning() {
-     // Listeyi temizler
+    // Listeyi temizler
     previousEquipmentData = [];
 
     // Sadece modal gösterimi
@@ -1050,46 +1076,47 @@
   }
 
   function showEquipmentModal(equipments) {
-      const modalBody = document.getElementById("modalEquipmentBody");
-      modalBody.innerHTML = "";
+    const modalBody = document.getElementById("modalEquipmentBody");
+    modalBody.innerHTML = "";
 
-      equipments.forEach((item) => {
-          const row = document.createElement("tr");
+    equipments.forEach((item) => {
+      const row = document.createElement("tr");
 
-          // SID/IP Alanı İçeriği
-          let sidIpText = "";
-          let headerText = "";
+      // SID/IP Alanı İçeriği
+      let sidIpText = "";
+      let headerText = "";
 
-          if (item.ip) {
-              sidIpText = `${item.ip} | ${item.slave_id}`;
-              headerText = "IP / SID:";
-          } else {
-              sidIpText = `SID: ${item.slave_id}`;
-              headerText = "SID:";
-          }
+      if (item.ip) {
+        sidIpText = `${item.ip} | ${item.slave_id}`;
+        headerText = "IP / SID:";
+      } else {
+        sidIpText = `SID: ${item.slave_id}`;
+        headerText = "SID:";
+      }
 
-          // Başlığı Dinamik Olarak Güncelle
-          document.getElementById("sid-ip-header").textContent = headerText;
+      // Başlığı Dinamik Olarak Güncelle
+      document.getElementById("sid-ip-header").textContent = headerText;
 
-          // Protokol Alanı
-          const protocolText = item.ip ? "Modbus TCP" : "Modbus RTU";
+      // Protokol Alanı
+      const protocolText = item.ip ? "Modbus TCP" : "Modbus RTU";
 
-          // Satır İçeriği
-          row.innerHTML = `
+      // Satır İçeriği
+      row.innerHTML = `
               <td>${item.model_name || "Unknown"}</td>
               <td>${sidIpText}</td>
               <td>${protocolText}</td>
           `;
 
-          modalBody.appendChild(row);
-      });
+      modalBody.appendChild(row);
+    });
 
-      // Modal Gösterimleri
-      document.getElementById("equipment-loading").style.display = "none";
-      document.getElementById("equipment-not-found-message").style.display = "none";
-      document.getElementById("equipment-found-title").style.display = "block";
-      document.getElementById("equipment-table").style.display = "table";
-      document.getElementById("equipment-ok-button").style.display = "block";
+    // Modal Gösterimleri
+    document.getElementById("equipment-loading").style.display = "none";
+    document.getElementById("equipment-not-found-message").style.display =
+      "none";
+    document.getElementById("equipment-found-title").style.display = "block";
+    document.getElementById("equipment-table").style.display = "table";
+    document.getElementById("equipment-ok-button").style.display = "block";
   }
 
   function closeEquipmentModal() {
@@ -1309,89 +1336,94 @@
 
   // Write Modbus
   function sendWriteModbusRequest() {
-      const terminal = document.getElementById("write-terminal");
-      const statusMessage = document.getElementById("write-status-message");
-      terminal.value = "{{ _('Sending Write Modbus request... Please wait.') }}";
-      statusMessage.textContent = "";
-      statusMessage.className = "status-message";
+    const terminal = document.getElementById("write-terminal");
+    const statusMessage = document.getElementById("write-status-message");
+    terminal.value = "{{ _('Sending Write Modbus request... Please wait.') }}";
+    statusMessage.textContent = "";
+    statusMessage.className = "status-message";
 
-      const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
-      if (!selectedDeviceIP) {
-        terminal.value = "{{ _('No device selected.') }}";
-        statusMessage.textContent = "{{ _('Local Network Connection Scan Failed.') }}";
-        statusMessage.classList.add("error");
-        return;
-      }
+    const selectedDeviceIP = sessionStorage.getItem("selected_device_ip");
+    if (!selectedDeviceIP) {
+      terminal.value = "{{ _('No device selected.') }}";
+      statusMessage.textContent =
+        "{{ _('Local Network Connection Scan Failed.') }}";
+      statusMessage.classList.add("error");
+      return;
+    }
 
-      const registerValue = parseInt(document.getElementById("write-register").value);
-      const slaveIdValue = parseInt(document.getElementById("slave-id").value);
+    const registerValue = parseInt(
+      document.getElementById("write-register").value
+    );
+    const slaveIdValue = parseInt(document.getElementById("slave-id").value);
 
-      if (isNaN(registerValue) || registerValue < 0) {
-        alert("Register address must be a valid number and >= 0");
-        return;
-      }
-      if (isNaN(slaveIdValue) || slaveIdValue <= 0) {
-        alert("Slave ID must be a valid number and greater than 0");
-        return;
-      }
+    if (isNaN(registerValue) || registerValue < 0) {
+      alert("Register address must be a valid number and >= 0");
+      return;
+    }
+    if (isNaN(slaveIdValue) || slaveIdValue <= 0) {
+      alert("Slave ID must be a valid number and greater than 0");
+      return;
+    }
 
-      const dataTypeValue = document.getElementById("write-data-type").value;
-      const writeValue = document.getElementById("write-data").value;
+    const dataTypeValue = document.getElementById("write-data-type").value;
+    const writeValue = document.getElementById("write-data").value;
 
-      const modbusParams = {
-        port: document.getElementById("port").value,
-        baudrate: parseInt(document.getElementById("baud-rate").value),
-        parity: document.getElementById("parity").value,
-        stopbits: parseInt(document.getElementById("stop-bit").value),
-        bytesize: parseInt(document.getElementById("bytesize").value),
-        timeout: parseFloat(document.getElementById("timeout").value),
-        address: registerValue,
-        slave_id: slaveIdValue,
-        method: "rtu",
-        data_type: dataTypeValue,
-        data: writeValue,
-        byte_order:
-          document.getElementById("write-byte-order").value === "big" ? 1 : 0,
-        word_order:
-          document.getElementById("write-word-order").value === "big" ? 1 : 0,
-      };
+    const modbusParams = {
+      port: document.getElementById("port").value,
+      baudrate: parseInt(document.getElementById("baud-rate").value),
+      parity: document.getElementById("parity").value,
+      stopbits: parseInt(document.getElementById("stop-bit").value),
+      bytesize: parseInt(document.getElementById("bytesize").value),
+      timeout: parseFloat(document.getElementById("timeout").value),
+      address: registerValue,
+      slave_id: slaveIdValue,
+      method: "rtu",
+      data_type: dataTypeValue,
+      data: writeValue,
+      byte_order:
+        document.getElementById("write-byte-order").value === "big" ? 1 : 0,
+      word_order:
+        document.getElementById("write-word-order").value === "big" ? 1 : 0,
+    };
 
-      console.log("Sending JSON:", JSON.stringify({ modbus_params: modbusParams }));
+    console.log(
+      "Sending JSON:",
+      JSON.stringify({ modbus_params: modbusParams })
+    );
 
-      fetch("/validate_modbus", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ modbus_params: modbusParams }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Received Response:", data);
+    fetch("/validate_modbus", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ modbus_params: modbusParams }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Received Response:", data);
 
-          const innerData = data.data;
-          const resultValue = innerData?.data;
+        const innerData = data.data;
+        const resultValue = innerData?.data;
 
-          if (
-            data.status === "success" &&
-            innerData.status === "success" &&
-            resultValue !== undefined
-          ) {
-            terminal.value = `📥 Response: ${resultValue}`;
-            statusMessage.textContent = "Modbus request successful.";
-            statusMessage.classList.add("success");
-          } else {
-            terminal.value = `❌ Error: ${innerData?.message || data.message}`;
-            statusMessage.textContent = "Modbus request failed.";
-            statusMessage.classList.add("error");
-          }
-        })
-        .catch((error) => {
-          console.error("Request Failed:", error);
-          terminal.value = `Request failed:\n${error}`;
+        if (
+          data.status === "success" &&
+          innerData.status === "success" &&
+          resultValue !== undefined
+        ) {
+          terminal.value = `📥 Response: ${resultValue}`;
+          statusMessage.textContent = "Modbus request successful.";
+          statusMessage.classList.add("success");
+        } else {
+          terminal.value = `❌ Error: ${innerData?.message || data.message}`;
           statusMessage.textContent = "Modbus request failed.";
           statusMessage.classList.add("error");
-        });
+        }
+      })
+      .catch((error) => {
+        console.error("Request Failed:", error);
+        terminal.value = `Request failed:\n${error}`;
+        statusMessage.textContent = "Modbus request failed.";
+        statusMessage.classList.add("error");
+      });
   }
-
 
   // Sayfa yüklendiğinde select'leri doldur
   document.addEventListener("DOMContentLoaded", () => {
@@ -1462,16 +1494,17 @@
           const lastConnectionCell = cloudStatusRow.children[3];
 
           statusCells.forEach((cell) => {
-            cell.innerHTML = `<span class="status-indicator"></span>`; 
+            cell.innerHTML = `<span class="status-indicator"></span>`;
 
             const indicator = cell.querySelector(".status-indicator");
 
             if (data.status === "success" && data.data.cloud_connected) {
-              indicator.classList.add("status-green"); 
+              indicator.classList.add("status-green");
               lastConnectionCell.textContent =
-                data.data.last_connection_time || "{{ _('No connection yet') }}";
+                data.data.last_connection_time ||
+                "{{ _('No connection yet') }}";
             } else {
-              indicator.classList.add("status-red"); 
+              indicator.classList.add("status-red");
               lastConnectionCell.textContent = "{{ _('No connection yet') }}";
             }
           });
@@ -1487,6 +1520,16 @@
     // Bulut bağlantısını her 10 saniyede bir kontrol et
     setInterval(updateCloudStatus, 10000);
   });
+  document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("slave-id");
+    input.setAttribute("readonly", true);
+    input.addEventListener("focus", function () {
+      input.removeAttribute("readonly");
+    });
+    input.setAttribute("autocomplete", "new-password");
+    input.setAttribute("name", "slave_id_fake");
+  });
+  
 </script>
 
 <style>
@@ -1705,11 +1748,11 @@
   }
 
   .status-green {
-    border-color: #33FF00;
+    border-color: #33ff00;
   }
 
   .status-red {
-    border-color: #CD2727;
+    border-color: #cd2727;
   }
 </style>
 

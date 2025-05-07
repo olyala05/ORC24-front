@@ -238,9 +238,12 @@
             connectedWifiSpan.innerText = `{{ _('No Wi-Fi Connection') }}`;
           }
         })
-        .catch((error) => {wifiListElement.innerHTML =
+        .catch((error) => {
+          wifiListElement.innerHTML =
             "<p style='color: red;'>{{ _('Wi-Fi information could not be retrieved.') }}</p>";
-          showErrorAlert("{{ _('An issue occurred while retrieving Wi-Fi information.') }}");
+          showErrorAlert(
+            "{{ _('An issue occurred while retrieving Wi-Fi information.') }}"
+          );
         })
         .finally(() => {
           hideLoading();
@@ -283,7 +286,7 @@
       // connectButton.innerHTML = `<span class="spinner"></span> Bağlanılıyor...`;
 
       showLoading("{{ _('Connecting to the Wi-Fi network...') }}");
-      
+
       fetch("/connect_wifi", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -306,7 +309,9 @@
         .catch((error) => {
           hideLoading();
           console.error("{{ _('Wi-Fi connection error!') }}");
-          showErrorAlert("{{ _('An error occurred during the Wi-Fi connection.') }}");
+          showErrorAlert(
+            "{{ _('An error occurred during the Wi-Fi connection.') }}"
+          );
         })
         .finally(() => {
           connectButton.disabled = false;
@@ -350,7 +355,10 @@
           }
         })
         .catch((error) => {
-          showErrorAlert("{{ _('Error while fetching modem information!') }}", error.message);
+          showErrorAlert(
+            "{{ _('Error while fetching modem information!') }}",
+            error.message
+          );
         });
     }
 
@@ -372,7 +380,9 @@
           !modemData.wifi_password ||
           !modemData.gsm_number
         ) {
-          showWarningAlert("{{ _('Please fill out all fields. Some fields are left empty.') }}");
+          showWarningAlert(
+            "{{ _('Please fill out all fields. Some fields are left empty.') }}"
+          );
           return;
         }
 
@@ -384,7 +394,7 @@
             "Content-Type": "application/json",
           },
           body: JSON.stringify(modemData),
-        })
+          })
           .then((response) => response.json())
           .then((data) => {
             hideLoading();
@@ -398,10 +408,11 @@
             hideLoading();
             showErrorAlert("{{ _('You entered the wrong password!') }}");
           });
-      });
+        });
 
     fetchModemInfo();
   });
+  
 </script>
 
 <style>
