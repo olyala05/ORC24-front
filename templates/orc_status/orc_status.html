@@ -234,6 +234,7 @@
       .then((response) => response.json())
       .then((data) => {
         console.log("[LOG] Archive log status fetch başladı.");
+        console.log("[FETCH] /get_archive_log_status cevabı:", data);
   
         if (data.status !== "success" || !data.data) {
           console.warn("[LOG] Geçersiz yanıt yapısı");
@@ -267,6 +268,7 @@
   
           if (!row) {
             console.warn(`[LOG] ${dataTag} için satır bulunamadı.`);
+            console.warn(`Satır bulunamadı! tag=${dataTag}`);
             return;
           }
   
@@ -281,6 +283,7 @@
   
           const archiveInfo = archiveData[archiveKey];
           console.log(`[LOG] Archive Info (${archiveKey}):`, archiveInfo);
+          console.log(`[${dataTag}] Archive Info:`, archiveInfo);
   
           const rowSpans = row.querySelectorAll(".status-dot");
           const allCells = row.querySelectorAll("td");
@@ -297,6 +300,7 @@
   
             const dtArchive = new Date(archiveDate);
             rowSpans[0].title = dtArchive.toLocaleString("tr-TR");
+            console.log(`✅ [${dataTag}] Archive tipi: ${archiveType} (${typeToColorClass[archiveType]})`);
           }
   
           // 2️⃣ Now Sütunu Tooltip + Renk
@@ -306,6 +310,7 @@
   
             const dtNow = new Date(lastLogDate);
             rowSpans[1].title = dtNow.toLocaleString("tr-TR");
+            console.log(`✅ [${dataTag}] Now tipi: ${nowType} (${typeToColorClass[nowType]})`);
           }
   
           // 3️⃣ Last Connection Date Hücresini Güncelle

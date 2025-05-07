@@ -370,7 +370,7 @@
           network_type_id: parseInt(networkTypeSelect.value),
           wifi_ssid: ssidInput.value,
           wifi_password: passwordInput.value,
-          gsm_number: gsmNumberInput.value,
+          gsm_number: gsmNumberInput.value
         };
 
         // Boş Alan Kontrolü
@@ -394,7 +394,7 @@
             "Content-Type": "application/json",
           },
           body: JSON.stringify(modemData),
-          })
+        })
           .then((response) => response.json())
           .then((data) => {
             hideLoading();
@@ -408,11 +408,12 @@
             hideLoading();
             showErrorAlert("{{ _('You entered the wrong password!') }}");
           });
-        });
+      });
 
     fetchModemInfo();
   });
-  
+
+
 </script>
 
 <style>

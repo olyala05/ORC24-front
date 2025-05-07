@@ -20,23 +20,23 @@ document.addEventListener("DOMContentLoaded", function () {
 setTimeout(function () {
     const currentPath = window.location.pathname;
     if (currentPath === "/" || currentPath === "/index" || currentPath === "/index.html") {
-      fetch("/auto-login", {
-        method: "POST"
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            window.location.href = "/dashboard";
-          } else {
-            console.error("Giriş başarısız:", data.message);
-          }
+        fetch("/auto-login", {
+            method: "POST"
         })
-        .catch((err) => {
-          console.error("API çağrısı hatası:", err);
-        });
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success) {
+                    window.location.href = "/dashboard";
+                } else {
+                    console.error("Giriş başarısız:", data.message);
+                }
+            })
+            .catch((err) => {
+                console.error("API çağrısı hatası:", err);
+            });
     }
-  }, 5000);
-  
+}, 5000);
+
 
 // Simple Keyboard
 document.addEventListener("DOMContentLoaded", function () {
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.location.pathname === "/login") {
         document.addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
-                event.preventDefault(); 
+                event.preventDefault();
                 if (loginButton) {
                     loginButton.click();
                 }
@@ -76,14 +76,14 @@ document.addEventListener("DOMContentLoaded", function () {
             ]
         },
         display: {
-            '{enter}': '↵',  
+            '{enter}': '↵',
             '{bksp}': '⌫',
             '{shift}': '⇧',
             '{space}': 'Space'
         },
         theme: "hg-theme-default myTheme",
     });
-    
+
     let activeInput = null;
 
     function onInputChange(input) {
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
             activeInput.value += " ";
         } else if (button === "{enter}") {
             if (loginButton) {
-                loginButton.click(); 
+                loginButton.click();
             }
         } else if (button === "{shift}") {
             Keyboard.setOptions({
@@ -113,23 +113,66 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Input alanına tıklanınca klavyeyi aç
+    // document.querySelectorAll("input").forEach(input => {
+    //     input.addEventListener("focus", event => {
+    //         const activeEl = document.activeElement;
+    //         if (activeEl.closest(".language-switcher")) {
+    //         return; 
+    //         }
+
+    //         activeInput = event.target;
+    //         Keyboard.setInput(activeInput.value);
+    //         keyboardContainer.style.display = "block";
+    //         setTimeout(() => {
+    //             keyboardContainer.style.bottom = "0";
+    //         }, 10);
+    //     });
+    // });
+
+    // Input alanına tıklanınca klavyeyi aç
     document.querySelectorAll("input").forEach(input => {
         input.addEventListener("focus", event => {
             const activeEl = document.activeElement;
-            if (activeEl.closest(".language-switcher")) {
-            return; 
-            }
-
+            if (activeEl.closest(".language-switcher")) return;
+    
             activeInput = event.target;
             Keyboard.setInput(activeInput.value);
             keyboardContainer.style.display = "block";
+    
+            // Boşluk bırak ki klavye alanı üzerine binmesin
+            document.body.style.paddingBottom = "260px";
+    
             setTimeout(() => {
                 keyboardContainer.style.bottom = "0";
             }, 10);
+    
+            // GSM Number input için scrollIntoView
+            const isGSMInput =
+                activeInput.placeholder === "GSM Number" ||
+                activeInput.placeholder === "{{ _('GSM Number') }}";
+    
+            if (isGSMInput) {
+                setTimeout(() => {
+                    activeInput.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+                }, 200);
+            }
         });
     });
     
-    // Input dışında bir yere tıklanınca klavyeyi kapat
+
+    // // Input dışında bir yere tıklanınca klavyeyi kapat
+    // document.addEventListener("click", function (event) {
+    //     if (!event.target.closest("input") && !event.target.closest("#keyboard-container")) {
+    //         keyboardContainer.style.bottom = "-100%";
+    //         setTimeout(() => {
+    //             keyboardContainer.style.display = "none";
+    //         }, 300);
+    //         activeInput = null;
+    //     }
+    // });
     document.addEventListener("click", function (event) {
         if (!event.target.closest("input") && !event.target.closest("#keyboard-container")) {
             keyboardContainer.style.bottom = "-100%";
@@ -137,12 +180,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 keyboardContainer.style.display = "none";
             }, 300);
             activeInput = null;
+            document.body.style.paddingBottom = "0px"; // 🔄 sıfırla
         }
     });
+    
 });
 
 document.querySelectorAll(".language-switcher button").forEach(button => {
     button.addEventListener("mousedown", (e) => {
-        e.preventDefault();  
+        e.preventDefault();
     });
 });
+keyboardContainer.style.display = "block";
+document.body.style.paddingBottom = "260px";  // geçici boşluk
+
