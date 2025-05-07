@@ -1529,6 +1529,23 @@
     input.setAttribute("autocomplete", "new-password");
     input.setAttribute("name", "slave_id_fake");
   });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const wifiTestButton = document.querySelector(".wifi-test-btn");
+    const ethernetTestButton = document.querySelector(".ethernet-test-btn");
+
+    if (wifiTestButton) {
+      wifiTestButton.addEventListener("click", function () {
+        location.reload();
+      });
+    }
+
+    if (ethernetTestButton) {
+      ethernetTestButton.addEventListener("click", function () {
+        location.reload();
+      });
+    }
+  });
   
 </script>
 

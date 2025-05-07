@@ -226,8 +226,7 @@
       const loadingDiv = document.getElementById("table-loading-overlay");
       if (loadingDiv) loadingDiv.remove();
     }
-  
-  document.addEventListener("DOMContentLoaded", function () {
+ document.addEventListener("DOMContentLoaded", function () {
     // 📌 Sadece tabloya özel loading göster
     showTableLoading("Veriler getiriliyor...");
   
@@ -330,6 +329,122 @@
       });
   });
   
+
+
+/**
+
+document.addEventListener("DOMContentLoaded", function () {
+  showTableLoading("Veriler getiriliyor...");
+
+  const typeToColorClass = {
+    1: "green",
+    2: "orange",
+    3: "red",
+  };
+
+  const tagMapping = {
+    wifi_connection: "İnternet Var Mı?",
+    cloud_connection: "modem bilgisi buluta gönderildi mi?",
+    vpn_connection: "VPN IP Adresi",
+    rabbitmq: "Rabbit MQya Basılan veri",
+  };
+
+  const rows = Array.from(document.querySelectorAll("tbody tr"));
+  const now = new Date();
+  const tagsToFallback = [];
+
+  fetch("/get_archive_log_status")
+    .then((response) => response.json())
+    .then((archiveResult) => {
+      if (archiveResult.status !== "success" || !archiveResult.data) {
+        throw new Error("Geçersiz archive log yapısı");
+      }
+
+      const archiveData = archiveResult.data;
+
+      Object.entries(tagMapping).forEach(([tag, label]) => {
+        const row = rows.find((tr) => tr.dataset.tag === tag);
+        if (!row) return;
+
+        const archiveKey = Object.keys(archiveData).find(
+          (k) => k.toLowerCase() === label.toLowerCase()
+        );
+
+        const archiveInfo = archiveKey ? archiveData[archiveKey] : null;
+        const rowSpans = row.querySelectorAll(".status-dot");
+        const allCells = row.querySelectorAll("td");
+
+        // 1️⃣ Archive Renk ve Tooltip
+        if (archiveInfo?.archive_log_type) {
+          const archiveDate = new Date(archiveInfo.archive_log_date);
+          rowSpans[0].classList.remove("red", "green", "orange");
+          rowSpans[0].classList.add(typeToColorClass[archiveInfo.archive_log_type]);
+          rowSpans[0].title = archiveDate.toLocaleString("tr-TR");
+        }
+
+        // 2️⃣ Now: Archive'daki tarih 24 saat içinde mi?
+        const lastLogDate = archiveInfo?.last_log_date ? new Date(archiveInfo.last_log_date) : null;
+        const isValid = lastLogDate && (now - lastLogDate) < 24 * 60 * 60 * 1000;
+
+        if (archiveInfo?.last_log_type && isValid) {
+          rowSpans[1].classList.remove("red", "green", "orange");
+          rowSpans[1].classList.add(typeToColorClass[archiveInfo.last_log_type]);
+          rowSpans[1].title = lastLogDate.toLocaleString("tr-TR");
+          if (allCells[3]) allCells[3].textContent = lastLogDate.toLocaleString("tr-TR");
+        } else {
+          tagsToFallback.push(tag);  // Bu tag için cihazdan veri alacağız
+        }
+      });
+
+      return tagsToFallback;
+    })
+    .then((missingTags) => {
+      if (!missingTags.length) {
+        hideTableLoading();
+        return;
+      }
+
+      // ⏳ Archive'da olmayanları cihazdan al
+      return fetch("/wi-fi-list", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      })
+        .then(res => res.json())
+        .then(deviceData => {
+          if (deviceData.status !== "success" || !deviceData.data) return;
+          const data = deviceData.data;
+
+          const connectionMap = {
+            wifi_connection: data.wifi_connected,
+            vpn_connection: data.vpn_connected,
+            rabbitmq: data.rabbitmq_connected,
+            cloud_connection: data.cloud_connected ?? false,
+          };
+
+          missingTags.forEach((tag) => {
+            const row = rows.find((tr) => tr.dataset.tag === tag);
+            if (!row) return;
+
+            const dotNow = row.querySelectorAll(".status-dot")[1];
+            const dateCell = row.querySelectorAll("td")[3];
+
+            const isConnected = connectionMap[tag];
+            dotNow.classList.remove("green", "red");
+            dotNow.classList.add(isConnected ? "green" : "red");
+            dotNow.title = isConnected ? "Bağlı" : "Bağlı değil";
+            if (dateCell) dateCell.textContent = data.last_connected_time || "-";
+          });
+        });
+    })
+    .catch((err) => {
+      console.error("🛑 Hata oluştu:", err);
+    })
+    .finally(() => {
+      hideTableLoading();
+    });
+});
+
+**/
     document.addEventListener("DOMContentLoaded", function() {
       const now = new Date();
   

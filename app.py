@@ -584,6 +584,7 @@ def wi_fi_list():
             500,
         )
 
+
 @app.route("/connect_wifi", methods=["POST"])
 def connect_wifi():
     try:
