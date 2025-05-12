@@ -1,9 +1,10 @@
 import os, json, win32api, win32file, requests
+from cryptography.fernet import Fernet
 
 USER_INFO_FILENAME = "user_info.json"
 TOKEN_FILE_PATH = "stored_token.txt"
 LARAVEL_API_URL_V2 = "https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/dashboard"
-
+SECRET_KEY_PATH = "secret.key"
 class TokenManager:
     _token = None
 
@@ -36,7 +37,17 @@ class TokenManager:
     def clear_token(cls):
         cls._token = None
 
-
+def decrypt_token(encrypted_token: str) -> str:
+    try:
+        with open(SECRET_KEY_PATH, "rb") as key_file:
+            key = key_file.read()
+        fernet = Fernet(key)
+        decrypted_token = fernet.decrypt(encrypted_token.encode()).decode()
+        return decrypted_token
+    except Exception as e:
+        print(f"Token çözme hatası: {e}")
+        return None
+    
 def find_usb_and_read_token():
     drives = win32api.GetLogicalDriveStrings().split('\x00')[:-1]
     for drive in drives:
@@ -50,11 +61,13 @@ def extract_token_from_file(filepath):
     try:
         with open(filepath, "r", encoding="utf-8") as file:
             data = json.load(file)
-            token = data.get("auth", {}).get("token")
-            if token:
-                with open(TOKEN_FILE_PATH, "w") as f:
-                    f.write(token)
-                return token, None
+            encrypted_token = data.get("auth", {}).get("token")
+            if encrypted_token:
+                token = decrypt_token(encrypted_token)
+                if token:
+                    with open(TOKEN_FILE_PATH, "w") as f:
+                        f.write(token)
+                    return token, None
     except Exception as e:
         print(f"Dosya okunamadı: {e}")
     return None, None

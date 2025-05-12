@@ -49,11 +49,7 @@ app.register_blueprint(dash_bp)
 
 # Context Processor - Global Değişkenler
 app.context_processor(inject_globals)
-
-# @app.before_request
-# def before_request_func():
-#     g.lang = session.get('lang', 'en') 
-    
+ 
 @app.before_request
 def before_request_func():
     g.lang = session.get('lang', 'en') 
@@ -121,19 +117,6 @@ def arp_scan(ip_range):
 
     return ip_list
 
-# def nmap_scan(ip_range):
-#     """Belirtilen IP aralığında Nmap taraması yaparak 02 veya 12  veya 2c ile başlayan MAC adreslerini bulur"""
-#     nm = nmap.PortScanner()
-#     # res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
-#     res = nm.scan(hosts=ip_range, arguments="-sn")
-#     ip_list = []
-#     for host in nm.all_hosts():
-#         mac_address = nm[host]["addresses"].get("mac", "")
-#         if mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c") or mac_address.startswith("d8"):
-#             ip_list.append({"ip": host, "mac": mac_address})
-
-#     return ip_list
-
 def nmap_scan(ip_range):
     nm = nmap.PortScanner()
 
@@ -158,44 +141,6 @@ def nmap_scan(ip_range):
             print(f"[+] Bulundu: {host} -> {mac_address}")
 
     return found_hosts
-
-
-# !! VPN ile cihaz ip lerini getiren kod
-# def get_mac_from_device(ip): 
-#     """Cihaza HTTP isteği atarak MAC adresini almaya çalışır"""
-#     try:
-#         response = requests.get(f"http://{ip}:8085/mac_address", timeout=2)
-#         if response.status_code == 200:
-#             return response.text.strip()  
-#     except requests.exceptions.RequestException:
-#         pass
-#     return None
-
-# def nmap_scan(ip_range): 
-#     """Belirtilen IP aralığında Nmap taraması yapar ve cihazlardan MAC adresi ister"""
-#     nm = nmap.PortScanner()
-#     res = nm.scan(hosts=ip_range, arguments="-sn --unprivileged")
-#     print("Nmap taraması sonucu:", res) 
-    
-#     valid_devices = []
-    
-#     for host in nm.all_hosts():
-#         print(f"Bulunan cihaz IP'si: {host}") 
-#         mac_address = get_mac_from_device(host)  
-#         print(f"MAC Adresi: {mac_address}")  
-#         if mac_address and (mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c")):
-#             valid_devices.append({"ip": host, "mac": mac_address})
-#     return valid_devices
-# !! VPN ile cihaz ip lerini getiren kod
-
-# def get_connected_devices():
-#     """Önce ARP taraması, başarısız olursa Nmap taraması ile cihazları bulur"""
-#     devices = arp_scan(IP_RANGE)
-#     if not devices:
-#         print("ARP taraması başarısız, Nmap taraması başlatılıyor...")
-#         devices = nmap_scan(IP_RANGE)
-#     print("Bağlı cihazlar:", devices)
-#     return devices
 
 def get_connected_devices():
     devices = arp_scan(IP_RANGE)
@@ -412,8 +357,6 @@ def update_modem_info():
     selected_ip = session.get("selected_device_ip")
     if not selected_ip:
         return ResponseHandler.error(message="Selected device IP missing", code=400)
-
-    # 1️⃣ UUID'yi ve diğer bilgileri cihazdan çek (/get_modems)
     try:
         response = requests.get(f"http://{selected_ip}:8085/get_modems", timeout=5)
         response.raise_for_status()
@@ -554,7 +497,6 @@ def wi_fi_list():
     if not selected_ip:
         print("ERROR: No selected device IP found!")
         return jsonify({"error": "IP address is missing"}), 400
-
     try:
         print(f"Wi-Fi listesi için cihazdan veri alınıyor: {selected_ip}")
         url = f"http://{selected_ip}:8085/check_network"
@@ -584,7 +526,6 @@ def wi_fi_list():
             ),
             500,
         )
-
 
 @app.route("/connect_wifi", methods=["POST"])
 def connect_wifi():
@@ -641,8 +582,6 @@ def disconnect_wifi():
                 code=400,
                 details="Selected device IP is required",
             )
-
-        # Cihaza bağlantıyı kesme isteği gönder
         url = f"http://{selected_ip}:8085/disconnect_wifi"
         response = requests.post(url)
         response.raise_for_status()
@@ -861,56 +800,6 @@ def validate_modbus():
         return ResponseHandler.error(
             message="Failed to send command to ORC24", code=500, details=str(e)
         )
-
-# @app.route("/modbus_test", methods=["POST", "GET"])
-# def modbus_test():
-#     """Check if the selected device has a valid Modbus connection."""
-#     selected_ip = session.get("selected_device_ip")
-#     print(f"[INFO] Selected IP from session: {selected_ip}")
-
-#     if not selected_ip:
-#         print("[ERROR] Device IP is missing in session.")
-#         return ResponseHandler.error(
-#             message="Device IP missing",
-#             code=400,
-#             details="Selected device IP is required",
-#         )
-
-#     try:
-#         url = f"http://{selected_ip}:8085/modbus_test"
-#         print(f"[INFO] Sending request to: {url}")
-#         response = requests.get(url)
-#         response.raise_for_status()
-
-#         result = response.json()
-#         print(f"[INFO] Response received: {result}")
-
-#         if result.get("status") == "success":
-#             print("[SUCCESS] Modbus test passed.")
-#             return ResponseHandler.success(
-#                 message="Modbus test successful", data=result.get("data", [])
-#             )
-
-#         print("[ERROR] Modbus test failed with message:", result.get("message"))
-#         return ResponseHandler.error(
-#             message="Modbus test failed",
-#             code=400,
-#             details=result.get("message", "No valid Modbus response"),
-#         )
-
-#     except requests.RequestException as e:
-#         print(f"[EXCEPTION] Connection error: {str(e)}")
-#         return ResponseHandler.error(
-#             message="Device connection error",
-#             code=500,
-#             details=f"Failed to connect to {selected_ip}: {str(e)}",
-#         )
-
-#     except Exception as e:
-#         print(f"[EXCEPTION] Unexpected error: {str(e)}")
-#         return ResponseHandler.error(
-#             message="Unexpected error occurred", code=500, details=str(e)
-#         )
 
 @app.route("/modbus_test", methods=["POST"])
 def modbus_test_proxy():
@@ -1154,7 +1043,6 @@ def data():
 @app.route("/live-data", endpoint="live-data")
 def live_data():
     return render_template("datas/live_data.html", page_title=_("Live Data"))
-
 # Live Data
 @app.route("/fetch_grouped_live_data", methods=["POST"])
 def fetch_grouped_live_data():

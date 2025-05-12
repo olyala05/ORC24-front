@@ -17,26 +17,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-setTimeout(function () {
-    const currentPath = window.location.pathname;
-    if (currentPath === "/" || currentPath === "/index" || currentPath === "/index.html") {
-        fetch("/auto-login", {
-            method: "POST"
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.success) {
-                    window.location.href = "/dashboard";
-                } else {
-                    console.error("Giriş başarısız:", data.message);
-                }
-            })
-            .catch((err) => {
-                console.error("API çağrısı hatası:", err);
-            });
-    }
-}, 5000);
+// setTimeout(function () {
+//     const currentPath = window.location.pathname;
+//     if (currentPath === "/" || currentPath === "/index" || currentPath === "/index.html") {
+//         fetch("/auto-login", {
+//             method: "POST"
+//         })
+//             .then((res) => res.json())
+//             .then((data) => {
+//                 if (data.success) {
+//                     window.location.href = "/dashboard";
+//                 } else {
+//                     console.error("Giriş başarısız:", data.message);
+//                 }
+//             })
+//             .catch((err) => {
+//                 console.error("API çağrısı hatası:", err);
+//             });
+//     }
+// }, 3000);
 
+setTimeout(function () {
+    window.location.href = "/dashboard";
+}, 3000);
 
 // Simple Keyboard
 document.addEventListener("DOMContentLoaded", function () {
@@ -192,5 +195,5 @@ document.querySelectorAll(".language-switcher button").forEach(button => {
     });
 });
 keyboardContainer.style.display = "block";
-document.body.style.paddingBottom = "260px";  // geçici boşluk
+document.body.style.paddingBottom = "260px";
 

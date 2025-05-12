@@ -174,7 +174,13 @@
     <div>
       <img src="{{ url_for('static', filename='images/svg/10.svg') }}" alt="CO2" />
       <span class="energy-value">
-      {{ "{:,.2f}".format(from_grid.carbonTon).replace(",", "X").replace(".", ",").replace("X", ".") }} 
+
+      {% if from_grid and from_grid.kwh %}
+  {{ "{:,.2f}".format(from_grid.kwh).replace(",", "X").replace(".", ",").replace("X", ".") }}
+{% else %}
+  -
+{% endif %}
+
       </span> Ton
     </div>
     <div>
@@ -240,7 +246,7 @@
           <span class="phase">I1-N</span>
         </div>
         <div class="voltage-box">
-          <span class="icon">
+          <span class="icon"> 
             <img src="{{ url_for('static', filename='images/svg/34.svg') }}" alt="Current" />
           </span>
           <span class="value">
