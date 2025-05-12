@@ -14,11 +14,9 @@ import json
 from utils.token_handler import get_dashboard_data, find_usb_and_read_token
 from pprint import pprint
 import os
+from utils.token_handler import TokenManager
 
 auth_bp = Blueprint("auth", __name__)
-
-# LOGIN API
-# LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
 
 LARAVEL_API_URL = "https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/whoami"
 USER_INFO_FILENAME = "user_info.json"

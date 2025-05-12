@@ -64,7 +64,7 @@ def login():
                 # 🎯 Başarılı giriş bilgisini session içinde sakla
                 session["login_success"] = True
 
-                return redirect(url_for("dashboard"))  # 🎯 Dashboard sayfasına yönlendir
+                return redirect(url_for("dashboard")) 
             except Exception as e:
                 flash("Sunucudan geçersiz yanıt alındı!", "danger")
                 return redirect(url_for("auth.login"))

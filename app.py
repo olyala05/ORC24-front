@@ -39,7 +39,7 @@ Scss(app, static_dir="static", asset_dir="assets")
 babel = Babel(app)
 
 LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
-IP_RANGE = "192.168.4.0/24"
+IP_RANGE = "192.168.1.0/24"
 DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database": "iot"}
 last_connection_time = None
 
@@ -116,7 +116,7 @@ def arp_scan(ip_range):
     ip_list = []
     for element in answered_list:
         mac_address = element[1].hwsrc.lower()  # MAC adresini küçük harfe çevir
-        if mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c")  or mac_address.startswith("d8"):
+        if mac_address.startswith("02") or mac_address.startswith("12") or mac_address.startswith("2c") or mac_address.startswith("d8"):
             ip_list.append({"ip": element[1].psrc, "mac": mac_address})
 
     return ip_list
@@ -141,7 +141,8 @@ def nmap_scan(ip_range):
     print(f"Taranıyor: {ip_range} ...")
     nm.scan(hosts=ip_range, arguments="-sn -n")
 
-    mac_prefixes = ("2c", "d8")  
+    # mac_prefixes = ("2c", "d8")  
+    mac_prefixes = ("2c","d8") 
     found_hosts = []
 
     for host in nm.all_hosts():

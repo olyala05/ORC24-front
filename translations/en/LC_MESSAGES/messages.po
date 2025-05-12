@@ -1516,3 +1516,5 @@ msgstr "Loading logs..."
 msgid "Loading Page..."
 msgstr "Loading Page..."
 
+msgid "Wi-Fi information could not be retrieved."
+msgstr "Wi-Fi information could not be retrieved."

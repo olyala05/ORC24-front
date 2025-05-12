@@ -1557,3 +1557,6 @@ msgstr "Loglar yükleniyor..."
 msgid "Loading Page..."
 msgstr "Sayfa Yükleniyor..."
 
+msgid "Wi-Fi information could not be retrieved."
+msgstr "Wi-Fi bilgisi alınamadı."
+

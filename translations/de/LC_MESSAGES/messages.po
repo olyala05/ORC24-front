@@ -1509,3 +1509,6 @@ msgstr "Logs werden geladen..."
 
 msgid "Loading Page..."
 msgstr "Seite wird geladen..."
+
+msgid "Wi-Fi information could not be retrieved."
+msgstr "WLAN-Informationen konnten nicht abgerufen werden."
