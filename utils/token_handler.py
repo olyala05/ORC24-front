@@ -11,7 +11,7 @@ from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
 
 TOKEN_FILE_PATH = "stored_token.txt"
-AES_KEY = bytes.fromhex("c167ff3136e6a497d7eea9f430080ba9".encode().hex())  # 128-bit key
+AES_KEY = bytes.fromhex("c167ff3136e6a497d7eea9f430080ba9".encode().hex())
 
 def decrypt_aes_file(filepath):
     print(f"\nAES şifrelenmiş dosya okunuyor: {filepath}")
@@ -150,7 +150,6 @@ class TokenManager:
 
         print("🚫 Hiçbir yerden token alınamadı.")
         return None
-
 
 def get_dashboard_data():
     token = TokenManager.load_token()

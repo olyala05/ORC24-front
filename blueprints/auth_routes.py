@@ -256,19 +256,6 @@ def check_login_redirect():
             session.clear()
     return redirect(url_for("auth.login"))
 
-
-# @auth_bp.route("/auto-login", methods=["POST"])
-# def auto_login():
-#     print("Auto-login başladı")
-#     data, error = get_dashboard_data()
-
-#     if error:
-#         print(f"❌ Auto-login Hatası: {error}")
-#         return jsonify({"success": False, "message": error}), 403
-
-#     print("🔹 API'den gelen veriler:", json.dumps(data, indent=2))
-#     return jsonify({"success": True, "data": data})
-
 @auth_bp.route("/auto-login", methods=["POST"])
 def auto_login():
     print("\n🚀 [AUTO-LOGIN BAŞLADI]")

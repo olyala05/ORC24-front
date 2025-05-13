@@ -41,7 +41,7 @@ Scss(app, static_dir="static", asset_dir="assets")
 babel = Babel(app)
 
 # LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"  bunu sileyim mi o zaman ??  ?? 
-# IP_RANGE = "192.168.1.0/24"
+# IP_RANGE = "192.168.4.0/24"
 # DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database": "iot"}
 last_connection_time = None
 

@@ -1,16 +1,16 @@
 from flask import Blueprint, request, session, render_template
 from utils.token_handler import get_dashboard_data
+from utils.decorators import role_required  
 
 dash_bp = Blueprint("dashboard", __name__)
 
 @dash_bp.route("/dashboard")
+@role_required("manager", "technical", "viewer")  
 def dashboard():
     data, error = get_dashboard_data()
 
     if error:
         return render_template("dashboard.html", error=error)
-
-    # Ceza durumu kontrolü (inductive veya capacitive biri bile True ise ceza var)
     penalty_status = (
         data.get("capacitive", {}).get("isUnderPenalty", False)
         or data.get("inductive", {}).get("isUnderPenalty", False)

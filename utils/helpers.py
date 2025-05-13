@@ -9,7 +9,7 @@ DB_CONFIG = {
     "database": "iot"
 }
 
-IP_RANGE = "192.168.1.0/24"
+IP_RANGE = "192.168.4.0/24"
 
 def get_base_url():
     """
