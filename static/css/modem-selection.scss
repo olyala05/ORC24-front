@@ -17,7 +17,6 @@ body {
   overflow: hidden; // Scroll'u kapat
 }
 
-
 // 📌 Ana İçerik (Header Altında)
 .content {
   margin-top: $header-height;
@@ -57,7 +56,7 @@ body {
       border-radius: 4px;
       border: 1px solid rgba(199, 199, 199, 0.4);
       background: #fff;
-      color: #1C2747;
+      color: #1c2747;
       font-weight: 700;
       height: 51px;
       border-radius: 5px;
@@ -98,11 +97,11 @@ body {
 
     // Disabled butonlar için stil
     &:disabled {
-      background-color: #E2E2E2; 
-      color: #6E6E6E;  // Beyaz yazı rengi
-      cursor: not-allowed;  // Fare işareti değişir
-      border: 1px solid #6E6E6E;  // Gri kenar rengi
-    } 
+      background-color: #e2e2e2;
+      color: #6e6e6e; // Beyaz yazı rengi
+      cursor: not-allowed; // Fare işareti değişir
+      border: 1px solid #6e6e6e; // Gri kenar rengi
+    }
 
     &.active {
       background-color: #fff;
@@ -120,16 +119,16 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: transparent; 
-  backdrop-filter: blur(4px); 
+  background: transparent;
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; 
+  z-index: 9999;
 }
 
 .loading-box {
-  background: rgba(255, 255, 255, 0);  /* Kutunun arka planı zaten şeffaf */
+  background: rgba(255, 255, 255, 0); /* Kutunun arka planı zaten şeffaf */
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -148,10 +147,13 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
-
 
 .alarm-icon-container {
   position: relative;
@@ -170,11 +172,11 @@ body {
   border-radius: 50%;
   display: none;
   min-width: 11px;
-  text-align: center
+  text-align: center;
 }
 
 .dots::after {
-  content: '';
+  content: "";
   display: inline-block;
   animation: dotsAnimation 1.2s steps(4, end) infinite;
   width: 1em;
@@ -182,9 +184,104 @@ body {
 }
 
 @keyframes dotsAnimation {
-  0%   { content: ''; }
-  25%  { content: '.'; }
-  50%  { content: '..'; }
-  75%  { content: '...'; }
-  100% { content: ''; }
+  0% {
+    content: "";
+  }
+  25% {
+    content: ".";
+  }
+  50% {
+    content: "..";
+  }
+  75% {
+    content: "...";
+  }
+  100% {
+    content: "";
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .modem-selection .dropdown-container {
+    width: 500px;
+
+    .modem-dropdown {
+      width: 100%;
+      font-size: 20px;
+      height: 56px;
+    }
+  }
+
+  .button-container .btn,
+  .bottom-buttons .btn {
+    font-size: 24px;
+    min-width: 220px;
+    min-height: 80px;
+    padding: 10px 20px;
+  }
+
+  .loading-box {
+    font-size: 20px;
+  }
+
+  .loader {
+    width: 50px;
+    height: 50px;
+    border-width: 7px;
+  }
+
+  .alarm-badge {
+    font-size: 12px;
+    padding: 4px 4px;
+    min-width: 13px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .content {
+    width: 95%;
+    padding: 30px;
+  }
+
+  .modem-selection .dropdown-container {
+    width: 60%;
+    padding: 24px;
+
+    .modem-dropdown {
+      font-size: 22px;
+      height: 60px;
+    }
+  }
+
+  .modem-dropdown-wrapper {
+    width: 100%;
+  }
+
+  .button-container .btn,
+  .bottom-buttons .btn {
+    font-size: 30px;
+    min-width: 480px;
+    min-height: 110px;
+  }
+
+  .loading-box {
+    font-size: 22px;
+  }
+
+  .loader {
+    width: 60px;
+    height: 60px;
+    border-width: 8px;
+  }
+
+  .alarm-badge {
+    font-size: 14px;
+    padding: 5px 5px;
+    min-width: 15px;
+  }
 }
