@@ -226,69 +226,25 @@ class TokenManager:
     @classmethod
     def load_token(cls):
         print("\n🔁 Token yükleniyor...")
-        if cls._token:
-            print("🔄 Token cache'ten alındı.")
+
+        # Öncelik USB'de! varsa .pier dosyasından al ve stored_token.txt'yi güncelle
+        token, _ = find_usb_and_read_token()
+        if token:
+            cls._token = token
+            print("🆕 USB'den token alındı ve stored_token.txt güncellendi.")
             return cls._token
 
+        # USB yoksa stored_token.txt'den devam et
         if os.path.exists(TOKEN_FILE_PATH):
             with open(TOKEN_FILE_PATH, "r") as f:
-                lines = f.readlines()
-                for line in lines:
+                for line in f:
                     if line.startswith("token:"):
                         cls._token = line.replace("token:", "").strip()
                         print("📄 Token stored_token.txt içinden alındı.")
                         return cls._token
 
-        token, _ = find_usb_and_read_token()
-        if token:
-            cls._token = token
-            return cls._token
-
-        print("🚫 Token bulunamadı.")
+        print("🚫 Hiçbir yerden token alınamadı.")
         return None
-
-    @classmethod
-    def get_token(cls):
-        return cls._token or cls.load_token()
-
-    @classmethod
-    def clear_token(cls):
-        cls._token = None
-
-# def get_dashboard_data():
-#     token = TokenManager.load_token()
-#     base_url = None
-
-#     if os.path.exists(TOKEN_FILE_PATH):
-#         with open(TOKEN_FILE_PATH, "r") as f:
-#             for line in f:
-#                 if line.startswith("base_url:"):
-#                     base_url = line.replace("base_url:", "").strip()
-
-#     if not token or not base_url:
-#         return None, "Token veya base_url bulunamadı"
-
-#     # url = f"{base_url}/api/iot/v2/orc24/dashboard"
-#     url = f"{base_url}/orc24/dashboard"
-
-#     print(f"📡 Dashboard API çağrısı yapılıyor: {url}")
-
-#     try:
-#         response = requests.get(
-#             url,
-#             headers={
-#                 "Authorization": f"Bearer {token}",
-#                 "Accept": "application/json",
-#                 "Content-Type": "application/json"
-#             },
-#             verify=False
-#         )
-#         if response.status_code == 200:
-#             return response.json(), None
-#         else:
-#             return None, f"API hatası: {response.status_code}"
-#     except Exception as e:
-#         return None, f"İstek hatası: {e}"
 
 
 def get_dashboard_data():
