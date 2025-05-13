@@ -25,6 +25,8 @@ from blueprints.auth_routes import auth_bp
 from blueprints.dashboard import dash_bp 
 from utils.context_processors import inject_globals 
 from utils.decorators import role_required  
+from utils.helpers import get_base_url, DB_CONFIG, IP_RANGE
+
 
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
@@ -38,9 +40,9 @@ jwt = JWTManager(app)
 Scss(app, static_dir="static", asset_dir="assets")
 babel = Babel(app)
 
-LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"
-IP_RANGE = "192.168.1.0/24"
-DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database": "iot"}
+# LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"  bunu sileyim mi o zaman ??  ?? 
+# IP_RANGE = "192.168.1.0/24"
+# DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database": "iot"}
 last_connection_time = None
 
 # Blueprintleri kayıt et
@@ -96,7 +98,8 @@ def alarm_status():
     }
 
     response = requests.get(
-        f"{LARAVEL_API_URL}/alarm/status", headers=headers, verify=False
+        # f"{LARAVEL_API_URL}/alarm/status", headers=headers, verify=False
+        f"{get_base_url()}/v1/orc24/alarm/status", headers=headers, verify=False
     )
 
     print("Alarm Status API Yanıtı:", response.status_code, response.text)

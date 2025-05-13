@@ -1,1 +1,2 @@
-65|gA46KrBvlN8AdtzveRsznmOxUsMldJoJhcujQ9rQ91d99502
+token: 14|wRLNVnk7JAK37LRYFPCPfcUeU8c6VMF0xzeelXqA66bfeb35
+base_url: https://v2.pierenergytrackingsystem.com/api/iot/v2
