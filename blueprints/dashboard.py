@@ -4,8 +4,7 @@ from utils.decorators import role_required
 
 dash_bp = Blueprint("dashboard", __name__)
 
-@dash_bp.route("/dashboard")
-@role_required("manager", "technical", "viewer")  
+@dash_bp.route("/dashboard")  
 def dashboard():
     data, error = get_dashboard_data()
 

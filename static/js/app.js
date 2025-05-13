@@ -35,7 +35,7 @@ setTimeout(function () {
                 console.error("API çağrısı hatası:", err);
             });
     }
-}, 5000);
+}, 3000);
 
 
 // Simple Keyboard
