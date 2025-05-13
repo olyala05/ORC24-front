@@ -430,30 +430,46 @@ function goToEquipment() {
     window.location.href = "/settings";
   }
 
-  // Test Sayfasına Yönlendirir
   function SwitchtTest() {
     const userRole = document.body.dataset.userRole;
     const dropdown = document.getElementById("modem");
     const selectedDeviceIP = dropdown ? dropdown.value : null;
 
-    // 2️⃣ Cihaz Seçimi Kontrolü
     if (!selectedDeviceIP) {
         showWarningAlert("{{ _('Please select a device first!') }}");
         return;
     }
 
-    // 1️⃣ Role Kontrolü
     if (userRole === 'technical') {
         showErrorAlert("{{ _('You do not have access to this page.') }}");
         return;
     }
 
-    // 3️⃣ Yönlendirme
     showLoading("{{ _('Test is loading...') }}");
-    setTimeout(() => {
-        window.location.href = "/switch";
-    }, 100);
-  }
+
+    fetch("/switch", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ device_ip: selectedDeviceIP })
+    })
+    .then(res => res.json())
+    .then(data => {
+        hideLoading();
+        if (data.success) {
+            showSuccessAlert("{{ _('Test started successfully.') }}");
+        } else {
+            showErrorAlert("{{ _('Test failed to start.') }}");
+        }
+    })
+    .catch(err => {
+        hideLoading();
+        showErrorAlert("{{ _('An error occurred.') }}");
+        console.error(err);
+    });
+}
+
 
   // data
   function goToData() {

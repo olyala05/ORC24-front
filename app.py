@@ -27,6 +27,10 @@ from utils.context_processors import inject_globals
 from utils.decorators import role_required  
 from utils.helpers import get_base_url, DB_CONFIG, IP_RANGE
 
+from blueprints.auth_routes import get_token_and_base_url
+from utils.helpers import get_base_url
+from utils.token_handler import TokenManager
+
 
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
@@ -161,7 +165,6 @@ def nmap_scan(ip_range):
             print(f"[+] Bulundu: {host} -> {mac_address}")
 
     return found_hosts
-
 
 # !! VPN ile cihaz ip lerini getiren kod
 # def get_mac_from_device(ip): 
@@ -445,8 +448,10 @@ def update_modem_info():
     token = session.get("access_token")
     if not token:
         return ResponseHandler.error(message="Token missing", code=401)
+    _, base_url = get_base_url()
+    cloud_url = f"{base_url}/orc24/modems/{modem_uuid}"
 
-    cloud_url = f"https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/modems/{modem_uuid}"
+    # cloud_url = f"https://v2.pierenergytrackingsystem.com/api/iot/v2/orc24/modems/{modem_uuid}"
     try:
         cloud_response = requests.put(
             cloud_url,
