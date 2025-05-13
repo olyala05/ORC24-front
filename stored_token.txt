@@ -1,2 +1,12 @@
-token: 19|BCs4nNLdf8umVmyrwwvuboUTQ6WupJWlJx8MHaEh2597bc35
+token: 22|5BILElv1gH77ulgSJTs8GQUs1PAXXM7WbZYU7WC965cc4d63
 base_url: https://v2.pierenergytrackingsystem.com/api/iot/v2
+rabbit_url: https://rabbitmq.pierenergytrackingsystem.com
+rabbit_host: rabbitmq-ssl-nepkg8xpddekzdcqdfa.pierenergytrackingsystem.com
+rabbit_port: 1672
+rabbit_port_ssl: 1671
+rabbit_user: root
+rabbit_password: Pier123+
+rabbit_vhost: /
+rabbit_channel: tracking_v2_process
+rabbit_ssl_ca_cert: 
+rabbit_connection_name: modem-0196c34e-c501-7332-888e-195119c38a50

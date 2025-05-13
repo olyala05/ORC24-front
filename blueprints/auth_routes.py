@@ -149,7 +149,8 @@ from utils.token_handler import (
     get_dashboard_data,
     find_usb_and_read_token,
     TOKEN_FILE_PATH,
-    TokenManager
+    TokenManager,
+    send_rabbitmq_modem_message
 )
 
 auth_bp = Blueprint("auth", __name__)
@@ -256,16 +257,47 @@ def check_login_redirect():
     return redirect(url_for("auth.login"))
 
 
+# @auth_bp.route("/auto-login", methods=["POST"])
+# def auto_login():
+#     print("Auto-login başladı")
+#     data, error = get_dashboard_data()
+
+#     if error:
+#         print(f"❌ Auto-login Hatası: {error}")
+#         return jsonify({"success": False, "message": error}), 403
+
+#     print("🔹 API'den gelen veriler:", json.dumps(data, indent=2))
+#     return jsonify({"success": True, "data": data})
+
 @auth_bp.route("/auto-login", methods=["POST"])
 def auto_login():
-    print("Auto-login başladı")
+    print("\n🚀 [AUTO-LOGIN BAŞLADI]")
+
+    # 🟡 Token ve base_url al
+    print("🔑 get_token_and_base_url() çağrılıyor...")
+    token, _ = get_token_and_base_url()
+    if not token:
+        print("❌ Token alınamadı!")
+        return jsonify({"success": False, "message": "Token alınamadı"}), 403
+    print(f"✅ Token alındı: {token}")
+
+    # 🟡 RabbitMQ mesajı gönder
+    print("📦 RabbitMQ modem mesajı gönderilmeye çalışılıyor...")
+    success, msg = send_rabbitmq_modem_message(token)
+    if not success:
+        print(f"❌ RabbitMQ mesajı başarısız: {msg}")
+        return jsonify({"success": False, "message": msg}), 403
+    print("✅ RabbitMQ mesajı başarıyla gönderildi.")
+
+    # 🟡 Şimdi dashboard datası al
+    print("📡 Dashboard API çağrısı başlatılıyor...")
     data, error = get_dashboard_data()
-
     if error:
-        print(f"❌ Auto-login Hatası: {error}")
+        print(f"❌ Dashboard hatası: {error}")
         return jsonify({"success": False, "message": error}), 403
+    print("✅ Dashboard verisi başarıyla alındı.")
 
-    print("🔹 API'den gelen veriler:", json.dumps(data, indent=2))
+    print("🎯 Auto-login tamamlandı. Dashboard dönülüyor.")
     return jsonify({"success": True, "data": data})
 
 
