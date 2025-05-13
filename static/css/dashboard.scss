@@ -712,3 +712,132 @@
   padding: 15px;
   border-radius: 3px;
 }
+
+/* RESPONSIVE */
+@media (min-width: 1024px) {
+  .energy-table {
+    font-size: 1.3rem;
+    padding: 30px;
+    /* height: 40%; */
+    text-align: center;
+    align-items: normal;
+    justify-content: center;
+
+    .energy-header {
+      font-size: 1.4rem;
+      padding-bottom: 20px;
+    }
+
+    .energy-row {
+      font-size: 1.3rem;
+      padding: 10px 15px;
+
+      div {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        img {
+          width: 28px;
+          height: 28px;
+          flex-shrink: 0;
+          margin-right: 2px;
+        }
+      }
+
+      .energy-value {
+        min-width: 100px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .dashboard-container {
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .voltage-section {
+    flex: 1;
+    padding: 25px;
+    height: 80%;
+    justify-content: center;
+  }
+
+  .voltage-table {
+    gap: 10px;
+  }
+
+  .voltage-box {
+    padding: 36px 27px;
+    min-width: 280px;
+
+    .icon img {
+      width: 22px;
+      height: 22px;
+    }
+
+    .value {
+      font-size: 18px;
+    }
+
+    .phase {
+      font-size: 14px;
+    }
+  }
+
+  .gauge-container {
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+
+  .gauge {
+    width: 150px;
+    height: 150px;
+  }
+
+  .gauge-circle {
+    width: 150px;
+    height: 150px;
+
+    span {
+      font-size: 20px;
+    }
+
+    p {
+      font-size: 15px;
+    }
+  }
+  .voltage-box .icon {
+    margin-right: 44px;
+  }
+}
+
+.gauge-chart {
+  width: 130px;
+  height: 130px;
+
+  // Sadece reaktif için yükseklik farkı
+  &.reactive {
+    height: 120px;
+  }
+
+  @media (min-width: 1024px) {
+    width: 180px;
+    height: 180px;
+
+    &.reactive {
+      height: 160px;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    width: 220px;
+    height: 220px;
+
+    &.reactive {
+      height: 200px;
+    }
+  }
+}

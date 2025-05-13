@@ -260,12 +260,15 @@
       </div>
     </div>
 
-      <!-- ECHARTS -->
-        <div id="frequencyGauge" style="width: 130px; height: 130px;"></div>
+      <!-- ECHARTS         <div id="frequencyGauge" style="width: 130px; height: 130px;"></div>
 
         <div id="reactiveStatus" style="width: 130px; height: 120px;"></div>
 
-        <div id="powerFactorGauge" style="width: 130px; height: 130px"></div>
+        <div id="powerFactorGauge" style="width: 130px; height: 130px"></div>-->
+
+        <div id="frequencyGauge" class="gauge-chart"></div>
+        <div id="reactiveStatus" class="gauge-chart"></div>
+        <div id="powerFactorGauge" class="gauge-chart"></div>
 
       </div>
     </div>
@@ -392,6 +395,17 @@
       return "#0EB100";
     }
 
+    function getGaugeResponsiveSizes() {
+      const width = window.innerWidth;
+      if (width >= 1440) {
+        return { r: 100, r2: 92, r3: 86, fontSize: 18 };
+      } else if (width >= 1024) {
+        return { r: 80, r2: 72, r3: 66, fontSize: 16 };
+      } else {
+        return { r: 60, r2: 52, r3: 46, fontSize: 14 };
+      }
+    }
+    
     // Echarts 1 Frekans (Hz)
     const frequencyChart = echarts.init(document.getElementById("frequencyGauge"));
     frequencyChart.setOption({
@@ -581,5 +595,12 @@
         },
       ],
     });
-</script>
+
+    window.addEventListener("resize", function () {
+      frequencyChart.resize();
+      reactiveChart.resize();
+      pfChart.resize();
+    });
+    
+  </script>
 {% endblock content %}
