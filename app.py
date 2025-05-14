@@ -28,7 +28,6 @@ from utils.decorators import role_required
 from utils.helpers import get_base_url, DB_CONFIG, IP_RANGE
 
 from blueprints.auth_routes import get_token_and_base_url
-from utils.helpers import get_base_url
 from utils.token_handler import TokenManager
 
 
@@ -44,9 +43,6 @@ jwt = JWTManager(app)
 Scss(app, static_dir="static", asset_dir="assets")
 babel = Babel(app)
 
-# LARAVEL_API_URL = "https://api.pierenergytrackingsystem.com/v1/orc24"  bunu sileyim mi o zaman ??  ?? 
-# IP_RANGE = "192.168.4.0/24"
-# DB_CONFIG = {"host": "localhost", "user": "root", "password": "123", "database": "iot"}
 last_connection_time = None
 
 # Blueprintleri kayıt et
