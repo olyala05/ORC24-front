@@ -1,3 +1,5 @@
+# burası ==>> utils/helpers.py
+
 import os
 from utils.token_handler import TOKEN_FILE_PATH
 
@@ -22,3 +24,17 @@ def get_base_url():
                 if line.startswith("base_url:"):
                     return line.replace("base_url:", "").strip()
     return "https://api.pierenergytrackingsystem.com"  # fallback
+
+
+def safe_format(value, suffix=""):
+    """
+    Sayıyı virgüllü formatla. Eğer None veya formatlanamazsa '-' döner.
+    Örn: 1234.56 → 1.234,56
+    """
+    try:
+        if value is None:
+            return "-"
+        formatted = "{:,.2f}".format(value).replace(",", "X").replace(".", ",").replace("X", ".")
+        return f"{formatted} {suffix}".strip()
+    except (ValueError, TypeError):
+        return "-"

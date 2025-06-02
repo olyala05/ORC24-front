@@ -29,7 +29,7 @@ from utils.helpers import get_base_url, DB_CONFIG, IP_RANGE
 
 from blueprints.auth_routes import get_token_and_base_url
 from utils.token_handler import TokenManager
-
+from utils.helpers import safe_format
 
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
