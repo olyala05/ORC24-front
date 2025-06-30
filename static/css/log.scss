@@ -19,7 +19,7 @@ body {
 .log-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
+  align-items: flex-start;
   justify-content: flex-start;
   height: 61vh;
 }
@@ -27,7 +27,7 @@ body {
 // 📌 Log Tablosu
 .log-table {
   width: 763px;
-  max-height: 319px;
+  max-height: 100%;
   background-color: #0b1734;
   padding: 7px;
   border-radius: 8px;
@@ -81,7 +81,7 @@ body {
       display: inline-block;
 
       &.green {
-        background-color: #33FF00;
+        background-color: #33ff00;
       }
 
       &.red {
@@ -100,7 +100,7 @@ body {
 }
 
 .status-info {
-  background-color: #33FF00;
+  background-color: #33ff00;
 }
 
 .status-warning {
@@ -108,18 +108,18 @@ body {
 }
 
 .status-exception {
-  background-color: #FF0F00;
+  background-color: #ff0f00;
 }
 
 /* Takvim Konteyneri */
 #calendar-container {
   display: flex;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   align-items: center;
   background-color: #0b1734;
   gap: 10px;
-  margin-left: 20px; 
-  margin-right: auto; 
+  margin-left: 20px;
+  margin-right: auto;
 }
 .calendar-input-wrapper {
   position: relative;
@@ -154,15 +154,13 @@ body {
   transform: translateY(-50%) rotate(180deg); /* Yukarı döner */
 }
 
-
 .calendar-icon.open {
   transform: translateY(-50%) rotate(180deg); // Yukarı ok
 }
 
-
 .calendar-input:focus {
-  border-color: #ff6f00; 
-  outline: none; 
+  border-color: #ff6f00;
+  outline: none;
 }
 .log-table-content table {
   width: 100%;
@@ -185,13 +183,13 @@ body {
 }
 
 .status-info {
-  background-color: #33FF00;
+  background-color: #33ff00;
 }
 .status-warning {
   background-color: orange;
 }
 .status-exception {
-  background-color: #FF0F00;
+  background-color: #ff0f00;
 }
 
 .ellipsis {
@@ -272,4 +270,33 @@ body {
 .daterangepicker:after,
 .daterangepicker:before {
   display: none !important;
+}
+
+// 10 inch
+@media screen and (min-width: 1024px) and (max-height: 600px) {
+  .log-table {
+    width: 990px;
+  }
+
+  .log-table .log-table-content {
+    max-height: 410px;
+  }
+  .log-table table th {
+    font-size: 19px;
+  }
+  .log-table table td {
+    font-size: 18px;
+  }
+  .calendar-input {
+    height: 38px !important;
+    font-size: 19px !important;
+  }
+  .calendar-icon img {
+    width: 22px !important;
+    height: 16px !important;
+  }
+  .calendar-icon {
+    right: 30px !important;
+    top: 54% !important;
+  }
 }

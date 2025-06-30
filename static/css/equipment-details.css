@@ -44,13 +44,13 @@
   background-color: #3fb950;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-passive {
-  background-color: #FF0F00;
+  background-color: #ff0f00;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-detail-green {
   color: #3fb950;
 }
 .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item .eq-detail-red {
-  color: #FF0F00;
+  color: #ff0f00;
 }
 .eq-detail-container .eq-detail-log {
   width: 60%;
@@ -102,19 +102,19 @@
   border-radius: 50%;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-active {
-  background-color: #33FF00;
+  background-color: #33ff00;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-passive {
-  background-color: #FF0F00;
+  background-color: #ff0f00;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-warning {
-  background-color: #FF0F00;
+  background-color: #ff0f00;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-green {
   color: #3fb950;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-red {
-  color: #FF0F00;
+  color: #ff0f00;
 }
 .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item .eq-detail-log-gray {
   color: #8b949e;
@@ -161,4 +161,30 @@ body.lang-de .eq-detail-log-item span {
 .text-right {
   text-align: right;
   width: 162px;
+}
+
+@media screen and (width: 1024px) and (height: 600px) {
+  .eq-detail-container {
+    width: 98%;
+    height: 80%;
+    margin-top: 96px;
+  }
+  .eq-detail-container .eq-detail-panel {
+    width: 48%;
+  }
+  .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item span {
+    font-size: 16px;
+  }
+  .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item {
+    padding: 6px 7px;
+  }
+  .eq-detail-container .eq-detail-log .eq-detail-log-header {
+    font-size: 18px;
+  }
+  .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item {
+    font-size: 16px;
+  }
+  .eq-detail-container .eq-detail-log .eq-detail-log-list {
+    max-height: 370px;
+  }
 }/*# sourceMappingURL=equipment-details.css.map */

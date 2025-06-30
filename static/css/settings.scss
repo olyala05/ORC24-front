@@ -41,3 +41,15 @@
     opacity: 1;
   }
 }
+
+// 10 inch RESPONSIVE
+@media screen and (min-width: 1024px) and (max-height: 600px) {
+  .main-set-container {
+    padding: 25px;
+    width: 90%;
+  }
+  .main-set-btn {
+    font-size: 24px;
+    padding: 30px 40px;
+  }
+}

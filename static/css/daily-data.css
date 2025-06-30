@@ -159,7 +159,7 @@
   border-collapse: collapse;
   background: #0b1734;
   border-radius: 6px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 .daily-data-detail-table-container .scrollable-table {
   width: 100%;
@@ -203,7 +203,8 @@
   width: 100%;
   table-layout: fixed;
 }
-.daily-data-detail-table-container .scrollable-table th, .daily-data-detail-table-container .scrollable-table td {
+.daily-data-detail-table-container .scrollable-table th,
+.daily-data-detail-table-container .scrollable-table td {
   border: none;
   padding: 6px;
   text-align: center;
@@ -212,4 +213,42 @@
 }
 .daily-data-detail-table-container .scrollable-table tbody tr:last-child td {
   border-bottom: none;
+}
+
+@media screen and (min-width: 1024px) and (max-height: 600px) {
+  .daily-data-container {
+    width: 1004px;
+    margin-top: 101px;
+  }
+  .daily-data-container .daily-data-table,
+  .daily-data-container .daily-data-status {
+    min-height: 471px;
+  }
+  .daily-data-container .table-header > div {
+    font-size: 16px;
+  }
+  .daily-data-container .table-row > div {
+    font-size: 14px;
+  }
+  .daily-data-detail-table-container .daily-data-detail-data-table th,
+  .daily-data-detail-table-container .daily-data-detail-data-table td {
+    font-size: 16px;
+  }
+  .daily-data-detail-table-container .scrollable-table th,
+  .daily-data-detail-table-container .scrollable-table td {
+    font-size: 17px;
+  }
+  .daily-data-detail-table-container .scrollable-table {
+    max-height: 437px;
+  }
+  .daily-data-detail-table-container .scrollable-table tbody {
+    max-height: 380px;
+  }
+  .daily-data-detail-table-container {
+    max-height: 497px;
+    margin-top: 95px;
+  }
+}
+@media screen and (min-width: 1280px) and (max-width: 1440px) and (min-height: 700px) {
+  /* 13-14 inch dizüstü cihazlar için stiller */
 }/*# sourceMappingURL=daily-data.css.map */

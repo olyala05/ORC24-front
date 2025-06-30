@@ -291,7 +291,7 @@ input:-webkit-autofill:focus {
   position: relative;
   display: inline-block;
   background: #ef8018 !important;
-  padding: 12px !important;
+  padding: 13px !important;
   border-radius: 6px !important;
 }
 .language-switcher .language-toggle {
@@ -303,7 +303,7 @@ input:-webkit-autofill:focus {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  background: #EF8018;
+  background: #ef8018;
   padding: 10px;
   border-radius: 6px;
 }
@@ -411,4 +411,31 @@ input:-webkit-autofill:focus {
 
 .lang-btn.selected .radio-indicator {
   background-color: #ff7f32;
+}
+
+@media screen and (min-width: 1024px) and (max-height: 600px) {
+  .logo {
+    height: 100px;
+  }
+  .login-box {
+    padding: 7px;
+    border-radius: 10px;
+    width: 500px;
+  }
+  .input-group {
+    padding: 16px;
+    margin: 9px;
+  }
+  .icon {
+    font-size: 25px;
+  }
+  .input-group input {
+    padding: 5px 30px;
+    font-size: 20px;
+  }
+  .login-btn {
+    padding: 13px 29px;
+    font-size: 26px;
+    gap: 22px;
+  }
 }/*# sourceMappingURL=styles.css.map */

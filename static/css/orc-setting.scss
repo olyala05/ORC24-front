@@ -357,9 +357,9 @@
   width: 40%;
   box-sizing: border-box;
   font-size: 15px;
-  color: #6E6E6E;
+  color: #6e6e6e;
   font-weight: 600;
-  border: 1px solid #B1B1B1;
+  border: 1px solid #b1b1b1;
   text-align: center;
 }
 
@@ -375,7 +375,7 @@
 }
 
 .orc-save-btn {
-  background: #EF8018;
+  background: #ef8018;
   color: white;
   border: none;
   width: 38%;
@@ -464,10 +464,87 @@
   }
 }
 
-
-.wifi-orange-icon{
+.wifi-orange-icon {
   width: 22px;
-  background: #EF8018;
+  background: #ef8018;
   border-radius: 50%;
   padding: 6px;
+}
+
+@media screen and (min-width: 1024px) and (max-height: 600px) {
+  .settings-content {
+    margin-top: 89px;
+  }
+  .orc-sidebar-set {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 240px;
+  }
+  .wifi-card-set {
+    width: 380px;
+  }
+
+  .wifi-container-set {
+    height: 480px;
+  }
+  .network-box-set {
+    width: 320px;
+    margin: 4px;
+  }
+  .settings-content .tab-btn-set {
+    padding: 20px;
+    border-radius: 7px;
+    color: #000;
+    font-weight: 600;
+    font-size: 20px;
+    padding: 28px;
+  }
+
+  .content-area-set ul li {
+    font-size: 16px;
+  }
+  .wifi-list-set h4 {
+    font-size: 20px;
+  }
+  .wifi-card-set h4 {
+    font-size: 20px;
+  }
+  .wifi-card-set p {
+    font-size: 20px;
+  }
+  .wifi-card-set label {
+    margin-bottom: 2px;
+    font-size: 18px;
+  }
+  .wifi-card-set .show-password-set .show-pass {
+    font-size: 16px;
+    margin: 0;
+  }
+  .wifi-card-set .btn-group-set .btn-set {
+    padding: 15px 50px;
+    font-size: 18px;
+  }
+  .orc-input-group input,
+  .orc-input-group select {
+    padding: 13px;
+    margin: 5px;
+    width: 47%;
+    font-size: 20px;
+    border-radius: 11px;
+  }
+  .orc-input-group {
+    padding: 3px 7px;
+  }
+  .orc-input-group label {
+    font-size: 20px;
+  }
+  .orc-save-btn {
+    width: 45%;
+    padding: 15px 0px;
+    font-size: 22px;
+  }
+  .orc-settings-card {
+    width: 730px;
+  }
 }

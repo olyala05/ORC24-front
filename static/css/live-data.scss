@@ -71,7 +71,7 @@
     border-radius: 50%;
 
     &.active {
-      background-color: #33FF00;
+      background-color: #33ff00;
     }
     &.inactive {
       background-color: red;
@@ -82,7 +82,7 @@
   .live-data-status {
     .table-row {
       > div[data-status="A / A"] {
-        color: #33FF00;
+        color: #33ff00;
       }
       > div[data-status="P / P"] {
         color: red;
@@ -200,7 +200,7 @@
     /* Scroll olacak kısım (sadece tbody) */
     tbody {
       display: block;
-      max-height: 300px; 
+      max-height: 300px;
       overflow-y: auto;
       width: 100%;
     }
@@ -234,7 +234,8 @@
       table-layout: fixed;
     }
 
-    th, td {
+    th,
+    td {
       border: none;
       padding: 6px;
       text-align: center;
@@ -249,11 +250,52 @@
   }
 }
 
-
 .status-circle {
   display: inline-block;
   width: 12px;
   height: 12px;
-  background-color: red; 
+  background-color: red;
   border-radius: 50%;
+}
+
+// !! 10 inch  RESPONSIVE !!
+@media screen and (min-width: 1024px) and (max-height: 600px) {
+  .live-data-container {
+    width: 1004px;
+    max-height: 478px;
+    margin-top: 94px;
+    overflow-y: auto; /* Dikey scroll sadece gerektiğinde çıksın */
+    overflow-x: hidden; /* Yatay scroll hiçbir zaman olmasın */
+  }
+  .live-data-container .live-data-table,
+  .live-data-container .live-data-status {
+    min-height: 486px;
+  }
+  .live-data-container .table-header > div {
+    font-size: 16px;
+  }
+  .live-data-container .table-row > div {
+    font-size: 14px;
+  }
+  .live-data-detail-table-container .live-data-detail-data-table th,
+  .live-data-detail-table-container .live-data-detail-data-table td {
+    font-size: 16px;
+  }
+  .live-data-detail-table-container .scrollable-table th,
+  .live-data-detail-table-container .scrollable-table td {
+    font-size: 17px;
+  }
+  .live-data-detail-table-container .scrollable-table {
+    max-height: 417px;
+  }
+  .live-data-detail-table-container .scrollable-table tbody {
+    max-height: 380px;
+  }
+  .live-data-detail-table-container {
+    margin-top: 96px;
+  }
+
+  .live-data-detail-table-container .live-data-detail-data-table:first-child {
+    margin-bottom: 7px;
+  }
 }

@@ -159,7 +159,7 @@
   border-collapse: collapse;
   background: #0b1734;
   border-radius: 6px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 .hourly-data-detail-table-container .scrollable-table {
   width: 100%;
@@ -203,7 +203,8 @@
   width: 100%;
   table-layout: fixed;
 }
-.hourly-data-detail-table-container .scrollable-table th, .hourly-data-detail-table-container .scrollable-table td {
+.hourly-data-detail-table-container .scrollable-table th,
+.hourly-data-detail-table-container .scrollable-table td {
   border: none;
   padding: 6px;
   text-align: center;
@@ -212,4 +213,38 @@
 }
 .hourly-data-detail-table-container .scrollable-table tbody tr:last-child td {
   border-bottom: none;
+}
+
+@media screen and (min-width: 1024px) and (max-height: 600px) {
+  .hourly-data-container {
+    width: 1004px;
+  }
+  .hourly-data-container .hourly-data-table,
+  .hourly-data-container .hourly-data-status {
+    max-height: 474px;
+    margin-top: 19px;
+  }
+  .hourly-data-container .table-header > div {
+    font-size: 16px;
+  }
+  .hourly-data-container .table-row > div {
+    font-size: 14px;
+  }
+  .hourly-data-detail-table-container .hourly-data-detail-data-table th,
+  .hourly-data-detail-table-container .hourly-data-detail-data-table td {
+    font-size: 16px;
+  }
+  .hourly-data-detail-table-container .scrollable-table th,
+  .hourly-data-detail-table-container .scrollable-table td {
+    font-size: 17px;
+  }
+  .hourly-data-detail-table-container .scrollable-table {
+    max-height: 407px;
+  }
+  .hourly-data-detail-table-container .scrollable-table tbody {
+    max-height: 380px;
+  }
+  .hourly-data-detail-table-container {
+    margin-top: 96px;
+  }
 }/*# sourceMappingURL=hourly-data.css.map */

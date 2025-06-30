@@ -20,7 +20,7 @@
 .header .header-button-logout {
   background-color: #ef8018;
   color: black;
-  padding: 6px 11px;
+  padding: 8px 11px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 8px;
@@ -33,13 +33,13 @@
 }
 .header .header-button {
   background-color: #ef8018;
-  color: #1C2747;
-  padding: 6px 20px;
-  font-size: 16px;
+  color: #1c2747;
+  padding: 7px 14px;
+  font-size: 18px;
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
-  gap: 22px;
+  gap: 14px;
 }
 .header .header-button:hover {
   background-color: #ff8c33;
@@ -161,7 +161,7 @@ div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line] {
 
 .header-button-back {
   background-color: #ef8018;
-  color: #1C2747;
+  color: #1c2747;
   padding: 0px 0px;
   font-size: 6px;
   font-weight: bold;
@@ -171,20 +171,26 @@ div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line] {
   border: 0;
 }
 
-.dashboard-header-logout-icon {
-  width: 30px;
-  height: 30px;
-  padding: 7px 9px;
-  background: #0b1734;
-  border-radius: 5px;
-}
-
 .header-home-icon {
   padding: 9px 9px;
   background: #0b1734;
   border-radius: 5px;
   width: 30px !important;
   height: 30px !important;
+}
+
+.header-button-back img {
+  padding: 9px 9px;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+}
+
+.header-logout-icon {
+  width: 40px;
+  height: 40px;
+  padding: 9px 9px;
+  border-radius: 5px;
 }
 
 .dashboard-header-logout-icon {
@@ -202,13 +208,6 @@ div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line] {
   border-radius: 5px;
 }
 
-.header-button-back img {
-  padding: 9px 9px;
-  border-radius: 8px;
-  width: 40px;
-  height: 40px;
-}
-
 @media screen and (min-width: 1024px) and (max-height: 600px) {
   .header {
     height: 100px;
@@ -216,10 +215,18 @@ div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line] {
   .header .header-logo .logo {
     height: 70px;
   }
-  .header-button-back img {
-    border-radius: 8px;
-    width: 55px;
-    height: 54px;
+  .line {
+    height: 2px;
+  }
+  .header .report-line {
+    margin: 5px 0;
+  }
+  .header .date-time,
+  .header .report-date {
+    font-size: 20px;
+    margin-top: 5px;
+    margin-left: 30px;
+    margin-bottom: 3px;
   }
   .header .header-button {
     padding: 7px 15px;
@@ -227,10 +234,19 @@ div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line] {
     border-radius: 8px;
     gap: 16px;
   }
-  .header .date-time, .header .report-date {
-    font-size: 20px;
-    margin-top: 5px;
-    margin-left: 30px;
-    margin-bottom: 3px;
+  .header-home-icon {
+    padding: 9px 12px;
+    background: #0b1734;
+    border-radius: 8px;
+    width: 42px !important;
+    height: 42px !important;
+  }
+  .header .header-button-logout {
+    padding: 14px 12px;
+  }
+  .header-button-back img {
+    border-radius: 8px;
+    width: 55px;
+    height: 54px;
   }
 }/*# sourceMappingURL=header.css.map */

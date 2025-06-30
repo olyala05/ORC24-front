@@ -165,7 +165,7 @@ $container-padding: 10px;
       display: inline-block;
 
       &.green {
-        background-color: #33FF00;
+        background-color: #33ff00;
       }
 
       &.red {
@@ -239,7 +239,7 @@ $container-padding: 10px;
     }
 
     .status-btn {
-      background-color: #EF8018;
+      background-color: #ef8018;
       padding: 18px;
       font-size: 16px;
       border-radius: 6px;
@@ -277,7 +277,7 @@ $container-padding: 10px;
 
 /* 🔁 Retry Butonu */
 .retry-btn {
-  background: #EF8018;
+  background: #ef8018;
   color: white;
   padding: 15px 24px;
   border: none;
@@ -288,4 +288,60 @@ $container-padding: 10px;
 
 .retry-btn:hover {
   background: #ff8c33;
+}
+
+// !! 10 inch  RESPONSIVE !!
+@media screen and (min-width: 1024px) and (max-height: 600px) {
+  .algorithm-section .algorithm-box .algorithm-left {
+    gap: 8px;
+  }
+
+  .connection-table {
+    width: 48%;
+  }
+
+  .device-info {
+    width: 48%;
+  }
+
+  .orc-content {
+    width: 98vw;
+    height: calc(100vh - 98px);
+    margin-top: 93px;
+    gap: 12px;
+  }
+
+  .select2-container--default .select2-selection--single {
+    width: 602px;
+  }
+
+  .algorithm-section .algorithm-box .algorithm-left {
+    font-size: 17px;
+    margin-left: 15px;
+  }
+  .algorithm-section .separator {
+    width: 97%;
+    height: 2px;
+    margin: 2px auto 1px;
+  }
+  .algorithm-section h3 {
+    font-size: 19px;
+    margin-bottom: 5px;
+    margin-top: 11px;
+  }
+  .algorithm-section .algorithm-box .status-btn {
+    padding: 18px;
+    font-size: 19px;
+    width: 200px;
+  }
+  .connection-table table th {
+    font-size: 17px;
+  }
+  .connection-table table td {
+    font-size: 17px;
+  }
+
+  .device-info ul li {
+    font-size: 17px;
+  }
 }

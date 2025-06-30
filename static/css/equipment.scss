@@ -60,9 +60,24 @@ body {
 
 // 📌 Renkler
 .green {
-  background-color: #46B649;
+  background-color: #46b649;
 }
 
 .red {
   background-color: #d32f2f;
+}
+
+// !! 10 inch RESPONSIVE
+@media screen and (min-width: 1024px) and (max-height: 600px) {
+  .equipment-container-wrapper {
+    width: 94%;
+    height: 73%;
+  }
+  .equipment-box {
+    padding: 35px 0px;
+    font-size: 21px;
+  }
+  .equipment-container-wrapper {
+    margin-top: 100px;
+  }
 }

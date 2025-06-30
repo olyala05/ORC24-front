@@ -49,14 +49,14 @@
         }
 
         .eq-passive {
-          background-color: #FF0F00;
+          background-color: #ff0f00;
         }
         .eq-detail-green {
           color: #3fb950;
         }
 
         .eq-detail-red {
-          color: #FF0F00;
+          color: #ff0f00;
         }
       }
     }
@@ -105,8 +105,8 @@
         }
         .eq-detail-log-status span:last-child {
           flex: 1;
-          white-space: normal;    
-          word-break: break-word;  
+          white-space: normal;
+          word-break: break-word;
         }
 
         .eq-detail-dot {
@@ -116,23 +116,23 @@
         }
 
         .eq-active {
-          background-color: #33FF00;
+          background-color: #33ff00;
         }
 
         .eq-passive {
-          background-color: #FF0F00;
+          background-color: #ff0f00;
         }
 
         .eq-warning {
-          background-color: #FF0F00;
+          background-color: #ff0f00;
         }
-        
+
         .eq-detail-log-green {
           color: #3fb950;
         }
 
         .eq-detail-log-red {
-          color: #FF0F00;
+          color: #ff0f00;
         }
 
         .eq-detail-log-gray {
@@ -142,7 +142,6 @@
     }
   }
 }
-
 
 body.lang-de {
   .eq-detail-container {
@@ -156,14 +155,13 @@ body.lang-de {
 }
 .eq-detail-status {
   display: inline-block;
-  max-width: 140px;  // Yazının genişliğini sınırlar
+  max-width: 140px; // Yazının genişliğini sınırlar
   white-space: nowrap; // Yazının alt satıra kaymasını engeller
-  overflow: hidden;    // Taşan kısmı gizler
-  text-overflow: ellipsis;  // Uzun yazılarda ... gösterir
+  overflow: hidden; // Taşan kısmı gizler
+  text-overflow: ellipsis; // Uzun yazılarda ... gösterir
   vertical-align: middle;
   color: #ffda29;
 }
-
 
 .eq-detail-tooltip {
   position: absolute;
@@ -185,8 +183,34 @@ body.lang-de {
   display: block;
 }
 
-
 .text-right {
   text-align: right;
   width: 162px;
-} 
+}
+
+// !! 10 inch RESPONSIVE
+@media screen and (width: 1024px) and (height: 600px) {
+  .eq-detail-container {
+    width: 98%;
+    height: 80%;
+    margin-top: 96px;
+  }
+  .eq-detail-container .eq-detail-panel {
+    width: 48%;
+  }
+  .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item span {
+    font-size: 16px;
+  }
+  .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item {
+    padding: 6px 7px;
+  }
+  .eq-detail-container .eq-detail-log .eq-detail-log-header {
+    font-size: 18px;
+  }
+  .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item {
+    font-size: 16px;
+  }
+  .eq-detail-container .eq-detail-log .eq-detail-log-list {
+    max-height: 370px;
+  }
+}

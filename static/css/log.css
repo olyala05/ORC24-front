@@ -18,7 +18,7 @@ body {
 
 .log-table {
   width: 763px;
-  max-height: 319px;
+  max-height: 100%;
   background-color: #0b1734;
   padding: 7px;
   border-radius: 8px;
@@ -66,7 +66,7 @@ body {
   display: inline-block;
 }
 .log-table table .status-dot.green {
-  background-color: #33FF00;
+  background-color: #33ff00;
 }
 .log-table table .status-dot.red {
   background-color: #ff0000;
@@ -81,7 +81,7 @@ body {
 }
 
 .status-info {
-  background-color: #33FF00;
+  background-color: #33ff00;
 }
 
 .status-warning {
@@ -89,7 +89,7 @@ body {
 }
 
 .status-exception {
-  background-color: #FF0F00;
+  background-color: #ff0f00;
 }
 
 /* Takvim Konteyneri */
@@ -166,7 +166,7 @@ body {
 }
 
 .status-info {
-  background-color: #33FF00;
+  background-color: #33ff00;
 }
 
 .status-warning {
@@ -174,7 +174,7 @@ body {
 }
 
 .status-exception {
-  background-color: #FF0F00;
+  background-color: #ff0f00;
 }
 
 .ellipsis {
@@ -263,4 +263,31 @@ body {
 .daterangepicker:after,
 .daterangepicker:before {
   display: none !important;
+}
+
+@media screen and (min-width: 1024px) and (max-height: 600px) {
+  .log-table {
+    width: 990px;
+  }
+  .log-table .log-table-content {
+    max-height: 410px;
+  }
+  .log-table table th {
+    font-size: 19px;
+  }
+  .log-table table td {
+    font-size: 18px;
+  }
+  .calendar-input {
+    height: 38px !important;
+    font-size: 19px !important;
+  }
+  .calendar-icon img {
+    width: 22px !important;
+    height: 16px !important;
+  }
+  .calendar-icon {
+    right: 30px !important;
+    top: 54% !important;
+  }
 }/*# sourceMappingURL=log.css.map */
