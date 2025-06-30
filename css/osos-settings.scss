@@ -1,0 +1,149 @@
+// **OSOS SETTINGS ANA CONTAINER**
+.osos-settings-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // **KART TASARIMI**
+  .osos-settings-card {
+    background: #161b3d;
+    padding: 20px;
+    border-radius: 10px;
+    width: 745px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+
+    // **GRUP YAPISI**
+    .osos-settings-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f2f2f2;
+      padding: 8px;
+      border-radius: 7px;
+      margin-bottom: 15px;
+      color: black;
+
+      label {
+        font-weight: bold;
+      }
+
+      input {
+        width: 58%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background: white !important;
+        color: black !important;
+      }
+      input:focus,
+      input:active {
+        background: white !important;
+        color: black !important;
+        outline: none;
+      }
+
+      // Autofill durumlarında (Chrome gibi) arka plan ve metin rengini koru
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+        color: black !important;
+      }
+    }
+
+    // **SELECT ELEMENTİ**
+    .osos-settings-select {
+      display: flex;
+      align-items: center;
+      position: relative;
+      width: 60%;
+
+      select {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        appearance: none; // Varsayılan ok simgesini kaldır
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: white;
+      }
+
+      .osos-settings-arrow {
+        position: absolute;
+        right: 10px;
+        font-size: 16px;
+      }
+    }
+
+    // **BUTONLAR**
+    .osos-settings-btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+
+      button {
+        background: #ef742a;
+        color: white;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 45%;
+        text-align: center;
+
+        &:hover {
+          background: #d65f1f;
+        }
+      }
+    }
+
+    // **BAĞLANTI DURUMLARI**
+    .osos-settings-failed {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .osos-settings-success {
+      color: #33FF00;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 5px;
+    }
+  }
+
+  .osos-results {
+    display: flex;
+    justify-content: start;
+    gap: 15px;
+  }
+
+  .osos-results p {
+    margin: 0; /* Fazladan boşlukları kaldır */
+    padding: 10px 15px; /* İç boşluk ekle */
+    border-radius: 5px; /* Köşeleri yuvarla */
+  }
+
+  .osos-settings-failed {
+    color: #ff4d4d;
+  }
+
+  .osos-settings-success {
+    color: #33FF00;
+  }
+}
+
+
+.tab-btn-set:disabled {
+  background-color: #ccc; 
+  cursor: not-allowed;
+  opacity: 1;
+}

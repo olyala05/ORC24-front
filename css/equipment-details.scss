@@ -1,0 +1,216 @@
+.eq-detail-container {
+  display: flex;
+  gap: 8px;
+  color: #e6edf3;
+  padding: 0px;
+  font-family: Arial, sans-serif;
+  width: 98%;
+  height: 80%;
+  margin-top: 80px;
+
+  .eq-detail-panel {
+    background-color: #0b1734;
+    padding: 7px;
+    border-radius: 8px;
+    width: 40%;
+
+    .eq-detail-header {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .eq-detail-info {
+      display: flex;
+      flex-direction: column;
+
+      .eq-detail-item {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #ef8018;
+        padding: 4px 5px;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        span {
+          font-size: 14px;
+        }
+
+        .eq-detail-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+        }
+
+        .eq-active {
+          background-color: #3fb950;
+        }
+
+        .eq-passive {
+          background-color: #ff0f00;
+        }
+        .eq-detail-green {
+          color: #3fb950;
+        }
+
+        .eq-detail-red {
+          color: #ff0f00;
+        }
+      }
+    }
+  }
+
+  .eq-detail-log {
+    width: 60%;
+    background-color: #0b1734;
+    padding: 8px;
+    border-radius: 8px;
+
+    .eq-detail-log-header {
+      display: flex;
+      justify-content: flex-start;
+      font-size: 16px;
+      padding: 5px 0;
+      border-bottom: 1px solid #ffffff;
+      gap: 15px;
+    }
+
+    .eq-detail-log-list {
+      list-style: none;
+      padding: 0;
+      max-height: 400px;
+      overflow-y: auto;
+      margin: 0;
+      max-height: 340px;
+
+      li:last-child {
+        border-bottom: none;
+      }
+
+      .eq-detail-log-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        border-bottom: 1px solid #ef8018;
+        font-size: 14px;
+
+        .eq-detail-log-status {
+          display: flex;
+          align-items: center;
+          gap: 50px;
+          flex-wrap: nowrap;
+          width: 280px;
+        }
+        .eq-detail-log-status span:last-child {
+          flex: 1;
+          white-space: normal;
+          word-break: break-word;
+        }
+
+        .eq-detail-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+        }
+
+        .eq-active {
+          background-color: #33ff00;
+        }
+
+        .eq-passive {
+          background-color: #ff0f00;
+        }
+
+        .eq-warning {
+          background-color: #ff0f00;
+        }
+
+        .eq-detail-log-green {
+          color: #3fb950;
+        }
+
+        .eq-detail-log-red {
+          color: #ff0f00;
+        }
+
+        .eq-detail-log-gray {
+          color: #8b949e;
+        }
+      }
+    }
+  }
+}
+
+body.lang-de {
+  .eq-detail-container {
+    font-size: 13px;
+  }
+
+  .eq-detail-item span,
+  .eq-detail-log-item span {
+    font-size: 13px;
+  }
+}
+.eq-detail-status {
+  display: inline-block;
+  max-width: 140px; // Yazının genişliğini sınırlar
+  white-space: nowrap; // Yazının alt satıra kaymasını engeller
+  overflow: hidden; // Taşan kısmı gizler
+  text-overflow: ellipsis; // Uzun yazılarda ... gösterir
+  vertical-align: middle;
+  color: #ffda29;
+}
+
+.eq-detail-tooltip {
+  position: absolute;
+  background-color: #fff;
+  color: #1c2747;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  max-width: 300px;
+  word-wrap: break-word;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  display: none;
+  max-width: 300px;
+  text-align: center;
+}
+
+.eq-detail-tooltip.active {
+  display: block;
+}
+
+.text-right {
+  text-align: right;
+  width: 162px;
+}
+
+// !! 10 inch RESPONSIVE
+@media screen and (width: 1024px) and (height: 600px) {
+  .eq-detail-container {
+    width: 98%;
+    height: 80%;
+    margin-top: 96px;
+  }
+  .eq-detail-container .eq-detail-panel {
+    width: 48%;
+  }
+  .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item span {
+    font-size: 16px;
+  }
+  .eq-detail-container .eq-detail-panel .eq-detail-info .eq-detail-item {
+    padding: 6px 7px;
+  }
+  .eq-detail-container .eq-detail-log .eq-detail-log-header {
+    font-size: 18px;
+  }
+  .eq-detail-container .eq-detail-log .eq-detail-log-list .eq-detail-log-item {
+    font-size: 16px;
+  }
+  .eq-detail-container .eq-detail-log .eq-detail-log-list {
+    max-height: 370px;
+  }
+}

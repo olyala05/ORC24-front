@@ -1,0 +1,32 @@
+@use './styles' as styles;
+@forward './alarms';
+@forward './alarm-network';    
+@forward './alarm-electric'; 
+@forward './dashboard';
+@forward './equipment-details';
+@use './equipment-setting';
+@forward './equipment';
+@forward './header';
+@use './log';
+@use './modem-selection';
+@use './orc-status';
+@forward './settings';
+@forward './test';
+@forward './orc-setting';
+@forward './osos-settings';
+@forward './data';
+@forward './live-data';
+@forward './hourly-data';
+@forward './daily-data';
+@forward './keyboard';
+@forward './custom';
+
+
+// @import "../bootstrap/css/bootstrap.min.css";
+
+@import '../fontawesome/css/all.min.css';
+
+@import '../simple-keyboard-master/build/css/index.css'; 
+
+
+

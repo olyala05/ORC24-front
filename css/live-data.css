@@ -1,0 +1,261 @@
+@charset "UTF-8";
+.live-data-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+  gap: 7px;
+  max-height: 500px;
+  width: 783px;
+  overflow-y: auto;
+  margin-top: 80px;
+}
+.live-data-container .live-data-table,
+.live-data-container .live-data-status {
+  width: 48%;
+  background-color: #191932;
+  padding: 6px;
+  border-radius: 8px;
+  overflow-y: auto;
+  max-height: 500px;
+  min-height: 375px;
+}
+.live-data-container .table-header {
+  position: sticky;
+  top: 0;
+  background-color: #191932;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  border-bottom: 1px solid #2d2d4a;
+  text-align: center;
+}
+.live-data-container .table-header > div {
+  flex: 1;
+  padding: 3px;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+}
+.live-data-container .table-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #2d2d4a;
+  align-items: center;
+  gap: -6px;
+}
+.live-data-container .table-row > div {
+  flex: 1;
+  padding: 0px;
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+}
+.live-data-container .status {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.live-data-container .status.active {
+  background-color: #33ff00;
+}
+.live-data-container .status.inactive {
+  background-color: red;
+}
+.live-data-container .live-data-status .table-row > div[data-status="A / A"] {
+  color: #33ff00;
+}
+.live-data-container .live-data-status .table-row > div[data-status="P / P"] {
+  color: red;
+  text-align: center;
+  align-items: center;
+  margin-left: 24px;
+}
+
+.live-data-detail-table-container {
+  width: 98%;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 76px;
+}
+.live-data-detail-table-container .live-data-detail-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #0b1734;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.live-data-detail-table-container .live-data-detail-data-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  font-size: 14px;
+}
+.live-data-detail-table-container .live-data-detail-data-table th,
+.live-data-detail-table-container .live-data-detail-data-table td {
+  border: none;
+  padding: 6px;
+  text-align: center;
+  font-size: 13px;
+}
+.live-data-detail-table-container .live-data-detail-data-table th {
+  background: #0b1734;
+  font-weight: bold;
+  color: #ef8018;
+  border-bottom: 1px solid #ffffff;
+}
+.live-data-detail-table-container .live-data-detail-data-table td {
+  border-bottom: 1px solid #ef8018;
+}
+.live-data-detail-table-container .live-data-detail-data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.live-data-detail-status {
+  color: #00ff00;
+}
+.live-data-detail-archive {
+  color: red;
+}
+.live-data-detail-error {
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff4444;
+}
+.live-data-detail-error tr {
+  text-align: left;
+}
+.live-data-detail-error-text {
+  color: #ff4444;
+}
+
+/* Genel Konteyner */
+.live-data-detail-table-container {
+  width: 98%;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  max-height: 600px; /* Konteynerin max yüksekliği */
+  overflow: hidden;
+  margin-top: 76px;
+  /* İlk tabloyu sabit bırak */
+  /* İkinci tablo için scroll ayarları */
+}
+.live-data-detail-table-container .live-data-detail-data-table:first-child {
+  position: relative;
+  width: 100%;
+  border-collapse: collapse;
+  background: #0b1734;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+.live-data-detail-table-container .scrollable-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0b1734;
+  border-radius: 6px;
+  display: block;
+  max-height: 317px; /* Sadece içeriği kaydır */
+  overflow: hidden;
+  /* Scroll olacak kısım (sadece tbody) */
+  /* Thead sabit kalsın */
+  /* Tablo içi hücre ayarları */
+  /* Son satırın alt sınırını kaldır */
+}
+.live-data-detail-table-container .scrollable-table tbody {
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+  width: 100%;
+}
+.live-data-detail-table-container .scrollable-table thead {
+  display: block;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  background: #0b1734;
+  z-index: 10;
+}
+.live-data-detail-table-container .scrollable-table thead tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+.live-data-detail-table-container .scrollable-table thead th {
+  font-weight: bold;
+  color: #ef8018;
+  border-bottom: 1px solid #ffffff;
+}
+.live-data-detail-table-container .scrollable-table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+.live-data-detail-table-container .scrollable-table th,
+.live-data-detail-table-container .scrollable-table td {
+  border: none;
+  padding: 6px;
+  text-align: center;
+  font-size: 13px;
+  border-bottom: 1px solid #ef8018;
+}
+.live-data-detail-table-container .scrollable-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.status-circle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+@media screen and (min-width: 1024px) and (max-height: 600px) {
+  .live-data-container {
+    width: 1004px;
+    max-height: 478px;
+    margin-top: 94px;
+    overflow-y: auto; /* Dikey scroll sadece gerektiğinde çıksın */
+    overflow-x: hidden; /* Yatay scroll hiçbir zaman olmasın */
+  }
+  .live-data-container .live-data-table,
+  .live-data-container .live-data-status {
+    min-height: 486px;
+  }
+  .live-data-container .table-header > div {
+    font-size: 16px;
+  }
+  .live-data-container .table-row > div {
+    font-size: 14px;
+  }
+  .live-data-detail-table-container .live-data-detail-data-table th,
+  .live-data-detail-table-container .live-data-detail-data-table td {
+    font-size: 16px;
+  }
+  .live-data-detail-table-container .scrollable-table th,
+  .live-data-detail-table-container .scrollable-table td {
+    font-size: 17px;
+  }
+  .live-data-detail-table-container .scrollable-table {
+    max-height: 417px;
+  }
+  .live-data-detail-table-container .scrollable-table tbody {
+    max-height: 380px;
+  }
+  .live-data-detail-table-container {
+    margin-top: 96px;
+  }
+  .live-data-detail-table-container .live-data-detail-data-table:first-child {
+    margin-bottom: 7px;
+  }
+}/*# sourceMappingURL=live-data.css.map */

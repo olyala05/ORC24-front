@@ -1,0 +1,126 @@
+@charset "UTF-8";
+.osos-settings-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.osos-settings-container .osos-settings-card {
+  background: #161b3d;
+  padding: 20px;
+  border-radius: 10px;
+  width: 745px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+  align-items: center;
+  margin-top: 80px;
+}
+.osos-settings-container .osos-settings-card .osos-settings-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f2f2f2;
+  padding: 8px;
+  border-radius: 7px;
+  margin-bottom: 15px;
+  color: black;
+}
+.osos-settings-container .osos-settings-card .osos-settings-group label {
+  font-weight: bold;
+}
+.osos-settings-container .osos-settings-card .osos-settings-group input {
+  width: 58%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: white !important;
+  color: black !important;
+}
+.osos-settings-container .osos-settings-card .osos-settings-group input:focus,
+.osos-settings-container .osos-settings-card .osos-settings-group input:active {
+  background: white !important;
+  color: black !important;
+  outline: none;
+}
+.osos-settings-container .osos-settings-card .osos-settings-group input:-webkit-autofill,
+.osos-settings-container .osos-settings-card .osos-settings-group input:-webkit-autofill:hover,
+.osos-settings-container .osos-settings-card .osos-settings-group input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-transition: background-color 5000s ease-in-out 0s;
+  transition: background-color 5000s ease-in-out 0s;
+  color: black !important;
+}
+.osos-settings-container .osos-settings-card .osos-settings-select {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 60%;
+}
+.osos-settings-container .osos-settings-card .osos-settings-select select {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: white;
+}
+.osos-settings-container .osos-settings-card .osos-settings-select .osos-settings-arrow {
+  position: absolute;
+  right: 10px;
+  font-size: 16px;
+}
+.osos-settings-container .osos-settings-card .osos-settings-btn-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.osos-settings-container .osos-settings-card .osos-settings-btn-group button {
+  background: #ef742a;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 45%;
+  text-align: center;
+}
+.osos-settings-container .osos-settings-card .osos-settings-btn-group button:hover {
+  background: #d65f1f;
+}
+.osos-settings-container .osos-settings-card .osos-settings-failed {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 5px;
+}
+.osos-settings-container .osos-settings-card .osos-settings-success {
+  color: #33FF00;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 5px;
+}
+.osos-settings-container .osos-results {
+  display: flex;
+  justify-content: start;
+  gap: 15px;
+}
+.osos-settings-container .osos-results p {
+  margin: 0; /* Fazladan boşlukları kaldır */
+  padding: 10px 15px; /* İç boşluk ekle */
+  border-radius: 5px; /* Köşeleri yuvarla */
+}
+.osos-settings-container .osos-settings-failed {
+  color: #ff4d4d;
+}
+.osos-settings-container .osos-settings-success {
+  color: #33FF00;
+}
+
+.tab-btn-set:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 1;
+}/*# sourceMappingURL=osos-settings.css.map */

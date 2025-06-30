@@ -1,0 +1,137 @@
+// Renkler ve Değişkenler
+$background-dark: #0b132b;
+$header-dark: #1d2540;
+$row-hover: #101626;
+$text-light: #ffffff;
+$title-orange: #ffa500;
+$border-color: #2a2e43;
+$success-green: #00d656;
+$error-red: #ff3b3b;
+
+// Genel Log Alanı
+.log-wrapper {
+  padding: 24px;
+  background-color: $background-dark;
+  color: $text-light;
+  font-family: "Segoe UI", sans-serif;
+  border-radius: 8px;
+
+  // Tarih Seçici
+  .daterange-container {
+    margin-bottom: 16px;
+    background: #0b1734;
+    width: 50%;
+    padding: 14px;
+    border-radius: 10px;
+    border-color: #fcfcfc;
+
+    .custom-daterange {
+      position: relative;
+      width: 260px;
+
+      input[type="text"] {
+        width: 100%;
+        padding: 10px 40px 10px 14px; // ok için boşluk sağda
+        font-size: 14px;
+        color: $text-light;
+        background-color: darken($background-dark, 5%);
+        border: none;
+        border-radius: 6px;
+
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 6px $title-orange;
+        }
+      }
+
+      // Ok ikonları (input’un içinde yerleşik)
+      .arrow-icon {
+        position: absolute;
+        top: 50%;
+        right: 14px;
+        width: 16px;
+        height: 16px;
+        transform: translateY(-50%);
+        pointer-events: none;
+
+        &.arrow-up {
+          display: none; // başlangıçta yukarı ikon gizli
+        }
+      }
+
+      &.open {
+        .arrow-up {
+          display: inline;
+        }
+
+        .arrow-down {
+          display: none;
+        }
+      }
+    }
+  }
+
+  // Tablo
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+
+    thead {
+      background-color: $header-dark;
+
+      th {
+        padding: 12px 16px;
+        font-weight: 600;
+        color: $title-orange;
+        font-size: 13px;
+        text-align: left;
+
+        &.archive-col {
+          width: 60px;
+          text-align: center;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        background-color: $background-dark;
+        border-bottom: 1px solid $border-color;
+        transition: background-color 0.2s ease-in-out;
+
+        &:hover {
+          background-color: $row-hover;
+        }
+
+        td {
+          padding: 12px 16px;
+          font-size: 13px;
+          color: $text-light;
+
+          &.archive-col {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  // Durum Noktası
+  .status-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+
+    &.status-green {
+      background-color: $success-green;
+    }
+
+    &.status-red {
+      background-color: $error-red;
+    }
+  }
+}
+
